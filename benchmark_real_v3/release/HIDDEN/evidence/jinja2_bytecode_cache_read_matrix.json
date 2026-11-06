@@ -1,0 +1,312 @@
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "project_id": "jinja2-3.1.3",
+  "project": "Jinja2",
+  "version": "3.1.3",
+  "target_operation": {
+    "file": "src/jinja2/loaders.py",
+    "line": 132,
+    "code": "code = bucket.code",
+    "function": "BaseLoader.load",
+    "note": "read of a bytecode-cache bucket; deleting it makes the loader ignore a hit and recompile"
+  },
+  "candidate_universe": [
+    {
+      "id": "compile_fallback",
+      "file": "src/jinja2/loaders.py",
+      "line": 137,
+      "code": "code = environment.compile(source, name, filename)",
+      "kind": "assignment",
+      "role": "backup path that keeps P- working when the cache read is removed"
+    }
+  ],
+  "probe": "probe_jinja_bytecode_cache.py",
+  "scope": {
+    "declared_inputs": [
+      "expose_cache_poisoned",
+      "mask_cache_benign"
+    ],
+    "candidate_universe_size": 1,
+    "all_subsets_enumerated": true,
+    "exposing_inputs": [
+      "expose_cache_poisoned"
+    ],
+    "masking_inputs": [
+      "mask_cache_benign"
+    ],
+    "claim": "Exact over the declared finite inputs and declared candidate universe U.  Not a claim over the whole legal input domain or over operations outside U."
+  },
+  "inputs": {
+    "expose_cache_poisoned": {
+      "role": "exposing",
+      "payload": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      },
+      "executable": {
+        "EMPTY": true,
+        "compile_fallback": true
+      },
+      "masked_strict": {
+        "EMPTY": false,
+        "compile_fallback": false
+      },
+      "exposed": {
+        "EMPTY": true,
+        "compile_fallback": true
+      },
+      "msms": [],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "2"
+        },
+        "compile_fallback": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "2"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        },
+        "compile_fallback": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "message": "'NoneType' object has no attribute 'co_filename'",
+          "outcome": "raise",
+          "type": "AttributeError"
+        }
+      }
+    },
+    "mask_cache_benign": {
+      "role": "masking",
+      "payload": {
+        "template": "{{ 6*7 }}"
+      },
+      "executable": {
+        "EMPTY": true,
+        "compile_fallback": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "compile_fallback": false
+      },
+      "exposed": {
+        "EMPTY": false,
+        "compile_fallback": true
+      },
+      "msms": [
+        [
+          "compile_fallback"
+        ]
+      ],
+      "mmbs": [
+        [
+          "compile_fallback"
+        ]
+      ],
+      "plus_observations": {
+        "EMPTY": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        },
+        "compile_fallback": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        },
+        "compile_fallback": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "message": "'NoneType' object has no attribute 'co_filename'",
+          "outcome": "raise",
+          "type": "AttributeError"
+        }
+      }
+    }
+  },
+  "runs": {
+    "plus": {
+      "expose_cache_poisoned": {
+        "EMPTY": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 1+1 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "outcome": "return",
+            "value": "2"
+          }
+        },
+        "compile_fallback": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 1+1 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "outcome": "return",
+            "value": "2"
+          }
+        }
+      },
+      "mask_cache_benign": {
+        "EMPTY": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "outcome": "return",
+            "value": "42"
+          }
+        },
+        "compile_fallback": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "outcome": "return",
+            "value": "42"
+          }
+        }
+      }
+    },
+    "minus": {
+      "expose_cache_poisoned": {
+        "EMPTY": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 1+1 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "outcome": "return",
+            "value": "42"
+          }
+        },
+        "compile_fallback": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 1+1 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "message": "'NoneType' object has no attribute 'co_filename'",
+            "outcome": "raise",
+            "type": "AttributeError"
+          }
+        }
+      },
+      "mask_cache_benign": {
+        "EMPTY": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "outcome": "return",
+            "value": "42"
+          }
+        },
+        "compile_fallback": {
+          "probe": "probe_jinja_bytecode_cache.py",
+          "payload": {
+            "template": "{{ 6*7 }}"
+          },
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "cache_dumps": 0,
+            "cache_loads": 1,
+            "message": "'NoneType' object has no attribute 'co_filename'",
+            "outcome": "raise",
+            "type": "AttributeError"
+          }
+        }
+      }
+    }
+  }
+}

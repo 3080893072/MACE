@@ -1,0 +1,694 @@
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "story": "NO_LOCAL_EFFECT",
+  "baselines": {
+    "A_direct_qwen": {
+      "run_label": "LIVE_MODEL_RUN",
+      "submission": {
+        "task_id": "jinja2_bytecode_cache_read",
+        "claims": [
+          {
+            "type": "EXPOSING_COUNTEREXAMPLE",
+            "input": {
+              "template": "test_template.html",
+              "context": {}
+            }
+          },
+          {
+            "type": "MSMS",
+            "input": {
+              "template": "test_template.html",
+              "context": {}
+            },
+            "operations": [
+              {
+                "file": "src/jinja2/loaders.py",
+                "line": 132,
+                "code": "code = bucket.code"
+              }
+            ]
+          },
+          {
+            "type": "MMBS",
+            "input": {
+              "template": "test_template.html",
+              "context": {}
+            },
+            "operations": [
+              {
+                "file": "src/jinja2/loaders.py",
+                "line": 132,
+                "code": "code = bucket.code"
+              }
+            ]
+          }
+        ],
+        "submission_id": "baseline-A"
+      },
+      "score": {
+        "protocol": "mace_benchmark_v3_scoring",
+        "scorer_version": "mace-benchmark-v3-scorer-1.0",
+        "task_id": "jinja2_bytecode_cache_read",
+        "submission_id": "baseline-A",
+        "status_counts": {
+          "WITNESS_VERIFIED": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "PROVEN": 0,
+          "FALSE": 1,
+          "INVALID": 0,
+          "UNVERIFIED": 2,
+          "UNSUPPORTED": 0,
+          "DUPLICATE": 0
+        },
+        "score": {
+          "credited_relations": 0,
+          "claim_credit": 0,
+          "domain_exact_relations": 0,
+          "witness_verified_relations": 0,
+          "deduplicated": 0
+        },
+        "claims": [
+          {
+            "index": 0,
+            "type": "EXPOSING_COUNTEREXAMPLE",
+            "status": "FALSE",
+            "reason": "P+ and P- produced equal observations, so the input does not expose the deletion",
+            "scope": null,
+            "relation_key": "EXPOSING",
+            "observations": {
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "test_template.html"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "test_template.html"
+              }
+            },
+            "credit": 0
+          },
+          {
+            "index": 1,
+            "type": "MSMS",
+            "status": "UNVERIFIED",
+            "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+            "scope": "outside the declared candidate universe",
+            "relation_key": "MSMS:src/jinja2/loaders.py:132",
+            "credit": 0
+          },
+          {
+            "index": 2,
+            "type": "MMBS",
+            "status": "UNVERIFIED",
+            "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+            "scope": "outside the declared candidate universe",
+            "relation_key": "MMBS:src/jinja2/loaders.py:132",
+            "credit": 0
+          }
+        ],
+        "scope_notes": [
+          "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+          "A single witness is never promoted to a claim over the whole legal input domain.",
+          "Operations outside U are reported UNVERIFIED, not FALSE."
+        ]
+      },
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 6244,
+        "completion_tokens": 198,
+        "total_duration_ns": 138859659233,
+        "load_duration_ns": 3822782,
+        "prompt_eval_duration_ns": 76917270000,
+        "eval_duration_ns": 61799562000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 139.265,
+        "attempt": 0
+      },
+      "input_contract_errors": []
+    },
+    "B_qwen_verifier": {
+      "run_label": "LIVE_MODEL_RUN",
+      "condition": "pure_verification",
+      "feedback_regeneration": "NOT_RUN (not executed in this pilot)",
+      "verifier_counts": {
+        "total": 3,
+        "verified": 1,
+        "refuted": 2,
+        "unknown": 0
+      },
+      "score": {
+        "protocol": "mace_benchmark_v3_scoring",
+        "scorer_version": "mace-benchmark-v3-scorer-1.0",
+        "task_id": "jinja2_bytecode_cache_read",
+        "submission_id": "baseline-A",
+        "status_counts": {
+          "WITNESS_VERIFIED": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "PROVEN": 0,
+          "FALSE": 0,
+          "INVALID": 0,
+          "UNVERIFIED": 1,
+          "UNSUPPORTED": 0,
+          "DUPLICATE": 0
+        },
+        "score": {
+          "credited_relations": 0,
+          "claim_credit": 0,
+          "domain_exact_relations": 0,
+          "witness_verified_relations": 0,
+          "deduplicated": 0
+        },
+        "claims": [
+          {
+            "index": 0,
+            "type": "MSMS",
+            "status": "UNVERIFIED",
+            "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+            "scope": "outside the declared candidate universe",
+            "relation_key": "MSMS:src/jinja2/loaders.py:132",
+            "credit": 0
+          }
+        ],
+        "scope_notes": [
+          "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+          "A single witness is never promoted to a claim over the whole legal input domain.",
+          "Operations outside U are reported UNVERIFIED, not FALSE."
+        ]
+      },
+      "model_calls": 1,
+      "probe_executions": 4,
+      "wall_seconds": 1.66
+    },
+    "C_ast_intervention": {
+      "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+      "universe": [
+        {
+          "id": "src/jinja2/loaders.py:137-137",
+          "file": "src/jinja2/loaders.py",
+          "first_line": 137,
+          "last_line": 137,
+          "kind": "assignment",
+          "code": "            code = environment.compile(source, name, filename)"
+        }
+      ],
+      "pruning": {
+        "universe": [
+          {
+            "id": "src/jinja2/loaders.py:137-137",
+            "file": "src/jinja2/loaders.py",
+            "first_line": 137,
+            "last_line": 137,
+            "kind": "assignment",
+            "code": "            code = environment.compile(source, name, filename)"
+          }
+        ],
+        "ranking": [
+          {
+            "id": "src/jinja2/loaders.py:137-137",
+            "changed_cells": 6,
+            "cells": 12,
+            "span": 1
+          }
+        ],
+        "considered": 1,
+        "dropped_no_effect": 0,
+        "dropped_duplicate_effect": 0,
+        "truncated": 0
+      },
+      "per_input": [
+        {
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/jinja2/loaders.py:137-137"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            },
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            }
+          }
+        },
+        {
+          "input": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 1+1 }}"
+          },
+          "a_executes": true,
+          "active_ops": [],
+          "masked_empty": false,
+          "exposed_empty": true,
+          "msms_ids": [],
+          "mmbs_ids": [],
+          "observations_empty": {
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "2"
+            },
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            }
+          }
+        },
+        {
+          "input": {
+            "template": "hello {{ name }}",
+            "cached_source": "{{ 1+1 }}",
+            "context": {
+              "name": "x"
+            }
+          },
+          "a_executes": true,
+          "active_ops": [],
+          "masked_empty": false,
+          "exposed_empty": true,
+          "msms_ids": [],
+          "mmbs_ids": [],
+          "observations_empty": {
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "2"
+            },
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "hello x"
+            }
+          }
+        },
+        {
+          "input": {
+            "template": "{{ 1+1 }}"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/jinja2/loaders.py:137-137"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "2"
+            },
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "2"
+            }
+          }
+        },
+        {
+          "input": {
+            "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/jinja2/loaders.py:137-137"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "12"
+            },
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "12"
+            }
+          }
+        },
+        {
+          "input": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 6*7 }}"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/jinja2/loaders.py:137-137"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/jinja2/loaders.py:137-137"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            },
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            }
+          }
+        }
+      ],
+      "submission": {
+        "submission_id": "baseline-C",
+        "task_id": "jinja2_bytecode_cache_read",
+        "claims": [
+          {
+            "type": "EXPOSING_COUNTEREXAMPLE",
+            "input": {
+              "template": "{{ 6*7 }}",
+              "cached_source": "{{ 1+1 }}"
+            }
+          },
+          {
+            "type": "MSMS",
+            "inputs": [
+              {
+                "template": "{{ 6*7 }}"
+              },
+              {
+                "template": "{{ 1+1 }}"
+              },
+              {
+                "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+              },
+              {
+                "template": "{{ 6*7 }}",
+                "cached_source": "{{ 6*7 }}"
+              }
+            ],
+            "operations": [
+              {
+                "file": "src/jinja2/loaders.py",
+                "line": 137,
+                "code": "            code = environment.compile(source, name, filename)"
+              }
+            ]
+          },
+          {
+            "type": "MMBS",
+            "inputs": [
+              {
+                "template": "{{ 6*7 }}"
+              },
+              {
+                "template": "{{ 1+1 }}"
+              },
+              {
+                "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+              },
+              {
+                "template": "{{ 6*7 }}",
+                "cached_source": "{{ 6*7 }}"
+              }
+            ],
+            "operations": [
+              {
+                "file": "src/jinja2/loaders.py",
+                "line": 137,
+                "code": "            code = environment.compile(source, name, filename)"
+              }
+            ]
+          },
+          {
+            "type": "PREREQUISITE_BREAKING",
+            "input": {
+              "template": "{{ 6*7 }}"
+            },
+            "control_input": {
+              "template": "{{ 6*7 }}",
+              "cached_source": "{{ 1+1 }}"
+            },
+            "operations": [
+              {
+                "file": "src/jinja2/loaders.py",
+                "line": 137,
+                "code": "            code = environment.compile(source, name, filename)"
+              }
+            ],
+            "prerequisite": "masking holds on input; the same set does not break on control"
+          }
+        ]
+      },
+      "unknowns": [],
+      "score": {
+        "protocol": "mace_benchmark_v3_scoring",
+        "scorer_version": "mace-benchmark-v3-scorer-1.0",
+        "task_id": "jinja2_bytecode_cache_read",
+        "submission_id": "baseline-C",
+        "status_counts": {
+          "WITNESS_VERIFIED": 2,
+          "FINITE_DOMAIN_EXACT": 2,
+          "PROVEN": 0,
+          "FALSE": 0,
+          "INVALID": 0,
+          "UNVERIFIED": 0,
+          "UNSUPPORTED": 0,
+          "DUPLICATE": 0
+        },
+        "score": {
+          "credited_relations": 4,
+          "claim_credit": 4,
+          "domain_exact_relations": 2,
+          "witness_verified_relations": 2,
+          "deduplicated": 0
+        },
+        "claims": [
+          {
+            "index": 0,
+            "type": "EXPOSING_COUNTEREXAMPLE",
+            "status": "WITNESS_VERIFIED",
+            "reason": "Both sides executed and produced different observations.",
+            "scope": "one submitted input; no claim over other legal inputs",
+            "relation_key": "EXPOSING",
+            "observations": {
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "2"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              }
+            },
+            "credit": 1
+          },
+          {
+            "index": 1,
+            "type": "MSMS",
+            "status": "FINITE_DOMAIN_EXACT",
+            "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+            "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+            "relation_key": "MSMS:src/jinja2/loaders.py:137",
+            "operations": [
+              "src/jinja2/loaders.py:137"
+            ],
+            "per_input": [
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              }
+            ],
+            "credit": 1
+          },
+          {
+            "index": 2,
+            "type": "MMBS",
+            "status": "FINITE_DOMAIN_EXACT",
+            "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+            "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+            "relation_key": "MMBS:src/jinja2/loaders.py:137",
+            "operations": [
+              "src/jinja2/loaders.py:137"
+            ],
+            "per_input": [
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ]
+              }
+            ],
+            "credit": 1
+          },
+          {
+            "index": 3,
+            "type": "PREREQUISITE_BREAKING",
+            "status": "WITNESS_VERIFIED",
+            "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+            "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+            "relation_key": "PREREQUISITE:src/jinja2/loaders.py:137",
+            "operations": [
+              "src/jinja2/loaders.py:137"
+            ],
+            "prerequisite": "masking holds on input; the same set does not break on control",
+            "details": {
+              "condition_masked_EMPTY": true,
+              "condition_msms": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "condition_mmbs": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "control_masked_EMPTY": false,
+              "control_mmbs": []
+            },
+            "credit": 1
+          }
+        ],
+        "scope_notes": [
+          "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+          "A single witness is never promoted to a claim over the whole legal input domain.",
+          "Operations outside U are reported UNVERIFIED, not FALSE."
+        ]
+      },
+      "model_calls": 0,
+      "probe_executions": 24,
+      "variant_builds": 4,
+      "wall_seconds": 11.48
+    },
+    "legacy_full_mace": {
+      "run_label": "UNSUPPORTED_INTERFACE",
+      "reason": "The historical Full MACE run loop emits code-level guards and does not expose an operation-level MSMS/MMBS submission interface. It is recorded as unsupported, not as zero."
+    }
+  }
+}

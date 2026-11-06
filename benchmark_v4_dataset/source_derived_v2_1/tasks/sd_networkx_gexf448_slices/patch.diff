@@ -1,0 +1,19 @@
+--- a/networkx/readwrite/gexf.py
++++ b/networkx/readwrite/gexf.py
+@@ -443,12 +443,16 @@
+             source_id = str(G.nodes[u].get("id", u))
+             target_id = str(G.nodes[v].get("id", v))
+             edge_element = Element("edge", source=source_id, target=target_id, **kw)
+             default = G.graph.get("edge_default", {})
+             if self.VERSION == "1.1":
+                 edge_data = self.add_slices(edge_element, edge_data)
++                # SD:U:U1:begin
++                if not G.is_directed() and not edge_element.findall("slices"):
++                    edge_data = self.add_slices(edge_element, edge_data)
++                # SD:U:U1:end
+             else:
+                 edge_data = self.add_spells(edge_element, edge_data)
+             edge_data = self.add_viz(edge_element, edge_data)
+             edge_data = self.add_attributes("edge", edge_element, edge_data, default)
+             edges_element.append(edge_element)
+         graph_element.append(edges_element)

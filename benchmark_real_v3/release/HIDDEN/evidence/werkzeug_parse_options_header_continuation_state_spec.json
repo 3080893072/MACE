@@ -1,0 +1,60 @@
+{
+  "task_id": "werkzeug_parse_options_header_continuation_state",
+  "project_id": "werkzeug-2.2.3",
+  "source_version": "Werkzeug 2.2.3",
+  "difficulty": "complex",
+  "mechanism": "loop-carried state propagation (the reset of a continuation encoding is masked by a later re-write of the same state variable)",
+  "target_operation": {
+    "file": "src/werkzeug/http.py",
+    "line": 440,
+    "code": "continued_encoding = None",
+    "function": "parse_options_header",
+    "note": "resets the carried RFC 2231 continuation encoding when a non-continuation piece is parsed"
+  },
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected; 31 original tests execute A",
+  "candidate_universe": [
+    {
+      "id": "write_state",
+      "file": "src/werkzeug/http.py",
+      "line": 444,
+      "code": "continued_encoding = encoding",
+      "kind": "assignment",
+      "role": "later write of the same loop-carried state; overwrites the reset before the next read"
+    }
+  ],
+  "universe_notes": [
+    "A and U are the only writes to continued_encoding inside the option loop; the initialization at line 429 runs once before the loop and is not an alternative supplier.",
+    "Line 443 reads the state; it does not write it and therefore cannot mask A.",
+    "Masking is cross-iteration: a prior continuation supplies an encoding, A resets it, and U re-supplies an encoding before the next continuation reads the state.",
+    "Completeness outside the declared U is not claimed."
+  ],
+  "probe": "probe_werkzeug_parse_options_header.py",
+  "inputs": [
+    {
+      "id": "expose_reset",
+      "role": "exposing",
+      "payload": {
+        "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*1*=%E6%96%87"
+      },
+      "note": "The non-continuation piece 'foo=bar' resets the carried UTF-8 encoding in P+. P- keeps it, so the last continuation is percent-decoded instead of left raw."
+    },
+    {
+      "id": "mask_state_overwrite",
+      "role": "masking",
+      "payload": {
+        "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*0*=utf-8''%E6%96%87; size*1*=%E5%AD%97"
+      },
+      "note": "After the reset, the explicit encoding on 'size*0*' re-writes the same state. P+ and P- both decode the final continuation as UTF-8; disabling that re-write exposes the missing reset."
+    }
+  ],
+  "scope": {
+    "inputs_executed": 2,
+    "operations_in_universe": 1,
+    "not_claimed": [
+      "All RFC 2231/5987 header forms and malformed inputs",
+      "Operations outside the declared U",
+      "A task-level certificate over the whole legal input domain"
+    ]
+  }
+}

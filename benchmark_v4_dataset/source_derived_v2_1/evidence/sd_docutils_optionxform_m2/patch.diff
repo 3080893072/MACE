@@ -1,0 +1,21 @@
+--- a/docutils/frontend.py
++++ b/docutils/frontend.py
+@@ -915,12 +915,18 @@
+     def optionxform(self, optionstr):
+         """
+         Lowercase and transform '-' to '_'.
+ 
+         So the cmdline form of option names can be used in config files.
+         """
++        # SD:U:U1:begin
++        optionstr = optionstr.lower()
++        # SD:U:U1:end
++        # SD:U:U2:begin
++        optionstr = optionstr.replace('-', '_', 1)
++        # SD:U:U2:end
+         return optionstr.lower().replace('-', '_')
+ 
+     def get_section(self, section):
+         """
+         Return a given section as a dictionary.
+ 

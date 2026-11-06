@@ -1,0 +1,335 @@
+{
+  "coverage_source": "benchmark_real_pilot\\qualification\\out\\upstream_runs.json",
+  "frozen_at_utc": "2026-11-02T00:54:25.242945+00:00",
+  "note": "T_task is frozen from P+ coverage and source association. P- outcomes are recorded later and never used to add or remove a selected test.",
+  "p_minus_consulted": false,
+  "protocol_version": "2",
+  "selection_basis": [
+    "source_association",
+    "original_test_structure",
+    "p_plus_coverage"
+  ],
+  "tasks": {
+    "real_click_truncate_visible": {
+      "candidate_pool_size": 1,
+      "original_test_ids": [
+        "tests/test_formatting.py::test_wrap_text_visible_width[styled-long-word-breaks-on-visible-width]"
+      ],
+      "original_test_source": {
+        "tests/test_formatting.py::test_wrap_text_visible_width[styled-long-word-breaks-on-visible-width]": "tests/test_formatting.py"
+      },
+      "package": "click",
+      "project": "click",
+      "project_id": "click-8.4.1",
+      "selected_tests": [
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_formatting.py::test_wrap_text_visible_width[styled-long-word-breaks-on-visible-width]",
+          "original_test_file": "tests/test_formatting.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        }
+      ],
+      "selection_hash": "e45f4c867031768c22395ef35c9ecb14c51bdeced0527bb76d6747fc0b12fca9",
+      "selection_reason": "The only P+ trace hit for _truncate_visible is the styled long-word parameter of test_wrap_text_visible_width.  It is retained as the complete source-associated T_task; no unrelated formatting tests were added merely to reach five tests.",
+      "selection_rule": "all P+ trace-hit tests whose original file is in allowed_test_files",
+      "source_associated_pool_size": 1,
+      "source_file": "src/click/_textwrap.py",
+      "source_symbol": "_truncate_visible",
+      "t_project": {
+        "cached_minus_key": "click-8.4.1:minus_truncate_visible",
+        "cached_plus_key": "click-8.4.1:plus",
+        "deselected_by_project": 30000,
+        "deselected_by_protocol": 0,
+        "extra_args": [],
+        "filter_note": "No external -m filter.  click's own pytest.ini addopts deselects the stress marker (30000 deselected).",
+        "full_unfiltered_suite_note": "The declared T_project is click's released default suite; the 30000 stress tests are deselected by click's own config.",
+        "label": "click default released suite",
+        "tests": [
+          "tests"
+        ]
+      },
+      "target_expected": "cut = 0",
+      "target_upstream_line": 23,
+      "task_id": "real_click_truncate_visible",
+      "test_pytest": "7.4.0",
+      "test_python": "D:/Anaconda3/python.exe",
+      "test_scope_note": "One original upstream test.  It calls wrap_text and reaches _truncate_visible through _handle_long_word; it is not a direct call to the private helper.  No other original test traced to A.",
+      "trace_label": "truncate_visible",
+      "version": "8.4.1"
+    },
+    "real_werkzeug_headerset_update": {
+      "candidate_pool_size": 3,
+      "original_test_ids": [
+        "tests/test_datastructures.py::TestHeaderSet::test_basic_interface",
+        "tests/test_http.py::TestHTTPUtility::test_set_header",
+        "tests/test_wrappers.py::test_common_response_descriptors"
+      ],
+      "original_test_source": {
+        "tests/test_datastructures.py::TestHeaderSet::test_basic_interface": "tests/test_datastructures.py",
+        "tests/test_http.py::TestHTTPUtility::test_set_header": "tests/test_http.py",
+        "tests/test_wrappers.py::test_common_response_descriptors": "tests/test_wrappers.py"
+      },
+      "package": "werkzeug",
+      "project": "Werkzeug",
+      "project_id": "werkzeug-2.2.3",
+      "selected_tests": [
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_datastructures.py::TestHeaderSet::test_basic_interface",
+          "original_test_file": "tests/test_datastructures.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_http.py::TestHTTPUtility::test_set_header",
+          "original_test_file": "tests/test_http.py",
+          "plus_hit_count": 1,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_wrappers.py::test_common_response_descriptors",
+          "original_test_file": "tests/test_wrappers.py",
+          "plus_hit_count": 5,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        }
+      ],
+      "selection_hash": "8247c7ee67b72b315c9f722fcf6211f0b2c01d21e671d6193881c4b95fbd56ee",
+      "selection_reason": "All three P+ trace hits are original tests that reach HeaderSet.update through public HeaderSet or response-header operations.  They are the complete source-associated set; no other original test traced to A.",
+      "selection_rule": "all P+ trace-hit tests whose original file is in allowed_test_files",
+      "source_associated_pool_size": 3,
+      "source_file": "src/werkzeug/datastructures.py",
+      "source_symbol": "HeaderSet.update",
+      "t_project": {
+        "cached_minus_key": "werkzeug-2.2.3:minus_headerset_update",
+        "cached_plus_key": "werkzeug-2.2.3:plus",
+        "deselected_by_project": 0,
+        "deselected_by_protocol": 24,
+        "extra_args": [
+          "-m",
+          "not dev_server"
+        ],
+        "filter_note": "24 dev_server tests are deselected because they require a working local dev-server connection on this Windows host.",
+        "full_unfiltered_suite_note": "The unfiltered Werkzeug suite is not used: it has 15 failed and 8 errors from ConnectionRefusedError in dev-server tests. No claim is made that the whole unfiltered suite passes.",
+        "label": "Werkzeug applicable released suite",
+        "tests": [
+          "tests"
+        ]
+      },
+      "target_expected": "inserted_any = False",
+      "target_upstream_line": 2266,
+      "task_id": "real_werkzeug_headerset_update",
+      "test_pytest": "7.2.0",
+      "test_python": "<local-path>",
+      "test_scope_note": "Three original upstream tests: one direct HeaderSet test, one http.parse_set_header test that calls add(), and one response descriptor test that calls Vary/Allow add().",
+      "trace_label": "headerset_update",
+      "version": "2.2.3"
+    },
+    "real_werkzeug_url_unparse": {
+      "candidate_pool_size": 219,
+      "original_test_ids": [
+        "tests/test_urls.py::test_iri_safe_conversion",
+        "tests/test_urls.py::test_iri_safe_quoting",
+        "tests/test_urls.py::test_iri_support",
+        "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved",
+        "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only",
+        "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii",
+        "tests/test_urls.py::test_iri_to_uri_to_iri",
+        "tests/test_urls.py::test_quoting",
+        "tests/test_urls.py::test_quoting_of_local_urls",
+        "tests/test_urls.py::test_uri_iri_normalization",
+        "tests/test_urls.py::test_uri_to_iri_dont_unquote_space",
+        "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only",
+        "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii",
+        "tests/test_urls.py::test_uri_to_iri_to_uri",
+        "tests/test_urls.py::test_url_fixing",
+        "tests/test_urls.py::test_url_fixing_filepaths",
+        "tests/test_urls.py::test_url_fixing_qs",
+        "tests/test_urls.py::test_url_joining"
+      ],
+      "original_test_source": {
+        "tests/test_urls.py::test_iri_safe_conversion": "tests/test_urls.py",
+        "tests/test_urls.py::test_iri_safe_quoting": "tests/test_urls.py",
+        "tests/test_urls.py::test_iri_support": "tests/test_urls.py",
+        "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved": "tests/test_urls.py",
+        "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only": "tests/test_urls.py",
+        "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii": "tests/test_urls.py",
+        "tests/test_urls.py::test_iri_to_uri_to_iri": "tests/test_urls.py",
+        "tests/test_urls.py::test_quoting": "tests/test_urls.py",
+        "tests/test_urls.py::test_quoting_of_local_urls": "tests/test_urls.py",
+        "tests/test_urls.py::test_uri_iri_normalization": "tests/test_urls.py",
+        "tests/test_urls.py::test_uri_to_iri_dont_unquote_space": "tests/test_urls.py",
+        "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only": "tests/test_urls.py",
+        "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii": "tests/test_urls.py",
+        "tests/test_urls.py::test_uri_to_iri_to_uri": "tests/test_urls.py",
+        "tests/test_urls.py::test_url_fixing": "tests/test_urls.py",
+        "tests/test_urls.py::test_url_fixing_filepaths": "tests/test_urls.py",
+        "tests/test_urls.py::test_url_fixing_qs": "tests/test_urls.py",
+        "tests/test_urls.py::test_url_joining": "tests/test_urls.py"
+      },
+      "package": "werkzeug",
+      "project": "Werkzeug",
+      "project_id": "werkzeug-2.2.3",
+      "selected_tests": [
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_safe_conversion",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_safe_quoting",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 3,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_support",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 8,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 1,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_iri_to_uri_to_iri",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_quoting",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 1,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_quoting_of_local_urls",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 1,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_uri_iri_normalization",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 60,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_uri_to_iri_dont_unquote_space",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 1,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_uri_to_iri_to_uri",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_url_fixing",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 3,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_url_fixing_filepaths",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 6,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_url_fixing_qs",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 2,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        },
+        {
+          "association": "original_test_calls_target_path",
+          "nodeid": "tests/test_urls.py::test_url_joining",
+          "original_test_file": "tests/test_urls.py",
+          "plus_hit_count": 5,
+          "reason": "P+ trace hit on the target line inside an allowed source-associated original test file."
+        }
+      ],
+      "selection_hash": "70b6f9f0d0a93b56f4e3ff948ad466d89263061dff4db8c16e35e6504ce28b90",
+      "selection_reason": "All P+ trace hits in tests/test_urls.py are retained.  These are the original tests for the public URL conversion surface that calls url_unparse (iri_to_uri, uri_to_iri, url_fix, url_join).  The other 201 P+ hit tests are incidental consumers in unrelated modules and are not part of the direct source-associated set.",
+      "selection_rule": "all P+ trace-hit tests whose original file is in allowed_test_files",
+      "source_associated_pool_size": 18,
+      "source_file": "src/werkzeug/urls.py",
+      "source_symbol": "url_unparse",
+      "t_project": {
+        "cached_minus_key": "werkzeug-2.2.3:minus_url_unparse",
+        "cached_plus_key": "werkzeug-2.2.3:plus",
+        "deselected_by_project": 0,
+        "deselected_by_protocol": 24,
+        "extra_args": [
+          "-m",
+          "not dev_server"
+        ],
+        "filter_note": "24 dev_server tests are deselected because they require a working local dev-server connection on this Windows host.",
+        "full_unfiltered_suite_note": "The unfiltered Werkzeug suite is not used: it has 15 failed and 8 errors from ConnectionRefusedError in dev-server tests. No claim is made that the whole unfiltered suite passes.",
+        "label": "Werkzeug applicable released suite",
+        "tests": [
+          "tests"
+        ]
+      },
+      "target_expected": "url = s(\"\")",
+      "target_upstream_line": 605,
+      "task_id": "real_werkzeug_url_unparse",
+      "test_pytest": "7.2.0",
+      "test_python": "<local-path>",
+      "test_scope_note": "Eighteen original upstream tests from tests/test_urls.py.  They call public URL helpers that reach url_unparse indirectly; no original test imports url_unparse by name.",
+      "trace_label": "url_unparse",
+      "version": "2.2.3"
+    }
+  }
+}

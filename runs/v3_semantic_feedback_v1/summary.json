@@ -1,0 +1,1253 @@
+{
+  "schema": "mace-semantic-feedback-summary-v1",
+  "feedback_source": "<local-path>",
+  "model": "qwen2.5-coder:32b",
+  "elapsed_seconds": 558.301,
+  "totals": {
+    "cost": {
+      "prompt_tokens": 18822,
+      "completion_tokens": 5648,
+      "wall_seconds": 307.87600000000003,
+      "calls": 8
+    },
+    "probes": {
+      "D_graph": 1182,
+      "D_union": 1182
+    },
+    "tasks": 4
+  },
+  "tasks": {
+    "ctrl_02": {
+      "kind": "pilot",
+      "reference_kind": "frozen attribution sets",
+      "reference_sizes": {
+        "msms": 1,
+        "mmbs": 0
+      },
+      "cost": {
+        "prompt_tokens": 3676,
+        "completion_tokens": 1022,
+        "wall_seconds": 63.798,
+        "total_tokens": 4698,
+        "calls": [
+          {
+            "label": "initial",
+            "prompt_tokens": 1376,
+            "completion_tokens": 554,
+            "wall_seconds": 38.266,
+            "error": null
+          },
+          {
+            "label": "correction",
+            "prompt_tokens": 2300,
+            "completion_tokens": 468,
+            "wall_seconds": 25.532,
+            "error": null
+          }
+        ]
+      },
+      "candidates": {
+        "msms": {
+          "candidates": 1,
+          "unique_sets": 1,
+          "set_correct": 1,
+          "confirmed": 0,
+          "set_precision": 1.0,
+          "set_recall": 1.0,
+          "condition_exact": 0,
+          "false_accept_candidates": 1,
+          "false_reject_candidates": 0,
+          "correct_relations": 0
+        },
+        "mmbs": {
+          "candidates": 1,
+          "unique_sets": 1,
+          "set_correct": 0,
+          "confirmed": 0,
+          "set_precision": 0.0,
+          "set_recall": null,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 0,
+          "correct_relations": 0
+        }
+      },
+      "correction": {
+        "initial_candidates": 3,
+        "final_candidates": 2,
+        "initial_verified": 0,
+        "final_verified": 0,
+        "initial_bad": 3,
+        "final_bad": 2,
+        "correction_used": true,
+        "fixed_after_feedback": 0,
+        "still_bad": 2
+      },
+      "universes": {
+        "U_graph": 2,
+        "U_qwen": 0,
+        "U_union": 2,
+        "control_context": 0,
+        "rejected": 0
+      },
+      "arms": {
+        "D_graph": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_mean": 4.0,
+          "first_mmbs_mean": 3.0,
+          "probe_executions": 240,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 5
+          },
+          "hypothesis_probed": {
+            "msms": 5,
+            "mmbs": 5
+          }
+        },
+        "D_union": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_mean": 4.0,
+          "first_mmbs_mean": 3.0,
+          "probe_executions": 240,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 5
+          },
+          "hypothesis_probed": {
+            "msms": 5,
+            "mmbs": 5
+          }
+        }
+      },
+      "probes": {
+        "D_graph": 240,
+        "D_union": 240
+      },
+      "baselines": {
+        "A_graph": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_mean": 3.0,
+          "first_mmbs_mean": 2.0,
+          "probe_executions": 240,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          }
+        },
+        "B_old_qwen": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_mean": 3.0,
+          "first_mmbs_mean": 2.0,
+          "probe_executions": 240,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 10
+          },
+          "hypothesis_probed": {
+            "msms": 10,
+            "mmbs": 10
+          }
+        },
+        "C_semantic": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_mean": 3.0,
+          "first_mmbs_mean": 2.0,
+          "probe_executions": 240,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 15
+          },
+          "hypothesis_probed": {
+            "msms": 15,
+            "mmbs": 15
+          }
+        },
+        "direct_qwen": {
+          "call_error": null,
+          "raw_relations": 3,
+          "mapped_relations": 3,
+          "rejected_relations": 0,
+          "parse_error": null,
+          "verified_relations": 0,
+          "true_relations": 1,
+          "covered_true_relations": 0,
+          "exact_task": false,
+          "statuses": [
+            "FALSE",
+            "FALSE",
+            "FALSE"
+          ]
+        },
+        "C_relation_verification": [
+          {
+            "status": "FALSE",
+            "kind": "independent",
+            "names": [
+              "C"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "independent",
+            "names": [
+              "D"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "cooperative",
+            "names": [
+              "C",
+              "D"
+            ],
+            "exact": false
+          },
+          {
+            "status": "FALSE",
+            "kind": "fallback",
+            "names": [
+              "C",
+              "D"
+            ],
+            "exact": false
+          }
+        ]
+      }
+    },
+    "ctrl_03": {
+      "kind": "pilot",
+      "reference_kind": "frozen attribution sets",
+      "reference_sizes": {
+        "msms": 3,
+        "mmbs": 1
+      },
+      "cost": {
+        "prompt_tokens": 6193,
+        "completion_tokens": 1525,
+        "wall_seconds": 79.723,
+        "total_tokens": 7718,
+        "calls": [
+          {
+            "label": "initial",
+            "prompt_tokens": 1729,
+            "completion_tokens": 715,
+            "wall_seconds": 37.378,
+            "error": null
+          },
+          {
+            "label": "correction",
+            "prompt_tokens": 4464,
+            "completion_tokens": 810,
+            "wall_seconds": 42.345,
+            "error": null
+          }
+        ]
+      },
+      "candidates": {
+        "msms": {
+          "candidates": 1,
+          "unique_sets": 1,
+          "set_correct": 0,
+          "confirmed": 0,
+          "set_precision": 0.0,
+          "set_recall": 0.0,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 0,
+          "correct_relations": 0
+        },
+        "mmbs": {
+          "candidates": 3,
+          "unique_sets": 3,
+          "set_correct": 1,
+          "confirmed": 0,
+          "set_precision": 0.333,
+          "set_recall": 1.0,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 3,
+          "correct_relations": 0
+        }
+      },
+      "correction": {
+        "initial_candidates": 4,
+        "final_candidates": 4,
+        "initial_verified": 0,
+        "final_verified": 0,
+        "initial_bad": 4,
+        "final_bad": 4,
+        "correction_used": true,
+        "fixed_after_feedback": 0,
+        "still_bad": 4
+      },
+      "universes": {
+        "U_graph": 4,
+        "U_qwen": 0,
+        "U_union": 4,
+        "control_context": 0,
+        "rejected": 0
+      },
+      "arms": {
+        "D_graph": {
+          "universe_size": 4,
+          "inputs_searched": 14,
+          "evaluations": 224,
+          "complete_inputs": 14,
+          "first_msms_mean": 8.143,
+          "first_mmbs_mean": 6.714,
+          "probe_executions": 680,
+          "msms_relations": [
+            [
+              "op_L10_C4_if",
+              "op_L8_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L10_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L8_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 14,
+            "mmbs": 16
+          },
+          "hypothesis_probed": {
+            "msms": 14,
+            "mmbs": 42
+          }
+        },
+        "D_union": {
+          "universe_size": 4,
+          "inputs_searched": 14,
+          "evaluations": 224,
+          "complete_inputs": 14,
+          "first_msms_mean": 8.143,
+          "first_mmbs_mean": 6.714,
+          "probe_executions": 680,
+          "msms_relations": [
+            [
+              "op_L10_C4_if",
+              "op_L8_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L10_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L8_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 14,
+            "mmbs": 16
+          },
+          "hypothesis_probed": {
+            "msms": 14,
+            "mmbs": 42
+          }
+        }
+      },
+      "probes": {
+        "D_graph": 680,
+        "D_union": 680
+      },
+      "baselines": {
+        "A_graph": {
+          "universe_size": 4,
+          "inputs_searched": 14,
+          "evaluations": 224,
+          "complete_inputs": 14,
+          "first_msms_mean": 6.0,
+          "first_mmbs_mean": 7.857,
+          "probe_executions": 680,
+          "msms_relations": [
+            [
+              "op_L10_C4_if",
+              "op_L8_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L10_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L8_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          }
+        },
+        "B_old_qwen": {
+          "universe_size": 4,
+          "inputs_searched": 14,
+          "evaluations": 224,
+          "complete_inputs": 14,
+          "first_msms_mean": 7.714,
+          "first_mmbs_mean": 9.0,
+          "probe_executions": 680,
+          "msms_relations": [
+            [
+              "op_L10_C4_if",
+              "op_L8_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L10_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L8_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 4
+          },
+          "hypothesis_probed": {
+            "msms": 28,
+            "mmbs": 28
+          }
+        },
+        "C_semantic": {
+          "universe_size": 4,
+          "inputs_searched": 14,
+          "evaluations": 224,
+          "complete_inputs": 14,
+          "first_msms_mean": 3.714,
+          "first_mmbs_mean": 5.571,
+          "probe_executions": 680,
+          "msms_relations": [
+            [
+              "op_L10_C4_if",
+              "op_L8_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L10_C4_if"
+            ],
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ],
+            [
+              "op_L8_C4_if"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 28,
+            "mmbs": 20
+          },
+          "hypothesis_probed": {
+            "msms": 42,
+            "mmbs": 42
+          }
+        },
+        "direct_qwen": {
+          "call_error": null,
+          "raw_relations": 5,
+          "mapped_relations": 5,
+          "rejected_relations": 0,
+          "parse_error": null,
+          "verified_relations": 2,
+          "true_relations": 4,
+          "covered_true_relations": 2,
+          "exact_task": false,
+          "statuses": [
+            "VERIFIED",
+            "VERIFIED",
+            "FALSE",
+            "FALSE",
+            "FALSE"
+          ]
+        },
+        "C_relation_verification": [
+          {
+            "status": "VERIFIED",
+            "kind": "independent",
+            "names": [
+              "B"
+            ],
+            "exact": true
+          },
+          {
+            "status": "VERIFIED",
+            "kind": "independent",
+            "names": [
+              "E"
+            ],
+            "exact": true
+          },
+          {
+            "status": "FALSE",
+            "kind": "cooperative",
+            "names": [
+              "B",
+              "E"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "fallback",
+            "names": [
+              "B",
+              "E"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "independent",
+            "names": [
+              "D"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "independent",
+            "names": [
+              "C"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "cooperative",
+            "names": [
+              "C",
+              "D"
+            ],
+            "exact": false
+          },
+          {
+            "status": "FALSE",
+            "kind": "fallback",
+            "names": [
+              "C",
+              "D"
+            ],
+            "exact": false
+          },
+          {
+            "status": "FALSE",
+            "kind": "coexisting",
+            "names": [
+              "C",
+              "B",
+              "D"
+            ],
+            "exact": null
+          },
+          {
+            "status": "FALSE",
+            "kind": "coexisting",
+            "names": [
+              "C",
+              "E",
+              "D"
+            ],
+            "exact": null
+          }
+        ]
+      }
+    },
+    "werkzeug_get_host_default_empty": {
+      "kind": "real_v3",
+      "reference_kind": "A_graph confirmed sets",
+      "reference_sizes": {
+        "msms": 2,
+        "mmbs": 2
+      },
+      "cost": {
+        "prompt_tokens": 5122,
+        "completion_tokens": 1996,
+        "wall_seconds": 105.876,
+        "total_tokens": 7118,
+        "calls": [
+          {
+            "label": "initial",
+            "prompt_tokens": 1882,
+            "completion_tokens": 986,
+            "wall_seconds": 53.485,
+            "error": null
+          },
+          {
+            "label": "correction",
+            "prompt_tokens": 3240,
+            "completion_tokens": 1010,
+            "wall_seconds": 52.391,
+            "error": null
+          }
+        ]
+      },
+      "candidates": {
+        "msms": {
+          "candidates": 3,
+          "unique_sets": 3,
+          "set_correct": 2,
+          "confirmed": 2,
+          "set_precision": 0.667,
+          "set_recall": 1.0,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 0,
+          "correct_relations": 2
+        },
+        "mmbs": {
+          "candidates": 3,
+          "unique_sets": 3,
+          "set_correct": 2,
+          "confirmed": 2,
+          "set_precision": 0.667,
+          "set_recall": 1.0,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 0,
+          "correct_relations": 2
+        }
+      },
+      "correction": {
+        "initial_candidates": 6,
+        "final_candidates": 6,
+        "initial_verified": 4,
+        "final_verified": 4,
+        "initial_bad": 2,
+        "final_bad": 2,
+        "correction_used": true,
+        "fixed_after_feedback": 0,
+        "still_bad": 2
+      },
+      "universes": {
+        "U_graph": 5,
+        "U_qwen": 0,
+        "U_union": 5,
+        "control_context": 0,
+        "rejected": 0
+      },
+      "arms": {
+        "D_graph": {
+          "universe_size": 5,
+          "inputs_searched": 6,
+          "evaluations": 96,
+          "complete_inputs": 0,
+          "first_msms_mean": 2.667,
+          "first_mmbs_mean": 3.667,
+          "probe_executions": 194,
+          "msms_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 6,
+            "mmbs": 6
+          },
+          "hypothesis_probed": {
+            "msms": 18,
+            "mmbs": 18
+          }
+        },
+        "D_union": {
+          "universe_size": 5,
+          "inputs_searched": 6,
+          "evaluations": 96,
+          "complete_inputs": 0,
+          "first_msms_mean": 2.667,
+          "first_mmbs_mean": 3.667,
+          "probe_executions": 194,
+          "msms_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 6,
+            "mmbs": 6
+          },
+          "hypothesis_probed": {
+            "msms": 18,
+            "mmbs": 18
+          }
+        }
+      },
+      "probes": {
+        "D_graph": 194,
+        "D_union": 194
+      },
+      "baselines": {
+        "A_graph": {
+          "universe_size": 5,
+          "inputs_searched": 6,
+          "evaluations": 96,
+          "complete_inputs": 0,
+          "first_msms_mean": 4.333,
+          "first_mmbs_mean": 3.333,
+          "probe_executions": 194,
+          "msms_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          }
+        },
+        "B_old_qwen": {
+          "universe_size": 5,
+          "inputs_searched": 6,
+          "evaluations": 96,
+          "complete_inputs": 0,
+          "first_msms_mean": 6.0,
+          "first_mmbs_mean": 4.333,
+          "probe_executions": 194,
+          "msms_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          }
+        },
+        "C_semantic": {
+          "universe_size": 5,
+          "inputs_searched": 6,
+          "evaluations": 96,
+          "complete_inputs": 0,
+          "first_msms_mean": 2.667,
+          "first_mmbs_mean": 3.667,
+          "probe_executions": 194,
+          "msms_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 10,
+            "mmbs": 10
+          },
+          "hypothesis_probed": {
+            "msms": 18,
+            "mmbs": 18
+          }
+        },
+        "direct_qwen": {
+          "call_error": null,
+          "raw_relations": 8,
+          "mapped_relations": 8,
+          "rejected_relations": 0,
+          "parse_error": null,
+          "set_confirmed_relations": 0,
+          "not_confirmed_relations": 0,
+          "new_op_relations": 8,
+          "condition": "NOT_EVALUATED"
+        },
+        "C_relation_verification": null
+      }
+    },
+    "werkzeug_filestorage_stream_name": {
+      "kind": "real_v3",
+      "reference_kind": "A_graph confirmed sets",
+      "reference_sizes": {
+        "msms": 3,
+        "mmbs": 1
+      },
+      "cost": {
+        "prompt_tokens": 3831,
+        "completion_tokens": 1105,
+        "wall_seconds": 58.479,
+        "total_tokens": 4936,
+        "calls": [
+          {
+            "label": "initial",
+            "prompt_tokens": 1506,
+            "completion_tokens": 545,
+            "wall_seconds": 29.195,
+            "error": null
+          },
+          {
+            "label": "correction",
+            "prompt_tokens": 2325,
+            "completion_tokens": 560,
+            "wall_seconds": 29.284,
+            "error": null
+          }
+        ]
+      },
+      "candidates": {
+        "msms": {
+          "candidates": 2,
+          "unique_sets": 2,
+          "set_correct": 2,
+          "confirmed": 2,
+          "set_precision": 1.0,
+          "set_recall": 0.667,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 0,
+          "correct_relations": 2
+        },
+        "mmbs": {
+          "candidates": 1,
+          "unique_sets": 1,
+          "set_correct": 0,
+          "confirmed": 0,
+          "set_precision": 0.0,
+          "set_recall": 0.0,
+          "condition_exact": 0,
+          "false_accept_candidates": 0,
+          "false_reject_candidates": 0,
+          "correct_relations": 0
+        }
+      },
+      "correction": {
+        "initial_candidates": 3,
+        "final_candidates": 3,
+        "initial_verified": 2,
+        "final_verified": 2,
+        "initial_bad": 1,
+        "final_bad": 1,
+        "correction_used": true,
+        "fixed_after_feedback": 0,
+        "still_bad": 1
+      },
+      "universes": {
+        "U_graph": 3,
+        "U_qwen": 0,
+        "U_union": 3,
+        "control_context": 0,
+        "rejected": 0
+      },
+      "arms": {
+        "D_graph": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_mean": 2.0,
+          "first_mmbs_mean": 6.0,
+          "probe_executions": 68,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 8,
+            "mmbs": 4
+          }
+        },
+        "D_union": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_mean": 2.0,
+          "first_mmbs_mean": 6.0,
+          "probe_executions": 68,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 8,
+            "mmbs": 4
+          }
+        }
+      },
+      "probes": {
+        "D_graph": 68,
+        "D_union": 68
+      },
+      "baselines": {
+        "A_graph": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_mean": 4.5,
+          "first_mmbs_mean": 3.0,
+          "probe_executions": 68,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          }
+        },
+        "B_old_qwen": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_mean": 7.25,
+          "first_mmbs_mean": 7.0,
+          "probe_executions": 68,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          }
+        },
+        "C_semantic": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_mean": 2.0,
+          "first_mmbs_mean": 3.0,
+          "probe_executions": 68,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "hypothesis_witness": {
+            "msms": 6,
+            "mmbs": 3
+          },
+          "hypothesis_probed": {
+            "msms": 12,
+            "mmbs": 12
+          }
+        },
+        "direct_qwen": {
+          "call_error": null,
+          "raw_relations": 6,
+          "mapped_relations": 4,
+          "rejected_relations": 2,
+          "parse_error": null,
+          "set_confirmed_relations": 2,
+          "not_confirmed_relations": 0,
+          "new_op_relations": 2,
+          "condition": "NOT_EVALUATED"
+        },
+        "C_relation_verification": null
+      }
+    }
+  }
+}

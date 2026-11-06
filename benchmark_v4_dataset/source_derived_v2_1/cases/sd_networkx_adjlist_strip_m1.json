@@ -1,0 +1,31 @@
+{
+  "case_id": "sd_networkx_adjlist_strip_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "split": "DEV",
+  "base": {
+    "slug": "networkx-3.2.1",
+    "file": "networkx/readwrite/adjlist.py",
+    "A_line": 204,
+    "A_code": "        vlist = line.strip().split(delimiter)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 204,
+      "indent": 8,
+      "role": "Space-only trim: restores A for space-padded adjacency lines.",
+      "lines": [
+        "if \"\\t\" not in line:",
+        "    vlist = line.strip(\" \").split(delimiter)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_networkx_adjlist_strip_m1.py",
+  "inputs": {
+    "mask_space_padding": "adjacency line padded with spaces",
+    "expose_tab_padding": "adjacency line padded with a tab: the node name keeps it",
+    "control_plain": "adjacency line without padding"
+  },
+  "rationale": "parse_adjlist() trims each adjacency line before splitting it into node names. The patch restores trimming for spaces only; a tab-padded line keeps the tab inside the first node name, which is the exposing witness."
+}

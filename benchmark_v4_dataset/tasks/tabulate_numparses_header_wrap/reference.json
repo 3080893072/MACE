@@ -1,0 +1,66 @@
+{
+  "task_id": "tabulate_numparses_header_wrap",
+  "story": "FULL_MASKING_STORY",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 2074
+  },
+  "candidate_universe": [
+    {
+      "id": "L2060",
+      "file": "tabulate/__init__.py",
+      "line": 2060,
+      "code": "        numparses = _expand_numparse(disable_numparse, num_cols)",
+      "role": "body-column numparse expansion; supplies the same value A would compute when maxcolwidths is provided"
+    },
+    {
+      "id": "L2129",
+      "file": "tabulate/__init__.py",
+      "line": 2129,
+      "code": "    numparses = _expand_numparse(disable_numparse, len(cols))",
+      "role": "post-transpose recomputation; does not affect header wrapping"
+    }
+  ],
+  "inputs": {
+    "mask_both_widths": {
+      "role": "masking",
+      "p_plus": "normal wrapped output",
+      "p_minus": "identical to P+",
+      "p_minus_u_disabled": "UnboundLocalError: numparses",
+      "msms": [
+        [
+          "L2060"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L2060"
+        ]
+      ]
+    },
+    "expose_no_maxcolwidths": {
+      "role": "exposing",
+      "p_plus": "normal wrapped output",
+      "p_minus": "UnboundLocalError: numparses",
+      "u_necessity": "L2060 is not executed on this input, so it cannot restore equality"
+    },
+    "control_no_maxheader": {
+      "role": "control",
+      "note": "A is not executed; P+ and P- are identical"
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U={L2060,L2129}",
+    "subsets": {
+      "[]": "not equal (P- without L2060 fails)",
+      "[L2060]": "equal (MSMS/MMBS)",
+      "[L2129]": "not equal (later, does not help header wrapping)",
+      "[L2060,L2129]": "equal but not minimal"
+    }
+  },
+  "not_claimed": [
+    "No claim over inputs outside the declared three.",
+    "No claim that no other operation elsewhere could also mask A.",
+    "Single-element MSMS: this is not a cooperative-masking task."
+  ]
+}

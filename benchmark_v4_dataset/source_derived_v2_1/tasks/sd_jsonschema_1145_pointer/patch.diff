@@ -1,0 +1,18 @@
+--- a/jsonschema/validators.py
++++ b/jsonschema/validators.py
+@@ -1140,12 +1140,15 @@
+                     return subschema
+ 
+         # Resolve via path
+         parts = unquote(fragment).split("/") if fragment else []
+         for part in parts:
+             part = part.replace("~1", "/").replace("~0", "~")
++            # SD:U:U1:begin
++            part = part.replace("~0", "~")
++            # SD:U:U1:end
+ 
+             if isinstance(document, Sequence):
+                 try:  # noqa: SIM105
+                     part = int(part)
+                 except ValueError:
+                     pass

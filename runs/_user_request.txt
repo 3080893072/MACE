@@ -1,0 +1,382 @@
+COUNT 110
+===== MSG 0 =====
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+<tools-used-before-summary>Bash, Edit, Grep, Read, TaskStop, ToolSearch, Write</tools-used-before-summary>
+Summary:
+1. Primary Request and Intent:
+
+The user's request (from the prior summary, still governing) is to complete the independent M1 collaborative-masking screening and verification for repo `<local-path>`, branch `research/mace-subgraph-search`, building on commits `c82dcea`/`d3cff20` and `docs/MACE_graph_budgeted_search_and_M1_results.md`.
+
+Verbatim/near-verbatim constraints that MUST continue to apply:
+- Highest priority: complete the existing M1 screening. Read existing protocol, frozen ledger, stage-2 logs, failure records. Do not redesign the method, do not re-select projects, do not reorder the 2500 candidates.
+- For each of the 10 projects determine collection success/failure stage and cause; fixing test environments, installing missing deps, adjusting isolated envs, fixing screening-tool bugs is allowed, but original project behavior and frozen selection rules must be preserved. "不得通过修改原项目测试、删除失败测试或更换项目制造筛查成功."
+- M1 definition: target A and candidate U; minimal sufficient masking set S with |S|≥2, M_x(S)=1, all proper T⊊S have M_x(T)=0; A executes with relevant local effect; masking observable in complete program; at least two ops jointly form the minimal set; all strict subsets checked; interventions legal and P+/P− reproducible; not NO_LOCAL_EFFECT/ASSERTION_GAP/single-op misclassification. "不能将 UNKNOWN 当作 False，也不能用尚未完成的子集验证宣称最小性."
+- "原测试必须按照此前冻结规则选择，不能查看 P− 结果后再挑选通过的测试。人工设计的补充测试必须单独标记，不能冒充真实项目原有测试。"
+- "在案例正式冻结前，不得运行 C-fixed 或 Graph 来比较成绩" and "不得使用隐藏参考数据优化搜索策略."
+- "不得为了达到预期数量而放宽标准、替换冻结项目或用合成案例充数."
+- If no qualified M1: report `M1_NOT_ESTABLISHED` with counts, per-stage causes, closest cases and why they fail, whether cause is insufficient cases, blocked environment, or screening mechanism inability; unresolved projects recorded as incomplete, not "no M1".
+- Not doing this round: no GPU; no Qwen 32B inference; no new Agent/Prompt stage; no refactoring old Full MACE; no modifying frozen Benchmark/HIDDEN scorer; no retuning Graph ranking weights; no repeated paper architecture figures; do not present pure Graph results as Graph + Qwen Full MACE; keep existing Qwen client and old Full MACE code; do not delete/replace.
+- Deliverable: `docs/MACE_M1_stage2_completion_results.md` with 8 sections + final answers to: (a) did we find real independent multi-op collaborative masking cases; (b) did Graph produce verifiable gains over C-fixed on those cases; (c) what evidence is missing for the full MACE paper experiment. Run full regression tests and record exit code, commit hash, final workspace state. Stop after completion; do not automatically start next round.
+
+2. Key Technical Concepts:
+- MACE v3 baseline semantics: MSMS = non-empty minimal kept set S with Masked_strict(U\S); MMBS = non-empty minimal disabled set D with Exposed(D); masked/exposed indexed by disabled set D.
+- M1 inert member definition (readiness doc §3.4): at least one s∈S individually inert — disabling only s (D={s}) leaves plus and minus observations unchanged vs D=∅ (full program); this is what C's `allowed()` filter drops. (Proved that an S-context interpretation would contradict minimality, so full-program D={s} is correct.)
+- U discovery exactly replicates `benchmark_v3_baselines/ast_discovery.py`: same plain-LHS variable definitions, after A in same function, reachable same-file helpers any position, qualifying `if` blocks with no contained candidate assignment; embedded one-line statements excluded from targets/ops.
+- Target derivation: reviewed function → direct-body plain assignments (nested defs/classes excluded) → A; U from `_statement_ops`.
+- Test selection: coverage.py dynamic contexts (`--cov-context=test`, `contexts_by_lineno`) identify original upstream tests whose context executed A; at most 3 lexicographic; no P− consulted.
+- Observation: m1_watch_plugin records per-test outcome plus `repr(var)` at every line after A and at return, keyed by (abs file, co_name, co_firstlineno); values normalized to original line coordinates via physical→original mapping; local effect = values at first common post-A line (or return values) differ.
+- Patching: statement spans replaced by indented `pass  # M1 disabled`, bottom-up; line mapping accounts for multi-line span deletion; A itself deleted only in minus.
+- Tri-state evidence: runs have `known` flag; timeouts/missing watch outputs must be UNKNOWN, not False; minimality cannot be claimed if relevant subset evidence is UNKNOWN.
+- pytest rootdir and coverage interactions; `--cov-config` breaks sqlalchemy's pyproject marker registration under `--strict-markers`.
+- Python 3.11.7; per-project uv venvs; Tsinghua PyPI mirror; pytest 9.2.0 in sqlalchemy venv; coverage 7.17.1.
+
+3. Files and Code Sections:
+
+- `scripts/m1_env_repair.py` (edited extensively)
+  - Purpose: create per-project venvs, install declared test/runtime deps, hash project trees before/after, collect tests; rich marked TESTS_NOT_IN_SDIST.
+  - Final DEPS additions (cumulative): urllib3 += pysocks, pytest-cov; requests already had pytest-cov; starlette += jinja2, python-multipart, itsdangerous, httpx>=0.28.1, opentelemetry-api, opentelemetry-sdk, pytest-cov; httpx += trustme, uvicorn, chardet, zstandard, brotli, pytest-cov; attrs += pytest-cov; sqlalchemy += pytest-cov; python-dateutil += attrs, freezegun, tzdata; packaging += pretend, tomli-w, pytest-cov; more-itertools = ["pytest","pytest-cov"].
+  - Writes `runs/v3_m1_screening/stage2_repair.json`; all 9 non-rich projects now COLLECTED (httpx eventually).
+
+- `runs/v3_m1_screening/stage2_repair_changes.json` (created)
+  - Records second-pass dependency additions with reason.
+
+- `benchmark_real_pilot/qualification/m1_watch_plugin.py` (created/rewritten)
+  - Loads JSON config via `M1_WATCH_CONFIG` with targets `{label,file,function,firstlineno,a_line,a_end,func_end,var}`.
+  - Global trace attaches local tracer only to matching `(abs file, co_name, co_firstlineno)`.
+  - Records hits at `a_line`, `values_by_line[str(line)]` for `a_end < line <= func_end`, `return_values`, caps CAP_PER_LINE=50, CAP_PER_TEST=5000, `truncated`.
+  - Writes `{exitstatus,cwd,targets,records}` to config `out`.
+
+- `scripts/dump_coverage_contexts.py` (created)
+  - Uses `coverage.CoverageData(basename=...).contexts_by_lineno`, filters files under package root, keeps contexts containing "::" stripped at "|", writes path→line→tests JSON.
+
+- `scripts/m1_screen.py` (created, large; main work)
+  - Constants: `SCREEN=OUT/"screen"`, `WORK=SCREEN/"work"`, `COVERAGE=SCREEN/"coverage"`, `RUNS=SCREEN/"runs"`; `TARGETED_PM_BUDGET=800`, `FULL_SUITE_PM_BUDGET=150`, `MATRIX_EXEC_BUDGET=1500`, `MAX_U=6`.
+  - `build_targets()`: parses reviewed candidates, `_function_node`, `_direct_assignments`, `_embedded_one_liner` checks, `reachable_functions`, `_statement_ops`; target_id = `candidate_id@first-last:lhs`; stores `function_code_firstlineno = min(def line, decorator lines)`; writes `targets.json`.
+  - `coverage_targets()`: eligible targets → project/file/line index.
+  - `run_coverage(project)`: copies project into `WORK`, runs pytest with `--cov <pkg> --cov-context=test --cov-report= --rootdir <work> -p no:cacheprovider` (NO `--cov-config`), dumps via `dump_coverage_contexts.py`, records `*.run.json`.
+  - `source_rel_file(project,file)`: package-root-relative candidate path → project-relative path.
+  - `build_mapping`, `to_physical`, `to_original`, `apply_deletions`, `restore`.
+  - `test_nodeids_from_coverage(project,target)`: work-path lookup.
+  - `watch_target(work,target,rel_file,spans,original_lines)` uses `function_code_firstlineno`.
+  - `run_variant(...)`: patches disabled U ops and optionally deletes A; subprocess timeout 60s; returns `{returncode,wall_seconds,stdout_tail,stderr_tail,watch,timed_out,known}`; `known = payload is not None and not timed_out`.
+  - `observation(...)`: returns `{known,exitstatus,returncode,outcomes,values,hits,return_values,truncated,wall_seconds}` normalized to original lines.
+  - `passed`, `canonical_obs`.
+  - `stage_select()`: writes `selected.json`; currently 46 SELECTED, 1350 UNCOVERED.
+  - `stage_probe(projects)`: plus run → passing subset → minus run; statuses EXPOSED / NO_LOCAL_EFFECT / MASKED_FULL / NO_EXECUTION / NO_PASSING_TEST / UNKNOWN_PLUS_RUN / UNKNOWN_MINUS_RUN; budget targeted_pm 800; writes `probe.json`.
+  - `stage_matrix(projects)`: enumerates all D ⊆ U for MASKED_FULL targets, runs plus/minus, computes `masked`/`exposed`, minimal_multi, minimal_single, minimal_mmbs, inert members via D={s} vs D=∅ outcomes, statuses; budget 1500 execution; writes `matrix.json`.
+  - `run_full_suite(project,delete_a,target)`: full original suite, parses FAILED/ERROR lines, returns failures/new failures.
+  - `stage_finalize(projects)`: plus/minus full suite; CONFIRMED_M1 if no new failures, else DETECTED_BY_FULL_SUITE; writes `cases.json`.
+  - CLI: plan/coverage/select/probe/matrix/finalize/status.
+  - Partial matrix result already stored: `requests:utils.py:99:proxy_bypass_registry@130-130:test` = `SINGLE_OP_ONLY`, 4 evaluations, complete.
+
+- `scripts/m1_accept.py` (created)
+  - Independent acceptance of a proposed S; `evaluate()` plus/minus; re-runs primary D=U\S, every nonempty proper subset T of S (D=U\T), every D={s}; computes checks `a_executes`, `local_effect`, `size_at_least_two`, `primary_masked`, `all_proper_subsets_not_masked`, `at_least_one_inert`, `full_suite_no_new_failure`; writes `acceptance.json` and `accepted/<slug>.json`; `evidence_level="WITNESS_VERIFIED"`.
+  - Imports `from scripts import m1_screen as screen`; uses `proper_nonempty` (asserts/imports itertools inline).
+
+- `.gitignore` (appended)
+  ```
+  runs/v3_m1_screening/screen/work/
+  runs/v3_m1_screening/screen/coverage/
+  runs/v3_m1_screening/screen/runs/
+  ```
+
+- `runs/v3_m1_screening/screen/targets.json`: 4501 targets, 1396 eligible U≥2; counts by project (sqlalchemy 2535, rich 397, python-dateutil 333, urllib3 241, starlette 233, httpx 225, packaging 212, requests 119, attrs 109, more-itertools 97).
+
+- `runs/v3_m1_screening/screen/probe.json`: 48 targeted P− runs; statuses EXPOSED 30, NO_LOCAL_EFFECT 6, MASKED_FULL 10. MASKED_FULL list with U sizes: requests proxy_bypass_registry@130 (2); cert_verify @337 (9), @340 (8), @344 (6), @345 (5), @346 (4), @350 (3), @351 (2); sessions.__init__@488 (5); more-itertools _factor_pollard@1058 (3).
+
+- Read: `benchmark_v3_baselines/ast_discovery.py` (U rule), `graph_search.py` (search_relations signature at line 336, budget in subset evaluations), `docs/MACE_next_stage_research_readiness.md` §3.4 (M1 exact definition), `benchmark_real_pilot/qualification/pytest_trace_plugin.py`, `run_upstream.py`.
+
+4. Errors and fixes:
+- Missing test dependencies, fixed iteratively: urllib3 `socks`→pysocks; starlette jinja2/python_multipart/itsdangerous/httpx then opentelemetry-api/sdk; httpx trustme→uvicorn→chardet→zstandard/brotli; python-dateutil attr/freezegun/tzdata; packaging pretend/tomli-w. Recorded in stage2_repair_changes.json.
+- rich 15.0.0 sdist has no tests directory → recorded TESTS_NOT_IN_SDIST, no substitution (per rules).
+- pytest nodeids prefixed `runs/v3_m1_screening/screen/work/...` because KIT/pytest.ini became rootdir → added `--rootdir str(work)` to coverage and variant pytest commands.
+- Selected 0 targets because candidate `file` is package-root-relative while work copy uses project-relative → added `source_rel_file()` and applied in test_nodeids_from_coverage, run_variant, span_mapping_for, watch_target.
+- NO_EXECUTION for `requests.models.Response.content` because `co_firstlineno` is the decorator line (1030) while AST node.lineno is def line (1031) → added `function_code_firstlineno` = min(def, decorators); regenerated targets and re-probed those two targets (then EXPOSED).
+- sqlalchemy coverage INTERNALERROR `PytestUnknownMarkWarning: Unknown pytest.mark.backend` under `--strict-markers`; reproduced and isolated to `--cov-config`; removing `--cov-config` fixes it. Relaunched sqlalchemy coverage.
+- Matrix variants hung (900s subprocess timeout) → killed job b5svxlkmr, reduced to 180s, still slow; killed bvoafynlt, reduced to 60s, restarted b0iy8g5vr.
+- `static_candidates.json` loaded from SCREEN instead of OUT → fixed path.
+- Matrix budget KeyError 'wall_seconds' when matrix.json budget lacked key → `budget.setdefault`.
+- Large code insertion via bash heredoc failed with "unexpected EOF" → used Edit tool instead.
+- Integrity issue found: timeouts/missing outputs were being counted as False, violating "UNKNOWN not False". Added `known` flags to run_variant/observation; patched probe with UNKNOWN_PLUS_RUN/UNKNOWN_MINUS_RUN; matrix tri-state patch was in progress at cutoff.
+
+5. Problem Solving:
+- Stage 2 fully diagnosed and repaired without touching source: 9/10 projects collectable; rich inherently uncollectable.
+- Built a complete screening pipeline (targets → coverage-based test selection → full-program probe → subset matrix → independent acceptance) preserving frozen order and P+ only test selection.
+- Established first screening results: 46 selected targets on small projects; 10 MASKED_FULL survivors; one processed matrix target (requests proxy_bypass_registry@130) resolved as SINGLE_OP_ONLY.
+- Coverage completed for starlette/urllib3/httpx/attrs/python-dateutil; packaging running; sqlalchemy relaunched and running.
+- Ongoing: tri-state UNKNOWN handling in matrix; matrix run restart; remaining coverage; probe all projects; matrix all survivors; accept/freeze any M1; then C-fixed vs Graph only if cases exist; final report + regression.
+
+6. All user messages:
+- (Prior session messages already summarized; the current explicit governing message is the MACE "完成独立 M1 协同掩盖案例筛查与验证" request detailed in section 1, including all constraints quoted there.)
+- No new user-role message in this session after that; the only new inputs were automated background-task notifications and system reminders (not user input).
+
+7. Pending Tasks:
+- Finish tri-state UNKNOWN handling in `stage_matrix` (masked/exposed dicts must preserve None; minimality must record/block unknown subsets; inert checks require known; MMBS likewise). Then kill/restart matrix so results use patched code.
+- Let packaging coverage finish; run `select` again including all covered projects.
+- Run `probe` for all covered projects (respect 800 targeted P− budget, frozen global hash order).
+- Run `matrix` for all MASKED_FULL survivors within 1500-execution budget; handle U>6 as STRUCTURAL_SKIP and record.
+- For any CONFIRMED_M1_PENDING_FULL_SUITE, run `scripts/m1_accept.py` on each; freeze cases/evidence/hashes.
+- If accepted cases exist: implement/run C-fixed-1.1 vs Graph-candidates vs Graph-full on independent cases with same U, intervention semantics, verifier, execution budget; report discovery metrics, errors/UNKNOWN, first-relation probe cost, total executions/wall time, new valid findings.
+- If no qualified M1: prepare `M1_NOT_ESTABLISHED` report with required counts/reasons.
+- Write `docs/MACE_M1_stage2_completion_results.md` with all 8 required sections and final three answers; run full regression `python -m pytest -q`; record exit code/commit/workspace; commit code and artifacts; stop.
+
+8. Current Work:
+At the cutoff I was patching `scripts/m1_screen.py` to make matrix evidence tri-state so UNKNOWN is never treated as False (required by user: "不能将 UNKNOWN 当作 False，也不能用尚未完成的子集验证宣称最小性"). Already completed:
+- `run_variant` now returns `"known": bool(payload is not None and not timed_out_flag)`.
+- `observation` now returns `"known": payload is not None`.
+- Probe patched:
+  ```python
+  if not obs_plus["known"]:
+      record["status"] = "UNKNOWN_PLUS_RUN"
+      ...
+  ...
+  if not obs_minus["known"]:
+      record["status"] = "UNKNOWN_MINUS_RUN"
+      record["local_effect"] = None
+  elif not record["a_executes"]:
+      ...
+  ```
+I had just displayed lines 850–950 of `scripts/m1_screen.py` (the matrix evaluation block) to patch it next. That block currently still does:
+```python
+plus_ok = passed(obs_plus, nodeids)
+if not plus_ok:
+    evaluations[key] = {"plus_pass": False, "minus_pass": None,
+                        "masked": False, "exposed": False, ...}
+...
+minus_ok = passed(obs_minus, nodeids)
+evaluations[key] = {"plus_pass": True, "minus_pass": minus_ok,
+                    "masked": minus_ok, "exposed": not minus_ok, ...}
+...
+masked = {frozenset(row["disabled"]): bool(row["masked"]) ...}
+exposed = {frozenset(row["disabled"]): bool(row["exposed"]) ...}
+```
+which must become status-aware (OK/INVALID/UNKNOWN; masked/exposed None for unknown), and the minimality loops must skip None and record unknown-blocked sets rather than confirm.
+
+Background jobs at cutoff:
+- `bint41w5j`: coverage starlette/urllib3/httpx/attrs/python-dateutil done; packaging still running.
+- `bj74t585n`: sqlalchemy coverage relaunched without `--cov-config`, still running.
+- `b0iy8g5vr`: matrix requests+more-itertools with 60s timeout, launched BEFORE the tri-state `known` edits (so its in-memory code lacks them; may need kill/restart after patching).
+- First stored matrix target: `requests:utils.py:99:proxy_bypass_registry@130-130:test` → `SINGLE_OP_ONLY`.
+
+9. Optional Next Step:
+Complete the tri-state matrix patch in `scripts/m1_screen.py` (evaluations carry `status`; masked/exposed are True/False/None; minimal_multi/minimal_single/minimal_mmbs require all relevant evidence known and record `unknown_blocked`; inert requires known D={s} plus/minus), then stop and restart the matrix background job (`b0iy8g5vr`) so all results are produced by the corrected verifier. Direct quote of the governing requirement being implemented: "不能将 UNKNOWN 当作 False，也不能用尚未完成的子集验证宣称最小性。" This is directly in line with the user's most recent explicit request to complete M1 screening and acceptance within the frozen protocol.
+
+If you need specific details from before compaction (like exact code snippets, error messages, or content you generated), read the full transcript at: <home>\.claude\projects\d--3------GSG-main\37683106-7430-4810-97ec-6745f29ad31a.jsonl
+Continue the conversation from where it left off without asking the user any further questions. Resume directly — do not acknowledge the summary, do not recap what was happening, do not preface with "I'll continue" or similar. Pick up the last task as if the break never happened.
+
+The messages after this summary are the most recent messages from before compaction, kept verbatim. The summary was written without seeing them, so something it says has not happened yet may already have happened in them.
+===== MSG 1 =====
+<system-reminder>
+Codebase and user instructions are shown below. Be sure to adhere to these instructions. IMPORTANT: These instructions OVERRIDE any default behavior and you MUST follow them exactly as written.
+
+Contents of <home>\.claude\projects\d--3------GSG-main\memory\MEMORY.md (user's auto-memory, persists across conversations):
+
+# Memory Index
+
+- [uavvisloc ≠ AnyVisLoc](uavvisloc-dataset-gt.md) — 用户说的 uavvisloc = 真·UAV-VisLoc(<local-path> 已弃用;GT=绕中心按 Phi1 旋转+按 GSD 缩放的相似变换。
+- [Shared-graph vis design](vis-shared-graph-design.md) — UAV/SAT panels get identical edge topology+strength by rendering one shared entries/edges against per-view node positions; node coords never move.
+- [Semantic↔node correspondence](semantic-node-correspondence.md) — node k ↔ cache_*_masks[k] ↔ class k; nodes sit on semantic centroids (nearest-in-mask, not raw centroid).
+- [类别同时是配对约束](class-is-matching-constraint.md) — cu/cs 既是节点显示色又是配对条件,改分类判据会连带改节点数/连线;动之前必须先问用户。
+- [VisEdgeNet training](vis-edge-net-training.md) — optional learned-edge path: freezes main model, trains a small edge classifier for cross-view-consistent + building-forward edges; render with --edge-net.
+- [autodl 配置每次开机都不同](autodl-instance-specs-vary.md) — 有卡/没卡、内存 2GB/64GB 都遇到过;开机先查 nvidia-smi 和 cgroup,别假设。
+- [Autodl server connection](autodl-server-connection.md) — SSH 端口/密码每次重启都变,用控制台最新连接串;当前(2026-10-11)22099 / CsIj3biuOd2g。
+- [Autodl 2GB cgroup 限制](autodl-2gb-cgroup-limit.md) — 容器内存只有 2GB(free 显示的 755GB 是宿主),全量 torch.load 必被 SIGKILL 137;用 mmap+assign。
+- [SAT panel 配准到 UAV 帧](sat-panel-registration.md) — vis_sem_gnn_paper.py 用 match_geometric 已经拟合好的相似变换把卫星面板扳进无人机帧;a 的旋转对称退化会让拟合静默转 180°。
+- [Vis figure audit workflow](vis-audit-workflow.md) — eyeball-verify classes + correspondence with audit_scene.py/check_overlap.py before publishing; 1248's 6 highlighted pairs verified, no override needed.
+- [改图不要重跑模型](figure-edits-dont-need-model-rerun.md) — 裁剪/放大/配色这类只动最后一步的修改，在 add_legend 存的面板 PNG 上本地重合成即可;_fill_local.py 是范例。
+- [严格按标注出图](ann-driven-figure.md) — _ann_figure.py:节点=标注点本身、无模型;--bid 模式取恒为 image-01;两面板裁到 warp_valid_bbox 后同框同尺度。后续 _ann_flesh.py 用真注意力补血肉(半径=na、线宽=Au/As),并显式处理"多点落在同一语义区域"的退化;当前交付=论文版,线宽+亮度都分两档 strong/medium(1.50~1.80 / 1.20~1.40pt;α 0.94~1.00 / 0.86~0.94)、weak 不画、halo 与亮度都按档取常数(否则可视带宽/明暗在档边界反转);"偏淡"一律调 alpha;细线"细而实"(0.80~1.10pt/α 0.72~0.92/也带衬底);缩线宽必须连衬底一起缩,且每次要验算三条宽度不等式 + 两条亮度不等式;alpha 也必须分档,否则被"候选值挤在池子中上部"吃掉有效跨度。产物=每场景 3 张 PNG(combined + uav + sat,后两张是拼版前的面板、与 combined 逐像素相同);掩膜 α=0.40(--sem-alpha 可调,0.22 时实测几乎看不见)。
+- [本地跑前向取注意力](local-attn-extraction.md) — autodl 没显卡,取真注意力必须在本机;靠 16MB 裁剪 ckpt(sha1 逐位验证)+ _NoSAM 空壳 + 手搓 batch 三件套。
+- [Three-stage training curriculum](curriculum-three-stage.md) — Layer3 三阶段训练 (UrbanScene3D 建筑预训练→1652 建筑适配→1652 全类);前端固定不变,课程图不画前端,避免与 architecture.png 冲突。
+- [r22 checkpoint 被污染](r22-checkpoint-contamination.md) — runs/r22/ckpt_latest.pt 是 09-06 另一次 5-epoch 跑覆盖写的;真 r22 = ckpt_epoch029.pt。读 run 目录一律优先用 ckpt 内嵌 cfg。
+- [单模态,没有多模态](single-modal-no-multimodality.md) — 深度/语义 mask 都出自同一张 RGB;论文图里不能写 multi-modal。唯一真实对照是"有图/无图"。
+- [CMA-Loc 数据集](cma-loc-dataset.md) — ECCV 2026 的 GAGeo 配套数据集,HF 公开可下(73.67 GiB);drone 混在 mono 分片里、mask 是 COCO RLE、仓库无 license;跨视角对应已配准实测验证(同瓦片换楼 IoU=0.000),但 42% 卫星掩码就是个矩形、且无任何地理坐标。
+- [CMA-Loc 掩码画图工具](cma-mask-figure-tool.md) — vis_cma_masks.py(candidates 挑样本 / sheet 浏览 / figure 出图);candidates 的过滤是必需的,~42% 卫星掩码是矩形、400 条只过 70 条。
+- [Weather degradation figure](weather-degradation-figure.md) — synth_weather.py;选雾+雨(雾的衰减就是深度的函数,可物理论证),否决雪/云/夜间的理由;深度列必须重跑、DA 输出是视差需翻转。
+- [Δ 与正确率非线性](delta-accuracy-nonlinear.md) — KDE 图的 Δ 和 R@1 是饱和关系;精确式必须条件在正样本分数上,Φ(Δ/σ_eff)^N 是错的(第一版踩过)。
+- [注意力不聚焦建筑](attention-not-building-focused.md) — 节点注意力 H/logK=0.961 近均匀、建筑占比还低于面积占比;Grad-CAM 也不稳定。参考图那种"热力图指出主楼"的 caption 没有数据支持。
+- [区域消融归因](region-ablation-attribution.md) — 模型里没有跨视角注意力,"UAV/SAT 对应"只能靠配对区域联合消融做出来;建筑 x20.7 且已排除面积混淆(r=+0.14)。
+- [Feature-response 论文图](feature-response-figure.md) — 单图 CLS-to-patch 余弦;基线只能是 zero-shot DINOv2;模糊/归一化顺序、平顶判据、bootstrap 检验等实测坑;**heatmaps/ 的复现参数已找回(在 batch50_results/index.txt),存于 HEATMAP_BASELINE.md**。
+- [match_geometric 不可当真值](match-geometric-degenerate.md) — 49 场景里 45 个相似变换拟合是 ambiguous(可能转了180°);评估配对只能用 ann.json 人工标注(命中 6/21)。
+- [SUES 可编辑 SVG 与场景定位](sues-0143-editable-svg.md) — 本机重跑前向拿真数据(_sues_exact.py,自检逐像素一致);贴图定位场景用像素 MAD 不用 md5;0039/0143/1432 黄色节点版已交付。
+- [别问,自己干](autonomous-no-clarifying-questions.md) — 意图能推断出来就直接做完,别中途停下来问;只在真正不可逆的破坏性操作前才确认。
+- [AnyVisLoc 真值标签路线](anyvisloc-truth-label-route-blocked.md) — 取景+pose_c2w 俯仰轴两处根因已修;**全量 screening 证明 SRM 无目标人群**(ranking-ambiguous 0/1846,p-mode 只测大角度旋转的候选生成)。旧 `_avl` 缓存作废。
+- [GitHub 其实连得上](github-reachable-ssl-no-revoke.md) — 之前"不通"是 schannel 证书吊销检查;用 `curl --ssl-no-revoke`(且 Bash 要关沙箱)。WebFetch 对 github 一律拒绝。
+- [外观扰动鲁棒性实验](corruption-robustness-experiment.md) — Gaussian Blur s=0–5 固定口径：1652 test + DINOv2 zero-shot 基线；Sample4Geo 待定；seg 必须用 segearth env 重算(两段跑)。
+- [回复用中文](reply-in-chinese.md) — 所有回复用中文；但论文图内文字另有要求(SRM 图英文、t-SNE mock 图完全无文字)，别混淆。
+- [图片路径要标粗](bold-image-paths.md) — 每次生成图片后必须用粗体列出存放路径，别埋在段落里；旧图重列也要加粗。
+- [GPU 任务开 autodl](use-autodl-gpu-not-local.md) — 一律用 autodl 的卡,别用本机显卡;本机只做 CPU 侧(构对/统计/画图),GPU 任务先问用户开 autodl。
+- [MegaDepth microbundle 已解除](megadepth-micro-bundle-blocked.md) — 从百度分享经"转存+PCS Range"拿到 raw scene 0000;compat 已证、全链 sanity 通过;含 harness 双重 /255 bug。
+- [MegaDepth 训练 SRM 与跨域结论](megadepth-srm-transfer.md) — 真 GT 路线已跑通(5000 步);lr 必须 1e-4 否则发散;跨域阈值不可迁移,排序弱于"全保留"。
+- [02 站两套卫星裁片](uavvisloc-02-tilt-crops.md) — 都是用户自己裁的;02/tilt/... 按 -Phi1-45 转过,配对远好于 02/cropped_satellite_images(02_0021:343 vs 10 内点);老连线图用的就是它;仅 02 有。
+- [数据集图惯例](dataset-figure-field-norm.md) — 同类论文用"流程图+计数表"而非连续分数直方图;A.3 可辩护,被质疑时加分组计数或挪 supplementary。
+- [UAV-VisLoc 图幅与 GSD](uavvisloc-frame-scale-gsd.md) — 单帧 400~800 m（GSD 0.10~0.17，与正文 0.1-0.2 一致）；裁片反推的 326 m、全表 RMSE 都是错口径。
+- [AutoDL 无卡模式判据](autodl-nogpu-mode-symptoms.md) — /dev/nvidia* 不存在 + cpu.max=0.5 核 + memory.max=2GiB = 无卡模式,不是显卡坏了;停机用带卡模式重开。
+- [MACE 原型](mace-prototype.md) — 掩蔽感知合同引擎在 <local-path> 结论=条件归纳是瓶颈、组合不是;MACE 精度不超基线、成本约 6 倍;M6=STOP;M7 可行性审查=NO-GO/条件 GO;M8 可执行性/1.5B 基线(真 requests 题 5 测试全过但 1 masked/4 unexercised;ctrl 上 Pure 3/3、Direct 1/3、Full 0/3 typed 是记法错误);M9 开放式发现接口门禁=STOP(Full MACE 无操作级归因,不新增题目)。
+</system-reminder>
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+<tools-used-before-summary>Bash, Edit, Grep, Read, TaskStop, ToolSearch, Write</tools-used-before-summary>
+Summary:
+1. Primary Request and Intent:
+
+The user's request (from the prior summary, still governing) is to complete the independent M1 collaborative-masking screening and verification for repo `<local-path>`, branch `research/mace-subgraph-search`, building on commits `c82dcea`/`d3cff20` and `docs/MACE_graph_budgeted_search_and_M1_results.md`.
+
+Verbatim/near-verbatim constraints that MUST continue to apply:
+- Highest priority: complete the existing M1 screening. Read existing protocol, frozen ledger, stage-2 logs, failure records. Do not redesign the method, do not re-select projects, do not reorder the 2500 candidates.
+- For each of the 10 projects determine collection success/failure stage and cause; fixing test environments, installing missing deps, adjusting isolated envs, fixing screening-tool bugs is allowed, but original project behavior and frozen selection rules must be preserved. "不得通过修改原项目测试、删除失败测试或更换项目制造筛查成功."
+- M1 definition: target A and candidate U; minimal sufficient masking set S with |S|≥2, M_x(S)=1, all proper T⊊S have M_x(T)=0; A executes with relevant local effect; masking observable in complete program; at least two ops jointly form the minimal set; all strict subsets checked; interventions legal and P+/P− reproducible; not NO_LOCAL_EFFECT/ASSERTION_GAP/single-op misclassification. "不能将 UNKNOWN 当作 False，也不能用尚未完成的子集验证宣称最小性."
+- "原测试必须按照此前冻结规则选择，不能查看 P− 结果后再挑选通过的测试。人工设计的补充测试必须单独标记，不能冒充真实项目原有测试。"
+- "在案例正式冻结前，不得运行 C-fixed 或 Graph 来比较成绩" and "不得使用隐藏参考数据优化搜索策略."
+- "不得为了达到预期数量而放宽标准、替换冻结项目或用合成案例充数."
+- If no qualified M1: report `M1_NOT_ESTABLISHED` with counts, per-stage causes, closest cases and why they fail, whether cause is insufficient cases, blocked environment, or screening mechanism inability; unresolved projects recorded as incomplete, not "no M1".
+- Not doing this round: no GPU; no Qwen 32B inference; no new Agent/Prompt stage; no refactoring old Full MACE; no modifying frozen Benchmark/HIDDEN scorer; no retuning Graph ranking weights; no repeated paper architecture figures; do not present pure Graph results as Graph + Qwen Full MACE; keep existing Qwen client and old Full MACE code; do not delete/replace.
+- Deliverable: `docs/MACE_M1_stage2_completion_results.md` with 8 sections + final answers to: (a) did we find real independent multi-op collaborative masking cases; (b) did Graph produce verifiable gains over C-fixed on those cases; (c) what evidence is missing for the full MACE paper experiment. Run full regression tests and record exit code, commit hash, final workspace state. Stop after completion; do not automatically start next round.
+
+2. Key Technical Concepts:
+- MACE v3 baseline semantics: MSMS = non-empty minimal kept set S with Masked_strict(U\S); MMBS = non-empty minimal disabled set D with Exposed(D); masked/exposed indexed by disabled set D.
+- M1 inert member definition (readiness doc §3.4): at least one s∈S individually inert — disabling only s (D={s}) leaves plus and minus observations unchanged vs D=∅ (full program); this is what C's `allowed()` filter drops. (Proved that an S-context interpretation would contradict minimality, so full-program D={s} is correct.)
+- U discovery exactly replicates `benchmark_v3_baselines/ast_discovery.py`: same plain-LHS variable definitions, after A in same function, reachable same-file helpers any position, qualifying `if` blocks with no contained candidate assignment; embedded one-line statements excluded from targets/ops.
+- Target derivation: reviewed function → direct-body plain assignments (nested defs/classes excluded) → A; U from `_statement_ops`.
+- Test selection: coverage.py dynamic contexts (`--cov-context=test`, `contexts_by_lineno`) identify original upstream tests whose context executed A; at most 3 lexicographic; no P− consulted.
+- Observation: m1_watch_plugin records per-test outcome plus `repr(var)` at every line after A and at return, keyed by (abs file, co_name, co_firstlineno); values normalized to original line coordinates via physical→original mapping; local effect = values at first common post-A line (or return values) differ.
+- Patching: statement spans replaced by indented `pass  # M1 disabled`, bottom-up; line mapping accounts for multi-line span deletion; A itself deleted only in minus.
+- Tri-state evidence: runs have `known` flag; timeouts/missing watch outputs must be UNKNOWN, not False; minimality cannot be claimed if relevant subset evidence is UNKNOWN.
+- pytest rootdir and coverage interactions; `--cov-config` breaks sqlalchemy's pyproject marker registration under `--strict-markers`.
+- Python 3.11.7; per-project uv venvs; Tsinghua PyPI mirror; pytest 9.2.0 in sqlalchemy venv; coverage 7.17.1.
+
+3. Files and Code Sections:
+
+- `scripts/m1_env_repair.py` (edited extensively)
+  - Purpose: create per-project venvs, install declared test/runtime deps, hash project trees before/after, collect tests; rich marked TESTS_NOT_IN_SDIST.
+  - Final DEPS additions (cumulative): urllib3 += pysocks, pytest-cov; requests already had pytest-cov; starlette += jinja2, python-multipart, itsdangerous, httpx>=0.28.1, opentelemetry-api, opentelemetry-sdk, pytest-cov; httpx += trustme, uvicorn, chardet, zstandard, brotli, pytest-cov; attrs += pytest-cov; sqlalchemy += pytest-cov; python-dateutil += attrs, freezegun, tzdata; packaging += pretend, tomli-w, pytest-cov; more-itertools = ["pytest","pytest-cov"].
+  - Writes `runs/v3_m1_screening/stage2_repair.json`; all 9 non-rich projects now COLLECTED (httpx eventually).
+
+- `runs/v3_m1_screening/stage2_repair_changes.json` (created)
+  - Records second-pass dependency additions with reason.
+
+- `benchmark_real_pilot/qualification/m1_watch_plugin.py` (created/rewritten)
+  - Loads JSON config via `M1_WATCH_CONFIG` with targets `{label,file,function,firstlineno,a_line,a_end,func_end,var}`.
+  - Global trace attaches local tracer only to matching `(abs file, co_name, co_firstlineno)`.
+  - Records hits at `a_line`, `values_by_line[str(line)]` for `a_end < line <= func_end`, `return_values`, caps CAP_PER_LINE=50, CAP_PER_TEST=5000, `truncated`.
+  - Writes `{exitstatus,cwd,targets,records}` to config `out`.
+
+- `scripts/dump_coverage_contexts.py` (created)
+  - Uses `coverage.CoverageData(basename=...).contexts_by_lineno`, filters files under package root, keeps contexts containing "::" stripped at "|", writes path→line→tests JSON.
+
+- `scripts/m1_screen.py` (created, large; main work)
+  - Constants: `SCREEN=OUT/"screen"`, `WORK=SCREEN/"work"`, `COVERAGE=SCREEN/"coverage"`, `RUNS=SCREEN/"runs"`; `TARGETED_PM_BUDGET=800`, `FULL_SUITE_PM_BUDGET=150`, `MATRIX_EXEC_BUDGET=1500`, `MAX_U=6`.
+  - `build_targets()`: parses reviewed candidates, `_function_node`, `_direct_assignments`, `_embedded_one_liner` checks, `reachable_functions`, `_statement_ops`; target_id = `candidate_id@first-last:lhs`; stores `function_code_firstlineno = min(def line, decorator lines)`; writes `targets.json`.
+  - `coverage_targets()`: eligible targets → project/file/line index.
+  - `run_coverage(project)`: copies project into `WORK`, runs pytest with `--cov <pkg> --cov-context=test --cov-report= --rootdir <work> -p no:cacheprovider` (NO `--cov-config`), dumps via `dump_coverage_contexts.py`, records `*.run.json`.
+  - `source_rel_file(project,file)`: package-root-relative candidate path → project-relative path.
+  - `build_mapping`, `to_physical`, `to_original`, `apply_deletions`, `restore`.
+  - `test_nodeids_from_coverage(project,target)`: work-path lookup.
+  - `watch_target(work,target,rel_file,spans,original_lines)` uses `function_code_firstlineno`.
+  - `run_variant(...)`: patches disabled U ops and optionally deletes A; subprocess timeout 60s; returns `{returncode,wall_seconds,stdout_tail,stderr_tail,watch,timed_out,known}`; `known = payload is not None and not timed_out`.
+  - `observation(...)`: returns `{known,exitstatus,returncode,outcomes,values,hits,return_values,truncated,wall_seconds}` normalized to original lines.
+  - `passed`, `canonical_obs`.
+  - `stage_select()`: writes `selected.json`; currently 46 SELECTED, 1350 UNCOVERED.
+  - `stage_probe(projects)`: plus run → passing subset → minus run; statuses EXPOSED / NO_LOCAL_EFFECT / MASKED_FULL / NO_EXECUTION / NO_PASSING_TEST / UNKNOWN_PLUS_RUN / UNKNOWN_MINUS_RUN; budget targeted_pm 800; writes `probe.json`.
+  - `stage_matrix(projects)`: enumerates all D ⊆ U for MASKED_FULL targets, runs plus/minus, computes `masked`/`exposed`, minimal_multi, minimal_single, minimal_mmbs, inert members via D={s} vs D=∅ outcomes, statuses; budget 1500 execution; writes `matrix.json`.
+  - `run_full_suite(project,delete_a,target)`: full original suite, parses FAILED/ERROR lines, returns failures/new failures.
+  - `stage_finalize(projects)`: plus/minus full suite; CONFIRMED_M1 if no new failures, else DETECTED_BY_FULL_SUITE; writes `cases.json`.
+  - CLI: plan/coverage/select/probe/matrix/finalize/status.
+  - Partial matrix result already stored: `requests:utils.py:99:proxy_bypass_registry@130-130:test` = `SINGLE_OP_ONLY`, 4 evaluations, complete.
+
+- `scripts/m1_accept.py` (created)
+  - Independent acceptance of a proposed S; `evaluate()` plus/minus; re-runs primary D=U\S, every nonempty proper subset T of S (D=U\T), every D={s}; computes checks `a_executes`, `local_effect`, `size_at_least_two`, `primary_masked`, `all_proper_subsets_not_masked`, `at_least_one_inert`, `full_suite_no_new_failure`; writes `acceptance.json` and `accepted/<slug>.json`; `evidence_level="WITNESS_VERIFIED"`.
+  - Imports `from scripts import m1_screen as screen`; uses `proper_nonempty` (asserts/imports itertools inline).
+
+- `.gitignore` (appended)
+  ```
+  runs/v3_m1_screening/screen/work/
+  runs/v3_m1_screening/screen/coverage/
+  runs/v3_m1_screening/screen/runs/
+  ```
+
+- `runs/v3_m1_screening/screen/targets.json`: 4501 targets, 1396 eligible U≥2; counts by project (sqlalchemy 2535, rich 397, python-dateutil 333, urllib3 241, starlette 233, httpx 225, packaging 212, requests 119, attrs 109, more-itertools 97).
+
+- `runs/v3_m1_screening/screen/probe.json`: 48 targeted P− runs; statuses EXPOSED 30, NO_LOCAL_EFFECT 6, MASKED_FULL 10. MASKED_FULL list with U sizes: requests proxy_bypass_registry@130 (2); cert_verify @337 (9), @340 (8), @344 (6), @345 (5), @346 (4), @350 (3), @351 (2); sessions.__init__@488 (5); more-itertools _factor_pollard@1058 (3).
+
+- Read: `benchmark_v3_baselines/ast_discovery.py` (U rule), `graph_search.py` (search_relations signature at line 336, budget in subset evaluations), `docs/MACE_next_stage_research_readiness.md` §3.4 (M1 exact definition), `benchmark_real_pilot/qualification/pytest_trace_plugin.py`, `run_upstream.py`.
+
+4. Errors and fixes:
+- Missing test dependencies, fixed iteratively: urllib3 `socks`→pysocks; starlette jinja2/python_multipart/itsdangerous/httpx then opentelemetry-api/sdk; httpx trustme→uvicorn→chardet→zstandard/brotli; python-dateutil attr/freezegun/tzdata; packaging pretend/tomli-w. Recorded in stage2_repair_changes.json.
+- rich 15.0.0 sdist has no tests directory → recorded TESTS_NOT_IN_SDIST, no substitution (per rules).
+- pytest nodeids prefixed `runs/v3_m1_screening/screen/work/...` because KIT/pytest.ini became rootdir → added `--rootdir str(work)` to coverage and variant pytest commands.
+- Selected 0 targets because candidate `file` is package-root-relative while work copy uses project-relative → added `source_rel_file()` and applied in test_nodeids_from_coverage, run_variant, span_mapping_for, watch_target.
+- NO_EXECUTION for `requests.models.Response.content` because `co_firstlineno` is the decorator line (1030) while AST node.lineno is def line (1031) → added `function_code_firstlineno` = min(def, decorators); regenerated targets and re-probed those two targets (then EXPOSED).
+- sqlalchemy coverage INTERNALERROR `PytestUnknownMarkWarning: Unknown pytest.mark.backend` under `--strict-markers`; reproduced and isolated to `--cov-config`; removing `--cov-config` fixes it. Relaunched sqlalchemy coverage.
+- Matrix variants hung (900s subprocess timeout) → killed job b5svxlkmr, reduced to 180s, still slow; killed bvoafynlt, reduced to 60s, restarted b0iy8g5vr.
+- `static_candidates.json` loaded from SCREEN instead of OUT → fixed path.
+- Matrix budget KeyError 'wall_seconds' when matrix.json budget lacked key → `budget.setdefault`.
+- Large code insertion via bash heredoc failed with "unexpected EOF" → used Edit tool instead.
+- Integrity issue found: timeouts/missing outputs were being counted as False, violating "UNKNOWN not False". Added `known` flags to run_variant/observation; patched probe with UNKNOWN_PLUS_RUN/UNKNOWN_MINUS_RUN; matrix tri-state patch was in progress at cutoff.
+
+5. Problem Solving:
+- Stage 2 fully diagnosed and repaired without touching source: 9/10 projects collectable; rich inherently uncollectable.
+- Built a complete screening pipeline (targets → coverage-based test selection → full-program probe → subset matrix → independent acceptance) preserving frozen order and P+ only test selection.
+- Established first screening results: 46 selected targets on small projects; 10 MASKED_FULL survivors; one processed matrix target (requests proxy_bypass_registry@130) resolved as SINGLE_OP_ONLY.
+- Coverage completed for starlette/urllib3/httpx/attrs/python-dateutil; packaging running; sqlalchemy relaunched and running.
+- Ongoing: tri-state UNKNOWN handling in matrix; matrix run restart; remaining coverage; probe all projects; matrix all survivors; accept/freeze any M1; then C-fixed vs Graph only if cases exist; final report + regression.
+
+6. All user messages:
+- (Prior session messages already summarized; the current explicit governing message is the MACE "完成独立 M1 协同掩盖案例筛查与验证" request detailed in section 1, including all constraints quoted there.)
+- No new user-role message in this session after that; the only new inputs were automated background-task notifications and system reminders (not user input).
+
+7. Pending Tasks:
+- Finish tri-state UNKNOWN handling in `stage_matrix` (masked/exposed dicts must preserve None; minimality must record/block unknown subsets; inert checks require known; MMBS likewise). Then kill/restart matrix so results use patched code.
+- Let packaging coverage finish; run `select` again including all covered projects.
+- Run `probe` for all covered projects (respect 800 targeted P− budget, frozen global hash order).
+- Run `matrix` for all MASKED_FULL survivors within 1500-execution budget; handle U>6 as STRUCTURAL_SKIP and record.
+- For any CONFIRMED_M1_PENDING_FULL_SUITE, run `scripts/m1_accept.py` on each; freeze cases/evidence/hashes.
+- If accepted cases exist: implement/run C-fixed-1.1 vs Graph-candidates vs Graph-full on independent cases with same U, intervention semantics, verifier, execution budget; report discovery metrics, errors/UNKNOWN, first-relation probe cost, total executions/wall time, new valid findings.
+- If no qualified M1: prepare `M1_NOT_ESTABLISHED` report with required counts/reasons.
+- Write `docs/MACE_M1_stage2_completion_results.md` with all 8 required sections and final three answers; run full regression `python -m pytest -q`; record exit code/commit/workspace; commit code and artifacts; stop.
+
+8. Current Work:
+At the cutoff I was patching `scripts/m1_screen.py` to make matrix evidence tri-state so UNKNOWN is never treated as False (required by user: "不能将 UNKNOWN 当作 False，也不能用尚未完成的子集验证宣称最小性"). Already completed:
+- `run_variant` now returns `"known": bool(payload is not None and not timed_out_flag)`.
+- `observation` now returns `"known": payload is not None`.
+- Probe patched:
+  ```python
+  if not obs_plus["known"]:
+      record["status"] = "UNKNOWN_PLUS_RUN"
+      ...
+  ...
+  if not obs_minus["known"]:
+      record["status"] = "UNKNOWN_MINUS_RUN"
+      record["local_effect"] = None
+  elif not record["a_executes"]:
+      ...
+  ```
+I had just displayed lines 850–950 of `scripts/m1_screen.py` (the matrix evaluation block) to patch it next. That block currently still does:
+```python
+plus_ok = passed(obs_plus, nodeids)
+if not plus_ok:
+    evaluations[key] = {"plus_pass": False, "minus_pass": None,
+                        "masked": False, "exposed": False, ...}
+...
+minus_ok = passed(obs_minus, nodeids)
+evaluations[key] = {"plus_pass": True, "minus_pass": minus_ok,
+                    "masked": minus_ok, "exposed": not minus_ok, ...}
+...
+masked = {frozenset(row["disabled"]): bool(row["masked"]) ...}
+exposed = {frozenset(row["disabled"]): bool(row["exposed"]) ...}
+```
+which must become status-aware (OK/INVALID/UNKNOWN; masked/exposed None for unknown), and the minimality loops must skip None and record unknown-blocked sets rather than confirm.
+
+Background jobs at cutoff:
+- `bint41w5j`: coverage starlette/urllib3/httpx/attrs/python-dateutil done; packaging still running.
+- `bj74t585n`: sqlalchemy coverage relaunched without `--cov-config`, still running.
+- `b0iy8g5vr`: matrix requests+more-itertools with 60s timeout, launched BEFORE the tri-state `known` edits (so its in-memory code lacks them; may need kill/restart after patching).
+- First stored matrix target: `requests:utils.py:99:proxy_bypass_registry@130-130:test` → `SINGLE_OP_ONLY`.
+
+9. Optional Next Step:
+Complete the tri-state matrix patch in `scripts/m1_screen.py` (evaluations carry `status`; masked/exposed are True/False/None; minimal_multi/minimal_single/minimal_mmbs require all relevant evidence known and record `unknown_blocked`; inert requires known D={s} plus/minus), then stop and restart the matrix background job (`b0iy8g5vr`) so all results are produced by the corrected verifier. Direct quote of the governing requirement being implemented: "不能将 UNKNOWN 当作 False，也不能用尚未完成的子集验证宣称最小性。" This is directly in line with the user's most recent explicit request to complete M1 screening and acceptance within the frozen protocol.
+
+If you need specific details from before compaction (like exact code snippets, error messages, or content you generated), read the full transcript at: <home>\.claude\projects\d--3------GSG-main\37683106-7430-4810-97ec-6745f29ad31a.jsonl
+Continue the conversation from where it left off without asking the user any further questions. Resume directly — do not acknowledge the summary, do not recap what was happening, do not preface with "I'll continue" or similar. Pick up the last task as if the break never happened.
+
+The messages after this summary are the most recent messages from before compaction, kept verbatim. The summary was written without seeing them, so something it says has not happened yet may already have happened in them.

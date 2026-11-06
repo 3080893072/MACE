@@ -1,0 +1,159 @@
+{
+  "case_id": "sd_toml_strict_num_strip_m1",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "toml/decoder.py:94-94",
+      "file": "toml/decoder.py",
+      "first_line": 94,
+      "last_line": 94,
+      "kind": "assign",
+      "code": "        n = n.strip(\" \")",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "toml/decoder.py:91-91",
+          "to": "toml/decoder.py:94-94",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:n",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_strictly_valid_num"
+    },
+    {
+      "id": "toml/decoder.py:109-109",
+      "file": "toml/decoder.py",
+      "first_line": 109,
+      "last_line": 109,
+      "kind": "assign",
+      "code": "        n = n[1:]",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "toml/decoder.py:91-91",
+          "to": "toml/decoder.py:109-109",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:n",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_strictly_valid_num"
+    },
+    {
+      "id": "toml/decoder.py:97-97",
+      "file": "toml/decoder.py",
+      "first_line": 97,
+      "last_line": 97,
+      "kind": "return",
+      "code": "        return False",
+      "graph_score": 0.918471,
+      "graph_path": [
+        {
+          "from": "toml/decoder.py:91-91",
+          "to": "toml/decoder.py:96-97",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "toml/decoder.py:96-97",
+          "to": "toml/decoder.py:97-97",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "not n"
+        }
+      ],
+      "graph_function": "_strictly_valid_num"
+    },
+    {
+      "id": "toml/decoder.py:99-99",
+      "file": "toml/decoder.py",
+      "first_line": 99,
+      "last_line": 99,
+      "kind": "return",
+      "code": "        return False",
+      "graph_score": 0.918471,
+      "graph_path": [
+        {
+          "from": "toml/decoder.py:91-91",
+          "to": "toml/decoder.py:98-99",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "toml/decoder.py:98-99",
+          "to": "toml/decoder.py:99-99",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "n[0] == '_'"
+        }
+      ],
+      "graph_function": "_strictly_valid_num"
+    },
+    {
+      "id": "toml/decoder.py:101-101",
+      "file": "toml/decoder.py",
+      "first_line": 101,
+      "last_line": 101,
+      "kind": "return",
+      "code": "        return False",
+      "graph_score": 0.918471,
+      "graph_path": [
+        {
+          "from": "toml/decoder.py:91-91",
+          "to": "toml/decoder.py:100-101",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "toml/decoder.py:100-101",
+          "to": "toml/decoder.py:101-101",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "n[-1] == '_'"
+        }
+      ],
+      "graph_function": "_strictly_valid_num"
+    },
+    {
+      "id": "toml/decoder.py:103-103",
+      "file": "toml/decoder.py",
+      "first_line": 103,
+      "last_line": 103,
+      "kind": "return",
+      "code": "        return False",
+      "graph_score": 0.918471,
+      "graph_path": [
+        {
+          "from": "toml/decoder.py:91-91",
+          "to": "toml/decoder.py:102-103",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "toml/decoder.py:102-103",
+          "to": "toml/decoder.py:103-103",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "\"_.\" in n or \"._\" in n"
+        }
+      ],
+      "graph_function": "_strictly_valid_num"
+    }
+  ],
+  "source": "computed_v2_1"
+}

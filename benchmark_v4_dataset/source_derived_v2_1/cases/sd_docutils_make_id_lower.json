@@ -1,0 +1,28 @@
+{
+  "case_id": "sd_docutils_make_id_lower",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/nodes.py",
+    "A_line": 2231,
+    "A_code": "    id = string.lower()"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 2231,
+      "indent": 4,
+      "role": "ASCII-only case folding: restores A for identifiers that are entirely ASCII.",
+      "lines": ["if string.isascii():", "    id = string.lower()"]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_make_id_lower.py",
+  "inputs": {
+    "mask_ascii_mixed_case": "ASCII source text with mixed case",
+    "expose_non_ascii": "non-ASCII source text: A folds it, the ASCII-only repair does not",
+    "control_lowercase": "already lowercase ASCII identifier"
+  },
+  "rationale": "make_id() lowercases the source string before mapping non-identifier characters. The patch restores the case folding only for all-ASCII input; a non-ASCII string exposes the missing fold because the later character filter deletes the upper-case bytes instead of folding them."
+}

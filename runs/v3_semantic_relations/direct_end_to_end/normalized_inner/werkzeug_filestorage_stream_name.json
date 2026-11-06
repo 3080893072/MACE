@@ -1,0 +1,363 @@
+{
+  "task_id": "werkzeug_filestorage_stream_name",
+  "kind": "real_v3",
+  "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_filestorage_stream_name\n\n## Files\n`src/werkzeug/datastructures.py`\n\n## Program with source line numbers\n```text\n2902 |     def __init__(\n2903 |         self,\n2904 |         stream=None,\n2905 |         filename=None,\n2906 |         name=None,\n2907 |         content_type=None,\n2908 |         content_length=None,\n2909 |         headers=None,\n2910 |     ):\n2911 |         self.name = name\n2912 |         self.stream = stream or BytesIO()\n2913 | \n2914 |         # If no filename is provided, attempt to get the filename from\n2915 |         # the stream object. Python names special streams like\n2916 |         # ``<stderr>`` with angular brackets, skip these streams.\n2917 |         if filename is None:\n2918 |             filename = getattr(stream, \"name\", None)\n2919 | \n2920 |             if filename is not None:\n2921 |                 filename = os.fsdecode(filename)\n2922 | \n2923 |             if filename and filename[0] == \"<\" and filename[-1] == \">\":\n2924 |                 filename = None\n2925 |         else:\n2926 |             filename = os.fsdecode(filename)\n2927 | \n2928 |         self.filename = filename\n2929 | \n2930 |         if headers is None:\n2931 |             headers = Headers()\n2932 |         self.headers = headers\n2933 |         if content_type is not None:\n2934 |             headers[\"Content-Type\"] = content_type\n2935 |         if content_length is not None:\n2936 |             headers[\"Content-Length\"] = str(content_length)\n```\n\n## Target A\nLine 2918: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"data\": {\"description\": \"Bytes encoded as UTF-8 for none/named streams.\", \"required\": false, \"type\": \"string\"}, \"name\": {\"description\": \"Required when stream is 'named'.\", \"required\": false, \"type\": \"string\"}, \"stream\": {\"description\": \"Kind of stream object passed to FileStorage.\", \"enum\": [\"tempfile\", \"stderr\", \"none\", \"named\"], \"required\": true, \"type\": \"string\"}}\nFrozen legal cases: [{\"stream\": \"tempfile\"}, {\"stream\": \"stderr\"}, {\"stream\": \"none\", \"data\": \"abc\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"x.txt\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stderr>\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stdin>\"}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; stream must be one of tempfile, stderr, none, named.; data, when present, must be a string.; name is required for stream='named' and must be a string.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"filename\": \"string|null\", \"filename_type\": \"Python type name\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+  "prompt_sha256": "5eaadce2513e38bbe74eca625e73a5c22f1bbfa72429914d4c06ce81951487a3",
+  "model_output": {
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2919, \"text\": \"filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'stderr' or stream == 'tempfile'\",\n      \"rationale\": \"Deleting line 2918 and line 2919 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2920, \"text\": \"if filename is not None:\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"    filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'stderr' or stream == 'tempfile'\",\n      \"rationale\": \"Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2923, \"text\": \"if filename and filename[0] == \\\"<\\\" and filename[-1] == \\\">\\\":\\\"\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"    filename = None\"}\n      ],\n      \"condition\": \"stream == 'stderr' or stream == 'tempfile'\",\n      \"rationale\": \"Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2926, \"text\": \"filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'named' and name[0] == '<' and name[-1] == '>'\",\n      \"rationale\": \"Deleting line 2918 and line 2926 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2920, \"text\": \"if filename is not None:\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"    filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'named' and name[0] == '<' and name[-1] == '>'\",\n      \"rationale\": \"Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2923, \"text\": \"if filename and filename[0] == \\\"<\\\" and filename[-1] == \\\">\\\":\\\"\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"    filename = None\"}\n      ],\n      \"condition\": \"stream == 'named' and name[0] == '<' and name[-1] == '>'\",\n      \"rationale\": \"Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 1109,
+      "completion_tokens": 877,
+      "total_duration_ns": 45261110382,
+      "load_duration_ns": 2892618,
+      "prompt_eval_duration_ns": 427978000,
+      "eval_duration_ns": 43922234000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 46.333,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b",
+    "wall_seconds": 46.335,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_filestorage_stream_name\n\n## Files\n`src/werkzeug/datastructures.py`\n\n## Program with source line numbers\n```text\n2902 |     def __init__(\n2903 |         self,\n2904 |         stream=None,\n2905 |         filename=None,\n2906 |         name=None,\n2907 |         content_type=None,\n2908 |         content_length=None,\n2909 |         headers=None,\n2910 |     ):\n2911 |         self.name = name\n2912 |         self.stream = stream or BytesIO()\n2913 | \n2914 |         # If no filename is provided, attempt to get the filename from\n2915 |         # the stream object. Python names special streams like\n2916 |         # ``<stderr>`` with angular brackets, skip these streams.\n2917 |         if filename is None:\n2918 |             filename = getattr(stream, \"name\", None)\n2919 | \n2920 |             if filename is not None:\n2921 |                 filename = os.fsdecode(filename)\n2922 | \n2923 |             if filename and filename[0] == \"<\" and filename[-1] == \">\":\n2924 |                 filename = None\n2925 |         else:\n2926 |             filename = os.fsdecode(filename)\n2927 | \n2928 |         self.filename = filename\n2929 | \n2930 |         if headers is None:\n2931 |             headers = Headers()\n2932 |         self.headers = headers\n2933 |         if content_type is not None:\n2934 |             headers[\"Content-Type\"] = content_type\n2935 |         if content_length is not None:\n2936 |             headers[\"Content-Length\"] = str(content_length)\n```\n\n## Target A\nLine 2918: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"data\": {\"description\": \"Bytes encoded as UTF-8 for none/named streams.\", \"required\": false, \"type\": \"string\"}, \"name\": {\"description\": \"Required when stream is 'named'.\", \"required\": false, \"type\": \"string\"}, \"stream\": {\"description\": \"Kind of stream object passed to FileStorage.\", \"enum\": [\"tempfile\", \"stderr\", \"none\", \"named\"], \"required\": true, \"type\": \"string\"}}\nFrozen legal cases: [{\"stream\": \"tempfile\"}, {\"stream\": \"stderr\"}, {\"stream\": \"none\", \"data\": \"abc\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"x.txt\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stderr>\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stdin>\"}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; stream must be one of tempfile, stderr, none, named.; data, when present, must be a string.; name is required for stream='named' and must be a string.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"filename\": \"string|null\", \"filename_type\": \"Python type name\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+      }
+    ]
+  },
+  "relations": [
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": true,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2919,
+            "text": "filename = os.fsdecode(filename)"
+          }
+        ],
+        "condition": "stream == 'stderr' or stream == 'tempfile'",
+        "rationale": "Deleting line 2918 and line 2919 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        }
+      ],
+      "verification": {
+        "status": "SET_CONFIRMED",
+        "ids": [
+          "src/werkzeug/datastructures.py:2921-2921"
+        ],
+        "new_ops": [],
+        "msms_inputs": [
+          "{\"data\": \"abc\", \"stream\": \"none\"}"
+        ],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2920-2921",
+          "key": "src/werkzeug/datastructures.py:2920-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2920,
+          "last_line": 2921,
+          "line": 2920,
+          "end_line": 2921,
+          "col": 12,
+          "end_col": 48,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if filename is not None:\n                filename = os.fsdecode(filename)",
+          "text": "if filename is not None:\n                filename = os.fsdecode(filename)",
+          "node_key": [
+            "If",
+            2920,
+            12,
+            2921,
+            48
+          ]
+        },
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2920,
+            "text": "if filename is not None:"
+          },
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2921,
+            "text": "    filename = os.fsdecode(filename)"
+          }
+        ],
+        "condition": "stream == 'stderr' or stream == 'tempfile'",
+        "rationale": "Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        }
+      ],
+      "verification": {
+        "status": "SET_CONFIRMED",
+        "ids": [
+          "src/werkzeug/datastructures.py:2921-2921"
+        ],
+        "new_ops": [],
+        "msms_inputs": [
+          "{\"data\": \"abc\", \"stream\": \"none\"}"
+        ],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "rejected",
+      "reason": "unmapped operation",
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 2923,
+          "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\"",
+          "proposal": {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2923,
+            "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+          }
+        }
+      ],
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2923,
+            "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+          },
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2924,
+            "text": "    filename = None"
+          }
+        ],
+        "condition": "stream == 'stderr' or stream == 'tempfile'",
+        "rationale": "Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed."
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2926-2926",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2926,
+          "last_line": 2926,
+          "kind": "assignment",
+          "code": "            filename = os.fsdecode(filename)"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": true,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2926,
+            "text": "filename = os.fsdecode(filename)"
+          }
+        ],
+        "condition": "stream == 'named' and name[0] == '<' and name[-1] == '>'",
+        "rationale": "Deleting line 2918 and line 2926 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2926-2926",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2926,
+          "last_line": 2926,
+          "kind": "assignment",
+          "code": "            filename = os.fsdecode(filename)"
+        }
+      ],
+      "verification": {
+        "status": "SET_CONFIRMED",
+        "ids": [
+          "src/werkzeug/datastructures.py:2926-2926"
+        ],
+        "new_ops": [],
+        "msms_inputs": [
+          "{\"data\": \"abc\", \"stream\": \"none\"}"
+        ],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2920-2921",
+          "key": "src/werkzeug/datastructures.py:2920-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2920,
+          "last_line": 2921,
+          "line": 2920,
+          "end_line": 2921,
+          "col": 12,
+          "end_col": 48,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if filename is not None:\n                filename = os.fsdecode(filename)",
+          "text": "if filename is not None:\n                filename = os.fsdecode(filename)",
+          "node_key": [
+            "If",
+            2920,
+            12,
+            2921,
+            48
+          ]
+        },
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2920,
+            "text": "if filename is not None:"
+          },
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2921,
+            "text": "    filename = os.fsdecode(filename)"
+          }
+        ],
+        "condition": "stream == 'named' and name[0] == '<' and name[-1] == '>'",
+        "rationale": "Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        }
+      ],
+      "verification": {
+        "status": "SET_CONFIRMED",
+        "ids": [
+          "src/werkzeug/datastructures.py:2921-2921"
+        ],
+        "new_ops": [],
+        "msms_inputs": [
+          "{\"data\": \"abc\", \"stream\": \"none\"}"
+        ],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "rejected",
+      "reason": "unmapped operation",
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 2923,
+          "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\"",
+          "proposal": {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2923,
+            "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+          }
+        }
+      ],
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2923,
+            "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+          },
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2924,
+            "text": "    filename = None"
+          }
+        ],
+        "condition": "stream == 'named' and name[0] == '<' and name[-1] == '>'",
+        "rationale": "Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed."
+      }
+    }
+  ],
+  "summary": {
+    "call_error": null,
+    "raw_relations": 6,
+    "mapped_relations": 4,
+    "rejected_relations": 2,
+    "parse_error": null,
+    "normalization": "inner",
+    "set_confirmed_relations": 4,
+    "not_confirmed_relations": 0,
+    "new_op_relations": 0,
+    "condition": "NOT_EVALUATED"
+  }
+}

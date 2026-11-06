@@ -1,0 +1,51 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/lexer.py:121:name:text",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/lexer.py",
+  "function": "get_tokens",
+  "mechanism": "name",
+  "target_A": {
+    "line": 121,
+    "end_line": 121,
+    "kind": "Assign",
+    "code": "text = text.decode(encoding)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_parse.py::test_non_ascii"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                text = text.decode(encoding)",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.57,
+    "failed_nodeids": [
+      "tests.test_parse::test_non_ascii"
+    ],
+    "stdout_tail": "init__.py:30: in parse\n    return tuple(parsestream(sql, encoding))\nsqlparse\\engine\\filter_stack.py:34: in run\n    for stmt in stream:\nsqlparse\\engine\\statement_splitter.py:84: in process\n    for ttype, value in stream:\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <sqlparse.lexer.Lexer object at 0x000001DF1F627C90>\ntext = b\"insert into test (id, name) values (1, '\\xd1\\x82\\xd0\\xb5\\xd1\\x81\\xd1\\x82');\"\nencoding = 'utf-8'\n\n    def get_tokens(self, text, encoding=None):\n        \"\"\"\n        Return an iterable of (tokentype, value) pairs generated from\n        `text`. If `unfiltered` is set to `True`, the filtering mechanism\n        is bypassed even if filters are defined.\n    \n        Also preprocess the text, i.e. expand tabs and strip it if\n        wanted and applies registered filters.\n    \n        Split ``text`` into (tokentype, text) pairs.\n    \n        ``stack`` is the initial stack (default: ``['root']``)\n        \"\"\"\n        if isinstance(text, TextIOBase):\n            text = text.read()\n    \n        if isinstance(text, str):\n            pass\n        elif isinstance(text, bytes):\n            if encoding:\n                pass  # P-: target A deleted\n            else:\n                try:\n                    text = text.decode('utf-8')\n                except UnicodeDecodeError:\n                    text = text.decode('unicode-escape')\n        else:\n            raise TypeError(\"Expected text or file-like object, got {!r}\".\n                            format(type(text)))\n    \n        iterable = enumerate(text)\n        for pos, char in iterable:\n            for rexmatch, action in self._SQL_REGEX:\n>               m = rexmatch(text, pos)\nE               TypeError: cannot use a string pattern on a bytes-like object\n\nsqlparse\\lexer.py:134: TypeError\n---------------------------- Captured stdout call -----------------------------\n|- 0 DML 'insert'\n|- 1 Whitespace ' '\n|- 2 Keyword 'into'\n|- 3 Whitespace ' '\n|- 4 Function 'test (...'\n|  |- 0 Identifier 'test'\n|  |  `- 0 Name 'test'\n|  |- 1 Whitespace ' '\n|  `- 2 Parenthesis '(id, n...'\n|     |- 0 Punctuation '('\n|     |- 1 IdentifierList 'id, na...'\n|     |  |- 0 Identifier 'id'\n|     |  |  `- 0 Name 'id'\n|     |  |- 1 Punctuation ','\n|     |  |- 2 Whitespace ' '\n|     |  `- 3 Identifier 'name'\n|     |     `- 0 Name 'name'\n|     `- 2 Punctuation ')'\n|- 5 Whitespace ' '\n|- 6 Values 'values...'\n|  |- 0 Keyword 'values'\n|  |- 1 Whitespace ' '\n|  `- 2 Parenthesis '(1, '��...'\n|     |- 0 Punctuation '('\n|     |- 1 IdentifierList '1, '���...'\n|     |  |- 0 Integer '1'\n|     |  |- 1 Punctuation ','\n|     |  |- 2 Whitespace ' '\n|     |  `- 3 Single \"'��֧��'\"\n|     `- 2 Punctuation ')'\n`- 7 Punctuation ';'\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_parse.py::test_non_ascii - TypeError: cannot use a string p...\n1 failed in 0.23s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

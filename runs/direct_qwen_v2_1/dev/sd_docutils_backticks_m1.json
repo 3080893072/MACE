@@ -1,0 +1,343 @@
+{
+  "task_id": "sd_docutils_backticks_m1",
+  "split": "DEV",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "model": "qwen2.5-coder:32b",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900
+  },
+  "public_source_sha256": "a6b7dd0923be3bc6febeb126bb46999b39d03969c5829dae2e7ff4b0e504df43",
+  "prompt_sha256": "86a7f0094f9e3d247afcdd8039209bc4ca2a9b86bca8c4e60abe3e32e443d4ae",
+  "prompt_chars": 47009,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_docutils_backticks_m1\n\n## File\n`docutils/utils/smartquotes.py`\n\n## Program with source line numbers\n```text\n   1 | #!/usr/bin/python3\n   2 | # :Id: $Id: smartquotes.py 9335 2023-04-06 18:40:57Z milde $\n   3 | # :Copyright: © 2010 Günter Milde,\n   4 | #             original `SmartyPants`_: © 2003 John Gruber\n   5 | #             smartypants.py:          © 2004, 2007 Chad Miller\n   6 | # :Maintainer: docutils-develop@lists.sourceforge.net\n   7 | # :License: Released under the terms of the `2-Clause BSD license`_, in short:\n   8 | #\n   9 | #    Copying and distribution of this file, with or without modification,\n  10 | #    are permitted in any medium without royalty provided the copyright\n  11 | #    notices and this notice are preserved.\n  12 | #    This file is offered as-is, without any warranty.\n  13 | #\n  14 | # .. _2-Clause BSD license: https://opensource.org/licenses/BSD-2-Clause\n  15 | \n  16 | \n  17 | r\"\"\"\n  18 | =========================\n  19 | Smart Quotes for Docutils\n  20 | =========================\n  21 | \n  22 | Synopsis\n  23 | ========\n  24 | \n  25 | \"SmartyPants\" is a free web publishing plug-in for Movable Type, Blosxom, and\n  26 | BBEdit that easily translates plain ASCII punctuation characters into \"smart\"\n  27 | typographic punctuation characters.\n  28 | \n  29 | ``smartquotes.py`` is an adaption of \"SmartyPants\" to Docutils_.\n  30 | \n  31 | * Using Unicode instead of HTML entities for typographic punctuation\n  32 |   characters, it works for any output format that supports Unicode.\n  33 | * Supports `language specific quote characters`__.\n  34 | \n  35 | __ https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks\n  36 | \n  37 | \n  38 | Authors\n  39 | =======\n  40 | \n  41 | `John Gruber`_ did all of the hard work of writing this software in Perl for\n  42 | `Movable Type`_ and almost all of this useful documentation.  `Chad Miller`_\n  43 | ported it to Python to use with Pyblosxom_.\n  44 | Adapted to Docutils_ by Günter Milde.\n  45 | \n  46 | Additional Credits\n  47 | ==================\n  48 | \n  49 | Portions of the SmartyPants original work are based on Brad Choate's nifty\n  50 | MTRegex plug-in.  `Brad Choate`_ also contributed a few bits of source code to\n  51 | this plug-in.  Brad Choate is a fine hacker indeed.\n  52 | \n  53 | `Jeremy Hedley`_ and `Charles Wiltgen`_ deserve mention for exemplary beta\n  54 | testing of the original SmartyPants.\n  55 | \n  56 | `Rael Dornfest`_ ported SmartyPants to Blosxom.\n  57 | \n  58 | .. _Brad Choate: http://bradchoate.com/\n  59 | .. _Jeremy Hedley: http://antipixel.com/\n  60 | .. _Charles Wiltgen: http://playbacktime.com/\n  61 | .. _Rael Dornfest: http://raelity.org/\n  62 | \n  63 | \n  64 | Copyright and License\n  65 | =====================\n  66 | \n  67 | SmartyPants_ license (3-Clause BSD license):\n  68 | \n  69 |   Copyright (c) 2003 John Gruber (http://daringfireball.net/)\n  70 |   All rights reserved.\n  71 | \n  72 |   Redistribution and use in source and binary forms, with or without\n  73 |   modification, are permitted provided that the following conditions are\n  74 |   met:\n  75 | \n  76 |   * Redistributions of source code must retain the above copyright\n  77 |     notice, this list of conditions and the following disclaimer.\n  78 | \n  79 |   * Redistributions in binary form must reproduce the above copyright\n  80 |     notice, this list of conditions and the following disclaimer in\n  81 |     the documentation and/or other materials provided with the\n  82 |     distribution.\n  83 | \n  84 |   * Neither the name \"SmartyPants\" nor the names of its contributors\n  85 |     may be used to endorse or promote products derived from this\n  86 |     software without specific prior written permission.\n  87 | \n  88 |   This software is provided by the copyright holders and contributors\n  89 |   \"as is\" and any express or implied warranties, including, but not\n  90 |   limited to, the implied warranties of merchantability and fitness for\n  91 |   a particular purpose are disclaimed. In no event shall the copyright\n  92 |   owner or contributors be liable for any direct, indirect, incidental,\n  93 |   special, exemplary, or consequential damages (including, but not\n  94 |   limited to, procurement of substitute goods or services; loss of use,\n  95 |   data, or profits; or business interruption) however caused and on any\n  96 |   theory of liability, whether in contract, strict liability, or tort\n  97 |   (including negligence or otherwise) arising in any way out of the use\n  98 |   of this software, even if advised of the possibility of such damage.\n  99 | \n 100 | smartypants.py license (2-Clause BSD license):\n 101 | \n 102 |   smartypants.py is a derivative work of SmartyPants.\n 103 | \n 104 |   Redistribution and use in source and binary forms, with or without\n 105 |   modification, are permitted provided that the following conditions are\n 106 |   met:\n 107 | \n 108 |   * Redistributions of source code must retain the above copyright\n 109 |     notice, this list of conditions and the following disclaimer.\n 110 | \n 111 |   * Redistributions in binary form must reproduce the above copyright\n 112 |     notice, this list of conditions and the following disclaimer in\n 113 |     the documentation and/or other materials provided with the\n 114 |     distribution.\n 115 | \n 116 |   This software is provided by the copyright holders and contributors\n 117 |   \"as is\" and any express or implied warranties, including, but not\n 118 |   limited to, the implied warranties of merchantability and fitness for\n 119 |   a particular purpose are disclaimed. In no event shall the copyright\n 120 |   owner or contributors be liable for any direct, indirect, incidental,\n 121 |   special, exemplary, or consequential damages (including, but not\n 122 |   limited to, procurement of substitute goods or services; loss of use,\n 123 |   data, or profits; or business interruption) however caused and on any\n 124 |   theory of liability, whether in contract, strict liability, or tort\n 125 |   (including negligence or otherwise) arising in any way out of the use\n 126 |   of this software, even if advised of the possibility of such damage.\n 127 | \n 128 | .. _John Gruber: http://daringfireball.net/\n 129 | .. _Chad Miller: http://web.chad.org/\n 130 | \n 131 | .. _Pyblosxom: http://pyblosxom.bluesock.org/\n 132 | .. _SmartyPants: http://daringfireball.net/projects/smartypants/\n 133 | .. _Movable Type: http://www.movabletype.org/\n 134 | .. _2-Clause BSD license: https://opensource.org/licenses/BSD-2-Clause\n 135 | .. _Docutils: https://docutils.sourceforge.io/\n 136 | \n 137 | Description\n 138 | ===========\n 139 | \n 140 | SmartyPants can perform the following transformations:\n 141 | \n 142 | - Straight quotes ( \" and ' ) into \"curly\" quote characters\n 143 | - Backticks-style quotes (\\`\\`like this'') into \"curly\" quote characters\n 144 | - Dashes (``--`` and ``---``) into en- and em-dash entities\n 145 | - Three consecutive dots (``...`` or ``. . .``) into an ellipsis entity\n 146 | \n 147 | This means you can write, edit, and save your posts using plain old\n 148 | ASCII straight quotes, plain dashes, and plain dots, but your published\n 149 | posts (and final HTML output) will appear with smart quotes, em-dashes,\n 150 | and proper ellipses.\n 151 | \n 152 | SmartyPants does not modify characters within ``<pre>``, ``<code>``, ``<kbd>``,\n 153 | ``<math>`` or ``<script>`` tag blocks. Typically, these tags are used to\n 154 | display text where smart quotes and other \"smart punctuation\" would not be\n 155 | appropriate, such as source code or example markup.\n 156 | \n 157 | \n 158 | Backslash Escapes\n 159 | =================\n 160 | \n 161 | If you need to use literal straight quotes (or plain hyphens and periods),\n 162 | `smartquotes` accepts the following backslash escape sequences to force\n 163 | ASCII-punctuation. Mind, that you need two backslashes as Docutils expands it,\n 164 | too.\n 165 | \n 166 | ========  =========\n 167 | Escape    Character\n 168 | ========  =========\n 169 | ``\\\\``    \\\\\n 170 | ``\\\\\"``   \\\\\"\n 171 | ``\\\\'``   \\\\'\n 172 | ``\\\\.``   \\\\.\n 173 | ``\\\\-``   \\\\-\n 174 | ``\\\\```   \\\\`\n 175 | ========  =========\n 176 | \n 177 | This is useful, for example, when you want to use straight quotes as\n 178 | foot and inch marks: 6\\\\'2\\\\\" tall; a 17\\\\\" iMac.\n 179 | \n 180 | \n 181 | Caveats\n 182 | =======\n 183 | \n 184 | Why You Might Not Want to Use Smart Quotes in Your Weblog\n 185 | ---------------------------------------------------------\n 186 | \n 187 | For one thing, you might not care.\n 188 | \n 189 | Most normal, mentally stable individuals do not take notice of proper\n 190 | typographic punctuation. Many design and typography nerds, however, break\n 191 | out in a nasty rash when they encounter, say, a restaurant sign that uses\n 192 | a straight apostrophe to spell \"Joe's\".\n 193 | \n 194 | If you're the sort of person who just doesn't care, you might well want to\n 195 | continue not caring. Using straight quotes -- and sticking to the 7-bit\n 196 | ASCII character set in general -- is certainly a simpler way to live.\n 197 | \n 198 | Even if you *do* care about accurate typography, you still might want to\n 199 | think twice before educating the quote characters in your weblog. One side\n 200 | effect of publishing curly quote characters is that it makes your\n 201 | weblog a bit harder for others to quote from using copy-and-paste. What\n 202 | happens is that when someone copies text from your blog, the copied text\n 203 | contains the 8-bit curly quote characters (as well as the 8-bit characters\n 204 | for em-dashes and ellipses, if you use these options). These characters\n 205 | are not standard across different text encoding methods, which is why they\n 206 | need to be encoded as characters.\n 207 | \n 208 | People copying text from your weblog, however, may not notice that you're\n 209 | using curly quotes, and they'll go ahead and paste the unencoded 8-bit\n 210 | characters copied from their browser into an email message or their own\n 211 | weblog. When pasted as raw \"smart quotes\", these characters are likely to\n 212 | get mangled beyond recognition.\n 213 | \n 214 | That said, my own opinion is that any decent text editor or email client\n 215 | makes it easy to stupefy smart quote characters into their 7-bit\n 216 | equivalents, and I don't consider it my problem if you're using an\n 217 | indecent text editor or email client.\n 218 | \n 219 | \n 220 | Algorithmic Shortcomings\n 221 | ------------------------\n 222 | \n 223 | One situation in which quotes will get curled the wrong way is when\n 224 | apostrophes are used at the start of leading contractions. For example::\n 225 | \n 226 |   'Twas the night before Christmas.\n 227 | \n 228 | In the case above, SmartyPants will turn the apostrophe into an opening\n 229 | secondary quote, when in fact it should be the `RIGHT SINGLE QUOTATION MARK`\n 230 | character which is also \"the preferred character to use for apostrophe\"\n 231 | (Unicode). I don't think this problem can be solved in the general case --\n 232 | every word processor I've tried gets this wrong as well. In such cases, it's\n 233 | best to inset the `RIGHT SINGLE QUOTATION MARK` (’) by hand.\n 234 | \n 235 | In English, the same character is used for apostrophe and  closing secondary\n 236 | quote (both plain and \"smart\" ones). For other locales (French, Italean,\n 237 | Swiss, ...) \"smart\" secondary closing quotes differ from the curly apostrophe.\n 238 | \n 239 |    .. class:: language-fr\n 240 | \n 241 |    Il dit : \"C'est 'super' !\"\n 242 | \n 243 | If the apostrophe is used at the end of a word, it cannot be distinguished\n 244 | from a secondary quote by the algorithm. Therefore, a text like::\n 245 | \n 246 |    .. class:: language-de-CH\n 247 | \n 248 |    \"Er sagt: 'Ich fass' es nicht.'\"\n 249 | \n 250 | will get a single closing guillemet instead of an apostrophe.\n 251 | \n 252 | This can be prevented by use use of the `RIGHT SINGLE QUOTATION MARK` in\n 253 | the source::\n 254 | \n 255 |    -  \"Er sagt: 'Ich fass' es nicht.'\"\n 256 |    +  \"Er sagt: 'Ich fass’ es nicht.'\"\n 257 | \n 258 | \n 259 | Version History\n 260 | ===============\n 261 | \n 262 | 1.9     2022-03-04\n 263 |         - Code cleanup. Require Python 3.\n 264 | \n 265 | 1.8.1   2017-10-25\n 266 |         - Use open quote after Unicode whitespace, ZWSP, and ZWNJ.\n 267 |         - Code cleanup.\n 268 | \n 269 | 1.8:    2017-04-24\n 270 |         - Command line front-end.\n 271 | \n 272 | 1.7.1:  2017-03-19\n 273 |         - Update and extend language-dependent quotes.\n 274 |         - Differentiate apostrophe from single quote.\n 275 | \n 276 | 1.7:    2012-11-19\n 277 |         - Internationalization: language-dependent quotes.\n 278 | \n 279 | 1.6.1:  2012-11-06\n 280 |         - Refactor code, code cleanup,\n 281 |         - `educate_tokens()` generator as interface for Docutils.\n 282 | \n 283 | 1.6:    2010-08-26\n 284 |         - Adaption to Docutils:\n 285 |           - Use Unicode instead of HTML entities,\n 286 |           - Remove code special to pyblosxom.\n 287 | \n 288 | 1.5_1.6: Fri, 27 Jul 2007 07:06:40 -0400\n 289 |         - Fixed bug where blocks of precious unalterable text was instead\n 290 |           interpreted.  Thanks to Le Roux and Dirk van Oosterbosch.\n 291 | \n 292 | 1.5_1.5: Sat, 13 Aug 2005 15:50:24 -0400\n 293 |         - Fix bogus magical quotation when there is no hint that the\n 294 |           user wants it, e.g., in \"21st century\".  Thanks to Nathan Hamblen.\n 295 |         - Be smarter about quotes before terminating numbers in an en-dash'ed\n 296 |           range.\n 297 | \n 298 | 1.5_1.4: Thu, 10 Feb 2005 20:24:36 -0500\n 299 |         - Fix a date-processing bug, as reported by jacob childress.\n 300 |         - Begin a test-suite for ensuring correct output.\n 301 |         - Removed import of \"string\", since I didn't really need it.\n 302 |           (This was my first every Python program.  Sue me!)\n 303 | \n 304 | 1.5_1.3: Wed, 15 Sep 2004 18:25:58 -0400\n 305 |         - Abort processing if the flavour is in forbidden-list.  Default of\n 306 |           [ \"rss\" ]   (Idea of Wolfgang SCHNERRING.)\n 307 |         - Remove stray virgules from en-dashes.  Patch by Wolfgang SCHNERRING.\n 308 | \n 309 | 1.5_1.2: Mon, 24 May 2004 08:14:54 -0400\n 310 |         - Some single quotes weren't replaced properly.  Diff-tesuji played\n 311 |           by Benjamin GEIGER.\n 312 | \n 313 | 1.5_1.1: Sun, 14 Mar 2004 14:38:28 -0500\n 314 |         - Support upcoming pyblosxom 0.9 plugin verification feature.\n 315 | \n 316 | 1.5_1.0: Tue, 09 Mar 2004 08:08:35 -0500\n 317 |         - Initial release\n 318 | \"\"\"\n 319 | \n 320 | import re\n 321 | import sys\n 322 | \n 323 | \n 324 | options = r\"\"\"\n 325 | Options\n 326 | =======\n 327 | \n 328 | Numeric values are the easiest way to configure SmartyPants' behavior:\n 329 | \n 330 | :0:     Suppress all transformations. (Do nothing.)\n 331 | \n 332 | :1:     Performs default SmartyPants transformations: quotes (including\n 333 |         \\`\\`backticks'' -style), em-dashes, and ellipses. \"``--``\" (dash dash)\n 334 |         is used to signify an em-dash; there is no support for en-dashes\n 335 | \n 336 | :2:     Same as smarty_pants=\"1\", except that it uses the old-school typewriter\n 337 |         shorthand for dashes:  \"``--``\" (dash dash) for en-dashes, \"``---``\"\n 338 |         (dash dash dash)\n 339 |         for em-dashes.\n 340 | \n 341 | :3:     Same as smarty_pants=\"2\", but inverts the shorthand for dashes:\n 342 |         \"``--``\" (dash dash) for em-dashes, and \"``---``\" (dash dash dash) for\n 343 |         en-dashes.\n 344 | \n 345 | :-1:    Stupefy mode. Reverses the SmartyPants transformation process, turning\n 346 |         the characters produced by SmartyPants into their ASCII equivalents.\n 347 |         E.g. the LEFT DOUBLE QUOTATION MARK (“) is turned into a simple\n 348 |         double-quote (\\\"), \"—\" is turned into two dashes, etc.\n 349 | \n 350 | \n 351 | The following single-character attribute values can be combined to toggle\n 352 | individual transformations from within the smarty_pants attribute. For\n 353 | example, ``\"1\"`` is equivalent to ``\"qBde\"``.\n 354 | \n 355 | :q:     Educates normal quote characters: (\") and (').\n 356 | \n 357 | :b:     Educates \\`\\`backticks'' -style double quotes.\n 358 | \n 359 | :B:     Educates \\`\\`backticks'' -style double quotes and \\`single' quotes.\n 360 | \n 361 | :d:     Educates em-dashes.\n 362 | \n 363 | :D:     Educates em-dashes and en-dashes, using old-school typewriter\n 364 |         shorthand: (dash dash) for en-dashes, (dash dash dash) for em-dashes.\n 365 | \n 366 | :i:     Educates em-dashes and en-dashes, using inverted old-school typewriter\n 367 |         shorthand: (dash dash) for em-dashes, (dash dash dash) for en-dashes.\n 368 | \n 369 | :e:     Educates ellipses.\n 370 | \n 371 | :w:     Translates any instance of ``&quot;`` into a normal double-quote\n 372 |         character. This should be of no interest to most people, but\n 373 |         of particular interest to anyone who writes their posts using\n 374 |         Dreamweaver, as Dreamweaver inexplicably uses this entity to represent\n 375 |         a literal double-quote character. SmartyPants only educates normal\n 376 |         quotes, not entities (because ordinarily, entities are used for\n 377 |         the explicit purpose of representing the specific character they\n 378 |         represent). The \"w\" option must be used in conjunction with one (or\n 379 |         both) of the other quote options (\"q\" or \"b\"). Thus, if you wish to\n 380 |         apply all SmartyPants transformations (quotes, en- and em-dashes, and\n 381 |         ellipses) and also translate ``&quot;`` entities into regular quotes\n 382 |         so SmartyPants can educate them, you should pass the following to the\n 383 |         smarty_pants attribute:\n 384 | \"\"\"\n 385 | \n 386 | \n 387 | class smartchars:\n 388 |     \"\"\"Smart quotes and dashes\"\"\"\n 389 | \n 390 |     endash = '–'      # \"&#8211;\" EN DASH\n 391 |     emdash = '—'      # \"&#8212;\" EM DASH\n 392 |     ellipsis = '…'    # \"&#8230;\" HORIZONTAL ELLIPSIS\n 393 |     apostrophe = '’'  # \"&#8217;\" RIGHT SINGLE QUOTATION MARK\n 394 | \n 395 |     # quote characters (language-specific, set in __init__())\n 396 |     # https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks\n 397 |     # https://de.wikipedia.org/wiki/Anf%C3%BChrungszeichen#Andere_Sprachen\n 398 |     # https://fr.wikipedia.org/wiki/Guillemet\n 399 |     # https://typographisme.net/post/Les-espaces-typographiques-et-le-web\n 400 |     # https://www.btb.termiumplus.gc.ca/tpv2guides/guides/redac/index-fra.html\n 401 |     # https://en.wikipedia.org/wiki/Hebrew_punctuation#Quotation_marks\n 402 |     # [7] https://www.tustep.uni-tuebingen.de/bi/bi00/bi001t1-anfuehrung.pdf\n 403 |     # [8] https://www.korrekturavdelingen.no/anforselstegn.htm\n 404 |     # [9] Typografisk håndbok. Oslo: Spartacus. 2000. s. 67. ISBN 8243001530.\n 405 |     # [10] https://www.typografi.org/sitat/sitatart.html\n 406 |     # [11] https://mk.wikipedia.org/wiki/Правопис_и_правоговор_на_македонскиот_јазик  # noqa:E501\n 407 |     # [12] https://hrvatska-tipografija.com/polunavodnici/\n 408 |     # [13] https://pl.wikipedia.org/wiki/Cudzys%C5%82%C3%B3w\n 409 |     #\n 410 |     # See also configuration option \"smartquote-locales\".\n 411 |     quotes = {\n 412 |         'af':           '“”‘’',\n 413 |         'af-x-altquot': '„”‚’',\n 414 |         'bg':           '„“‚‘',  # https://bg.wikipedia.org/wiki/Кавички\n 415 |         'ca':           '«»“”',\n 416 |         'ca-x-altquot': '“”‘’',\n 417 |         'cs':           '„“‚‘',\n 418 |         'cs-x-altquot': '»«›‹',\n 419 |         'da':           '»«›‹',\n 420 |         'da-x-altquot': '„“‚‘',\n 421 |         # 'da-x-altquot2': '””’’',\n 422 |         'de':           '„“‚‘',\n 423 |         'de-x-altquot': '»«›‹',\n 424 |         'de-ch':        '«»‹›',\n 425 |         'el':           '«»“”',  # '«»‟”' https://hal.science/hal-02101618\n 426 |         'en':           '“”‘’',\n 427 |         'en-uk-x-altquot': '‘’“”',  # Attention: \" → ‘ and ' → “ !\n 428 |         'eo':           '“”‘’',\n 429 |         'es':           '«»“”',\n 430 |         'es-x-altquot': '“”‘’',\n 431 |         'et':           '„“‚‘',  # no secondary quote listed in\n 432 |         'et-x-altquot': '«»‹›',  # the sources above (wikipedia.org)\n 433 |         'eu':           '«»‹›',\n 434 |         'fi':           '””’’',\n 435 |         'fi-x-altquot': '»»››',\n 436 |         'fr':           ('« ', ' »', '“', '”'),  # full no-break space\n 437 |         'fr-x-altquot': ('« ', ' »', '“', '”'),  # narrow no-break space\n 438 |         'fr-ch':        '«»‹›',                  # https://typoguide.ch/\n 439 |         'fr-ch-x-altquot': ('« ',  ' »', '‹ ', ' ›'),  # narrow no-break space  # noqa:E501\n 440 |         'gl':           '«»“”',\n 441 |         'he':           '”“»«',  # Hebrew is RTL, test position:\n 442 |         'he-x-altquot': '„”‚’',  # low quotation marks are opening.\n 443 |         # 'he-x-altquot': '“„‘‚',  # RTL: low quotation marks opening\n 444 |         'hr':           '„”‘’',  # Croatian [12]\n 445 |         'hr-x-altquot': '»«›‹',\n 446 |         'hsb':          '„“‚‘',\n 447 |         'hsb-x-altquot': '»«›‹',\n 448 |         'hu':           '„”«»',\n 449 |         'is':           '„“‚‘',\n 450 |         'it':           '«»“”',\n 451 |         'it-ch':        '«»‹›',\n 452 |         'it-x-altquot': '“”‘’',\n 453 |         # 'it-x-altquot2': '“„‘‚',  # [7] in headlines\n 454 |         'ja':           '「」『』',\n 455 |         'ko':           '“”‘’',\n 456 |         'lt':           '„“‚‘',\n 457 |         'lv':           '„“‚‘',\n 458 |         'mk':           '„“‚‘',  # Macedonian [11]\n 459 |         'nl':           '“”‘’',\n 460 |         'nl-x-altquot': '„”‚’',\n 461 |         # 'nl-x-altquot2': '””’’',\n 462 |         'nb':           '«»’’',     # Norsk bokmål (canonical form 'no')\n 463 |         'nn':           '«»’’',     # Nynorsk [10]\n 464 |         'nn-x-altquot': '«»‘’',     # [8], [10]\n 465 |         # 'nn-x-altquot2': '«»«»',  # [9], [10]\n 466 |         # 'nn-x-altquot3': '„“‚‘',  # [10]\n 467 |         'no':           '«»’’',     # Norsk bokmål [10]\n 468 |         'no-x-altquot': '«»‘’',     # [8], [10]\n 469 |         # 'no-x-altquot2': '«»«»',  # [9], [10\n 470 |         # 'no-x-altquot3': '„“‚‘',  # [10]\n 471 |         'pl':           '„”«»',\n 472 |         'pl-x-altquot': '«»‚’',\n 473 |         # 'pl-x-altquot2': '„”‚’',  # [13]\n 474 |         'pt':           '«»“”',\n 475 |         'pt-br':        '“”‘’',\n 476 |         'ro':           '„”«»',\n 477 |         'ru':           '«»„“',\n 478 |         'sh':           '„”‚’',  # Serbo-Croatian\n 479 |         'sh-x-altquot': '»«›‹',\n 480 |         'sk':           '„“‚‘',  # Slovak\n 481 |         'sk-x-altquot': '»«›‹',\n 482 |         'sl':           '„“‚‘',  # Slovenian\n 483 |         'sl-x-altquot': '»«›‹',\n 484 |         'sq':           '«»‹›',  # Albanian\n 485 |         'sq-x-altquot': '“„‘‚',\n 486 |         'sr':           '„”’’',\n 487 |         'sr-x-altquot': '»«›‹',\n 488 |         'sv':           '””’’',\n 489 |         'sv-x-altquot': '»»››',\n 490 |         'tr':           '“”‘’',\n 491 |         'tr-x-altquot': '«»‹›',\n 492 |         # 'tr-x-altquot2': '“„‘‚',  # [7] antiquated?\n 493 |         'uk':           '«»„“',\n 494 |         'uk-x-altquot': '„“‚‘',\n 495 |         'zh-cn':        '“”‘’',\n 496 |         'zh-tw':        '「」『』',\n 497 |         }\n 498 | \n 499 |     def __init__(self, language='en'):\n 500 |         self.language = language\n 501 |         try:\n 502 |             (self.opquote, self.cpquote,\n 503 |              self.osquote, self.csquote) = self.quotes[language.lower()]\n 504 |         except KeyError:\n 505 |             self.opquote, self.cpquote, self.osquote, self.csquote = '\"\"\\'\\''\n 506 | \n 507 | \n 508 | default_smartypants_attr = '1'\n 509 | \n 510 | \n 511 | def smartyPants(text, attr=default_smartypants_attr, language='en'):\n 512 |     \"\"\"Main function for \"traditional\" use.\"\"\"\n 513 | \n 514 |     return \"\".join(t for t in educate_tokens(tokenize(text), attr, language))\n 515 | \n 516 | \n 517 | def educate_tokens(text_tokens, attr=default_smartypants_attr, language='en'):\n 518 |     \"\"\"Return iterator that \"educates\" the items of `text_tokens`.\"\"\"\n 519 |     # Parse attributes:\n 520 |     # 0 : do nothing\n 521 |     # 1 : set all\n 522 |     # 2 : set all, using old school en- and em- dash shortcuts\n 523 |     # 3 : set all, using inverted old school en and em- dash shortcuts\n 524 |     #\n 525 |     # q : quotes\n 526 |     # b : backtick quotes (``double'' only)\n 527 |     # B : backtick quotes (``double'' and `single')\n 528 |     # d : dashes\n 529 |     # D : old school dashes\n 530 |     # i : inverted old school dashes\n 531 |     # e : ellipses\n 532 |     # w : convert &quot; entities to \" for Dreamweaver users\n 533 | \n 534 |     convert_quot = False  # translate &quot; entities into normal quotes?\n 535 |     do_dashes = False\n 536 |     do_backticks = False\n 537 |     do_quotes = False\n 538 |     do_ellipses = False\n 539 |     do_stupefy = False\n 540 | \n 541 |     # if attr == \"0\":  # pass tokens unchanged (see below).\n 542 |     if attr == '1':  # Do everything, turn all options on.\n 543 |         do_quotes = True\n 544 |         do_backticks = True\n 545 |         do_dashes = 1\n 546 |         do_ellipses = True\n 547 |     elif attr == '2':\n 548 |         # Do everything, turn all options on, use old school dash shorthand.\n 549 |         do_quotes = True\n 550 |         do_backticks = True\n 551 |         do_dashes = 2\n 552 |         do_ellipses = True\n 553 |     elif attr == '3':\n 554 |         # Do everything, use inverted old school dash shorthand.\n 555 |         do_quotes = True\n 556 |         do_backticks = True\n 557 |         do_dashes = 3\n 558 |         do_ellipses = True\n 559 |     elif attr == '-1':  # Special \"stupefy\" mode.\n 560 |         do_stupefy = True\n 561 |     else:\n 562 |         if 'q' in attr: do_quotes = True     # noqa: E701\n 563 |         if 'b' in attr: do_backticks = True  # noqa: E701\n 564 |         if 'B' in attr: do_backticks = 2     # noqa: E701\n 565 |         if 'd' in attr: do_dashes = 1        # noqa: E701\n 566 |         if 'D' in attr: do_dashes = 2        # noqa: E701\n 567 |         if 'i' in attr: do_dashes = 3        # noqa: E701\n 568 |         if 'e' in attr: do_ellipses = True   # noqa: E701\n 569 |         if 'w' in attr: convert_quot = True  # noqa: E701\n 570 | \n 571 |     prev_token_last_char = ' '\n 572 |     # Last character of the previous text token. Used as\n 573 |     # context to curl leading quote characters correctly.\n 574 | \n 575 |     for (ttype, text) in text_tokens:\n 576 | \n 577 |         # skip HTML and/or XML tags as well as empty text tokens\n 578 |         # without updating the last character\n 579 |         if ttype == 'tag' or not text:\n 580 |             yield text\n 581 |             continue\n 582 | \n 583 |         # skip literal text (math, literal, raw, ...)\n 584 |         if ttype == 'literal':\n 585 |             prev_token_last_char = text[-1:]\n 586 |             yield text\n 587 |             continue\n 588 | \n 589 |         last_char = text[-1:]  # Remember last char before processing.\n 590 | \n 591 |         text = processEscapes(text)\n 592 | \n 593 |         if convert_quot:\n 594 |             text = text.replace('&quot;', '\"')\n 595 | \n 596 |         if do_dashes == 1:\n 597 |             text = educateDashes(text)\n 598 |         elif do_dashes == 2:\n 599 |             text = educateDashesOldSchool(text)\n 600 |         elif do_dashes == 3:\n 601 |             text = educateDashesOldSchoolInverted(text)\n 602 | \n 603 |         if do_ellipses:\n 604 |             text = educateEllipses(text)\n 605 | \n 606 |         # Note: backticks need to be processed before quotes.\n 607 |         if do_backticks:\n 608 |             text = educateBackticks(text, language)\n 609 | \n 610 |         if do_backticks == 2:\n 611 |             text = educateSingleBackticks(text, language)\n 612 | \n 613 |         if do_quotes:\n 614 |             # Replace plain quotes in context to prevent conversion to\n 615 |             # 2-character sequence in French.\n 616 |             context = prev_token_last_char.replace('\"', ';').replace(\"'\", ';')\n 617 |             text = educateQuotes(context+text, language)[1:]\n 618 | \n 619 |         if do_stupefy:\n 620 |             text = stupefyEntities(text, language)\n 621 | \n 622 |         # Remember last char as context for the next token\n 623 |         prev_token_last_char = last_char\n 624 | \n 625 |         text = processEscapes(text, restore=True)\n 626 | \n 627 |         yield text\n 628 | \n 629 | \n 630 | def educateQuotes(text, language='en'):\n 631 |     \"\"\"\n 632 |     Parameter:  - text string (unicode or bytes).\n 633 |                 - language (`BCP 47` language tag.)\n 634 |     Returns:    The `text`, with \"educated\" curly quote characters.\n 635 | \n 636 |     Example input:  \"Isn't this fun?\"\n 637 |     Example output: “Isn’t this fun?“;\n 638 |     \"\"\"\n 639 | \n 640 |     smart = smartchars(language)\n 641 |     ch_classes = {'open': '[([{]',    # opening braces\n 642 |                   'close': r'[^\\s]',  # everything except whitespace\n 643 |                   'punct': r\"\"\"[-!\" #\\$\\%'()*+,.\\/:;<=>?\\@\\[\\\\\\]\\^_`{|}~]\"\"\",\n 644 |                   'dash': '[-–—]'     # hyphen and em/en dashes\n 645 |                           r'|&[mn]dash;|&\\#8211;|&\\#8212;|&\\#x201[34];',\n 646 |                   'sep': '[\\\\s\\u200B\\u200C]|&nbsp;',  # Whitespace, ZWSP, ZWNJ\n 647 |                   }\n 648 | \n 649 |     # Special case if the very first character is a quote\n 650 |     # followed by punctuation at a non-word-break. Use closing quotes.\n 651 |     # TODO: example (when does this match?)\n 652 |     text = re.sub(r\"^'(?=%s\\\\B)\" % ch_classes['punct'], smart.csquote, text)\n 653 |     text = re.sub(r'^\"(?=%s\\\\B)' % ch_classes['punct'], smart.cpquote, text)\n 654 | \n 655 |     # Special case for adjacent quotes\n 656 |     # like \"'Quoted' words in a larger quote.\"\n 657 |     text = re.sub('\"\\'(?=\\\\w)', smart.opquote+smart.osquote, text)\n 658 |     text = re.sub('\\'\"(?=\\\\w)', smart.osquote+smart.opquote, text)\n 659 | \n 660 |     # Special case: \"opening character\" followed by quote,\n 661 |     # optional punctuation and space like \"[\", '(', or '-'.\n 662 |     text = re.sub(r\"(%(open)s|%(dash)s)'(?=%(punct)s? )\" % ch_classes,\n 663 |                   r'\\1%s'%smart.csquote, text)\n 664 |     text = re.sub(r'(%(open)s|%(dash)s)\"(?=%(punct)s? )' % ch_classes,\n 665 |                   r'\\1%s'%smart.cpquote, text)\n 666 | \n 667 |     # Special case for decade abbreviations (the '80s):\n 668 |     if language.startswith('en'):  # TODO similar cases in other languages?\n 669 |         text = re.sub(r\"'(?=\\d{2}s)\", smart.apostrophe, text)\n 670 | \n 671 |     # Get most opening secondary quotes:\n 672 |     opening_secondary_quotes_regex = re.compile(\"\"\"\n 673 |                     (# ?<=  # look behind fails: requires fixed-width pattern\n 674 |                       %(sep)s     |  # a whitespace char, or\n 675 |                       %(open)s    |  # opening brace, or\n 676 |                       %(dash)s       # em/en-dash\n 677 |                     )\n 678 |                     '                  # the quote\n 679 |                     (?=\\\\w|%(punct)s)  # word character or punctuation\n 680 |                     \"\"\" % ch_classes, re.VERBOSE)\n 681 | \n 682 |     text = opening_secondary_quotes_regex.sub(r'\\1'+smart.osquote, text)\n 683 | \n 684 |     # In many locales, secondary closing quotes are different from apostrophe:\n 685 |     if smart.csquote != smart.apostrophe:\n 686 |         apostrophe_regex = re.compile(r\"(?<=(\\w|\\d))'(?=\\w)\")\n 687 |         text = apostrophe_regex.sub(smart.apostrophe, text)\n 688 |     # TODO: keep track of quoting level to recognize apostrophe in, e.g.,\n 689 |     # \"Ich fass' es nicht.\"\n 690 | \n 691 |     closing_secondary_quotes_regex = re.compile(r\"(?<!\\s)'\")\n 692 |     text = closing_secondary_quotes_regex.sub(smart.csquote, text)\n 693 | \n 694 |     # Any remaining secondary quotes should be opening ones:\n 695 |     text = text.replace(r\"'\", smart.osquote)\n 696 | \n 697 |     # Get most opening primary quotes:\n 698 |     opening_primary_quotes_regex = re.compile(\"\"\"\n 699 |                     (\n 700 |                       %(sep)s     |  # a whitespace char, or\n 701 |                       %(open)s    |  # zero width separating char, or\n 702 |                       %(dash)s       # em/en-dash\n 703 |                     )\n 704 |                     \"                 # the quote, followed by\n 705 |                     (?=\\\\w|%(punct)s) # a word character or punctuation\n 706 |                     \"\"\" % ch_classes, re.VERBOSE)\n 707 | \n 708 |     text = opening_primary_quotes_regex.sub(r'\\1'+smart.opquote, text)\n 709 | \n 710 |     # primary closing quotes:\n 711 |     closing_primary_quotes_regex = re.compile(r\"\"\"\n 712 |                     (\n 713 |                     (?<!\\s)\" | # no whitespace before\n 714 |                     \"(?=\\s)    # whitespace behind\n 715 |                     )\n 716 |                     \"\"\", re.VERBOSE)\n 717 |     text = closing_primary_quotes_regex.sub(smart.cpquote, text)\n 718 | \n 719 |     # Any remaining quotes should be opening ones.\n 720 |     text = text.replace(r'\"', smart.opquote)\n 721 | \n 722 |     return text\n 723 | \n 724 | \n 725 | def educateBackticks(text, language='en'):\n 726 |     \"\"\"\n 727 |     Parameter:  String (unicode or bytes).\n 728 |     Returns:    The `text`, with ``backticks'' -style double quotes\n 729 |                 translated into HTML curly quote entities.\n 730 |     Example input:  ``Isn't this fun?''\n 731 |     Example output: “Isn't this fun?“;\n 732 |     \"\"\"\n 733 |     smart = smartchars(language)\n 734 | \n 735 |     text = text.replace(r'``', smart.opquote)\n 736 | \n 737 |     text = text.replace(r'``', smart.opquote, 1)\n 738 | \n 739 |     text = text.replace(r\"''\", smart.cpquote)\n 740 |     return text\n 741 | \n 742 | \n 743 | def educateSingleBackticks(text, language='en'):\n 744 |     \"\"\"\n 745 |     Parameter:  String (unicode or bytes).\n 746 |     Returns:    The `text`, with `backticks' -style single quotes\n 747 |                 translated into HTML curly quote entities.\n 748 | \n 749 |     Example input:  `Isn't this fun?'\n 750 |     Example output: ‘Isn’t this fun?’\n 751 |     \"\"\"\n 752 |     smart = smartchars(language)\n 753 | \n 754 |     text = text.replace(r'`', smart.osquote)\n 755 |     text = text.replace(r\"'\", smart.csquote)\n 756 |     return text\n 757 | \n 758 | \n 759 | def educateDashes(text):\n 760 |     \"\"\"\n 761 |     Parameter:  String (unicode or bytes).\n 762 |     Returns:    The `text`, with each instance of \"--\" translated to\n 763 |                 an em-dash character.\n 764 |     \"\"\"\n 765 | \n 766 |     text = text.replace(r'---', smartchars.endash)  # en (yes, backwards)\n 767 |     text = text.replace(r'--', smartchars.emdash)   # em (yes, backwards)\n 768 |     return text\n 769 | \n 770 | \n 771 | def educateDashesOldSchool(text):\n 772 |     \"\"\"\n 773 |     Parameter:  String (unicode or bytes).\n 774 |     Returns:    The `text`, with each instance of \"--\" translated to\n 775 |                 an en-dash character, and each \"---\" translated to\n 776 |                 an em-dash character.\n 777 |     \"\"\"\n 778 | \n 779 |     text = text.replace(r'---', smartchars.emdash)\n 780 |     text = text.replace(r'--', smartchars.endash)\n 781 |     return text\n 782 | \n 783 | \n 784 | def educateDashesOldSchoolInverted(text):\n 785 |     \"\"\"\n 786 |     Parameter:  String (unicode or bytes).\n 787 |     Returns:    The `text`, with each instance of \"--\" translated to\n 788 |                 an em-dash character, and each \"---\" translated to\n 789 |                 an en-dash character. Two reasons why: First, unlike the\n 790 |                 en- and em-dash syntax supported by\n 791 |                 EducateDashesOldSchool(), it's compatible with existing\n 792 |                 entries written before SmartyPants 1.1, back when \"--\" was\n 793 |                 only used for em-dashes.  Second, em-dashes are more\n 794 |                 common than en-dashes, and so it sort of makes sense that\n 795 |                 the shortcut should be shorter to type. (Thanks to Aaron\n 796 |                 Swartz for the idea.)\n 797 |     \"\"\"\n 798 |     text = text.replace(r'---', smartchars.endash)    # em\n 799 |     text = text.replace(r'--', smartchars.emdash)    # en\n 800 |     return text\n 801 | \n 802 | \n 803 | def educateEllipses(text):\n 804 |     \"\"\"\n 805 |     Parameter:  String (unicode or bytes).\n 806 |     Returns:    The `text`, with each instance of \"...\" translated to\n 807 |                 an ellipsis character.\n 808 | \n 809 |     Example input:  Huh...?\n 810 |     Example output: Huh&#8230;?\n 811 |     \"\"\"\n 812 | \n 813 |     text = text.replace(r'...', smartchars.ellipsis)\n 814 |     text = text.replace(r'. . .', smartchars.ellipsis)\n 815 |     return text\n 816 | \n 817 | \n 818 | def stupefyEntities(text, language='en'):\n 819 |     \"\"\"\n 820 |     Parameter:  String (unicode or bytes).\n 821 |     Returns:    The `text`, with each SmartyPants character translated to\n 822 |                 its ASCII counterpart.\n 823 | \n 824 |     Example input:  “Hello — world.”\n 825 |     Example output: \"Hello -- world.\"\n 826 |     \"\"\"\n 827 |     smart = smartchars(language)\n 828 | \n 829 |     text = text.replace(smart.endash, \"-\")\n 830 |     text = text.replace(smart.emdash, \"--\")\n 831 |     text = text.replace(smart.osquote, \"'\")  # open secondary quote\n 832 |     text = text.replace(smart.csquote, \"'\")  # close secondary quote\n 833 |     text = text.replace(smart.opquote, '\"')  # open primary quote\n 834 |     text = text.replace(smart.cpquote, '\"')  # close primary quote\n 835 |     text = text.replace(smart.ellipsis, '...')\n 836 | \n 837 |     return text\n 838 | \n 839 | \n 840 | def processEscapes(text, restore=False):\n 841 |     r\"\"\"\n 842 |     Parameter:  String (unicode or bytes).\n 843 |     Returns:    The `text`, with after processing the following backslash\n 844 |                 escape sequences. This is useful if you want to force a \"dumb\"\n 845 |                 quote or other character to appear.\n 846 | \n 847 |                 Escape  Value\n 848 |                 ------  -----\n 849 |                 \\\\      &#92;\n 850 |                 \\\"      &#34;\n 851 |                 \\'      &#39;\n 852 |                 \\.      &#46;\n 853 |                 \\-      &#45;\n 854 |                 \\`      &#96;\n 855 |     \"\"\"\n 856 |     replacements = ((r'\\\\', r'&#92;'),\n 857 |                     (r'\\\"', r'&#34;'),\n 858 |                     (r\"\\'\", r'&#39;'),\n 859 |                     (r'\\.', r'&#46;'),\n 860 |                     (r'\\-', r'&#45;'),\n 861 |                     (r'\\`', r'&#96;'))\n 862 |     if restore:\n 863 |         for (ch, rep) in replacements:\n 864 |             text = text.replace(rep, ch[1])\n 865 |     else:\n 866 |         for (ch, rep) in replacements:\n 867 |             text = text.replace(ch, rep)\n 868 | \n 869 |     return text\n 870 | \n 871 | \n 872 | def tokenize(text):\n 873 |     \"\"\"\n 874 |     Parameter:  String containing HTML markup.\n 875 |     Returns:    An iterator that yields the tokens comprising the input\n 876 |                 string. Each token is either a tag (possibly with nested,\n 877 |                 tags contained therein, such as <a href=\"<MTFoo>\">, or a\n 878 |                 run of text between tags. Each yielded element is a\n 879 |                 two-element tuple; the first is either 'tag' or 'text';\n 880 |                 the second is the actual value.\n 881 | \n 882 |     Based on the _tokenize() subroutine from Brad Choate's MTRegex plugin.\n 883 |     \"\"\"\n 884 |     tag_soup = re.compile(r'([^<]*)(<[^>]*>)')\n 885 |     token_match = tag_soup.search(text)\n 886 |     previous_end = 0\n 887 | \n 888 |     while token_match is not None:\n 889 |         if token_match.group(1):\n 890 |             yield 'text', token_match.group(1)\n 891 |         yield 'tag', token_match.group(2)\n 892 |         previous_end = token_match.end()\n 893 |         token_match = tag_soup.search(text, token_match.end())\n 894 | \n 895 |     if previous_end < len(text):\n 896 |         yield 'text', text[previous_end:]\n 897 | \n 898 | \n 899 | if __name__ == \"__main__\":\n 900 | \n 901 |     import itertools\n 902 |     import locale\n 903 |     try:\n 904 |         locale.setlocale(locale.LC_ALL, '')  # set to user defaults\n 905 |         defaultlanguage = locale.getlocale()[0]\n 906 |     except:  # noqa  catchall\n 907 |         defaultlanguage = 'en'\n 908 | \n 909 |     # Normalize and drop unsupported subtags:\n 910 |     defaultlanguage = defaultlanguage.lower().replace('-', '_')\n 911 |     # split (except singletons, which mark the following tag as non-standard):\n 912 |     defaultlanguage = re.sub(r'_([a-zA-Z0-9])_', r'_\\1-', defaultlanguage)\n 913 |     _subtags = [subtag for subtag in defaultlanguage.split('_')]\n 914 |     _basetag = _subtags.pop(0)\n 915 |     # find all combinations of subtags\n 916 |     for n in range(len(_subtags), 0, -1):\n 917 |         for tags in itertools.combinations(_subtags, n):\n 918 |             _tag = '-'.join((_basetag, *tags))\n 919 |             if _tag in smartchars.quotes:\n 920 |                 defaultlanguage = _tag\n 921 |                 break\n 922 |         else:\n 923 |             if _basetag in smartchars.quotes:\n 924 |                 defaultlanguage = _basetag\n 925 |             else:\n 926 |                 defaultlanguage = 'en'\n 927 | \n 928 |     import argparse\n 929 |     parser = argparse.ArgumentParser(\n 930 |                 description='Filter <input> making ASCII punctuation \"smart\".')\n 931 |     # TODO: require input arg or other means to print USAGE instead of waiting.\n 932 |     # parser.add_argument(\"input\", help=\"Input stream, use '-' for stdin.\")\n 933 |     parser.add_argument(\"-a\", \"--action\", default=\"1\",\n 934 |                         help=\"what to do with the input (see --actionhelp)\")\n 935 |     parser.add_argument(\"-e\", \"--encoding\", default=\"utf-8\",\n 936 |                         help=\"text encoding\")\n 937 |     parser.add_argument(\"-l\", \"--language\", default=defaultlanguage,\n 938 |                         help=\"text language (BCP47 tag), \"\n 939 |                              f\"Default: {defaultlanguage}\")\n 940 |     parser.add_argument(\"-q\", \"--alternative-quotes\", action=\"store_true\",\n 941 |                         help=\"use alternative quote style\")\n 942 |     parser.add_argument(\"--doc\", action=\"store_true\",\n 943 |                         help=\"print documentation\")\n 944 |     parser.add_argument(\"--actionhelp\", action=\"store_true\",\n 945 |                         help=\"list available actions\")\n 946 |     parser.add_argument(\"--stylehelp\", action=\"store_true\",\n 947 |                         help=\"list available quote styles\")\n 948 |     parser.add_argument(\"--test\", action=\"store_true\",\n 949 |                         help=\"perform short self-test\")\n 950 |     args = parser.parse_args()\n 951 | \n 952 |     if args.doc:\n 953 |         print(__doc__)\n 954 |     elif args.actionhelp:\n 955 |         print(options)\n 956 |     elif args.stylehelp:\n 957 |         print()\n 958 |         print(\"Available styles (primary open/close, secondary open/close)\")\n 959 |         print(\"language tag   quotes\")\n 960 |         print(\"============   ======\")\n 961 |         for key in sorted(smartchars.quotes.keys()):\n 962 |             print(\"%-14s %s\" % (key, smartchars.quotes[key]))\n 963 |     elif args.test:\n 964 |         # Unit test output goes to stderr.\n 965 |         import unittest\n 966 | \n 967 |         class TestSmartypantsAllAttributes(unittest.TestCase):\n 968 |             # the default attribute is \"1\", which means \"all\".\n 969 |             def test_dates(self):\n 970 |                 self.assertEqual(smartyPants(\"1440-80's\"), \"1440-80’s\")\n 971 |                 self.assertEqual(smartyPants(\"1440-'80s\"), \"1440-’80s\")\n 972 |                 self.assertEqual(smartyPants(\"1440---'80s\"), \"1440–’80s\")\n 973 |                 self.assertEqual(smartyPants(\"1960's\"), \"1960’s\")\n 974 |                 self.assertEqual(smartyPants(\"one two '60s\"), \"one two ’60s\")\n 975 |                 self.assertEqual(smartyPants(\"'60s\"), \"’60s\")\n 976 | \n 977 |             def test_educated_quotes(self):\n 978 |                 self.assertEqual(smartyPants('\"Isn\\'t this fun?\"'),\n 979 |                                  '“Isn’t this fun?”')\n 980 | \n 981 |             def test_html_tags(self):\n 982 |                 text = '<a src=\"foo\">more</a>'\n 983 |                 self.assertEqual(smartyPants(text), text)\n 984 | \n 985 |         suite = unittest.TestLoader().loadTestsFromTestCase(\n 986 |                                             TestSmartypantsAllAttributes)\n 987 |         unittest.TextTestRunner().run(suite)\n 988 | \n 989 |     else:\n 990 |         if args.alternative_quotes:\n 991 |             if '-x-altquot' in args.language:\n 992 |                 args.language = args.language.replace('-x-altquot', '')\n 993 |             else:\n 994 |                 args.language += '-x-altquot'\n 995 |         text = sys.stdin.read()\n 996 |         print(smartyPants(text, attr=args.action, language=args.language))\n```\n\n## Target A\nLine 735: `text = text.replace(r'``', smart.opquote)`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 737, \"text\": \"text = text.replace(r'``', smart.opquote, 1)\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 735 and 737 has the same effect as deleting only line 735 because line 737 is a redundant replacement that does not change the text further.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 739, \"text\": \"text = text.replace(r\\\"''\\\", smart.cpquote)\"}\n      ],\n      \"condition\": \"text.count('``') == 0\",\n      \"rationale\": \"If there are no double backticks in the text, the replacement in line 739 does not affect the text, making the deletion of line 735 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 737, \"text\": \"text = text.replace(r'``', smart.opquote, 1)\"},\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 739, \"text\": \"text = text.replace(r\\\"''\\\", smart.cpquote)\"}\n      ],\n      \"condition\": \"text.count('``') == 0\",\n      \"rationale\": \"If there are no double backticks in the text, the replacements in lines 737 and 739 do not affect the text, making the deletion of line 735 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 736, \"text\": \"text = text.replace(r'``', smart.opquote)\"}\n      ],\n      \"condition\": \"text.count('``') == 0\",\n      \"rationale\": \"If there are no double backticks in the text, the replacement in line 736 does not affect the text, making the deletion of line 735 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 736, \"text\": \"text = text.replace(r'``', smart.opquote)\"},\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 739, \"text\": \"text = text.replace(r\\\"''\\\", smart.cpquote)\"}\n      ],\n      \"condition\": \"text.count('``') == 0\",\n      \"rationale\": \"If there are no double backticks in the text, the replacements in lines 736 and 739 do not affect the text, making the deletion of line 735 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 736, \"text\": \"text = text.replace(r'``', smart.opquote)\"},\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 737, \"text\": \"text = text.replace(r'``', smart.opquote, 1)\"}\n      ],\n      \"condition\": \"text.count('``') == 0\",\n      \"rationale\": \"If there are no double backticks in the text, the replacements in lines 736 and 737 do not affect the text, making the deletion of line 735 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 736, \"text\": \"text = text.replace(r'``', smart.opquote)\"},\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 737, \"text\": \"text = text.replace(r'``', smart.opquote, 1)\"},\n        {\"file\": \"docutils/utils/smartquotes.py\", \"line\": 739, \"text\": \"text = text.replace(r\\\"''\\\", smart.cpquote)\"}\n      ],\n      \"condition\": \"text.count('``') == 0\",\n      \"rationale\": \"If there are no double backticks in the text, the replacements in lines 736, 737, and 739 do not affect the text, making the deletion of line 735 unobservable.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 4098,
+      "completion_tokens": 973,
+      "total_duration_ns": 53226778390,
+      "load_duration_ns": 4546295,
+      "prompt_eval_duration_ns": 1726165000,
+      "eval_duration_ns": 48710567000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 53.42,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b"
+  },
+  "prompt_tokens": 4098,
+  "completion_tokens": 973,
+  "runtime_s": 53.42,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "docutils/utils/smartquotes.py:737-737"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/smartquotes.py:737-737",
+          "key": "docutils/utils/smartquotes.py:737-737",
+          "file": "docutils/utils/smartquotes.py",
+          "first_line": 737,
+          "last_line": 737,
+          "line": 737,
+          "end_line": 737,
+          "col": 4,
+          "end_col": 48,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "text = text.replace(r'``', smart.opquote, 1)",
+          "text": "text = text.replace(r'``', smart.opquote, 1)",
+          "node_key": [
+            "Assign",
+            737,
+            4,
+            737,
+            48
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "Deleting both lines 735 and 737 has the same effect as deleting only line 735 because line 737 is a redundant replacement that does not change the text further."
+    },
+    {
+      "ids": [
+        "docutils/utils/smartquotes.py:739-739"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/smartquotes.py:739-739",
+          "key": "docutils/utils/smartquotes.py:739-739",
+          "file": "docutils/utils/smartquotes.py",
+          "first_line": 739,
+          "last_line": 739,
+          "line": 739,
+          "end_line": 739,
+          "col": 4,
+          "end_col": 45,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "text = text.replace(r\"''\", smart.cpquote)",
+          "text": "text = text.replace(r\"''\", smart.cpquote)",
+          "node_key": [
+            "Assign",
+            739,
+            4,
+            739,
+            45
+          ]
+        }
+      ],
+      "condition": "text.count('``') == 0",
+      "rationale": "If there are no double backticks in the text, the replacement in line 739 does not affect the text, making the deletion of line 735 unobservable."
+    },
+    {
+      "ids": [
+        "docutils/utils/smartquotes.py:737-737",
+        "docutils/utils/smartquotes.py:739-739"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/smartquotes.py:737-737",
+          "key": "docutils/utils/smartquotes.py:737-737",
+          "file": "docutils/utils/smartquotes.py",
+          "first_line": 737,
+          "last_line": 737,
+          "line": 737,
+          "end_line": 737,
+          "col": 4,
+          "end_col": 48,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "text = text.replace(r'``', smart.opquote, 1)",
+          "text": "text = text.replace(r'``', smart.opquote, 1)",
+          "node_key": [
+            "Assign",
+            737,
+            4,
+            737,
+            48
+          ]
+        },
+        {
+          "id": "docutils/utils/smartquotes.py:739-739",
+          "key": "docutils/utils/smartquotes.py:739-739",
+          "file": "docutils/utils/smartquotes.py",
+          "first_line": 739,
+          "last_line": 739,
+          "line": 739,
+          "end_line": 739,
+          "col": 4,
+          "end_col": 45,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "text = text.replace(r\"''\", smart.cpquote)",
+          "text": "text = text.replace(r\"''\", smart.cpquote)",
+          "node_key": [
+            "Assign",
+            739,
+            4,
+            739,
+            45
+          ]
+        }
+      ],
+      "condition": "text.count('``') == 0",
+      "rationale": "If there are no double backticks in the text, the replacements in lines 737 and 739 do not affect the text, making the deletion of line 735 unobservable."
+    }
+  ],
+  "rejected": [
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          }
+        ],
+        "condition": "text.count('``') == 0",
+        "rationale": "If there are no double backticks in the text, the replacement in line 736 does not affect the text, making the deletion of line 735 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 736,
+          "text": "text = text.replace(r'``', smart.opquote)",
+          "proposal": {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          },
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 739,
+            "text": "text = text.replace(r\"''\", smart.cpquote)"
+          }
+        ],
+        "condition": "text.count('``') == 0",
+        "rationale": "If there are no double backticks in the text, the replacements in lines 736 and 739 do not affect the text, making the deletion of line 735 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 736,
+          "text": "text = text.replace(r'``', smart.opquote)",
+          "proposal": {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          },
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 737,
+            "text": "text = text.replace(r'``', smart.opquote, 1)"
+          }
+        ],
+        "condition": "text.count('``') == 0",
+        "rationale": "If there are no double backticks in the text, the replacements in lines 736 and 737 do not affect the text, making the deletion of line 735 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 736,
+          "text": "text = text.replace(r'``', smart.opquote)",
+          "proposal": {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          },
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 737,
+            "text": "text = text.replace(r'``', smart.opquote, 1)"
+          },
+          {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 739,
+            "text": "text = text.replace(r\"''\", smart.cpquote)"
+          }
+        ],
+        "condition": "text.count('``') == 0",
+        "rationale": "If there are no double backticks in the text, the replacements in lines 736, 737, and 739 do not affect the text, making the deletion of line 735 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 736,
+          "text": "text = text.replace(r'``', smart.opquote)",
+          "proposal": {
+            "file": "docutils/utils/smartquotes.py",
+            "line": 736,
+            "text": "text = text.replace(r'``', smart.opquote)"
+          }
+        }
+      ]
+    }
+  ],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "false_relations": 3,
+    "unmatched_sets": 1,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_one_backtick",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [],
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [
+          "docutils/utils/smartquotes.py:739-739",
+          "docutils/utils/smartquotes.py:739-739"
+        ],
+        "msms_exact": false,
+        "precision": 0.5,
+        "recall": 1.0,
+        "false_relations": 3,
+        "unmatched_sets": 1
+      }
+    }
+  ],
+  "status": "OK"
+}

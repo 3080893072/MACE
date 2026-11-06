@@ -1,0 +1,92 @@
+{
+  "verifier_version": "intervention-verifier-1.0",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "universe": [
+    {
+      "id": "src/werkzeug/routing/map.py:307-307",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 307,
+      "last_line": 307,
+      "kind": "assignment",
+      "code": "            server_name = server_name.lower()"
+    }
+  ],
+  "universe_problems": [],
+  "verdicts": [
+    {
+      "verdict": "VERIFIED",
+      "reason": "P+ and P- differ on the submitted input",
+      "observations": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "verdict": "REFUTED",
+      "reason": "a submitted input is not masked at EMPTY",
+      "inputs": [
+        {
+          "input": {
+            "host": "Example.com",
+            "server_name": "Example.com",
+            "subdomain": null
+          },
+          "matched": false,
+          "computed_minimal_sets": [],
+          "masked_at_empty": false
+        }
+      ],
+      "index": 1,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "REFUTED",
+      "reason": "set is not a minimal relation over the proposal's operation universe on a submitted input",
+      "inputs": [
+        {
+          "input": {
+            "host": "Example.com",
+            "server_name": "Example.com",
+            "subdomain": null
+          },
+          "matched": false,
+          "computed_minimal_sets": [],
+          "masked_at_empty": false
+        }
+      ],
+      "index": 2,
+      "type": "MMBS"
+    }
+  ],
+  "verified_submission": {
+    "task_id": "werkzeug_bind_server_name_lower",
+    "submission_id": "baseline-A",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "host": "Example.com",
+          "server_name": "Example.com",
+          "subdomain": null
+        }
+      }
+    ]
+  },
+  "counts": {
+    "total": 3,
+    "verified": 1,
+    "refuted": 2,
+    "unknown": 0
+  },
+  "probe_executions": 4
+}

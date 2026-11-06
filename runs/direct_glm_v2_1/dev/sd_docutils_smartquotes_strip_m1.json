@@ -1,0 +1,415 @@
+{
+  "task_id": "sd_docutils_smartquotes_strip_m1",
+  "split": "DEV",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "model": "glm-4.7-flash:q4_K_M",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900,
+    "think": false
+  },
+  "public_source_sha256": "4fd94e44082be7ff35a2dd09ce15a60d7be8672b11ae63e4d74330b8e56b09d0",
+  "prompt_sha256": "9e3da46302f692c78e947f57a93b284edda1d3549dd7f01ae0cabd67daba8bb5",
+  "prompt_chars": 48531,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_docutils_smartquotes_strip_m1\n\n## File\n`docutils/frontend.py`\n\n## Program with source line numbers\n```text\n   1 | # $Id: frontend.py 9328 2023-02-07 14:24:37Z milde $\n   2 | # Author: David Goodger <goodger@python.org>\n   3 | # Copyright: This module has been placed in the public domain.\n   4 | \n   5 | \"\"\"\n   6 | Command-line and common processing for Docutils front-end tools.\n   7 | \n   8 | This module is provisional.\n   9 | Major changes will happen with the switch from the deprecated\n  10 | \"optparse\" module to \"arparse\".\n  11 | \n  12 | Applications should use the high-level API provided by `docutils.core`.\n  13 | See https://docutils.sourceforge.io/docs/api/runtime-settings.html.\n  14 | \n  15 | Exports the following classes:\n  16 | \n  17 | * `OptionParser`: Standard Docutils command-line processing.\n  18 |   Deprecated. Will be replaced by an ArgumentParser.\n  19 | * `Option`: Customized version of `optparse.Option`; validation support.\n  20 |   Deprecated. Will be removed.\n  21 | * `Values`: Runtime settings; objects are simple structs\n  22 |   (``object.attribute``).  Supports cumulative list settings (attributes).\n  23 |   Deprecated. Will be removed.\n  24 | * `ConfigParser`: Standard Docutils config file processing.\n  25 |   Provisional. Details will change.\n  26 | \n  27 | Also exports the following functions:\n  28 | \n  29 | Interface function:\n  30 |    `get_default_settings()`.  New in 0.19.\n  31 | \n  32 | Option callbacks:\n  33 |    `store_multiple()`, `read_config_file()`. Deprecated.\n  34 | \n  35 | Setting validators:\n  36 |   `validate_encoding()`, `validate_encoding_error_handler()`,\n  37 |   `validate_encoding_and_error_handler()`,\n  38 |   `validate_boolean()`, `validate_ternary()`,\n  39 |   `validate_nonnegative_int()`, `validate_threshold()`,\n  40 |   `validate_colon_separated_string_list()`,\n  41 |   `validate_comma_separated_list()`,\n  42 |   `validate_url_trailing_slash()`,\n  43 |   `validate_dependency_file()`,\n  44 |   `validate_strip_class()`\n  45 |   `validate_smartquotes_locales()`.\n  46 | \n  47 |   Provisional.\n  48 | \n  49 | Misc:\n  50 |   `make_paths_absolute()`, `filter_settings_spec()`. Provisional.\n  51 | \"\"\"\n  52 | \n  53 | __docformat__ = 'reStructuredText'\n  54 | \n  55 | \n  56 | import codecs\n  57 | import configparser\n  58 | import optparse\n  59 | from optparse import SUPPRESS_HELP\n  60 | import os\n  61 | import os.path\n  62 | import sys\n  63 | import warnings\n  64 | \n  65 | import docutils\n  66 | from docutils import io, utils\n  67 | \n  68 | \n  69 | def store_multiple(option, opt, value, parser, *args, **kwargs):\n  70 |     \"\"\"\n  71 |     Store multiple values in `parser.values`.  (Option callback.)\n  72 | \n  73 |     Store `None` for each attribute named in `args`, and store the value for\n  74 |     each key (attribute name) in `kwargs`.\n  75 |     \"\"\"\n  76 |     for attribute in args:\n  77 |         setattr(parser.values, attribute, None)\n  78 |     for key, value in kwargs.items():\n  79 |         setattr(parser.values, key, value)\n  80 | \n  81 | \n  82 | def read_config_file(option, opt, value, parser):\n  83 |     \"\"\"\n  84 |     Read a configuration file during option processing.  (Option callback.)\n  85 |     \"\"\"\n  86 |     try:\n  87 |         new_settings = parser.get_config_file_settings(value)\n  88 |     except ValueError as err:\n  89 |         parser.error(err)\n  90 |     parser.values.update(new_settings, parser)\n  91 | \n  92 | \n  93 | def validate_encoding(setting, value, option_parser,\n  94 |                       config_parser=None, config_section=None):\n  95 |     if value == '':\n  96 |         return None  # allow overwriting a config file value\n  97 |     try:\n  98 |         codecs.lookup(value)\n  99 |     except LookupError:\n 100 |         raise LookupError('setting \"%s\": unknown encoding: \"%s\"'\n 101 |                           % (setting, value))\n 102 |     return value\n 103 | \n 104 | \n 105 | def validate_encoding_error_handler(setting, value, option_parser,\n 106 |                                     config_parser=None, config_section=None):\n 107 |     try:\n 108 |         codecs.lookup_error(value)\n 109 |     except LookupError:\n 110 |         raise LookupError(\n 111 |             'unknown encoding error handler: \"%s\" (choices: '\n 112 |             '\"strict\", \"ignore\", \"replace\", \"backslashreplace\", '\n 113 |             '\"xmlcharrefreplace\", and possibly others; see documentation for '\n 114 |             'the Python ``codecs`` module)' % value)\n 115 |     return value\n 116 | \n 117 | \n 118 | def validate_encoding_and_error_handler(\n 119 |     setting, value, option_parser, config_parser=None, config_section=None):\n 120 |     \"\"\"\n 121 |     Side-effect: if an error handler is included in the value, it is inserted\n 122 |     into the appropriate place as if it was a separate setting/option.\n 123 |     \"\"\"\n 124 |     if ':' in value:\n 125 |         encoding, handler = value.split(':')\n 126 |         validate_encoding_error_handler(\n 127 |             setting + '_error_handler', handler, option_parser,\n 128 |             config_parser, config_section)\n 129 |         if config_parser:\n 130 |             config_parser.set(config_section, setting + '_error_handler',\n 131 |                               handler)\n 132 |         else:\n 133 |             setattr(option_parser.values, setting + '_error_handler', handler)\n 134 |     else:\n 135 |         encoding = value\n 136 |     validate_encoding(setting, encoding, option_parser,\n 137 |                       config_parser, config_section)\n 138 |     return encoding\n 139 | \n 140 | \n 141 | def validate_boolean(setting, value, option_parser,\n 142 |                      config_parser=None, config_section=None):\n 143 |     \"\"\"Check/normalize boolean settings:\n 144 |          True:  '1', 'on', 'yes', 'true'\n 145 |          False: '0', 'off', 'no','false', ''\n 146 |     \"\"\"\n 147 |     if isinstance(value, bool):\n 148 |         return value\n 149 |     try:\n 150 |         return option_parser.booleans[value.strip().lower()]\n 151 |     except KeyError:\n 152 |         raise LookupError('unknown boolean value: \"%s\"' % value)\n 153 | \n 154 | \n 155 | def validate_ternary(setting, value, option_parser,\n 156 |                      config_parser=None, config_section=None):\n 157 |     \"\"\"Check/normalize three-value settings:\n 158 |          True:  '1', 'on', 'yes', 'true'\n 159 |          False: '0', 'off', 'no','false', ''\n 160 |          any other value: returned as-is.\n 161 |     \"\"\"\n 162 |     if isinstance(value, bool) or value is None:\n 163 |         return value\n 164 |     try:\n 165 |         return option_parser.booleans[value.strip().lower()]\n 166 |     except KeyError:\n 167 |         return value\n 168 | \n 169 | \n 170 | def validate_nonnegative_int(setting, value, option_parser,\n 171 |                              config_parser=None, config_section=None):\n 172 |     value = int(value)\n 173 |     if value < 0:\n 174 |         raise ValueError('negative value; must be positive or zero')\n 175 |     return value\n 176 | \n 177 | \n 178 | def validate_threshold(setting, value, option_parser,\n 179 |                        config_parser=None, config_section=None):\n 180 |     try:\n 181 |         return int(value)\n 182 |     except ValueError:\n 183 |         try:\n 184 |             return option_parser.thresholds[value.lower()]\n 185 |         except (KeyError, AttributeError):\n 186 |             raise LookupError('unknown threshold: %r.' % value)\n 187 | \n 188 | \n 189 | def validate_colon_separated_string_list(\n 190 |     setting, value, option_parser, config_parser=None, config_section=None):\n 191 |     if not isinstance(value, list):\n 192 |         value = value.split(':')\n 193 |     else:\n 194 |         last = value.pop()\n 195 |         value.extend(last.split(':'))\n 196 |     return value\n 197 | \n 198 | \n 199 | def validate_comma_separated_list(setting, value, option_parser,\n 200 |                                   config_parser=None, config_section=None):\n 201 |     \"\"\"Check/normalize list arguments (split at \",\" and strip whitespace).\n 202 |     \"\"\"\n 203 |     # `value` may be ``bytes``, ``str``, or a ``list`` (when  given as\n 204 |     # command line option and \"action\" is \"append\").\n 205 |     if not isinstance(value, list):\n 206 |         value = [value]\n 207 |     # this function is called for every option added to `value`\n 208 |     # -> split the last item and append the result:\n 209 |     last = value.pop()\n 210 |     items = [i.strip(' \\t\\n') for i in last.split(',') if i.strip(' \\t\\n')]\n 211 |     value.extend(items)\n 212 |     return value\n 213 | \n 214 | \n 215 | def validate_url_trailing_slash(\n 216 |     setting, value, option_parser, config_parser=None, config_section=None):\n 217 |     if not value:\n 218 |         return './'\n 219 |     elif value.endswith('/'):\n 220 |         return value\n 221 |     else:\n 222 |         return value + '/'\n 223 | \n 224 | \n 225 | def validate_dependency_file(setting, value, option_parser,\n 226 |                              config_parser=None, config_section=None):\n 227 |     try:\n 228 |         return utils.DependencyList(value)\n 229 |     except OSError:\n 230 |         # TODO: warn/info?\n 231 |         return utils.DependencyList(None)\n 232 | \n 233 | \n 234 | def validate_strip_class(setting, value, option_parser,\n 235 |                          config_parser=None, config_section=None):\n 236 |     # value is a comma separated string list:\n 237 |     value = validate_comma_separated_list(setting, value, option_parser,\n 238 |                                           config_parser, config_section)\n 239 |     # validate list elements:\n 240 |     for cls in value:\n 241 |         normalized = docutils.nodes.make_id(cls)\n 242 |         if cls != normalized:\n 243 |             raise ValueError('Invalid class value %r (perhaps %r?)'\n 244 |                              % (cls, normalized))\n 245 |     return value\n 246 | \n 247 | \n 248 | def validate_smartquotes_locales(setting, value, option_parser,\n 249 |                                  config_parser=None, config_section=None):\n 250 |     \"\"\"Check/normalize a comma separated list of smart quote definitions.\n 251 | \n 252 |     Return a list of (language-tag, quotes) string tuples.\"\"\"\n 253 | \n 254 |     # value is a comma separated string list:\n 255 |     value = validate_comma_separated_list(setting, value, option_parser,\n 256 |                                           config_parser, config_section)\n 257 |     # validate list elements\n 258 |     lc_quotes = []\n 259 |     for item in value:\n 260 |         try:\n 261 |             lang, quotes = item.split(':', 1)\n 262 |         except AttributeError:\n 263 |             # this function is called for every option added to `value`\n 264 |             # -> ignore if already a tuple:\n 265 |             lc_quotes.append(item)\n 266 |             continue\n 267 |         except ValueError:\n 268 |             raise ValueError('Invalid value \"%s\".'\n 269 |                              ' Format is \"<language>:<quotes>\".'\n 270 |                              % item.encode('ascii', 'backslashreplace'))\n 271 |         # parse colon separated string list:\n 272 |         quotes = quotes.strip()\n 273 | \n 274 |         if \"\\t\" not in quotes:\n 275 |             quotes = quotes.strip(\" \")\n 276 | \n 277 |         multichar_quotes = quotes.split(':')\n 278 |         if len(multichar_quotes) == 4:\n 279 |             quotes = multichar_quotes\n 280 |         elif len(quotes) != 4:\n 281 |             raise ValueError('Invalid value \"%s\". Please specify 4 quotes\\n'\n 282 |                              '    (primary open/close; secondary open/close).'\n 283 |                              % item.encode('ascii', 'backslashreplace'))\n 284 |         lc_quotes.append((lang, quotes))\n 285 |     return lc_quotes\n 286 | \n 287 | \n 288 | def make_paths_absolute(pathdict, keys, base_path=None):\n 289 |     \"\"\"\n 290 |     Interpret filesystem path settings relative to the `base_path` given.\n 291 | \n 292 |     Paths are values in `pathdict` whose keys are in `keys`.  Get `keys` from\n 293 |     `OptionParser.relative_path_settings`.\n 294 |     \"\"\"\n 295 |     if base_path is None:\n 296 |         base_path = os.getcwd()\n 297 |     for key in keys:\n 298 |         if key in pathdict:\n 299 |             value = pathdict[key]\n 300 |             if isinstance(value, list):\n 301 |                 value = [make_one_path_absolute(base_path, path)\n 302 |                          for path in value]\n 303 |             elif value:\n 304 |                 value = make_one_path_absolute(base_path, value)\n 305 |             pathdict[key] = value\n 306 | \n 307 | \n 308 | def make_one_path_absolute(base_path, path):\n 309 |     return os.path.abspath(os.path.join(base_path, path))\n 310 | \n 311 | \n 312 | def filter_settings_spec(settings_spec, *exclude, **replace):\n 313 |     \"\"\"Return a copy of `settings_spec` excluding/replacing some settings.\n 314 | \n 315 |     `settings_spec` is a tuple of configuration settings\n 316 |     (cf. `docutils.SettingsSpec.settings_spec`).\n 317 | \n 318 |     Optional positional arguments are names of to-be-excluded settings.\n 319 |     Keyword arguments are option specification replacements.\n 320 |     (See the html4strict writer for an example.)\n 321 |     \"\"\"\n 322 |     settings = list(settings_spec)\n 323 |     # every third item is a sequence of option tuples\n 324 |     for i in range(2, len(settings), 3):\n 325 |         newopts = []\n 326 |         for opt_spec in settings[i]:\n 327 |             # opt_spec is (\"<help>\", [<option strings>], {<keyword args>})\n 328 |             opt_name = [opt_string[2:].replace('-', '_')\n 329 |                         for opt_string in opt_spec[1]\n 330 |                         if opt_string.startswith('--')][0]\n 331 |             if opt_name in exclude:\n 332 |                 continue\n 333 |             if opt_name in replace.keys():\n 334 |                 newopts.append(replace[opt_name])\n 335 |             else:\n 336 |                 newopts.append(opt_spec)\n 337 |         settings[i] = tuple(newopts)\n 338 |     return tuple(settings)\n 339 | \n 340 | \n 341 | class Values(optparse.Values):\n 342 |     \"\"\"Storage for option values.\n 343 | \n 344 |     Updates list attributes by extension rather than by replacement.\n 345 |     Works in conjunction with the `OptionParser.lists` instance attribute.\n 346 | \n 347 |     Deprecated. Will be removed.\n 348 |     \"\"\"\n 349 | \n 350 |     def __init__(self, *args, **kwargs):\n 351 |         warnings.warn('frontend.Values class will be removed '\n 352 |                       'in Docutils 0.21 or later.',\n 353 |                       DeprecationWarning, stacklevel=2)\n 354 |         super().__init__(*args, **kwargs)\n 355 |         if getattr(self, 'record_dependencies', None) is None:\n 356 |             # Set up dummy dependency list.\n 357 |             self.record_dependencies = utils.DependencyList()\n 358 | \n 359 |     def update(self, other_dict, option_parser):\n 360 |         if isinstance(other_dict, Values):\n 361 |             other_dict = other_dict.__dict__\n 362 |         other_dict = dict(other_dict)  # also works with ConfigParser sections\n 363 |         for setting in option_parser.lists.keys():\n 364 |             if hasattr(self, setting) and setting in other_dict:\n 365 |                 value = getattr(self, setting)\n 366 |                 if value:\n 367 |                     value += other_dict[setting]\n 368 |                     del other_dict[setting]\n 369 |         self._update_loose(other_dict)\n 370 | \n 371 |     def copy(self):\n 372 |         \"\"\"Return a shallow copy of `self`.\"\"\"\n 373 |         with warnings.catch_warnings():\n 374 |             warnings.filterwarnings('ignore', category=DeprecationWarning)\n 375 |             return self.__class__(defaults=self.__dict__)\n 376 | \n 377 |     def setdefault(self, name, default):\n 378 |         \"\"\"Return ``self.name`` or ``default``.\n 379 | \n 380 |         If ``self.name`` is unset, set ``self.name = default``.\n 381 |         \"\"\"\n 382 |         if getattr(self, name, None) is None:\n 383 |             setattr(self, name, default)\n 384 |         return getattr(self, name)\n 385 | \n 386 | \n 387 | class Option(optparse.Option):\n 388 |     \"\"\"Add validation and override support to `optparse.Option`.\n 389 | \n 390 |     Deprecated. Will be removed.\n 391 |     \"\"\"\n 392 | \n 393 |     ATTRS = optparse.Option.ATTRS + ['validator', 'overrides']\n 394 | \n 395 |     def __init__(self, *args, **kwargs):\n 396 |         warnings.warn('The frontend.Option class will be removed '\n 397 |                       'in Docutils 0.21 or later.',\n 398 |                       DeprecationWarning, stacklevel=2)\n 399 |         super().__init__(*args, **kwargs)\n 400 | \n 401 |     def process(self, opt, value, values, parser):\n 402 |         \"\"\"\n 403 |         Call the validator function on applicable settings and\n 404 |         evaluate the 'overrides' option.\n 405 |         Extends `optparse.Option.process`.\n 406 |         \"\"\"\n 407 |         result = super().process(opt, value, values, parser)\n 408 |         setting = self.dest\n 409 |         if setting:\n 410 |             if self.validator:\n 411 |                 value = getattr(values, setting)\n 412 |                 try:\n 413 |                     new_value = self.validator(setting, value, parser)\n 414 |                 except Exception as err:\n 415 |                     raise optparse.OptionValueError(\n 416 |                         'Error in option \"%s\":\\n    %s'\n 417 |                         % (opt, io.error_string(err)))\n 418 |                 setattr(values, setting, new_value)\n 419 |             if self.overrides:\n 420 |                 setattr(values, self.overrides, None)\n 421 |         return result\n 422 | \n 423 | \n 424 | class OptionParser(optparse.OptionParser, docutils.SettingsSpec):\n 425 |     \"\"\"\n 426 |     Settings parser for command-line and library use.\n 427 | \n 428 |     The `settings_spec` specification here and in other Docutils components\n 429 |     are merged to build the set of command-line options and runtime settings\n 430 |     for this process.\n 431 | \n 432 |     Common settings (defined below) and component-specific settings must not\n 433 |     conflict.  Short options are reserved for common settings, and components\n 434 |     are restricted to using long options.\n 435 | \n 436 |     Deprecated.\n 437 |     Will be replaced by a subclass of `argparse.ArgumentParser`.\n 438 |     \"\"\"\n 439 | \n 440 |     standard_config_files = [\n 441 |         '/etc/docutils.conf',           # system-wide\n 442 |         './docutils.conf',              # project-specific\n 443 |         '~/.docutils']                  # user-specific\n 444 |     \"\"\"Docutils configuration files, using ConfigParser syntax.\n 445 | \n 446 |     Filenames will be tilde-expanded later. Later files override earlier ones.\n 447 |     \"\"\"\n 448 | \n 449 |     threshold_choices = 'info 1 warning 2 error 3 severe 4 none 5'.split()\n 450 |     \"\"\"Possible inputs for for --report and --halt threshold values.\"\"\"\n 451 | \n 452 |     thresholds = {'info': 1, 'warning': 2, 'error': 3, 'severe': 4, 'none': 5}\n 453 |     \"\"\"Lookup table for --report and --halt threshold values.\"\"\"\n 454 | \n 455 |     booleans = {'1': True, 'on': True, 'yes': True, 'true': True, '0': False,\n 456 |                 'off': False, 'no': False, 'false': False, '': False}\n 457 |     \"\"\"Lookup table for boolean configuration file settings.\"\"\"\n 458 | \n 459 |     default_error_encoding = (getattr(sys.stderr, 'encoding', None)\n 460 |                               or io._locale_encoding  # noqa\n 461 |                               or 'ascii')\n 462 | \n 463 |     default_error_encoding_error_handler = 'backslashreplace'\n 464 | \n 465 |     settings_spec = (\n 466 |         'General Docutils Options',\n 467 |         None,\n 468 |         (('Output destination name. Obsoletes the <destination> '\n 469 |           'positional argument. Default: None (stdout).',\n 470 |           ['--output'], {'metavar': '<destination>'}),\n 471 |          ('Specify the document title as metadata.',\n 472 |           ['--title'], {'metavar': '<title>'}),\n 473 |          ('Include a \"Generated by Docutils\" credit and link.',\n 474 |           ['--generator', '-g'], {'action': 'store_true',\n 475 |                                   'validator': validate_boolean}),\n 476 |          ('Do not include a generator credit.',\n 477 |           ['--no-generator'], {'action': 'store_false', 'dest': 'generator'}),\n 478 |          ('Include the date at the end of the document (UTC).',\n 479 |           ['--date', '-d'], {'action': 'store_const', 'const': '%Y-%m-%d',\n 480 |                              'dest': 'datestamp'}),\n 481 |          ('Include the time & date (UTC).',\n 482 |           ['--time', '-t'], {'action': 'store_const',\n 483 |                              'const': '%Y-%m-%d %H:%M UTC',\n 484 |                              'dest': 'datestamp'}),\n 485 |          ('Do not include a datestamp of any kind.',\n 486 |           ['--no-datestamp'], {'action': 'store_const', 'const': None,\n 487 |                                'dest': 'datestamp'}),\n 488 |          ('Include a \"View document source\" link.',\n 489 |           ['--source-link', '-s'], {'action': 'store_true',\n 490 |                                     'validator': validate_boolean}),\n 491 |          ('Use <URL> for a source link; implies --source-link.',\n 492 |           ['--source-url'], {'metavar': '<URL>'}),\n 493 |          ('Do not include a \"View document source\" link.',\n 494 |           ['--no-source-link'],\n 495 |           {'action': 'callback', 'callback': store_multiple,\n 496 |            'callback_args': ('source_link', 'source_url')}),\n 497 |          ('Link from section headers to TOC entries.  (default)',\n 498 |           ['--toc-entry-backlinks'],\n 499 |           {'dest': 'toc_backlinks', 'action': 'store_const', 'const': 'entry',\n 500 |            'default': 'entry'}),\n 501 |          ('Link from section headers to the top of the TOC.',\n 502 |           ['--toc-top-backlinks'],\n 503 |           {'dest': 'toc_backlinks', 'action': 'store_const', 'const': 'top'}),\n 504 |          ('Disable backlinks to the table of contents.',\n 505 |           ['--no-toc-backlinks'],\n 506 |           {'dest': 'toc_backlinks', 'action': 'store_false'}),\n 507 |          ('Link from footnotes/citations to references. (default)',\n 508 |           ['--footnote-backlinks'],\n 509 |           {'action': 'store_true', 'default': 1,\n 510 |            'validator': validate_boolean}),\n 511 |          ('Disable backlinks from footnotes and citations.',\n 512 |           ['--no-footnote-backlinks'],\n 513 |           {'dest': 'footnote_backlinks', 'action': 'store_false'}),\n 514 |          ('Enable section numbering by Docutils.  (default)',\n 515 |           ['--section-numbering'],\n 516 |           {'action': 'store_true', 'dest': 'sectnum_xform',\n 517 |            'default': 1, 'validator': validate_boolean}),\n 518 |          ('Disable section numbering by Docutils.',\n 519 |           ['--no-section-numbering'],\n 520 |           {'action': 'store_false', 'dest': 'sectnum_xform'}),\n 521 |          ('Remove comment elements from the document tree.',\n 522 |           ['--strip-comments'],\n 523 |           {'action': 'store_true', 'validator': validate_boolean}),\n 524 |          ('Leave comment elements in the document tree. (default)',\n 525 |           ['--leave-comments'],\n 526 |           {'action': 'store_false', 'dest': 'strip_comments'}),\n 527 |          ('Remove all elements with classes=\"<class>\" from the document tree. '\n 528 |           'Warning: potentially dangerous; use with caution. '\n 529 |           '(Multiple-use option.)',\n 530 |           ['--strip-elements-with-class'],\n 531 |           {'action': 'append', 'dest': 'strip_elements_with_classes',\n 532 |            'metavar': '<class>', 'validator': validate_strip_class}),\n 533 |          ('Remove all classes=\"<class>\" attributes from elements in the '\n 534 |           'document tree. Warning: potentially dangerous; use with caution. '\n 535 |           '(Multiple-use option.)',\n 536 |           ['--strip-class'],\n 537 |           {'action': 'append', 'dest': 'strip_classes',\n 538 |            'metavar': '<class>', 'validator': validate_strip_class}),\n 539 |          ('Report system messages at or higher than <level>: \"info\" or \"1\", '\n 540 |           '\"warning\"/\"2\" (default), \"error\"/\"3\", \"severe\"/\"4\", \"none\"/\"5\"',\n 541 |           ['--report', '-r'], {'choices': threshold_choices, 'default': 2,\n 542 |                                'dest': 'report_level', 'metavar': '<level>',\n 543 |                                'validator': validate_threshold}),\n 544 |          ('Report all system messages.  (Same as \"--report=1\".)',\n 545 |           ['--verbose', '-v'], {'action': 'store_const', 'const': 1,\n 546 |                                 'dest': 'report_level'}),\n 547 |          ('Report no system messages.  (Same as \"--report=5\".)',\n 548 |           ['--quiet', '-q'], {'action': 'store_const', 'const': 5,\n 549 |                               'dest': 'report_level'}),\n 550 |          ('Halt execution at system messages at or above <level>.  '\n 551 |           'Levels as in --report.  Default: 4 (severe).',\n 552 |           ['--halt'], {'choices': threshold_choices, 'dest': 'halt_level',\n 553 |                        'default': 4, 'metavar': '<level>',\n 554 |                        'validator': validate_threshold}),\n 555 |          ('Halt at the slightest problem.  Same as \"--halt=info\".',\n 556 |           ['--strict'], {'action': 'store_const', 'const': 1,\n 557 |                          'dest': 'halt_level'}),\n 558 |          ('Enable a non-zero exit status for non-halting system messages at '\n 559 |           'or above <level>.  Default: 5 (disabled).',\n 560 |           ['--exit-status'], {'choices': threshold_choices,\n 561 |                               'dest': 'exit_status_level',\n 562 |                               'default': 5, 'metavar': '<level>',\n 563 |                               'validator': validate_threshold}),\n 564 |          ('Enable debug-level system messages and diagnostics.',\n 565 |           ['--debug'], {'action': 'store_true',\n 566 |                         'validator': validate_boolean}),\n 567 |          ('Disable debug output.  (default)',\n 568 |           ['--no-debug'], {'action': 'store_false', 'dest': 'debug'}),\n 569 |          ('Send the output of system messages to <file>.',\n 570 |           ['--warnings'], {'dest': 'warning_stream', 'metavar': '<file>'}),\n 571 |          ('Enable Python tracebacks when Docutils is halted.',\n 572 |           ['--traceback'], {'action': 'store_true', 'default': None,\n 573 |                             'validator': validate_boolean}),\n 574 |          ('Disable Python tracebacks.  (default)',\n 575 |           ['--no-traceback'], {'dest': 'traceback', 'action': 'store_false'}),\n 576 |          ('Specify the encoding and optionally the '\n 577 |           'error handler of input text.  Default: <auto-detect>:strict.',\n 578 |           ['--input-encoding', '-i'],\n 579 |           {'metavar': '<name[:handler]>',\n 580 |            'validator': validate_encoding_and_error_handler}),\n 581 |          ('Specify the error handler for undecodable characters.  '\n 582 |           'Choices: \"strict\" (default), \"ignore\", and \"replace\".',\n 583 |           ['--input-encoding-error-handler'],\n 584 |           {'default': 'strict', 'validator': validate_encoding_error_handler}),\n 585 |          ('Specify the text encoding and optionally the error handler for '\n 586 |           'output.  Default: utf-8:strict.',\n 587 |           ['--output-encoding', '-o'],\n 588 |           {'metavar': '<name[:handler]>', 'default': 'utf-8',\n 589 |            'validator': validate_encoding_and_error_handler}),\n 590 |          ('Specify error handler for unencodable output characters; '\n 591 |           '\"strict\" (default), \"ignore\", \"replace\", '\n 592 |           '\"xmlcharrefreplace\", \"backslashreplace\".',\n 593 |           ['--output-encoding-error-handler'],\n 594 |           {'default': 'strict', 'validator': validate_encoding_error_handler}),\n 595 |          ('Specify text encoding and optionally error handler '\n 596 |           'for error output.  Default: %s:%s.'\n 597 |           % (default_error_encoding, default_error_encoding_error_handler),\n 598 |           ['--error-encoding', '-e'],\n 599 |           {'metavar': '<name[:handler]>', 'default': default_error_encoding,\n 600 |            'validator': validate_encoding_and_error_handler}),\n 601 |          ('Specify the error handler for unencodable characters in '\n 602 |           'error output.  Default: %s.'\n 603 |           % default_error_encoding_error_handler,\n 604 |           ['--error-encoding-error-handler'],\n 605 |           {'default': default_error_encoding_error_handler,\n 606 |            'validator': validate_encoding_error_handler}),\n 607 |          ('Specify the language (as BCP 47 language tag).  Default: en.',\n 608 |           ['--language', '-l'], {'dest': 'language_code', 'default': 'en',\n 609 |                                  'metavar': '<name>'}),\n 610 |          ('Write output file dependencies to <file>.',\n 611 |           ['--record-dependencies'],\n 612 |           {'metavar': '<file>', 'validator': validate_dependency_file,\n 613 |            'default': None}),           # default set in Values class\n 614 |          ('Read configuration settings from <file>, if it exists.',\n 615 |           ['--config'], {'metavar': '<file>', 'type': 'string',\n 616 |                          'action': 'callback', 'callback': read_config_file}),\n 617 |          (\"Show this program's version number and exit.\",\n 618 |           ['--version', '-V'], {'action': 'version'}),\n 619 |          ('Show this help message and exit.',\n 620 |           ['--help', '-h'], {'action': 'help'}),\n 621 |          # Typically not useful for non-programmatical use:\n 622 |          (SUPPRESS_HELP, ['--id-prefix'], {'default': ''}),\n 623 |          (SUPPRESS_HELP, ['--auto-id-prefix'], {'default': '%'}),\n 624 |          # Hidden options, for development use only:\n 625 |          (SUPPRESS_HELP, ['--dump-settings'], {'action': 'store_true'}),\n 626 |          (SUPPRESS_HELP, ['--dump-internals'], {'action': 'store_true'}),\n 627 |          (SUPPRESS_HELP, ['--dump-transforms'], {'action': 'store_true'}),\n 628 |          (SUPPRESS_HELP, ['--dump-pseudo-xml'], {'action': 'store_true'}),\n 629 |          (SUPPRESS_HELP, ['--expose-internal-attribute'],\n 630 |           {'action': 'append', 'dest': 'expose_internals',\n 631 |            'validator': validate_colon_separated_string_list}),\n 632 |          (SUPPRESS_HELP, ['--strict-visitor'], {'action': 'store_true'}),\n 633 |          ))\n 634 |     \"\"\"Runtime settings and command-line options common to all Docutils front\n 635 |     ends.  Setting specs specific to individual Docutils components are also\n 636 |     used (see `populate_from_components()`).\"\"\"\n 637 | \n 638 |     settings_defaults = {'_disable_config': None,\n 639 |                          '_source': None,\n 640 |                          '_destination': None,\n 641 |                          '_config_files': None}\n 642 |     \"\"\"Defaults for settings without command-line option equivalents.\n 643 | \n 644 |     See https://docutils.sourceforge.io/docs/user/config.html#internal-settings\n 645 |     \"\"\"\n 646 | \n 647 |     config_section = 'general'\n 648 | \n 649 |     version_template = ('%%prog (Docutils %s%s, Python %s, on %s)'\n 650 |                         % (docutils.__version__,\n 651 |                            docutils.__version_details__\n 652 |                            and ' [%s]'%docutils.__version_details__ or '',\n 653 |                            sys.version.split()[0], sys.platform))\n 654 |     \"\"\"Default version message.\"\"\"\n 655 | \n 656 |     def __init__(self, components=(), defaults=None, read_config_files=False,\n 657 |                  *args, **kwargs):\n 658 |         \"\"\"Set up OptionParser instance.\n 659 | \n 660 |         `components` is a list of Docutils components each containing a\n 661 |         ``.settings_spec`` attribute.\n 662 |         `defaults` is a mapping of setting default overrides.\n 663 |         \"\"\"\n 664 | \n 665 |         self.lists = {}\n 666 |         \"\"\"Set of list-type settings.\"\"\"\n 667 | \n 668 |         self.config_files = []\n 669 |         \"\"\"List of paths of applied configuration files.\"\"\"\n 670 | \n 671 |         self.relative_path_settings = ['warning_stream']  # will be modified\n 672 | \n 673 |         warnings.warn('The frontend.OptionParser class will be replaced '\n 674 |                       'by a subclass of argparse.ArgumentParser '\n 675 |                       'in Docutils 0.21 or later.',\n 676 |                       DeprecationWarning, stacklevel=2)\n 677 |         super().__init__(option_class=Option, add_help_option=None,\n 678 |                          formatter=optparse.TitledHelpFormatter(width=78),\n 679 |                          *args, **kwargs)\n 680 |         if not self.version:\n 681 |             self.version = self.version_template\n 682 |         self.components = (self, *components)\n 683 |         self.populate_from_components(self.components)\n 684 |         self.defaults.update(defaults or {})\n 685 |         if read_config_files and not self.defaults['_disable_config']:\n 686 |             try:\n 687 |                 config_settings = self.get_standard_config_settings()\n 688 |             except ValueError as err:\n 689 |                 self.error(err)\n 690 |             self.defaults.update(config_settings.__dict__)\n 691 | \n 692 |     def populate_from_components(self, components):\n 693 |         \"\"\"Collect settings specification from components.\n 694 | \n 695 |         For each component, populate from the `SettingsSpec.settings_spec`\n 696 |         structure, then from the `SettingsSpec.settings_defaults` dictionary.\n 697 |         After all components have been processed, check for and populate from\n 698 |         each component's `SettingsSpec.settings_default_overrides` dictionary.\n 699 |         \"\"\"\n 700 |         for component in components:\n 701 |             if component is None:\n 702 |                 continue\n 703 |             settings_spec = component.settings_spec\n 704 |             self.relative_path_settings.extend(\n 705 |                 component.relative_path_settings)\n 706 |             for i in range(0, len(settings_spec), 3):\n 707 |                 title, description, option_spec = settings_spec[i:i+3]\n 708 |                 if title:\n 709 |                     group = optparse.OptionGroup(self, title, description)\n 710 |                     self.add_option_group(group)\n 711 |                 else:\n 712 |                     group = self        # single options\n 713 |                 for (help_text, option_strings, kwargs) in option_spec:\n 714 |                     option = group.add_option(help=help_text, *option_strings,\n 715 |                                               **kwargs)\n 716 |                     if kwargs.get('action') == 'append':\n 717 |                         self.lists[option.dest] = True\n 718 |                 if component.settings_defaults:\n 719 |                     self.defaults.update(component.settings_defaults)\n 720 |         for component in components:\n 721 |             if component and component.settings_default_overrides:\n 722 |                 self.defaults.update(component.settings_default_overrides)\n 723 | \n 724 |     @classmethod\n 725 |     def get_standard_config_files(cls):\n 726 |         \"\"\"Return list of config files, from environment or standard.\"\"\"\n 727 |         if 'DOCUTILSCONFIG' in os.environ:\n 728 |             config_files = os.environ['DOCUTILSCONFIG'].split(os.pathsep)\n 729 |         else:\n 730 |             config_files = cls.standard_config_files\n 731 |         return [os.path.expanduser(f) for f in config_files if f.strip()]\n 732 | \n 733 |     def get_standard_config_settings(self):\n 734 |         with warnings.catch_warnings():\n 735 |             warnings.filterwarnings('ignore', category=DeprecationWarning)\n 736 |             settings = Values()\n 737 |         for filename in self.get_standard_config_files():\n 738 |             settings.update(self.get_config_file_settings(filename), self)\n 739 |         return settings\n 740 | \n 741 |     def get_config_file_settings(self, config_file):\n 742 |         \"\"\"Returns a dictionary containing appropriate config file settings.\"\"\"\n 743 |         config_parser = ConfigParser()\n 744 |         # parse config file, add filename if found and successfully read.\n 745 |         applied = set()\n 746 |         with warnings.catch_warnings():\n 747 |             warnings.filterwarnings('ignore', category=DeprecationWarning)\n 748 |             self.config_files += config_parser.read(config_file, self)\n 749 |             settings = Values()\n 750 |         for component in self.components:\n 751 |             if not component:\n 752 |                 continue\n 753 |             for section in (tuple(component.config_section_dependencies or ())\n 754 |                             + (component.config_section,)):\n 755 |                 if section in applied:\n 756 |                     continue\n 757 |                 applied.add(section)\n 758 |                 if config_parser.has_section(section):\n 759 |                     settings.update(config_parser[section], self)\n 760 |         make_paths_absolute(settings.__dict__,\n 761 |                             self.relative_path_settings,\n 762 |                             os.path.dirname(config_file))\n 763 |         return settings.__dict__\n 764 | \n 765 |     def check_values(self, values, args):\n 766 |         \"\"\"Store positional arguments as runtime settings.\"\"\"\n 767 |         values._source, values._destination = self.check_args(args)\n 768 |         make_paths_absolute(values.__dict__, self.relative_path_settings)\n 769 |         values._config_files = self.config_files\n 770 |         return values\n 771 | \n 772 |     def check_args(self, args):\n 773 |         source = destination = None\n 774 |         if args:\n 775 |             source = args.pop(0)\n 776 |             if source == '-':           # means stdin\n 777 |                 source = None\n 778 |         if args:\n 779 |             destination = args.pop(0)\n 780 |             if destination == '-':      # means stdout\n 781 |                 destination = None\n 782 |         if args:\n 783 |             self.error('Maximum 2 arguments allowed.')\n 784 |         if source and source == destination:\n 785 |             self.error('Do not specify the same file for both source and '\n 786 |                        'destination.  It will clobber the source file.')\n 787 |         return source, destination\n 788 | \n 789 |     def set_defaults_from_dict(self, defaults):\n 790 |         # not used, deprecated, will be removed\n 791 |         self.defaults.update(defaults)\n 792 | \n 793 |     def get_default_values(self):\n 794 |         \"\"\"Needed to get custom `Values` instances.\"\"\"\n 795 |         with warnings.catch_warnings():\n 796 |             warnings.filterwarnings('ignore', category=DeprecationWarning)\n 797 |             defaults = Values(self.defaults)\n 798 |         defaults._config_files = self.config_files\n 799 |         return defaults\n 800 | \n 801 |     def get_option_by_dest(self, dest):\n 802 |         \"\"\"\n 803 |         Get an option by its dest.\n 804 | \n 805 |         If you're supplying a dest which is shared by several options,\n 806 |         it is undefined which option of those is returned.\n 807 | \n 808 |         A KeyError is raised if there is no option with the supplied\n 809 |         dest.\n 810 |         \"\"\"\n 811 |         for group in self.option_groups + [self]:\n 812 |             for option in group.option_list:\n 813 |                 if option.dest == dest:\n 814 |                     return option\n 815 |         raise KeyError('No option with dest == %r.' % dest)\n 816 | \n 817 | \n 818 | class ConfigParser(configparser.RawConfigParser):\n 819 |     \"\"\"Parser for Docutils configuration files.\n 820 | \n 821 |     See https://docutils.sourceforge.io/docs/user/config.html.\n 822 | \n 823 |     Option key normalization includes conversion of '-' to '_'.\n 824 | \n 825 |     Config file encoding is \"utf-8\". Encoding errors are reported\n 826 |     and the affected file(s) skipped.\n 827 | \n 828 |     This class is provisional and will change in future versions.\n 829 |     \"\"\"\n 830 | \n 831 |     old_settings = {\n 832 |         'pep_stylesheet': ('pep_html writer', 'stylesheet'),\n 833 |         'pep_stylesheet_path': ('pep_html writer', 'stylesheet_path'),\n 834 |         'pep_template': ('pep_html writer', 'template')}\n 835 |     \"\"\"{old setting: (new section, new setting)} mapping, used by\n 836 |     `handle_old_config`, to convert settings from the old [options] section.\n 837 |     \"\"\"\n 838 | \n 839 |     old_warning = (\n 840 |         'The \"[option]\" section is deprecated.\\n'\n 841 |         'Support for old-format configuration files will be removed in '\n 842 |         'Docutils 0.21 or later.  Please revise your configuration files.  '\n 843 |         'See <https://docutils.sourceforge.io/docs/user/config.html>, '\n 844 |         'section \"Old-Format Configuration Files\".')\n 845 | \n 846 |     not_utf8_error = \"\"\"\\\n 847 | Unable to read configuration file \"%s\": content not encoded as UTF-8.\n 848 | Skipping \"%s\" configuration file.\n 849 | \"\"\"\n 850 | \n 851 |     def read(self, filenames, option_parser=None):\n 852 |         # Currently, if a `docutils.frontend.OptionParser` instance is\n 853 |         # supplied, setting values are validated.\n 854 |         if option_parser is not None:\n 855 |             warnings.warn('frontend.ConfigParser.read(): parameter '\n 856 |                           '\"option_parser\" will be removed '\n 857 |                           'in Docutils 0.21 or later.',\n 858 |                           DeprecationWarning, stacklevel=2)\n 859 |         read_ok = []\n 860 |         if isinstance(filenames, str):\n 861 |             filenames = [filenames]\n 862 |         for filename in filenames:\n 863 |             # Config files are UTF-8-encoded:\n 864 |             try:\n 865 |                 read_ok += super().read(filename, encoding='utf-8')\n 866 |             except UnicodeDecodeError:\n 867 |                 sys.stderr.write(self.not_utf8_error % (filename, filename))\n 868 |                 continue\n 869 |             if 'options' in self:\n 870 |                 self.handle_old_config(filename)\n 871 |             if option_parser is not None:\n 872 |                 self.validate_settings(filename, option_parser)\n 873 |         return read_ok\n 874 | \n 875 |     def handle_old_config(self, filename):\n 876 |         warnings.warn_explicit(self.old_warning, ConfigDeprecationWarning,\n 877 |                                filename, 0)\n 878 |         options = self.get_section('options')\n 879 |         if not self.has_section('general'):\n 880 |             self.add_section('general')\n 881 |         for key, value in options.items():\n 882 |             if key in self.old_settings:\n 883 |                 section, setting = self.old_settings[key]\n 884 |                 if not self.has_section(section):\n 885 |                     self.add_section(section)\n 886 |             else:\n 887 |                 section = 'general'\n 888 |                 setting = key\n 889 |             if not self.has_option(section, setting):\n 890 |                 self.set(section, setting, value)\n 891 |         self.remove_section('options')\n 892 | \n 893 |     def validate_settings(self, filename, option_parser):\n 894 |         \"\"\"\n 895 |         Call the validator function and implement overrides on all applicable\n 896 |         settings.\n 897 |         \"\"\"\n 898 |         for section in self.sections():\n 899 |             for setting in self.options(section):\n 900 |                 try:\n 901 |                     option = option_parser.get_option_by_dest(setting)\n 902 |                 except KeyError:\n 903 |                     continue\n 904 |                 if option.validator:\n 905 |                     value = self.get(section, setting)\n 906 |                     try:\n 907 |                         new_value = option.validator(\n 908 |                             setting, value, option_parser,\n 909 |                             config_parser=self, config_section=section)\n 910 |                     except Exception as err:\n 911 |                         raise ValueError(f'Error in config file \"{filename}\", '\n 912 |                                          f'section \"[{section}]\":\\n'\n 913 |                                          f'    {io.error_string(err)}\\n'\n 914 |                                          f'        {setting} = {value}')\n 915 |                     self.set(section, setting, new_value)\n 916 |                 if option.overrides:\n 917 |                     self.set(section, option.overrides, None)\n 918 | \n 919 |     def optionxform(self, optionstr):\n 920 |         \"\"\"\n 921 |         Lowercase and transform '-' to '_'.\n 922 | \n 923 |         So the cmdline form of option names can be used in config files.\n 924 |         \"\"\"\n 925 |         return optionstr.lower().replace('-', '_')\n 926 | \n 927 |     def get_section(self, section):\n 928 |         \"\"\"\n 929 |         Return a given section as a dictionary.\n 930 | \n 931 |         Return empty dictionary if the section doesn't exist.\n 932 | \n 933 |         Deprecated. Use the configparser \"Mapping Protocol Access\" and\n 934 |         catch KeyError.\n 935 |         \"\"\"\n 936 |         warnings.warn('frontend.OptionParser.get_section() '\n 937 |                       'will be removed in Docutils 0.21 or later.',\n 938 |                       DeprecationWarning, stacklevel=2)\n 939 |         try:\n 940 |             return dict(self[section])\n 941 |         except KeyError:\n 942 |             return {}\n 943 | \n 944 | \n 945 | class ConfigDeprecationWarning(FutureWarning):\n 946 |     \"\"\"Warning for deprecated configuration file features.\"\"\"\n 947 | \n 948 | \n 949 | def get_default_settings(*components):\n 950 |     \"\"\"Return default runtime settings for `components`.\n 951 | \n 952 |     Return a `frontend.Values` instance with defaults for generic Docutils\n 953 |     settings and settings from the `components` (`SettingsSpec` instances).\n 954 | \n 955 |     This corresponds to steps 1 and 2 in the `runtime settings priority`__.\n 956 | \n 957 |     __ https://docutils.sourceforge.io/docs/api/runtime-settings.html\n 958 |        #settings-priority\n 959 |     \"\"\"\n 960 |     with warnings.catch_warnings():\n 961 |         warnings.filterwarnings('ignore', category=DeprecationWarning)\n 962 |         return OptionParser(components).get_default_values()\n```\n\n## Target A\nLine 272: `quotes = quotes.strip()`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes is None\",\n      \"rationale\": \"If quotes is None, the strip operation is skipped, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == ''\",\n      \"rationale\": \"If quotes is an empty string, the strip operation returns an empty string, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == '\\\"'\",\n      \"rationale\": \"If quotes is a single double quote, the strip operation returns the same value, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == \\\"'\\\"\",\n      \"rationale\": \"If quotes is a single single quote, the strip operation returns the same value, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == '\\\"\\\"'\",\n      \"rationale\": \"If quotes is a pair of double quotes, the strip operation returns the same value, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == \\\"''\\\"\",\n      \"rationale\": \"If quotes is a pair of single quotes, the strip operation returns the same value, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == '\\\"\\\\'\\\"'\",\n      \"rationale\": \"If quotes is a single double quote followed by a single quote, the strip operation returns the same value, making the deletion of line 272 unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/frontend.py\", \"line\": 271, \"text\": \"quotes = self.get_option('quotes')\"},\n        {\"file\": \"docutils/frontend.py\", \"line\": 272, \"text\": \"quotes = quotes.strip()\"}\n      ],\n      \"condition\": \"quotes == \\\"'\\\\\\\"'\\\"\",\n      \"rationale\": \"If quotes is a single single quote followed by a double quote, the strip operation returns the same value, making the deletion of line 272 unobservable.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 4098,
+      "completion_tokens": 906,
+      "total_duration_ns": 19079202243,
+      "load_duration_ns": 4399652,
+      "prompt_eval_duration_ns": 1107666000,
+      "eval_duration_ns": 17629612000,
+      "model": "glm-4.7-flash:q4_K_M",
+      "done_reason": "stop",
+      "wall_seconds": 19.22,
+      "attempt": 0
+    },
+    "model": "glm-4.7-flash:q4_K_M"
+  },
+  "prompt_tokens": 4098,
+  "completion_tokens": 906,
+  "runtime_s": 19.22,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [],
+  "rejected": [
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes is None",
+        "rationale": "If quotes is None, the strip operation is skipped, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == ''",
+        "rationale": "If quotes is an empty string, the strip operation returns an empty string, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == '\"'",
+        "rationale": "If quotes is a single double quote, the strip operation returns the same value, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == \"'\"",
+        "rationale": "If quotes is a single single quote, the strip operation returns the same value, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == '\"\"'",
+        "rationale": "If quotes is a pair of double quotes, the strip operation returns the same value, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == \"''\"",
+        "rationale": "If quotes is a pair of single quotes, the strip operation returns the same value, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == '\"\\'\"'",
+        "rationale": "If quotes is a single double quote followed by a single quote, the strip operation returns the same value, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          },
+          {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        ],
+        "condition": "quotes == \"'\\\"'\"",
+        "rationale": "If quotes is a single single quote followed by a double quote, the strip operation returns the same value, making the deletion of line 272 unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 271,
+          "text": "quotes = self.get_option('quotes')",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 271,
+            "text": "quotes = self.get_option('quotes')"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "docutils/frontend.py",
+            "line": 272,
+            "text": "quotes = quotes.strip()"
+          }
+        }
+      ]
+    }
+  ],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_space_padding",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [],
+        "stray_ops": [],
+        "msms_exact": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "INVALID_OUTPUT"
+}

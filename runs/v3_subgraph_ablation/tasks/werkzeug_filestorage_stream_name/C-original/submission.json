@@ -1,0 +1,79 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "werkzeug_filestorage_stream_name",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "stream": "tempfile"
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "stream": "stderr"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stderr>"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stdin>"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/datastructures.py",
+          "line": 2924,
+          "code": "                filename = None"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "stream": "stderr"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stderr>"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stdin>"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/datastructures.py",
+          "line": 2924,
+          "code": "                filename = None"
+        }
+      ]
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "input": {
+        "stream": "stderr"
+      },
+      "control_input": {
+        "stream": "tempfile"
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/datastructures.py",
+          "line": 2924,
+          "code": "                filename = None"
+        }
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control"
+    }
+  ]
+}

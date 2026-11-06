@@ -1,0 +1,1230 @@
+{
+  "tabulate-0.9.0:tabulate/__init__.py:1464:name:headers": {
+    "probe_id": "tabulate_headers_firstrow",
+    "declared_inputs": [
+      {
+        "id": "int_firstrow",
+        "call": "tabulate([[1,2],[3,4]], headers='firstrow')"
+      },
+      {
+        "id": "str_firstrow",
+        "call": "tabulate([['a','b'],['c','d']], headers='firstrow')"
+      },
+      {
+        "id": "float_firstrow",
+        "call": "tabulate([[1.5,2.5],[3.0,4.0]], headers='firstrow')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1469",
+        "file": "tabulate/__init__.py",
+        "line": 1469,
+        "code": "headers = list(map(str, headers))",
+        "role": "unconditional re-conversion that overwrites A"
+      }
+    ],
+    "observations": {
+      "P_plus": {
+        "int_firstrow": "normal output",
+        "str_firstrow": "normal output",
+        "float_firstrow": "normal output"
+      },
+      "P_minus": {
+        "int_firstrow": "identical to P+",
+        "str_firstrow": "identical to P+",
+        "float_firstrow": "identical to P+"
+      },
+      "P_minus_U_disabled": {
+        "int_firstrow": "TypeError: object of type 'int' has no len()",
+        "str_firstrow": "normal output",
+        "float_firstrow": "TypeError: object of type 'float' has no len()"
+      },
+      "P_plus_U_disabled": {
+        "int_firstrow": "TypeError: object of type 'int' has no len()",
+        "str_firstrow": "normal output",
+        "float_firstrow": "TypeError: object of type 'float' has no len()"
+      }
+    },
+    "exposing_witness": null,
+    "masking_witness": {
+      "input": "int_firstrow",
+      "msms": [
+        [
+          "L1469"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L1469"
+        ]
+      ]
+    },
+    "u_necessity": true,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "A is fully overwritten by the unconditional L1469 on every input where A executes; P+ and P- never differ, so no legal exposing witness exists (AC5). Deleting A plus U changes both P+ and P-, which shows U is necessary for the equality but produces no exposing witness for A itself."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:2121:name:tablefmt": {
+    "probe_id": "tabulate_tablefmt_multiline",
+    "declared_inputs": [
+      {
+        "id": "grid_multiline",
+        "call": "tabulate([['a\nb','c']], tablefmt='grid')"
+      },
+      {
+        "id": "pipe_multiline",
+        "call": "tabulate([['a\nb','c']], tablefmt='pipe')"
+      },
+      {
+        "id": "plain_multiline",
+        "call": "tabulate([['a\nb','c']], tablefmt='plain')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L2192",
+        "file": "tabulate/__init__.py",
+        "line": 2192,
+        "code": "tablefmt = _table_formats.get(tablefmt, _table_formats['simple'])",
+        "role": "unconditional name-to-TableFormat resolution"
+      }
+    ],
+    "observations": {
+      "P_plus": {
+        "grid_multiline": "normal",
+        "pipe_multiline": "normal",
+        "plain_multiline": "normal"
+      },
+      "P_minus": {
+        "grid_multiline": "identical to P+",
+        "pipe_multiline": "identical to P+",
+        "plain_multiline": "identical to P+"
+      },
+      "P_minus_U_disabled": {
+        "all": "AttributeError: 'str' object has no attribute ..."
+      },
+      "P_plus_U_disabled": {
+        "all": "AttributeError: 'str' object has no attribute ..."
+      }
+    },
+    "exposing_witness": null,
+    "masking_witness": {
+      "input": "grid_multiline",
+      "msms": [
+        [
+          "L2192"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L2192"
+        ]
+      ]
+    },
+    "u_necessity": true,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "L2192 resolves the format name unconditionally, so deleting A is invisible for every input and no exposing witness exists."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:2074:name:numparses": {
+    "probe_id": "tabulate_numparses_header_wrap",
+    "declared_inputs": [
+      {
+        "id": "mask_both_widths",
+        "role": "masking",
+        "call": "tabulate(table, headers='firstrow', tablefmt='plain', maxcolwidths=[10,10], maxheadercolwidths=[None,2])"
+      },
+      {
+        "id": "expose_no_maxcolwidths",
+        "role": "exposing",
+        "call": "tabulate(table, headers='firstrow', tablefmt='plain', maxheadercolwidths=[None,2])"
+      },
+      {
+        "id": "control_no_maxheader",
+        "role": "control",
+        "call": "tabulate(table, headers='firstrow', tablefmt='plain', maxcolwidths=[10,10])"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L2060",
+        "line": 2060,
+        "code": "numparses = _expand_numparse(disable_numparse, num_cols)",
+        "role": "same computation executed when maxcolwidths is provided"
+      },
+      {
+        "id": "L2129",
+        "line": 2129,
+        "code": "numparses = _expand_numparse(disable_numparse, len(cols))",
+        "role": "post-transpose recomputation; does not affect header wrapping"
+      }
+    ],
+    "observations": {
+      "P_plus": {
+        "mask_both_widths": "normal",
+        "expose_no_maxcolwidths": "normal",
+        "control_no_maxheader": "normal"
+      },
+      "P_minus": {
+        "mask_both_widths": "identical to P+",
+        "expose_no_maxcolwidths": "UnboundLocalError: numparses",
+        "control_no_maxheader": "identical to P+"
+      },
+      "P_minus_keep_L2060": {
+        "mask_both_widths": "identical to P+",
+        "expose_no_maxcolwidths": "UnboundLocalError"
+      },
+      "P_minus_keep_L2129": {
+        "mask_both_widths": "UnboundLocalError",
+        "expose_no_maxcolwidths": "UnboundLocalError"
+      },
+      "P_minus_keep_none": {
+        "mask_both_widths": "UnboundLocalError",
+        "expose_no_maxcolwidths": "UnboundLocalError"
+      }
+    },
+    "exposing_witness": {
+      "input": "expose_no_maxcolwidths",
+      "p_plus": "normal",
+      "p_minus": "UnboundLocalError"
+    },
+    "masking_witness": {
+      "input": "mask_both_widths",
+      "msms": [
+        [
+          "L2060"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L2060"
+        ]
+      ],
+      "masked_at_empty": false
+    },
+    "u_necessity": true,
+    "verdict": "ACCEPTED_DEV",
+    "acceptance": "benchmark_v4_dataset/tasks/tabulate_numparses_header_wrap/acceptance/acceptance_report.json"
+  },
+  "pygments-2.17.2:pygments/formatters/bbcode.py:64:name:end": {
+    "probe_id": "pygments_bbcode_color_end",
+    "probe_script": "benchmark_v4_dataset/discovery/stage4/probes/bbcode64.py",
+    "raw_evidence": "benchmark_v4_dataset/discovery/stage4/bbcode64.json",
+    "declared_inputs": [
+      {
+        "id": "mask_strong_markdown",
+        "call": "highlight(\"**strong text**\", MarkdownLexer(), BBCodeFormatter())"
+      },
+      {
+        "id": "expose_keyword_python",
+        "call": "highlight(\"def f(): pass\", PythonLexer(), BBCodeFormatter())"
+      },
+      {
+        "id": "control_plain_name",
+        "call": "highlight(\"foo\", PythonLexer(), BBCodeFormatter())"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L67",
+        "file": "pygments/formatters/bbcode.py",
+        "line": 67,
+        "code": "end = '[/b]' + end",
+        "role": "bold closing tag"
+      },
+      {
+        "id": "L70",
+        "file": "pygments/formatters/bbcode.py",
+        "line": 70,
+        "code": "end = '[/i]' + end",
+        "role": "italic closing tag"
+      },
+      {
+        "id": "L73",
+        "file": "pygments/formatters/bbcode.py",
+        "line": 73,
+        "code": "end = '[/u]' + end",
+        "role": "underline closing tag"
+      }
+    ],
+    "observations": {
+      "P_plus": {
+        "mask_strong_markdown": "[b]**strong text**[/b][color=#bbbbbb]",
+        "expose_keyword_python": "colour closing tag present",
+        "control_plain_name": "no closing tag"
+      },
+      "P_minus": {
+        "mask_strong_markdown": "identical to P+",
+        "expose_keyword_python": "[/color] missing",
+        "control_plain_name": "identical to P+"
+      },
+      "P_minus_keep_L67": {
+        "mask_strong_markdown": "identical to P+",
+        "expose_keyword_python": "still differs from P+",
+        "control_plain_name": "identical to P+"
+      },
+      "P_minus_keep_EMPTY": {
+        "mask_strong_markdown": "[/b] missing",
+        "expose_keyword_python": "differs",
+        "control_plain_name": "identical to P+"
+      }
+    },
+    "exposing_witness": {
+      "input": "expose_keyword_python",
+      "P_plus": "contains [/color]",
+      "P_minus": "missing [/color]"
+    },
+    "masking_witness": {
+      "input": "mask_strong_markdown",
+      "msms": [
+        [
+          "L67"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L67"
+        ]
+      ]
+    },
+    "u_necessity": true,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking. The input emits a bold-only token and no colour-styled token, so A (the colour closing tag) is simply unobservable; no operation in U recomputes or compensates A. Keeping L67 restores equality only because L67 independently contributes the bold tag to the same observation. Fails v4.1 Protocol 3.1 (no same-value recompute, no alternative path, no joint reconstruction)."
+  },
+  "pygments-2.17.2:pygments/formatters/bbcode.py:67:name:end": {
+    "probe_id": "pygments_pygments_formatters_bbcode.py_67",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_bold",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L67",
+        "file": "pygments/formatters/bbcode.py",
+        "line": 67,
+        "code": "[b] closing tag",
+        "role": "bold closing tag"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): A sets the bold closing tag; on an italic-only input A is unobservable and keeping the italic tag restores equality. No operation recomputes a bold tag."
+  },
+  "pygments-2.17.2:pygments/formatters/groff.py:73:name:end": {
+    "probe_id": "pygments_pygments_formatters_groff.py_73",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_italic",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L73",
+        "file": "pygments/formatters/groff.py",
+        "line": 73,
+        "code": "end = regular + end",
+        "role": "italic font restore"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): L70 (bold) carries the same RHS but is a different style attribute; the two merely concatenate independent restores. No operation recomputes the italic restore, so any equality on italic-free input is degenerate."
+  },
+  "pygments-2.17.2:pygments/formatters/latex.py:295:augassign:cmndef": {
+    "probe_id": "pygments_pygments_formatters_latex.py_295",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_bold",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L295",
+        "file": "pygments/formatters/latex.py",
+        "line": 295,
+        "code": "cmndef += r'\\let\\$$@bf=\textbf'",
+        "role": "bold macro definition"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): cmndef is only observed through tokens of the styled type. An input without bold tokens makes A invisible; the other cmndef accumulations add different macros, none recomputes the bold macro."
+  },
+  "pygments-2.17.2:pygments/formatters/latex.py:297:augassign:cmndef": {
+    "probe_id": "pygments_pygments_formatters_latex.py_297",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_italic",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L297",
+        "file": "pygments/formatters/latex.py",
+        "line": 297,
+        "code": "cmndef += r'\\let\\$$@it=\textit'",
+        "role": "italic macro definition"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): Same structure as L295: no operation recomputes the italic macro; equality on italic-free inputs is observational."
+  },
+  "pygments-2.17.2:pygments/formatters/latex.py:397:name:value": {
+    "probe_id": "pygments_pygments_formatters_latex.py_397",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_comment",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L397",
+        "file": "pygments/formatters/latex.py",
+        "line": 397,
+        "code": "value = escape_tex(value, cp)",
+        "role": "comment escaping"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): L399 has the same RHS but sits in the mutually exclusive non-comment branch (elif ttype not in Token.Escape); the pair never executes for the same token."
+  },
+  "pygments-2.17.2:pygments/formatters/html.py:975:name:source": {
+    "probe_id": "pygments_pygments_formatters_html.py_975",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_hl_lines",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L975",
+        "file": "pygments/formatters/html.py",
+        "line": 975,
+        "code": "source = self._highlight_lines(source)",
+        "role": "highlight-lines wrapper"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): A is a no-op when hl_lines is empty or names no line; later wrappers are different transformations, not recomputation."
+  },
+  "pygments-2.17.2:pygments/formatters/svg.py:153:name:value": {
+    "probe_id": "pygments_pygments_formatters_svg.py_153",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_html-special-char",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L153",
+        "file": "pygments/formatters/svg.py",
+        "line": 153,
+        "code": "value = escape_html(value)",
+        "role": "html escaping"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): escape_html is the identity on values without <, >, &, and the later spacehack expansion reconstructs nothing that escaping produced."
+  },
+  "pygments-2.17.2:pygments/style.py:92:name:ndef": {
+    "probe_id": "pygments_pygments_style.py_92",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_noinherit",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L92",
+        "file": "pygments/style.py",
+        "line": 92,
+        "code": "ndef = _styles[Token][:]",
+        "role": "noinherit copy"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): A and the later copy L94 are in mutually exclusive branches (noinherit vs else)."
+  },
+  "pygments-2.17.2:pygments/filters/__init__.py:860:name:value": {
+    "probe_id": "pygments_pygments_filters___init__.py_860",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_with_space",
+        "note": "legal input that emits a token of the affected style"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L860",
+        "file": "pygments/filters/__init__.py",
+        "line": 860,
+        "code": "value = value.replace(' ', spaces)",
+        "role": "space replacement"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: the branch structure already excludes compensation."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): A is unobservable when the replacement string equals the input or no space is present; the tab/newline replacements do not reconstruct a space replacement."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:1052:name:strings": {
+    "probe_id": "tabulate_tabulate___init__.py_1052",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_strip",
+        "note": "legal input that exercises the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1052",
+        "file": "tabulate/__init__.py",
+        "line": 1052,
+        "code": "strings = [s.strip() for s in strings]",
+        "role": "right-align strip"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): The only identical-RHS assignments (1056/1070) sit in mutually exclusive alignment branches. On a right-aligned input with no surrounding whitespace A is a no-op."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:1056:name:strings": {
+    "probe_id": "tabulate_tabulate___init__.py_1056",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_strip",
+        "note": "legal input that exercises the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1056",
+        "file": "tabulate/__init__.py",
+        "line": 1056,
+        "code": "strings = [s.strip() for s in strings]",
+        "role": "center-align strip"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): Identical RHS at 1052 is in the mutually exclusive right-alignment branch; 1070 is in the else branch. No same-path recomputation exists."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:1419:name:headers": {
+    "probe_id": "tabulate_tabulate___init__.py_1419",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_str-header",
+        "note": "legal input that exercises the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1419",
+        "file": "tabulate/__init__.py",
+        "line": 1419,
+        "code": "headers = list(map(str, headers))",
+        "role": "dict headers stringify"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): Deleting the stringify is invisible when the dict values are already strings. The later identical-RHS lines are in the firstrow/other branches, not a same-path recomputation for dict input."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:1423:name:headers": {
+    "probe_id": "tabulate_tabulate___init__.py_1423",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_str-header",
+        "note": "legal input that exercises the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1423",
+        "file": "tabulate/__init__.py",
+        "line": 1423,
+        "code": "headers = list(map(str, headers))",
+        "role": "firstrow headers stringify"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): Identical RHS at 1419 is in the mutually exclusive dict branch; 1464/1469 are other input modes."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:2557:augassign:cur_len": {
+    "probe_id": "tabulate_tabulate___init__.py_2557",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_drop-whitespace",
+        "note": "legal input that exercises the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L2557",
+        "file": "tabulate/__init__.py",
+        "line": 2557,
+        "code": "cur_len -= self._len(cur_line[-1])",
+        "role": "drop trailing whitespace length"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): The later identical decrement at 2584 is in the max-lines placeholder path, not a recomputation on the same path. Deleting A only matters when a later width comparison becomes decisive; that is unobservable on inputs where the line is stored anyway."
+  },
+  "networkx-3.2.1:networkx/algorithms/bipartite/generators.py:514:name:w": {
+    "probe_id": "networkx_networkx_algorithms_bipartite_generators.py_514",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_exercising_branch",
+        "note": "legal input entering the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L514",
+        "file": "networkx/algorithms/bipartite/generators.py",
+        "line": 514,
+        "code": "w = -1",
+        "role": "second-loop reset"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): The identical RHS at L500 initialises a previous loop. Between L500 and L514 the loop mutates w (each iteration increments by at least one), so L500 cannot leave the value A would set. Deleting A starts the second loop from the first loop residual; any equality would be coincidence, not compensation."
+  },
+  "networkx-3.2.1:networkx/algorithms/simple_paths.py:709:name:Gpred": {
+    "probe_id": "networkx_networkx_algorithms_simple_paths.py_709",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_exercising_branch",
+        "note": "legal input entering the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L709",
+        "file": "networkx/algorithms/simple_paths.py",
+        "line": 709,
+        "code": "Gpred = filter_iter(Gpred)",
+        "role": "ignore_nodes predecessor filter"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): No operation re-applies the ignore_nodes filter. The later identical RHS at L745 is the undirected ignore_edges wrapper whose inner iterate() checks ignore_edges only, so it cannot reconstruct A."
+  },
+  "networkx-3.2.1:networkx/algorithms/swap.py:359:name:window": {
+    "probe_id": "networkx_networkx_algorithms_swap.py_359",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_exercising_branch",
+        "note": "legal input entering the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L359",
+        "file": "networkx/algorithms/swap.py",
+        "line": 359,
+        "code": "window = math.ceil(window / 2)",
+        "role": "halve window after failure"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): The later identical RHS at L404 belongs to the other branch of the same if; each statement halves the current window, neither recomputes the other."
+  },
+  "networkx-3.2.1:networkx/readwrite/gexf.py:450:name:edge_data": {
+    "probe_id": "networkx_networkx_readwrite_gexf.py_450",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_exercising_branch",
+        "note": "legal input entering the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L450",
+        "file": "networkx/readwrite/gexf.py",
+        "line": 450,
+        "code": "edge_data = self.add_spells(edge_element, edge_data)",
+        "role": "edge spells branch"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): add_slices and add_spells are alternative branches selected by self.VERSION; no operation re-adds spells for a 1.1 writer."
+  },
+  "networkx-3.2.1:networkx/readwrite/gexf.py:795:name:data": {
+    "probe_id": "networkx_networkx_readwrite_gexf.py_795",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_exercising_branch",
+        "note": "legal input entering the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L795",
+        "file": "networkx/readwrite/gexf.py",
+        "line": 795,
+        "code": "data = self.add_slices(data, node_xml)",
+        "role": "node slices branch"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): The add_spells alternative is mutually exclusive (chosen when VERSION is not 1.1); no operation reconstructs slices."
+  },
+  "networkx-3.2.1:networkx/readwrite/gexf.py:797:name:data": {
+    "probe_id": "networkx_networkx_readwrite_gexf.py_797",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "input_exercising_branch",
+        "note": "legal input entering the branch"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L797",
+        "file": "networkx/readwrite/gexf.py",
+        "line": 797,
+        "code": "data = self.add_spells(data, node_xml)",
+        "role": "node spells branch"
+      }
+    ],
+    "observations": {
+      "note": "No probe run: no same-path compensation exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Degenerate observational masking (Protocol 3.1): The add_slices alternative is mutually exclusive (VERSION 1.1); no operation reconstructs spells."
+  },
+  "tabulate-0.9.0:tabulate/__init__.py:2092:name:numalign": {
+    "probe_id": "tabulate_numalign_pretty",
+    "evidence_type": "PROBE_RECORDED",
+    "declared_inputs": [
+      {
+        "id": "pretty_default",
+        "call": "tabulate([[1.5],[2]], tablefmt='pretty')"
+      },
+      {
+        "id": "simple_default",
+        "call": "tabulate([[1.5],[2]], tablefmt='simple')"
+      },
+      {
+        "id": "pretty_explicit_center",
+        "call": "tabulate([[1.5],[2]], tablefmt='pretty', numalign='center')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L2095",
+        "file": "tabulate/__init__.py",
+        "line": 2095,
+        "code": "numalign = \"decimal\" if numalign == _DEFAULT_ALIGN else numalign",
+        "role": "later normalisation of the same variable"
+      }
+    ],
+    "observations": {
+      "P_plus": "normal",
+      "P_minus": "identical to P+ on all declared inputs",
+      "note": "The pretty-path adjustment of numalign is not observable on the declared legal inputs; deleting A changes no output."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "No legal input distinguishes P+ from P-; the later normalisation at L2095 does not create an exposing witness (AC5)."
+  },
+  "python-dateutil-2.8.2:dateutil/tz/tz.py:1651:name:tz": {
+    "probe_id": "dateutil_gettz_nocache_tz_none",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "gettz_unknown_name",
+        "call": "dateutil.tz.gettz(\"Not/AZone\")"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1592",
+        "file": "dateutil/tz/tz.py",
+        "line": 1592,
+        "code": "tz = None",
+        "role": "function-entry initialisation"
+      },
+      {
+        "id": "L1646",
+        "file": "dateutil/tz/tz.py",
+        "line": 1646,
+        "code": "tz = None",
+        "role": "abs-path branch"
+      }
+    ],
+    "observations": {
+      "note": "L1592 unconditionally binds tz=None before every path that reaches A.  Removing A therefore cannot change any observation, whatever the input.  No exposing input exists."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "A is dominated by the unconditional entry assignment; P+ = P- on every legal input, so AC5 cannot be met.  This is redundancy, not masking."
+  },
+  "python-dateutil-2.8.2:dateutil/rrule.py:1191:augassign:i": {
+    "probe_id": "dateutil_rrule_wnomask_i_increment",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "byweekno_1_spills",
+        "note": "rrule with byweekno=1 whose week 1 starts in the previous year"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1191",
+        "file": "dateutil/rrule.py",
+        "line": 1191,
+        "code": "i += 1",
+        "role": "loop index increment"
+      }
+    ],
+    "observations": {
+      "note": "No other operation recomputes i inside the loop; no fallback path writes wnomask.  The full suite survives only because no original test asserts wnomask for this branch (assertion gap)."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Full suite survives (TEST_SURVIVING_DELETION) but the kept set contains no compensating operation, so v4.1 3.1 case 1/2/3 is not met."
+  },
+  "toml-0.10.2:toml/decoder.py:218:name:k": {
+    "probe_id": "toml_decoder_backslash_scan_k",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "escaped_quote_key",
+        "note": "key ending in an escaped quote inside a basic string"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L218",
+        "file": "toml/decoder.py",
+        "line": 218,
+        "code": "k = 1",
+        "role": "backslash-scan counter reset"
+      }
+    ],
+    "observations": {
+      "note": "No other operation re-initialises k inside this block; deleting it leaves k at its stale value from a previous scan, so the value is simply different, not recomputed."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Full suite survives because no original test uses an escaped quote at the end of a key (assertion gap); no compensating operation exists."
+  },
+  "toml-0.10.2:toml/encoder.py:96:name:v": {
+    "probe_id": "toml_encoder_single_quote_unescape",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "single_quoted_with_apostrophe",
+        "call": "toml.dumps({'k': \"it's\"})"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L96",
+        "file": "toml/encoder.py",
+        "line": 96,
+        "code": "v = v.replace(\"\\\\'\", \"'\")",
+        "role": "single-quote unescape"
+      }
+    ],
+    "observations": {
+      "note": "The other branch is exclusive (singlequote True/False), so nothing on the same path recomputes v.  Deleting A changes the emitted string for apostrophes."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "No same-value recompute, no alternative path, no joint reconstruction."
+  },
+  "jsonschema-4.20.0:jsonschema/validators.py:1145:name:part": {
+    "probe_id": "jsonschema_pointer_unescape",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "pointer_with_tilde",
+        "call": "validator.resolve('#/a~1b')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1145",
+        "file": "jsonschema/validators.py",
+        "line": 1145,
+        "code": "part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")",
+        "role": "JSON-pointer unescape"
+      }
+    ],
+    "observations": {
+      "note": "part is reassigned only to int(part) afterwards, which is a different value, not a recompute.  No operation restores the unescaped form."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Survives on the original suite (no escaped-pointer test asserts the result); no masking operation exists."
+  },
+  "simplejson-3.19.2:simplejson/decoder.py:200:augassign:end": {
+    "probe_id": "simplejson_jsonobject_ws_step",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "one_space",
+        "call": "loads('{\"a\": 1}')"
+      },
+      {
+        "id": "two_spaces",
+        "call": "loads('{\"a\":  1}')"
+      },
+      {
+        "id": "newline",
+        "call": "loads('{\"a\":\\n1}')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L200",
+        "file": "simplejson/decoder.py",
+        "line": 200,
+        "code": "end += 1",
+        "role": "single whitespace step"
+      },
+      {
+        "id": "L201",
+        "file": "simplejson/decoder.py",
+        "line": 201,
+        "code": "if s[end] in _ws:",
+        "role": "second whitespace check"
+      },
+      {
+        "id": "L202",
+        "file": "simplejson/decoder.py",
+        "line": 202,
+        "code": "end = _w(s, end + 1).end()",
+        "role": "whitespace skip"
+      }
+    ],
+    "observations": {
+      "note": "For every position: with A, end=p+1 then the second check either does nothing (s[p+1] not in _ws) or calls _w(s, p+2); without A, end=p+1 unchanged and the first check calls _w(s, p+2).end(), which reaches the same boundary because WHITESPACE and _ws are the same character class.  The two branches are observationally identical on every input."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "L200 is fully redundant with L201-L202; no legal input distinguishes P+ from P-, so AC5 cannot be met.  This is a no-op statement, not masking."
+  },
+  "simplejson-3.19.2:simplejson/encoder.py:49:name:s": {
+    "probe_id": "simplejson_encode_basestring_str_normalise",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "plain_str",
+        "call": "encode_basestring(\"abc\")"
+      },
+      {
+        "id": "str_subclass",
+        "note": "class S(str) instance"
+      },
+      {
+        "id": "bytes",
+        "call": "encode_basestring(b\"abc\")"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L49",
+        "file": "simplejson/encoder.py",
+        "line": 49,
+        "code": "s = str.__str__(s)",
+        "role": "str-subclass normalisation"
+      }
+    ],
+    "observations": {
+      "note": "A only runs when type(s) is not str.  For a str subclass the following concatenation already produces an exact str, so the rendered JSON is unchanged; for a non-string it raises TypeError both with and without A (only the message text differs), and such a value is not a legal input to this encoder."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "No legal input changes the observation, so there is no exposing witness; the line is a type-normalisation guard, not a masked effect."
+  },
+  "simplejson-3.19.2:simplejson/encoder.py:76:name:s": {
+    "probe_id": "simplejson_py_encode_basestring_ascii_str_normalise",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "plain_str",
+        "call": "py_encode_basestring_ascii(\"abc\")"
+      },
+      {
+        "id": "str_subclass",
+        "note": "class S(str) instance"
+      },
+      {
+        "id": "bytes",
+        "call": "py_encode_basestring_ascii(b\"abc\")"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L76",
+        "file": "simplejson/encoder.py",
+        "line": 76,
+        "code": "s = str.__str__(s)",
+        "role": "str-subclass normalisation"
+      }
+    ],
+    "observations": {
+      "note": "A only runs when type(s) is not str.  For a str subclass the following concatenation already produces an exact str, so the rendered JSON is unchanged; for a non-string it raises TypeError both with and without A (only the message text differs), and such a value is not a legal input to this encoder."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "No legal input changes the observation, so there is no exposing witness; the line is a type-normalisation guard, not a masked effect."
+  },
+  "lark-1.1.9:lark/parse_tree_builder.py:377:name:f": {
+    "probe_id": "lark_inplace_transformer_wrap",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "inplace_transformer",
+        "note": "Transformer_InPlace with a user callback"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L377",
+        "file": "lark/parse_tree_builder.py",
+        "line": 377,
+        "code": "f = inplace_transformer(f)",
+        "role": "in-place transform wrapper"
+      }
+    ],
+    "observations": {
+      "note": "Without A the callback stays unwrapped and receives children instead of an in-place tree.  The later `f = w(f)` loop applies a different wrapper, so nothing recomputes inplace_transformer(f)."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "The original suite survives because no test exercises a Transformer_InPlace callback that is observably changed; there is no compensating operation."
+  },
+  "lark-1.1.9:lark/parsers/grammar_analysis.py:122:name:changed": {
+    "probe_id": "lark_follow_fixpoint_flag",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "grammar_with_follow",
+        "note": "any grammar whose FOLLOW sets are non-empty"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L105",
+        "file": "lark/parsers/grammar_analysis.py",
+        "line": 105,
+        "code": "changed = True",
+        "role": "FIRST fixpoint entry flag"
+      },
+      {
+        "id": "L122",
+        "file": "lark/parsers/grammar_analysis.py",
+        "line": 122,
+        "code": "changed = True",
+        "role": "FOLLOW fixpoint entry flag"
+      }
+    ],
+    "observations": {
+      "note": "For every input L122 sees changed=False (the previous while loop exits only when changed is False).  Deleting A therefore skips the FOLLOW fixpoint entirely; no kept subset can re-run it, so equality cannot be restored.  L105 is the same text but belongs to the FIRST fixpoint and cannot stand in for A."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "Survives because the suite does not assert non-empty FOLLOW sets for the grammars it builds; there is no operation that reconstructs A."
+  },
+  "parso-0.8.3:parso/python/errors.py:956:name:default_only": {
+    "probe_id": "parso_param_rule_default_only_reset",
+    "evidence_type": "STATIC_REVIEW",
+    "declared_inputs": [
+      {
+        "id": "default_then_star",
+        "call": "parse('def f(x=1, *, y): pass')"
+      },
+      {
+        "id": "default_only",
+        "call": "parse('def f(x=1, y): pass')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L950",
+        "file": "parso/python/errors.py",
+        "line": 950,
+        "code": "default_only = False",
+        "role": "entry initialisation"
+      },
+      {
+        "id": "L956",
+        "file": "parso/python/errors.py",
+        "line": 956,
+        "code": "default_only = False",
+        "role": "reset after bare star"
+      }
+    ],
+    "observations": {
+      "note": "L950 runs once before the loop; L956 is the only reset that fires after a bare '*'.  Keeping L950 cannot stand in for A: on 'def f(x=1, *, y)' the flag is already True when the star is reached.  No other operation recomputes it."
+    },
+    "exposing_witness": null,
+    "masking_witness": null,
+    "u_necessity": false,
+    "verdict": "REJECT_NO_MASKING_RELATION",
+    "reason": "The suite survives because it contains no default-then-star parameter list (assertion gap); there is no compensating operation, so v4.1 3.1 is not met."
+  }
+}

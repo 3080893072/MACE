@@ -1,0 +1,428 @@
+{
+  "task_id": "sd_pygments_latex297_italic",
+  "split": "DEV",
+  "mechanism": "M6_CROSS_FUNCTION_STATE",
+  "model": "glm-4.7-flash:q4_K_M",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900,
+    "think": false
+  },
+  "public_source_sha256": "2d440ff2ba316856bbf37d790e50f2f8d4965c83be13cde9a7e9f48510effd09",
+  "prompt_sha256": "5d7c1386aeb35ef05fe76a048c0165255b09a1c6c86b47bc67150e5292691ca4",
+  "prompt_chars": 25872,
+  "declared_inputs": 4,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_pygments_latex297_italic\n\n## File\n`pygments/formatters/latex.py`\n\n## Program with source line numbers\n```text\n   1 | \"\"\"\n   2 |     pygments.formatters.latex\n   3 |     ~~~~~~~~~~~~~~~~~~~~~~~~~\n   4 | \n   5 |     Formatter for LaTeX fancyvrb output.\n   6 | \n   7 |     :copyright: Copyright 2006-2023 by the Pygments team, see AUTHORS.\n   8 |     :license: BSD, see LICENSE for details.\n   9 | \"\"\"\n  10 | \n  11 | from io import StringIO\n  12 | \n  13 | from pygments.formatter import Formatter\n  14 | from pygments.lexer import Lexer, do_insertions\n  15 | from pygments.token import Token, STANDARD_TYPES\n  16 | from pygments.util import get_bool_opt, get_int_opt\n  17 | \n  18 | \n  19 | __all__ = ['LatexFormatter']\n  20 | \n  21 | \n  22 | def escape_tex(text, commandprefix):\n  23 |     return text.replace('\\\\', '\\x00'). \\\n  24 |                 replace('{', '\\x01'). \\\n  25 |                 replace('}', '\\x02'). \\\n  26 |                 replace('\\x00', r'\\%sZbs{}' % commandprefix). \\\n  27 |                 replace('\\x01', r'\\%sZob{}' % commandprefix). \\\n  28 |                 replace('\\x02', r'\\%sZcb{}' % commandprefix). \\\n  29 |                 replace('^', r'\\%sZca{}' % commandprefix). \\\n  30 |                 replace('_', r'\\%sZus{}' % commandprefix). \\\n  31 |                 replace('&', r'\\%sZam{}' % commandprefix). \\\n  32 |                 replace('<', r'\\%sZlt{}' % commandprefix). \\\n  33 |                 replace('>', r'\\%sZgt{}' % commandprefix). \\\n  34 |                 replace('#', r'\\%sZsh{}' % commandprefix). \\\n  35 |                 replace('%', r'\\%sZpc{}' % commandprefix). \\\n  36 |                 replace('$', r'\\%sZdl{}' % commandprefix). \\\n  37 |                 replace('-', r'\\%sZhy{}' % commandprefix). \\\n  38 |                 replace(\"'\", r'\\%sZsq{}' % commandprefix). \\\n  39 |                 replace('\"', r'\\%sZdq{}' % commandprefix). \\\n  40 |                 replace('~', r'\\%sZti{}' % commandprefix)\n  41 | \n  42 | \n  43 | DOC_TEMPLATE = r'''\n  44 | \\documentclass{%(docclass)s}\n  45 | \\usepackage{fancyvrb}\n  46 | \\usepackage{color}\n  47 | \\usepackage[%(encoding)s]{inputenc}\n  48 | %(preamble)s\n  49 | \n  50 | %(styledefs)s\n  51 | \n  52 | \\begin{document}\n  53 | \n  54 | \\section*{%(title)s}\n  55 | \n  56 | %(code)s\n  57 | \\end{document}\n  58 | '''\n  59 | \n  60 | ## Small explanation of the mess below :)\n  61 | #\n  62 | # The previous version of the LaTeX formatter just assigned a command to\n  63 | # each token type defined in the current style.  That obviously is\n  64 | # problematic if the highlighted code is produced for a different style\n  65 | # than the style commands themselves.\n  66 | #\n  67 | # This version works much like the HTML formatter which assigns multiple\n  68 | # CSS classes to each <span> tag, from the most specific to the least\n  69 | # specific token type, thus falling back to the parent token type if one\n  70 | # is not defined.  Here, the classes are there too and use the same short\n  71 | # forms given in token.STANDARD_TYPES.\n  72 | #\n  73 | # Highlighted code now only uses one custom command, which by default is\n  74 | # \\PY and selectable by the commandprefix option (and in addition the\n  75 | # escapes \\PYZat, \\PYZlb and \\PYZrb which haven't been renamed for\n  76 | # backwards compatibility purposes).\n  77 | #\n  78 | # \\PY has two arguments: the classes, separated by +, and the text to\n  79 | # render in that style.  The classes are resolved into the respective\n  80 | # style commands by magic, which serves to ignore unknown classes.\n  81 | #\n  82 | # The magic macros are:\n  83 | # * \\PY@it, \\PY@bf, etc. are unconditionally wrapped around the text\n  84 | #   to render in \\PY@do.  Their definition determines the style.\n  85 | # * \\PY@reset resets \\PY@it etc. to do nothing.\n  86 | # * \\PY@toks parses the list of classes, using magic inspired by the\n  87 | #   keyval package (but modified to use plusses instead of commas\n  88 | #   because fancyvrb redefines commas inside its environments).\n  89 | # * \\PY@tok processes one class, calling the \\PY@tok@classname command\n  90 | #   if it exists.\n  91 | # * \\PY@tok@classname sets the \\PY@it etc. to reflect the chosen style\n  92 | #   for its class.\n  93 | # * \\PY resets the style, parses the classnames and then calls \\PY@do.\n  94 | #\n  95 | # Tip: to read this code, print it out in substituted form using e.g.\n  96 | # >>> print STYLE_TEMPLATE % {'cp': 'PY'}\n  97 | \n  98 | STYLE_TEMPLATE = r'''\n  99 | \\makeatletter\n 100 | \\def\\%(cp)s@reset{\\let\\%(cp)s@it=\\relax \\let\\%(cp)s@bf=\\relax%%\n 101 |     \\let\\%(cp)s@ul=\\relax \\let\\%(cp)s@tc=\\relax%%\n 102 |     \\let\\%(cp)s@bc=\\relax \\let\\%(cp)s@ff=\\relax}\n 103 | \\def\\%(cp)s@tok#1{\\csname %(cp)s@tok@#1\\endcsname}\n 104 | \\def\\%(cp)s@toks#1+{\\ifx\\relax#1\\empty\\else%%\n 105 |     \\%(cp)s@tok{#1}\\expandafter\\%(cp)s@toks\\fi}\n 106 | \\def\\%(cp)s@do#1{\\%(cp)s@bc{\\%(cp)s@tc{\\%(cp)s@ul{%%\n 107 |     \\%(cp)s@it{\\%(cp)s@bf{\\%(cp)s@ff{#1}}}}}}}\n 108 | \\def\\%(cp)s#1#2{\\%(cp)s@reset\\%(cp)s@toks#1+\\relax+\\%(cp)s@do{#2}}\n 109 | \n 110 | %(styles)s\n 111 | \n 112 | \\def\\%(cp)sZbs{\\char`\\\\}\n 113 | \\def\\%(cp)sZus{\\char`\\_}\n 114 | \\def\\%(cp)sZob{\\char`\\{}\n 115 | \\def\\%(cp)sZcb{\\char`\\}}\n 116 | \\def\\%(cp)sZca{\\char`\\^}\n 117 | \\def\\%(cp)sZam{\\char`\\&}\n 118 | \\def\\%(cp)sZlt{\\char`\\<}\n 119 | \\def\\%(cp)sZgt{\\char`\\>}\n 120 | \\def\\%(cp)sZsh{\\char`\\#}\n 121 | \\def\\%(cp)sZpc{\\char`\\%%}\n 122 | \\def\\%(cp)sZdl{\\char`\\$}\n 123 | \\def\\%(cp)sZhy{\\char`\\-}\n 124 | \\def\\%(cp)sZsq{\\char`\\'}\n 125 | \\def\\%(cp)sZdq{\\char`\\\"}\n 126 | \\def\\%(cp)sZti{\\char`\\~}\n 127 | %% for compatibility with earlier versions\n 128 | \\def\\%(cp)sZat{@}\n 129 | \\def\\%(cp)sZlb{[}\n 130 | \\def\\%(cp)sZrb{]}\n 131 | \\makeatother\n 132 | '''\n 133 | \n 134 | \n 135 | def _get_ttype_name(ttype):\n 136 |     fname = STANDARD_TYPES.get(ttype)\n 137 |     if fname:\n 138 |         return fname\n 139 |     aname = ''\n 140 |     while fname is None:\n 141 |         aname = ttype[-1] + aname\n 142 |         ttype = ttype.parent\n 143 |         fname = STANDARD_TYPES.get(ttype)\n 144 |     return fname + aname\n 145 | \n 146 | \n 147 | class LatexFormatter(Formatter):\n 148 |     r\"\"\"\n 149 |     Format tokens as LaTeX code. This needs the `fancyvrb` and `color`\n 150 |     standard packages.\n 151 | \n 152 |     Without the `full` option, code is formatted as one ``Verbatim``\n 153 |     environment, like this:\n 154 | \n 155 |     .. sourcecode:: latex\n 156 | \n 157 |         \\begin{Verbatim}[commandchars=\\\\\\{\\}]\n 158 |         \\PY{k}{def }\\PY{n+nf}{foo}(\\PY{n}{bar}):\n 159 |             \\PY{k}{pass}\n 160 |         \\end{Verbatim}\n 161 | \n 162 |     Wrapping can be disabled using the `nowrap` option.\n 163 | \n 164 |     The special command used here (``\\PY``) and all the other macros it needs\n 165 |     are output by the `get_style_defs` method.\n 166 | \n 167 |     With the `full` option, a complete LaTeX document is output, including\n 168 |     the command definitions in the preamble.\n 169 | \n 170 |     The `get_style_defs()` method of a `LatexFormatter` returns a string\n 171 |     containing ``\\def`` commands defining the macros needed inside the\n 172 |     ``Verbatim`` environments.\n 173 | \n 174 |     Additional options accepted:\n 175 | \n 176 |     `nowrap`\n 177 |         If set to ``True``, don't wrap the tokens at all, not even inside a\n 178 |         ``\\begin{Verbatim}`` environment. This disables most other options\n 179 |         (default: ``False``).\n 180 | \n 181 |     `style`\n 182 |         The style to use, can be a string or a Style subclass (default:\n 183 |         ``'default'``).\n 184 | \n 185 |     `full`\n 186 |         Tells the formatter to output a \"full\" document, i.e. a complete\n 187 |         self-contained document (default: ``False``).\n 188 | \n 189 |     `title`\n 190 |         If `full` is true, the title that should be used to caption the\n 191 |         document (default: ``''``).\n 192 | \n 193 |     `docclass`\n 194 |         If the `full` option is enabled, this is the document class to use\n 195 |         (default: ``'article'``).\n 196 | \n 197 |     `preamble`\n 198 |         If the `full` option is enabled, this can be further preamble commands,\n 199 |         e.g. ``\\usepackage`` (default: ``''``).\n 200 | \n 201 |     `linenos`\n 202 |         If set to ``True``, output line numbers (default: ``False``).\n 203 | \n 204 |     `linenostart`\n 205 |         The line number for the first line (default: ``1``).\n 206 | \n 207 |     `linenostep`\n 208 |         If set to a number n > 1, only every nth line number is printed.\n 209 | \n 210 |     `verboptions`\n 211 |         Additional options given to the Verbatim environment (see the *fancyvrb*\n 212 |         docs for possible values) (default: ``''``).\n 213 | \n 214 |     `commandprefix`\n 215 |         The LaTeX commands used to produce colored output are constructed\n 216 |         using this prefix and some letters (default: ``'PY'``).\n 217 | \n 218 |         .. versionadded:: 0.7\n 219 |         .. versionchanged:: 0.10\n 220 |            The default is now ``'PY'`` instead of ``'C'``.\n 221 | \n 222 |     `texcomments`\n 223 |         If set to ``True``, enables LaTeX comment lines.  That is, LaTex markup\n 224 |         in comment tokens is not escaped so that LaTeX can render it (default:\n 225 |         ``False``).\n 226 | \n 227 |         .. versionadded:: 1.2\n 228 | \n 229 |     `mathescape`\n 230 |         If set to ``True``, enables LaTeX math mode escape in comments. That\n 231 |         is, ``'$...$'`` inside a comment will trigger math mode (default:\n 232 |         ``False``).\n 233 | \n 234 |         .. versionadded:: 1.2\n 235 | \n 236 |     `escapeinside`\n 237 |         If set to a string of length 2, enables escaping to LaTeX. Text\n 238 |         delimited by these 2 characters is read as LaTeX code and\n 239 |         typeset accordingly. It has no effect in string literals. It has\n 240 |         no effect in comments if `texcomments` or `mathescape` is\n 241 |         set. (default: ``''``).\n 242 | \n 243 |         .. versionadded:: 2.0\n 244 | \n 245 |     `envname`\n 246 |         Allows you to pick an alternative environment name replacing Verbatim.\n 247 |         The alternate environment still has to support Verbatim's option syntax.\n 248 |         (default: ``'Verbatim'``).\n 249 | \n 250 |         .. versionadded:: 2.0\n 251 |     \"\"\"\n 252 |     name = 'LaTeX'\n 253 |     aliases = ['latex', 'tex']\n 254 |     filenames = ['*.tex']\n 255 | \n 256 |     def __init__(self, **options):\n 257 |         Formatter.__init__(self, **options)\n 258 |         self.nowrap = get_bool_opt(options, 'nowrap', False)\n 259 |         self.docclass = options.get('docclass', 'article')\n 260 |         self.preamble = options.get('preamble', '')\n 261 |         self.linenos = get_bool_opt(options, 'linenos', False)\n 262 |         self.linenostart = abs(get_int_opt(options, 'linenostart', 1))\n 263 |         self.linenostep = abs(get_int_opt(options, 'linenostep', 1))\n 264 |         self.verboptions = options.get('verboptions', '')\n 265 |         self.nobackground = get_bool_opt(options, 'nobackground', False)\n 266 |         self.commandprefix = options.get('commandprefix', 'PY')\n 267 |         self.texcomments = get_bool_opt(options, 'texcomments', False)\n 268 |         self.mathescape = get_bool_opt(options, 'mathescape', False)\n 269 |         self.escapeinside = options.get('escapeinside', '')\n 270 |         if len(self.escapeinside) == 2:\n 271 |             self.left = self.escapeinside[0]\n 272 |             self.right = self.escapeinside[1]\n 273 |         else:\n 274 |             self.escapeinside = ''\n 275 |         self.envname = options.get('envname', 'Verbatim')\n 276 | \n 277 |         self._create_stylesheet()\n 278 | \n 279 |     def _create_stylesheet(self):\n 280 |         t2n = self.ttype2name = {Token: ''}\n 281 |         c2d = self.cmd2def = {}\n 282 |         cp = self.commandprefix\n 283 | \n 284 |         def rgbcolor(col):\n 285 |             if col:\n 286 |                 return ','.join(['%.2f' % (int(col[i] + col[i + 1], 16) / 255.0)\n 287 |                                  for i in (0, 2, 4)])\n 288 |             else:\n 289 |                 return '1,1,1'\n 290 | \n 291 |         for ttype, ndef in self.style:\n 292 |             name = _get_ttype_name(ttype)\n 293 |             cmndef = ''\n 294 |             if ndef['bold']:\n 295 |                 cmndef += r'\\let\\$$@bf=\\textbf'\n 296 |             if ndef['italic']:\n 297 |                 cmndef += r'\\let\\$$@it=\\textit'\n 298 |             if ndef['underline']:\n 299 |                 cmndef += r'\\let\\$$@ul=\\underline'\n 300 |             if ndef['roman']:\n 301 |                 cmndef += r'\\let\\$$@ff=\\textrm'\n 302 |             if ndef['sans']:\n 303 |                 cmndef += r'\\let\\$$@ff=\\textsf'\n 304 |             if ndef['mono']:\n 305 |                 cmndef += r'\\let\\$$@ff=\\textsf'\n 306 |             if ndef['color']:\n 307 |                 cmndef += (r'\\def\\$$@tc##1{\\textcolor[rgb]{%s}{##1}}' %\n 308 |                            rgbcolor(ndef['color']))\n 309 |             if ndef['border']:\n 310 |                 cmndef += (r'\\def\\$$@bc##1{{\\setlength{\\fboxsep}{\\string -\\fboxrule}'\n 311 |                            r'\\fcolorbox[rgb]{%s}{%s}{\\strut ##1}}}' %\n 312 |                            (rgbcolor(ndef['border']),\n 313 |                             rgbcolor(ndef['bgcolor'])))\n 314 |             elif ndef['bgcolor']:\n 315 |                 cmndef += (r'\\def\\$$@bc##1{{\\setlength{\\fboxsep}{0pt}'\n 316 |                            r'\\colorbox[rgb]{%s}{\\strut ##1}}}' %\n 317 |                            rgbcolor(ndef['bgcolor']))\n 318 |             if cmndef == '':\n 319 |                 continue\n 320 |             cmndef = cmndef.replace('$$', cp)\n 321 |             t2n[ttype] = name\n 322 |             c2d[name] = cmndef\n 323 | \n 324 |     def get_style_defs(self, arg=''):\n 325 |         \"\"\"\n 326 |         Return the command sequences needed to define the commands\n 327 |         used to format text in the verbatim environment. ``arg`` is ignored.\n 328 |         \"\"\"\n 329 |         cp = self.commandprefix\n 330 |         styles = []\n 331 | \n 332 |         if not self.full:\n 333 |             _sd_new = {}\n 334 |             for _sd_tt, _sd_ndef in self.style:\n 335 |                 _sd_name = _get_ttype_name(_sd_tt)\n 336 |                 if _sd_name in _sd_new:\n 337 |                     continue\n 338 |                 _sd_def = self.cmd2def.get(_sd_name)\n 339 |                 if _sd_def is None:\n 340 |                     if not _sd_ndef['italic']:\n 341 |                         continue\n 342 |                     _sd_def = ''\n 343 |                 if _sd_ndef['italic'] and 'textit' not in _sd_def:\n 344 |                     _sd_tc = '\\\\def' + '\\\\' + cp + '@tc'\n 345 |                     _sd_let = r'\\let' + '\\\\' + cp + r'@it=\\textit'\n 346 |                     if _sd_tc in _sd_def:\n 347 |                         _sd_def = _sd_def.replace(_sd_tc, _sd_let + _sd_tc, 1)\n 348 |                     else:\n 349 |                         _sd_def = _sd_def + _sd_let\n 350 |                 _sd_new[_sd_name] = _sd_def\n 351 |             for _sd_name, _sd_def in self.cmd2def.items():\n 352 |                 _sd_new.setdefault(_sd_name, _sd_def)\n 353 |             self.cmd2def = _sd_new\n 354 | \n 355 |         for name, definition in self.cmd2def.items():\n 356 |             styles.append(r'\\@namedef{%s@tok@%s}{%s}' % (cp, name, definition))\n 357 |         return STYLE_TEMPLATE % {'cp': self.commandprefix,\n 358 |                                  'styles': '\\n'.join(styles)}\n 359 | \n 360 |     def format_unencoded(self, tokensource, outfile):\n 361 |         # TODO: add support for background colors\n 362 |         t2n = self.ttype2name\n 363 |         cp = self.commandprefix\n 364 | \n 365 |         if self.full:\n 366 |             realoutfile = outfile\n 367 |             outfile = StringIO()\n 368 | \n 369 |         if not self.nowrap:\n 370 |             outfile.write('\\\\begin{' + self.envname + '}[commandchars=\\\\\\\\\\\\{\\\\}')\n 371 |             if self.linenos:\n 372 |                 start, step = self.linenostart, self.linenostep\n 373 |                 outfile.write(',numbers=left' +\n 374 |                               (start and ',firstnumber=%d' % start or '') +\n 375 |                               (step and ',stepnumber=%d' % step or ''))\n 376 |             if self.mathescape or self.texcomments or self.escapeinside:\n 377 |                 outfile.write(',codes={\\\\catcode`\\\\$=3\\\\catcode`\\\\^=7'\n 378 |                               '\\\\catcode`\\\\_=8\\\\relax}')\n 379 |             if self.verboptions:\n 380 |                 outfile.write(',' + self.verboptions)\n 381 |             outfile.write(']\\n')\n 382 | \n 383 |         for ttype, value in tokensource:\n 384 |             if ttype in Token.Comment:\n 385 |                 if self.texcomments:\n 386 |                     # Try to guess comment starting lexeme and escape it ...\n 387 |                     start = value[0:1]\n 388 |                     for i in range(1, len(value)):\n 389 |                         if start[0] != value[i]:\n 390 |                             break\n 391 |                         start += value[i]\n 392 | \n 393 |                     value = value[len(start):]\n 394 |                     start = escape_tex(start, cp)\n 395 | \n 396 |                     # ... but do not escape inside comment.\n 397 |                     value = start + value\n 398 |                 elif self.mathescape:\n 399 |                     # Only escape parts not inside a math environment.\n 400 |                     parts = value.split('$')\n 401 |                     in_math = False\n 402 |                     for i, part in enumerate(parts):\n 403 |                         if not in_math:\n 404 |                             parts[i] = escape_tex(part, cp)\n 405 |                         in_math = not in_math\n 406 |                     value = '$'.join(parts)\n 407 |                 elif self.escapeinside:\n 408 |                     text = value\n 409 |                     value = ''\n 410 |                     while text:\n 411 |                         a, sep1, text = text.partition(self.left)\n 412 |                         if sep1:\n 413 |                             b, sep2, text = text.partition(self.right)\n 414 |                             if sep2:\n 415 |                                 value += escape_tex(a, cp) + b\n 416 |                             else:\n 417 |                                 value += escape_tex(a + sep1 + b, cp)\n 418 |                         else:\n 419 |                             value += escape_tex(a, cp)\n 420 |                 else:\n 421 |                     value = escape_tex(value, cp)\n 422 |             elif ttype not in Token.Escape:\n 423 |                 value = escape_tex(value, cp)\n 424 |             styles = []\n 425 |             while ttype is not Token:\n 426 |                 try:\n 427 |                     styles.append(t2n[ttype])\n 428 |                 except KeyError:\n 429 |                     # not in current style\n 430 |                     styles.append(_get_ttype_name(ttype))\n 431 |                 ttype = ttype.parent\n 432 |             styleval = '+'.join(reversed(styles))\n 433 |             if styleval:\n 434 |                 spl = value.split('\\n')\n 435 |                 for line in spl[:-1]:\n 436 |                     if line:\n 437 |                         outfile.write(\"\\\\%s{%s}{%s}\" % (cp, styleval, line))\n 438 |                     outfile.write('\\n')\n 439 |                 if spl[-1]:\n 440 |                     outfile.write(\"\\\\%s{%s}{%s}\" % (cp, styleval, spl[-1]))\n 441 |             else:\n 442 |                 outfile.write(value)\n 443 | \n 444 |         if not self.nowrap:\n 445 |             outfile.write('\\\\end{' + self.envname + '}\\n')\n 446 | \n 447 |         if self.full:\n 448 |             encoding = self.encoding or 'utf8'\n 449 |             # map known existings encodings from LaTeX distribution\n 450 |             encoding = {\n 451 |                 'utf_8': 'utf8',\n 452 |                 'latin_1': 'latin1',\n 453 |                 'iso_8859_1': 'latin1',\n 454 |             }.get(encoding.replace('-', '_'), encoding)\n 455 |             realoutfile.write(DOC_TEMPLATE %\n 456 |                 dict(docclass  = self.docclass,\n 457 |                      preamble  = self.preamble,\n 458 |                      title     = self.title,\n 459 |                      encoding  = encoding,\n 460 |                      styledefs = self.get_style_defs(),\n 461 |                      code      = outfile.getvalue()))\n 462 | \n 463 | \n 464 | class LatexEmbeddedLexer(Lexer):\n 465 |     \"\"\"\n 466 |     This lexer takes one lexer as argument, the lexer for the language\n 467 |     being formatted, and the left and right delimiters for escaped text.\n 468 | \n 469 |     First everything is scanned using the language lexer to obtain\n 470 |     strings and comments. All other consecutive tokens are merged and\n 471 |     the resulting text is scanned for escaped segments, which are given\n 472 |     the Token.Escape type. Finally text that is not escaped is scanned\n 473 |     again with the language lexer.\n 474 |     \"\"\"\n 475 |     def __init__(self, left, right, lang, **options):\n 476 |         self.left = left\n 477 |         self.right = right\n 478 |         self.lang = lang\n 479 |         Lexer.__init__(self, **options)\n 480 | \n 481 |     def get_tokens_unprocessed(self, text):\n 482 |         # find and remove all the escape tokens (replace with an empty string)\n 483 |         # this is very similar to DelegatingLexer.get_tokens_unprocessed.\n 484 |         buffered = ''\n 485 |         insertions = []\n 486 |         insertion_buf = []\n 487 |         for i, t, v in self._find_safe_escape_tokens(text):\n 488 |             if t is None:\n 489 |                 if insertion_buf:\n 490 |                     insertions.append((len(buffered), insertion_buf))\n 491 |                     insertion_buf = []\n 492 |                 buffered += v\n 493 |             else:\n 494 |                 insertion_buf.append((i, t, v))\n 495 |         if insertion_buf:\n 496 |             insertions.append((len(buffered), insertion_buf))\n 497 |         return do_insertions(insertions,\n 498 |                              self.lang.get_tokens_unprocessed(buffered))\n 499 | \n 500 |     def _find_safe_escape_tokens(self, text):\n 501 |         \"\"\" find escape tokens that are not in strings or comments \"\"\"\n 502 |         for i, t, v in self._filter_to(\n 503 |             self.lang.get_tokens_unprocessed(text),\n 504 |             lambda t: t in Token.Comment or t in Token.String\n 505 |         ):\n 506 |             if t is None:\n 507 |                 for i2, t2, v2 in self._find_escape_tokens(v):\n 508 |                     yield i + i2, t2, v2\n 509 |             else:\n 510 |                 yield i, None, v\n 511 | \n 512 |     def _filter_to(self, it, pred):\n 513 |         \"\"\" Keep only the tokens that match `pred`, merge the others together \"\"\"\n 514 |         buf = ''\n 515 |         idx = 0\n 516 |         for i, t, v in it:\n 517 |             if pred(t):\n 518 |                 if buf:\n 519 |                     yield idx, None, buf\n 520 |                     buf = ''\n 521 |                 yield i, t, v\n 522 |             else:\n 523 |                 if not buf:\n 524 |                     idx = i\n 525 |                 buf += v\n 526 |         if buf:\n 527 |             yield idx, None, buf\n 528 | \n 529 |     def _find_escape_tokens(self, text):\n 530 |         \"\"\" Find escape tokens within text, give token=None otherwise \"\"\"\n 531 |         index = 0\n 532 |         while text:\n 533 |             a, sep1, text = text.partition(self.left)\n 534 |             if a:\n 535 |                 yield index, None, a\n 536 |                 index += len(a)\n 537 |             if sep1:\n 538 |                 b, sep2, text = text.partition(self.right)\n 539 |                 if sep2:\n 540 |                     yield index + len(sep1), Token.Escape, b\n 541 |                     index += len(sep1) + len(b) + len(sep2)\n 542 |                 else:\n 543 |                     yield index, Token.Error, sep1\n 544 |                     index += len(sep1)\n 545 |                     text = b\n```\n\n## Target A\nLine 297: `cmndef += r'\\let\\$$@it=\\textit'`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`, `in4`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 294, \"text\": \"if ndef['bold']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 295, \"text\": \"cmndef += r'\\\\let\\\\$$@bf=\\\\textbf'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 296, \"text\": \"if ndef['italic']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 297, \"text\": \"cmndef += r'\\\\let\\\\$$@it=\\\\textit'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 298, \"text\": \"if ndef['underline']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 299, \"text\": \"cmndef += r'\\\\let\\\\$$@ul=\\\\underline'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 300, \"text\": \"if ndef['roman']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 301, \"text\": \"cmndef += r'\\\\let\\\\$$@ff=\\\\textrm'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 302, \"text\": \"if ndef['sans']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 303, \"text\": \"cmndef += r'\\\\let\\\\$$@ff=\\\\textsf'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 304, \"text\": \"if ndef['mono']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 305, \"text\": \"cmndef += r'\\\\let\\\\$$@ff=\\\\textsf'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 306, \"text\": \"if ndef['color']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 307, \"text\": \"cmndef += (r'\\\\def\\\\$$@tc##1{\\\\textcolor[rgb]{%s}{##1}}' %\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 308, \"text\": \"rgbcolor(ndef['color']))\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 309, \"text\": \"if ndef['border']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 310, \"text\": \"cmndef += (r'\\\\def\\\\$$@bc##1{{\\\\setlength{\\\\fboxsep}{\\\\string -\\\\fboxrule}'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 311, \"text\": \"r'\\\\fcolorbox[rgb]{%s}{%s}{\\\\strut ##1}}}' %\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 312, \"text\": \"(rgbcolor(ndef['border']),\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 313, \"text\": \"rgbcolor(ndef['bgcolor'])))\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 314, \"text\": \"elif ndef['bgcolor']:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 315, \"text\": \"cmndef += (r'\\\\def\\\\$$@bc##1{{\\\\setlength{\\\\fboxsep}{0pt}'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 316, \"text\": \"r'\\\\colorbox[rgb]{%s}{\\\\strut ##1}}}' %\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 317, \"text\": \"rgbcolor(ndef['bgcolor']))\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 318, \"text\": \"if cmndef == '':\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 319, \"text\": \"continue\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 320, \"text\": \"cmndef = cmndef.replace('$$', cp)\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 321, \"text\": \"t2n[ttype] = name\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 322, \"text\": \"c2d[name] = cmndef\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The deleted line sets the LaTeX command for italic text; if the style definition never uses italic text, the command is never referenced, making its presence or absence unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 343, \"text\": \"if _sd_ndef['italic'] and 'textit' not in _sd_def:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 344, \"text\": \"_sd_tc = '\\\\def' + '\\\\' + cp + '@tc'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 345, \"text\": \"_sd_let = r'\\\\let' + '\\\\' + cp + r'@it=\\\\textit'\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 346, \"text\": \"if _sd_tc in _sd_def:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 347, \"text\": \"_sd_def = _sd_def.replace(_sd_tc, _sd_let + _sd_tc, 1)\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 348, \"text\": \"else:\"},\n        {\"file\": \"pygments/formatters/latex.py\", \"line\": 349, \"text\": \"_sd_def = _sd_def + _sd_let\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The deleted line defines the command for italic text; if the style definition never uses italic text, the command is never referenced, making its presence or absence unobservable.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 7580,
+      "completion_tokens": 1466,
+      "total_duration_ns": 34152346597,
+      "load_duration_ns": 3659800,
+      "prompt_eval_duration_ns": 2567016000,
+      "eval_duration_ns": 31206493000,
+      "model": "glm-4.7-flash:q4_K_M",
+      "done_reason": "stop",
+      "wall_seconds": 34.334,
+      "attempt": 0
+    },
+    "model": "glm-4.7-flash:q4_K_M"
+  },
+  "prompt_tokens": 7580,
+  "completion_tokens": 1466,
+  "runtime_s": 34.334,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [],
+  "rejected": [
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 294,
+            "text": "if ndef['bold']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 295,
+            "text": "cmndef += r'\\let\\$$@bf=\\textbf'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 296,
+            "text": "if ndef['italic']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 297,
+            "text": "cmndef += r'\\let\\$$@it=\\textit'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 298,
+            "text": "if ndef['underline']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 299,
+            "text": "cmndef += r'\\let\\$$@ul=\\underline'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 300,
+            "text": "if ndef['roman']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 301,
+            "text": "cmndef += r'\\let\\$$@ff=\\textrm'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 302,
+            "text": "if ndef['sans']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 303,
+            "text": "cmndef += r'\\let\\$$@ff=\\textsf'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 304,
+            "text": "if ndef['mono']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 305,
+            "text": "cmndef += r'\\let\\$$@ff=\\textsf'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 306,
+            "text": "if ndef['color']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 307,
+            "text": "cmndef += (r'\\def\\$$@tc##1{\\textcolor[rgb]{%s}{##1}}' %"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 308,
+            "text": "rgbcolor(ndef['color']))"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 309,
+            "text": "if ndef['border']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 310,
+            "text": "cmndef += (r'\\def\\$$@bc##1{{\\setlength{\\fboxsep}{\\string -\\fboxrule}'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 311,
+            "text": "r'\\fcolorbox[rgb]{%s}{%s}{\\strut ##1}}}' %"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 312,
+            "text": "(rgbcolor(ndef['border']),"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 313,
+            "text": "rgbcolor(ndef['bgcolor'])))"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 314,
+            "text": "elif ndef['bgcolor']:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 315,
+            "text": "cmndef += (r'\\def\\$$@bc##1{{\\setlength{\\fboxsep}{0pt}'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 316,
+            "text": "r'\\colorbox[rgb]{%s}{\\strut ##1}}}' %"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 317,
+            "text": "rgbcolor(ndef['bgcolor']))"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 318,
+            "text": "if cmndef == '':"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 319,
+            "text": "continue"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 320,
+            "text": "cmndef = cmndef.replace('$$', cp)"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 321,
+            "text": "t2n[ttype] = name"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 322,
+            "text": "c2d[name] = cmndef"
+          }
+        ],
+        "condition": "true",
+        "rationale": "The deleted line sets the LaTeX command for italic text; if the style definition never uses italic text, the command is never referenced, making its presence or absence unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "target_line",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 297,
+            "text": "cmndef += r'\\let\\$$@it=\\textit'"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 308,
+          "text": "rgbcolor(ndef['color']))",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 308,
+            "text": "rgbcolor(ndef['color']))"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 311,
+          "text": "r'\\fcolorbox[rgb]{%s}{%s}{\\strut ##1}}}' %",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 311,
+            "text": "r'\\fcolorbox[rgb]{%s}{%s}{\\strut ##1}}}' %"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 312,
+          "text": "(rgbcolor(ndef['border']),",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 312,
+            "text": "(rgbcolor(ndef['border']),"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 313,
+          "text": "rgbcolor(ndef['bgcolor'])))",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 313,
+            "text": "rgbcolor(ndef['bgcolor'])))"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 316,
+          "text": "r'\\colorbox[rgb]{%s}{\\strut ##1}}}' %",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 316,
+            "text": "r'\\colorbox[rgb]{%s}{\\strut ##1}}}' %"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 317,
+          "text": "rgbcolor(ndef['bgcolor']))",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 317,
+            "text": "rgbcolor(ndef['bgcolor']))"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 343,
+            "text": "if _sd_ndef['italic'] and 'textit' not in _sd_def:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 344,
+            "text": "_sd_tc = '\\def' + '\\' + cp + '@tc'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 345,
+            "text": "_sd_let = r'\\let' + '\\' + cp + r'@it=\\textit'"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 346,
+            "text": "if _sd_tc in _sd_def:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 347,
+            "text": "_sd_def = _sd_def.replace(_sd_tc, _sd_let + _sd_tc, 1)"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 348,
+            "text": "else:"
+          },
+          {
+            "file": "pygments/formatters/latex.py",
+            "line": 349,
+            "text": "_sd_def = _sd_def + _sd_let"
+          }
+        ],
+        "condition": "true",
+        "rationale": "The deleted line defines the command for italic text; if the style definition never uses italic text, the command is never referenced, making its presence or absence unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 344,
+          "text": "_sd_tc = '\\def' + '\\' + cp + '@tc'",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 344,
+            "text": "_sd_tc = '\\def' + '\\' + cp + '@tc'"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 345,
+          "text": "_sd_let = r'\\let' + '\\' + cp + r'@it=\\textit'",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 345,
+            "text": "_sd_let = r'\\let' + '\\' + cp + r'@it=\\textit'"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 348,
+          "text": "else:",
+          "proposal": {
+            "file": "pygments/formatters/latex.py",
+            "line": 348,
+            "text": "else:"
+          }
+        }
+      ]
+    }
+  ],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 2,
+    "exact": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_domain": 2,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_inline_italic",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [],
+        "stray_ops": [],
+        "msms_exact": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    },
+    {
+      "input": "mask_inline_italic_color",
+      "public_id": "in2",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [],
+        "stray_ops": [],
+        "msms_exact": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "INVALID_OUTPUT"
+}

@@ -1,0 +1,31 @@
+{
+  "case_id": "sd_networkx_gexf448_slices",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M8_OBJECT_SHARED_STATE",
+  "base": {
+    "slug": "networkx-3.2.1",
+    "file": "networkx/readwrite/gexf.py",
+    "A_line": 448,
+    "A_code": "                edge_data = self.add_slices(edge_element, edge_data)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 448,
+      "indent": 16,
+      "role": "Repairs the shared XML edge object: re-applies the slice mutation only when the object does not already carry a slices child.",
+      "lines": [
+        "if not G.is_directed() and not edge_element.findall(\"slices\"):",
+        "    edge_data = self.add_slices(edge_element, edge_data)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_networkx_gexf448.py",
+  "inputs": {
+    "mask_undirected_slices": "undirected edge carrying slices data",
+    "expose_directed_slices": "directed edge carrying slices data (repair not declared)",
+    "control_undirected_no_slices": "undirected edge without slices data; A is a no-op",
+    "control_directed_no_slices": "directed edge without slices data"
+  },
+  "rationale": "A mutates the shared edge_element by appending a slices child.  U1 inspects that object state and re-applies the mutation only when the child is absent.  The repair is declared for undirected graphs; the directed case exposes the deletion (the unconsumed slices entry then breaks attribute serialisation)."
+}

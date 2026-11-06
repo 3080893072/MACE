@@ -1,0 +1,25 @@
+--- a/pygments/formatters/groff.py
++++ b/pygments/formatters/groff.py
+@@ -68,12 +68,22 @@
+             if ndef['bold']:
+                 start += bold
+                 end = regular + end
+             if ndef['italic']:
+                 start += italic
+                 end = regular + end
++                # SD:U:U1:begin
++                _sd_it = bool(ndef['italic']) and self.monospaced
++                # SD:U:U1:end
++                # SD:U:U2:begin
++                _sd_tag = regular if _sd_it else ''
++                # SD:U:U2:end
++                # SD:U:U3:begin
++                if _sd_it and not end.startswith(regular):
++                    end = _sd_tag + end
++                # SD:U:U3:end
+             if ndef['bgcolor']:
+                 start += '\\M[%s]' % ndef['bgcolor']
+                 end = '\\M[]' + end
+ 
+             self.styles[ttype] = start, end
+ 

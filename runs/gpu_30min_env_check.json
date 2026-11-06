@@ -1,0 +1,43 @@
+{
+ "checked_utc": "2026-11-03T16:34:34Z",
+ "purpose": "MACE 30-minute GPU comparison environment check",
+ "gpu_requested": "RTX 4090 D on AutoDL with qwen2.5-coder:32b",
+ "autodl_attempts": [
+  {
+   "host": "connect.cqa1.seetacloud.com",
+   "port": 39405,
+   "provenance": "last known 2026-10-12",
+   "result": "TCP_FAIL",
+   "error": "ConnectionRefusedError"
+  },
+  {
+   "host": "connect.cqa1.seetacloud.com",
+   "port": 22099,
+   "provenance": "2026-10-11 4090 D instance",
+   "result": "TCP_FAIL",
+   "error": "ConnectionRefusedError"
+  },
+  {
+   "host": "connect.cqa1.seetacloud.com",
+   "port": 28636,
+   "provenance": "2026-09-13 CPU instance",
+   "result": "TCP_FAIL",
+   "error": "ConnectionRefusedError"
+  }
+ ],
+ "autodl_conclusion": "No running AutoDL instance reachable at any known connection string.",
+ "local_gpu": [
+  "NVIDIA GeForce RTX 5060 Laptop GPU, 8151 MiB"
+ ],
+ "local_gpu_note": "RTX 5060 Laptop, 8151 MiB VRAM; qwen2.5-coder:32b (Q4 ~19GB) does not fit.",
+ "local_ollama_binary": null,
+ "local_ollama_endpoint": {
+  "url": "http://127.0.0.1:11434/api/tags",
+  "reachable": false,
+  "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+ },
+ "frozen_model_config": "benchmark_v3_baselines/config.py: qwen2.5-coder:32b @ http://127.0.0.1:11434",
+ "prior_availability_record": "runs/v3_baseline_pilot/availability.json (2026-11-03): endpoint_reachable=false, model_present=false",
+ "model_calls_made": 0,
+ "conclusion": "C (Direct Qwen 32B) and D (Full MACE) NOT_RUN. No model output was fabricated."
+}

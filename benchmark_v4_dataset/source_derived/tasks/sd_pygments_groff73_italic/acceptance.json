@@ -1,0 +1,108 @@
+{
+  "case_id": "sd_pygments_groff73_italic",
+  "independent": true,
+  "shares_construction_code": false,
+  "checks": {
+    "AC1_sdist_matches_discovery": true,
+    "AC1_evidence_matches_source": true,
+    "AC1_A_line_text": true,
+    "patch_preserves_A": true,
+    "patch_only_inserts": true,
+    "U_blocks_outside_A": true,
+    "P_minus_only_deletes_A": true,
+    "patch_diff_does_not_remove_A": true,
+    "patch_diff_insert_count": true,
+    "enumeration_agrees": true,
+    "roles_declared": true,
+    "masking_inputs_satisfied": true,
+    "exposing_inputs_satisfied": true,
+    "control_inputs_satisfied": true,
+    "u_necessary_in_minimal_sets": true
+  },
+  "all_checks_pass": true,
+  "hashes": {
+    "sdist": "bdadb195208df9efe2d1cfc3cf4760dc757d023b7d1b8e4f5da0a2ec212c2dd8",
+    "discovery": "bdadb195208df9efe2d1cfc3cf4760dc757d023b7d1b8e4f5da0a2ec212c2dd8",
+    "evidence": "bdadb195208df9efe2d1cfc3cf4760dc757d023b7d1b8e4f5da0a2ec212c2dd8"
+  },
+  "A": {
+    "file": "pygments/formatters/groff.py",
+    "line": 73,
+    "code": "                end = regular + end",
+    "patched_index": 73
+  },
+  "U": [
+    "U1",
+    "U2",
+    "U3"
+  ],
+  "per_input": {
+    "mask_italic_mono": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "empty_kept_masks": false
+    },
+    "expose_italic_nonmono": {
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "empty_kept_masks": false
+    },
+    "control_bold_mono": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "empty_kept_masks": true
+    }
+  },
+  "notes": {
+    "source_sha256": "bdadb195208df9efe2d1cfc3cf4760dc757d023b7d1b8e4f5da0a2ec212c2dd8",
+    "inserted_lines": 10
+  }
+}

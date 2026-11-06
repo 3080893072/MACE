@@ -1,0 +1,990 @@
+{
+  "protocol": "benchmark_real_v3_acceptance",
+  "generated_utc": "2026-11-02T13:04:40.793534+00:00",
+  "method": "Independent reimplementation: own project copies, own line deletion, own probe runner, own subset enumeration and own pytest invocation.  No call to verify_task/variant_lab/run_suite.",
+  "task_count": 5,
+  "accepted": 5,
+  "needs_review": 0,
+  "tasks": [
+    {
+      "task_id": "jinja2_bytecode_cache_read",
+      "project_id": "jinja2-3.1.3",
+      "project": "Jinja2",
+      "version": "3.1.3",
+      "verdict": "PASS",
+      "errors": [],
+      "checks": {
+        "source_and_single_line_diff": {
+          "ok": true,
+          "source_hash": "76a289afb2a1fbb65b5f18233fab82ae6e7c501c521e9dd33b302e4d9d32ad42",
+          "changed_files": [
+            "jinja2/loaders.py"
+          ],
+          "errors": []
+        },
+        "deletion_record": {
+          "file": "src/jinja2/loaders.py",
+          "line": 132,
+          "original": "            code = bucket.code",
+          "replacement": "            pass  # P-: target A deleted"
+        },
+        "candidate_universe_positions": {
+          "ok": true,
+          "operations": [
+            {
+              "id": "compile_fallback",
+              "file": "src/jinja2/loaders.py",
+              "first_line": 137,
+              "last_line": 137,
+              "code": "code=environment.compile(source,name,filename)",
+              "kind": "assignment"
+            }
+          ],
+          "errors": []
+        },
+        "target_execution": {
+          "ok": true,
+          "by_input": {
+            "expose_cache_poisoned": {
+              "role": "exposing",
+              "executed": true,
+              "observation": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "2"
+              },
+              "trace_error": null
+            },
+            "mask_cache_benign": {
+              "role": "masking",
+              "executed": true,
+              "observation": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              },
+              "trace_error": null
+            }
+          }
+        },
+        "matrix_reproduction": {
+          "ok": true,
+          "stored": "<local-path>",
+          "inputs": {
+            "expose_cache_poisoned": {
+              "msms": [],
+              "mmbs": [],
+              "masked_EMPTY": false,
+              "exposed_EMPTY": true
+            },
+            "mask_cache_benign": {
+              "msms": [
+                [
+                  "compile_fallback"
+                ]
+              ],
+              "mmbs": [
+                [
+                  "compile_fallback"
+                ]
+              ],
+              "masked_EMPTY": true,
+              "exposed_EMPTY": false
+            }
+          },
+          "errors": []
+        },
+        "minimality": {
+          "ok": true,
+          "errors": [],
+          "note": "All subsets of the declared U were enumerated independently; minimality is exact over that finite universe."
+        },
+        "task_specific": {
+          "ok": true,
+          "detail": {
+            "fallback_observations": {
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "message": "'NoneType' object has no attribute 'co_filename'",
+                "outcome": "raise",
+                "type": "AttributeError"
+              }
+            }
+          },
+          "errors": []
+        },
+        "p_minus_full_suite": {
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "-m",
+            "pytest",
+            "tests",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 2.43761,
+          "summary": {
+            "passed": 845,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 0,
+            "xfailed": 0
+          },
+          "stdout_tail": "........................................................................ [  8%]\n........................................................................ [ 17%]\n........................................................................ [ 25%]\n........................................................................ [ 34%]\n........................................................................ [ 42%]\n........................................................................ [ 51%]\n........................................................................ [ 59%]\n........................................................................ [ 68%]\n........................................................................ [ 76%]\n........................................................................ [ 85%]\n........................................................................ [ 93%]\n.....................................................                    [100%]\n- generated xml file: <local-path> -\n845 passed in 1.86s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        },
+        "t_task_on_p_plus": {
+          "command": [
+            "D:/Anaconda3/python.exe",
+            "-m",
+            "pytest",
+            "tests/test_bytecode_cache.py::TestByteCodeCache::test_simple",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 0.607094,
+          "summary": {
+            "passed": 1,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 0,
+            "xfailed": 0
+          },
+          "stdout_tail": ".                                                                        [100%]\n- generated xml file: <local-path> -\n1 passed in 0.06s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        }
+      },
+      "independent_matrix": "<local-path>",
+      "work_root": "<local-path>"
+    },
+    {
+      "task_id": "werkzeug_bind_server_name_lower",
+      "project_id": "werkzeug-2.2.3",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "verdict": "PASS",
+      "errors": [],
+      "checks": {
+        "source_and_single_line_diff": {
+          "ok": true,
+          "source_hash": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+          "changed_files": [
+            "werkzeug/routing/map.py"
+          ],
+          "errors": []
+        },
+        "deletion_record": {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 307,
+          "original": "            server_name = server_name.lower()",
+          "replacement": "            pass  # P-: target A deleted"
+        },
+        "candidate_universe_positions": {
+          "ok": true,
+          "operations": [
+            {
+              "id": "bind_relower",
+              "file": "src/werkzeug/routing/map.py",
+              "first_line": 219,
+              "last_line": 219,
+              "code": "server_name=server_name.lower()",
+              "kind": "assignment"
+            }
+          ],
+          "errors": []
+        },
+        "target_execution": {
+          "ok": true,
+          "by_input": {
+            "expose_subdomain_path": {
+              "role": "exposing",
+              "executed": true,
+              "observation": {
+                "outcome": "return",
+                "server_name": "example.com",
+                "subdomain": ""
+              },
+              "trace_error": null
+            },
+            "mask_subdomain_supplied": {
+              "role": "masking",
+              "executed": true,
+              "observation": {
+                "outcome": "return",
+                "server_name": "example.com",
+                "subdomain": "www"
+              },
+              "trace_error": null
+            }
+          }
+        },
+        "matrix_reproduction": {
+          "ok": true,
+          "stored": "<local-path>",
+          "inputs": {
+            "expose_subdomain_path": {
+              "msms": [],
+              "mmbs": [],
+              "masked_EMPTY": false,
+              "exposed_EMPTY": true
+            },
+            "mask_subdomain_supplied": {
+              "msms": [
+                [
+                  "bind_relower"
+                ]
+              ],
+              "mmbs": [
+                [
+                  "bind_relower"
+                ]
+              ],
+              "masked_EMPTY": true,
+              "exposed_EMPTY": false
+            }
+          },
+          "errors": []
+        },
+        "minimality": {
+          "ok": true,
+          "errors": [],
+          "note": "All subsets of the declared U were enumerated independently; minimality is exact over that finite universe."
+        },
+        "task_specific": {
+          "ok": true,
+          "detail": {},
+          "errors": []
+        },
+        "p_minus_full_suite": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 3.773961,
+          "summary": {
+            "passed": 816,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 24,
+            "xfailed": 0
+          },
+          "stdout_tail": "........................................................................ [  8%]\n........................................................................ [ 17%]\n........................................................................ [ 26%]\n........................................................................ [ 35%]\n........................................................................ [ 44%]\n........................................................................ [ 52%]\n........................................................................ [ 61%]\n........................................................................ [ 70%]\n........................................................................ [ 79%]\n........................................................................ [ 88%]\n........................................................................ [ 97%]\n........................                                                 [100%]\n- generated xml file: <local-path> -\n816 passed, 24 deselected in 3.25s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        },
+        "t_task_on_p_plus": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests/test_routing.py::test_external_building_with_port_bind_to_environ",
+            "tests/test_routing.py::test_external_building_with_port_bind_to_environ_wrong_servername",
+            "tests/test_routing.py::test_http_host_before_server_name",
+            "tests/test_routing.py::test_invalid_subdomain_warning",
+            "tests/test_routing.py::test_server_name_casing",
+            "tests/test_routing.py::test_server_name_interpolation",
+            "tests/test_routing.py::test_server_name_match_default_port[http://localhost-localhost:80]",
+            "tests/test_routing.py::test_server_name_match_default_port[https://localhost-localhost:443]",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 0.683224,
+          "summary": {
+            "passed": 8,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 0,
+            "xfailed": 0
+          },
+          "stdout_tail": "........                                                                 [100%]\n- generated xml file: <local-path> -\n8 passed in 0.19s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        }
+      },
+      "independent_matrix": "<local-path>",
+      "work_root": "<local-path>"
+    },
+    {
+      "task_id": "werkzeug_filestorage_stream_name",
+      "project_id": "werkzeug-2.2.3",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "verdict": "PASS",
+      "errors": [],
+      "checks": {
+        "source_and_single_line_diff": {
+          "ok": true,
+          "source_hash": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+          "changed_files": [
+            "werkzeug/datastructures.py"
+          ],
+          "errors": []
+        },
+        "deletion_record": {
+          "file": "src/werkzeug/datastructures.py",
+          "line": 2918,
+          "original": "            filename = getattr(stream, \"name\", None)",
+          "replacement": "            pass  # P-: target A deleted"
+        },
+        "candidate_universe_positions": {
+          "ok": true,
+          "operations": [
+            {
+              "id": "special_name_reset",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2924,
+              "last_line": 2924,
+              "code": "filename=None",
+              "kind": "assignment"
+            }
+          ],
+          "errors": []
+        },
+        "target_execution": {
+          "ok": true,
+          "by_input": {
+            "expose_regular_stream": {
+              "role": "exposing",
+              "executed": true,
+              "observation": {
+                "filename": "<home>\\AppData\\Local\\Temp\\tmpaq4s3m67",
+                "filename_type": "str",
+                "outcome": "return"
+              },
+              "trace_error": null
+            },
+            "mask_special_stream": {
+              "role": "masking",
+              "executed": true,
+              "observation": {
+                "filename": null,
+                "filename_type": "NoneType",
+                "outcome": "return"
+              },
+              "trace_error": null
+            }
+          }
+        },
+        "matrix_reproduction": {
+          "ok": true,
+          "stored": "<local-path>",
+          "inputs": {
+            "expose_regular_stream": {
+              "msms": [],
+              "mmbs": [],
+              "masked_EMPTY": false,
+              "exposed_EMPTY": true
+            },
+            "mask_special_stream": {
+              "msms": [
+                [
+                  "special_name_reset"
+                ]
+              ],
+              "mmbs": [
+                [
+                  "special_name_reset"
+                ]
+              ],
+              "masked_EMPTY": true,
+              "exposed_EMPTY": false
+            }
+          },
+          "errors": []
+        },
+        "minimality": {
+          "ok": true,
+          "errors": [],
+          "note": "All subsets of the declared U were enumerated independently; minimality is exact over that finite universe."
+        },
+        "task_specific": {
+          "ok": true,
+          "detail": {},
+          "errors": []
+        },
+        "p_minus_full_suite": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 3.781758,
+          "summary": {
+            "passed": 816,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 24,
+            "xfailed": 0
+          },
+          "stdout_tail": "........................................................................ [  8%]\n........................................................................ [ 17%]\n........................................................................ [ 26%]\n........................................................................ [ 35%]\n........................................................................ [ 44%]\n........................................................................ [ 52%]\n........................................................................ [ 61%]\n........................................................................ [ 70%]\n........................................................................ [ 79%]\n........................................................................ [ 88%]\n........................................................................ [ 97%]\n........................                                                 [100%]\n- generated xml file: <local-path> -\n816 passed, 24 deselected in 3.27s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        },
+        "t_task_on_p_plus": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests/test_datastructures.py::TestFileStorage::test_bytes_proper_sentinel[data0]",
+            "tests/test_datastructures.py::TestFileStorage::test_bytes_proper_sentinel[data1]",
+            "tests/test_datastructures.py::TestFileStorage::test_mimetype_always_lowercase",
+            "tests/test_datastructures.py::TestFileStorage::test_proxy_can_access_stream_attrs[BytesIO]",
+            "tests/test_datastructures.py::TestFileStorage::test_proxy_can_access_stream_attrs[SpooledTemporaryFile]",
+            "tests/test_datastructures.py::TestFileStorage::test_save_to_bytes_io",
+            "tests/test_datastructures.py::TestFileStorage::test_save_to_file",
+            "tests/test_datastructures.py::TestFileStorage::test_save_to_pathlib_dst",
+            "tests/test_test.py::test_environ_builder_data",
+            "tests/test_test.py::test_file_closing",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 0.738183,
+          "summary": {
+            "passed": 10,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 0,
+            "xfailed": 0
+          },
+          "stdout_tail": "..........                                                               [100%]\n- generated xml file: <local-path> -\n10 passed in 0.25s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        }
+      },
+      "independent_matrix": "<local-path>",
+      "work_root": "<local-path>"
+    },
+    {
+      "task_id": "werkzeug_get_host_default_empty",
+      "project_id": "werkzeug-2.2.3",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "verdict": "PASS",
+      "errors": [],
+      "checks": {
+        "source_and_single_line_diff": {
+          "ok": true,
+          "source_hash": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+          "changed_files": [
+            "werkzeug/sansio/utils.py"
+          ],
+          "errors": []
+        },
+        "deletion_record": {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 82,
+          "original": "    host = \"\"",
+          "replacement": "    pass  # P-: target A deleted"
+        },
+        "candidate_universe_positions": {
+          "ok": true,
+          "operations": [
+            {
+              "id": "overwrite_host_header",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 85,
+              "last_line": 85,
+              "code": "host=host_header",
+              "kind": "assignment"
+            },
+            {
+              "id": "overwrite_server",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 87,
+              "last_line": 87,
+              "code": "host=server[0]",
+              "kind": "assignment"
+            }
+          ],
+          "errors": []
+        },
+        "target_execution": {
+          "ok": true,
+          "by_input": {
+            "expose_neither": {
+              "role": "exposing",
+              "executed": true,
+              "observation": {
+                "host": "",
+                "outcome": "return"
+              },
+              "trace_error": null
+            },
+            "mask_host_header": {
+              "role": "masking",
+              "executed": true,
+              "observation": {
+                "host": "example.com",
+                "outcome": "return"
+              },
+              "trace_error": null
+            },
+            "mask_server": {
+              "role": "masking",
+              "executed": true,
+              "observation": {
+                "host": "example.com:8080",
+                "outcome": "return"
+              },
+              "trace_error": null
+            }
+          }
+        },
+        "matrix_reproduction": {
+          "ok": true,
+          "stored": "<local-path>",
+          "inputs": {
+            "expose_neither": {
+              "msms": [],
+              "mmbs": [],
+              "masked_EMPTY": false,
+              "exposed_EMPTY": true
+            },
+            "mask_host_header": {
+              "msms": [
+                [
+                  "overwrite_host_header"
+                ]
+              ],
+              "mmbs": [
+                [
+                  "overwrite_host_header"
+                ]
+              ],
+              "masked_EMPTY": true,
+              "exposed_EMPTY": false
+            },
+            "mask_server": {
+              "msms": [
+                [
+                  "overwrite_server"
+                ]
+              ],
+              "mmbs": [
+                [
+                  "overwrite_server"
+                ]
+              ],
+              "masked_EMPTY": true,
+              "exposed_EMPTY": false
+            }
+          },
+          "errors": []
+        },
+        "minimality": {
+          "ok": true,
+          "errors": [],
+          "note": "All subsets of the declared U were enumerated independently; minimality is exact over that finite universe."
+        },
+        "task_specific": {
+          "ok": true,
+          "detail": {
+            "two_alternative_maskers": {
+              "mask_host_header": "overwrite_host_header",
+              "mask_server": "overwrite_server"
+            },
+            "distinct_paths": true
+          },
+          "errors": []
+        },
+        "p_minus_full_suite": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 3.750203,
+          "summary": {
+            "passed": 816,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 24,
+            "xfailed": 0
+          },
+          "stdout_tail": "........................................................................ [  8%]\n........................................................................ [ 17%]\n........................................................................ [ 26%]\n........................................................................ [ 35%]\n........................................................................ [ 44%]\n........................................................................ [ 52%]\n........................................................................ [ 61%]\n........................................................................ [ 70%]\n........................................................................ [ 79%]\n........................................................................ [ 88%]\n........................................................................ [ 97%]\n........................                                                 [100%]\n- generated xml file: <local-path> -\n816 passed, 24 deselected in 3.24s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        },
+        "t_task_on_p_plus": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[all]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[for]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[host]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore 0]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore empty]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore len < trusted]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore untrusted]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ipv6 - port, host with port]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ipv6 host]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[ipv6 port, host without port]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[multiple for]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[port, host with port]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[port, host without port]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[port, name]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[prefix < for]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[prefix]",
+            "tests/middleware/test_proxy_fix.py::test_proxy_fix[proto]",
+            "tests/sansio/test_utils.py::test_get_host[http-None-server10-spam:8080]",
+            "tests/sansio/test_utils.py::test_get_host[http-None-server11-unix/socket]",
+            "tests/sansio/test_utils.py::test_get_host[http-None-server9-spam]",
+            "tests/sansio/test_utils.py::test_get_host[http-spam-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[http-spam-server12-spam]",
+            "tests/sansio/test_utils.py::test_get_host[http-spam:80-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[http-spam:8080-None-spam:8080]",
+            "tests/sansio/test_utils.py::test_get_host[https-spam-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[https-spam:443-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[ws-spam-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[ws-spam:80-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[wss-spam-None-spam]",
+            "tests/sansio/test_utils.py::test_get_host[wss-spam:443-None-spam]",
+            "tests/test_debug.py::TestDebugHelpers::test_exc_divider_found_on_chained_exception",
+            "tests/test_formparser.py::TestMultiPart::test_basic",
+            "tests/test_formparser.py::TestMultiPart::test_ie7_unc_path",
+            "tests/test_internal.py::test_wrapper_internals",
+            "tests/test_routing.py::test_basic_routing",
+            "tests/test_routing.py::test_dispatch",
+            "tests/test_routing.py::test_environ_defaults",
+            "tests/test_routing.py::test_environ_nonascii_pathinfo",
+            "tests/test_routing.py::test_external_building_with_port_bind_to_environ",
+            "tests/test_routing.py::test_external_building_with_port_bind_to_environ_wrong_servername",
+            "tests/test_routing.py::test_http_host_before_server_name",
+            "tests/test_routing.py::test_invalid_subdomain_warning",
+            "tests/test_routing.py::test_server_name_casing",
+            "tests/test_routing.py::test_server_name_interpolation",
+            "tests/test_routing.py::test_server_name_match_default_port[http://localhost-localhost:80]",
+            "tests/test_routing.py::test_server_name_match_default_port[https://localhost-localhost:443]",
+            "tests/test_test.py::test_content_type",
+            "tests/test_test.py::test_cookie_across_redirect",
+            "tests/test_test.py::test_cookie_for_different_path",
+            "tests/test_test.py::test_cookie_forging",
+            "tests/test_test.py::test_cookiejar_stores_cookie",
+            "tests/test_test.py::test_correct_open_invocation_on_redirect",
+            "tests/test_test.py::test_delete_requests_with_form",
+            "tests/test_test.py::test_environ_builder_basics",
+            "tests/test_test.py::test_environ_builder_json",
+            "tests/test_test.py::test_follow_external_redirect",
+            "tests/test_test.py::test_follow_external_redirect_on_same_subdomain",
+            "tests/test_test.py::test_follow_local_redirect",
+            "tests/test_test.py::test_follow_redirect",
+            "tests/test_test.py::test_follow_redirect_body[301-False]",
+            "tests/test_test.py::test_follow_redirect_body[302-False]",
+            "tests/test_test.py::test_follow_redirect_body[307-True]",
+            "tests/test_test.py::test_follow_redirect_body[308-True]",
+            "tests/test_test.py::test_follow_redirect_exhaust_intermediate",
+            "tests/test_test.py::test_follow_redirect_loop",
+            "tests/test_test.py::test_follow_redirect_non_root_base_url",
+            "tests/test_test.py::test_full_url_requests_with_args",
+            "tests/test_test.py::test_multi_value_submit",
+            "tests/test_test.py::test_multiple_cookies",
+            "tests/test_test.py::test_no_content_type_header_addition",
+            "tests/test_test.py::test_no_initial_cookie",
+            "tests/test_test.py::test_path_info_script_name_unquoting",
+            "tests/test_test.py::test_post_with_file_descriptor",
+            "tests/test_test.py::test_raw_request_uri",
+            "tests/test_test.py::test_redirects_are_tracked",
+            "tests/test_test.py::test_resent_cookie",
+            "tests/test_test.py::test_set_cookie_app",
+            "tests/test_utils.py::test_append_slash_redirect[False-/-http://example.org/-http://example.org/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/-http://example.org/app-http://example.org/app/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/foo-http://example.org/app-http://example.org/app/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/foo/-http://example.org/-http://example.org/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/foo/-http://example.org/app-http://example.org/app/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/foo/bar-http://example.org/-http://example.org/foo/bar/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/foo/bar-http://example.org/app-http://example.org/app/foo/bar/]",
+            "tests/test_utils.py::test_append_slash_redirect[False-/foo?baz-http://example.org/-http://example.org/foo/?baz]",
+            "tests/test_utils.py::test_append_slash_redirect[False-foo-http://example.org/app-http://example.org/app/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/-http://example.org/-http://example.org/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/-http://example.org/app-http://example.org/app/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/foo-http://example.org/app-http://example.org/app/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/foo/-http://example.org/-http://example.org/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/foo/-http://example.org/app-http://example.org/app/foo/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/foo/bar-http://example.org/-http://example.org/foo/bar/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/foo/bar-http://example.org/app-http://example.org/app/foo/bar/]",
+            "tests/test_utils.py::test_append_slash_redirect[True-/foo?baz-http://example.org/-http://example.org/foo/?baz]",
+            "tests/test_utils.py::test_append_slash_redirect[True-foo-http://example.org/app-http://example.org/app/foo/]",
+            "tests/test_wrappers.py::test_base_request",
+            "tests/test_wrappers.py::test_location_header_autocorrect[True-../test-http://localhost/a/test]",
+            "tests/test_wrappers.py::test_location_header_autocorrect[True-./test-http://localhost/a/b/test]",
+            "tests/test_wrappers.py::test_location_header_autocorrect[True-/test-http://localhost/test]",
+            "tests/test_wrappers.py::test_location_header_autocorrect[True-test-http://localhost/a/b/test]",
+            "tests/test_wrappers.py::test_request_repr",
+            "tests/test_wrappers.py::test_url_request_descriptors",
+            "tests/test_wrappers.py::test_url_request_descriptors_hosts",
+            "tests/test_wrappers.py::test_url_request_descriptors_query_quoting",
+            "tests/test_wsgi.py::test_get_current_url_invalid_utf8",
+            "tests/test_wsgi.py::test_get_current_url_unicode",
+            "tests/test_wsgi.py::test_get_host[host, custom port]",
+            "tests/test_wsgi.py::test_get_host[host, strip http port]",
+            "tests/test_wsgi.py::test_get_host[host, strip https port]",
+            "tests/test_wsgi.py::test_get_host[host]",
+            "tests/test_wsgi.py::test_get_host[ignore x-forwarded-host]",
+            "tests/test_wsgi.py::test_get_host[name, custom port]",
+            "tests/test_wsgi.py::test_get_host[name, ignore http port]",
+            "tests/test_wsgi.py::test_get_host[name, ignore https port]",
+            "tests/test_wsgi.py::test_get_host[prefer host]",
+            "tests/test_wsgi.py::test_get_host_fallback",
+            "tests/test_wsgi.py::test_get_host_validate_trusted_hosts",
+            "tests/test_wsgi.py::test_responder",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 1.306762,
+          "summary": {
+            "passed": 118,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 0,
+            "xfailed": 0
+          },
+          "stdout_tail": "........................................................................ [ 61%]\n..............................................                           [100%]\n- generated xml file: <local-path> -\n118 passed in 0.77s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        }
+      },
+      "independent_matrix": "<local-path>",
+      "work_root": "<local-path>"
+    },
+    {
+      "task_id": "werkzeug_secure_filename_ascii_filter",
+      "project_id": "werkzeug-2.2.3",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "verdict": "PASS",
+      "errors": [],
+      "checks": {
+        "source_and_single_line_diff": {
+          "ok": true,
+          "source_hash": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+          "changed_files": [
+            "werkzeug/utils.py"
+          ],
+          "errors": []
+        },
+        "deletion_record": {
+          "file": "src/werkzeug/utils.py",
+          "line": 222,
+          "original": "    filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")",
+          "replacement": "    pass  # P-: target A deleted"
+        },
+        "candidate_universe_positions": {
+          "ok": true,
+          "operations": [
+            {
+              "id": "sanitize_whitelist",
+              "file": "src/werkzeug/utils.py",
+              "first_line": 227,
+              "last_line": 229,
+              "code": "filename=str(_filename_ascii_strip_re.sub(\"\",\"_\".join(filename.split()))).strip(\"._\")",
+              "kind": "block"
+            }
+          ],
+          "errors": []
+        },
+        "target_execution": {
+          "ok": true,
+          "by_input": {
+            "expose_ogham_space": {
+              "role": "exposing",
+              "executed": true,
+              "observation": {
+                "filename": "ab",
+                "outcome": "return"
+              },
+              "trace_error": null
+            },
+            "mask_nonascii_letters": {
+              "role": "masking",
+              "executed": true,
+              "observation": {
+                "filename": "txt",
+                "outcome": "return"
+              },
+              "trace_error": null
+            }
+          }
+        },
+        "matrix_reproduction": {
+          "ok": true,
+          "stored": "<local-path>",
+          "inputs": {
+            "expose_ogham_space": {
+              "msms": [],
+              "mmbs": [],
+              "masked_EMPTY": false,
+              "exposed_EMPTY": true
+            },
+            "mask_nonascii_letters": {
+              "msms": [
+                [
+                  "sanitize_whitelist"
+                ]
+              ],
+              "mmbs": [
+                [
+                  "sanitize_whitelist"
+                ]
+              ],
+              "masked_EMPTY": true,
+              "exposed_EMPTY": false
+            }
+          },
+          "errors": []
+        },
+        "minimality": {
+          "ok": true,
+          "errors": [],
+          "note": "All subsets of the declared U were enumerated independently; minimality is exact over that finite universe."
+        },
+        "task_specific": {
+          "ok": true,
+          "detail": {},
+          "errors": []
+        },
+        "p_minus_full_suite": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 3.725545,
+          "summary": {
+            "passed": 816,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 24,
+            "xfailed": 0
+          },
+          "stdout_tail": "........................................................................ [  8%]\n........................................................................ [ 17%]\n........................................................................ [ 26%]\n........................................................................ [ 35%]\n........................................................................ [ 44%]\n........................................................................ [ 52%]\n........................................................................ [ 61%]\n........................................................................ [ 70%]\n........................................................................ [ 79%]\n........................................................................ [ 88%]\n........................................................................ [ 97%]\n........................                                                 [100%]\n- generated xml file: <local-path> -\n816 passed, 24 deselected in 3.22s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        },
+        "t_task_on_p_plus": {
+          "command": [
+            "<local-path>",
+            "-m",
+            "pytest",
+            "tests/test_utils.py::test_secure_filename",
+            "-q",
+            "--disable-warnings",
+            "--junitxml=<local-path>",
+            "-m",
+            "not dev_server"
+          ],
+          "returncode": 0,
+          "timed_out": false,
+          "duration_seconds": 0.565676,
+          "summary": {
+            "passed": 1,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "deselected": 0,
+            "xfailed": 0
+          },
+          "stdout_tail": ".                                                                        [100%]\n- generated xml file: <local-path> -\n1 passed in 0.08s\n",
+          "stderr_tail": "",
+          "log": "<local-path>",
+          "junit": "<local-path>",
+          "success": true
+        }
+      },
+      "independent_matrix": "<local-path>",
+      "work_root": "<local-path>"
+    }
+  ]
+}

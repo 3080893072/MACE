@@ -1,0 +1,31 @@
+{
+  "case_id": "sd_tabulate_2557_curlen",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M7_LOOP_STATE",
+  "base": {
+    "slug": "tabulate-0.9.0",
+    "file": "tabulate/__init__.py",
+    "A_line": 2557,
+    "A_code": "                cur_len -= self._len(cur_line[-1])"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 2557,
+      "indent": 16,
+      "role": "Recomputes the loop-carried line accumulator from the remaining chunks instead of applying the decrement.",
+      "lines": [
+        "if self.max_lines == 2:",
+        "    cur_len = sum(map(self._len, cur_line[:-1]))"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_tabulate_2557.py",
+  "inputs": {
+    "mask_two_lines": "two-line truncation where the last line ends in a dropped whitespace chunk",
+    "expose_three_lines": "three-line truncation with the same dropped-chunk shape",
+    "control_line_fits": "the candidate line fits even without the decrement",
+    "control_no_max_lines": "max_lines is None; cur_len is not consulted"
+  },
+  "rationale": "A adjusts the per-line accumulator when a trailing whitespace chunk is dropped; U1 rebuilds the accumulator from the surviving chunks.  The rebuild is declared for two-line truncation, which is the masking input; three-line truncation exposes the deletion."
+}

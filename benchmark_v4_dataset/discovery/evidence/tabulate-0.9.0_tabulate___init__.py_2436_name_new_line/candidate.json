@@ -1,0 +1,72 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:2436:name:new_line",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_update_lines",
+  "mechanism": "name",
+  "target_A": {
+    "line": 2436,
+    "end_line": 2436,
+    "kind": "Assign",
+    "code": "new_line = \"\".join(self._active_codes) + new_line"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_internal.py::test_wrap_text_to_colwidths",
+    "test/test_internal.py::test_wrap_text_to_colwidths_multi_ansi_colors_full_cell",
+    "test/test_internal.py::test_wrap_text_to_colwidths_multi_ansi_colors_in_subset",
+    "test/test_internal.py::test_wrap_text_to_colwidths_single_ansi_colors_full_cell",
+    "test/test_internal.py::test_wrap_text_to_numbers",
+    "test/test_output.py::test_maxcolwidth_honor_disable_parsenum",
+    "test/test_output.py::test_maxcolwidth_pad_tailing_widths",
+    "test/test_output.py::test_maxcolwidth_single_value",
+    "test/test_output.py::test_plain_maxcolwidth_autowraps",
+    "test/test_output.py::test_plain_maxcolwidth_autowraps_with_sep",
+    "test/test_output.py::test_plain_maxheadercolwidths_autowraps",
+    "test/test_textwrapper.py::test_wrap_color_in_single_line",
+    "test/test_textwrapper.py::test_wrap_color_line_splillover",
+    "test/test_textwrapper.py::test_wrap_datetime",
+    "test/test_textwrapper.py::test_wrap_full_line_color",
+    "test/test_textwrapper.py::test_wrap_longword_non_wide",
+    "test/test_textwrapper.py::test_wrap_multiword_non_wide",
+    "test/test_textwrapper.py::test_wrap_multiword_non_wide_with_hypens"
+  ],
+  "original_hit_test_count": 18,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        new_line = \"\".join(self._active_codes) + new_line",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.5,
+    "failed_nodeids": [
+      "test.test_internal::test_wrap_text_to_colwidths_multi_ansi_colors_full_cell",
+      "test.test_internal::test_wrap_text_to_colwidths_multi_ansi_colors_in_subset",
+      "test.test_internal::test_wrap_text_to_colwidths_single_ansi_colors_full_cell",
+      "test.test_textwrapper::test_wrap_color_line_splillover",
+      "test.test_textwrapper::test_wrap_full_line_color"
+    ],
+    "stdout_tail": " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = ['\\x1b[31m\\x1b[104mThis is a test\\x1b[0m', '\\x1b[31m\\x1b[104mstring for testing\\x1b[0m', '\\x1b[31m\\x1b[104mTextWrap with colors\\x1b[0m']\nresult = ['\\x1b[31m\\x1b[104mThis is a test\\x1b[0m', 'string for testing\\x1b[0m', 'TextWrap with colors\\x1b[0m']\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n['\\x1b[31m\\x1b[104mThis is a test\\x1b[0m', '\\x1b[31m\\x1b[104mstring for testing\\x1b[0m', '\\x1b[31m\\x1b[104mTextWrap with colors\\x1b[0m']\n\nGot:\n['\\x1b[31m\\x1b[104mThis is a test\\x1b[0m', 'string for testing\\x1b[0m', 'TextWrap with colors\\x1b[0m']\n\n_______________________ test_wrap_color_line_splillover _______________________\n\n    def test_wrap_color_line_splillover():\n        \"\"\"TextWrapper: Wrap a line - preserve internal color tags and wrap them to\n        other lines when required, requires adding the colors tags to other lines as appropriate\"\"\"\n        # This has both a text color and a background color\n        data = \"This is a \\033[31mtest string for testing TextWrap\\033[0m with colors\"\n    \n        expected = [\n            \"This is a \\033[31mtest string for\\033[0m\",\n            \"\\033[31mtesting TextWrap\\033[0m with\",\n            \"colors\",\n        ]\n        wrapper = CTW(width=25)\n        result = wrapper.wrap(data)\n>       assert_equal(expected, result)\n\ntest\\test_textwrapper.py:158: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = ['This is a \\x1b[31mtest string for\\x1b[0m', '\\x1b[31mtesting TextWrap\\x1b[0m with', 'colors']\nresult = ['This is a \\x1b[31mtest string for\\x1b[0m', 'testing TextWrap\\x1b[0m with', 'colors']\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n['This is a \\x1b[31mtest string for\\x1b[0m', '\\x1b[31mtesting TextWrap\\x1b[0m with', 'colors']\n\nGot:\n['This is a \\x1b[31mtest string for\\x1b[0m', 'testing TextWrap\\x1b[0m with', 'colors']\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_internal.py::test_wrap_text_to_colwidths_single_ansi_colors_full_cell\nFAILED test/test_internal.py::test_wrap_text_to_colwidths_multi_ansi_colors_full_cell\nFAILED test/test_internal.py::test_wrap_text_to_colwidths_multi_ansi_colors_in_subset\nFAILED test/test_textwrapper.py::test_wrap_full_line_color - AssertionError\nFAILED test/test_textwrapper.py::test_wrap_color_line_splillover - AssertionE...\n5 failed, 13 passed in 0.17s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

@@ -1,0 +1,346 @@
+{
+  "case_id": "sd_pygments_style95_cache",
+  "method": "graph",
+  "mechanism": "M9_EXCEPTION_FALLBACK",
+  "project": "Pygments",
+  "universe": [
+    {
+      "id": "pygments/style.py:87-87",
+      "file": "pygments/style.py",
+      "first_line": 87,
+      "last_line": 87,
+      "kind": "assign",
+      "code": "                ndef = _styles.get(token.parent, None)",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "pygments/style.py:95-95",
+          "to": "pygments/style.py:87-87",
+          "kind": "data",
+          "confidence": "MAY",
+          "evidence": "loop-carried def-use:_styles",
+          "guard": ""
+        }
+      ],
+      "graph_function": "__new__"
+    },
+    {
+      "id": "pygments/style.py:64-64",
+      "file": "pygments/style.py",
+      "first_line": 64,
+      "last_line": 64,
+      "kind": "assign",
+      "code": "                obj.styles[token] = ''",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/style.py:95-95",
+          "to": "pygments/style.py:64-64",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:token",
+          "guard": ""
+        }
+      ],
+      "graph_function": "__new__"
+    },
+    {
+      "id": "pygments/style.py:81-81",
+      "file": "pygments/style.py",
+      "first_line": 81,
+      "last_line": 81,
+      "kind": "assign",
+      "code": "        _styles = obj._styles = {}",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/style.py:95-95",
+          "to": "pygments/style.py:81-81",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:_styles",
+          "guard": ""
+        }
+      ],
+      "graph_function": "__new__"
+    },
+    {
+      "id": "pygments/style.py:92-92",
+      "file": "pygments/style.py",
+      "first_line": 92,
+      "last_line": 92,
+      "kind": "assign",
+      "code": "                    ndef = _styles[Token][:]",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/style.py:95-95",
+          "to": "pygments/style.py:92-92",
+          "kind": "data",
+          "confidence": "MAY",
+          "evidence": "loop-carried def-use:_styles",
+          "guard": ""
+        }
+      ],
+      "graph_function": "__new__"
+    },
+    {
+      "id": "pygments/style.py:90-90",
+      "file": "pygments/style.py",
+      "first_line": 90,
+      "last_line": 90,
+      "kind": "assign",
+      "code": "                    ndef = ['', 0, 0, 0, '', '', 0, 0, 0]",
+      "graph_score": 1.1,
+      "graph_path": [
+        {
+          "from": "pygments/style.py:95-95",
+          "to": "pygments/style.py:90-90",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:ndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "__new__"
+    },
+    {
+      "id": "pygments/style.py:94-94",
+      "file": "pygments/style.py",
+      "first_line": 94,
+      "last_line": 94,
+      "kind": "assign",
+      "code": "                    ndef = ndef[:]",
+      "graph_score": 1.1,
+      "graph_path": [
+        {
+          "from": "pygments/style.py:95-95",
+          "to": "pygments/style.py:94-94",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:ndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "__new__"
+    }
+  ],
+  "discovery": {
+    "method": "graph",
+    "rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic",
+    "stats": {
+      "nodes": 57,
+      "edges": 674,
+      "edge_kinds": {
+        "alias": 116,
+        "call": 119,
+        "control": 282,
+        "data": 157
+      },
+      "edge_confidence": {
+        "MAY": 248,
+        "MUST": 423,
+        "UNKNOWN": 3
+      },
+      "deletable": 28,
+      "unresolved_calls": [
+        "UNKNOWN:get",
+        "UNKNOWN:split"
+      ]
+    },
+    "eligible": 28,
+    "selected": 6,
+    "truncated": true,
+    "u_covered": [],
+    "u_total": [
+      "U1"
+    ],
+    "u_recall": 0.0,
+    "u_exact": false
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_text",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [],
+      "mmbs_ids": [
+        [
+          "pygments/style.py:94-94"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": false,
+        "unknown_subsets": 56,
+        "invalid_subsets": 0,
+        "cache_hits": 10,
+        "first_msms": null,
+        "first_mmbs": {
+          "set": [
+            "pygments/style.py:94-94"
+          ],
+          "evaluations": 12,
+          "elapsed_seconds": 0.004
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "mask_name_other",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [],
+      "mmbs_ids": [
+        [
+          "pygments/style.py:94-94"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": false,
+        "unknown_subsets": 56,
+        "invalid_subsets": 0,
+        "cache_hits": 10,
+        "first_msms": null,
+        "first_mmbs": {
+          "set": [
+            "pygments/style.py:94-94"
+          ],
+          "evaluations": 12,
+          "elapsed_seconds": 0.003
+        }
+      }
+    },
+    {
+      "public_id": "in3",
+      "input_key": "expose_keyword",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in4",
+      "input_key": "mask_operator_inherited",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [],
+      "mmbs_ids": [
+        [
+          "pygments/style.py:94-94"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": false,
+        "unknown_subsets": 56,
+        "invalid_subsets": 0,
+        "cache_hits": 10,
+        "first_msms": null,
+        "first_mmbs": {
+          "set": [
+            "pygments/style.py:94-94"
+          ],
+          "evaluations": 12,
+          "elapsed_seconds": 0.004
+        }
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 0,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 3,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 3
+  },
+  "detail": [
+    {
+      "input": "mask_text",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [],
+      "got_msms_blocks": [],
+      "got_msms_blocks_identity": [],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/style.py:94-94"
+        ]
+      ]
+    },
+    {
+      "input": "mask_name_other",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [],
+      "got_msms_blocks": [],
+      "got_msms_blocks_identity": [],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/style.py:94-94"
+        ]
+      ]
+    },
+    {
+      "input": "mask_operator_inherited",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [],
+      "got_msms_blocks": [],
+      "got_msms_blocks_identity": [],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/style.py:94-94"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 2.34,
+    "probe_executions_algorithm": 128,
+    "probe_executions_scoring": 0,
+    "variant_builds": 128,
+    "subsets_evaluated": 192
+  }
+}

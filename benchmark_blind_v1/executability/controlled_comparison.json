@@ -1,0 +1,2792 @@
+{
+  "schema_version": "mace-controlled-functional-comparison-v1",
+  "generated_at_utc": "2026-11-01T09:45:10+00:00",
+  "pilot_only": true,
+  "note": "ctrl_01/02/03 have been reviewed repeatedly and are Pilot tasks, not a new independent test set.  No historical label was changed.",
+  "model": {
+    "provider": "transformers-local",
+    "model": "qwen15b",
+    "path": "D:/tmp/qwen15b",
+    "dtype": "torch.bfloat16",
+    "device": "cuda:0",
+    "parameters": 1543714304,
+    "max_position_embeddings": 32768
+  },
+  "methods": [
+    "pure_symbolic",
+    "direct_qwen",
+    "full_mace"
+  ],
+  "tasks": [
+    {
+      "method": "pure_symbolic",
+      "task_id": "ctrl_01",
+      "status": "DERIVED",
+      "error": null,
+      "guard": "mode == 0",
+      "guard_check": {
+        "status": "BOUNDED",
+        "exact": true,
+        "sound": true,
+        "complete": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "counterexamples": [],
+        "typed": true,
+        "wall_seconds": 0.095
+      },
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality",
+      "wall_seconds": 0.096,
+      "tokens": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "capabilities": {
+        "guard": "SUPPORTED",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "UNSUPPORTED_INTERFACE",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "derive_guard returns a source-level guard and coverage; it does not enumerate operation subsets or map tests."
+    },
+    {
+      "method": "direct_qwen",
+      "task_id": "ctrl_01",
+      "status": "GUARD_VERIFIED",
+      "error": null,
+      "guard": "(mode == 0)",
+      "guard_check": {
+        "status": "BOUNDED",
+        "exact": true,
+        "sound": true,
+        "complete": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "counterexamples": [],
+        "typed": true,
+        "wall_seconds": 0.09
+      },
+      "relations": [],
+      "relation_count": 0,
+      "witness_count": 3,
+      "witnesses": [
+        {
+          "args": {
+            "mode": 1,
+            "x": 0
+          },
+          "out_plus": 1,
+          "out_minus": 0,
+          "snap_plus": {
+            "mode": 1,
+            "x": 0,
+            "v": 1
+          },
+          "snap_minus": {
+            "mode": 1,
+            "x": 0,
+            "v": 0
+          }
+        },
+        {
+          "args": {
+            "mode": 1,
+            "x": 1
+          },
+          "out_plus": 2,
+          "out_minus": 1,
+          "snap_plus": {
+            "mode": 1,
+            "x": 1,
+            "v": 2
+          },
+          "snap_minus": {
+            "mode": 1,
+            "x": 1,
+            "v": 1
+          }
+        },
+        {
+          "args": {
+            "mode": 1,
+            "x": 2
+          },
+          "out_plus": 3,
+          "out_minus": 2,
+          "snap_plus": {
+            "mode": 1,
+            "x": 2,
+            "v": 3
+          },
+          "snap_minus": {
+            "mode": 1,
+            "x": 2,
+            "v": 2
+          }
+        }
+      ],
+      "usage": {
+        "calls": 1,
+        "prompt_tokens": 558,
+        "completion_tokens": 50,
+        "decode_seconds": 2.106,
+        "wall_seconds": 12.131
+      },
+      "model": "qwen15b",
+      "rounds_used": 1,
+      "capabilities": {
+        "guard": "SUPPORTED",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "CHECKER_GENERATED_ONLY",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "Direct Qwen is the guard-only M5/M6 baseline; its prompt does not ask for operation sets, counterexamples, or test gaps.  Any witness comes from the checker's report, not from the model.",
+      "wall_seconds": 12.223,
+      "raw_exchanges": [
+        {
+          "round": 1,
+          "stats": {
+            "prompt_tokens": 558,
+            "completion_tokens": 50,
+            "total_tokens": 608,
+            "wall_seconds": 2.106,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"mask_guard\": \"(mode == 0)\",\n  \"explanation\": \"The returned value remains unchanged because the condition `mode == 0` ensures that the value of `v` does not change.\"\n}\n```",
+          "guard": "(mode == 0)",
+          "report": {
+            "guard_ok": true,
+            "evidence_level": "BOUNDED",
+            "domain_size": 6,
+            "usable_rows": 6,
+            "execution_errors": 0,
+            "post_sorts": {
+              "mode": "int",
+              "x": "int",
+              "v": "int"
+            },
+            "relations": [],
+            "guard": {
+              "id": "G",
+              "expr": "(mode == 0)",
+              "source_lines": [],
+              "status": "BOUNDED",
+              "checked": 6,
+              "unsound": 0,
+              "incomplete": 0,
+              "shape": null,
+              "parts": [
+                "mode == 0"
+              ],
+              "blame": {
+                "accepts_wrong": [
+                  0
+                ],
+                "rejects_wrong": [
+                  0
+                ]
+              },
+              "counterexamples": []
+            },
+            "observer_soundness": {
+              "status": "UNKNOWN",
+              "reason": "no complete observer set"
+            },
+            "composition": {
+              "upstream_fixed_point": {
+                "status": "UNKNOWN",
+                "reason": "no upstream relation with role='fixed_point' was verified"
+              },
+              "derived_guard": {
+                "reason": "no verified relation can contribute to the guard",
+                "expr": null,
+                "partial_expr": null,
+                "channels_covered": [],
+                "missing_channels": [
+                  0
+                ],
+                "fixed_point_relations": [],
+                "observer_relations": [],
+                "parts": [],
+                "compose_status": "UNKNOWN",
+                "status": "UNKNOWN"
+              }
+            },
+            "behaviour": {
+              "local_inactive": 0,
+              "active_masked": 3,
+              "active_exposed": 3
+            },
+            "witnesses": [
+              {
+                "args": {
+                  "mode": 1,
+                  "x": 0
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "mode": 1,
+                  "x": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "mode": 1,
+                  "x": 0,
+                  "v": 0
+                }
+              },
+              {
+                "args": {
+                  "mode": 1,
+                  "x": 1
+                },
+                "out_plus": 2,
+                "out_minus": 1,
+                "snap_plus": {
+                  "mode": 1,
+                  "x": 1,
+                  "v": 2
+                },
+                "snap_minus": {
+                  "mode": 1,
+                  "x": 1,
+                  "v": 1
+                }
+              },
+              {
+                "args": {
+                  "mode": 1,
+                  "x": 2
+                },
+                "out_plus": 3,
+                "out_minus": 2,
+                "snap_plus": {
+                  "mode": 1,
+                  "x": 2,
+                  "v": 3
+                },
+                "snap_minus": {
+                  "mode": 1,
+                  "x": 2,
+                  "v": 2
+                }
+              }
+            ],
+            "attribution": {
+              "contrast": {
+                "status": "TESTED",
+                "arguments": {
+                  "mode": {
+                    "contexts": 3,
+                    "contexts_with_flip": 3,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "mode",
+                      "args": {
+                        "x": 0
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 1,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "x": {
+                    "contexts": 2,
+                    "contexts_with_flip": 0,
+                    "causally_relevant": false,
+                    "example": null
+                  }
+                },
+                "causally_relevant": [
+                  "mode"
+                ]
+              },
+              "proof_dag": {
+                "nodes": [
+                  {
+                    "id": "G",
+                    "kind": "mask_guard",
+                    "source_lines": [],
+                    "status": "BOUNDED"
+                  }
+                ],
+                "edges": [],
+                "unsupported": [],
+                "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+              }
+            },
+            "all_relations_pass": false,
+            "status": "OK",
+            "target_line": 3,
+            "source_sha256": null
+          },
+          "error": null,
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(mode, x):\n002:     v = x\n003:     v = v + 1  # TARGET_A\n004:     if mode == 0:\n005:         v = x\n006:     return v\n\nInput domain: mode: int, x: int; the declared finite set has 6 cases (Full Cartesian product of the two argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  mode: int\n  v: int\n  x: int\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "full_mace",
+      "task_id": "ctrl_01",
+      "status": "NO_RESULT",
+      "error": null,
+      "guard": null,
+      "guard_check": {
+        "status": "ABSENT",
+        "exact": false,
+        "sound": null,
+        "complete": null,
+        "unsound": null,
+        "incomplete": null
+      },
+      "relations": [],
+      "relation_count": 0,
+      "witness_count": 0,
+      "witnesses": [],
+      "usage": {
+        "calls": 2,
+        "prompt_tokens": 2846,
+        "completion_tokens": 598,
+        "decode_seconds": 17.867,
+        "wall_seconds": 17.959
+      },
+      "model": "qwen15b",
+      "rounds_used": 2,
+      "capabilities": {
+        "guard": "UNKNOWN",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "NOT_PRODUCED",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "Full MACE emits typed relations and their conditions (a semantic masking explanation), then the checker supplies witnesses.  The contract schema does not enumerate downstream operation subsets and does not classify tests.",
+      "wall_seconds": 17.96,
+      "raw_exchanges": [
+        {
+          "round": 1,
+          "stats": {
+            "prompt_tokens": 1244,
+            "completion_tokens": 299,
+            "total_tokens": 1543,
+            "wall_seconds": 8.695,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<mode == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [4],\n      \"rationale\": \"When mode is 0, the value of v remains unchanged.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"<x == x>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [3],\n      \"rationale\": \"The initial value of v is equal to the initial value of x.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```",
+          "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(mode, x):\n002:     v = x\n003:     v = v + 1  # TARGET_A\n004:     if mode == 0:\n005:         v = x\n006:     return v\n\nInput domain used by the bounded checker:\nmode: int, x: int; the declared finite set has 6 cases (Full Cartesian product of the two argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  mode: int\n  v: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "stats": {
+            "prompt_tokens": 1602,
+            "completion_tokens": 299,
+            "total_tokens": 1901,
+            "wall_seconds": 9.172,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<mode == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [4],\n      \"rationale\": \"When mode is 0, the value of v remains unchanged.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"<x == x>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [3],\n      \"rationale\": \"The initial value of v is equal to the initial value of x.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```",
+          "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(mode, x):\n002:     v = x\n003:     v = v + 1  # TARGET_A\n004:     if mode == 0:\n005:         v = x\n006:     return v\n\nInput domain used by the bounded checker:\nmode: int, x: int; the declared finite set has 6 cases (Full Cartesian product of the two argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  mode: int\n  v: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+            },
+            {
+              "role": "assistant",
+              "content": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<mode == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [4],\n      \"rationale\": \"When mode is 0, the value of v remains unchanged.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"<x == x>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [3],\n      \"rationale\": \"The initial value of v is equal to the initial value of x.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```"
+            },
+            {
+              "role": "user",
+              "content": "Your previous reply was not a valid MACE contract: T1.expr is not a parsable expression: invalid syntax\nReturn the complete JSON contract again, in exactly the shape requested, using only ids that already exist plus the new ones you introduce."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "pure_symbolic",
+      "task_id": "ctrl_02",
+      "status": "DERIVED",
+      "error": null,
+      "guard": "(6 + x) // 6 * 6 // 7 * 7 == 6 * (x // 6) // 7 * 7 and c == 0 and (d == 0) or (not d == 0 and (6 + x) // 6 * 6 == 6 * (x // 6) and (c == 0)) or (not c == 0 and (6 + x) // 7 * 7 == 7 * (x // 7) and (d == 0))",
+      "guard_check": {
+        "status": "BOUNDED",
+        "exact": true,
+        "sound": true,
+        "complete": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "counterexamples": [],
+        "typed": true,
+        "wall_seconds": 0.095
+      },
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 8,
+        "ratio": 0.625
+      },
+      "reason": "source-level path equality",
+      "wall_seconds": 0.098,
+      "tokens": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "capabilities": {
+        "guard": "SUPPORTED",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "UNSUPPORTED_INTERFACE",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "derive_guard returns a source-level guard and coverage; it does not enumerate operation subsets or map tests."
+    },
+    {
+      "method": "direct_qwen",
+      "task_id": "ctrl_02",
+      "status": "ROUNDS_EXHAUSTED",
+      "error": null,
+      "guard": "(c == 0) and (d == 0)",
+      "guard_check": {
+        "status": "REFUTED",
+        "exact": false,
+        "sound": false,
+        "complete": true,
+        "unsound": 1,
+        "incomplete": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "x": 6,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 7,
+            "out_minus": 0,
+            "snap_plus": {
+              "x": 6,
+              "c": 0,
+              "d": 0,
+              "v": 12
+            },
+            "snap_minus": {
+              "x": 6,
+              "c": 0,
+              "d": 0,
+              "v": 6
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true,
+              true
+            ],
+            "part_text": [
+              "c == 0",
+              "d == 0"
+            ]
+          }
+        ],
+        "typed": true,
+        "wall_seconds": 0.091
+      },
+      "relations": [],
+      "relation_count": 0,
+      "witness_count": 3,
+      "witnesses": [
+        {
+          "args": {
+            "x": 1,
+            "c": 0,
+            "d": 1
+          },
+          "out_plus": 6,
+          "out_minus": 0,
+          "snap_plus": {
+            "x": 1,
+            "c": 0,
+            "d": 1,
+            "v": 7
+          },
+          "snap_minus": {
+            "x": 1,
+            "c": 0,
+            "d": 1,
+            "v": 1
+          }
+        },
+        {
+          "args": {
+            "x": 1,
+            "c": 1,
+            "d": 0
+          },
+          "out_plus": 7,
+          "out_minus": 0,
+          "snap_plus": {
+            "x": 1,
+            "c": 1,
+            "d": 0,
+            "v": 7
+          },
+          "snap_minus": {
+            "x": 1,
+            "c": 1,
+            "d": 0,
+            "v": 1
+          }
+        },
+        {
+          "args": {
+            "x": 1,
+            "c": 1,
+            "d": 1
+          },
+          "out_plus": 7,
+          "out_minus": 1,
+          "snap_plus": {
+            "x": 1,
+            "c": 1,
+            "d": 1,
+            "v": 7
+          },
+          "snap_minus": {
+            "x": 1,
+            "c": 1,
+            "d": 1,
+            "v": 1
+          }
+        }
+      ],
+      "usage": {
+        "calls": 2,
+        "prompt_tokens": 1486,
+        "completion_tokens": 76,
+        "decode_seconds": 2.39,
+        "wall_seconds": 2.665
+      },
+      "model": "qwen15b",
+      "rounds_used": 2,
+      "capabilities": {
+        "guard": "SUPPORTED",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "CHECKER_GENERATED_ONLY",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "Direct Qwen is the guard-only M5/M6 baseline; its prompt does not ask for operation sets, counterexamples, or test gaps.  Any witness comes from the checker's report, not from the model.",
+      "wall_seconds": 2.757,
+      "raw_exchanges": [
+        {
+          "round": 1,
+          "stats": {
+            "prompt_tokens": 602,
+            "completion_tokens": 51,
+            "total_tokens": 653,
+            "wall_seconds": 1.681,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"mask_guard\": \"(c == 0) and (d == 0)\",\n  \"explanation\": \"The returned value remains unchanged if both conditions c == 0 and d == 0 are true.\"\n}\n```",
+          "guard": "(c == 0) and (d == 0)",
+          "report": {
+            "guard_ok": false,
+            "evidence_level": "BOUNDED",
+            "domain_size": 24,
+            "usable_rows": 24,
+            "execution_errors": 0,
+            "post_sorts": {
+              "x": "int",
+              "c": "int",
+              "d": "int",
+              "v": "int"
+            },
+            "relations": [],
+            "guard": {
+              "id": "G",
+              "expr": "(c == 0) and (d == 0)",
+              "source_lines": [],
+              "status": "REFUTED",
+              "checked": 24,
+              "unsound": 1,
+              "incomplete": 0,
+              "shape": "and",
+              "parts": [
+                "c == 0",
+                "d == 0"
+              ],
+              "blame": {
+                "accepts_wrong": [
+                  1,
+                  1
+                ],
+                "rejects_wrong": [
+                  0,
+                  0
+                ]
+              },
+              "counterexamples": [
+                {
+                  "args": {
+                    "x": 6,
+                    "c": 0,
+                    "d": 0
+                  },
+                  "out_plus": 7,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "x": 6,
+                    "c": 0,
+                    "d": 0,
+                    "v": 12
+                  },
+                  "snap_minus": {
+                    "x": 6,
+                    "c": 0,
+                    "d": 0,
+                    "v": 6
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "unsound",
+                  "predicted": true,
+                  "parts": [
+                    true,
+                    true
+                  ],
+                  "part_text": [
+                    "c == 0",
+                    "d == 0"
+                  ]
+                }
+              ],
+              "contrasts": [
+                {
+                  "only_differing_argument": "x",
+                  "masked": {
+                    "args": {
+                      "x": 1,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 0,
+                    "out_minus": 0,
+                    "guard_says": true
+                  },
+                  "exposed": {
+                    "args": {
+                      "x": 6,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 7,
+                    "out_minus": 0,
+                    "guard_says": true
+                  }
+                }
+              ]
+            },
+            "observer_soundness": {
+              "status": "UNKNOWN",
+              "reason": "no complete observer set"
+            },
+            "composition": {
+              "upstream_fixed_point": {
+                "status": "UNKNOWN",
+                "reason": "no upstream relation with role='fixed_point' was verified"
+              },
+              "derived_guard": {
+                "reason": "no verified relation can contribute to the guard",
+                "expr": null,
+                "partial_expr": null,
+                "channels_covered": [],
+                "missing_channels": [
+                  0
+                ],
+                "fixed_point_relations": [],
+                "observer_relations": [],
+                "parts": [],
+                "compose_status": "UNKNOWN",
+                "status": "UNKNOWN"
+              }
+            },
+            "behaviour": {
+              "local_inactive": 0,
+              "active_masked": 5,
+              "active_exposed": 19
+            },
+            "witnesses": [
+              {
+                "args": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 1
+                },
+                "out_plus": 6,
+                "out_minus": 0,
+                "snap_plus": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 1,
+                  "v": 1
+                }
+              },
+              {
+                "args": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "snap_plus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 0,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 0,
+                  "v": 1
+                }
+              },
+              {
+                "args": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 1,
+                "snap_plus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 1,
+                  "v": 1
+                }
+              }
+            ],
+            "attribution": {
+              "contrast": {
+                "status": "TESTED",
+                "arguments": {
+                  "x": {
+                    "contexts": 4,
+                    "contexts_with_flip": 1,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "x",
+                      "args": {
+                        "c": 0,
+                        "d": 0
+                      },
+                      "masked": {
+                        "value": 1,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 6,
+                        "out_plus": 7,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "c": {
+                    "contexts": 12,
+                    "contexts_with_flip": 5,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "c",
+                      "args": {
+                        "x": 1,
+                        "d": 0
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 7,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "d": {
+                    "contexts": 12,
+                    "contexts_with_flip": 5,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "d",
+                      "args": {
+                        "x": 1,
+                        "c": 0
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 6,
+                        "out_minus": 0
+                      }
+                    }
+                  }
+                },
+                "causally_relevant": [
+                  "x",
+                  "c",
+                  "d"
+                ]
+              },
+              "proof_dag": {
+                "nodes": [
+                  {
+                    "id": "G",
+                    "kind": "mask_guard",
+                    "source_lines": [],
+                    "status": "REFUTED"
+                  }
+                ],
+                "edges": [],
+                "unsupported": [],
+                "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+              }
+            },
+            "all_relations_pass": false,
+            "status": "OK",
+            "target_line": 3,
+            "source_sha256": null
+          },
+          "error": null,
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(x, c, d):\n002:     v = x\n003:     v = v + 6  # TARGET_A\n004:     if c == 0:\n005:         v = v // 6 * 6\n006:     if d == 0:\n007:         v = v // 7 * 7\n008:     return v\n\nInput domain: x: int, c: int, d: int; the declared finite set has 24 cases (Full Cartesian product of the three argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  v: int\n  x: int\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "stats": {
+            "prompt_tokens": 884,
+            "completion_tokens": 25,
+            "total_tokens": 909,
+            "wall_seconds": 0.709,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"mask_guard\": \"(c == 0) and (d == 0)\"\n}\n```",
+          "guard": "(c == 0) and (d == 0)",
+          "report": {
+            "guard_ok": false,
+            "evidence_level": "BOUNDED",
+            "domain_size": 24,
+            "usable_rows": 24,
+            "execution_errors": 0,
+            "post_sorts": {
+              "x": "int",
+              "c": "int",
+              "d": "int",
+              "v": "int"
+            },
+            "relations": [],
+            "guard": {
+              "id": "G",
+              "expr": "(c == 0) and (d == 0)",
+              "source_lines": [],
+              "status": "REFUTED",
+              "checked": 24,
+              "unsound": 1,
+              "incomplete": 0,
+              "shape": "and",
+              "parts": [
+                "c == 0",
+                "d == 0"
+              ],
+              "blame": {
+                "accepts_wrong": [
+                  1,
+                  1
+                ],
+                "rejects_wrong": [
+                  0,
+                  0
+                ]
+              },
+              "counterexamples": [
+                {
+                  "args": {
+                    "x": 6,
+                    "c": 0,
+                    "d": 0
+                  },
+                  "out_plus": 7,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "x": 6,
+                    "c": 0,
+                    "d": 0,
+                    "v": 12
+                  },
+                  "snap_minus": {
+                    "x": 6,
+                    "c": 0,
+                    "d": 0,
+                    "v": 6
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "unsound",
+                  "predicted": true,
+                  "parts": [
+                    true,
+                    true
+                  ],
+                  "part_text": [
+                    "c == 0",
+                    "d == 0"
+                  ]
+                }
+              ],
+              "contrasts": [
+                {
+                  "only_differing_argument": "x",
+                  "masked": {
+                    "args": {
+                      "x": 1,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 0,
+                    "out_minus": 0,
+                    "guard_says": true
+                  },
+                  "exposed": {
+                    "args": {
+                      "x": 6,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 7,
+                    "out_minus": 0,
+                    "guard_says": true
+                  }
+                }
+              ]
+            },
+            "observer_soundness": {
+              "status": "UNKNOWN",
+              "reason": "no complete observer set"
+            },
+            "composition": {
+              "upstream_fixed_point": {
+                "status": "UNKNOWN",
+                "reason": "no upstream relation with role='fixed_point' was verified"
+              },
+              "derived_guard": {
+                "reason": "no verified relation can contribute to the guard",
+                "expr": null,
+                "partial_expr": null,
+                "channels_covered": [],
+                "missing_channels": [
+                  0
+                ],
+                "fixed_point_relations": [],
+                "observer_relations": [],
+                "parts": [],
+                "compose_status": "UNKNOWN",
+                "status": "UNKNOWN"
+              }
+            },
+            "behaviour": {
+              "local_inactive": 0,
+              "active_masked": 5,
+              "active_exposed": 19
+            },
+            "witnesses": [
+              {
+                "args": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 1
+                },
+                "out_plus": 6,
+                "out_minus": 0,
+                "snap_plus": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 1,
+                  "v": 1
+                }
+              },
+              {
+                "args": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "snap_plus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 0,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 0,
+                  "v": 1
+                }
+              },
+              {
+                "args": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 1,
+                "snap_plus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "x": 1,
+                  "c": 1,
+                  "d": 1,
+                  "v": 1
+                }
+              }
+            ],
+            "attribution": {
+              "contrast": {
+                "status": "TESTED",
+                "arguments": {
+                  "x": {
+                    "contexts": 4,
+                    "contexts_with_flip": 1,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "x",
+                      "args": {
+                        "c": 0,
+                        "d": 0
+                      },
+                      "masked": {
+                        "value": 1,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 6,
+                        "out_plus": 7,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "c": {
+                    "contexts": 12,
+                    "contexts_with_flip": 5,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "c",
+                      "args": {
+                        "x": 1,
+                        "d": 0
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 7,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "d": {
+                    "contexts": 12,
+                    "contexts_with_flip": 5,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "d",
+                      "args": {
+                        "x": 1,
+                        "c": 0
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 6,
+                        "out_minus": 0
+                      }
+                    }
+                  }
+                },
+                "causally_relevant": [
+                  "x",
+                  "c",
+                  "d"
+                ]
+              },
+              "proof_dag": {
+                "nodes": [
+                  {
+                    "id": "G",
+                    "kind": "mask_guard",
+                    "source_lines": [],
+                    "status": "REFUTED"
+                  }
+                ],
+                "edges": [],
+                "unsupported": [],
+                "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+              }
+            },
+            "all_relations_pass": false,
+            "status": "OK",
+            "target_line": 3,
+            "source_sha256": null
+          },
+          "error": null,
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(x, c, d):\n002:     v = x\n003:     v = v + 6  # TARGET_A\n004:     if c == 0:\n005:         v = v // 6 * 6\n006:     if d == 0:\n007:         v = v // 7 * 7\n008:     return v\n\nInput domain: x: int, c: int, d: int; the declared finite set has 24 cases (Full Cartesian product of the three argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  v: int\n  x: int\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+            },
+            {
+              "role": "assistant",
+              "content": "```json\n{\n  \"mask_guard\": \"(c == 0) and (d == 0)\",\n  \"explanation\": \"The returned value remains unchanged if both conditions c == 0 and d == 0 are true.\"\n}\n```"
+            },
+            {
+              "role": "user",
+              "content": "Your guard was: (c == 0) and (d == 0)\nThe bounded checker ran 24 paired executions.\nUNSOUND in 1 cases: the guard accepts an input where the two versions differ. First counterexample: {\"args\": {\"x\": 6, \"c\": 0, \"d\": 0}, \"out_plus\": 7, \"out_minus\": 0, \"snap_plus\": {\"x\": 6, \"c\": 0, \"d\": 0, \"v\": 12}, \"snap_minus\": {\"x\": 6, \"c\": 0, \"d\": 0, \"v\": 6}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true, true], \"part_text\": [\"c == 0\", \"d == 0\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "full_mace",
+      "task_id": "ctrl_02",
+      "status": "NO_RESULT",
+      "error": null,
+      "guard": null,
+      "guard_check": {
+        "status": "ABSENT",
+        "exact": false,
+        "sound": null,
+        "complete": null,
+        "unsound": null,
+        "incomplete": null
+      },
+      "relations": [],
+      "relation_count": 0,
+      "witness_count": 0,
+      "witnesses": [],
+      "usage": {
+        "calls": 2,
+        "prompt_tokens": 2889,
+        "completion_tokens": 508,
+        "decode_seconds": 14.783,
+        "wall_seconds": 14.875
+      },
+      "model": "qwen15b",
+      "rounds_used": 2,
+      "capabilities": {
+        "guard": "UNKNOWN",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "NOT_PRODUCED",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "Full MACE emits typed relations and their conditions (a semantic masking explanation), then the checker supplies witnesses.  The contract schema does not enumerate downstream operation subsets and does not classify tests.",
+      "wall_seconds": 14.876,
+      "raw_exchanges": [
+        {
+          "round": 1,
+          "stats": {
+            "prompt_tokens": 1288,
+            "completion_tokens": 254,
+            "total_tokens": 1542,
+            "wall_seconds": 6.81,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<c == 0 or d == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If c or d is zero, the division by 6 or 7 results in zero, so v remains unchanged.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\", \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"The value of v remains unchanged after the addition.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```",
+          "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(x, c, d):\n002:     v = x\n003:     v = v + 6  # TARGET_A\n004:     if c == 0:\n005:         v = v // 6 * 6\n006:     if d == 0:\n007:         v = v // 7 * 7\n008:     return v\n\nInput domain used by the bounded checker:\nx: int, c: int, d: int; the declared finite set has 24 cases (Full Cartesian product of the three argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  v: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "stats": {
+            "prompt_tokens": 1601,
+            "completion_tokens": 254,
+            "total_tokens": 1855,
+            "wall_seconds": 7.973,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<c == 0 or d == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If c or d is zero, the division by 6 or 7 results in zero, so v remains unchanged.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\", \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"The value of v remains unchanged after the addition.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```",
+          "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(x, c, d):\n002:     v = x\n003:     v = v + 6  # TARGET_A\n004:     if c == 0:\n005:         v = v // 6 * 6\n006:     if d == 0:\n007:         v = v // 7 * 7\n008:     return v\n\nInput domain used by the bounded checker:\nx: int, c: int, d: int; the declared finite set has 24 cases (Full Cartesian product of the three argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  v: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+            },
+            {
+              "role": "assistant",
+              "content": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<c == 0 or d == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If c or d is zero, the division by 6 or 7 results in zero, so v remains unchanged.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\", \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"The value of v remains unchanged after the addition.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```"
+            },
+            {
+              "role": "user",
+              "content": "Your previous reply was not a valid MACE contract: T1.expr is not a parsable expression: invalid syntax\nReturn the complete JSON contract again, in exactly the shape requested, using only ids that already exist plus the new ones you introduce."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "pure_symbolic",
+      "task_id": "ctrl_03",
+      "status": "DERIVED",
+      "error": null,
+      "guard": "q == 0 or p == 0 or ((4 + x) // 3 * 3 // 7 * 7 == 3 * (x // 3) // 7 * 7 and c == 0 and (d == 0)) or (not d == 0 and (4 + x) // 7 * 7 == 7 * (x // 7) and (c == 0)) or (not c == 0 and (4 + x) // 3 * 3 == 3 * (x // 3) and (d == 0))",
+      "guard_check": {
+        "status": "BOUNDED",
+        "exact": true,
+        "sound": true,
+        "complete": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "counterexamples": [],
+        "typed": true,
+        "wall_seconds": 0.094
+      },
+      "coverage": {
+        "reached": 7,
+        "summarized": 0,
+        "covered": 7,
+        "total": 12,
+        "ratio": 0.583
+      },
+      "reason": "source-level path equality",
+      "wall_seconds": 0.102,
+      "tokens": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "capabilities": {
+        "guard": "SUPPORTED",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "UNSUPPORTED_INTERFACE",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "derive_guard returns a source-level guard and coverage; it does not enumerate operation subsets or map tests."
+    },
+    {
+      "method": "direct_qwen",
+      "task_id": "ctrl_03",
+      "status": "ROUNDS_EXHAUSTED",
+      "error": null,
+      "guard": "(p == 0) and (q == 0) and (d == 0)",
+      "guard_check": {
+        "status": "REFUTED",
+        "exact": false,
+        "sound": true,
+        "complete": false,
+        "unsound": 0,
+        "incomplete": 14,
+        "counterexamples": [
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 3,
+            "out_minus": 3,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 7
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 3
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false,
+              false
+            ],
+            "part_text": [
+              "p == 0",
+              "q == 0",
+              "d == 0"
+            ]
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 4,
+            "out_minus": 4,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 8
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 4
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false,
+              false
+            ],
+            "part_text": [
+              "p == 0",
+              "q == 0",
+              "d == 0"
+            ]
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 5,
+            "out_minus": 5,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 9
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 5
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false,
+              false
+            ],
+            "part_text": [
+              "p == 0",
+              "q == 0",
+              "d == 0"
+            ]
+          }
+        ],
+        "typed": true,
+        "wall_seconds": 0.111
+      },
+      "relations": [],
+      "relation_count": 0,
+      "witness_count": 3,
+      "witnesses": [
+        {
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "out_plus": 7,
+          "out_minus": 0,
+          "snap_plus": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0,
+            "v": 9
+          },
+          "snap_minus": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0,
+            "v": 5
+          }
+        },
+        {
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          "out_plus": 7,
+          "out_minus": 0,
+          "snap_plus": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0,
+            "v": 10
+          },
+          "snap_minus": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0,
+            "v": 6
+          }
+        },
+        {
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "out_plus": 7,
+          "out_minus": 3,
+          "snap_plus": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1,
+            "v": 7
+          },
+          "snap_minus": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1,
+            "v": 3
+          }
+        }
+      ],
+      "usage": {
+        "calls": 2,
+        "prompt_tokens": 1722,
+        "completion_tokens": 85,
+        "decode_seconds": 2.318,
+        "wall_seconds": 2.61
+      },
+      "model": "qwen15b",
+      "rounds_used": 2,
+      "capabilities": {
+        "guard": "SUPPORTED",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "CHECKER_GENERATED_ONLY",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "Direct Qwen is the guard-only M5/M6 baseline; its prompt does not ask for operation sets, counterexamples, or test gaps.  Any witness comes from the checker's report, not from the model.",
+      "wall_seconds": 2.724,
+      "raw_exchanges": [
+        {
+          "round": 1,
+          "stats": {
+            "prompt_tokens": 694,
+            "completion_tokens": 53,
+            "total_tokens": 747,
+            "wall_seconds": 1.356,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"mask_guard\": \"(p == 0) and (q == 0) and (d == 0)\",\n  \"explanation\": \"The returned value remains unchanged if all conditions in the mask guard are true.\"\n}\n```",
+          "guard": "(p == 0) and (q == 0) and (d == 0)",
+          "report": {
+            "guard_ok": false,
+            "evidence_level": "BOUNDED",
+            "domain_size": 20,
+            "usable_rows": 20,
+            "execution_errors": 0,
+            "post_sorts": {
+              "p": "int",
+              "q": "int",
+              "x": "int",
+              "c": "int",
+              "d": "int",
+              "v": "int"
+            },
+            "relations": [],
+            "guard": {
+              "id": "G",
+              "expr": "(p == 0) and (q == 0) and (d == 0)",
+              "source_lines": [],
+              "status": "REFUTED",
+              "checked": 20,
+              "unsound": 0,
+              "incomplete": 14,
+              "shape": "and",
+              "parts": [
+                "p == 0",
+                "q == 0",
+                "d == 0"
+              ],
+              "blame": {
+                "accepts_wrong": [
+                  0,
+                  0,
+                  0
+                ],
+                "rejects_wrong": [
+                  6,
+                  6,
+                  12
+                ]
+              },
+              "counterexamples": [
+                {
+                  "args": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "out_plus": 3,
+                  "out_minus": 3,
+                  "snap_plus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1,
+                    "v": 7
+                  },
+                  "snap_minus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1,
+                    "v": 3
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "incomplete",
+                  "predicted": false,
+                  "parts": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "part_text": [
+                    "p == 0",
+                    "q == 0",
+                    "d == 0"
+                  ]
+                },
+                {
+                  "args": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 4,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "out_plus": 4,
+                  "out_minus": 4,
+                  "snap_plus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 4,
+                    "c": 1,
+                    "d": 1,
+                    "v": 8
+                  },
+                  "snap_minus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 4,
+                    "c": 1,
+                    "d": 1,
+                    "v": 4
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "incomplete",
+                  "predicted": false,
+                  "parts": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "part_text": [
+                    "p == 0",
+                    "q == 0",
+                    "d == 0"
+                  ]
+                },
+                {
+                  "args": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 5,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "out_plus": 5,
+                  "out_minus": 5,
+                  "snap_plus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 5,
+                    "c": 1,
+                    "d": 1,
+                    "v": 9
+                  },
+                  "snap_minus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 5,
+                    "c": 1,
+                    "d": 1,
+                    "v": 5
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "incomplete",
+                  "predicted": false,
+                  "parts": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "part_text": [
+                    "p == 0",
+                    "q == 0",
+                    "d == 0"
+                  ]
+                }
+              ],
+              "contrasts": [
+                {
+                  "only_differing_argument": "p",
+                  "masked": {
+                    "args": {
+                      "p": 0,
+                      "q": 1,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 3,
+                    "out_minus": 3,
+                    "guard_says": false
+                  },
+                  "exposed": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 7,
+                    "out_minus": 3,
+                    "guard_says": false
+                  }
+                },
+                {
+                  "only_differing_argument": "q",
+                  "masked": {
+                    "args": {
+                      "p": 1,
+                      "q": 0,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 3,
+                    "out_minus": 3,
+                    "guard_says": false
+                  },
+                  "exposed": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 7,
+                    "out_minus": 3,
+                    "guard_says": false
+                  }
+                },
+                {
+                  "only_differing_argument": "x",
+                  "masked": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 3,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 0,
+                    "out_minus": 0,
+                    "guard_says": false
+                  },
+                  "exposed": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 5,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 7,
+                    "out_minus": 0,
+                    "guard_says": false
+                  }
+                }
+              ]
+            },
+            "observer_soundness": {
+              "status": "UNKNOWN",
+              "reason": "no complete observer set"
+            },
+            "composition": {
+              "upstream_fixed_point": {
+                "status": "UNKNOWN",
+                "reason": "no upstream relation with role='fixed_point' was verified"
+              },
+              "derived_guard": {
+                "reason": "no verified relation can contribute to the guard",
+                "expr": null,
+                "partial_expr": null,
+                "channels_covered": [],
+                "missing_channels": [
+                  0
+                ],
+                "fixed_point_relations": [],
+                "observer_relations": [],
+                "parts": [],
+                "compose_status": "UNKNOWN",
+                "status": "UNKNOWN"
+              }
+            },
+            "behaviour": {
+              "local_inactive": 0,
+              "active_masked": 14,
+              "active_exposed": 6
+            },
+            "witnesses": [
+              {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "snap_plus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0,
+                  "v": 5
+                }
+              },
+              {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 6,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "snap_plus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 6,
+                  "c": 0,
+                  "d": 0,
+                  "v": 10
+                },
+                "snap_minus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 6,
+                  "c": 0,
+                  "d": 0,
+                  "v": 6
+                }
+              },
+              {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                }
+              }
+            ],
+            "attribution": {
+              "contrast": {
+                "status": "TESTED",
+                "arguments": {
+                  "p": {
+                    "contexts": 12,
+                    "contexts_with_flip": 4,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "p",
+                      "args": {
+                        "q": 1,
+                        "x": 3,
+                        "c": 1,
+                        "d": 1
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 3,
+                        "out_minus": 3
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 7,
+                        "out_minus": 3
+                      }
+                    }
+                  },
+                  "q": {
+                    "contexts": 12,
+                    "contexts_with_flip": 4,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "q",
+                      "args": {
+                        "p": 1,
+                        "x": 3,
+                        "c": 1,
+                        "d": 1
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 3,
+                        "out_minus": 3
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 7,
+                        "out_minus": 3
+                      }
+                    }
+                  },
+                  "x": {
+                    "contexts": 5,
+                    "contexts_with_flip": 1,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "x",
+                      "args": {
+                        "p": 1,
+                        "q": 1,
+                        "c": 0,
+                        "d": 0
+                      },
+                      "masked": {
+                        "value": 3,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 5,
+                        "out_plus": 7,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "c": {
+                    "contexts": 20,
+                    "contexts_with_flip": 0,
+                    "causally_relevant": false,
+                    "example": null
+                  },
+                  "d": {
+                    "contexts": 20,
+                    "contexts_with_flip": 0,
+                    "causally_relevant": false,
+                    "example": null
+                  }
+                },
+                "causally_relevant": [
+                  "p",
+                  "q",
+                  "x"
+                ]
+              },
+              "proof_dag": {
+                "nodes": [
+                  {
+                    "id": "G",
+                    "kind": "mask_guard",
+                    "source_lines": [],
+                    "status": "REFUTED"
+                  }
+                ],
+                "edges": [],
+                "unsupported": [],
+                "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+              }
+            },
+            "all_relations_pass": false,
+            "status": "OK",
+            "target_line": 3,
+            "source_sha256": null
+          },
+          "error": null,
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(p, q, x, c, d):\n002:     v = x\n003:     v = v + 4  # TARGET_A\n004:     if p == 0:\n005:         v = x\n006:     if q == 0:\n007:         v = x\n008:     if d == 0:\n009:         v = v // 3 * 3\n010:     if c == 0:\n011:         v = v // 7 * 7\n012:     return v\n\nInput domain: p: int, q: int, x: int, c: int, d: int; the declared finite set has 20 cases (The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  p: int\n  q: int\n  x: int\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "stats": {
+            "prompt_tokens": 1028,
+            "completion_tokens": 32,
+            "total_tokens": 1060,
+            "wall_seconds": 0.962,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"mask_guard\": \"(p == 0) and (q == 0) and (d == 0)\"\n}\n```",
+          "guard": "(p == 0) and (q == 0) and (d == 0)",
+          "report": {
+            "guard_ok": false,
+            "evidence_level": "BOUNDED",
+            "domain_size": 20,
+            "usable_rows": 20,
+            "execution_errors": 0,
+            "post_sorts": {
+              "p": "int",
+              "q": "int",
+              "x": "int",
+              "c": "int",
+              "d": "int",
+              "v": "int"
+            },
+            "relations": [],
+            "guard": {
+              "id": "G",
+              "expr": "(p == 0) and (q == 0) and (d == 0)",
+              "source_lines": [],
+              "status": "REFUTED",
+              "checked": 20,
+              "unsound": 0,
+              "incomplete": 14,
+              "shape": "and",
+              "parts": [
+                "p == 0",
+                "q == 0",
+                "d == 0"
+              ],
+              "blame": {
+                "accepts_wrong": [
+                  0,
+                  0,
+                  0
+                ],
+                "rejects_wrong": [
+                  6,
+                  6,
+                  12
+                ]
+              },
+              "counterexamples": [
+                {
+                  "args": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "out_plus": 3,
+                  "out_minus": 3,
+                  "snap_plus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1,
+                    "v": 7
+                  },
+                  "snap_minus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1,
+                    "v": 3
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "incomplete",
+                  "predicted": false,
+                  "parts": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "part_text": [
+                    "p == 0",
+                    "q == 0",
+                    "d == 0"
+                  ]
+                },
+                {
+                  "args": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 4,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "out_plus": 4,
+                  "out_minus": 4,
+                  "snap_plus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 4,
+                    "c": 1,
+                    "d": 1,
+                    "v": 8
+                  },
+                  "snap_minus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 4,
+                    "c": 1,
+                    "d": 1,
+                    "v": 4
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "incomplete",
+                  "predicted": false,
+                  "parts": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "part_text": [
+                    "p == 0",
+                    "q == 0",
+                    "d == 0"
+                  ]
+                },
+                {
+                  "args": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 5,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "out_plus": 5,
+                  "out_minus": 5,
+                  "snap_plus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 5,
+                    "c": 1,
+                    "d": 1,
+                    "v": 9
+                  },
+                  "snap_minus": {
+                    "p": 0,
+                    "q": 1,
+                    "x": 5,
+                    "c": 1,
+                    "d": 1,
+                    "v": 5
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "kind": "incomplete",
+                  "predicted": false,
+                  "parts": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "part_text": [
+                    "p == 0",
+                    "q == 0",
+                    "d == 0"
+                  ]
+                }
+              ],
+              "contrasts": [
+                {
+                  "only_differing_argument": "p",
+                  "masked": {
+                    "args": {
+                      "p": 0,
+                      "q": 1,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 3,
+                    "out_minus": 3,
+                    "guard_says": false
+                  },
+                  "exposed": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 7,
+                    "out_minus": 3,
+                    "guard_says": false
+                  }
+                },
+                {
+                  "only_differing_argument": "q",
+                  "masked": {
+                    "args": {
+                      "p": 1,
+                      "q": 0,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 3,
+                    "out_minus": 3,
+                    "guard_says": false
+                  },
+                  "exposed": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 3,
+                      "c": 1,
+                      "d": 1
+                    },
+                    "out_plus": 7,
+                    "out_minus": 3,
+                    "guard_says": false
+                  }
+                },
+                {
+                  "only_differing_argument": "x",
+                  "masked": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 3,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 0,
+                    "out_minus": 0,
+                    "guard_says": false
+                  },
+                  "exposed": {
+                    "args": {
+                      "p": 1,
+                      "q": 1,
+                      "x": 5,
+                      "c": 0,
+                      "d": 0
+                    },
+                    "out_plus": 7,
+                    "out_minus": 0,
+                    "guard_says": false
+                  }
+                }
+              ]
+            },
+            "observer_soundness": {
+              "status": "UNKNOWN",
+              "reason": "no complete observer set"
+            },
+            "composition": {
+              "upstream_fixed_point": {
+                "status": "UNKNOWN",
+                "reason": "no upstream relation with role='fixed_point' was verified"
+              },
+              "derived_guard": {
+                "reason": "no verified relation can contribute to the guard",
+                "expr": null,
+                "partial_expr": null,
+                "channels_covered": [],
+                "missing_channels": [
+                  0
+                ],
+                "fixed_point_relations": [],
+                "observer_relations": [],
+                "parts": [],
+                "compose_status": "UNKNOWN",
+                "status": "UNKNOWN"
+              }
+            },
+            "behaviour": {
+              "local_inactive": 0,
+              "active_masked": 14,
+              "active_exposed": 6
+            },
+            "witnesses": [
+              {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "snap_plus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0,
+                  "v": 5
+                }
+              },
+              {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 6,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "snap_plus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 6,
+                  "c": 0,
+                  "d": 0,
+                  "v": 10
+                },
+                "snap_minus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 6,
+                  "c": 0,
+                  "d": 0,
+                  "v": 6
+                }
+              },
+              {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                }
+              }
+            ],
+            "attribution": {
+              "contrast": {
+                "status": "TESTED",
+                "arguments": {
+                  "p": {
+                    "contexts": 12,
+                    "contexts_with_flip": 4,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "p",
+                      "args": {
+                        "q": 1,
+                        "x": 3,
+                        "c": 1,
+                        "d": 1
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 3,
+                        "out_minus": 3
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 7,
+                        "out_minus": 3
+                      }
+                    }
+                  },
+                  "q": {
+                    "contexts": 12,
+                    "contexts_with_flip": 4,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "q",
+                      "args": {
+                        "p": 1,
+                        "x": 3,
+                        "c": 1,
+                        "d": 1
+                      },
+                      "masked": {
+                        "value": 0,
+                        "out_plus": 3,
+                        "out_minus": 3
+                      },
+                      "exposed": {
+                        "value": 1,
+                        "out_plus": 7,
+                        "out_minus": 3
+                      }
+                    }
+                  },
+                  "x": {
+                    "contexts": 5,
+                    "contexts_with_flip": 1,
+                    "causally_relevant": true,
+                    "example": {
+                      "same_args_except": "x",
+                      "args": {
+                        "p": 1,
+                        "q": 1,
+                        "c": 0,
+                        "d": 0
+                      },
+                      "masked": {
+                        "value": 3,
+                        "out_plus": 0,
+                        "out_minus": 0
+                      },
+                      "exposed": {
+                        "value": 5,
+                        "out_plus": 7,
+                        "out_minus": 0
+                      }
+                    }
+                  },
+                  "c": {
+                    "contexts": 20,
+                    "contexts_with_flip": 0,
+                    "causally_relevant": false,
+                    "example": null
+                  },
+                  "d": {
+                    "contexts": 20,
+                    "contexts_with_flip": 0,
+                    "causally_relevant": false,
+                    "example": null
+                  }
+                },
+                "causally_relevant": [
+                  "p",
+                  "q",
+                  "x"
+                ]
+              },
+              "proof_dag": {
+                "nodes": [
+                  {
+                    "id": "G",
+                    "kind": "mask_guard",
+                    "source_lines": [],
+                    "status": "REFUTED"
+                  }
+                ],
+                "edges": [],
+                "unsupported": [],
+                "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+              }
+            },
+            "all_relations_pass": false,
+            "status": "OK",
+            "target_line": 3,
+            "source_sha256": null
+          },
+          "error": null,
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(p, q, x, c, d):\n002:     v = x\n003:     v = v + 4  # TARGET_A\n004:     if p == 0:\n005:         v = x\n006:     if q == 0:\n007:         v = x\n008:     if d == 0:\n009:         v = v // 3 * 3\n010:     if c == 0:\n011:         v = v // 7 * 7\n012:     return v\n\nInput domain: p: int, q: int, x: int, c: int, d: int; the declared finite set has 20 cases (The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  p: int\n  q: int\n  x: int\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+            },
+            {
+              "role": "assistant",
+              "content": "```json\n{\n  \"mask_guard\": \"(p == 0) and (q == 0) and (d == 0)\",\n  \"explanation\": \"The returned value remains unchanged if all conditions in the mask guard are true.\"\n}\n```"
+            },
+            {
+              "role": "user",
+              "content": "Your guard was: (p == 0) and (q == 0) and (d == 0)\nThe bounded checker ran 20 paired executions.\nINCOMPLETE in 14 cases: outputs are equal but the guard rejects the input. First counterexample: {\"args\": {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, \"out_plus\": 3, \"out_minus\": 3, \"snap_plus\": {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1, \"v\": 7}, \"snap_minus\": {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1, \"v\": 3}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [true, false, false], \"part_text\": [\"p == 0\", \"q == 0\", \"d == 0\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "full_mace",
+      "task_id": "ctrl_03",
+      "status": "NO_RESULT",
+      "error": null,
+      "guard": null,
+      "guard_check": {
+        "status": "ABSENT",
+        "exact": false,
+        "sound": null,
+        "complete": null,
+        "unsound": null,
+        "incomplete": null
+      },
+      "relations": [],
+      "relation_count": 0,
+      "witness_count": 0,
+      "witnesses": [],
+      "usage": {
+        "calls": 2,
+        "prompt_tokens": 3038,
+        "completion_tokens": 438,
+        "decode_seconds": 13.251,
+        "wall_seconds": 13.355
+      },
+      "model": "qwen15b",
+      "rounds_used": 2,
+      "capabilities": {
+        "guard": "UNKNOWN",
+        "masking_operation_sets": "UNSUPPORTED_INTERFACE",
+        "valid_counterexample": "NOT_PRODUCED",
+        "test_gap": "UNSUPPORTED_INTERFACE"
+      },
+      "interface_note": "Full MACE emits typed relations and their conditions (a semantic masking explanation), then the checker supplies witnesses.  The contract schema does not enumerate downstream operation subsets and does not classify tests.",
+      "wall_seconds": 13.356,
+      "raw_exchanges": [
+        {
+          "round": 1,
+          "stats": {
+            "prompt_tokens": 1380,
+            "completion_tokens": 219,
+            "total_tokens": 1599,
+            "wall_seconds": 6.64,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<x_post == x>\",\n      \"source_lines\": [3, 3],\n      \"rationale\": \"A simply increments x by 4.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<True>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [3],\n      \"rationale\": \"A is a no-op.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<x_post == x>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [3],\n      \"rationale\": \"A does not affect the output.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": [3]},\n  \"uncertainty\": \"\"\n}\n```",
+          "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(p, q, x, c, d):\n002:     v = x\n003:     v = v + 4  # TARGET_A\n004:     if p == 0:\n005:         v = x\n006:     if q == 0:\n007:         v = x\n008:     if d == 0:\n009:         v = v // 3 * 3\n010:     if c == 0:\n011:         v = v // 7 * 7\n012:     return v\n\nInput domain used by the bounded checker:\np: int, q: int, x: int, c: int, d: int; the declared finite set has 20 cases (The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  p: int\n  q: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "stats": {
+            "prompt_tokens": 1658,
+            "completion_tokens": 219,
+            "total_tokens": 1877,
+            "wall_seconds": 6.611,
+            "model": "qwen15b",
+            "provider": "transformers-local",
+            "temperature": 0.0,
+            "seed": 42,
+            "max_new_tokens": 1024,
+            "device": "cuda:0"
+          },
+          "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<x_post == x>\",\n      \"source_lines\": [3, 3],\n      \"rationale\": \"A simply increments x by 4.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<True>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [3],\n      \"rationale\": \"A is a no-op.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<x_post == x>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [3],\n      \"rationale\": \"A does not affect the output.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": [3]},\n  \"uncertainty\": \"\"\n}\n```",
+          "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+          "request": [
+            {
+              "role": "system",
+              "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(p, q, x, c, d):\n002:     v = x\n003:     v = v + 4  # TARGET_A\n004:     if p == 0:\n005:         v = x\n006:     if q == 0:\n007:         v = x\n008:     if d == 0:\n009:         v = v // 3 * 3\n010:     if c == 0:\n011:         v = v // 7 * 7\n012:     return v\n\nInput domain used by the bounded checker:\np: int, q: int, x: int, c: int, d: int; the declared finite set has 20 cases (The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  p: int\n  q: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+            },
+            {
+              "role": "assistant",
+              "content": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<x_post == x>\",\n      \"source_lines\": [3, 3],\n      \"rationale\": \"A simply increments x by 4.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<True>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [3],\n      \"rationale\": \"A is a no-op.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<x_post == x>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [3],\n      \"rationale\": \"A does not affect the output.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": [3]},\n  \"uncertainty\": \"\"\n}\n```"
+            },
+            {
+              "role": "user",
+              "content": "Your previous reply was not a valid MACE contract: T1.expr is not a parsable expression: invalid syntax\nReturn the complete JSON contract again, in exactly the shape requested, using only ids that already exist plus the new ones you introduce."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "protocol": "benchmark_real_v3",
+  "survivors": 29,
+  "qualified": 5,
+  "verdict_counts": {
+    "QUALIFIED": 5,
+    "REJECT_NO_EXPOSING_INPUT": 8,
+    "REJECT_NO_MASKING_RELATION": 16
+  },
+  "candidates": {
+    "click-8.4.1:src/click/core.py:3260:default": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "No later statement in the bool-flag branch rewrites default, and no operation outside the branch absorbs a deleted assignment.  No execution-confirmed masking relation was found.",
+      "candidate_id": "click-8.4.1:src/click/core.py:3260:default",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/core.py:3383:source": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "Redundant assignment.  value is FLAG_NEEDS_VALUE only when the parser supplied it through opts, and Parameter.consume_value already returns ParameterSource.COMMANDLINE in that case.",
+      "candidate_id": "click-8.4.1:src/click/core.py:3383:source",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/core.py:3406:source": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "Redundant assignment for the same reason as line 3383: FLAG_NEEDS_VALUE entries come from the parser, so source is already COMMANDLINE when this branch is reached.",
+      "candidate_id": "click-8.4.1:src/click/core.py:3406:source",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/core.py:452:auto_envvar_prefix": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "The uppercased prefix is stored directly; the later statement only replaces hyphens with underscores and does not restore or mask the letter case.  No execution-confirmed masking relation was found.",
+      "candidate_id": "click-8.4.1:src/click/core.py:452:auto_envvar_prefix",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/exceptions.py:181:param_hint": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "The joined hint is consumed immediately by the f-string at line 182; no later operation re-normalizes or replaces it.",
+      "candidate_id": "click-8.4.1:src/click/exceptions.py:181:param_hint",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/shell_completion.py:607:args": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "args is read by the while condition and resolve_command in the same iteration; the next-iteration assignment cannot mask that read.",
+      "candidate_id": "click-8.4.1:src/click/shell_completion.py:607:args",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/termui.py:212:confirmation_prompt": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "The translated prompt string is consumed by _build_prompt in the same branch; no later operation supplies or absorbs it.",
+      "candidate_id": "click-8.4.1:src/click/termui.py:212:confirmation_prompt",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "click-8.4.1:src/click/testing.py:202:input": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "Equivalent replacement.  For input=None, P+ returns BytesIO(b''); deleting the line falls through to BytesIO(None), which is also an empty buffer.",
+      "candidate_id": "click-8.4.1:src/click/testing.py:202:input",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "jinja2-3.1.3:src/jinja2/debug.py:27:tb": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "t.cast is a runtime identity.  The deleted assignment would leave tb bound to the same object returned by sys.exc_info(); no legal input can distinguish the variants.",
+      "candidate_id": "jinja2-3.1.3:src/jinja2/debug.py:27:tb",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "jinja2-3.1.3:src/jinja2/debug.py:42:tb": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "Deleting the render-frame skip changes runtime tracebacks (an exposing input is constructible), but no later statement in cleanup_traceback absorbs the extra frame.  Template.render is not in internal_code, so the internal-code skip at lines 51-53 does not mask the deletion.",
+      "candidate_id": "jinja2-3.1.3:src/jinja2/debug.py:42:tb",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "jinja2-3.1.3:src/jinja2/lexer.py:640:value": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "The name-token value is consumed by value.isidentifier() and the token append before any later write; no operation absorbs it.",
+      "candidate_id": "jinja2-3.1.3:src/jinja2/lexer.py:640:value",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "jinja2-3.1.3:src/jinja2/loaders.py:132:code": {
+      "verdict": "QUALIFIED",
+      "task_id": "jinja2_bytecode_cache_read",
+      "mechanism": "coexisting backup path",
+      "basis": "Executed exposing input (poisoned BytecodeCache: P+ renders 2, P- renders 42) and executed masking input (benign cache: both 42) with MSMS = MMBS = [compile_fallback].  The P- applicable suite passes (845 tests).",
+      "evidence": [
+        "evidence/jinja2_bytecode_cache_read_matrix.json"
+      ],
+      "candidate_id": "jinja2-3.1.3:src/jinja2/loaders.py:132:code",
+      "screening_row": "<local-path>",
+      "scope": "Exact over the declared inputs and candidate universe U; not a claim over the whole legal input domain or operations outside U."
+    },
+    "jinja2-3.1.3:src/jinja2/utils.py:354:word": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "Dead store.  Every Load of word is dominated by the unconditional Store at line 361 inside the inner while loop; if the loop body is never entered, word is never read.  The static flag later_write_reads_A came from line 366, but line 361 intervenes and does not read the old value.",
+      "candidate_id": "jinja2-3.1.3:src/jinja2/utils.py:354:word",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/_reloader.py:127:name": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "abspath output is consumed by isfile/dirname/dirs.add.  _find_common_roots preserves the relative-vs-absolute path structure, so it does not mask the conversion.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/_reloader.py:127:name",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/datastructures.py:1778:best_specificity": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "Dead store.  The first accepted match assigns best_specificity at line 1791.  Line 1788 reads it only when quality > best_quality is false, which requires a prior accepted match; the first accepted match short-circuits before the read.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/datastructures.py:1778:best_specificity",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/datastructures.py:2918:filename": {
+      "verdict": "QUALIFIED",
+      "task_id": "werkzeug_filestorage_stream_name",
+      "mechanism": "conditional overwrite",
+      "basis": "Executed exposing input (tempfile-backed stream: P+ filename is the path, P- is None) and executed masking input (<stderr>: both None) with MSMS = MMBS = [special_name_reset].  The P- applicable suite passes (816 tests).",
+      "evidence": [
+        "evidence/werkzeug_filestorage_stream_name_matrix.json"
+      ],
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/datastructures.py:2918:filename",
+      "screening_row": "<local-path>",
+      "scope": "Exact over the declared inputs and candidate universe U; not a claim over the whole legal input domain or operations outside U."
+    },
+    "werkzeug-2.2.3:src/werkzeug/datastructures.py:2921:filename": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "fsdecode output flows directly to the public filename attribute.  The special-name reset at lines 2923-2924 applies to '<...>' names, where deletion is exposed rather than masked.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/datastructures.py:2921:filename",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/datastructures.py:339:value": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "list(value) is stored directly in tmp.  The else-branch line 341 is not executed for tuple/list values, so no operation in the function masks A.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/datastructures.py:339:value",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/http.py:440:continued_encoding": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "mechanism": "loop-carried state; masked but not breakable under U",
+      "basis": "Supplementary MSMS-only case.  Executed inputs: expose_reset (P+ size '%E6%96%87' vs P- decoded '文') and mask_state_overwrite (both '文字') with MSMS = [write_state].  MMBS is empty: disabling line 444 removes every non-None supplier of continued_encoding, so P+ and P- both end with None and the deletion is no longer observable.  The task is rejected under the both-direction (MSMS and MMBS) criterion used by the five qualified tasks.  A symmetric task with A=line 444, U=line 440 (which does admit an MMBS) was NOT screened in this round: line 444 is not a static candidate and the predeclared targeted budget was already spent.  It remains UNVERIFIED.",
+      "evidence": [
+        "evidence/werkzeug_parse_options_header_continuation_state_matrix.json",
+        "evidence/rejected_tasks/werkzeug_parse_options_header_continuation_state_spec.json"
+      ],
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/http.py:440:continued_encoding",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/http.py:771:last_end": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "last_end is read by the next iteration's guard (lines 764/782); the suffix branch does not execute the later write at line 794, so no operation masks A on the inputs where it matters.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/http.py:771:last_end",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/routing/map.py:307:server_name": {
+      "verdict": "QUALIFIED",
+      "task_id": "werkzeug_bind_server_name_lower",
+      "mechanism": "cross-function re-derivation with a control prerequisite",
+      "basis": "Executed exposing input (no supplied subdomain: P+ subdomain '' vs P- '<invalid>') and executed masking input (subdomain='www': both 'example.com') with MSMS = MMBS = [bind_relower].  The masking requires the control prerequisite subdomain is not None.  The P- applicable suite passes (816 tests).",
+      "evidence": [
+        "evidence/werkzeug_bind_server_name_lower_matrix.json"
+      ],
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/routing/map.py:307:server_name",
+      "screening_row": "<local-path>",
+      "scope": "Exact over the declared inputs and candidate universe U; not a claim over the whole legal input domain or operations outside U."
+    },
+    "werkzeug-2.2.3:src/werkzeug/routing/map.py:704:subdomain": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "subdomain is consumed by the truth test and the f-string at lines 708-709; no later operation re-supplies it.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/routing/map.py:704:subdomain",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/sansio/utils.py:82:host": {
+      "verdict": "QUALIFIED",
+      "task_id": "werkzeug_get_host_default_empty",
+      "mechanism": "two alternative conditional overwrites",
+      "basis": "Executed exposing input (neither Host header nor server: P+ host '' vs P- UnboundLocalError) and two executed masking inputs.  Host header masks A with MSMS = MMBS = [overwrite_host_header]; server address masks A with MSMS = MMBS = [overwrite_server].  The two paths are mutually exclusive per input.  The P- applicable suite passes (816 tests).",
+      "evidence": [
+        "evidence/werkzeug_get_host_default_empty_matrix.json"
+      ],
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/sansio/utils.py:82:host",
+      "screening_row": "<local-path>",
+      "scope": "Exact over the declared inputs and candidate universe U; not a claim over the whole legal input domain or operations outside U."
+    },
+    "werkzeug-2.2.3:src/werkzeug/test.py:400:query_string": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "Equivalent replacement.  For query_string=None, deleting the line enters the next branch with None, and MultiDict(None) builds the same empty mapping as MultiDict().",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/test.py:400:query_string",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/utils.py:222:filename": {
+      "verdict": "QUALIFIED",
+      "task_id": "werkzeug_secure_filename_ascii_filter",
+      "mechanism": "downstream sanitization absorption",
+      "basis": "Executed exposing input (U+1680: P+ 'ab' vs P- 'a_b') and executed masking input (CJK letters removed by the later whitelist: both 'txt') with MSMS = MMBS = [sanitize_whitelist].  The P- applicable suite passes (816 tests).",
+      "evidence": [
+        "evidence/werkzeug_secure_filename_ascii_filter_matrix.json"
+      ],
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/utils.py:222:filename",
+      "screening_row": "<local-path>",
+      "scope": "Exact over the declared inputs and candidate universe U; not a claim over the whole legal input domain or operations outside U."
+    },
+    "werkzeug-2.2.3:src/werkzeug/wrappers/response.py:518:content_length": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "Deleting A leaves content_length=None, which triggers the automatic-length block.  A correct supplied length is masked by the block, but disabling the block leaves both variants with the original header, so Break(U) is false and MMBS is empty.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/wrappers/response.py:518:content_length",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/wsgi.py:684:stream": {
+      "verdict": "REJECT_NO_EXPOSING_INPUT",
+      "basis": "t.cast is a runtime identity; the value is unchanged, so no observation can differ.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/wsgi.py:684:stream",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/wsgi.py:826:separator": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "The converted separator is consumed by re.compile in the same branch; no later operation masks the conversion.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/wsgi.py:826:separator",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    },
+    "werkzeug-2.2.3:src/werkzeug/wsgi.py:846:buf_size": {
+      "verdict": "REJECT_NO_MASKING_RELATION",
+      "basis": "buf_size is read by the cap check at line 851 before the only later write at line 857; no execution-confirmed masking relation was found.",
+      "candidate_id": "werkzeug-2.2.3:src/werkzeug/wsgi.py:846:buf_size",
+      "screening_row": "<local-path>",
+      "scope": "Rejected for this task-construction round only; no claim that A is unobservable outside the stated check."
+    }
+  }
+}

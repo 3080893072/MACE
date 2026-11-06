@@ -1,0 +1,21 @@
+{
+  "task_id": "werkzeug_filestorage_stream_name",
+  "submission_id": "baseline-A",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "stream": "named",
+        "name": "testfile.txt",
+        "data": "testdata"
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/datastructures.py",
+          "line": 2918,
+          "code": "filename = getattr(stream, \"name\", None)"
+        }
+      ]
+    }
+  ]
+}

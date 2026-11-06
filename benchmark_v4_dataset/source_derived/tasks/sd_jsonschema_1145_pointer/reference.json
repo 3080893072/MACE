@@ -1,0 +1,120 @@
+{
+  "task_id": "sd_jsonschema_1145_pointer",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "jsonschema/validators.py",
+    "line": 1145,
+    "function": "resolve_fragment",
+    "code": "            part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "jsonschema/validators.py",
+      "line": 1147,
+      "code": "part = part.replace(\"~0\", \"~\")",
+      "role": "Single-operation recomputation that restores the ~0 unescape but deliberately not the ~1 unescape.",
+      "patch_anchor_line": 1145,
+      "block_span": [
+        1146,
+        1148
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_tilde0": {
+      "role": "masking",
+      "description": "JSON pointer segment containing ~0",
+      "p_plus": {
+        "value": 1
+      },
+      "p_minus": {
+        "value": 1
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "mask_nested_tilde0": {
+      "role": "masking",
+      "description": "nested pointer segment containing ~0",
+      "p_plus": {
+        "value": 4
+      },
+      "p_minus": {
+        "value": 4
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_tilde1": {
+      "role": "exposing",
+      "description": "JSON pointer segment containing ~1",
+      "p_plus": {
+        "value": 2
+      },
+      "p_minus": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain": {
+      "role": "control",
+      "description": "pointer segment with no escape",
+      "p_plus": {
+        "value": 3
+      },
+      "p_minus": {
+        "value": 3
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_jsonschema_1145_pointer/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

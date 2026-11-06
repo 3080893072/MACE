@@ -1,0 +1,496 @@
+{
+  "task_id": "sd_coverage_glob_backslash_m2",
+  "split": "DEV",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "model": "glm-4.7-flash:q4_K_M",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900,
+    "think": false
+  },
+  "public_source_sha256": "ca9af84dc33a2218a04e3b66d64819e62be18c33e62f9de03f22fb2706736f69",
+  "prompt_sha256": "8e7971e503c7ddca8482de2ddc757b53665d066c90249f0529165e5a9d66fb60",
+  "prompt_chars": 25017,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_coverage_glob_backslash_m2\n\n## File\n`coverage/files.py`\n\n## Program with source line numbers\n```text\n   1 | # Licensed under the Apache License: http://www.apache.org/licenses/LICENSE-2.0\n   2 | # For details: https://github.com/nedbat/coveragepy/blob/master/NOTICE.txt\n   3 | \n   4 | \"\"\"File wrangling.\"\"\"\n   5 | \n   6 | from __future__ import annotations\n   7 | \n   8 | import hashlib\n   9 | import ntpath\n  10 | import os\n  11 | import os.path\n  12 | import posixpath\n  13 | import re\n  14 | import sys\n  15 | \n  16 | from typing import Callable, Dict, Iterable, List, Optional, Tuple\n  17 | \n  18 | from coverage import env\n  19 | from coverage.exceptions import ConfigError\n  20 | from coverage.misc import human_sorted, isolate_module, join_regex\n  21 | \n  22 | \n  23 | os = isolate_module(os)\n  24 | \n  25 | \n  26 | RELATIVE_DIR: str = \"\"\n  27 | CANONICAL_FILENAME_CACHE: Dict[str, str] = {}\n  28 | \n  29 | def set_relative_directory() -> None:\n  30 |     \"\"\"Set the directory that `relative_filename` will be relative to.\"\"\"\n  31 |     global RELATIVE_DIR, CANONICAL_FILENAME_CACHE\n  32 | \n  33 |     # The current directory\n  34 |     abs_curdir = abs_file(os.curdir)\n  35 |     if not abs_curdir.endswith(os.sep):\n  36 |         # Suffix with separator only if not at the system root\n  37 |         abs_curdir = abs_curdir + os.sep\n  38 | \n  39 |     # The absolute path to our current directory.\n  40 |     RELATIVE_DIR = os.path.normcase(abs_curdir)\n  41 | \n  42 |     # Cache of results of calling the canonical_filename() method, to\n  43 |     # avoid duplicating work.\n  44 |     CANONICAL_FILENAME_CACHE = {}\n  45 | \n  46 | \n  47 | def relative_directory() -> str:\n  48 |     \"\"\"Return the directory that `relative_filename` is relative to.\"\"\"\n  49 |     return RELATIVE_DIR\n  50 | \n  51 | \n  52 | def relative_filename(filename: str) -> str:\n  53 |     \"\"\"Return the relative form of `filename`.\n  54 | \n  55 |     The file name will be relative to the current directory when the\n  56 |     `set_relative_directory` was called.\n  57 | \n  58 |     \"\"\"\n  59 |     fnorm = os.path.normcase(filename)\n  60 |     if fnorm.startswith(RELATIVE_DIR):\n  61 |         filename = filename[len(RELATIVE_DIR):]\n  62 |     return filename\n  63 | \n  64 | \n  65 | def canonical_filename(filename: str) -> str:\n  66 |     \"\"\"Return a canonical file name for `filename`.\n  67 | \n  68 |     An absolute path with no redundant components and normalized case.\n  69 | \n  70 |     \"\"\"\n  71 |     if filename not in CANONICAL_FILENAME_CACHE:\n  72 |         cf = filename\n  73 |         if not os.path.isabs(filename):\n  74 |             for path in [os.curdir] + sys.path:\n  75 |                 if path is None:\n  76 |                     continue # type: ignore[unreachable]\n  77 |                 f = os.path.join(path, filename)\n  78 |                 try:\n  79 |                     exists = os.path.exists(f)\n  80 |                 except UnicodeError:\n  81 |                     exists = False\n  82 |                 if exists:\n  83 |                     cf = f\n  84 |                     break\n  85 |         cf = abs_file(cf)\n  86 |         CANONICAL_FILENAME_CACHE[filename] = cf\n  87 |     return CANONICAL_FILENAME_CACHE[filename]\n  88 | \n  89 | \n  90 | MAX_FLAT = 100\n  91 | \n  92 | def flat_rootname(filename: str) -> str:\n  93 |     \"\"\"A base for a flat file name to correspond to this file.\n  94 | \n  95 |     Useful for writing files about the code where you want all the files in\n  96 |     the same directory, but need to differentiate same-named files from\n  97 |     different directories.\n  98 | \n  99 |     For example, the file a/b/c.py will return 'd_86bbcbe134d28fd2_c_py'\n 100 | \n 101 |     \"\"\"\n 102 |     dirname, basename = ntpath.split(filename)\n 103 |     if dirname:\n 104 |         fp = hashlib.new(\"sha3_256\", dirname.encode(\"UTF-8\")).hexdigest()[:16]\n 105 |         prefix = f\"d_{fp}_\"\n 106 |     else:\n 107 |         prefix = \"\"\n 108 |     return prefix + basename.replace(\".\", \"_\")\n 109 | \n 110 | \n 111 | if env.WINDOWS:\n 112 | \n 113 |     _ACTUAL_PATH_CACHE: Dict[str, str] = {}\n 114 |     _ACTUAL_PATH_LIST_CACHE: Dict[str, List[str]] = {}\n 115 | \n 116 |     def actual_path(path: str) -> str:\n 117 |         \"\"\"Get the actual path of `path`, including the correct case.\"\"\"\n 118 |         if path in _ACTUAL_PATH_CACHE:\n 119 |             return _ACTUAL_PATH_CACHE[path]\n 120 | \n 121 |         head, tail = os.path.split(path)\n 122 |         if not tail:\n 123 |             # This means head is the drive spec: normalize it.\n 124 |             actpath = head.upper()\n 125 |         elif not head:\n 126 |             actpath = tail\n 127 |         else:\n 128 |             head = actual_path(head)\n 129 |             if head in _ACTUAL_PATH_LIST_CACHE:\n 130 |                 files = _ACTUAL_PATH_LIST_CACHE[head]\n 131 |             else:\n 132 |                 try:\n 133 |                     files = os.listdir(head)\n 134 |                 except Exception:\n 135 |                     # This will raise OSError, or this bizarre TypeError:\n 136 |                     # https://bugs.python.org/issue1776160\n 137 |                     files = []\n 138 |                 _ACTUAL_PATH_LIST_CACHE[head] = files\n 139 |             normtail = os.path.normcase(tail)\n 140 |             for f in files:\n 141 |                 if os.path.normcase(f) == normtail:\n 142 |                     tail = f\n 143 |                     break\n 144 |             actpath = os.path.join(head, tail)\n 145 |         _ACTUAL_PATH_CACHE[path] = actpath\n 146 |         return actpath\n 147 | \n 148 | else:\n 149 |     def actual_path(path: str) -> str:\n 150 |         \"\"\"The actual path for non-Windows platforms.\"\"\"\n 151 |         return path\n 152 | \n 153 | \n 154 | def abs_file(path: str) -> str:\n 155 |     \"\"\"Return the absolute normalized form of `path`.\"\"\"\n 156 |     return actual_path(os.path.abspath(os.path.realpath(path)))\n 157 | \n 158 | \n 159 | def zip_location(filename: str) -> Optional[Tuple[str, str]]:\n 160 |     \"\"\"Split a filename into a zipfile / inner name pair.\n 161 | \n 162 |     Only return a pair if the zipfile exists.  No check is made if the inner\n 163 |     name is in the zipfile.\n 164 | \n 165 |     \"\"\"\n 166 |     for ext in [\".zip\", \".whl\", \".egg\", \".pex\"]:\n 167 |         zipbase, extension, inner = filename.partition(ext + sep(filename))\n 168 |         if extension:\n 169 |             zipfile = zipbase + ext\n 170 |             if os.path.exists(zipfile):\n 171 |                 return zipfile, inner\n 172 |     return None\n 173 | \n 174 | \n 175 | def source_exists(path: str) -> bool:\n 176 |     \"\"\"Determine if a source file path exists.\"\"\"\n 177 |     if os.path.exists(path):\n 178 |         return True\n 179 | \n 180 |     if zip_location(path):\n 181 |         # If zip_location returns anything, then it's a zipfile that\n 182 |         # exists. That's good enough for us.\n 183 |         return True\n 184 | \n 185 |     return False\n 186 | \n 187 | \n 188 | def python_reported_file(filename: str) -> str:\n 189 |     \"\"\"Return the string as Python would describe this file name.\"\"\"\n 190 |     if env.PYBEHAVIOR.report_absolute_files:\n 191 |         filename = os.path.abspath(filename)\n 192 |     return filename\n 193 | \n 194 | \n 195 | def isabs_anywhere(filename: str) -> bool:\n 196 |     \"\"\"Is `filename` an absolute path on any OS?\"\"\"\n 197 |     return ntpath.isabs(filename) or posixpath.isabs(filename)\n 198 | \n 199 | \n 200 | def prep_patterns(patterns: Iterable[str]) -> List[str]:\n 201 |     \"\"\"Prepare the file patterns for use in a `GlobMatcher`.\n 202 | \n 203 |     If a pattern starts with a wildcard, it is used as a pattern\n 204 |     as-is.  If it does not start with a wildcard, then it is made\n 205 |     absolute with the current directory.\n 206 | \n 207 |     If `patterns` is None, an empty list is returned.\n 208 | \n 209 |     \"\"\"\n 210 |     prepped = []\n 211 |     for p in patterns or []:\n 212 |         prepped.append(p)\n 213 |         if not p.startswith((\"*\", \"?\")):\n 214 |             prepped.append(abs_file(p))\n 215 |     return prepped\n 216 | \n 217 | \n 218 | class TreeMatcher:\n 219 |     \"\"\"A matcher for files in a tree.\n 220 | \n 221 |     Construct with a list of paths, either files or directories. Paths match\n 222 |     with the `match` method if they are one of the files, or if they are\n 223 |     somewhere in a subtree rooted at one of the directories.\n 224 | \n 225 |     \"\"\"\n 226 |     def __init__(self, paths: Iterable[str], name: str = \"unknown\") -> None:\n 227 |         self.original_paths: List[str] = human_sorted(paths)\n 228 |         #self.paths = list(map(os.path.normcase, paths))\n 229 |         self.paths = [os.path.normcase(p) for p in paths]\n 230 |         self.name = name\n 231 | \n 232 |     def __repr__(self) -> str:\n 233 |         return f\"<TreeMatcher {self.name} {self.original_paths!r}>\"\n 234 | \n 235 |     def info(self) -> List[str]:\n 236 |         \"\"\"A list of strings for displaying when dumping state.\"\"\"\n 237 |         return self.original_paths\n 238 | \n 239 |     def match(self, fpath: str) -> bool:\n 240 |         \"\"\"Does `fpath` indicate a file in one of our trees?\"\"\"\n 241 |         fpath = os.path.normcase(fpath)\n 242 |         for p in self.paths:\n 243 |             if fpath.startswith(p):\n 244 |                 if fpath == p:\n 245 |                     # This is the same file!\n 246 |                     return True\n 247 |                 if fpath[len(p)] == os.sep:\n 248 |                     # This is a file in the directory\n 249 |                     return True\n 250 |         return False\n 251 | \n 252 | \n 253 | class ModuleMatcher:\n 254 |     \"\"\"A matcher for modules in a tree.\"\"\"\n 255 |     def __init__(self, module_names: Iterable[str], name:str = \"unknown\") -> None:\n 256 |         self.modules = list(module_names)\n 257 |         self.name = name\n 258 | \n 259 |     def __repr__(self) -> str:\n 260 |         return f\"<ModuleMatcher {self.name} {self.modules!r}>\"\n 261 | \n 262 |     def info(self) -> List[str]:\n 263 |         \"\"\"A list of strings for displaying when dumping state.\"\"\"\n 264 |         return self.modules\n 265 | \n 266 |     def match(self, module_name: str) -> bool:\n 267 |         \"\"\"Does `module_name` indicate a module in one of our packages?\"\"\"\n 268 |         if not module_name:\n 269 |             return False\n 270 | \n 271 |         for m in self.modules:\n 272 |             if module_name.startswith(m):\n 273 |                 if module_name == m:\n 274 |                     return True\n 275 |                 if module_name[len(m)] == \".\":\n 276 |                     # This is a module in the package\n 277 |                     return True\n 278 | \n 279 |         return False\n 280 | \n 281 | \n 282 | class GlobMatcher:\n 283 |     \"\"\"A matcher for files by file name pattern.\"\"\"\n 284 |     def __init__(self, pats: Iterable[str], name: str = \"unknown\") -> None:\n 285 |         self.pats = list(pats)\n 286 |         self.re = globs_to_regex(self.pats, case_insensitive=env.WINDOWS)\n 287 |         self.name = name\n 288 | \n 289 |     def __repr__(self) -> str:\n 290 |         return f\"<GlobMatcher {self.name} {self.pats!r}>\"\n 291 | \n 292 |     def info(self) -> List[str]:\n 293 |         \"\"\"A list of strings for displaying when dumping state.\"\"\"\n 294 |         return self.pats\n 295 | \n 296 |     def match(self, fpath: str) -> bool:\n 297 |         \"\"\"Does `fpath` match one of our file name patterns?\"\"\"\n 298 |         return self.re.match(fpath) is not None\n 299 | \n 300 | \n 301 | def sep(s: str) -> str:\n 302 |     \"\"\"Find the path separator used in this string, or os.sep if none.\"\"\"\n 303 |     if sep_match := re.search(r\"[\\\\/]\", s):\n 304 |         the_sep = sep_match[0]\n 305 |     else:\n 306 |         the_sep = os.sep\n 307 |     return the_sep\n 308 | \n 309 | \n 310 | # Tokenizer for _glob_to_regex.\n 311 | # None as a sub means disallowed.\n 312 | G2RX_TOKENS = [(re.compile(rx), sub) for rx, sub in [\n 313 |     (r\"\\*\\*\\*+\", None),             # Can't have ***\n 314 |     (r\"[^/]+\\*\\*+\", None),          # Can't have x**\n 315 |     (r\"\\*\\*+[^/]+\", None),          # Can't have **x\n 316 |     (r\"\\*\\*/\\*\\*\", None),           # Can't have **/**\n 317 |     (r\"^\\*+/\", r\"(.*[/\\\\\\\\])?\"),    # ^*/ matches any prefix-slash, or nothing.\n 318 |     (r\"/\\*+$\", r\"[/\\\\\\\\].*\"),       # /*$ matches any slash-suffix.\n 319 |     (r\"\\*\\*/\", r\"(.*[/\\\\\\\\])?\"),    # **/ matches any subdirs, including none\n 320 |     (r\"/\", r\"[/\\\\\\\\]\"),             # / matches either slash or backslash\n 321 |     (r\"\\*\", r\"[^/\\\\\\\\]*\"),          # * matches any number of non slash-likes\n 322 |     (r\"\\?\", r\"[^/\\\\\\\\]\"),           # ? matches one non slash-like\n 323 |     (r\"\\[.*?\\]\", r\"\\g<0>\"),         # [a-f] matches [a-f]\n 324 |     (r\"[a-zA-Z0-9_-]+\", r\"\\g<0>\"),  # word chars match themselves\n 325 |     (r\"[\\[\\]]\", None),              # Can't have single square brackets\n 326 |     (r\".\", r\"\\\\\\g<0>\"),             # Anything else is escaped to be safe\n 327 | ]]\n 328 | \n 329 | def _glob_to_regex(pattern: str) -> str:\n 330 |     \"\"\"Convert a file-path glob pattern into a regex.\"\"\"\n 331 |     # Turn all backslashes into slashes to simplify the tokenizer.\n 332 |     pattern = pattern.replace(\"\\\\\", \"/\")\n 333 | \n 334 |     pattern = pattern.replace(\"\\\\\", \"/\", 1)\n 335 | \n 336 | \n 337 |     pattern = pattern.replace(\"\\\\\", \"/\", 1)\n 338 | \n 339 |     if \"/\" not in pattern:\n 340 |         pattern = \"**/\" + pattern\n 341 |     path_rx = []\n 342 |     pos = 0\n 343 |     while pos < len(pattern):\n 344 |         for rx, sub in G2RX_TOKENS:                     # pragma: always breaks\n 345 |             if m := rx.match(pattern, pos=pos):\n 346 |                 if sub is None:\n 347 |                     raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n 348 |                 path_rx.append(m.expand(sub))\n 349 |                 pos = m.end()\n 350 |                 break\n 351 |     return \"\".join(path_rx)\n 352 | \n 353 | \n 354 | def globs_to_regex(\n 355 |     patterns: Iterable[str],\n 356 |     case_insensitive: bool = False,\n 357 |     partial: bool = False,\n 358 | ) -> re.Pattern[str]:\n 359 |     \"\"\"Convert glob patterns to a compiled regex that matches any of them.\n 360 | \n 361 |     Slashes are always converted to match either slash or backslash, for\n 362 |     Windows support, even when running elsewhere.\n 363 | \n 364 |     If the pattern has no slash or backslash, then it is interpreted as\n 365 |     matching a file name anywhere it appears in the tree.  Otherwise, the glob\n 366 |     pattern must match the whole file path.\n 367 | \n 368 |     If `partial` is true, then the pattern will match if the target string\n 369 |     starts with the pattern. Otherwise, it must match the entire string.\n 370 | \n 371 |     Returns: a compiled regex object.  Use the .match method to compare target\n 372 |     strings.\n 373 | \n 374 |     \"\"\"\n 375 |     flags = 0\n 376 |     if case_insensitive:\n 377 |         flags |= re.IGNORECASE\n 378 |     rx = join_regex(map(_glob_to_regex, patterns))\n 379 |     if not partial:\n 380 |         rx = fr\"(?:{rx})\\Z\"\n 381 |     compiled = re.compile(rx, flags=flags)\n 382 |     return compiled\n 383 | \n 384 | \n 385 | class PathAliases:\n 386 |     \"\"\"A collection of aliases for paths.\n 387 | \n 388 |     When combining data files from remote machines, often the paths to source\n 389 |     code are different, for example, due to OS differences, or because of\n 390 |     serialized checkouts on continuous integration machines.\n 391 | \n 392 |     A `PathAliases` object tracks a list of pattern/result pairs, and can\n 393 |     map a path through those aliases to produce a unified path.\n 394 | \n 395 |     \"\"\"\n 396 |     def __init__(\n 397 |         self,\n 398 |         debugfn: Optional[Callable[[str], None]] = None,\n 399 |         relative: bool = False,\n 400 |     ) -> None:\n 401 |         # A list of (original_pattern, regex, result)\n 402 |         self.aliases: List[Tuple[str, re.Pattern[str], str]] = []\n 403 |         self.debugfn = debugfn or (lambda msg: 0)\n 404 |         self.relative = relative\n 405 |         self.pprinted = False\n 406 | \n 407 |     def pprint(self) -> None:\n 408 |         \"\"\"Dump the important parts of the PathAliases, for debugging.\"\"\"\n 409 |         self.debugfn(f\"Aliases (relative={self.relative}):\")\n 410 |         for original_pattern, regex, result in self.aliases:\n 411 |             self.debugfn(f\" Rule: {original_pattern!r} -> {result!r} using regex {regex.pattern!r}\")\n 412 | \n 413 |     def add(self, pattern: str, result: str) -> None:\n 414 |         \"\"\"Add the `pattern`/`result` pair to the list of aliases.\n 415 | \n 416 |         `pattern` is an `glob`-style pattern.  `result` is a simple\n 417 |         string.  When mapping paths, if a path starts with a match against\n 418 |         `pattern`, then that match is replaced with `result`.  This models\n 419 |         isomorphic source trees being rooted at different places on two\n 420 |         different machines.\n 421 | \n 422 |         `pattern` can't end with a wildcard component, since that would\n 423 |         match an entire tree, and not just its root.\n 424 | \n 425 |         \"\"\"\n 426 |         original_pattern = pattern\n 427 |         pattern_sep = sep(pattern)\n 428 | \n 429 |         if len(pattern) > 1:\n 430 |             pattern = pattern.rstrip(r\"\\/\")\n 431 | \n 432 |         # The pattern can't end with a wildcard component.\n 433 |         if pattern.endswith(\"*\"):\n 434 |             raise ConfigError(\"Pattern must not end with wildcards.\")\n 435 | \n 436 |         # The pattern is meant to match a file path.  Let's make it absolute\n 437 |         # unless it already is, or is meant to match any prefix.\n 438 |         if not self.relative:\n 439 |             if not pattern.startswith(\"*\") and not isabs_anywhere(pattern + pattern_sep):\n 440 |                 pattern = abs_file(pattern)\n 441 |         if not pattern.endswith(pattern_sep):\n 442 |             pattern += pattern_sep\n 443 | \n 444 |         # Make a regex from the pattern.\n 445 |         regex = globs_to_regex([pattern], case_insensitive=True, partial=True)\n 446 | \n 447 |         # Normalize the result: it must end with a path separator.\n 448 |         result_sep = sep(result)\n 449 |         result = result.rstrip(r\"\\/\") + result_sep\n 450 |         self.aliases.append((original_pattern, regex, result))\n 451 | \n 452 |     def map(self, path: str, exists:Callable[[str], bool] = source_exists) -> str:\n 453 |         \"\"\"Map `path` through the aliases.\n 454 | \n 455 |         `path` is checked against all of the patterns.  The first pattern to\n 456 |         match is used to replace the root of the path with the result root.\n 457 |         Only one pattern is ever used.  If no patterns match, `path` is\n 458 |         returned unchanged.\n 459 | \n 460 |         The separator style in the result is made to match that of the result\n 461 |         in the alias.\n 462 | \n 463 |         `exists` is a function to determine if the resulting path actually\n 464 |         exists.\n 465 | \n 466 |         Returns the mapped path.  If a mapping has happened, this is a\n 467 |         canonical path.  If no mapping has happened, it is the original value\n 468 |         of `path` unchanged.\n 469 | \n 470 |         \"\"\"\n 471 |         if not self.pprinted:\n 472 |             self.pprint()\n 473 |             self.pprinted = True\n 474 | \n 475 |         for original_pattern, regex, result in self.aliases:\n 476 |             if m := regex.match(path):\n 477 |                 new = path.replace(m[0], result)\n 478 |                 new = new.replace(sep(path), sep(result))\n 479 |                 if not self.relative:\n 480 |                     new = canonical_filename(new)\n 481 |                 dot_start = result.startswith((\"./\", \".\\\\\")) and len(result) > 2\n 482 |                 if new.startswith((\"./\", \".\\\\\")) and not dot_start:\n 483 |                     new = new[2:]\n 484 |                 if not exists(new):\n 485 |                     self.debugfn(\n 486 |                         f\"Rule {original_pattern!r} changed {path!r} to {new!r} \" +\n 487 |                         \"which doesn't exist, continuing\"\n 488 |                     )\n 489 |                     continue\n 490 |                 self.debugfn(\n 491 |                     f\"Matched path {path!r} to rule {original_pattern!r} -> {result!r}, \" +\n 492 |                     f\"producing {new!r}\"\n 493 |                 )\n 494 |                 return new\n 495 | \n 496 |         # If we get here, no pattern matched.\n 497 | \n 498 |         if self.relative and not isabs_anywhere(path):\n 499 |             # Auto-generate a pattern to implicitly match relative files\n 500 |             parts = re.split(r\"[/\\\\]\", path)\n 501 |             if len(parts) > 1:\n 502 |                 dir1 = parts[0]\n 503 |                 pattern = f\"*/{dir1}\"\n 504 |                 regex_pat = fr\"^(.*[\\\\/])?{re.escape(dir1)}[\\\\/]\"\n 505 |                 result = f\"{dir1}{os.sep}\"\n 506 |                 # Only add a new pattern if we don't already have this pattern.\n 507 |                 if not any(p == pattern for p, _, _ in self.aliases):\n 508 |                     self.debugfn(\n 509 |                         f\"Generating rule: {pattern!r} -> {result!r} using regex {regex_pat!r}\"\n 510 |                     )\n 511 |                     self.aliases.append((pattern, re.compile(regex_pat), result))\n 512 |                     return self.map(path, exists=exists)\n 513 | \n 514 |         self.debugfn(f\"No rules match, path {path!r} is unchanged\")\n 515 |         return path\n 516 | \n 517 | \n 518 | def find_python_files(dirname: str, include_namespace_packages: bool) -> Iterable[str]:\n 519 |     \"\"\"Yield all of the importable Python files in `dirname`, recursively.\n 520 | \n 521 |     To be importable, the files have to be in a directory with a __init__.py,\n 522 |     except for `dirname` itself, which isn't required to have one.  The\n 523 |     assumption is that `dirname` was specified directly, so the user knows\n 524 |     best, but sub-directories are checked for a __init__.py to be sure we only\n 525 |     find the importable files.\n 526 | \n 527 |     If `include_namespace_packages` is True, then the check for __init__.py\n 528 |     files is skipped.\n 529 | \n 530 |     Files with strange characters are skipped, since they couldn't have been\n 531 |     imported, and are probably editor side-files.\n 532 | \n 533 |     \"\"\"\n 534 |     for i, (dirpath, dirnames, filenames) in enumerate(os.walk(dirname)):\n 535 |         if not include_namespace_packages:\n 536 |             if i > 0 and \"__init__.py\" not in filenames:\n 537 |                 # If a directory doesn't have __init__.py, then it isn't\n 538 |                 # importable and neither are its files\n 539 |                 del dirnames[:]\n 540 |                 continue\n 541 |         for filename in filenames:\n 542 |             # We're only interested in files that look like reasonable Python\n 543 |             # files: Must end with .py or .pyw, and must not have certain funny\n 544 |             # characters that probably mean they are editor junk.\n 545 |             if re.match(r\"^[^.#~!$@%^&*()+=,]+\\.pyw?$\", filename):\n 546 |                 yield os.path.join(dirpath, filename)\n 547 | \n 548 | \n 549 | # Globally set the relative directory.\n 550 | set_relative_directory()\n```\n\n## Target A\nLine 332: `pattern = pattern.replace(\"\\\\\", \"/\")`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"coverage/files.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"coverage/files.py\", \"line\": 334, \"text\": \"pattern = pattern.replace(\\\"\\\\\\\\\\\", \\\"/\\\", 1)\"},\n        {\"file\": \"coverage/files.py\", \"line\": 337, \"text\": \"pattern = pattern.replace(\\\"\\\\\\\\\\\", \\\"/\\\", 1)\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The two subsequent calls to replace with a count of 1 overwrite the result of the first call, making the first call redundant.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"coverage/files.py\", \"line\": 339, \"text\": \"if \\\"/\\\" not in pattern:\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"If the pattern contains no slashes, the subsequent replacement of backslashes with slashes is unnecessary.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"coverage/files.py\", \"line\": 340, \"text\": \"pattern = \\\"**/\\\" + pattern\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Appending \\\"**/\\\" to the pattern ensures the result contains a slash, making the replacement of backslashes with slashes redundant.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"coverage/files.py\", \"line\": 341, \"text\": \"path_rx = []\"},\n        {\"file\": \"coverage/files.py\", \"line\": 342, \"text\": \"pos = 0\"},\n        {\"file\": \"coverage/files.py\", \"line\": 343, \"text\": \"while pos < len(pattern):\"},\n        {\"file\": \"coverage/files.py\", \"line\": 344, \"text\": \"for rx, sub in G2RX_TOKENS:\"},\n        {\"file\": \"coverage/files.py\", \"line\": 345, \"text\": \"if m := rx.match(pattern, pos=pos):\"},\n        {\"file\": \"coverage/files.py\", \"line\": 346, \"text\": \"if sub is None:\"},\n        {\"file\": \"coverage/files.py\", \"line\": 347, \"text\": \"raise ConfigError(f\\\"File pattern can't include {m[0]!r}\\\")\"},\n        {\"file\": \"coverage/files.py\", \"line\": 348, \"text\": \"path_rx.append(m.expand(sub))\"},\n        {\"file\": \"coverage/files.py\", \"line\": 349, \"text\": \"pos = m.end()\"},\n        {\"file\": \"coverage/files.py\", \"line\": 350, \"text\": \"break\"},\n        {\"file\": \"coverage/files.py\", \"line\": 351, \"text\": \"return \\\"\\\".join(path_rx)\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The entire tokenization and regex generation logic is only triggered if the pattern contains a slash, which is guaranteed by the subsequent logic.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 7121,
+      "completion_tokens": 635,
+      "total_duration_ns": 15563460958,
+      "load_duration_ns": 2624901,
+      "prompt_eval_duration_ns": 2002937000,
+      "eval_duration_ns": 13300765000,
+      "model": "glm-4.7-flash:q4_K_M",
+      "done_reason": "stop",
+      "wall_seconds": 15.68,
+      "attempt": 0
+    },
+    "model": "glm-4.7-flash:q4_K_M"
+  },
+  "prompt_tokens": 7121,
+  "completion_tokens": 635,
+  "runtime_s": 15.68,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "coverage/files.py:334-334",
+        "coverage/files.py:337-337"
+      ],
+      "ops": [
+        {
+          "id": "coverage/files.py:334-334",
+          "key": "coverage/files.py:334-334",
+          "file": "coverage/files.py",
+          "first_line": 334,
+          "last_line": 334,
+          "line": 334,
+          "end_line": 334,
+          "col": 4,
+          "end_col": 43,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+          "text": "pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+          "node_key": [
+            "Assign",
+            334,
+            4,
+            334,
+            43
+          ]
+        },
+        {
+          "id": "coverage/files.py:337-337",
+          "key": "coverage/files.py:337-337",
+          "file": "coverage/files.py",
+          "first_line": 337,
+          "last_line": 337,
+          "line": 337,
+          "end_line": 337,
+          "col": 4,
+          "end_col": 43,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+          "text": "pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+          "node_key": [
+            "Assign",
+            337,
+            4,
+            337,
+            43
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "The two subsequent calls to replace with a count of 1 overwrite the result of the first call, making the first call redundant."
+    },
+    {
+      "ids": [
+        "coverage/files.py:339-340"
+      ],
+      "ops": [
+        {
+          "id": "coverage/files.py:339-340",
+          "key": "coverage/files.py:339-340",
+          "file": "coverage/files.py",
+          "first_line": 339,
+          "last_line": 340,
+          "line": 339,
+          "end_line": 340,
+          "col": 4,
+          "end_col": 33,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if \"/\" not in pattern:\n        pattern = \"**/\" + pattern",
+          "text": "if \"/\" not in pattern:\n        pattern = \"**/\" + pattern",
+          "node_key": [
+            "If",
+            339,
+            4,
+            340,
+            33
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "If the pattern contains no slashes, the subsequent replacement of backslashes with slashes is unnecessary."
+    },
+    {
+      "ids": [
+        "coverage/files.py:340-340"
+      ],
+      "ops": [
+        {
+          "id": "coverage/files.py:340-340",
+          "key": "coverage/files.py:340-340",
+          "file": "coverage/files.py",
+          "first_line": 340,
+          "last_line": 340,
+          "line": 340,
+          "end_line": 340,
+          "col": 8,
+          "end_col": 33,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "pattern = \"**/\" + pattern",
+          "text": "pattern = \"**/\" + pattern",
+          "node_key": [
+            "Assign",
+            340,
+            8,
+            340,
+            33
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "Appending \"**/\" to the pattern ensures the result contains a slash, making the replacement of backslashes with slashes redundant."
+    },
+    {
+      "ids": [
+        "coverage/files.py:341-341",
+        "coverage/files.py:342-342",
+        "coverage/files.py:343-350",
+        "coverage/files.py:344-350",
+        "coverage/files.py:345-350",
+        "coverage/files.py:346-347",
+        "coverage/files.py:347-347",
+        "coverage/files.py:348-348",
+        "coverage/files.py:349-349",
+        "coverage/files.py:350-350",
+        "coverage/files.py:351-351"
+      ],
+      "ops": [
+        {
+          "id": "coverage/files.py:341-341",
+          "key": "coverage/files.py:341-341",
+          "file": "coverage/files.py",
+          "first_line": 341,
+          "last_line": 341,
+          "line": 341,
+          "end_line": 341,
+          "col": 4,
+          "end_col": 16,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "path_rx = []",
+          "text": "path_rx = []",
+          "node_key": [
+            "Assign",
+            341,
+            4,
+            341,
+            16
+          ]
+        },
+        {
+          "id": "coverage/files.py:342-342",
+          "key": "coverage/files.py:342-342",
+          "file": "coverage/files.py",
+          "first_line": 342,
+          "last_line": 342,
+          "line": 342,
+          "end_line": 342,
+          "col": 4,
+          "end_col": 11,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "pos = 0",
+          "text": "pos = 0",
+          "node_key": [
+            "Assign",
+            342,
+            4,
+            342,
+            11
+          ]
+        },
+        {
+          "id": "coverage/files.py:343-350",
+          "key": "coverage/files.py:343-350",
+          "file": "coverage/files.py",
+          "first_line": 343,
+          "last_line": 350,
+          "line": 343,
+          "end_line": 350,
+          "col": 4,
+          "end_col": 21,
+          "kind": "while",
+          "node_type": "While",
+          "code": "while pos < len(pattern):\n        for rx, sub in G2RX_TOKENS:                     # pragma: always breaks\n            if m := rx.match(pattern, pos=pos):\n                if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n                path_rx.append(m.expand(sub))\n                pos = m.end()\n                break",
+          "text": "while pos < len(pattern):\n        for rx, sub in G2RX_TOKENS:                     # pragma: always breaks\n            if m := rx.match(pattern, pos=pos):\n                if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n                path_rx.append(m.expand(sub))\n                pos = m.end()\n                break",
+          "node_key": [
+            "While",
+            343,
+            4,
+            350,
+            21
+          ]
+        },
+        {
+          "id": "coverage/files.py:344-350",
+          "key": "coverage/files.py:344-350",
+          "file": "coverage/files.py",
+          "first_line": 344,
+          "last_line": 350,
+          "line": 344,
+          "end_line": 350,
+          "col": 8,
+          "end_col": 21,
+          "kind": "for",
+          "node_type": "For",
+          "code": "for rx, sub in G2RX_TOKENS:                     # pragma: always breaks\n            if m := rx.match(pattern, pos=pos):\n                if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n                path_rx.append(m.expand(sub))\n                pos = m.end()\n                break",
+          "text": "for rx, sub in G2RX_TOKENS:                     # pragma: always breaks\n            if m := rx.match(pattern, pos=pos):\n                if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n                path_rx.append(m.expand(sub))\n                pos = m.end()\n                break",
+          "node_key": [
+            "For",
+            344,
+            8,
+            350,
+            21
+          ]
+        },
+        {
+          "id": "coverage/files.py:345-350",
+          "key": "coverage/files.py:345-350",
+          "file": "coverage/files.py",
+          "first_line": 345,
+          "last_line": 350,
+          "line": 345,
+          "end_line": 350,
+          "col": 12,
+          "end_col": 21,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if m := rx.match(pattern, pos=pos):\n                if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n                path_rx.append(m.expand(sub))\n                pos = m.end()\n                break",
+          "text": "if m := rx.match(pattern, pos=pos):\n                if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")\n                path_rx.append(m.expand(sub))\n                pos = m.end()\n                break",
+          "node_key": [
+            "If",
+            345,
+            12,
+            350,
+            21
+          ]
+        },
+        {
+          "id": "coverage/files.py:346-347",
+          "key": "coverage/files.py:346-347",
+          "file": "coverage/files.py",
+          "first_line": 346,
+          "last_line": 347,
+          "line": 346,
+          "end_line": 347,
+          "col": 16,
+          "end_col": 77,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")",
+          "text": "if sub is None:\n                    raise ConfigError(f\"File pattern can't include {m[0]!r}\")",
+          "node_key": [
+            "If",
+            346,
+            16,
+            347,
+            77
+          ]
+        },
+        {
+          "id": "coverage/files.py:347-347",
+          "key": "coverage/files.py:347-347",
+          "file": "coverage/files.py",
+          "first_line": 347,
+          "last_line": 347,
+          "line": 347,
+          "end_line": 347,
+          "col": 20,
+          "end_col": 77,
+          "kind": "raise",
+          "node_type": "Raise",
+          "code": "raise ConfigError(f\"File pattern can't include {m[0]!r}\")",
+          "text": "raise ConfigError(f\"File pattern can't include {m[0]!r}\")",
+          "node_key": [
+            "Raise",
+            347,
+            20,
+            347,
+            77
+          ]
+        },
+        {
+          "id": "coverage/files.py:348-348",
+          "key": "coverage/files.py:348-348",
+          "file": "coverage/files.py",
+          "first_line": 348,
+          "last_line": 348,
+          "line": 348,
+          "end_line": 348,
+          "col": 16,
+          "end_col": 45,
+          "kind": "expr",
+          "node_type": "Expr",
+          "code": "path_rx.append(m.expand(sub))",
+          "text": "path_rx.append(m.expand(sub))",
+          "node_key": [
+            "Expr",
+            348,
+            16,
+            348,
+            45
+          ]
+        },
+        {
+          "id": "coverage/files.py:349-349",
+          "key": "coverage/files.py:349-349",
+          "file": "coverage/files.py",
+          "first_line": 349,
+          "last_line": 349,
+          "line": 349,
+          "end_line": 349,
+          "col": 16,
+          "end_col": 29,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "pos = m.end()",
+          "text": "pos = m.end()",
+          "node_key": [
+            "Assign",
+            349,
+            16,
+            349,
+            29
+          ]
+        },
+        {
+          "id": "coverage/files.py:350-350",
+          "key": "coverage/files.py:350-350",
+          "file": "coverage/files.py",
+          "first_line": 350,
+          "last_line": 350,
+          "line": 350,
+          "end_line": 350,
+          "col": 16,
+          "end_col": 21,
+          "kind": "break",
+          "node_type": "Break",
+          "code": "break",
+          "text": "break",
+          "node_key": [
+            "Break",
+            350,
+            16,
+            350,
+            21
+          ]
+        },
+        {
+          "id": "coverage/files.py:351-351",
+          "key": "coverage/files.py:351-351",
+          "file": "coverage/files.py",
+          "first_line": 351,
+          "last_line": 351,
+          "line": 351,
+          "end_line": 351,
+          "col": 4,
+          "end_col": 27,
+          "kind": "return",
+          "node_type": "Return",
+          "code": "return \"\".join(path_rx)",
+          "text": "return \"\".join(path_rx)",
+          "node_key": [
+            "Return",
+            351,
+            4,
+            351,
+            27
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "The entire tokenization and regex generation logic is only triggered if the pattern contains a slash, which is guaranteed by the subsequent logic."
+    }
+  ],
+  "rejected": [],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "false_relations": 14,
+    "unmatched_sets": 3,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_two_backslashes",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [],
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "stray_ops": [
+          "coverage/files.py:339-340",
+          "coverage/files.py:340-340",
+          "coverage/files.py:341-341",
+          "coverage/files.py:342-342",
+          "coverage/files.py:343-350",
+          "coverage/files.py:344-350",
+          "coverage/files.py:345-350",
+          "coverage/files.py:346-347",
+          "coverage/files.py:347-347",
+          "coverage/files.py:348-348",
+          "coverage/files.py:349-349",
+          "coverage/files.py:350-350",
+          "coverage/files.py:351-351"
+        ],
+        "msms_exact": false,
+        "precision": 0.5,
+        "recall": 1.0,
+        "false_relations": 14,
+        "unmatched_sets": 3
+      }
+    }
+  ],
+  "status": "OK"
+}

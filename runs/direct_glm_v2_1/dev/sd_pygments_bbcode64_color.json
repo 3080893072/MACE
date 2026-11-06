@@ -1,0 +1,352 @@
+{
+  "task_id": "sd_pygments_bbcode64_color",
+  "split": "DEV",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "model": "glm-4.7-flash:q4_K_M",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900,
+    "think": false
+  },
+  "public_source_sha256": "174d06fc6f18d6a8ec3f62a7caa807d958cff6266d1217eef66637dcb76a2917",
+  "prompt_sha256": "30c70b7ca3b26bea8b2c9ede4be210a54381f9aa9ec3094d90568a664bf85827",
+  "prompt_chars": 6350,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_pygments_bbcode64_color\n\n## File\n`pygments/formatters/bbcode.py`\n\n## Program with source line numbers\n```text\n   1 | \"\"\"\n   2 |     pygments.formatters.bbcode\n   3 |     ~~~~~~~~~~~~~~~~~~~~~~~~~~\n   4 | \n   5 |     BBcode formatter.\n   6 | \n   7 |     :copyright: Copyright 2006-2023 by the Pygments team, see AUTHORS.\n   8 |     :license: BSD, see LICENSE for details.\n   9 | \"\"\"\n  10 | \n  11 | \n  12 | from pygments.formatter import Formatter\n  13 | from pygments.util import get_bool_opt\n  14 | \n  15 | __all__ = ['BBCodeFormatter']\n  16 | \n  17 | \n  18 | class BBCodeFormatter(Formatter):\n  19 |     \"\"\"\n  20 |     Format tokens with BBcodes. These formatting codes are used by many\n  21 |     bulletin boards, so you can highlight your sourcecode with pygments before\n  22 |     posting it there.\n  23 | \n  24 |     This formatter has no support for background colors and borders, as there\n  25 |     are no common BBcode tags for that.\n  26 | \n  27 |     Some board systems (e.g. phpBB) don't support colors in their [code] tag,\n  28 |     so you can't use the highlighting together with that tag.\n  29 |     Text in a [code] tag usually is shown with a monospace font (which this\n  30 |     formatter can do with the ``monofont`` option) and no spaces (which you\n  31 |     need for indentation) are removed.\n  32 | \n  33 |     Additional options accepted:\n  34 | \n  35 |     `style`\n  36 |         The style to use, can be a string or a Style subclass (default:\n  37 |         ``'default'``).\n  38 | \n  39 |     `codetag`\n  40 |         If set to true, put the output into ``[code]`` tags (default:\n  41 |         ``false``)\n  42 | \n  43 |     `monofont`\n  44 |         If set to true, add a tag to show the code with a monospace font\n  45 |         (default: ``false``).\n  46 |     \"\"\"\n  47 |     name = 'BBCode'\n  48 |     aliases = ['bbcode', 'bb']\n  49 |     filenames = []\n  50 | \n  51 |     def __init__(self, **options):\n  52 |         Formatter.__init__(self, **options)\n  53 |         self._code = get_bool_opt(options, 'codetag', False)\n  54 |         self._mono = get_bool_opt(options, 'monofont', False)\n  55 | \n  56 |         self.styles = {}\n  57 |         self._make_styles()\n  58 | \n  59 |     def _make_styles(self):\n  60 |         for ttype, ndef in self.style:\n  61 |             start = end = ''\n  62 |             if ndef['color']:\n  63 |                 start += '[color=#%s]' % ndef['color']\n  64 |                 end = '[/color]' + end\n  65 | \n  66 |                 if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):\n  67 |                     end = '[/color]' + end\n  68 | \n  69 |             if ndef['bold']:\n  70 |                 start += '[b]'\n  71 |                 end = '[/b]' + end\n  72 |             if ndef['italic']:\n  73 |                 start += '[i]'\n  74 |                 end = '[/i]' + end\n  75 |             if ndef['underline']:\n  76 |                 start += '[u]'\n  77 |                 end = '[/u]' + end\n  78 |             # there are no common BBcodes for background-color and border\n  79 | \n  80 |             self.styles[ttype] = start, end\n  81 | \n  82 |             if ndef['color'] and not ndef['underline']:\n  83 |                 _sd_close = ''\n  84 |                 if ndef['italic']:\n  85 |                     _sd_close += '[/i]'\n  86 |                 if ndef['bold']:\n  87 |                     _sd_close += '[/b]'\n  88 |                 _sd_close += '[/color]'\n  89 |                 self.styles[ttype] = (start, _sd_close)\n  90 | \n  91 | \n  92 |     def format_unencoded(self, tokensource, outfile):\n  93 |         if self._code:\n  94 |             outfile.write('[code]')\n  95 |         if self._mono:\n  96 |             outfile.write('[font=monospace]')\n  97 | \n  98 |         lastval = ''\n  99 |         lasttype = None\n 100 | \n 101 |         for ttype, value in tokensource:\n 102 |             while ttype not in self.styles:\n 103 |                 ttype = ttype.parent\n 104 |             if ttype == lasttype:\n 105 |                 lastval += value\n 106 |             else:\n 107 |                 if lastval:\n 108 |                     start, end = self.styles[lasttype]\n 109 |                     outfile.write(''.join((start, lastval, end)))\n 110 |                 lastval = value\n 111 |                 lasttype = ttype\n 112 | \n 113 |         if lastval:\n 114 |             start, end = self.styles[lasttype]\n 115 |             outfile.write(''.join((start, lastval, end)))\n 116 | \n 117 |         if self._mono:\n 118 |             outfile.write('[/font]')\n 119 |         if self._code:\n 120 |             outfile.write('[/code]')\n 121 |         if self._code or self._mono:\n 122 |             outfile.write('\\n')\n```\n\n## Target A\nLine 64: `end = '[/color]' + end`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 66, \"text\": \"if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):\", \"source\": \"66\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 67, \"text\": \"end = '[/color]' + end\", \"source\": \"67\"}\n      ],\n      \"condition\": \"ndef['color'] and not ndef['underline'] and not end.startswith('[/color]')\",\n      \"rationale\": \"When the condition is true, the line at 67 appends the closing tag, making the line at 64 redundant.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 82, \"text\": \"if ndef['color'] and not ndef['underline']:\", \"source\": \"82\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 83, \"text\": \"_sd_close = ''\", \"source\": \"83\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 84, \"text\": \"if ndef['italic']:\", \"source\": \"84\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 85, \"text\": \"_sd_close += '[/i]'\", \"source\": \"85\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 86, \"text\": \"if ndef['bold']:\", \"source\": \"86\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 87, \"text\": \"_sd_close += '[/b]'\", \"source\": \"87\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 88, \"text\": \"_sd_close += '[/color]'\", \"source\": \"88\"},\n        {\"file\": \"pygments/formatters/bbcode.py\", \"line\": 89, \"text\": \"self.styles[ttype] = (start, _sd_close)\", \"source\": \"89\"}\n      ],\n      \"condition\": \"ndef['color'] and not ndef['underline']\",\n      \"rationale\": \"When the condition is true, the code at 89 assigns the value of _sd_close to the style, making the line at 64 irrelevant.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 1806,
+      "completion_tokens": 544,
+      "total_duration_ns": 11192610522,
+      "load_duration_ns": 2014232,
+      "prompt_eval_duration_ns": 409142000,
+      "eval_duration_ns": 10571627000,
+      "model": "glm-4.7-flash:q4_K_M",
+      "done_reason": "stop",
+      "wall_seconds": 11.344,
+      "attempt": 0
+    },
+    "model": "glm-4.7-flash:q4_K_M"
+  },
+  "prompt_tokens": 1806,
+  "completion_tokens": 544,
+  "runtime_s": 11.344,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "pygments/formatters/bbcode.py:66-67",
+        "pygments/formatters/bbcode.py:67-67"
+      ],
+      "ops": [
+        {
+          "id": "pygments/formatters/bbcode.py:66-67",
+          "key": "pygments/formatters/bbcode.py:66-67",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 66,
+          "last_line": 67,
+          "line": 66,
+          "end_line": 67,
+          "col": 16,
+          "end_col": 42,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):\n                    end = '[/color]' + end",
+          "text": "if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):\n                    end = '[/color]' + end",
+          "node_key": [
+            "If",
+            66,
+            16,
+            67,
+            42
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:67-67",
+          "key": "pygments/formatters/bbcode.py:67-67",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 67,
+          "last_line": 67,
+          "line": 67,
+          "end_line": 67,
+          "col": 20,
+          "end_col": 42,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "end = '[/color]' + end",
+          "text": "end = '[/color]' + end",
+          "node_key": [
+            "Assign",
+            67,
+            20,
+            67,
+            42
+          ]
+        }
+      ],
+      "condition": "ndef['color'] and not ndef['underline'] and not end.startswith('[/color]')",
+      "rationale": "When the condition is true, the line at 67 appends the closing tag, making the line at 64 redundant."
+    },
+    {
+      "ids": [
+        "pygments/formatters/bbcode.py:82-89",
+        "pygments/formatters/bbcode.py:83-83",
+        "pygments/formatters/bbcode.py:84-85",
+        "pygments/formatters/bbcode.py:85-85",
+        "pygments/formatters/bbcode.py:86-87",
+        "pygments/formatters/bbcode.py:87-87",
+        "pygments/formatters/bbcode.py:88-88",
+        "pygments/formatters/bbcode.py:89-89"
+      ],
+      "ops": [
+        {
+          "id": "pygments/formatters/bbcode.py:82-89",
+          "key": "pygments/formatters/bbcode.py:82-89",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 82,
+          "last_line": 89,
+          "line": 82,
+          "end_line": 89,
+          "col": 12,
+          "end_col": 55,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if ndef['color'] and not ndef['underline']:\n                _sd_close = ''\n                if ndef['italic']:\n                    _sd_close += '[/i]'\n                if ndef['bold']:\n                    _sd_close += '[/b]'\n                _sd_close += '[/color]'\n                self.styles[ttype] = (start, _sd_close)",
+          "text": "if ndef['color'] and not ndef['underline']:\n                _sd_close = ''\n                if ndef['italic']:\n                    _sd_close += '[/i]'\n                if ndef['bold']:\n                    _sd_close += '[/b]'\n                _sd_close += '[/color]'\n                self.styles[ttype] = (start, _sd_close)",
+          "node_key": [
+            "If",
+            82,
+            12,
+            89,
+            55
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:83-83",
+          "key": "pygments/formatters/bbcode.py:83-83",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 83,
+          "last_line": 83,
+          "line": 83,
+          "end_line": 83,
+          "col": 16,
+          "end_col": 30,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "_sd_close = ''",
+          "text": "_sd_close = ''",
+          "node_key": [
+            "Assign",
+            83,
+            16,
+            83,
+            30
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:84-85",
+          "key": "pygments/formatters/bbcode.py:84-85",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 84,
+          "last_line": 85,
+          "line": 84,
+          "end_line": 85,
+          "col": 16,
+          "end_col": 39,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if ndef['italic']:\n                    _sd_close += '[/i]'",
+          "text": "if ndef['italic']:\n                    _sd_close += '[/i]'",
+          "node_key": [
+            "If",
+            84,
+            16,
+            85,
+            39
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:85-85",
+          "key": "pygments/formatters/bbcode.py:85-85",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 85,
+          "last_line": 85,
+          "line": 85,
+          "end_line": 85,
+          "col": 20,
+          "end_col": 39,
+          "kind": "augassign",
+          "node_type": "AugAssign",
+          "code": "_sd_close += '[/i]'",
+          "text": "_sd_close += '[/i]'",
+          "node_key": [
+            "AugAssign",
+            85,
+            20,
+            85,
+            39
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:86-87",
+          "key": "pygments/formatters/bbcode.py:86-87",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 86,
+          "last_line": 87,
+          "line": 86,
+          "end_line": 87,
+          "col": 16,
+          "end_col": 39,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if ndef['bold']:\n                    _sd_close += '[/b]'",
+          "text": "if ndef['bold']:\n                    _sd_close += '[/b]'",
+          "node_key": [
+            "If",
+            86,
+            16,
+            87,
+            39
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:87-87",
+          "key": "pygments/formatters/bbcode.py:87-87",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 87,
+          "last_line": 87,
+          "line": 87,
+          "end_line": 87,
+          "col": 20,
+          "end_col": 39,
+          "kind": "augassign",
+          "node_type": "AugAssign",
+          "code": "_sd_close += '[/b]'",
+          "text": "_sd_close += '[/b]'",
+          "node_key": [
+            "AugAssign",
+            87,
+            20,
+            87,
+            39
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:88-88",
+          "key": "pygments/formatters/bbcode.py:88-88",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 88,
+          "last_line": 88,
+          "line": 88,
+          "end_line": 88,
+          "col": 16,
+          "end_col": 39,
+          "kind": "augassign",
+          "node_type": "AugAssign",
+          "code": "_sd_close += '[/color]'",
+          "text": "_sd_close += '[/color]'",
+          "node_key": [
+            "AugAssign",
+            88,
+            16,
+            88,
+            39
+          ]
+        },
+        {
+          "id": "pygments/formatters/bbcode.py:89-89",
+          "key": "pygments/formatters/bbcode.py:89-89",
+          "file": "pygments/formatters/bbcode.py",
+          "first_line": 89,
+          "last_line": 89,
+          "line": 89,
+          "end_line": 89,
+          "col": 16,
+          "end_col": 55,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "self.styles[ttype] = (start, _sd_close)",
+          "text": "self.styles[ttype] = (start, _sd_close)",
+          "node_key": [
+            "Assign",
+            89,
+            16,
+            89,
+            55
+          ]
+        }
+      ],
+      "condition": "ndef['color'] and not ndef['underline']",
+      "rationale": "When the condition is true, the code at 89 assigns the value of _sd_close to the style, making the line at 64 irrelevant."
+    }
+  ],
+  "rejected": [],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_color",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "OK"
+}

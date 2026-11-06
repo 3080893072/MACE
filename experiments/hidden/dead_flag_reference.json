@@ -1,0 +1,51 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "flag_post and not flag",
+        "source_lines": [
+          2,
+          3,
+          4
+        ],
+        "rationale": "A turns the initially false flag on."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "len(xs)",
+        "condition": "True",
+        "source_lines": [
+          5,
+          6
+        ],
+        "rationale": "Channel 0 is the length of the list, in both versions."
+      },
+      {
+        "id": "O1",
+        "channel": 1,
+        "expr": "len(xs) + 1",
+        "condition": "True",
+        "source_lines": [
+          6
+        ],
+        "rationale": "Channel 1 is the length plus one, in both versions."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "True",
+      "source_lines": [
+        2,
+        3,
+        4
+      ]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

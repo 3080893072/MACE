@@ -1,0 +1,116 @@
+{
+  "task_id": "sd_coverage_glob_backslash_m2",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "coverage/files.py",
+    "line": 332,
+    "function": "_glob_to_regex",
+    "code": "    pattern = pattern.replace(\"\\\\\", \"/\")",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "coverage/files.py",
+      "line": 334,
+      "code": "pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+      "role": "First backslash leg.",
+      "patch_anchor_line": 332,
+      "block_span": [
+        333,
+        335
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "coverage/files.py",
+      "line": 337,
+      "code": "pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+      "role": "Second backslash leg.",
+      "patch_anchor_line": 332,
+      "block_span": [
+        336,
+        338
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_two_backslashes": {
+      "role": "masking",
+      "description": "glob with two Windows separators",
+      "p_plus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_three_backslashes": {
+      "role": "exposing",
+      "description": "glob with three Windows separators: one survives",
+      "p_plus": {
+        "out": "src[/\\\\]a[/\\\\]b[/\\\\]c\\.py"
+      },
+      "p_minus": {
+        "out": "src[/\\\\]a[/\\\\]b\\\\c\\.py"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_posix": {
+      "role": "control",
+      "description": "glob that already uses forward slashes",
+      "p_plus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "differs from P+",
+      "[U2]": "differs from P+",
+      "[U1,U2]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_coverage_glob_backslash_m2/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

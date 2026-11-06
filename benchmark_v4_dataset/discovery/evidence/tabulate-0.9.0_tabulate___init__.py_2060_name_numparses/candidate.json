@@ -1,0 +1,63 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:2060:name:numparses",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "tabulate",
+  "mechanism": "name",
+  "target_A": {
+    "line": 2060,
+    "end_line": 2060,
+    "kind": "Assign",
+    "code": "numparses = _expand_numparse(disable_numparse, num_cols)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_maxcolwidth_honor_disable_parsenum",
+    "test/test_output.py::test_maxcolwidth_pad_tailing_widths",
+    "test/test_output.py::test_maxcolwidth_single_value",
+    "test/test_output.py::test_plain_maxcolwidth_autowraps",
+    "test/test_output.py::test_plain_maxcolwidth_autowraps_with_sep",
+    "test/test_output.py::test_plain_maxheadercolwidths_autowraps",
+    "test/test_textwrapper.py::test_wrap_datetime"
+  ],
+  "original_hit_test_count": 7,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        numparses = _expand_numparse(disable_numparse, num_cols)",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.7,
+    "failed_nodeids": [
+      "test.test_output::test_maxcolwidth_honor_disable_parsenum",
+      "test.test_output::test_maxcolwidth_pad_tailing_widths",
+      "test.test_output::test_maxcolwidth_single_value",
+      "test.test_output::test_plain_maxcolwidth_autowraps",
+      "test.test_output::test_plain_maxcolwidth_autowraps_with_sep",
+      "test.test_output::test_plain_maxheadercolwidths_autowraps",
+      "test.test_textwrapper::test_wrap_datetime"
+    ],
+    "stdout_tail": "f the\n        longest element in that column. However, in situations where fields are expected\n        to reasonably be too long to look good as a single line, tabulate can help automate\n        word wrapping long fields for you. Use the parameter `maxcolwidth` to provide a\n        list of maximal column widths\n    \n        >>> print(tabulate( \\\n              [('1', 'John Smith', \\\n                'This is a rather long description that might look better if it is wrapped a bit')], \\\n              headers=(\"Issue Id\", \"Author\", \"Description\"), \\\n              maxcolwidths=[None, None, 30], \\\n              tablefmt=\"grid\"  \\\n            ))\n        +------------+------------+-------------------------------+\n        |   Issue Id | Author     | Description                   |\n        +============+============+===============================+\n        |          1 | John Smith | This is a rather long         |\n        |            |            | description that might look   |\n        |            |            | better if it is wrapped a bit |\n        +------------+------------+-------------------------------+\n    \n        Header column width can be specified in a similar way using `maxheadercolwidth`\n    \n        \"\"\"\n    \n        if tabular_data is None:\n            tabular_data = []\n    \n        list_of_lists, headers = _normalize_tabular_data(\n            tabular_data, headers, showindex=showindex\n        )\n        list_of_lists, separating_lines = _remove_separating_lines(list_of_lists)\n    \n        if maxcolwidths is not None:\n            num_cols = len(list_of_lists[0])\n            if isinstance(maxcolwidths, int):  # Expand scalar for all columns\n                maxcolwidths = _expand_iterable(maxcolwidths, num_cols, maxcolwidths)\n            else:  # Ignore col width for any 'trailing' columns\n                maxcolwidths = _expand_iterable(maxcolwidths, num_cols, None)\n    \n            pass  # P-: target A deleted\n            list_of_lists = _wrap_text_to_colwidths(\n>               list_of_lists, maxcolwidths, numparses=numparses\n            )\nE           UnboundLocalError: cannot access local variable 'numparses' where it is not associated with a value\n\ntabulate\\__init__.py:2062: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_output.py::test_plain_maxcolwidth_autowraps - UnboundLocalEr...\nFAILED test/test_output.py::test_plain_maxcolwidth_autowraps_with_sep - Unbou...\nFAILED test/test_output.py::test_maxcolwidth_single_value - UnboundLocalError...\nFAILED test/test_output.py::test_maxcolwidth_pad_tailing_widths - UnboundLoca...\nFAILED test/test_output.py::test_maxcolwidth_honor_disable_parsenum - Unbound...\nFAILED test/test_output.py::test_plain_maxheadercolwidths_autowraps - Unbound...\nFAILED test/test_textwrapper.py::test_wrap_datetime - UnboundLocalError: cann...\n7 failed in 0.36s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

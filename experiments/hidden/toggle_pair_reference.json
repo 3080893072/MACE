@@ -1,0 +1,38 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "a_post == 0",
+        "source_lines": [5],
+        "rationale": "A sets the local a to zero."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "(n if flag else a) + b",
+        "condition": "flag or n == 0",
+        "source_lines": [7, 8, 9],
+        "rationale": "The branch restores a, and with it off the sum depends on a only through n."
+      },
+      {
+        "id": "O1",
+        "channel": 1,
+        "expr": "(n if flag else a) - b",
+        "condition": "flag or n == 0",
+        "source_lines": [7, 8, 9],
+        "rationale": "Same condition: both channels read the same local."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "flag or n == 0",
+      "source_lines": [5, 7, 8]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

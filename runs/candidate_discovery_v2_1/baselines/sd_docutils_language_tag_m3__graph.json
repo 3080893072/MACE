@@ -1,0 +1,151 @@
+{
+  "case_id": "sd_docutils_language_tag_m3",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "docutils/utils/__init__.py:706-706",
+      "file": "docutils/utils/__init__.py",
+      "first_line": 706,
+      "last_line": 706,
+      "kind": "assign",
+      "code": "    tag = tag.lower()",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "docutils/utils/__init__.py:704-704",
+          "to": "docutils/utils/__init__.py:706-706",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:tag",
+          "guard": ""
+        }
+      ],
+      "graph_function": "normalize_language_tag"
+    },
+    {
+      "id": "docutils/utils/__init__.py:709-709",
+      "file": "docutils/utils/__init__.py",
+      "first_line": 709,
+      "last_line": 709,
+      "kind": "assign",
+      "code": "    tag = tag.replace('-', '_', 1)",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "docutils/utils/__init__.py:704-704",
+          "to": "docutils/utils/__init__.py:709-709",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:tag",
+          "guard": ""
+        }
+      ],
+      "graph_function": "normalize_language_tag"
+    },
+    {
+      "id": "docutils/utils/__init__.py:712-712",
+      "file": "docutils/utils/__init__.py",
+      "first_line": 712,
+      "last_line": 712,
+      "kind": "assign",
+      "code": "    tag = tag.replace('-', '_', 1)",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "docutils/utils/__init__.py:704-704",
+          "to": "docutils/utils/__init__.py:712-712",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:tag",
+          "guard": ""
+        }
+      ],
+      "graph_function": "normalize_language_tag"
+    },
+    {
+      "id": "docutils/utils/__init__.py:715-715",
+      "file": "docutils/utils/__init__.py",
+      "first_line": 715,
+      "last_line": 715,
+      "kind": "assign",
+      "code": "    tag = re.sub(r'_([a-zA-Z0-9])_', r'_\\1-', tag)",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "docutils/utils/__init__.py:704-704",
+          "to": "docutils/utils/__init__.py:715-715",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:tag",
+          "guard": ""
+        }
+      ],
+      "graph_function": "normalize_language_tag"
+    },
+    {
+      "id": "docutils/utils/__init__.py:716-716",
+      "file": "docutils/utils/__init__.py",
+      "first_line": 716,
+      "last_line": 716,
+      "kind": "assign",
+      "code": "    subtags = [subtag for subtag in tag.split('_')]",
+      "graph_score": 1.05,
+      "graph_path": [
+        {
+          "from": "docutils/utils/__init__.py:704-704",
+          "to": "docutils/utils/__init__.py:716-716",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:tag",
+          "guard": ""
+        }
+      ],
+      "graph_function": "normalize_language_tag"
+    },
+    {
+      "id": "docutils/utils/__init__.py:724-724",
+      "file": "docutils/utils/__init__.py",
+      "first_line": 724,
+      "last_line": 724,
+      "kind": "return",
+      "code": "    return taglist",
+      "graph_score": 0.8,
+      "graph_path": [
+        {
+          "from": "docutils/utils/__init__.py:704-704",
+          "to": "docutils/utils/__init__.py:716-716",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:tag",
+          "guard": ""
+        },
+        {
+          "from": "docutils/utils/__init__.py:716-716",
+          "to": "docutils/utils/__init__.py:717-717",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:subtags",
+          "guard": ""
+        },
+        {
+          "from": "docutils/utils/__init__.py:717-717",
+          "to": "docutils/utils/__init__.py:722-722",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:base_tag",
+          "guard": ""
+        },
+        {
+          "from": "docutils/utils/__init__.py:722-722",
+          "to": "docutils/utils/__init__.py:724-724",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:taglist",
+          "guard": ""
+        }
+      ],
+      "graph_function": "normalize_language_tag"
+    }
+  ],
+  "source": "computed_v2_1"
+}

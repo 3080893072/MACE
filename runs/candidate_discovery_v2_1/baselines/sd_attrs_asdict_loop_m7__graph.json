@@ -1,0 +1,127 @@
+{
+  "case_id": "sd_attrs_asdict_loop_m7",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "src/attr/_funcs.py:65-72",
+      "file": "src/attr/_funcs.py",
+      "first_line": 65,
+      "last_line": 72,
+      "kind": "assign",
+      "code": "                rv[a.name] = asdict(\n                    v,\n                    recurse=True,\n                    filter=filter,\n                    dict_factory=dict_factory,\n                    retain_collection_types=retain_collection_types,\n                    value_serializer=value_serializer,\n                )",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "src/attr/_funcs.py:118-118",
+          "to": "src/attr/_funcs.py:65-72",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:a",
+          "guard": ""
+        }
+      ],
+      "graph_function": "asdict"
+    },
+    {
+      "id": "src/attr/_funcs.py:121-121",
+      "file": "src/attr/_funcs.py",
+      "first_line": 121,
+      "last_line": 121,
+      "kind": "assign",
+      "code": "                    rv[a.name] = v",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "src/attr/_funcs.py:118-118",
+          "to": "src/attr/_funcs.py:121-121",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:a",
+          "guard": ""
+        }
+      ],
+      "graph_function": "asdict"
+    },
+    {
+      "id": "src/attr/_funcs.py:124-124",
+      "file": "src/attr/_funcs.py",
+      "first_line": 124,
+      "last_line": 124,
+      "kind": "assign",
+      "code": "            rv[a.name] = v",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "src/attr/_funcs.py:118-118",
+          "to": "src/attr/_funcs.py:124-124",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:a",
+          "guard": ""
+        }
+      ],
+      "graph_function": "asdict"
+    },
+    {
+      "id": "src/attr/_funcs.py:87-87",
+      "file": "src/attr/_funcs.py",
+      "first_line": 87,
+      "last_line": 87,
+      "kind": "assign",
+      "code": "                    rv[a.name] = cf(items)",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "src/attr/_funcs.py:118-118",
+          "to": "src/attr/_funcs.py:87-87",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:a",
+          "guard": ""
+        }
+      ],
+      "graph_function": "asdict"
+    },
+    {
+      "id": "src/attr/_funcs.py:93-93",
+      "file": "src/attr/_funcs.py",
+      "first_line": 93,
+      "last_line": 93,
+      "kind": "assign",
+      "code": "                    rv[a.name] = cf(*items)",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "src/attr/_funcs.py:118-118",
+          "to": "src/attr/_funcs.py:93-93",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:a",
+          "guard": ""
+        }
+      ],
+      "graph_function": "asdict"
+    },
+    {
+      "id": "src/attr/_funcs.py:96-116",
+      "file": "src/attr/_funcs.py",
+      "first_line": 96,
+      "last_line": 116,
+      "kind": "assign",
+      "code": "                rv[a.name] = df(\n                    (\n                        _asdict_anything(\n                            kk,\n                            is_key=True,\n                            filter=filter,\n                            dict_factory=df,\n                            retain_collection_types=retain_collection_types,\n                            value_serializer=value_serializer,\n                        ),\n                        _asdict_anything(\n                            vv,\n                            is_key=False,\n                            filter=filter,\n                            dict_factory=df,\n                            retain_collection_types=retain_collection_types,\n                            value_serializer=value_serializer,\n                        ),\n                    )\n                    for kk, vv in v.items()\n                )",
+      "graph_score": 1.75,
+      "graph_path": [
+        {
+          "from": "src/attr/_funcs.py:118-118",
+          "to": "src/attr/_funcs.py:96-116",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:a",
+          "guard": ""
+        }
+      ],
+      "graph_function": "asdict"
+    }
+  ],
+  "source": "computed_v2_1"
+}

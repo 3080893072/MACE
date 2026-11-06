@@ -1,0 +1,209 @@
+{
+  "case_id": "sd_tabulate_1052_strip_right",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "slug": "tabulate-0.9.0",
+  "file": "tabulate/__init__.py",
+  "A_line": 1052,
+  "A_code": "            strings = [s.strip() for s in strings]",
+  "original_sha256": "5f7af0a28fcd713b830c97388675945fa8c4950b05b58f8d187c900a5752d57d",
+  "patched_sha256": "08acea7d452f5b0c348fcac502b7474c49f7985c380592e69b02682971c790b9",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 1052,
+      "role": "Space-only recomputation of the stripped column; equivalent to A for space-padded cells and a no-op for tab-padded cells.",
+      "lines": [
+        "strings = [s.strip(\" \") for s in strings]"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 1052,
+      "end": 1054
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_spaces": {
+        "out": "a\nb"
+      },
+      "expose_tabs": {
+        "out": "a\nb"
+      },
+      "control_plain": {
+        "out": "a\nb"
+      },
+      "control_center": {
+        "out": "a\nb"
+      }
+    },
+    "P_MINUS": {
+      "mask_spaces": {
+        "out": "a\nb"
+      },
+      "expose_tabs": {
+        "out": "\ta\n  b"
+      },
+      "control_plain": {
+        "out": "a\nb"
+      },
+      "control_center": {
+        "out": "a\nb"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_spaces": {
+        "out": "  a\n    b"
+      },
+      "expose_tabs": {
+        "out": "\ta\n  b"
+      },
+      "control_plain": {
+        "out": "a\nb"
+      },
+      "control_center": {
+        "out": "a\nb"
+      }
+    },
+    "KEEP_U1": {
+      "mask_spaces": {
+        "out": "a\nb"
+      },
+      "expose_tabs": {
+        "out": "\ta\n  b"
+      },
+      "control_plain": {
+        "out": "a\nb"
+      },
+      "control_center": {
+        "out": "a\nb"
+      }
+    }
+  },
+  "per_input": {
+    "mask_spaces": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\nb"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "  a\n    b"
+        },
+        "KEEP_U1": {
+          "out": "a\nb"
+        }
+      }
+    },
+    "expose_tabs": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "\ta\n  b"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "\ta\n  b"
+        },
+        "KEEP_U1": {
+          "out": "\ta\n  b"
+        }
+      }
+    },
+    "control_plain": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\nb"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a\nb"
+        },
+        "KEEP_U1": {
+          "out": "a\nb"
+        }
+      }
+    },
+    "control_center": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\nb"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a\nb"
+        },
+        "KEEP_U1": {
+          "out": "a\nb"
+        }
+      }
+    }
+  }
+}

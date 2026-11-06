@@ -1,0 +1,53 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/sql.py:141:name:parent",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/sql.py",
+  "function": "has_ancestor",
+  "mechanism": "name",
+  "target_A": {
+    "line": 141,
+    "end_line": 141,
+    "kind": "Assign",
+    "code": "parent = self.parent"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_parse.py::test_parse_has_ancestor",
+    "tests/test_parse.py::test_stmt_tokens_parents"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        parent = self.parent",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.54,
+    "failed_nodeids": [
+      "tests.test_parse::test_parse_has_ancestor",
+      "tests.test_parse::test_stmt_tokens_parents"
+    ],
+    "stdout_tail": "FF                                                                       [100%]\n================================== FAILURES ===================================\n___________________________ test_parse_has_ancestor ___________________________\n\n    def test_parse_has_ancestor():\n        s = 'foo or (bar, baz)'\n        p = sqlparse.parse(s)[0]\n        baz = p.tokens[-1].tokens[1].tokens[-1]\n>       assert baz.has_ancestor(p.tokens[-1].tokens[1])\n\ntests\\test_parse.py:57: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <Identifier 'baz' at 0x1EB6FC885D0>\nother = <IdentifierList 'bar, b...' at 0x1EB6FC89AD0>\n\n    def has_ancestor(self, other):\n        \"\"\"Returns ``True`` if *other* is in this tokens ancestry.\"\"\"\n        pass  # P-: target A deleted\n>       while parent:\nE       UnboundLocalError: cannot access local variable 'parent' where it is not associated with a value\n\nsqlparse\\sql.py:142: UnboundLocalError\n__________________________ test_stmt_tokens_parents ___________________________\n\n    def test_stmt_tokens_parents():\n        # see issue 226\n        s = \"CREATE TABLE test();\"\n        stmt = sqlparse.parse(s)[0]\n        for token in stmt.tokens:\n>           assert token.has_ancestor(stmt)\n\ntests\\test_parse.py:407: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <DDL 'CREATE' at 0x1EB6FF44040>\nother = <Statement 'CREATE...' at 0x1EB6FE448D0>\n\n    def has_ancestor(self, other):\n        \"\"\"Returns ``True`` if *other* is in this tokens ancestry.\"\"\"\n        pass  # P-: target A deleted\n>       while parent:\nE       UnboundLocalError: cannot access local variable 'parent' where it is not associated with a value\n\nsqlparse\\sql.py:142: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_parse.py::test_parse_has_ancestor - UnboundLocalError: cann...\nFAILED tests/test_parse.py::test_stmt_tokens_parents - UnboundLocalError: can...\n2 failed in 0.19s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

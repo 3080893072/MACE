@@ -1,0 +1,468 @@
+{
+  "candidate_operations": [
+    {
+      "end_line": 85,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 85,
+      "variable": "host"
+    },
+    {
+      "end_line": 87,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 87,
+      "variable": "host"
+    },
+    {
+      "end_line": 90,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 90,
+      "variable": "host"
+    },
+    {
+      "end_line": 93,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 93,
+      "variable": "host"
+    },
+    {
+      "end_line": 95,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 95,
+      "variable": "host"
+    }
+  ],
+  "claims": [
+    {
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": null
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MMBS"
+    }
+  ],
+  "inputs_evaluated": [
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "variable": "host"
+        }
+      ],
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 87,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87,
+          "variable": "host"
+        },
+        {
+          "end_line": 90,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 90,
+          "variable": "host"
+        }
+      ],
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com:8080",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com:8080",
+        "outcome": "return"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [],
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": null
+      },
+      "kind": "exposing",
+      "minus": {
+        "message": "cannot access local variable 'host' where it is not associated with a value",
+        "outcome": "raise",
+        "type": "UnboundLocalError"
+      },
+      "plus": {
+        "host": "",
+        "outcome": "return"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "variable": "host"
+        },
+        {
+          "end_line": 93,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 93,
+          "variable": "host"
+        }
+      ],
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 87,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87,
+          "variable": "host"
+        },
+        {
+          "end_line": 90,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 90,
+          "variable": "host"
+        },
+        {
+          "end_line": 95,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 95,
+          "variable": "host"
+        }
+      ],
+      "input": {
+        "host_header": null,
+        "scheme": "https",
+        "server": [
+          "example.com",
+          443
+        ]
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "variable": "host"
+        }
+      ],
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": [
+          "other.com",
+          80
+        ]
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      }
+    }
+  ],
+  "method": "deterministic_ast_intervention",
+  "subset_analysis": [
+    {
+      "candidates": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "variable": "host"
+        }
+      ],
+      "exposed": {
+        "(85, 85)": true,
+        "EMPTY": false
+      },
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "masked": {
+        "(85, 85)": false,
+        "EMPTY": true
+      },
+      "mmbs": [
+        [
+          [
+            85,
+            85
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            85,
+            85
+          ]
+        ]
+      ]
+    },
+    {
+      "candidates": [
+        {
+          "end_line": 87,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87,
+          "variable": "host"
+        },
+        {
+          "end_line": 90,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 90,
+          "variable": "host"
+        }
+      ],
+      "exposed": {
+        "(87, 87)": true,
+        "(87, 87)+(90, 90)": true,
+        "(90, 90)": false,
+        "EMPTY": false
+      },
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "masked": {
+        "(87, 87)": false,
+        "(87, 87)+(90, 90)": false,
+        "(90, 90)": true,
+        "EMPTY": true
+      },
+      "mmbs": [
+        [
+          [
+            87,
+            87
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            87,
+            87
+          ]
+        ]
+      ]
+    },
+    {
+      "candidates": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "variable": "host"
+        },
+        {
+          "end_line": 93,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 93,
+          "variable": "host"
+        }
+      ],
+      "exposed": {
+        "(85, 85)": true,
+        "(85, 85)+(93, 93)": true,
+        "(93, 93)": false,
+        "EMPTY": false
+      },
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "masked": {
+        "(85, 85)": false,
+        "(85, 85)+(93, 93)": false,
+        "(93, 93)": true,
+        "EMPTY": true
+      },
+      "mmbs": [
+        [
+          [
+            85,
+            85
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            85,
+            85
+          ]
+        ]
+      ]
+    }
+  ],
+  "target": {
+    "code": "host = \"\"",
+    "file": "src/werkzeug/sansio/utils.py",
+    "function": "get_host",
+    "line": 82
+  },
+  "task_id": "werkzeug_get_host_default_empty",
+  "test_gap": {
+    "summary": "not attempted: this baseline targets operation relations, not per-test classification",
+    "tests": []
+  },
+  "variant_builds": 14
+}

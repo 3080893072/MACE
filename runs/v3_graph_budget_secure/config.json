@@ -1,0 +1,36 @@
+{
+  "experiment": "mace_graph_budget_same_universe",
+  "task_ids": [
+    "werkzeug_secure_filename_ascii_filter"
+  ],
+  "fractions": [
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "rounding": "ceil(fraction * 2**|U|), clipped to [1, 2**|U|]",
+  "universes": "U_graph = frozen subgraph top-k candidates from runs/v3_subgraph_ablation; U_c = frozen Baseline C universe. Both are fixed before any budget run; neither is chosen by score.",
+  "modes": {
+    "exhaustive": "subsets by (|D|, D) order",
+    "graph": "symmetric frontier ordered by graph score, deterministic tie-break by the subset tuple"
+  },
+  "hidden_data_in_scope": false,
+  "model_calls": 0,
+  "budget_derivation": "Every budget is the deterministic prefix of one cold full-budget run; per-subset probes and wall seconds are timed during that run and summed over the prefix.",
+  "code_sha256": {
+    "benchmark_v3_baselines/graph_search.py": "d4b5ae764dc6d7973b1b597b38063be5a084899c729bf28b3b38beeefa2b0dd2",
+    "benchmark_v3_baselines/execution.py": "7d4bab5a737badb234c523b5af587250b93d06f35ec4b742f7f6d43f31d6b5ac",
+    "benchmark_v3_baselines/baseline_c.py": "422356d645bc364300cc0de76f2781a508da01a70e1beae192c93fcdd5a3cb6a",
+    "scripts/run_budget_experiment.py": "1d827c25d1bbeffb75e5e41ec8713f39934fc7505698d645bbd674a905645bfe"
+  },
+  "inputs_sha256": {
+    "werkzeug_secure_filename_ascii_filter": "8a398908b61161a101edd40e998db6ac723de214daf3433ed8c597d235ad0bd1"
+  },
+  "environment": {
+    "python": "3.11.7",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "cpu_count": 20
+  }
+}

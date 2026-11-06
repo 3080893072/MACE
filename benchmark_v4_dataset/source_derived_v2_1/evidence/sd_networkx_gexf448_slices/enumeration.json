@@ -1,0 +1,340 @@
+{
+  "case_id": "sd_networkx_gexf448_slices",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M8_OBJECT_SHARED_STATE",
+  "slug": "networkx-3.2.1",
+  "file": "networkx/readwrite/gexf.py",
+  "A_line": 448,
+  "A_code": "                edge_data = self.add_slices(edge_element, edge_data)",
+  "original_sha256": "5193d5488950347fedd0a35312372511c27de8575e2d62d543ce1feeed4da033",
+  "patched_sha256": "64e9cfc8e0fd9f02e8dd7f00a70e683b6b59a76e005587b720f3b4ff3f9c1f6b",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 448,
+      "role": "Repairs the shared XML edge object: re-applies the slice mutation only when the object does not already carry a slices child.",
+      "lines": [
+        "if not G.is_directed() and not edge_element.findall(\"slices\"):",
+        "    edge_data = self.add_slices(edge_element, edge_data)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 448,
+      "end": 451
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_undirected_slices": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "expose_directed_slices": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "control_undirected_no_slices": {
+        "children": []
+      },
+      "control_directed_no_slices": {
+        "children": []
+      }
+    },
+    "P_MINUS": {
+      "mask_undirected_slices": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "expose_directed_slices": {
+        "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+      },
+      "control_undirected_no_slices": {
+        "children": []
+      },
+      "control_directed_no_slices": {
+        "children": []
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_undirected_slices": {
+        "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+      },
+      "expose_directed_slices": {
+        "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+      },
+      "control_undirected_no_slices": {
+        "children": []
+      },
+      "control_directed_no_slices": {
+        "children": []
+      }
+    },
+    "KEEP_U1": {
+      "mask_undirected_slices": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "expose_directed_slices": {
+        "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+      },
+      "control_undirected_no_slices": {
+        "children": []
+      },
+      "control_directed_no_slices": {
+        "children": []
+      }
+    }
+  },
+  "per_input": {
+    "mask_undirected_slices": {
+      "plus": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "p_minus": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+        },
+        "KEEP_U1": {
+          "children": [
+            [
+              "slices",
+              {}
+            ]
+          ]
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1"
+          ]
+        ],
+        "u_necessary": true
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_directed_slices": {
+      "plus": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "p_minus": {
+        "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+        },
+        "KEEP_U1": {
+          "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [],
+        "mmbs": [],
+        "u_necessary": true
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_undirected_no_slices": {
+      "plus": {
+        "children": []
+      },
+      "p_minus": {
+        "children": []
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "children": []
+        },
+        "KEEP_U1": {
+          "children": []
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    },
+    "control_directed_no_slices": {
+      "plus": {
+        "children": []
+      },
+      "p_minus": {
+        "children": []
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "children": []
+        },
+        "KEEP_U1": {
+          "children": []
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "changed_inputs": [
+      {
+        "input": "control_undirected_no_slices",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      },
+      {
+        "input": "control_directed_no_slices",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      }
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 3,
+    "mmbs_COMPUTED": 1,
+    "mmbs_NONE": 2,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 1,
+    "msms_NONE": 3
+  }
+}

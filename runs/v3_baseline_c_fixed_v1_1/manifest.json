@@ -1,0 +1,1750 @@
+{
+  "schema": "mace-baseline-version-manifest-1.0",
+  "generated_from": {
+    "frozen_manifest": "runs\\v3_baseline_freeze\\manifest.json",
+    "frozen_manifest_sha256": "25cacb7e0beb059d657781b698e1d4d0492458740ab92fe07df87821e44f1165",
+    "pilot_root": "runs\\v3_baseline_pilot",
+    "repair_run_root": "runs\\v3_subgraph_ablation",
+    "repair_summary_sha256": "5dc71848b333b395952bd7c2dd071f11020b1e97b0b93824a86fc59da678708c"
+  },
+  "versions": {
+    "C-original-1.0-frozen": {
+      "status": "ARCHIVED_DO_NOT_REUSE_CONTAMINATED_EVIDENCE",
+      "code_commit": "a51faab7075e6b0c58d93e4e86e50061f27360a5",
+      "code_hashes": {
+        "benchmark_v3_baselines/baseline_c.py": "747423a018e99b561bd6c698a242c69b556f6f5041a4622dfeed0805d41ca8b6",
+        "benchmark_v3_baselines/execution.py": "a66dfaaca27287c122a62a103724327749834c6a95b40a6b6e1e1a8f2709d74c"
+      },
+      "executor_variant_scheme": "sanitized subset key truncated to 110 characters (distinct subsets can share a directory)",
+      "emission": "active_filtered",
+      "search": "exhaustive",
+      "trustworthy_submission": {
+        "jinja2_bytecode_cache_read": true,
+        "werkzeug_bind_server_name_lower": true,
+        "werkzeug_filestorage_stream_name": false,
+        "werkzeug_get_host_default_empty": true,
+        "werkzeug_secure_filename_ascii_filter": true
+      },
+      "warning": "Per-input masked/exposed maps of werkzeug_filestorage_stream_name are contaminated by the truncated-directory collision; the emitted claim set still matches the reference, but the per-input evidence and its assigned level must not be cited as ground truth."
+    },
+    "C-fixed-1.1": {
+      "status": "REPRODUCIBLE_BASELINE",
+      "code_hashes": {
+        "benchmark_v3_baselines/baseline_c.py": "422356d645bc364300cc0de76f2781a508da01a70e1beae192c93fcdd5a3cb6a",
+        "benchmark_v3_baselines/execution.py": "7d4bab5a737badb234c523b5af587250b93d06f35ec4b742f7f6d43f31d6b5ac"
+      },
+      "executor_variant_scheme": "sha1-16 of the full disabled key",
+      "emission": "minimality_only",
+      "search": "exhaustive",
+      "regression_run": "runs\\v3_subgraph_ablation\\tasks/<task>/C-fixed",
+      "verified_properties": {
+        "same_submission_as_repaired_C_original_on_dev": true,
+        "same_submission_as_frozen_C_original_on_dev": false,
+        "identical_to_frozen_submission_per_task": {
+          "jinja2_bytecode_cache_read": true,
+          "werkzeug_bind_server_name_lower": true,
+          "werkzeug_filestorage_stream_name": false,
+          "werkzeug_get_host_default_empty": true,
+          "werkzeug_secure_filename_ascii_filter": true
+        },
+        "credited_relations": 23,
+        "reference_relations_matched": "18/18",
+        "false_claims": 0,
+        "invalid_claims": 0,
+        "probe_executions": 696,
+        "variant_builds": 112
+      }
+    }
+  },
+  "hash_transition": {
+    "benchmark_v3_baselines/baseline_c.py": {
+      "frozen": "747423a018e99b561bd6c698a242c69b556f6f5041a4622dfeed0805d41ca8b6",
+      "current": "422356d645bc364300cc0de76f2781a508da01a70e1beae192c93fcdd5a3cb6a",
+      "changed": true
+    },
+    "benchmark_v3_baselines/execution.py": {
+      "frozen": "a66dfaaca27287c122a62a103724327749834c6a95b40a6b6e1e1a8f2709d74c",
+      "current": "7d4bab5a737badb234c523b5af587250b93d06f35ec4b742f7f6d43f31d6b5ac",
+      "changed": true
+    }
+  },
+  "collision_audit": {
+    "jinja2_bytecode_cache_read": {
+      "frozen_universe": {
+        "universe_size": 1,
+        "subset_count": 2,
+        "frozen_prefix": "c_jinja2_bytecode_cache_read",
+        "collision_groups": 0,
+        "subsets_in_collided_directories": 0,
+        "groups": {},
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 63
+      },
+      "graph_universe": {
+        "universe_size": 6,
+        "subset_count": 64,
+        "frozen_prefix": "c_jinja2_bytecode_cache_read",
+        "collision_groups": 6,
+        "subsets_in_collided_directories": 38,
+        "groups": {
+          "c_jinja2_bytecode_cache_read_plus_src_jinja2_loaders.py_119-119_src_jinja2_loaders.py_131-131_src_jinja2_loade": [
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ]
+          ],
+          "c_jinja2_bytecode_cache_read_plus_src_jinja2_loaders.py_119-119_src_jinja2_loaders.py_137-137_src_jinja2_loade": [
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ]
+          ],
+          "c_jinja2_bytecode_cache_read_plus_src_jinja2_loaders.py_119-119_src_jinja2_loaders.py_143-143_src_jinja2_loade": [
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ]
+          ],
+          "c_jinja2_bytecode_cache_read_plus_src_jinja2_loaders.py_131-131_src_jinja2_loaders.py_137-137_src_jinja2_loade": [
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ]
+          ],
+          "c_jinja2_bytecode_cache_read_plus_src_jinja2_loaders.py_131-131_src_jinja2_loaders.py_143-143_src_jinja2_loade": [
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ]
+          ],
+          "c_jinja2_bytecode_cache_read_plus_src_jinja2_loaders.py_137-137_src_jinja2_loaders.py_143-143_src_jinja2_loade": [
+            [
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            [
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            [
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144",
+              "src/jinja2/loaders.py:146-148"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 213
+      }
+    },
+    "werkzeug_bind_server_name_lower": {
+      "frozen_universe": {
+        "universe_size": 2,
+        "subset_count": 4,
+        "frozen_prefix": "c_werkzeug_bind_server_name_lower",
+        "collision_groups": 0,
+        "subsets_in_collided_directories": 0,
+        "groups": {},
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 110
+      },
+      "graph_universe": {
+        "universe_size": 6,
+        "subset_count": 64,
+        "frozen_prefix": "c_werkzeug_bind_server_name_lower",
+        "collision_groups": 10,
+        "subsets_in_collided_directories": 52,
+        "groups": {
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_219-219_src_werkzeug_routing_map.py_231-231": [
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_219-219_src_werkzeug_routing_map.py_305-305": [
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_219-219_src_werkzeug_routing_map.py_311-311": [
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_219-219_src_werkzeug_routing_map.py_313-313": [
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_231-231_src_werkzeug_routing_map.py_305-305": [
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_231-231_src_werkzeug_routing_map.py_311-311": [
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_231-231_src_werkzeug_routing_map.py_313-313": [
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_305-305_src_werkzeug_routing_map.py_311-311": [
+            [
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311"
+            ],
+            [
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            [
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_305-305_src_werkzeug_routing_map.py_313-313": [
+            [
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ],
+          "c_werkzeug_bind_server_name_lower_plus_src_werkzeug_routing_map.py_311-311_src_werkzeug_routing_map.py_313-313": [
+            [
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            [
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313",
+              "src/werkzeug/routing/map.py:344-353"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 254
+      }
+    },
+    "werkzeug_filestorage_stream_name": {
+      "frozen_universe": {
+        "universe_size": 3,
+        "subset_count": 8,
+        "frozen_prefix": "c_werkzeug_filestorage_stream_name",
+        "collision_groups": 1,
+        "subsets_in_collided_directories": 3,
+        "groups": {
+          "c_werkzeug_filestorage_stream_name_plus_src_werkzeug_datastructures.py_2921-2921_src_werkzeug_datastructures.p": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 162
+      },
+      "graph_universe": {
+        "universe_size": 6,
+        "subset_count": 64,
+        "frozen_prefix": "c_werkzeug_filestorage_stream_name",
+        "collision_groups": 4,
+        "subsets_in_collided_directories": 56,
+        "groups": {
+          "c_werkzeug_filestorage_stream_name_plus_src_werkzeug_datastructures.py_2911-2911_src_werkzeug_datastructures.p": [
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2911-2911",
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ]
+          ],
+          "c_werkzeug_filestorage_stream_name_plus_src_werkzeug_datastructures.py_2912-2912_src_werkzeug_datastructures.p": [
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2912-2912",
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ]
+          ],
+          "c_werkzeug_filestorage_stream_name_plus_src_werkzeug_datastructures.py_2921-2921_src_werkzeug_datastructures.p": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ]
+          ],
+          "c_werkzeug_filestorage_stream_name_plus_src_werkzeug_datastructures.py_2924-2924_src_werkzeug_datastructures.p": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926",
+              "src/werkzeug/datastructures.py:2928-2928"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 285
+      }
+    },
+    "werkzeug_get_host_default_empty": {
+      "frozen_universe": {
+        "universe_size": 5,
+        "subset_count": 32,
+        "frozen_prefix": "c_werkzeug_get_host_default_empty",
+        "collision_groups": 3,
+        "subsets_in_collided_directories": 13,
+        "groups": {
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_85-85_src_werkzeug_sansio_utils.py_87-87_s": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_85-85_src_werkzeug_sansio_utils.py_90-90_s": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_87-87_src_werkzeug_sansio_utils.py_90-90_s": [
+            [
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 213
+      },
+      "graph_universe": {
+        "universe_size": 6,
+        "subset_count": 64,
+        "frozen_prefix": "c_werkzeug_get_host_default_empty",
+        "collision_groups": 7,
+        "subsets_in_collided_directories": 43,
+        "groups": {
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_101-101_src_werkzeug_sansio_utils.py_85-85": [
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_101-101_src_werkzeug_sansio_utils.py_87-87": [
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_101-101_src_werkzeug_sansio_utils.py_90-90": [
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_101-101_src_werkzeug_sansio_utils.py_93-93": [
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:101-101",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_85-85_src_werkzeug_sansio_utils.py_87-87_s": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_85-85_src_werkzeug_sansio_utils.py_90-90_s": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:85-85",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ],
+          "c_werkzeug_get_host_default_empty_plus_src_werkzeug_sansio_utils.py_87-87_src_werkzeug_sansio_utils.py_90-90_s": [
+            [
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            [
+              "src/werkzeug/sansio/utils.py:87-87",
+              "src/werkzeug/sansio/utils.py:90-90",
+              "src/werkzeug/sansio/utils.py:93-93",
+              "src/werkzeug/sansio/utils.py:95-95"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 250
+      }
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "frozen_universe": {
+        "universe_size": 3,
+        "subset_count": 8,
+        "frozen_prefix": "c_werkzeug_secure_filename_ascii_filter",
+        "collision_groups": 0,
+        "subsets_in_collided_directories": 0,
+        "groups": {},
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 134
+      },
+      "graph_universe": {
+        "universe_size": 5,
+        "subset_count": 32,
+        "frozen_prefix": "c_werkzeug_secure_filename_ascii_filter",
+        "collision_groups": 3,
+        "subsets_in_collided_directories": 13,
+        "groups": {
+          "c_werkzeug_secure_filename_ascii_filter_plus_src_werkzeug_utils.py_221-221_src_werkzeug_utils.py_226-226_src_w": [
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:239-239"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ]
+          ],
+          "c_werkzeug_secure_filename_ascii_filter_plus_src_werkzeug_utils.py_221-221_src_werkzeug_utils.py_227-229_src_w": [
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ]
+          ],
+          "c_werkzeug_secure_filename_ascii_filter_plus_src_werkzeug_utils.py_226-226_src_werkzeug_utils.py_227-229_src_w": [
+            [
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239"
+            ],
+            [
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            [
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ]
+          ]
+        },
+        "truncated_name_length": 110,
+        "longest_full_name_untuned": 194
+      }
+    }
+  },
+  "contaminated_tasks": [
+    "werkzeug_filestorage_stream_name",
+    "werkzeug_get_host_default_empty"
+  ],
+  "affected_tasks": [
+    "werkzeug_filestorage_stream_name"
+  ],
+  "filestorage_diff": {
+    "task_id": "werkzeug_filestorage_stream_name",
+    "universe_old": [
+      "src/werkzeug/datastructures.py:2924-2924",
+      "src/werkzeug/datastructures.py:2921-2921",
+      "src/werkzeug/datastructures.py:2926-2926"
+    ],
+    "universe_new": [
+      "src/werkzeug/datastructures.py:2924-2924",
+      "src/werkzeug/datastructures.py:2921-2921",
+      "src/werkzeug/datastructures.py:2926-2926"
+    ],
+    "changed_inputs": 2,
+    "inputs": [
+      {
+        "input": {
+          "stream": "tempfile"
+        },
+        "a_executes": true,
+        "masked_empty_old": false,
+        "masked_empty_new": false,
+        "msms_old": [],
+        "msms_new": [],
+        "mmbs_old": [],
+        "mmbs_new": [],
+        "active_ops_old": [],
+        "active_ops_new": [],
+        "identical": true
+      },
+      {
+        "input": {
+          "stream": "stderr"
+        },
+        "a_executes": true,
+        "masked_empty_old": true,
+        "masked_empty_new": true,
+        "msms_old": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "msms_new": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "mmbs_old": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "mmbs_new": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "active_ops_old": [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        "active_ops_new": [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        "identical": true
+      },
+      {
+        "input": {
+          "stream": "none",
+          "data": "abc"
+        },
+        "a_executes": true,
+        "masked_empty_old": true,
+        "masked_empty_new": true,
+        "msms_old": [
+          [
+            "src/werkzeug/datastructures.py:2921-2921"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        ],
+        "msms_new": [
+          [
+            "src/werkzeug/datastructures.py:2921-2921"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        ],
+        "mmbs_old": [],
+        "mmbs_new": [],
+        "active_ops_old": [],
+        "active_ops_new": [],
+        "identical": true
+      },
+      {
+        "input": {
+          "stream": "named",
+          "data": "abc",
+          "name": "x.txt"
+        },
+        "a_executes": true,
+        "masked_empty_old": false,
+        "masked_empty_new": false,
+        "msms_old": [],
+        "msms_new": [],
+        "mmbs_old": [],
+        "mmbs_new": [],
+        "active_ops_old": [],
+        "active_ops_new": [],
+        "identical": true
+      },
+      {
+        "input": {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stderr>"
+        },
+        "a_executes": true,
+        "masked_empty_old": true,
+        "masked_empty_new": true,
+        "msms_old": [
+          [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        ],
+        "msms_new": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "mmbs_old": [
+          [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "mmbs_new": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "active_ops_old": [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        "active_ops_new": [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        "identical": false
+      },
+      {
+        "input": {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stdin>"
+        },
+        "a_executes": true,
+        "masked_empty_old": true,
+        "masked_empty_new": true,
+        "msms_old": [
+          [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        ],
+        "msms_new": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "mmbs_old": [
+          [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "mmbs_new": [
+          [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ]
+        ],
+        "active_ops_old": [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        "active_ops_new": [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        "identical": false
+      }
+    ],
+    "submission_identical": false,
+    "submission_diff": {
+      "frozen_sha256": "53da6d23a5ac55bef9f74f1d20537c1d1461388f218ff27fe169a9b2876469db",
+      "repaired_sha256": "3e38e1cb1d116c7fdd4d73e29879facdfcce8fc4b0b50d32dfcf90eef6125671",
+      "claim_changes": [
+        {
+          "index": 1,
+          "frozen": {
+            "type": "MSMS",
+            "input": {
+              "stream": "stderr"
+            },
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "code": "                filename = None"
+              }
+            ]
+          },
+          "repaired": {
+            "type": "MSMS",
+            "inputs": [
+              {
+                "stream": "stderr"
+              },
+              {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stderr>"
+              },
+              {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stdin>"
+              }
+            ],
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "code": "                filename = None"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "per_task_diff": {
+    "jinja2_bytecode_cache_read": {
+      "changed_inputs": 0,
+      "submission_identical": true
+    },
+    "werkzeug_bind_server_name_lower": {
+      "changed_inputs": 0,
+      "submission_identical": true
+    },
+    "werkzeug_filestorage_stream_name": {
+      "changed_inputs": 2,
+      "submission_identical": false
+    },
+    "werkzeug_get_host_default_empty": {
+      "changed_inputs": 0,
+      "submission_identical": true
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "changed_inputs": 0,
+      "submission_identical": true
+    }
+  },
+  "policy": [
+    "Frozen pilot artifacts stay in place and are never overwritten.",
+    "C-original-1.0 filestorage per-input evidence is not a reliable ground truth and must not be cited as such.",
+    "C-fixed-1.1 is the reference deterministic baseline for new comparisons; both its code hashes and its run directory are recorded here.",
+    "Any future change to baseline_c.py or execution.py creates a new version entry rather than silently changing 1.1."
+  ],
+  "reproduce": [
+    "python -m scripts.run_subgraph_ablation --modes C-fixed",
+    "python -m pytest -q"
+  ]
+}

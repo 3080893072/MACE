@@ -1,0 +1,36 @@
+{
+ "schema": "mace-portability-patch/1",
+ "generated_utc": "2026-11-06T01:13:16Z",
+ "reason": "The reported runs used an absolute repository path and Windows virtual environments under <local-path>. Shipping those strings would make the artifact unusable elsewhere. Only path resolution and output-directory selection changed: no prompt, search, scorer or dataset file.",
+ "verification": "All five frozen result hashes and all four HELDOUT prediction hashes still match. The other eight frozen code files are byte-identical.",
+ "files": {
+  "runner": {
+   "path": "scripts/run_candidate_discovery_v2_1.py",
+   "frozen_sha256": "3e73ac4989709562e838f63dc349838e8f8a8e916a2023dbbd31011ae0adddd8",
+   "current_sha256": "1ebb0ee7b6c038c1adc75ef20189628455b3ce7b32f4ba5a0ef08451bd99d28e",
+   "change": "venv interpreter via mace.paths; MACE_RUN_DIR/MACE_DEV_OUT output overrides; one import.",
+   "behaviour_change": "none (path resolution only)"
+  },
+  "v2_core": {
+   "path": "scripts/run_candidate_discovery_v2.py",
+   "frozen_sha256": "3f55f53152c3e419e410576ebdeca3c8b7d7ec6f6b3e3cc30861fb2fdcf98ec3",
+   "current_sha256": "78c4143732642a988d4f02ea554767e55bf2c24104262b3be49cefacdf6af600",
+   "change": "venv interpreter via mace.paths; one import.",
+   "behaviour_change": "none (path resolution only)"
+  },
+  "closure": {
+   "path": "scripts/close_candidate_discovery_v2_1.py",
+   "frozen_sha256": "5d4c9fbc52ab02c92d525f95fff1ece7f19de16efcf927f7b799353f92fd14d6",
+   "current_sha256": "0cd9459d9ed4d05af568bf3fe6c55802f33105007738c0c48d6041669dc3bd3a",
+   "change": "venv interpreter via mace.paths at three call sites; one import.",
+   "behaviour_change": "none (path resolution only)"
+  },
+  "executor_harness": {
+   "path": "benchmark_v4_dataset/tools/sd_algorithm_pilot.py",
+   "frozen_sha256": "fcc9501a9276adcd2857b5ef2ee3fc5faf57fd039c73d720f9d8183bc3b3699d",
+   "current_sha256": "a8f963cd4e5ac6156a35f79e85fa50302514cc35c8da8f0d52e8ac43bbc65de4",
+   "change": "WORK/VENVS via mace.paths; venv interpreter via venv_python().",
+   "behaviour_change": "none (path resolution only)"
+  }
+ }
+}

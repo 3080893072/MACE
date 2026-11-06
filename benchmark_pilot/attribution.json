@@ -1,0 +1,1357 @@
+{
+  "schema": "mace-benchmark-pilot-attribution/1",
+  "generation": "Controlled attribution is computed by executing both versions under every subset of disabled operations.  An absorber set is a minimal set of operations that, when enabled alone, masks A on some frozen input.  A coexisting set is a minimal set of at least two operations whose simultaneous disabling is needed to unmask A on some input.  Real tasks have no safe intervention and are recorded as unconfirmed.",
+  "evidence_level": "BOUNDED",
+  "controlled": {
+    "ctrl_01": {
+      "ops": [
+        "B"
+      ],
+      "op_lines": {
+        "B": 4
+      },
+      "per_case": [
+        {
+          "case_id": "case_0000",
+          "args": {
+            "mode": 0,
+            "x": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0001",
+          "args": {
+            "mode": 0,
+            "x": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0002",
+          "args": {
+            "mode": 0,
+            "x": 2
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0003",
+          "args": {
+            "mode": 1,
+            "x": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0004",
+          "args": {
+            "mode": 1,
+            "x": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0005",
+          "args": {
+            "mode": 1,
+            "x": 2
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        }
+      ],
+      "absorber_sets": [
+        {
+          "ops": [
+            "B"
+          ],
+          "kind": "independent",
+          "witness": {
+            "case_id": "case_0000",
+            "args": {
+              "mode": 0,
+              "x": 0
+            }
+          },
+          "case_ids": [
+            "case_0000",
+            "case_0001",
+            "case_0002"
+          ]
+        }
+      ],
+      "coexisting_sets": [],
+      "existing_tests": {
+        "t_mode0_x0": {
+          "input": {
+            "mode": 0,
+            "x": 0
+          },
+          "case_id": "case_0000",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B"
+          ],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        },
+        "t_mode0_x1": {
+          "input": {
+            "mode": 0,
+            "x": 1
+          },
+          "case_id": "case_0001",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B"
+          ],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        }
+      },
+      "design_guard_self_check": {
+        "guard": "mode == 0",
+        "agrees_with_execution_on_all_cases": true,
+        "note": "Private design check only; the scorer never compares a submission to this guard."
+      }
+    },
+    "ctrl_02": {
+      "ops": [
+        "C",
+        "D"
+      ],
+      "op_lines": {
+        "C": 4,
+        "D": 6
+      },
+      "per_case": [
+        {
+          "case_id": "case_0000",
+          "args": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0001",
+          "args": {
+            "x": 1,
+            "c": 0,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0002",
+          "args": {
+            "x": 1,
+            "c": 1,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0003",
+          "args": {
+            "x": 1,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0004",
+          "args": {
+            "x": 2,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0005",
+          "args": {
+            "x": 2,
+            "c": 0,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0006",
+          "args": {
+            "x": 2,
+            "c": 1,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0007",
+          "args": {
+            "x": 2,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0008",
+          "args": {
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0009",
+          "args": {
+            "x": 3,
+            "c": 0,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0010",
+          "args": {
+            "x": 3,
+            "c": 1,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0011",
+          "args": {
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0012",
+          "args": {
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0013",
+          "args": {
+            "x": 4,
+            "c": 0,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0014",
+          "args": {
+            "x": 4,
+            "c": 1,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0015",
+          "args": {
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0016",
+          "args": {
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0017",
+          "args": {
+            "x": 5,
+            "c": 0,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0018",
+          "args": {
+            "x": 5,
+            "c": 1,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0019",
+          "args": {
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0020",
+          "args": {
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0021",
+          "args": {
+            "x": 6,
+            "c": 0,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0022",
+          "args": {
+            "x": 6,
+            "c": 1,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0023",
+          "args": {
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        }
+      ],
+      "absorber_sets": [
+        {
+          "ops": [
+            "C",
+            "D"
+          ],
+          "kind": "cooperative",
+          "witness": {
+            "case_id": "case_0000",
+            "args": {
+              "x": 1,
+              "c": 0,
+              "d": 0
+            }
+          },
+          "case_ids": [
+            "case_0000",
+            "case_0004",
+            "case_0008",
+            "case_0012",
+            "case_0016"
+          ]
+        }
+      ],
+      "coexisting_sets": [],
+      "existing_tests": {
+        "t_rounds_x3": {
+          "input": {
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "case_id": "case_0008",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        },
+        "t_rounds_x5": {
+          "input": {
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "case_id": "case_0016",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        }
+      },
+      "design_guard_self_check": {
+        "guard": "c == 0 and d == 0 and x >= 1 and x <= 5",
+        "agrees_with_execution_on_all_cases": true,
+        "note": "Private design check only; the scorer never compares a submission to this guard."
+      }
+    },
+    "ctrl_03": {
+      "ops": [
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "op_lines": {
+        "B": 4,
+        "E": 6,
+        "D": 8,
+        "C": 10
+      },
+      "per_case": [
+        {
+          "case_id": "case_0000",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0001",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0002",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0003",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "B"
+          ]
+        },
+        {
+          "case_id": "case_0004",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0005",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0006",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0007",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": [
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0008",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ],
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [
+            [
+              "B",
+              "E"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0009",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ],
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [
+            [
+              "B",
+              "E"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0010",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ],
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [
+            [
+              "B",
+              "E"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0011",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ],
+            [
+              "E"
+            ]
+          ],
+          "coexisting_unmasking_sets": [
+            [
+              "B",
+              "E"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "case_id": "case_0012",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0013",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0014",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0015",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0016",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0017",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0018",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        },
+        {
+          "case_id": "case_0019",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "masked": false,
+          "absorber_sets": [],
+          "coexisting_unmasking_sets": [],
+          "individually_masking_ops": []
+        }
+      ],
+      "absorber_sets": [
+        {
+          "ops": [
+            "B"
+          ],
+          "kind": "independent",
+          "witness": {
+            "case_id": "case_0000",
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            }
+          },
+          "case_ids": [
+            "case_0000",
+            "case_0001",
+            "case_0002",
+            "case_0003",
+            "case_0008",
+            "case_0009",
+            "case_0010",
+            "case_0011"
+          ]
+        },
+        {
+          "ops": [
+            "E"
+          ],
+          "kind": "independent",
+          "witness": {
+            "case_id": "case_0004",
+            "args": {
+              "p": 1,
+              "q": 0,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            }
+          },
+          "case_ids": [
+            "case_0004",
+            "case_0005",
+            "case_0006",
+            "case_0007",
+            "case_0008",
+            "case_0009",
+            "case_0010",
+            "case_0011"
+          ]
+        },
+        {
+          "ops": [
+            "C",
+            "D"
+          ],
+          "kind": "cooperative",
+          "witness": {
+            "case_id": "case_0012",
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 0,
+              "d": 0
+            }
+          },
+          "case_ids": [
+            "case_0012",
+            "case_0013"
+          ]
+        }
+      ],
+      "coexisting_sets": [
+        {
+          "ops": [
+            "B",
+            "E"
+          ],
+          "kind": "coexisting",
+          "witness": {
+            "case_id": "case_0008",
+            "args": {
+              "p": 0,
+              "q": 0,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            }
+          },
+          "case_ids": [
+            "case_0008",
+            "case_0009",
+            "case_0010",
+            "case_0011"
+          ]
+        }
+      ],
+      "existing_tests": {
+        "t_b_only": {
+          "input": {
+            "p": 0,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "case_id": "case_0002",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B"
+          ],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        },
+        "t_e_only": {
+          "input": {
+            "p": 1,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "case_id": "case_0007",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "E"
+            ]
+          ],
+          "individually_masking_ops": [
+            "E"
+          ],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        },
+        "t_coop": {
+          "input": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "case_id": "case_0013",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        },
+        "t_both_overwrite": {
+          "input": {
+            "p": 0,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "case_id": "case_0010",
+          "masked": true,
+          "absorber_sets": [
+            [
+              "B"
+            ],
+            [
+              "E"
+            ]
+          ],
+          "individually_masking_ops": [
+            "B",
+            "E"
+          ],
+          "plus_test": {
+            "passed": true,
+            "error": null
+          },
+          "minus_test": {
+            "passed": true,
+            "error": null
+          },
+          "observable_equal": true
+        }
+      },
+      "design_guard_self_check": {
+        "guard": "p == 0 or q == 0 or (c == 0 and d == 0 and x <= 4)",
+        "agrees_with_execution_on_all_cases": true,
+        "note": "Private design check only; the scorer never compares a submission to this guard."
+      }
+    }
+  },
+  "real": {
+    "real_formatdef": {
+      "real": true,
+      "local_effect": {
+        "function1": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function2": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function3": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function4": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function5": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function6": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function7": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        },
+        "function8": {
+          "local_effect": true,
+          "plus_type": "str",
+          "minus_type": "Signature"
+        }
+      },
+      "tests": {
+        "test_formatdef": {
+          "input": {
+            "case_ids": [
+              "function1",
+              "function2",
+              "function3",
+              "function4"
+            ]
+          },
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          },
+          "gold_verdict": "masked"
+        }
+      },
+      "global_test_verdict": "masked",
+      "masking": {
+        "status": "unconfirmed",
+        "confirmed_claims": [],
+        "observed_absorption": "The outer `%s` formatting converts both str(signature) and the Signature object to the same string.  A changes the type of the intermediate value (str vs Signature) but not the final string.",
+        "why_unconfirmed": "There is no separately controllable operation in the extraction whose removal can be intervened on without changing the function's contract; the absorption is an implicit conversion, not an independent source operation.  The mechanism is therefore recorded as unconfirmed."
+      }
+    },
+    "real_setdiff": {
+      "real": true,
+      "local_effect": {
+        "empty_empty": {
+          "local_effect": false,
+          "plus": [],
+          "minus": []
+        },
+        "ab_a": {
+          "local_effect": false,
+          "plus": [
+            "b"
+          ],
+          "minus": [
+            "b"
+          ]
+        },
+        "ab_ab": {
+          "local_effect": false,
+          "plus": [],
+          "minus": []
+        },
+        "a_extra": {
+          "local_effect": false,
+          "plus": [],
+          "minus": []
+        },
+        "abc_none": {
+          "local_effect": false,
+          "plus": [
+            "a",
+            "b",
+            "c"
+          ],
+          "minus": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        "a_empty": {
+          "local_effect": false,
+          "plus": [
+            "a"
+          ],
+          "minus": [
+            "a"
+          ]
+        }
+      },
+      "tests": {},
+      "global_test_verdict": "not_covered",
+      "masking": {
+        "status": "no_masking_relation",
+        "confirmed_claims": [],
+        "observed_absorption": "A has no local effect: `set(declared) - set(keys)` and `set(declared) - keys` are value-identical for every frozen input.",
+        "why_unconfirmed": "There is no behavior to mask: deleting A changes neither the assigned value nor the observable.  This is a fully redundant deletion, not a masking relation."
+      }
+    }
+  }
+}

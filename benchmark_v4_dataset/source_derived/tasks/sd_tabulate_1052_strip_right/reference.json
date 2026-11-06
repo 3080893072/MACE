@@ -1,0 +1,116 @@
+{
+  "task_id": "sd_tabulate_1052_strip_right",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 1052,
+    "function": "_align_column_choose_padfn",
+    "code": "            strings = [s.strip() for s in strings]",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "tabulate/__init__.py",
+      "line": 1054,
+      "code": "strings = [s.strip(\" \") for s in strings]",
+      "role": "Space-only recomputation of the stripped column; equivalent to A for space-padded cells and a no-op for tab-padded cells.",
+      "patch_anchor_line": 1052,
+      "block_span": [
+        1053,
+        1055
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_spaces": {
+      "role": "masking",
+      "description": "right-aligned column with leading/trailing spaces",
+      "p_plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\nb"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_tabs": {
+      "role": "exposing",
+      "description": "right-aligned column padded with tabs",
+      "p_plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "\ta\n  b"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain": {
+      "role": "control",
+      "description": "no surrounding whitespace",
+      "p_plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\nb"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    },
+    "control_center": {
+      "role": "control",
+      "description": "space-padded but center-aligned (A's branch not taken)",
+      "p_plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\nb"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_tabulate_1052_strip_right/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

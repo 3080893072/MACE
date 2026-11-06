@@ -1,0 +1,30 @@
+{
+  "case_id": "sd_docutils_backticks_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 735,
+    "A_code": "    text = text.replace(r'``', smart.opquote)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 735,
+      "indent": 4,
+      "role": "One-occurrence leg: rewrites a single double backtick.",
+      "lines": [
+        "text = text.replace(r'``', smart.opquote, 1)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_backticks_m1.py",
+  "inputs": {
+    "mask_one_backtick": "text with one `` marker",
+    "expose_two_backticks": "text with two `` markers: only the first is repaired",
+    "control_plain": "text with no backtick"
+  },
+  "rationale": "educateBackticks() opens a primary quote at every `` marker. The patch rewrites one marker only; the second marker in a two-marker string stays raw and exposes the gap."
+}

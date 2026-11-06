@@ -1,0 +1,89 @@
+{
+  "case_id": "sd_coverage_glob_backslash_m2",
+  "independent": true,
+  "shares_construction_code": false,
+  "checks": {
+    "AC1_sdist_matches_discovery": true,
+    "AC1_evidence_matches_source": true,
+    "AC1_A_line_text": true,
+    "patch_preserves_A": true,
+    "patch_only_inserts": true,
+    "U_blocks_outside_A": true,
+    "P_minus_only_deletes_A": true,
+    "patch_diff_does_not_remove_A": true,
+    "patch_diff_insert_count": true,
+    "enumeration_agrees": true,
+    "roles_declared": true,
+    "masking_inputs_satisfied": true,
+    "exposing_inputs_satisfied": true,
+    "control_inputs_satisfied": true,
+    "u_necessary_in_minimal_sets": true
+  },
+  "all_checks_pass": true,
+  "hashes": {
+    "sdist": "d2ca82f84f3e64dc90b1b1028901e27f80927d774e03b7bc09881d04f0540b96",
+    "discovery": "d2ca82f84f3e64dc90b1b1028901e27f80927d774e03b7bc09881d04f0540b96",
+    "evidence": "d2ca82f84f3e64dc90b1b1028901e27f80927d774e03b7bc09881d04f0540b96"
+  },
+  "A": {
+    "file": "coverage/files.py",
+    "line": 332,
+    "code": "    pattern = pattern.replace(\"\\\\\", \"/\")",
+    "patched_index": 332
+  },
+  "U": [
+    "U1",
+    "U2"
+  ],
+  "per_input": {
+    "mask_two_backslashes": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false
+    },
+    "expose_three_backslashes": {
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "empty_kept_masks": false
+    },
+    "control_posix": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "empty_kept_masks": true
+    }
+  },
+  "notes": {
+    "source_sha256": "d2ca82f84f3e64dc90b1b1028901e27f80927d774e03b7bc09881d04f0540b96",
+    "inserted_lines": 6
+  }
+}

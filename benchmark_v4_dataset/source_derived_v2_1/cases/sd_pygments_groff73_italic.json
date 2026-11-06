@@ -1,0 +1,48 @@
+{
+  "case_id": "sd_pygments_groff73_italic",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "base": {
+    "slug": "pygments-2.17.2",
+    "file": "pygments/formatters/groff.py",
+    "A_line": 73,
+    "A_code": "                end = regular + end"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 73,
+      "indent": 16,
+      "role": "Leg 1: decides whether the monospaced italic reset is needed.",
+      "lines": [
+        "_sd_it = bool(ndef['italic']) and self.monospaced"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 73,
+      "indent": 16,
+      "role": "Leg 2: materialises the reset token selected by leg 1.",
+      "lines": [
+        "_sd_tag = regular if _sd_it else ''"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 73,
+      "indent": 16,
+      "role": "Leg 3: prepends the reset only when it is needed and not already present.",
+      "lines": [
+        "if _sd_it and not end.startswith(regular):",
+        "    end = _sd_tag + end"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_pygments_groff73.py",
+  "inputs": {
+    "mask_italic_mono": "italic-only style, monospaced output",
+    "expose_italic_nonmono": "italic-only style, non-monospaced output",
+    "control_bold_mono": "bold-only style; A is not executed"
+  },
+  "rationale": "The reset is reconstructed by three legs: a predicate, the token value, and the guarded prepend.  Dropping any one leg breaks equality on mask_italic_mono; only the full triple restores P+.  The triple is declared for monospaced output, so expose_italic_nonmono exposes the deletion."
+}

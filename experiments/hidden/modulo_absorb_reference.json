@@ -1,0 +1,41 @@
+{
+  "note": "Reference contract for CPU self-checks and later scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "total_post == total + 1",
+        "source_lines": [
+          9
+        ],
+        "rationale": "A increments total by one."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "total - total % 10 if cap else total",
+        "condition": "cap and fn_0(xs) % 10 != 9",
+        "source_lines": [
+          9,
+          11,
+          12
+        ],
+        "rationale": "Rounding down to a multiple of ten erases a +1 unless the value ends in 9."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "cap and fn_0(xs) % 10 != 9",
+      "source_lines": [
+        9,
+        11,
+        12
+      ],
+      "rationale": "Only the rounding branch can absorb the increment, and only when no carry leaves the last digit."
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

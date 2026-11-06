@@ -1,0 +1,1327 @@
+{
+  "experiment": "mace_v3_baseline_pilot",
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "git_commit": "eb8069c5cbc998f6496b5a61f0b60bf7b42cb62c",
+  "config_sha256": "78548ff836a701730d3eaa036cd4bc21728a6180176159369259d137d692dd84",
+  "availability": {
+    "checked_utc": "2026-11-03T16:38:02Z",
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "endpoint": "http://127.0.0.1:11434",
+    "ollama_binary": null,
+    "endpoint_reachable": true,
+    "endpoint_error": "",
+    "endpoint_models": [
+      {
+        "name": "qwen2.5-coder:32b",
+        "model": "qwen2.5-coder:32b",
+        "modified_at": "2026-10-30T09:35:42.40703532+08:00",
+        "size": 19851349898,
+        "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "32.8B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 32768,
+          "embedding_length": 5120,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "insert"
+        ]
+      },
+      {
+        "name": "qwen2.5-coder:14b",
+        "model": "qwen2.5-coder:14b",
+        "modified_at": "2026-10-30T08:45:59.977264912+08:00",
+        "size": 8988124298,
+        "digest": "9ec8897f747e246e970bc5cfdda85d22f1123dc2e3d34978a010a75968716849",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "14.8B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 32768,
+          "embedding_length": 5120,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "insert"
+        ]
+      },
+      {
+        "name": "qwen2.5-coder:7b",
+        "model": "qwen2.5-coder:7b",
+        "modified_at": "2026-10-30T08:12:39.496101633+08:00",
+        "size": 4683087561,
+        "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 32768,
+          "embedding_length": 3584,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "insert"
+        ]
+      },
+      {
+        "name": "qwen2.5-coder:0.5b",
+        "model": "qwen2.5-coder:0.5b",
+        "modified_at": "2026-10-30T00:49:06.717563691+08:00",
+        "size": 397821516,
+        "digest": "4ff64a7f502a08b7616edb8ca0a79eb1853fc363d842b7df4b46915d11a3fb09",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "494.03M",
+          "quantization_level": "Q4_K_M",
+          "context_length": 32768,
+          "embedding_length": 896,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "insert"
+        ]
+      }
+    ],
+    "model_present": true,
+    "dashscope_key_present": false,
+    "available": true
+  },
+  "dry_run": false,
+  "tasks": [
+    {
+      "task_id": "jinja2_bytecode_cache_read",
+      "story": "NO_LOCAL_EFFECT",
+      "baselines": {
+        "A_direct_qwen": {
+          "run_label": "LIVE_MODEL_RUN",
+          "submission": {
+            "task_id": "jinja2_bytecode_cache_read",
+            "claims": [
+              {
+                "type": "EXPOSING_COUNTEREXAMPLE",
+                "input": {
+                  "template": "test_template.html",
+                  "context": {}
+                }
+              },
+              {
+                "type": "MSMS",
+                "input": {
+                  "template": "test_template.html",
+                  "context": {}
+                },
+                "operations": [
+                  {
+                    "file": "src/jinja2/loaders.py",
+                    "line": 132,
+                    "code": "code = bucket.code"
+                  }
+                ]
+              },
+              {
+                "type": "MMBS",
+                "input": {
+                  "template": "test_template.html",
+                  "context": {}
+                },
+                "operations": [
+                  {
+                    "file": "src/jinja2/loaders.py",
+                    "line": 132,
+                    "code": "code = bucket.code"
+                  }
+                ]
+              }
+            ],
+            "submission_id": "baseline-A"
+          },
+          "score": {
+            "protocol": "mace_benchmark_v3_scoring",
+            "scorer_version": "mace-benchmark-v3-scorer-1.0",
+            "task_id": "jinja2_bytecode_cache_read",
+            "submission_id": "baseline-A",
+            "status_counts": {
+              "WITNESS_VERIFIED": 0,
+              "FINITE_DOMAIN_EXACT": 0,
+              "PROVEN": 0,
+              "FALSE": 1,
+              "INVALID": 0,
+              "UNVERIFIED": 2,
+              "UNSUPPORTED": 0,
+              "DUPLICATE": 0
+            },
+            "score": {
+              "credited_relations": 0,
+              "claim_credit": 0,
+              "domain_exact_relations": 0,
+              "witness_verified_relations": 0,
+              "deduplicated": 0
+            },
+            "claims": [
+              {
+                "index": 0,
+                "type": "EXPOSING_COUNTEREXAMPLE",
+                "status": "FALSE",
+                "reason": "P+ and P- produced equal observations, so the input does not expose the deletion",
+                "scope": null,
+                "relation_key": "EXPOSING",
+                "observations": {
+                  "plus": {
+                    "cache_dumps": 0,
+                    "cache_loads": 1,
+                    "outcome": "return",
+                    "value": "test_template.html"
+                  },
+                  "minus": {
+                    "cache_dumps": 0,
+                    "cache_loads": 1,
+                    "outcome": "return",
+                    "value": "test_template.html"
+                  }
+                },
+                "credit": 0
+              },
+              {
+                "index": 1,
+                "type": "MSMS",
+                "status": "UNVERIFIED",
+                "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+                "scope": "outside the declared candidate universe",
+                "relation_key": "MSMS:src/jinja2/loaders.py:132",
+                "credit": 0
+              },
+              {
+                "index": 2,
+                "type": "MMBS",
+                "status": "UNVERIFIED",
+                "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+                "scope": "outside the declared candidate universe",
+                "relation_key": "MMBS:src/jinja2/loaders.py:132",
+                "credit": 0
+              }
+            ],
+            "scope_notes": [
+              "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+              "A single witness is never promoted to a claim over the whole legal input domain.",
+              "Operations outside U are reported UNVERIFIED, not FALSE."
+            ]
+          },
+          "model_calls": 1,
+          "usage": {
+            "prompt_tokens": 6244,
+            "completion_tokens": 198,
+            "total_duration_ns": 138859659233,
+            "load_duration_ns": 3822782,
+            "prompt_eval_duration_ns": 76917270000,
+            "eval_duration_ns": 61799562000,
+            "model": "qwen2.5-coder:32b",
+            "done_reason": "stop",
+            "wall_seconds": 139.265,
+            "attempt": 0
+          },
+          "input_contract_errors": []
+        },
+        "B_qwen_verifier": {
+          "run_label": "LIVE_MODEL_RUN",
+          "condition": "pure_verification",
+          "feedback_regeneration": "NOT_RUN (not executed in this pilot)",
+          "verifier_counts": {
+            "total": 3,
+            "verified": 1,
+            "refuted": 2,
+            "unknown": 0
+          },
+          "score": {
+            "protocol": "mace_benchmark_v3_scoring",
+            "scorer_version": "mace-benchmark-v3-scorer-1.0",
+            "task_id": "jinja2_bytecode_cache_read",
+            "submission_id": "baseline-A",
+            "status_counts": {
+              "WITNESS_VERIFIED": 0,
+              "FINITE_DOMAIN_EXACT": 0,
+              "PROVEN": 0,
+              "FALSE": 0,
+              "INVALID": 0,
+              "UNVERIFIED": 1,
+              "UNSUPPORTED": 0,
+              "DUPLICATE": 0
+            },
+            "score": {
+              "credited_relations": 0,
+              "claim_credit": 0,
+              "domain_exact_relations": 0,
+              "witness_verified_relations": 0,
+              "deduplicated": 0
+            },
+            "claims": [
+              {
+                "index": 0,
+                "type": "MSMS",
+                "status": "UNVERIFIED",
+                "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+                "scope": "outside the declared candidate universe",
+                "relation_key": "MSMS:src/jinja2/loaders.py:132",
+                "credit": 0
+              }
+            ],
+            "scope_notes": [
+              "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+              "A single witness is never promoted to a claim over the whole legal input domain.",
+              "Operations outside U are reported UNVERIFIED, not FALSE."
+            ]
+          },
+          "model_calls": 1,
+          "probe_executions": 4,
+          "wall_seconds": 1.66
+        },
+        "C_ast_intervention": {
+          "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+          "universe": [
+            {
+              "id": "src/jinja2/loaders.py:137-137",
+              "file": "src/jinja2/loaders.py",
+              "first_line": 137,
+              "last_line": 137,
+              "kind": "assignment",
+              "code": "            code = environment.compile(source, name, filename)"
+            }
+          ],
+          "pruning": {
+            "universe": [
+              {
+                "id": "src/jinja2/loaders.py:137-137",
+                "file": "src/jinja2/loaders.py",
+                "first_line": 137,
+                "last_line": 137,
+                "kind": "assignment",
+                "code": "            code = environment.compile(source, name, filename)"
+              }
+            ],
+            "ranking": [
+              {
+                "id": "src/jinja2/loaders.py:137-137",
+                "changed_cells": 6,
+                "cells": 12,
+                "span": 1
+              }
+            ],
+            "considered": 1,
+            "dropped_no_effect": 0,
+            "dropped_duplicate_effect": 0,
+            "truncated": 0
+          },
+          "per_input": [
+            {
+              "input": {
+                "template": "{{ 6*7 }}"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/jinja2/loaders.py:137-137"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "observations_empty": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              }
+            },
+            {
+              "input": {
+                "template": "{{ 6*7 }}",
+                "cached_source": "{{ 1+1 }}"
+              },
+              "a_executes": true,
+              "active_ops": [],
+              "masked_empty": false,
+              "exposed_empty": true,
+              "msms_ids": [],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              }
+            },
+            {
+              "input": {
+                "template": "hello {{ name }}",
+                "cached_source": "{{ 1+1 }}",
+                "context": {
+                  "name": "x"
+                }
+              },
+              "a_executes": true,
+              "active_ops": [],
+              "masked_empty": false,
+              "exposed_empty": true,
+              "msms_ids": [],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "hello x"
+                }
+              }
+            },
+            {
+              "input": {
+                "template": "{{ 1+1 }}"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/jinja2/loaders.py:137-137"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "observations_empty": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                }
+              }
+            },
+            {
+              "input": {
+                "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/jinja2/loaders.py:137-137"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "observations_empty": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "12"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "12"
+                }
+              }
+            },
+            {
+              "input": {
+                "template": "{{ 6*7 }}",
+                "cached_source": "{{ 6*7 }}"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/jinja2/loaders.py:137-137"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/jinja2/loaders.py:137-137"
+                ]
+              ],
+              "observations_empty": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              }
+            }
+          ],
+          "submission": {
+            "submission_id": "baseline-C",
+            "task_id": "jinja2_bytecode_cache_read",
+            "claims": [
+              {
+                "type": "EXPOSING_COUNTEREXAMPLE",
+                "input": {
+                  "template": "{{ 6*7 }}",
+                  "cached_source": "{{ 1+1 }}"
+                }
+              },
+              {
+                "type": "MSMS",
+                "inputs": [
+                  {
+                    "template": "{{ 6*7 }}"
+                  },
+                  {
+                    "template": "{{ 1+1 }}"
+                  },
+                  {
+                    "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+                  },
+                  {
+                    "template": "{{ 6*7 }}",
+                    "cached_source": "{{ 6*7 }}"
+                  }
+                ],
+                "operations": [
+                  {
+                    "file": "src/jinja2/loaders.py",
+                    "line": 137,
+                    "code": "            code = environment.compile(source, name, filename)"
+                  }
+                ]
+              },
+              {
+                "type": "MMBS",
+                "inputs": [
+                  {
+                    "template": "{{ 6*7 }}"
+                  },
+                  {
+                    "template": "{{ 1+1 }}"
+                  },
+                  {
+                    "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+                  },
+                  {
+                    "template": "{{ 6*7 }}",
+                    "cached_source": "{{ 6*7 }}"
+                  }
+                ],
+                "operations": [
+                  {
+                    "file": "src/jinja2/loaders.py",
+                    "line": 137,
+                    "code": "            code = environment.compile(source, name, filename)"
+                  }
+                ]
+              },
+              {
+                "type": "PREREQUISITE_BREAKING",
+                "input": {
+                  "template": "{{ 6*7 }}"
+                },
+                "control_input": {
+                  "template": "{{ 6*7 }}",
+                  "cached_source": "{{ 1+1 }}"
+                },
+                "operations": [
+                  {
+                    "file": "src/jinja2/loaders.py",
+                    "line": 137,
+                    "code": "            code = environment.compile(source, name, filename)"
+                  }
+                ],
+                "prerequisite": "masking holds on input; the same set does not break on control"
+              }
+            ]
+          },
+          "unknowns": [],
+          "score": {
+            "protocol": "mace_benchmark_v3_scoring",
+            "scorer_version": "mace-benchmark-v3-scorer-1.0",
+            "task_id": "jinja2_bytecode_cache_read",
+            "submission_id": "baseline-C",
+            "status_counts": {
+              "WITNESS_VERIFIED": 2,
+              "FINITE_DOMAIN_EXACT": 2,
+              "PROVEN": 0,
+              "FALSE": 0,
+              "INVALID": 0,
+              "UNVERIFIED": 0,
+              "UNSUPPORTED": 0,
+              "DUPLICATE": 0
+            },
+            "score": {
+              "credited_relations": 4,
+              "claim_credit": 4,
+              "domain_exact_relations": 2,
+              "witness_verified_relations": 2,
+              "deduplicated": 0
+            },
+            "claims": [
+              {
+                "index": 0,
+                "type": "EXPOSING_COUNTEREXAMPLE",
+                "status": "WITNESS_VERIFIED",
+                "reason": "Both sides executed and produced different observations.",
+                "scope": "one submitted input; no claim over other legal inputs",
+                "relation_key": "EXPOSING",
+                "observations": {
+                  "plus": {
+                    "cache_dumps": 0,
+                    "cache_loads": 1,
+                    "outcome": "return",
+                    "value": "2"
+                  },
+                  "minus": {
+                    "cache_dumps": 0,
+                    "cache_loads": 1,
+                    "outcome": "return",
+                    "value": "42"
+                  }
+                },
+                "credit": 1
+              },
+              {
+                "index": 1,
+                "type": "MSMS",
+                "status": "FINITE_DOMAIN_EXACT",
+                "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+                "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+                "relation_key": "MSMS:src/jinja2/loaders.py:137",
+                "operations": [
+                  "src/jinja2/loaders.py:137"
+                ],
+                "per_input": [
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  }
+                ],
+                "credit": 1
+              },
+              {
+                "index": 2,
+                "type": "MMBS",
+                "status": "FINITE_DOMAIN_EXACT",
+                "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+                "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+                "relation_key": "MMBS:src/jinja2/loaders.py:137",
+                "operations": [
+                  "src/jinja2/loaders.py:137"
+                ],
+                "per_input": [
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/jinja2/loaders.py:137"
+                      ]
+                    ]
+                  }
+                ],
+                "credit": 1
+              },
+              {
+                "index": 3,
+                "type": "PREREQUISITE_BREAKING",
+                "status": "WITNESS_VERIFIED",
+                "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+                "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+                "relation_key": "PREREQUISITE:src/jinja2/loaders.py:137",
+                "operations": [
+                  "src/jinja2/loaders.py:137"
+                ],
+                "prerequisite": "masking holds on input; the same set does not break on control",
+                "details": {
+                  "condition_masked_EMPTY": true,
+                  "condition_msms": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ],
+                  "condition_mmbs": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ],
+                  "control_masked_EMPTY": false,
+                  "control_mmbs": []
+                },
+                "credit": 1
+              }
+            ],
+            "scope_notes": [
+              "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+              "A single witness is never promoted to a claim over the whole legal input domain.",
+              "Operations outside U are reported UNVERIFIED, not FALSE."
+            ]
+          },
+          "model_calls": 0,
+          "probe_executions": 24,
+          "variant_builds": 4,
+          "wall_seconds": 11.48
+        },
+        "legacy_full_mace": {
+          "run_label": "UNSUPPORTED_INTERFACE",
+          "reason": "The historical Full MACE run loop emits code-level guards and does not expose an operation-level MSMS/MMBS submission interface. It is recorded as unsupported, not as zero."
+        }
+      }
+    },
+    {
+      "task_id": "werkzeug_bind_server_name_lower",
+      "story": "NO_LOCAL_EFFECT",
+      "baselines": {
+        "A_direct_qwen": {
+          "run_label": "LIVE_MODEL_RUN",
+          "error": "RemoteDisconnected: Remote end closed connection without response"
+        },
+        "B_qwen_verifier": {
+          "run_label": "LIVE_MODEL_RUN",
+          "error": "RemoteDisconnected: Remote end closed connection without response"
+        },
+        "C_ast_intervention": {
+          "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+          "universe": [
+            {
+              "id": "src/werkzeug/routing/map.py:219-219",
+              "file": "src/werkzeug/routing/map.py",
+              "first_line": 219,
+              "last_line": 219,
+              "kind": "assignment",
+              "code": "        server_name = server_name.lower()"
+            },
+            {
+              "id": "src/werkzeug/routing/map.py:311-311",
+              "file": "src/werkzeug/routing/map.py",
+              "first_line": 311,
+              "last_line": 311,
+              "kind": "assignment",
+              "code": "                server_name = server_name[:-3]"
+            }
+          ],
+          "pruning": {
+            "universe": [
+              {
+                "id": "src/werkzeug/routing/map.py:219-219",
+                "file": "src/werkzeug/routing/map.py",
+                "first_line": 219,
+                "last_line": 219,
+                "kind": "assignment",
+                "code": "        server_name = server_name.lower()"
+              },
+              {
+                "id": "src/werkzeug/routing/map.py:311-311",
+                "file": "src/werkzeug/routing/map.py",
+                "first_line": 311,
+                "last_line": 311,
+                "kind": "assignment",
+                "code": "                server_name = server_name[:-3]"
+              }
+            ],
+            "ranking": [
+              {
+                "id": "src/werkzeug/routing/map.py:219-219",
+                "changed_cells": 4,
+                "cells": 14,
+                "span": 1
+              },
+              {
+                "id": "src/werkzeug/routing/map.py:311-311",
+                "changed_cells": 2,
+                "cells": 14,
+                "span": 1
+              }
+            ],
+            "considered": 4,
+            "dropped_no_effect": 2,
+            "dropped_duplicate_effect": 0,
+            "truncated": 0
+          },
+          "per_input": [
+            {
+              "input": {
+                "host": "example.com",
+                "server_name": null,
+                "subdomain": null
+              },
+              "a_executes": false,
+              "active_ops": [],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                }
+              }
+            },
+            {
+              "input": {
+                "host": "example.com",
+                "server_name": "EXAMPLE.COM",
+                "subdomain": null
+              },
+              "a_executes": true,
+              "active_ops": [],
+              "masked_empty": false,
+              "exposed_empty": true,
+              "msms_ids": [],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "<invalid>"
+                }
+              }
+            },
+            {
+              "input": {
+                "host": "example.com",
+                "server_name": "EXAMPLE.COM",
+                "subdomain": "www"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/werkzeug/routing/map.py:219-219"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/werkzeug/routing/map.py:219-219"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/routing/map.py:219-219"
+                ]
+              ],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "www"
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "www"
+                }
+              }
+            },
+            {
+              "input": {
+                "host": "sub.example.com",
+                "server_name": "EXAMPLE.COM",
+                "subdomain": null
+              },
+              "a_executes": true,
+              "active_ops": [],
+              "masked_empty": false,
+              "exposed_empty": true,
+              "msms_ids": [],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "sub"
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "<invalid>"
+                }
+              }
+            },
+            {
+              "input": {
+                "host": "example.com",
+                "server_name": "example.com:80",
+                "subdomain": "www"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/werkzeug/routing/map.py:311-311"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/werkzeug/routing/map.py:219-219"
+                ],
+                [
+                  "src/werkzeug/routing/map.py:311-311"
+                ]
+              ],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "www"
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "www"
+                }
+              }
+            },
+            {
+              "input": {
+                "host": "example.com",
+                "server_name": "EXAMPLE.COM:443",
+                "subdomain": "www"
+              },
+              "a_executes": true,
+              "active_ops": [
+                "src/werkzeug/routing/map.py:219-219"
+              ],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [
+                [
+                  "src/werkzeug/routing/map.py:219-219"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/routing/map.py:219-219"
+                ]
+              ],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com:443",
+                  "subdomain": "www"
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com:443",
+                  "subdomain": "www"
+                }
+              }
+            },
+            {
+              "input": {
+                "host": "EXAMPLE.COM",
+                "server_name": null,
+                "subdomain": "api"
+              },
+              "a_executes": false,
+              "active_ops": [],
+              "masked_empty": true,
+              "exposed_empty": false,
+              "msms_ids": [],
+              "mmbs_ids": [],
+              "observations_empty": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "api"
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "api"
+                }
+              }
+            }
+          ],
+          "submission": {
+            "submission_id": "baseline-C",
+            "task_id": "werkzeug_bind_server_name_lower",
+            "claims": [
+              {
+                "type": "EXPOSING_COUNTEREXAMPLE",
+                "input": {
+                  "host": "example.com",
+                  "server_name": "EXAMPLE.COM",
+                  "subdomain": null
+                }
+              },
+              {
+                "type": "MSMS",
+                "inputs": [
+                  {
+                    "host": "example.com",
+                    "server_name": "EXAMPLE.COM",
+                    "subdomain": "www"
+                  },
+                  {
+                    "host": "example.com",
+                    "server_name": "EXAMPLE.COM:443",
+                    "subdomain": "www"
+                  }
+                ],
+                "operations": [
+                  {
+                    "file": "src/werkzeug/routing/map.py",
+                    "line": 219,
+                    "code": "        server_name = server_name.lower()"
+                  }
+                ]
+              },
+              {
+                "type": "MMBS",
+                "inputs": [
+                  {
+                    "host": "example.com",
+                    "server_name": "EXAMPLE.COM",
+                    "subdomain": "www"
+                  },
+                  {
+                    "host": "example.com",
+                    "server_name": "EXAMPLE.COM:443",
+                    "subdomain": "www"
+                  }
+                ],
+                "operations": [
+                  {
+                    "file": "src/werkzeug/routing/map.py",
+                    "line": 219,
+                    "code": "        server_name = server_name.lower()"
+                  }
+                ]
+              },
+              {
+                "type": "PREREQUISITE_BREAKING",
+                "input": {
+                  "host": "example.com",
+                  "server_name": "EXAMPLE.COM",
+                  "subdomain": "www"
+                },
+                "control_input": {
+                  "host": "example.com",
+                  "server_name": "EXAMPLE.COM",
+                  "subdomain": null
+                },
+                "operations": [
+                  {
+                    "file": "src/werkzeug/routing/map.py",
+                    "line": 219,
+                    "code": "        server_name = server_name.lower()"
+                  }
+                ],
+                "prerequisite": "masking holds on input; the same set does not break on control"
+              }
+            ]
+          },
+          "unknowns": [],
+          "score": {
+            "protocol": "mace_benchmark_v3_scoring",
+            "scorer_version": "mace-benchmark-v3-scorer-1.0",
+            "task_id": "werkzeug_bind_server_name_lower",
+            "submission_id": "baseline-C",
+            "status_counts": {
+              "WITNESS_VERIFIED": 2,
+              "FINITE_DOMAIN_EXACT": 2,
+              "PROVEN": 0,
+              "FALSE": 0,
+              "INVALID": 0,
+              "UNVERIFIED": 0,
+              "UNSUPPORTED": 0,
+              "DUPLICATE": 0
+            },
+            "score": {
+              "credited_relations": 4,
+              "claim_credit": 4,
+              "domain_exact_relations": 2,
+              "witness_verified_relations": 2,
+              "deduplicated": 0
+            },
+            "claims": [
+              {
+                "index": 0,
+                "type": "EXPOSING_COUNTEREXAMPLE",
+                "status": "WITNESS_VERIFIED",
+                "reason": "Both sides executed and produced different observations.",
+                "scope": "one submitted input; no claim over other legal inputs",
+                "relation_key": "EXPOSING",
+                "observations": {
+                  "plus": {
+                    "outcome": "return",
+                    "server_name": "example.com",
+                    "subdomain": ""
+                  },
+                  "minus": {
+                    "outcome": "return",
+                    "server_name": "example.com",
+                    "subdomain": "<invalid>"
+                  }
+                },
+                "credit": 1
+              },
+              {
+                "index": 1,
+                "type": "MSMS",
+                "status": "FINITE_DOMAIN_EXACT",
+                "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+                "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+                "relation_key": "MSMS:src/werkzeug/routing/map.py:219",
+                "operations": [
+                  "src/werkzeug/routing/map.py:219"
+                ],
+                "per_input": [
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/werkzeug/routing/map.py:219"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/werkzeug/routing/map.py:219"
+                      ]
+                    ]
+                  }
+                ],
+                "credit": 1
+              },
+              {
+                "index": 2,
+                "type": "MMBS",
+                "status": "FINITE_DOMAIN_EXACT",
+                "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+                "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+                "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+                "operations": [
+                  "src/werkzeug/routing/map.py:219"
+                ],
+                "per_input": [
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/werkzeug/routing/map.py:219"
+                      ]
+                    ]
+                  },
+                  {
+                    "verified": true,
+                    "reason": "set matches an enumerated minimal relation",
+                    "computed_minimal_sets": [
+                      [
+                        "src/werkzeug/routing/map.py:219"
+                      ]
+                    ]
+                  }
+                ],
+                "credit": 1
+              },
+              {
+                "index": 3,
+                "type": "PREREQUISITE_BREAKING",
+                "status": "WITNESS_VERIFIED",
+                "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+                "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+                "relation_key": "PREREQUISITE:src/werkzeug/routing/map.py:219",
+                "operations": [
+                  "src/werkzeug/routing/map.py:219"
+                ],
+                "prerequisite": "masking holds on input; the same set does not break on control",
+                "details": {
+                  "condition_masked_EMPTY": true,
+                  "condition_msms": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ],
+                  "condition_mmbs": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ],
+                  "control_masked_EMPTY": false,
+                  "control_mmbs": []
+                },
+                "credit": 1
+              }
+            ],
+            "scope_notes": [
+              "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+              "A single witness is never promoted to a claim over the whole legal input domain.",
+              "Operations outside U are reported UNVERIFIED, not FALSE."
+            ]
+          },
+          "model_calls": 0,
+          "probe_executions": 76,
+          "variant_builds": 12,
+          "wall_seconds": 34.755
+        },
+        "legacy_full_mace": {
+          "run_label": "UNSUPPORTED_INTERFACE",
+          "reason": "The historical Full MACE run loop emits code-level guards and does not expose an operation-level MSMS/MMBS submission interface. It is recorded as unsupported, not as zero."
+        }
+      }
+    }
+  ]
+}

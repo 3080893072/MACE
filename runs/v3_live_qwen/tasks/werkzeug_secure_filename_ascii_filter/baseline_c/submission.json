@@ -1,0 +1,68 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "filename": "a b"
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/utils.py",
+          "line": 227,
+          "end_line": 229,
+          "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/utils.py",
+          "line": 227,
+          "end_line": 229,
+          "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+        }
+      ]
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "input": {
+        "filename": "北京.txt"
+      },
+      "control_input": {
+        "filename": "a b"
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/utils.py",
+          "line": 227,
+          "end_line": 229,
+          "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+        }
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control"
+    }
+  ]
+}

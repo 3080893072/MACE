@@ -1,0 +1,262 @@
+{
+  "click_wrap_text": {
+    "cases": {
+      "expose_changed_indent": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "  a\n\n  b"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "  a\n\nb"
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "expose_changed_indent"
+        },
+        "status": "EXPOSED",
+        "target_hit": true
+      },
+      "mask_equal_indent": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "a\n\nb"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "a\n\nb"
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "mask_equal_indent"
+        },
+        "status": "MASKED",
+        "target_hit": true
+      }
+    },
+    "file": "click-8.4.1/src/click/formatting.py",
+    "operation_B": {
+      "code": "indent = orig_len - term_len(line)",
+      "line": 95
+    },
+    "target_A": {
+      "code": "indent = None",
+      "line": 90
+    }
+  },
+  "jinja2_urlize": {
+    "cases": {
+      "expose_parenthesized_text": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "((abc)"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "(abc)"
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "expose_parenthesized_text"
+        },
+        "status": "EXPOSED",
+        "target_hit": true
+      },
+      "expose_parenthesized_url": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "((http://example.com)"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "(<a href=\"http://example.com\">http://example.com</a>)"
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "expose_parenthesized_url"
+        },
+        "status": "EXPOSED",
+        "target_hit": true
+      },
+      "mask_A_not_executed": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "mask_A_not_executed"
+        },
+        "status": "MASKED",
+        "target_hit": false
+      }
+    },
+    "file": "jinja2-3.1.3/src/jinja2/utils.py",
+    "operations": {
+      "292": 292,
+      "307": 307,
+      "322": 322,
+      "330": 330,
+      "335": 335
+    },
+    "target_A": {
+      "code": "middle = middle[match.end() :]",
+      "line": 282
+    }
+  },
+  "packaging_parse_letter_version": {
+    "cases": {
+      "expose_uppercase": {
+        "minus": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "str",
+                "ALPHA"
+              ],
+              [
+                "int",
+                1
+              ]
+            ]
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "str",
+                "a"
+              ],
+              [
+                "int",
+                1
+              ]
+            ]
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "expose_uppercase"
+        },
+        "status": "EXPOSED",
+        "target_hit": true
+      },
+      "mask_no_value_change": {
+        "minus": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "str",
+                "a"
+              ],
+              [
+                "int",
+                1
+              ]
+            ]
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "str",
+                "a"
+              ],
+              [
+                "int",
+                1
+              ]
+            ]
+          ]
+        ],
+        "relations": {
+          "coexisting": [],
+          "cooperative": [],
+          "illegal_or_undecidable": [],
+          "independent": [],
+          "scope": "single_witness",
+          "witness": "mask_no_value_change"
+        },
+        "status": "MASKED",
+        "target_hit": true
+      }
+    },
+    "file": "packaging-23.1/src/packaging/version.py",
+    "operation_B": {
+      "code": "letter = \"post\"",
+      "line": 470
+    },
+    "target_A": {
+      "code": "letter = letter.lower()",
+      "line": 464
+    }
+  }
+}

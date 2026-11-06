@@ -1,0 +1,67 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1430:name:rows",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1430,
+    "end_line": 1430,
+    "kind": "Assign",
+    "code": "rows = [[row.get(k) for k in keys] for row in rows]"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_list_of_dicts",
+    "test/test_input.py::test_list_of_dicts_firstrow",
+    "test/test_input.py::test_list_of_dicts_keys",
+    "test/test_input.py::test_list_of_dicts_with_dict_of_headers",
+    "test/test_input.py::test_list_of_dicts_with_missing_keys",
+    "test/test_input.py::test_list_of_ordereddicts",
+    "test/test_input.py::test_list_of_userdicts",
+    "test/test_input.py::test_list_of_userdicts_keys",
+    "test/test_regression.py::test_numeric_column_headers"
+  ],
+  "original_hit_test_count": 9,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            rows = [[row.get(k) for k in keys] for row in rows]",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.49,
+    "failed_nodeids": [
+      "test.test_input::test_list_of_dicts",
+      "test.test_input::test_list_of_dicts_firstrow",
+      "test.test_input::test_list_of_dicts_keys",
+      "test.test_input::test_list_of_dicts_with_dict_of_headers",
+      "test.test_input::test_list_of_dicts_with_missing_keys",
+      "test.test_input::test_list_of_ordereddicts",
+      "test.test_input::test_list_of_userdicts",
+      "test.test_input::test_list_of_userdicts_keys",
+      "test.test_regression::test_numeric_column_headers"
+    ],
+    "stdout_tail": "----------------- Captured stdout call -----------------------------\nExpected:\n  b    a\n---  ---\n  1    2\n  1    2\n\nGot:\nb    a\n---  ---\nb    a\nb    a\n\n_________________________ test_numeric_column_headers _________________________\n\n    def test_numeric_column_headers():\n        \"Regression: numbers as column headers (issue #22)\"\n        result = tabulate([[1], [2]], [42])\n        expected = \"  42\\n----\\n   1\\n   2\"\n        assert_equal(result, expected)\n    \n        lod = [{p: i for p in range(5)} for i in range(5)]\n        result = tabulate(lod, \"keys\")\n        expected = \"\\n\".join(\n            [\n                \"  0    1    2    3    4\",\n                \"---  ---  ---  ---  ---\",\n                \"  0    0    0    0    0\",\n                \"  1    1    1    1    1\",\n                \"  2    2    2    2    2\",\n                \"  3    3    3    3    3\",\n                \"  4    4    4    4    4\",\n            ]\n        )\n>       assert_equal(result, expected)\n\ntest\\test_regression.py:188: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = '  0    1    2    3    4\\n---  ---  ---  ---  ---\\n  0    1    2    3    4\\n  0    1    2    3    4\\n  0    1    2    3    4\\n  0    1    2    3    4\\n  0    1    2    3    4'\nresult = '  0    1    2    3    4\\n---  ---  ---  ---  ---\\n  0    0    0    0    0\\n  1    1    1    1    1\\n  2    2    2    2    2\\n  3    3    3    3    3\\n  4    4    4    4    4'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n  42\n----\n   1\n   2\n\nGot:\n  42\n----\n   1\n   2\n\nExpected:\n  0    1    2    3    4\n---  ---  ---  ---  ---\n  0    1    2    3    4\n  0    1    2    3    4\n  0    1    2    3    4\n  0    1    2    3    4\n  0    1    2    3    4\n\nGot:\n  0    1    2    3    4\n---  ---  ---  ---  ---\n  0    0    0    0    0\n  1    1    1    1    1\n  2    2    2    2    2\n  3    3    3    3    3\n  4    4    4    4    4\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_list_of_dicts - AssertionError\nFAILED test/test_input.py::test_list_of_userdicts - AssertionError\nFAILED test/test_input.py::test_list_of_dicts_keys - AssertionError\nFAILED test/test_input.py::test_list_of_userdicts_keys - AssertionError\nFAILED test/test_input.py::test_list_of_dicts_with_missing_keys - AssertionError\nFAILED test/test_input.py::test_list_of_dicts_firstrow - AssertionError\nFAILED test/test_input.py::test_list_of_dicts_with_dict_of_headers - Assertio...\nFAILED test/test_input.py::test_list_of_ordereddicts - AssertionError\nFAILED test/test_regression.py::test_numeric_column_headers - AssertionError\n9 failed in 0.17s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

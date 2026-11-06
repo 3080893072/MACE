@@ -1,0 +1,42 @@
+{
+  "case_id": "sd_docutils_language_tag_m3",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/__init__.py",
+    "A_line": 704,
+    "A_code": "    tag = tag.lower().replace('-', '_')"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 704,
+      "indent": 4,
+      "role": "Case folding leg: restores the lower() half of A.",
+      "lines": ["tag = tag.lower()"]
+    },
+    {
+      "id": "U2",
+      "after_line": 704,
+      "indent": 4,
+      "role": "First separator leg: rewrites at most one '-' separator.",
+      "lines": ["tag = tag.replace('-', '_', 1)"]
+    },
+    {
+      "id": "U3",
+      "after_line": 704,
+      "indent": 4,
+      "role": "Second separator leg: rewrites at most one further '-' separator.",
+      "lines": ["tag = tag.replace('-', '_', 1)"]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_language_tag_m3.py",
+  "inputs": {
+    "mask_two_separators": "two '-' separators and mixed case",
+    "expose_three_separators": "three '-' separators: the bounded rewrite leaves one behind",
+    "control_single_subtag": "already normalised single subtag"
+  },
+  "rationale": "A normalises a language tag by case folding it and rewriting every '-' as '_'. The patch restores that effect for tags with at most two separators only: U1 folds case, U2 and U3 each rewrite one separator, so all three are required for a two-separator tag while a three-separator tag remains partially normalised (the exposing witness)."
+}

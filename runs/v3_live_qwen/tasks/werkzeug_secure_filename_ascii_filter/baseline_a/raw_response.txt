@@ -1,0 +1,31 @@
+{
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {"filename": "i contain cool \u00fcml\u00e4uts.txt"},
+      "control_input": {"filename": "i contain cool \u00fcml\u00e4uts.txt"}
+    },
+    {
+      "type": "MSMS",
+      "input": {"filename": "i contain cool \u00fcml\u00e4uts.txt"},
+      "operations": [
+        {
+          "file": "src/werkzeug/utils.py",
+          "line": 222,
+          "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "input": {"filename": "i contain cool \u00fcml\u00e4uts.txt"},
+      "operations": [
+        {
+          "file": "src/werkzeug/utils.py",
+          "line": 222,
+          "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")"
+        }
+      ]
+    }
+  ]
+}

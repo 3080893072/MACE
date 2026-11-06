@@ -1,0 +1,99 @@
+{
+  "verifier_version": "intervention-verifier-1.0",
+  "task_id": "werkzeug_filestorage_stream_name",
+  "universe": [
+    {
+      "id": "src/werkzeug/datastructures.py:2918-2918",
+      "file": "src/werkzeug/datastructures.py",
+      "first_line": 2918,
+      "last_line": 2918,
+      "kind": "assignment",
+      "code": "            filename = getattr(stream, \"name\", None)"
+    }
+  ],
+  "universe_problems": [],
+  "verdicts": [
+    {
+      "verdict": "VERIFIED",
+      "reason": "P+ and P- differ on the submitted input",
+      "observations": {
+        "plus": {
+          "filename": "testfile.txt",
+          "filename_type": "str",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "verdict": "REFUTED",
+      "reason": "a submitted input is not masked at EMPTY",
+      "inputs": [
+        {
+          "input": {
+            "stream": "named",
+            "name": "testfile.txt",
+            "data": "testdata"
+          },
+          "matched": false,
+          "computed_minimal_sets": [],
+          "masked_at_empty": false
+        }
+      ],
+      "index": 1,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "REFUTED",
+      "reason": "set is not a minimal relation over the proposal's operation universe on a submitted input",
+      "inputs": [
+        {
+          "input": {
+            "stream": "named",
+            "name": "testfile.txt",
+            "data": "testdata"
+          },
+          "matched": false,
+          "computed_minimal_sets": [],
+          "masked_at_empty": false
+        }
+      ],
+      "index": 2,
+      "type": "MMBS"
+    }
+  ],
+  "verified_submission": {
+    "task_id": "werkzeug_filestorage_stream_name",
+    "submission_id": "baseline-A",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "stream": "named",
+          "name": "testfile.txt",
+          "data": "testdata"
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2918,
+            "code": "filename = getattr(stream, \"name\", None)"
+          }
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "total": 3,
+    "verified": 1,
+    "refuted": 2,
+    "unknown": 0
+  },
+  "probe_executions": 4
+}

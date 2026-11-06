@@ -1,0 +1,102 @@
+{
+  "claims": [
+    {
+      "input": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "input": {
+        "cached_source": "Hello",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MMBS"
+    }
+  ],
+  "submission_id": "ast-intervention-jinja2_bytecode_cache_read",
+  "task_id": "jinja2_bytecode_cache_read",
+  "test_gap": {
+    "summary": "not attempted: this baseline targets operation relations, not per-test classification",
+    "tests": []
+  }
+}

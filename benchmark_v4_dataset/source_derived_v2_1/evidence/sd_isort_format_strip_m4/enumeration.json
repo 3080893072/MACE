@@ -1,0 +1,329 @@
+{
+  "case_id": "sd_isort_format_strip_m4",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "slug": "isort-5.13.2",
+  "file": "isort/format.py",
+  "A_line": 21,
+  "A_code": "    import_line = import_line.strip()",
+  "original_sha256": "13d3a0e2673b6a3c7230016652500ad99996ecdef9b9ec5f63473dabece6cb30",
+  "patched_sha256": "d0c7a0ffd7b9b38efbb8d620830030728b5baf5d5af582d590a4e6345ac343e7",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 21,
+      "role": "Whitespace-only cleanup: strips spaces/tabs for single-line input.",
+      "lines": [
+        "if \"\\n\" not in import_line:",
+        "    import_line = import_line.strip(\" \\t\")"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 21,
+      "role": "Newline-tolerant cleanup: strips spaces/newlines when no tab is present.",
+      "lines": [
+        "if \"\\t\" not in import_line:",
+        "    import_line = import_line.strip(\" \\n\")"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 21,
+      "end": 24
+    },
+    "U2": {
+      "begin": 25,
+      "end": 28
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_padded": {
+        "out": "a.b"
+      },
+      "expose_tab_newline": {
+        "out": "a.b"
+      },
+      "control_plain": {
+        "out": "a.b"
+      }
+    },
+    "P_MINUS": {
+      "mask_padded": {
+        "out": "a.b"
+      },
+      "expose_tab_newline": {
+        "out": "\ta.b\n"
+      },
+      "control_plain": {
+        "out": "a.b"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_padded": {
+        "out": " a.b "
+      },
+      "expose_tab_newline": {
+        "out": "\ta.b\n"
+      },
+      "control_plain": {
+        "out": "a.b"
+      }
+    },
+    "KEEP_U1": {
+      "mask_padded": {
+        "out": "a.b"
+      },
+      "expose_tab_newline": {
+        "out": "\ta.b\n"
+      },
+      "control_plain": {
+        "out": "a.b"
+      }
+    },
+    "KEEP_U2": {
+      "mask_padded": {
+        "out": "a.b"
+      },
+      "expose_tab_newline": {
+        "out": "\ta.b\n"
+      },
+      "control_plain": {
+        "out": "a.b"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_padded": {
+        "out": "a.b"
+      },
+      "expose_tab_newline": {
+        "out": "\ta.b\n"
+      },
+      "control_plain": {
+        "out": "a.b"
+      }
+    }
+  },
+  "per_input": {
+    "mask_padded": {
+      "plus": {
+        "out": "a.b"
+      },
+      "p_minus": {
+        "out": "a.b"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": " a.b "
+        },
+        "KEEP_U1": {
+          "out": "a.b"
+        },
+        "KEEP_U2": {
+          "out": "a.b"
+        },
+        "KEEP_U1_U2": {
+          "out": "a.b"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_tab_newline": {
+      "plus": {
+        "out": "a.b"
+      },
+      "p_minus": {
+        "out": "\ta.b\n"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "\ta.b\n"
+        },
+        "KEEP_U1": {
+          "out": "\ta.b\n"
+        },
+        "KEEP_U2": {
+          "out": "\ta.b\n"
+        },
+        "KEEP_U1_U2": {
+          "out": "\ta.b\n"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [],
+        "mmbs": [],
+        "u_necessary": true
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_plain": {
+      "plus": {
+        "out": "a.b"
+      },
+      "p_minus": {
+        "out": "a.b"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a.b"
+        },
+        "KEEP_U1": {
+          "out": "a.b"
+        },
+        "KEEP_U2": {
+          "out": "a.b"
+        },
+        "KEEP_U1_U2": {
+          "out": "a.b"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "changed_inputs": [
+      {
+        "input": "mask_padded",
+        "mmbs": {
+          "legacy_v2": [
+            [
+              "U1"
+            ],
+            [
+              "U2"
+            ]
+          ],
+          "v2_1": [
+            [
+              "U1",
+              "U2"
+            ]
+          ]
+        }
+      },
+      {
+        "input": "control_plain",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      }
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 2,
+    "mmbs_COMPUTED": 1,
+    "mmbs_NONE": 1,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 1,
+    "msms_NONE": 2
+  }
+}

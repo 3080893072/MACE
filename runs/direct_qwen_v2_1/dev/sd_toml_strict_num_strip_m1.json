@@ -1,0 +1,406 @@
+{
+  "task_id": "sd_toml_strict_num_strip_m1",
+  "split": "DEV",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "model": "qwen2.5-coder:32b",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900
+  },
+  "public_source_sha256": "5e39f29a18dc7aa29aaf768ca6265e68552c80823c5f0313938c4e25d9641059",
+  "prompt_sha256": "6403f73fdfc29407367a5f9ad12bac4e108847f03aa924a72d4c1ca8de12a6a9",
+  "prompt_chars": 48115,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_toml_strict_num_strip_m1\n\n## File\n`toml/decoder.py`\n\n## Program with source line numbers\n```text\n   1 | import datetime\n   2 | import io\n   3 | from os import linesep\n   4 | import re\n   5 | import sys\n   6 | \n   7 | from toml.tz import TomlTz\n   8 | \n   9 | if sys.version_info < (3,):\n  10 |     _range = xrange  # noqa: F821\n  11 | else:\n  12 |     unicode = str\n  13 |     _range = range\n  14 |     basestring = str\n  15 |     unichr = chr\n  16 | \n  17 | \n  18 | def _detect_pathlib_path(p):\n  19 |     if (3, 4) <= sys.version_info:\n  20 |         import pathlib\n  21 |         if isinstance(p, pathlib.PurePath):\n  22 |             return True\n  23 |     return False\n  24 | \n  25 | \n  26 | def _ispath(p):\n  27 |     if isinstance(p, (bytes, basestring)):\n  28 |         return True\n  29 |     return _detect_pathlib_path(p)\n  30 | \n  31 | \n  32 | def _getpath(p):\n  33 |     if (3, 6) <= sys.version_info:\n  34 |         import os\n  35 |         return os.fspath(p)\n  36 |     if _detect_pathlib_path(p):\n  37 |         return str(p)\n  38 |     return p\n  39 | \n  40 | \n  41 | try:\n  42 |     FNFError = FileNotFoundError\n  43 | except NameError:\n  44 |     FNFError = IOError\n  45 | \n  46 | \n  47 | TIME_RE = re.compile(r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(\\.([0-9]{3,6}))?\")\n  48 | \n  49 | \n  50 | class TomlDecodeError(ValueError):\n  51 |     \"\"\"Base toml Exception / Error.\"\"\"\n  52 | \n  53 |     def __init__(self, msg, doc, pos):\n  54 |         lineno = doc.count('\\n', 0, pos) + 1\n  55 |         colno = pos - doc.rfind('\\n', 0, pos)\n  56 |         emsg = '{} (line {} column {} char {})'.format(msg, lineno, colno, pos)\n  57 |         ValueError.__init__(self, emsg)\n  58 |         self.msg = msg\n  59 |         self.doc = doc\n  60 |         self.pos = pos\n  61 |         self.lineno = lineno\n  62 |         self.colno = colno\n  63 | \n  64 | \n  65 | # Matches a TOML number, which allows underscores for readability\n  66 | _number_with_underscores = re.compile('([0-9])(_([0-9]))*')\n  67 | \n  68 | \n  69 | class CommentValue(object):\n  70 |     def __init__(self, val, comment, beginline, _dict):\n  71 |         self.val = val\n  72 |         separator = \"\\n\" if beginline else \" \"\n  73 |         self.comment = separator + comment\n  74 |         self._dict = _dict\n  75 | \n  76 |     def __getitem__(self, key):\n  77 |         return self.val[key]\n  78 | \n  79 |     def __setitem__(self, key, value):\n  80 |         self.val[key] = value\n  81 | \n  82 |     def dump(self, dump_value_func):\n  83 |         retstr = dump_value_func(self.val)\n  84 |         if isinstance(self.val, self._dict):\n  85 |             return self.comment + \"\\n\" + unicode(retstr)\n  86 |         else:\n  87 |             return unicode(retstr) + self.comment\n  88 | \n  89 | \n  90 | def _strictly_valid_num(n):\n  91 |     n = n.strip()\n  92 | \n  93 |     if \"\\t\" not in n:\n  94 |         n = n.strip(\" \")\n  95 | \n  96 |     if not n:\n  97 |         return False\n  98 |     if n[0] == '_':\n  99 |         return False\n 100 |     if n[-1] == '_':\n 101 |         return False\n 102 |     if \"_.\" in n or \"._\" in n:\n 103 |         return False\n 104 |     if len(n) == 1:\n 105 |         return True\n 106 |     if n[0] == '0' and n[1] not in ['.', 'o', 'b', 'x']:\n 107 |         return False\n 108 |     if n[0] == '+' or n[0] == '-':\n 109 |         n = n[1:]\n 110 |         if len(n) > 1 and n[0] == '0' and n[1] != '.':\n 111 |             return False\n 112 |     if '__' in n:\n 113 |         return False\n 114 |     return True\n 115 | \n 116 | \n 117 | def load(f, _dict=dict, decoder=None):\n 118 |     \"\"\"Parses named file or files as toml and returns a dictionary\n 119 | \n 120 |     Args:\n 121 |         f: Path to the file to open, array of files to read into single dict\n 122 |            or a file descriptor\n 123 |         _dict: (optional) Specifies the class of the returned toml dictionary\n 124 |         decoder: The decoder to use\n 125 | \n 126 |     Returns:\n 127 |         Parsed toml file represented as a dictionary\n 128 | \n 129 |     Raises:\n 130 |         TypeError -- When f is invalid type\n 131 |         TomlDecodeError: Error while decoding toml\n 132 |         IOError / FileNotFoundError -- When an array with no valid (existing)\n 133 |         (Python 2 / Python 3)          file paths is passed\n 134 |     \"\"\"\n 135 | \n 136 |     if _ispath(f):\n 137 |         with io.open(_getpath(f), encoding='utf-8') as ffile:\n 138 |             return loads(ffile.read(), _dict, decoder)\n 139 |     elif isinstance(f, list):\n 140 |         from os import path as op\n 141 |         from warnings import warn\n 142 |         if not [path for path in f if op.exists(path)]:\n 143 |             error_msg = \"Load expects a list to contain filenames only.\"\n 144 |             error_msg += linesep\n 145 |             error_msg += (\"The list needs to contain the path of at least one \"\n 146 |                           \"existing file.\")\n 147 |             raise FNFError(error_msg)\n 148 |         if decoder is None:\n 149 |             decoder = TomlDecoder(_dict)\n 150 |         d = decoder.get_empty_table()\n 151 |         for l in f:  # noqa: E741\n 152 |             if op.exists(l):\n 153 |                 d.update(load(l, _dict, decoder))\n 154 |             else:\n 155 |                 warn(\"Non-existent filename in list with at least one valid \"\n 156 |                      \"filename\")\n 157 |         return d\n 158 |     else:\n 159 |         try:\n 160 |             return loads(f.read(), _dict, decoder)\n 161 |         except AttributeError:\n 162 |             raise TypeError(\"You can only load a file descriptor, filename or \"\n 163 |                             \"list\")\n 164 | \n 165 | \n 166 | _groupname_re = re.compile(r'^[A-Za-z0-9_-]+$')\n 167 | \n 168 | \n 169 | def loads(s, _dict=dict, decoder=None):\n 170 |     \"\"\"Parses string as toml\n 171 | \n 172 |     Args:\n 173 |         s: String to be parsed\n 174 |         _dict: (optional) Specifies the class of the returned toml dictionary\n 175 | \n 176 |     Returns:\n 177 |         Parsed toml file represented as a dictionary\n 178 | \n 179 |     Raises:\n 180 |         TypeError: When a non-string is passed\n 181 |         TomlDecodeError: Error while decoding toml\n 182 |     \"\"\"\n 183 | \n 184 |     implicitgroups = []\n 185 |     if decoder is None:\n 186 |         decoder = TomlDecoder(_dict)\n 187 |     retval = decoder.get_empty_table()\n 188 |     currentlevel = retval\n 189 |     if not isinstance(s, basestring):\n 190 |         raise TypeError(\"Expecting something like a string\")\n 191 | \n 192 |     if not isinstance(s, unicode):\n 193 |         s = s.decode('utf8')\n 194 | \n 195 |     original = s\n 196 |     sl = list(s)\n 197 |     openarr = 0\n 198 |     openstring = False\n 199 |     openstrchar = \"\"\n 200 |     multilinestr = False\n 201 |     arrayoftables = False\n 202 |     beginline = True\n 203 |     keygroup = False\n 204 |     dottedkey = False\n 205 |     keyname = 0\n 206 |     key = ''\n 207 |     prev_key = ''\n 208 |     line_no = 1\n 209 | \n 210 |     for i, item in enumerate(sl):\n 211 |         if item == '\\r' and sl[i + 1] == '\\n':\n 212 |             sl[i] = ' '\n 213 |             continue\n 214 |         if keyname:\n 215 |             key += item\n 216 |             if item == '\\n':\n 217 |                 raise TomlDecodeError(\"Key name found without value.\"\n 218 |                                       \" Reached end of line.\", original, i)\n 219 |             if openstring:\n 220 |                 if item == openstrchar:\n 221 |                     oddbackslash = False\n 222 |                     k = 1\n 223 |                     while i >= k and sl[i - k] == '\\\\':\n 224 |                         oddbackslash = not oddbackslash\n 225 |                         k += 1\n 226 |                     if not oddbackslash:\n 227 |                         keyname = 2\n 228 |                         openstring = False\n 229 |                         openstrchar = \"\"\n 230 |                 continue\n 231 |             elif keyname == 1:\n 232 |                 if item.isspace():\n 233 |                     keyname = 2\n 234 |                     continue\n 235 |                 elif item == '.':\n 236 |                     dottedkey = True\n 237 |                     continue\n 238 |                 elif item.isalnum() or item == '_' or item == '-':\n 239 |                     continue\n 240 |                 elif (dottedkey and sl[i - 1] == '.' and\n 241 |                       (item == '\"' or item == \"'\")):\n 242 |                     openstring = True\n 243 |                     openstrchar = item\n 244 |                     continue\n 245 |             elif keyname == 2:\n 246 |                 if item.isspace():\n 247 |                     if dottedkey:\n 248 |                         nextitem = sl[i + 1]\n 249 |                         if not nextitem.isspace() and nextitem != '.':\n 250 |                             keyname = 1\n 251 |                     continue\n 252 |                 if item == '.':\n 253 |                     dottedkey = True\n 254 |                     nextitem = sl[i + 1]\n 255 |                     if not nextitem.isspace() and nextitem != '.':\n 256 |                         keyname = 1\n 257 |                     continue\n 258 |             if item == '=':\n 259 |                 keyname = 0\n 260 |                 prev_key = key[:-1].rstrip()\n 261 |                 key = ''\n 262 |                 dottedkey = False\n 263 |             else:\n 264 |                 raise TomlDecodeError(\"Found invalid character in key name: '\" +\n 265 |                                       item + \"'. Try quoting the key name.\",\n 266 |                                       original, i)\n 267 |         if item == \"'\" and openstrchar != '\"':\n 268 |             k = 1\n 269 |             try:\n 270 |                 while sl[i - k] == \"'\":\n 271 |                     k += 1\n 272 |                     if k == 3:\n 273 |                         break\n 274 |             except IndexError:\n 275 |                 pass\n 276 |             if k == 3:\n 277 |                 multilinestr = not multilinestr\n 278 |                 openstring = multilinestr\n 279 |             else:\n 280 |                 openstring = not openstring\n 281 |             if openstring:\n 282 |                 openstrchar = \"'\"\n 283 |             else:\n 284 |                 openstrchar = \"\"\n 285 |         if item == '\"' and openstrchar != \"'\":\n 286 |             oddbackslash = False\n 287 |             k = 1\n 288 |             tripquote = False\n 289 |             try:\n 290 |                 while sl[i - k] == '\"':\n 291 |                     k += 1\n 292 |                     if k == 3:\n 293 |                         tripquote = True\n 294 |                         break\n 295 |                 if k == 1 or (k == 3 and tripquote):\n 296 |                     while sl[i - k] == '\\\\':\n 297 |                         oddbackslash = not oddbackslash\n 298 |                         k += 1\n 299 |             except IndexError:\n 300 |                 pass\n 301 |             if not oddbackslash:\n 302 |                 if tripquote:\n 303 |                     multilinestr = not multilinestr\n 304 |                     openstring = multilinestr\n 305 |                 else:\n 306 |                     openstring = not openstring\n 307 |             if openstring:\n 308 |                 openstrchar = '\"'\n 309 |             else:\n 310 |                 openstrchar = \"\"\n 311 |         if item == '#' and (not openstring and not keygroup and\n 312 |                             not arrayoftables):\n 313 |             j = i\n 314 |             comment = \"\"\n 315 |             try:\n 316 |                 while sl[j] != '\\n':\n 317 |                     comment += s[j]\n 318 |                     sl[j] = ' '\n 319 |                     j += 1\n 320 |             except IndexError:\n 321 |                 break\n 322 |             if not openarr:\n 323 |                 decoder.preserve_comment(line_no, prev_key, comment, beginline)\n 324 |         if item == '[' and (not openstring and not keygroup and\n 325 |                             not arrayoftables):\n 326 |             if beginline:\n 327 |                 if len(sl) > i + 1 and sl[i + 1] == '[':\n 328 |                     arrayoftables = True\n 329 |                 else:\n 330 |                     keygroup = True\n 331 |             else:\n 332 |                 openarr += 1\n 333 |         if item == ']' and not openstring:\n 334 |             if keygroup:\n 335 |                 keygroup = False\n 336 |             elif arrayoftables:\n 337 |                 if sl[i - 1] == ']':\n 338 |                     arrayoftables = False\n 339 |             else:\n 340 |                 openarr -= 1\n 341 |         if item == '\\n':\n 342 |             if openstring or multilinestr:\n 343 |                 if not multilinestr:\n 344 |                     raise TomlDecodeError(\"Unbalanced quotes\", original, i)\n 345 |                 if ((sl[i - 1] == \"'\" or sl[i - 1] == '\"') and (\n 346 |                         sl[i - 2] == sl[i - 1])):\n 347 |                     sl[i] = sl[i - 1]\n 348 |                     if sl[i - 3] == sl[i - 1]:\n 349 |                         sl[i - 3] = ' '\n 350 |             elif openarr:\n 351 |                 sl[i] = ' '\n 352 |             else:\n 353 |                 beginline = True\n 354 |             line_no += 1\n 355 |         elif beginline and sl[i] != ' ' and sl[i] != '\\t':\n 356 |             beginline = False\n 357 |             if not keygroup and not arrayoftables:\n 358 |                 if sl[i] == '=':\n 359 |                     raise TomlDecodeError(\"Found empty keyname. \", original, i)\n 360 |                 keyname = 1\n 361 |                 key += item\n 362 |     if keyname:\n 363 |         raise TomlDecodeError(\"Key name found without value.\"\n 364 |                               \" Reached end of file.\", original, len(s))\n 365 |     if openstring:  # reached EOF and have an unterminated string\n 366 |         raise TomlDecodeError(\"Unterminated string found.\"\n 367 |                               \" Reached end of file.\", original, len(s))\n 368 |     s = ''.join(sl)\n 369 |     s = s.split('\\n')\n 370 |     multikey = None\n 371 |     multilinestr = \"\"\n 372 |     multibackslash = False\n 373 |     pos = 0\n 374 |     for idx, line in enumerate(s):\n 375 |         if idx > 0:\n 376 |             pos += len(s[idx - 1]) + 1\n 377 | \n 378 |         decoder.embed_comments(idx, currentlevel)\n 379 | \n 380 |         if not multilinestr or multibackslash or '\\n' not in multilinestr:\n 381 |             line = line.strip()\n 382 |         if line == \"\" and (not multikey or multibackslash):\n 383 |             continue\n 384 |         if multikey:\n 385 |             if multibackslash:\n 386 |                 multilinestr += line\n 387 |             else:\n 388 |                 multilinestr += line\n 389 |             multibackslash = False\n 390 |             closed = False\n 391 |             if multilinestr[0] == '[':\n 392 |                 closed = line[-1] == ']'\n 393 |             elif len(line) > 2:\n 394 |                 closed = (line[-1] == multilinestr[0] and\n 395 |                           line[-2] == multilinestr[0] and\n 396 |                           line[-3] == multilinestr[0])\n 397 |             if closed:\n 398 |                 try:\n 399 |                     value, vtype = decoder.load_value(multilinestr)\n 400 |                 except ValueError as err:\n 401 |                     raise TomlDecodeError(str(err), original, pos)\n 402 |                 currentlevel[multikey] = value\n 403 |                 multikey = None\n 404 |                 multilinestr = \"\"\n 405 |             else:\n 406 |                 k = len(multilinestr) - 1\n 407 |                 while k > -1 and multilinestr[k] == '\\\\':\n 408 |                     multibackslash = not multibackslash\n 409 |                     k -= 1\n 410 |                 if multibackslash:\n 411 |                     multilinestr = multilinestr[:-1]\n 412 |                 else:\n 413 |                     multilinestr += \"\\n\"\n 414 |             continue\n 415 |         if line[0] == '[':\n 416 |             arrayoftables = False\n 417 |             if len(line) == 1:\n 418 |                 raise TomlDecodeError(\"Opening key group bracket on line by \"\n 419 |                                       \"itself.\", original, pos)\n 420 |             if line[1] == '[':\n 421 |                 arrayoftables = True\n 422 |                 line = line[2:]\n 423 |                 splitstr = ']]'\n 424 |             else:\n 425 |                 line = line[1:]\n 426 |                 splitstr = ']'\n 427 |             i = 1\n 428 |             quotesplits = decoder._get_split_on_quotes(line)\n 429 |             quoted = False\n 430 |             for quotesplit in quotesplits:\n 431 |                 if not quoted and splitstr in quotesplit:\n 432 |                     break\n 433 |                 i += quotesplit.count(splitstr)\n 434 |                 quoted = not quoted\n 435 |             line = line.split(splitstr, i)\n 436 |             if len(line) < i + 1 or line[-1].strip() != \"\":\n 437 |                 raise TomlDecodeError(\"Key group not on a line by itself.\",\n 438 |                                       original, pos)\n 439 |             groups = splitstr.join(line[:-1]).split('.')\n 440 |             i = 0\n 441 |             while i < len(groups):\n 442 |                 groups[i] = groups[i].strip()\n 443 |                 if len(groups[i]) > 0 and (groups[i][0] == '\"' or\n 444 |                                            groups[i][0] == \"'\"):\n 445 |                     groupstr = groups[i]\n 446 |                     j = i + 1\n 447 |                     while ((not groupstr[0] == groupstr[-1]) or\n 448 |                            len(groupstr) == 1):\n 449 |                         j += 1\n 450 |                         if j > len(groups) + 2:\n 451 |                             raise TomlDecodeError(\"Invalid group name '\" +\n 452 |                                                   groupstr + \"' Something \" +\n 453 |                                                   \"went wrong.\", original, pos)\n 454 |                         groupstr = '.'.join(groups[i:j]).strip()\n 455 |                     groups[i] = groupstr[1:-1]\n 456 |                     groups[i + 1:j] = []\n 457 |                 else:\n 458 |                     if not _groupname_re.match(groups[i]):\n 459 |                         raise TomlDecodeError(\"Invalid group name '\" +\n 460 |                                               groups[i] + \"'. Try quoting it.\",\n 461 |                                               original, pos)\n 462 |                 i += 1\n 463 |             currentlevel = retval\n 464 |             for i in _range(len(groups)):\n 465 |                 group = groups[i]\n 466 |                 if group == \"\":\n 467 |                     raise TomlDecodeError(\"Can't have a keygroup with an empty \"\n 468 |                                           \"name\", original, pos)\n 469 |                 try:\n 470 |                     currentlevel[group]\n 471 |                     if i == len(groups) - 1:\n 472 |                         if group in implicitgroups:\n 473 |                             implicitgroups.remove(group)\n 474 |                             if arrayoftables:\n 475 |                                 raise TomlDecodeError(\"An implicitly defined \"\n 476 |                                                       \"table can't be an array\",\n 477 |                                                       original, pos)\n 478 |                         elif arrayoftables:\n 479 |                             currentlevel[group].append(decoder.get_empty_table()\n 480 |                                                        )\n 481 |                         else:\n 482 |                             raise TomlDecodeError(\"What? \" + group +\n 483 |                                                   \" already exists?\" +\n 484 |                                                   str(currentlevel),\n 485 |                                                   original, pos)\n 486 |                 except TypeError:\n 487 |                     currentlevel = currentlevel[-1]\n 488 |                     if group not in currentlevel:\n 489 |                         currentlevel[group] = decoder.get_empty_table()\n 490 |                         if i == len(groups) - 1 and arrayoftables:\n 491 |                             currentlevel[group] = [decoder.get_empty_table()]\n 492 |                 except KeyError:\n 493 |                     if i != len(groups) - 1:\n 494 |                         implicitgroups.append(group)\n 495 |                     currentlevel[group] = decoder.get_empty_table()\n 496 |                     if i == len(groups) - 1 and arrayoftables:\n 497 |                         currentlevel[group] = [decoder.get_empty_table()]\n 498 |                 currentlevel = currentlevel[group]\n 499 |                 if arrayoftables:\n 500 |                     try:\n 501 |                         currentlevel = currentlevel[-1]\n 502 |                     except KeyError:\n 503 |                         pass\n 504 |         elif line[0] == \"{\":\n 505 |             if line[-1] != \"}\":\n 506 |                 raise TomlDecodeError(\"Line breaks are not allowed in inline\"\n 507 |                                       \"objects\", original, pos)\n 508 |             try:\n 509 |                 decoder.load_inline_object(line, currentlevel, multikey,\n 510 |                                            multibackslash)\n 511 |             except ValueError as err:\n 512 |                 raise TomlDecodeError(str(err), original, pos)\n 513 |         elif \"=\" in line:\n 514 |             try:\n 515 |                 ret = decoder.load_line(line, currentlevel, multikey,\n 516 |                                         multibackslash)\n 517 |             except ValueError as err:\n 518 |                 raise TomlDecodeError(str(err), original, pos)\n 519 |             if ret is not None:\n 520 |                 multikey, multilinestr, multibackslash = ret\n 521 |     return retval\n 522 | \n 523 | \n 524 | def _load_date(val):\n 525 |     microsecond = 0\n 526 |     tz = None\n 527 |     try:\n 528 |         if len(val) > 19:\n 529 |             if val[19] == '.':\n 530 |                 if val[-1].upper() == 'Z':\n 531 |                     subsecondval = val[20:-1]\n 532 |                     tzval = \"Z\"\n 533 |                 else:\n 534 |                     subsecondvalandtz = val[20:]\n 535 |                     if '+' in subsecondvalandtz:\n 536 |                         splitpoint = subsecondvalandtz.index('+')\n 537 |                         subsecondval = subsecondvalandtz[:splitpoint]\n 538 |                         tzval = subsecondvalandtz[splitpoint:]\n 539 |                     elif '-' in subsecondvalandtz:\n 540 |                         splitpoint = subsecondvalandtz.index('-')\n 541 |                         subsecondval = subsecondvalandtz[:splitpoint]\n 542 |                         tzval = subsecondvalandtz[splitpoint:]\n 543 |                     else:\n 544 |                         tzval = None\n 545 |                         subsecondval = subsecondvalandtz\n 546 |                 if tzval is not None:\n 547 |                     tz = TomlTz(tzval)\n 548 |                 microsecond = int(int(subsecondval) *\n 549 |                                   (10 ** (6 - len(subsecondval))))\n 550 |             else:\n 551 |                 tz = TomlTz(val[19:])\n 552 |     except ValueError:\n 553 |         tz = None\n 554 |     if \"-\" not in val[1:]:\n 555 |         return None\n 556 |     try:\n 557 |         if len(val) == 10:\n 558 |             d = datetime.date(\n 559 |                 int(val[:4]), int(val[5:7]),\n 560 |                 int(val[8:10]))\n 561 |         else:\n 562 |             d = datetime.datetime(\n 563 |                 int(val[:4]), int(val[5:7]),\n 564 |                 int(val[8:10]), int(val[11:13]),\n 565 |                 int(val[14:16]), int(val[17:19]), microsecond, tz)\n 566 |     except ValueError:\n 567 |         return None\n 568 |     return d\n 569 | \n 570 | \n 571 | def _load_unicode_escapes(v, hexbytes, prefix):\n 572 |     skip = False\n 573 |     i = len(v) - 1\n 574 |     while i > -1 and v[i] == '\\\\':\n 575 |         skip = not skip\n 576 |         i -= 1\n 577 |     for hx in hexbytes:\n 578 |         if skip:\n 579 |             skip = False\n 580 |             i = len(hx) - 1\n 581 |             while i > -1 and hx[i] == '\\\\':\n 582 |                 skip = not skip\n 583 |                 i -= 1\n 584 |             v += prefix\n 585 |             v += hx\n 586 |             continue\n 587 |         hxb = \"\"\n 588 |         i = 0\n 589 |         hxblen = 4\n 590 |         if prefix == \"\\\\U\":\n 591 |             hxblen = 8\n 592 |         hxb = ''.join(hx[i:i + hxblen]).lower()\n 593 |         if hxb.strip('0123456789abcdef'):\n 594 |             raise ValueError(\"Invalid escape sequence: \" + hxb)\n 595 |         if hxb[0] == \"d\" and hxb[1].strip('01234567'):\n 596 |             raise ValueError(\"Invalid escape sequence: \" + hxb +\n 597 |                              \". Only scalar unicode points are allowed.\")\n 598 |         v += unichr(int(hxb, 16))\n 599 |         v += unicode(hx[len(hxb):])\n 600 |     return v\n 601 | \n 602 | \n 603 | # Unescape TOML string values.\n 604 | \n 605 | # content after the \\\n 606 | _escapes = ['0', 'b', 'f', 'n', 'r', 't', '\"']\n 607 | # What it should be replaced by\n 608 | _escapedchars = ['\\0', '\\b', '\\f', '\\n', '\\r', '\\t', '\\\"']\n 609 | # Used for substitution\n 610 | _escape_to_escapedchars = dict(zip(_escapes, _escapedchars))\n 611 | \n 612 | \n 613 | def _unescape(v):\n 614 |     \"\"\"Unescape characters in a TOML string.\"\"\"\n 615 |     i = 0\n 616 |     backslash = False\n 617 |     while i < len(v):\n 618 |         if backslash:\n 619 |             backslash = False\n 620 |             if v[i] in _escapes:\n 621 |                 v = v[:i - 1] + _escape_to_escapedchars[v[i]] + v[i + 1:]\n 622 |             elif v[i] == '\\\\':\n 623 |                 v = v[:i - 1] + v[i:]\n 624 |             elif v[i] == 'u' or v[i] == 'U':\n 625 |                 i += 1\n 626 |             else:\n 627 |                 raise ValueError(\"Reserved escape sequence used\")\n 628 |             continue\n 629 |         elif v[i] == '\\\\':\n 630 |             backslash = True\n 631 |         i += 1\n 632 |     return v\n 633 | \n 634 | \n 635 | class InlineTableDict(object):\n 636 |     \"\"\"Sentinel subclass of dict for inline tables.\"\"\"\n 637 | \n 638 | \n 639 | class TomlDecoder(object):\n 640 | \n 641 |     def __init__(self, _dict=dict):\n 642 |         self._dict = _dict\n 643 | \n 644 |     def get_empty_table(self):\n 645 |         return self._dict()\n 646 | \n 647 |     def get_empty_inline_table(self):\n 648 |         class DynamicInlineTableDict(self._dict, InlineTableDict):\n 649 |             \"\"\"Concrete sentinel subclass for inline tables.\n 650 |             It is a subclass of _dict which is passed in dynamically at load\n 651 |             time\n 652 | \n 653 |             It is also a subclass of InlineTableDict\n 654 |             \"\"\"\n 655 | \n 656 |         return DynamicInlineTableDict()\n 657 | \n 658 |     def load_inline_object(self, line, currentlevel, multikey=False,\n 659 |                            multibackslash=False):\n 660 |         candidate_groups = line[1:-1].split(\",\")\n 661 |         groups = []\n 662 |         if len(candidate_groups) == 1 and not candidate_groups[0].strip():\n 663 |             candidate_groups.pop()\n 664 |         while len(candidate_groups) > 0:\n 665 |             candidate_group = candidate_groups.pop(0)\n 666 |             try:\n 667 |                 _, value = candidate_group.split('=', 1)\n 668 |             except ValueError:\n 669 |                 raise ValueError(\"Invalid inline table encountered\")\n 670 |             value = value.strip()\n 671 |             if ((value[0] == value[-1] and value[0] in ('\"', \"'\")) or (\n 672 |                     value[0] in '-0123456789' or\n 673 |                     value in ('true', 'false') or\n 674 |                     (value[0] == \"[\" and value[-1] == \"]\") or\n 675 |                     (value[0] == '{' and value[-1] == '}'))):\n 676 |                 groups.append(candidate_group)\n 677 |             elif len(candidate_groups) > 0:\n 678 |                 candidate_groups[0] = (candidate_group + \",\" +\n 679 |                                        candidate_groups[0])\n 680 |             else:\n 681 |                 raise ValueError(\"Invalid inline table value encountered\")\n 682 |         for group in groups:\n 683 |             status = self.load_line(group, currentlevel, multikey,\n 684 |                                     multibackslash)\n 685 |             if status is not None:\n 686 |                 break\n 687 | \n 688 |     def _get_split_on_quotes(self, line):\n 689 |         doublequotesplits = line.split('\"')\n 690 |         quoted = False\n 691 |         quotesplits = []\n 692 |         if len(doublequotesplits) > 1 and \"'\" in doublequotesplits[0]:\n 693 |             singlequotesplits = doublequotesplits[0].split(\"'\")\n 694 |             doublequotesplits = doublequotesplits[1:]\n 695 |             while len(singlequotesplits) % 2 == 0 and len(doublequotesplits):\n 696 |                 singlequotesplits[-1] += '\"' + doublequotesplits[0]\n 697 |                 doublequotesplits = doublequotesplits[1:]\n 698 |                 if \"'\" in singlequotesplits[-1]:\n 699 |                     singlequotesplits = (singlequotesplits[:-1] +\n 700 |                                          singlequotesplits[-1].split(\"'\"))\n 701 |             quotesplits += singlequotesplits\n 702 |         for doublequotesplit in doublequotesplits:\n 703 |             if quoted:\n 704 |                 quotesplits.append(doublequotesplit)\n 705 |             else:\n 706 |                 quotesplits += doublequotesplit.split(\"'\")\n 707 |                 quoted = not quoted\n 708 |         return quotesplits\n 709 | \n 710 |     def load_line(self, line, currentlevel, multikey, multibackslash):\n 711 |         i = 1\n 712 |         quotesplits = self._get_split_on_quotes(line)\n 713 |         quoted = False\n 714 |         for quotesplit in quotesplits:\n 715 |             if not quoted and '=' in quotesplit:\n 716 |                 break\n 717 |             i += quotesplit.count('=')\n 718 |             quoted = not quoted\n 719 |         pair = line.split('=', i)\n 720 |         strictly_valid = _strictly_valid_num(pair[-1])\n 721 |         if _number_with_underscores.match(pair[-1]):\n 722 |             pair[-1] = pair[-1].replace('_', '')\n 723 |         while len(pair[-1]) and (pair[-1][0] != ' ' and pair[-1][0] != '\\t' and\n 724 |                                  pair[-1][0] != \"'\" and pair[-1][0] != '\"' and\n 725 |                                  pair[-1][0] != '[' and pair[-1][0] != '{' and\n 726 |                                  pair[-1].strip() != 'true' and\n 727 |                                  pair[-1].strip() != 'false'):\n 728 |             try:\n 729 |                 float(pair[-1])\n 730 |                 break\n 731 |             except ValueError:\n 732 |                 pass\n 733 |             if _load_date(pair[-1]) is not None:\n 734 |                 break\n 735 |             if TIME_RE.match(pair[-1]):\n 736 |                 break\n 737 |             i += 1\n 738 |             prev_val = pair[-1]\n 739 |             pair = line.split('=', i)\n 740 |             if prev_val == pair[-1]:\n 741 |                 raise ValueError(\"Invalid date or number\")\n 742 |             if strictly_valid:\n 743 |                 strictly_valid = _strictly_valid_num(pair[-1])\n 744 |         pair = ['='.join(pair[:-1]).strip(), pair[-1].strip()]\n 745 |         if '.' in pair[0]:\n 746 |             if '\"' in pair[0] or \"'\" in pair[0]:\n 747 |                 quotesplits = self._get_split_on_quotes(pair[0])\n 748 |                 quoted = False\n 749 |                 levels = []\n 750 |                 for quotesplit in quotesplits:\n 751 |                     if quoted:\n 752 |                         levels.append(quotesplit)\n 753 |                     else:\n 754 |                         levels += [level.strip() for level in\n 755 |                                    quotesplit.split('.')]\n 756 |                     quoted = not quoted\n 757 |             else:\n 758 |                 levels = pair[0].split('.')\n 759 |             while levels[-1] == \"\":\n 760 |                 levels = levels[:-1]\n 761 |             for level in levels[:-1]:\n 762 |                 if level == \"\":\n 763 |                     continue\n 764 |                 if level not in currentlevel:\n 765 |                     currentlevel[level] = self.get_empty_table()\n 766 |                 currentlevel = currentlevel[level]\n 767 |             pair[0] = levels[-1].strip()\n 768 |         elif (pair[0][0] == '\"' or pair[0][0] == \"'\") and \\\n 769 |                 (pair[0][-1] == pair[0][0]):\n 770 |             pair[0] = _unescape(pair[0][1:-1])\n 771 |         k, koffset = self._load_line_multiline_str(pair[1])\n 772 |         if k > -1:\n 773 |             while k > -1 and pair[1][k + koffset] == '\\\\':\n 774 |                 multibackslash = not multibackslash\n 775 |                 k -= 1\n 776 |             if multibackslash:\n 777 |                 multilinestr = pair[1][:-1]\n 778 |             else:\n 779 |                 multilinestr = pair[1] + \"\\n\"\n 780 |             multikey = pair[0]\n 781 |         else:\n 782 |             value, vtype = self.load_value(pair[1], strictly_valid)\n 783 |         try:\n 784 |             currentlevel[pair[0]]\n 785 |             raise ValueError(\"Duplicate keys!\")\n 786 |         except TypeError:\n 787 |             raise ValueError(\"Duplicate keys!\")\n 788 |         except KeyError:\n 789 |             if multikey:\n 790 |                 return multikey, multilinestr, multibackslash\n 791 |             else:\n 792 |                 currentlevel[pair[0]] = value\n 793 | \n 794 |     def _load_line_multiline_str(self, p):\n 795 |         poffset = 0\n 796 |         if len(p) < 3:\n 797 |             return -1, poffset\n 798 |         if p[0] == '[' and (p.strip()[-1] != ']' and\n 799 |                             self._load_array_isstrarray(p)):\n 800 |             newp = p[1:].strip().split(',')\n 801 |             while len(newp) > 1 and newp[-1][0] != '\"' and newp[-1][0] != \"'\":\n 802 |                 newp = newp[:-2] + [newp[-2] + ',' + newp[-1]]\n 803 |             newp = newp[-1]\n 804 |             poffset = len(p) - len(newp)\n 805 |             p = newp\n 806 |         if p[0] != '\"' and p[0] != \"'\":\n 807 |             return -1, poffset\n 808 |         if p[1] != p[0] or p[2] != p[0]:\n 809 |             return -1, poffset\n 810 |         if len(p) > 5 and p[-1] == p[0] and p[-2] == p[0] and p[-3] == p[0]:\n 811 |             return -1, poffset\n 812 |         return len(p) - 1, poffset\n 813 | \n 814 |     def load_value(self, v, strictly_valid=True):\n 815 |         if not v:\n 816 |             raise ValueError(\"Empty value is invalid\")\n 817 |         if v == 'true':\n 818 |             return (True, \"bool\")\n 819 |         elif v.lower() == 'true':\n 820 |             raise ValueError(\"Only all lowercase booleans allowed\")\n 821 |         elif v == 'false':\n 822 |             return (False, \"bool\")\n 823 |         elif v.lower() == 'false':\n 824 |             raise ValueError(\"Only all lowercase booleans allowed\")\n 825 |         elif v[0] == '\"' or v[0] == \"'\":\n 826 |             quotechar = v[0]\n 827 |             testv = v[1:].split(quotechar)\n 828 |             triplequote = False\n 829 |             triplequotecount = 0\n 830 |             if len(testv) > 1 and testv[0] == '' and testv[1] == '':\n 831 |                 testv = testv[2:]\n 832 |                 triplequote = True\n 833 |             closed = False\n 834 |             for tv in testv:\n 835 |                 if tv == '':\n 836 |                     if triplequote:\n 837 |                         triplequotecount += 1\n 838 |                     else:\n 839 |                         closed = True\n 840 |                 else:\n 841 |                     oddbackslash = False\n 842 |                     try:\n 843 |                         i = -1\n 844 |                         j = tv[i]\n 845 |                         while j == '\\\\':\n 846 |                             oddbackslash = not oddbackslash\n 847 |                             i -= 1\n 848 |                             j = tv[i]\n 849 |                     except IndexError:\n 850 |                         pass\n 851 |                     if not oddbackslash:\n 852 |                         if closed:\n 853 |                             raise ValueError(\"Found tokens after a closed \" +\n 854 |                                              \"string. Invalid TOML.\")\n 855 |                         else:\n 856 |                             if not triplequote or triplequotecount > 1:\n 857 |                                 closed = True\n 858 |                             else:\n 859 |                                 triplequotecount = 0\n 860 |             if quotechar == '\"':\n 861 |                 escapeseqs = v.split('\\\\')[1:]\n 862 |                 backslash = False\n 863 |                 for i in escapeseqs:\n 864 |                     if i == '':\n 865 |                         backslash = not backslash\n 866 |                     else:\n 867 |                         if i[0] not in _escapes and (i[0] != 'u' and\n 868 |                                                      i[0] != 'U' and\n 869 |                                                      not backslash):\n 870 |                             raise ValueError(\"Reserved escape sequence used\")\n 871 |                         if backslash:\n 872 |                             backslash = False\n 873 |                 for prefix in [\"\\\\u\", \"\\\\U\"]:\n 874 |                     if prefix in v:\n 875 |                         hexbytes = v.split(prefix)\n 876 |                         v = _load_unicode_escapes(hexbytes[0], hexbytes[1:],\n 877 |                                                   prefix)\n 878 |                 v = _unescape(v)\n 879 |             if len(v) > 1 and v[1] == quotechar and (len(v) < 3 or\n 880 |                                                      v[1] == v[2]):\n 881 |                 v = v[2:-2]\n 882 |             return (v[1:-1], \"str\")\n 883 |         elif v[0] == '[':\n 884 |             return (self.load_array(v), \"array\")\n 885 |         elif v[0] == '{':\n 886 |             inline_object = self.get_empty_inline_table()\n 887 |             self.load_inline_object(v, inline_object)\n 888 |             return (inline_object, \"inline_object\")\n 889 |         elif TIME_RE.match(v):\n 890 |             h, m, s, _, ms = TIME_RE.match(v).groups()\n 891 |             time = datetime.time(int(h), int(m), int(s), int(ms) if ms else 0)\n 892 |             return (time, \"time\")\n 893 |         else:\n 894 |             parsed_date = _load_date(v)\n 895 |             if parsed_date is not None:\n 896 |                 return (parsed_date, \"date\")\n 897 |             if not strictly_valid:\n 898 |                 raise ValueError(\"Weirdness with leading zeroes or \"\n 899 |                                  \"underscores in your number.\")\n 900 |             itype = \"int\"\n 901 |             neg = False\n 902 |             if v[0] == '-':\n 903 |                 neg = True\n 904 |                 v = v[1:]\n 905 |             elif v[0] == '+':\n 906 |                 v = v[1:]\n 907 |             v = v.replace('_', '')\n 908 |             lowerv = v.lower()\n 909 |             if '.' in v or ('x' not in v and ('e' in v or 'E' in v)):\n 910 |                 if '.' in v and v.split('.', 1)[1] == '':\n 911 |                     raise ValueError(\"This float is missing digits after \"\n 912 |                                      \"the point\")\n 913 |                 if v[0] not in '0123456789':\n 914 |                     raise ValueError(\"This float doesn't have a leading \"\n 915 |                                      \"digit\")\n 916 |                 v = float(v)\n 917 |                 itype = \"float\"\n 918 |             elif len(lowerv) == 3 and (lowerv == 'inf' or lowerv == 'nan'):\n 919 |                 v = float(v)\n 920 |                 itype = \"float\"\n 921 |             if itype == \"int\":\n 922 |                 v = int(v, 0)\n 923 |             if neg:\n 924 |                 return (0 - v, itype)\n 925 |             return (v, itype)\n 926 | \n 927 |     def bounded_string(self, s):\n 928 |         if len(s) == 0:\n 929 |             return True\n 930 |         if s[-1] != s[0]:\n 931 |             return False\n 932 |         i = -2\n 933 |         backslash = False\n 934 |         while len(s) + i > 0:\n 935 |             if s[i] == \"\\\\\":\n 936 |                 backslash = not backslash\n 937 |                 i -= 1\n 938 |             else:\n 939 |                 break\n 940 |         return not backslash\n 941 | \n 942 |     def _load_array_isstrarray(self, a):\n 943 |         a = a[1:-1].strip()\n 944 |         if a != '' and (a[0] == '\"' or a[0] == \"'\"):\n 945 |             return True\n 946 |         return False\n 947 | \n 948 |     def load_array(self, a):\n 949 |         atype = None\n 950 |         retval = []\n 951 |         a = a.strip()\n 952 |         if '[' not in a[1:-1] or \"\" != a[1:-1].split('[')[0].strip():\n 953 |             strarray = self._load_array_isstrarray(a)\n 954 |             if not a[1:-1].strip().startswith('{'):\n 955 |                 a = a[1:-1].split(',')\n 956 |             else:\n 957 |                 # a is an inline object, we must find the matching parenthesis\n 958 |                 # to define groups\n 959 |                 new_a = []\n 960 |                 start_group_index = 1\n 961 |                 end_group_index = 2\n 962 |                 open_bracket_count = 1 if a[start_group_index] == '{' else 0\n 963 |                 in_str = False\n 964 |                 while end_group_index < len(a[1:]):\n 965 |                     if a[end_group_index] == '\"' or a[end_group_index] == \"'\":\n 966 |                         if in_str:\n 967 |                             backslash_index = end_group_index - 1\n 968 |                             while (backslash_index > -1 and\n 969 |                                    a[backslash_index] == '\\\\'):\n 970 |                                 in_str = not in_str\n 971 |                                 backslash_index -= 1\n 972 |                         in_str = not in_str\n 973 |                     if not in_str and a[end_group_index] == '{':\n 974 |                         open_bracket_count += 1\n 975 |                     if in_str or a[end_group_index] != '}':\n 976 |                         end_group_index += 1\n 977 |                         continue\n 978 |                     elif a[end_group_index] == '}' and open_bracket_count > 1:\n 979 |                         open_bracket_count -= 1\n 980 |                         end_group_index += 1\n 981 |                         continue\n 982 | \n 983 |                     # Increase end_group_index by 1 to get the closing bracket\n 984 |                     end_group_index += 1\n 985 | \n 986 |                     new_a.append(a[start_group_index:end_group_index])\n 987 | \n 988 |                     # The next start index is at least after the closing\n 989 |                     # bracket, a closing bracket can be followed by a comma\n 990 |                     # since we are in an array.\n 991 |                     start_group_index = end_group_index + 1\n 992 |                     while (start_group_index < len(a[1:]) and\n 993 |                            a[start_group_index] != '{'):\n 994 |                         start_group_index += 1\n 995 |                     end_group_index = start_group_index + 1\n 996 |                 a = new_a\n 997 |             b = 0\n 998 |             if strarray:\n 999 |                 while b < len(a) - 1:\n1000 |                     ab = a[b].strip()\n1001 |                     while (not self.bounded_string(ab) or\n1002 |                            (len(ab) > 2 and\n1003 |                             ab[0] == ab[1] == ab[2] and\n1004 |                             ab[-2] != ab[0] and\n1005 |                             ab[-3] != ab[0])):\n1006 |                         a[b] = a[b] + ',' + a[b + 1]\n1007 |                         ab = a[b].strip()\n1008 |                         if b < len(a) - 2:\n1009 |                             a = a[:b + 1] + a[b + 2:]\n1010 |                         else:\n1011 |                             a = a[:b + 1]\n1012 |                     b += 1\n1013 |         else:\n1014 |             al = list(a[1:-1])\n1015 |             a = []\n1016 |             openarr = 0\n1017 |             j = 0\n1018 |             for i in _range(len(al)):\n1019 |                 if al[i] == '[':\n1020 |                     openarr += 1\n1021 |                 elif al[i] == ']':\n1022 |                     openarr -= 1\n1023 |                 elif al[i] == ',' and not openarr:\n1024 |                     a.append(''.join(al[j:i]))\n1025 |                     j = i + 1\n1026 |             a.append(''.join(al[j:]))\n1027 |         for i in _range(len(a)):\n1028 |             a[i] = a[i].strip()\n1029 |             if a[i] != '':\n1030 |                 nval, ntype = self.load_value(a[i])\n1031 |                 if atype:\n1032 |                     if ntype != atype:\n1033 |                         raise ValueError(\"Not a homogeneous array\")\n1034 |                 else:\n1035 |                     atype = ntype\n1036 |                 retval.append(nval)\n1037 |         return retval\n1038 | \n1039 |     def preserve_comment(self, line_no, key, comment, beginline):\n1040 |         pass\n1041 | \n1042 |     def embed_comments(self, idx, currentlevel):\n1043 |         pass\n1044 | \n1045 | \n1046 | class TomlPreserveCommentDecoder(TomlDecoder):\n1047 | \n1048 |     def __init__(self, _dict=dict):\n1049 |         self.saved_comments = {}\n1050 |         super(TomlPreserveCommentDecoder, self).__init__(_dict)\n1051 | \n1052 |     def preserve_comment(self, line_no, key, comment, beginline):\n1053 |         self.saved_comments[line_no] = (key, comment, beginline)\n1054 | \n1055 |     def embed_comments(self, idx, currentlevel):\n1056 |         if idx not in self.saved_comments:\n1057 |             return\n1058 | \n1059 |         key, comment, beginline = self.saved_comments[idx]\n1060 |         currentlevel[key] = CommentValue(currentlevel[key], comment, beginline,\n1061 |                                          self._dict)\n```\n\n## Target A\nLine 91: `n = n.strip()`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 90, \"text\": \"n = n.strip()\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 90 and 91 has no effect on the observable behavior because the stripped value is not used.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 92, \"text\": \"if n == '':\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 92 has no effect on the observable behavior because the stripped value is not used if it is empty.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 93, \"text\": \"raise ValueError('Empty value is invalid')\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 93 has no effect on the observable behavior because the stripped value is not used if it is empty.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 94, \"text\": \"if n[0] == '[':\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 94 has no effect on the observable behavior because the stripped value is not used if it starts with '['.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 95, \"text\": \"return (self.load_array(n), 'array')\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 95 has no effect on the observable behavior because the stripped value is not used if it starts with '['.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 96, \"text\": \"if n[0] == '{':\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 96 has no effect on the observable behavior because the stripped value is not used if it starts with '{'.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 97, \"text\": \"inline_object = self.get_empty_inline_table()\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 97 has no effect on the observable behavior because the stripped value is not used if it starts with '{'.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 98, \"text\": \"self.load_inline_object(n, inline_object)\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 98 has no effect on the observable behavior because the stripped value is not used if it starts with '{'.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 99, \"text\": \"return (inline_object, 'inline_object')\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 99 has no effect on the observable behavior because the stripped value is not used if it starts with '{'.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 100, \"text\": \"if TIME_RE.match(n):\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 100 has no effect on the observable behavior because the stripped value is not used if it matches the time regex.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 101, \"text\": \"h, m, s, _, ms = TIME_RE.match(n).groups()\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 101 has no effect on the observable behavior because the stripped value is not used if it matches the time regex.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"toml/decoder.py\", \"line\": 102, \"text\": \"time = datetime.time(int(h), int(m), int(s), int(ms) if ms else 0)\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting both lines 91 and 102 has no effect on the observable behavior because the stripped value is not used if it matches the time regex.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 4098,
+      "completion_tokens": 1055,
+      "total_duration_ns": 57327128737,
+      "load_duration_ns": 202326273,
+      "prompt_eval_duration_ns": 1716078000,
+      "eval_duration_ns": 52704463000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 58.511,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b"
+  },
+  "prompt_tokens": 4098,
+  "completion_tokens": 1055,
+  "runtime_s": 58.511,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [],
+  "rejected": [
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 90,
+            "text": "n = n.strip()"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 90 and 91 has no effect on the observable behavior because the stripped value is not used."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 90,
+          "text": "n = n.strip()",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 90,
+            "text": "n = n.strip()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 92,
+            "text": "if n == '':"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 92 has no effect on the observable behavior because the stripped value is not used if it is empty."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 92,
+          "text": "if n == '':",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 92,
+            "text": "if n == '':"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 93,
+            "text": "raise ValueError('Empty value is invalid')"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 93 has no effect on the observable behavior because the stripped value is not used if it is empty."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 93,
+          "text": "raise ValueError('Empty value is invalid')",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 93,
+            "text": "raise ValueError('Empty value is invalid')"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 94,
+            "text": "if n[0] == '[':"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 94 has no effect on the observable behavior because the stripped value is not used if it starts with '['."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 94,
+          "text": "if n[0] == '[':",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 94,
+            "text": "if n[0] == '[':"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 95,
+            "text": "return (self.load_array(n), 'array')"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 95 has no effect on the observable behavior because the stripped value is not used if it starts with '['."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 95,
+          "text": "return (self.load_array(n), 'array')",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 95,
+            "text": "return (self.load_array(n), 'array')"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 96,
+            "text": "if n[0] == '{':"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 96 has no effect on the observable behavior because the stripped value is not used if it starts with '{'."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 96,
+          "text": "if n[0] == '{':",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 96,
+            "text": "if n[0] == '{':"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 97,
+            "text": "inline_object = self.get_empty_inline_table()"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 97 has no effect on the observable behavior because the stripped value is not used if it starts with '{'."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 97,
+          "text": "inline_object = self.get_empty_inline_table()",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 97,
+            "text": "inline_object = self.get_empty_inline_table()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 98,
+            "text": "self.load_inline_object(n, inline_object)"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 98 has no effect on the observable behavior because the stripped value is not used if it starts with '{'."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 98,
+          "text": "self.load_inline_object(n, inline_object)",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 98,
+            "text": "self.load_inline_object(n, inline_object)"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 99,
+            "text": "return (inline_object, 'inline_object')"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 99 has no effect on the observable behavior because the stripped value is not used if it starts with '{'."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 99,
+          "text": "return (inline_object, 'inline_object')",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 99,
+            "text": "return (inline_object, 'inline_object')"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 100,
+            "text": "if TIME_RE.match(n):"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 100 has no effect on the observable behavior because the stripped value is not used if it matches the time regex."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 100,
+          "text": "if TIME_RE.match(n):",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 100,
+            "text": "if TIME_RE.match(n):"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 101,
+            "text": "h, m, s, _, ms = TIME_RE.match(n).groups()"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 101 has no effect on the observable behavior because the stripped value is not used if it matches the time regex."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 101,
+          "text": "h, m, s, _, ms = TIME_RE.match(n).groups()",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 101,
+            "text": "h, m, s, _, ms = TIME_RE.match(n).groups()"
+          }
+        }
+      ]
+    },
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "toml/decoder.py",
+            "line": 102,
+            "text": "time = datetime.time(int(h), int(m), int(s), int(ms) if ms else 0)"
+          }
+        ],
+        "condition": "true",
+        "rationale": "Deleting both lines 91 and 102 has no effect on the observable behavior because the stripped value is not used if it matches the time regex."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 102,
+          "text": "time = datetime.time(int(h), int(m), int(s), int(ms) if ms else 0)",
+          "proposal": {
+            "file": "toml/decoder.py",
+            "line": 102,
+            "text": "time = datetime.time(int(h), int(m), int(s), int(ms) if ms else 0)"
+          }
+        }
+      ]
+    }
+  ],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_space_padded_leading_zero",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [],
+        "stray_ops": [],
+        "msms_exact": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "INVALID_OUTPUT"
+}

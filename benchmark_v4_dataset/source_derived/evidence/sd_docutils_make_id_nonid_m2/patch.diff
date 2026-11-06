@@ -1,0 +1,21 @@
+--- a/docutils/nodes.py
++++ b/docutils/nodes.py
+@@ -2234,12 +2234,18 @@
+     # get rid of non-ascii characters.
+     # 'ascii' lowercase to prevent problems with turkish locale.
+     id = unicodedata.normalize(
+             'NFKD', id).encode('ascii', 'ignore').decode('ascii')
+     # shrink runs of whitespace and replace by hyphen
+     id = _non_id_chars.sub('-', ' '.join(id.split()))
++    # SD:U:U1:begin
++    id = id.replace(',', '-')
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    id = id.replace('!', '-')
++    # SD:U:U2:end
+     id = _non_id_at_ends.sub('', id)
+     return str(id)
+ 
+ 
+ _non_id_chars = re.compile('[^a-z0-9]+')
+ _non_id_at_ends = re.compile('^[-0-9]+|-+$')

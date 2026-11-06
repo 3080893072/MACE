@@ -1,0 +1,46 @@
+{
+  "task_id": "tabulate_numparses_header_wrap",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 2074,
+    "function": "tabulate",
+    "code": "        numparses = _expand_numparse(disable_numparse, num_cols)",
+    "statement": "single assignment; deletion keeps the line/indentation"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "tabulate.tabulate(tabular_data, headers=..., tablefmt=..., maxcolwidths=..., maxheadercolwidths=...)",
+    "constraints": [
+      "tabular_data is a non-empty list of equal-length lists of str/int/float",
+      "headers is 'firstrow' or a sequence of names",
+      "tablefmt is a string format name",
+      "maxcolwidths/maxheadercolwidths are int or sequence or None"
+    ],
+    "observation": "the returned string, or the exception type and message"
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_both_widths",
+      "role": "masking",
+      "call": "tabulate([['hdr','fold'],['1','very long data']], headers='firstrow', tablefmt='plain', maxcolwidths=[10,10], maxheadercolwidths=[None,2])"
+    },
+    {
+      "id": "expose_no_maxcolwidths",
+      "role": "exposing",
+      "call": "tabulate([['hdr','fold'],['1','very long data']], headers='firstrow', tablefmt='plain', maxheadercolwidths=[None,2])"
+    },
+    {
+      "id": "control_no_maxheader",
+      "role": "control",
+      "call": "tabulate([['hdr','fold'],['1','very long data']], headers='firstrow', tablefmt='plain', maxcolwidths=[10,10])"
+    }
+  ],
+  "original_tests": [
+    "test/test_output.py::test_plain_maxheadercolwidths_autowraps"
+  ],
+  "original_test_suite": "test/ (tabulate 0.9.0 released tests)",
+  "scope_note": "Exact over the declared finite inputs and declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

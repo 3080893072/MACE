@@ -1,0 +1,54 @@
+{
+  "schema_version": "mace-benchmark-blind-v1-submission",
+  "task_id": "blind_01_parse_header_links",
+  "note": "A submission is scored dimension by dimension. No field is an overall 'exact' score. The examples below use placeholders, not the private labels.",
+  "fields": {
+    "guard": {
+      "expr": "string: boolean expression over nonempty/all_special, int/bool constants, and/or/not, comparisons, arithmetic",
+      "status": "BOUNDED | UNKNOWN | INVALID"
+    },
+    "masking": {
+      "probes": [
+        {
+          "probe_id": "p1",
+          "absorber_sets": [
+            ["op_<k>"]
+          ],
+          "kind": "independent | cooperative | mixed | none"
+        }
+      ],
+      "note": "Report one entry for every public probe. The exact set of minimal absorber sets is compared; for an exposed probe the correct answer is [] and kind='none'. Missing probes are reported as uncovered."
+    },
+    "counterexample": {
+      "claim": "exists | none_exists | none_found",
+      "value": "string or null; required when claim=exists"
+    },
+    "test_gap": {
+      "tests": [
+        {
+          "name": "t1",
+          "verdict": "unexercised | masked | would_be_caught | assertion_gap | test_broken | not_covered",
+          "masking_ops": [
+            "op_<k>"
+          ]
+        }
+      ]
+    },
+    "evidence": "string: executable evidence the method wants scored (witness inputs, source positions, observations)"
+  },
+  "status_values": [
+    "ANSWERED",
+    "UNKNOWN",
+    "INVALID",
+    "UNSUPPORTED",
+    "BLOCKED"
+  ],
+  "rules": {
+    "only_answered_is_scored": true,
+    "unsupported_is_not_analyzed": true,
+    "finite_domain_is_bounded_not_proven": true,
+    "human_written_summary_is_not_an_algorithm_score": true,
+    "masking_attribution_scored_on_public_probes": true,
+    "guard_and_counterexample_scored_on_hidden_eval": true
+  }
+}

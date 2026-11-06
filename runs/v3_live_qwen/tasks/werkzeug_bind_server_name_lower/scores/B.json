@@ -1,0 +1,51 @@
+{
+  "protocol": "mace_benchmark_v3_scoring",
+  "scorer_version": "mace-benchmark-v3-scorer-1.0",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "submission_id": "baseline-A",
+  "status_counts": {
+    "WITNESS_VERIFIED": 1,
+    "FINITE_DOMAIN_EXACT": 0,
+    "PROVEN": 0,
+    "FALSE": 0,
+    "INVALID": 0,
+    "UNVERIFIED": 0,
+    "UNSUPPORTED": 0,
+    "DUPLICATE": 0
+  },
+  "score": {
+    "credited_relations": 1,
+    "claim_credit": 1,
+    "domain_exact_relations": 0,
+    "witness_verified_relations": 1,
+    "deduplicated": 0
+  },
+  "claims": [
+    {
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "status": "WITNESS_VERIFIED",
+      "reason": "Both sides executed and produced different observations.",
+      "scope": "one submitted input; no claim over other legal inputs",
+      "relation_key": "EXPOSING",
+      "observations": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "credit": 1
+    }
+  ],
+  "scope_notes": [
+    "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+    "A single witness is never promoted to a claim over the whole legal input domain.",
+    "Operations outside U are reported UNVERIFIED, not FALSE."
+  ]
+}

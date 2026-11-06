@@ -1,0 +1,53 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1478:name:rows",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1478,
+    "end_line": 1478,
+    "kind": "Assign",
+    "code": "rows = _prepend_row_index(rows, list(showindex))"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_list_of_lists_with_index_firstrow",
+    "test/test_output.py::test_list_of_lists_with_supplied_index"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        rows = _prepend_row_index(rows, list(showindex))",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.52,
+    "failed_nodeids": [
+      "test.test_output::test_list_of_lists_with_index_firstrow",
+      "test.test_output::test_list_of_lists_with_supplied_index"
+    ],
+    "stdout_tail": "FF                                                                       [100%]\n================================== FAILURES ===================================\n___________________ test_list_of_lists_with_supplied_index ____________________\n\n    def test_list_of_lists_with_supplied_index():\n        \"Output: a table with a supplied index\"\n        dd = zip(*[list(range(3)), list(range(101, 104))])\n        expected = \"\\n\".join(\n            [\"      a    b\", \"--  ---  ---\", \" 1    0  101\", \" 2    1  102\", \" 3    2  103\"]\n        )\n        result = tabulate(dd, headers=[\"a\", \"b\"], showindex=[1, 2, 3])\n>       assert_equal(result, expected)\n\ntest\\test_output.py:2891: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = '  a    b\\n---  ---\\n  0  101\\n  1  102\\n  2  103'\nresult = '      a    b\\n--  ---  ---\\n 1    0  101\\n 2    1  102\\n 3    2  103'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n  a    b\n---  ---\n  0  101\n  1  102\n  2  103\n\nGot:\n      a    b\n--  ---  ---\n 1    0  101\n 2    1  102\n 3    2  103\n\n___________________ test_list_of_lists_with_index_firstrow ____________________\n\n    def test_list_of_lists_with_index_firstrow():\n        \"Output: a table with a running index and header='firstrow'\"\n        dd = zip(*[[\"a\"] + list(range(3)), [\"b\"] + list(range(101, 104))])\n        expected = \"\\n\".join(\n            [\"      a    b\", \"--  ---  ---\", \" 0    0  101\", \" 1    1  102\", \" 2    2  103\"]\n        )\n        result = tabulate(dd, headers=\"firstrow\", showindex=True)\n        assert_equal(result, expected)\n        # TODO: make it a separate test case\n        # the index must be as long as the number of rows\n>       with raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\ntest\\test_output.py:2908: Failed\n---------------------------- Captured stdout call -----------------------------\nExpected:\n      a    b\n--  ---  ---\n 0    0  101\n 1    1  102\n 2    2  103\n\nGot:\n      a    b\n--  ---  ---\n 0    0  101\n 1    1  102\n 2    2  103\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_output.py::test_list_of_lists_with_supplied_index - Assertio...\nFAILED test/test_output.py::test_list_of_lists_with_index_firstrow - Failed: ...\n2 failed in 0.16s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

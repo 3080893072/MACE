@@ -1,0 +1,93 @@
+{
+  "fixture": {
+    "id": "dedup_channel",
+    "source": "fixtures/dedup_channel.py",
+    "entry": "program",
+    "channels": 1,
+    "domain": {
+      "kind": "exhaustive",
+      "args": [
+        {
+          "name": "xs",
+          "sort": "list[int]",
+          "length": [
+            1,
+            4
+          ],
+          "values": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "pre",
+          "sort": "bool"
+        }
+      ]
+    },
+    "functions": {
+      "fn_0": {
+        "params": [
+          "list[int]"
+        ],
+        "ret": "list[int]"
+      }
+    },
+    "notes": "Downstream dedup loses the appended duplicate; upstream dedup makes A a duplicate insertion."
+  },
+  "fixture_path": "dedup_channel.json",
+  "model_info": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": ""
+  },
+  "runtime": {
+    "ps": {
+      "models": [
+        {
+          "name": "qwen2.5-coder:32b",
+          "model": "qwen2.5-coder:32b",
+          "size": 21775106702,
+          "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen2",
+            "families": [
+              "qwen2"
+            ],
+            "parameter_size": "32.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2319-02-09T10:43:07.874994939+08:00",
+          "size_vram": 21775106702,
+          "context_length": 8192,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "seed": 42,
+  "rounds": 2,
+  "modes": [
+    "oracle"
+  ],
+  "num_ctx": 8192,
+  "temperature": 0.0,
+  "domain_size": 240,
+  "domain_exhaustive": true,
+  "started_utc": "2026-10-30T02:55:56.069457+00:00",
+  "oracle_contract": "/root/mace/experiments/hidden/dedup_channel_reference.json",
+  "diagnostic_only": true
+}

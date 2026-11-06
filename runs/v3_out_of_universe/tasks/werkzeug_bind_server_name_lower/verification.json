@@ -1,0 +1,209 @@
+{
+  "task_id": "werkzeug_bind_server_name_lower",
+  "local_universe_size": 6,
+  "c_universe_size": 2,
+  "graph_universe_extra": [
+    "src/werkzeug/routing/map.py:231-231",
+    "src/werkzeug/routing/map.py:305-305",
+    "src/werkzeug/routing/map.py:313-313",
+    "src/werkzeug/routing/map.py:344-353"
+  ],
+  "unverified_claims": 1,
+  "rows": [
+    {
+      "relation_key": "MSMS:src/werkzeug/routing/map.py:344-353",
+      "type": "MSMS",
+      "scorer_status": "UNVERIFIED",
+      "verdict": "ACCEPTED_LOCAL_UNIVERSE",
+      "outcome_scope": "exact over the submitted finite inputs and the public graph candidate universe; not over HIDDEN U and not over the whole legal input domain",
+      "modes_with_claim": [
+        "Graph-candidates",
+        "Graph-full"
+      ],
+      "operations": [
+        {
+          "operation": {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          },
+          "op_id": "src/werkzeug/routing/map.py:219-219",
+          "in_c_universe": true,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "        server_name = server_name.lower()"
+          }
+        },
+        {
+          "operation": {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 344,
+            "end_line": 353,
+            "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )"
+          },
+          "op_id": "src/werkzeug/routing/map.py:344-353",
+          "in_c_universe": false,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "        return Map.bind("
+          }
+        }
+      ],
+      "per_input": [
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            "complement": [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "outcome": "return",
+                "server_name": "example.com",
+                "subdomain": "www"
+              },
+              "minus": {
+                "outcome": "return",
+                "server_name": "example.com",
+                "subdomain": "www"
+              }
+            },
+            "proper_subsets": [
+              {
+                "kept": [
+                  "src/werkzeug/routing/map.py:219-219"
+                ],
+                "disabled": [
+                  "src/werkzeug/routing/map.py:231-231",
+                  "src/werkzeug/routing/map.py:305-305",
+                  "src/werkzeug/routing/map.py:311-311",
+                  "src/werkzeug/routing/map.py:313-313",
+                  "src/werkzeug/routing/map.py:344-353"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/werkzeug/routing/map.py:344-353"
+                ],
+                "disabled": [
+                  "src/werkzeug/routing/map.py:219-219",
+                  "src/werkzeug/routing/map.py:231-231",
+                  "src/werkzeug/routing/map.py:305-305",
+                  "src/werkzeug/routing/map.py:311-311",
+                  "src/werkzeug/routing/map.py:313-313"
+                ],
+                "masked": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          "active_ops": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/routing/map.py:219-219": true,
+            "src/werkzeug/routing/map.py:344-353": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/routing/map.py:219-219",
+              "src/werkzeug/routing/map.py:344-353"
+            ],
+            "complement": [
+              "src/werkzeug/routing/map.py:231-231",
+              "src/werkzeug/routing/map.py:305-305",
+              "src/werkzeug/routing/map.py:311-311",
+              "src/werkzeug/routing/map.py:313-313"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "outcome": "return",
+                "server_name": "example.com:443",
+                "subdomain": "www"
+              },
+              "minus": {
+                "outcome": "return",
+                "server_name": "example.com:443",
+                "subdomain": "www"
+              }
+            },
+            "proper_subsets": [
+              {
+                "kept": [
+                  "src/werkzeug/routing/map.py:219-219"
+                ],
+                "disabled": [
+                  "src/werkzeug/routing/map.py:231-231",
+                  "src/werkzeug/routing/map.py:305-305",
+                  "src/werkzeug/routing/map.py:311-311",
+                  "src/werkzeug/routing/map.py:313-313",
+                  "src/werkzeug/routing/map.py:344-353"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/werkzeug/routing/map.py:344-353"
+                ],
+                "disabled": [
+                  "src/werkzeug/routing/map.py:219-219",
+                  "src/werkzeug/routing/map.py:231-231",
+                  "src/werkzeug/routing/map.py:305-305",
+                  "src/werkzeug/routing/map.py:311-311",
+                  "src/werkzeug/routing/map.py:313-313"
+                ],
+                "masked": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          },
+          "active_ops": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/routing/map.py:219-219": true,
+            "src/werkzeug/routing/map.py:344-353": true
+          }
+        }
+      ],
+      "probes_used": 38
+    }
+  ],
+  "probe_executions": 38,
+  "variant_builds": 19
+}

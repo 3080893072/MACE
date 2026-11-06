@@ -1,0 +1,51 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1418:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1418,
+    "end_line": 1418,
+    "kind": "Assign",
+    "code": "headers = [headers.get(k, k) for k in keys]"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_list_of_dicts_with_dict_of_headers"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                headers = [headers.get(k, k) for k in keys]",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.47,
+    "failed_nodeids": [
+      "test.test_input::test_list_of_dicts_with_dict_of_headers"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n___________________ test_list_of_dicts_with_dict_of_headers ___________________\n\n    def test_list_of_dicts_with_dict_of_headers():\n        \"Input: a dict of user headers for a list of dicts (issue #23)\"\n        table = [{\"letters\": \"ABCDE\", \"digits\": 12345}]\n        headers = {\"digits\": \"DIGITS\", \"letters\": \"LETTERS\"}\n        expected1 = \"\\n\".join(\n            [\"  DIGITS  LETTERS\", \"--------  ---------\", \"   12345  ABCDE\"]\n        )\n        expected2 = \"\\n\".join(\n            [\"LETTERS      DIGITS\", \"---------  --------\", \"ABCDE         12345\"]\n        )\n        result = tabulate(table, headers=headers)\n>       assert_in(result, [expected1, expected2])\n\ntest\\test_input.py:459: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nresult = 'digits      letters\\n--------  ---------\\nABCDE         12345'\nexpected_set = ['  DIGITS  LETTERS\\n--------  ---------\\n   12345  ABCDE', 'LETTERS      DIGITS\\n---------  --------\\nABCDE         12345']\n\n    def assert_in(result, expected_set):\n        nums = range(1, len(expected_set) + 1)\n        for i, expected in zip(nums, expected_set):\n            print(\"Expected %d:\\n%s\\n\" % (i, expected))\n        print(\"Got:\\n%s\\n\" % result)\n>       assert result in expected_set\nE       AssertionError\n\ntest\\common.py:16: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected 1:\n  DIGITS  LETTERS\n--------  ---------\n   12345  ABCDE\n\nExpected 2:\nLETTERS      DIGITS\n---------  --------\nABCDE         12345\n\nGot:\ndigits      letters\n--------  ---------\nABCDE         12345\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_list_of_dicts_with_dict_of_headers - Assertio...\n1 failed in 0.12s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

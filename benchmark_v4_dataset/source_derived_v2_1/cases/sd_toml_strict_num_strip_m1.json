@@ -1,0 +1,28 @@
+{
+  "case_id": "sd_toml_strict_num_strip_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "split": "DEV",
+  "base": {
+    "slug": "toml-0.10.2",
+    "file": "toml/decoder.py",
+    "A_line": 91,
+    "A_code": "    n = n.strip()"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 91,
+      "indent": 4,
+      "role": "Space-only trimming before the numeric grammar check.",
+      "lines": ["if \"\\t\" not in n:", "    n = n.strip(\" \")"]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_toml_strict_num_strip_m1.py",
+  "inputs": {
+    "mask_space_padded_leading_zero": "space-padded integer with a leading zero (rejected after trimming)",
+    "expose_tab_padded_leading_zero": "tab-padded integer: A trims the tabs and rejects it, the space-only repair accepts it",
+    "control_plain_integer": "plain integer literal"
+  },
+  "rationale": "The numeric grammar check trims surrounding whitespace before applying the leading-zero rule. The patch restores trimming for spaces only; a tab-padded literal keeps its tabs, the leading character is no longer '0', and the check wrongly accepts it - the exposing witness."
+}

@@ -1,0 +1,165 @@
+{
+  "task_id": "sd_toml_strict_num_strip_m1",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_space_padded_leading_zero",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "toml/decoder.py:94-94"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "toml/decoder.py:94-94"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Keeping operation 94 can mask the effect of deleting operation 91.",
+          "disabled_operations": [
+            "toml/decoder.py:109-109"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "toml/decoder.py:109-109"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Keeping operation 109 can mask the effect of deleting operation 91.",
+          "disabled_operations": [
+            "toml/decoder.py:94-94"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "toml/decoder.py:109-109",
+            "toml/decoder.py:94-94"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "toml/decoder.py:94-94"
+          ],
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 1,
+    "c0_false": 0,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "toml/decoder.py:109-109",
+        "toml/decoder.py:97-97",
+        "toml/decoder.py:99-99",
+        "toml/decoder.py:101-101",
+        "toml/decoder.py:103-103"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "toml/decoder.py:97-97",
+        "toml/decoder.py:99-99",
+        "toml/decoder.py:101-101",
+        "toml/decoder.py:103-103",
+        "toml/decoder.py:105-105",
+        "toml/decoder.py:107-107",
+        "toml/decoder.py:109-109",
+        "toml/decoder.py:111-111",
+        "toml/decoder.py:113-113",
+        "toml/decoder.py:114-114"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 10
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "toml/decoder.py:109-109"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "toml/decoder.py:109-109"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    }
+  }
+}

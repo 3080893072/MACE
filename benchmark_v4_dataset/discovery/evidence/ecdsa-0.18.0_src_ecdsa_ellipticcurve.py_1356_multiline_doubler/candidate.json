@@ -1,0 +1,52 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/ellipticcurve.py:1356:multiline:doubler",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/ellipticcurve.py",
+  "function": "_maybe_precompute",
+  "mechanism": "multiline",
+  "target_A": {
+    "line": 1356,
+    "end_line": 1358,
+    "kind": "Assign",
+    "code": "doubler = PointEdwards(  # multi-line"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "multiline"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_edwards_precompute_no_side_effect"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        doubler = PointEdwards(",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 3,
+    "timed_out": false,
+    "seconds": 0.47,
+    "failed_nodeids": [
+      "::src.ecdsa.test_keys",
+      "pytest::internal"
+    ],
+    "stdout_tail": "albench\\broad_venvs\\ecdsa-0.18.0\\Lib\\site-packages\\_pytest\\main.py\", line 672, in perform_collect\nINTERNALERROR>     hook.pytest_collection_modifyitems(\nINTERNALERROR>   File \"<local-path>\", line 197, in __call__\nINTERNALERROR>     return self._hookexec(\nINTERNALERROR>            ^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 183, in _hookexec\nINTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 195, in _multicall\nINTERNALERROR>     raise exception\nINTERNALERROR>   File \"<local-path>\", line 167, in _multicall\nINTERNALERROR>     teardown.throw(exception)\nINTERNALERROR>   File \"<local-path>\", line 64, in run_old_style_hookwrapper\nINTERNALERROR>     return result.get_result()\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 103, in get_result\nINTERNALERROR>     raise exc.with_traceback(tb)\nINTERNALERROR>   File \"<local-path>\", line 49, in run_old_style_hookwrapper\nINTERNALERROR>     res = yield\nINTERNALERROR>           ^^^^^\nINTERNALERROR>   File \"<local-path>\", line 167, in _multicall\nINTERNALERROR>     teardown.throw(exception)\nINTERNALERROR>   File \"<local-path>\", line 64, in run_old_style_hookwrapper\nINTERNALERROR>     return result.get_result()\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 103, in get_result\nINTERNALERROR>     raise exc.with_traceback(tb)\nINTERNALERROR>   File \"<local-path>\", line 49, in run_old_style_hookwrapper\nINTERNALERROR>     res = yield\nINTERNALERROR>           ^^^^^\nINTERNALERROR>   File \"<local-path>\", line 147, in _multicall\nINTERNALERROR>     res = hook_impl.function(*args)\nINTERNALERROR>           ^^^^^^^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 30, in pytest_collection_modifyitems\nINTERNALERROR>     raise RuntimeError(\nINTERNALERROR> RuntimeError: 1 selected tests were not collected; first: ['src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_edwards_precompute_no_side_effect']\n\n1 error in 0.13s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

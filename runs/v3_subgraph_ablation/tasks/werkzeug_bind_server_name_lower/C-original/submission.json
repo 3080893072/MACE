@@ -1,0 +1,79 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219,
+          "code": "        server_name = server_name.lower()"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219,
+          "code": "        server_name = server_name.lower()"
+        }
+      ]
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "control_input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219,
+          "code": "        server_name = server_name.lower()"
+        }
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control"
+    }
+  ]
+}

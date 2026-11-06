@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mace"
+version = "0.2.0"
+description = "LLM-guided Masking-Aware Counterfactual Exploration for program comprehension, with executable causal verification and MACE-Bench."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+keywords = [
+  "program comprehension",
+  "counterfactual execution",
+  "masking relations",
+  "minimality verification",
+  "LLM-guided program analysis",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Testing",
+]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7.4,<9"]
+figures = ["matplotlib>=3.7"]
+
+[project.scripts]
+mace = "mace.cli:main"
+
+[project.urls]
+# Fill in after the anonymous-review period.
+Repository = "https://github.com/<owner>/MACE"
+
+[tool.setuptools]
+packages = ["mace"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"

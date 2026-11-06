@@ -1,0 +1,17 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| alt_masking | mace | qwen | upstream | BOUNDED | REFUTED | BOUNDED | BOUNDED | BOUNDED | 0/0 | 12002 | 84.2 |
+| dead_flag | mace | qwen | none | BOUNDED | BOUNDED | BOUNDED | BOUNDED | BOUNDED | 0/0 | 1250 | 18.3 |
+| dedup_channel | mace | qwen | upstream | BOUNDED | INVALID | BOUNDED | REFUTED | REFUTED | 0/100 | 8932 | 60.2 |
+| dict_slot | mace | qwen | upstream | BOUNDED | REFUTED | REFUTED | BOUNDED | BOUNDED | 0/0 | 11821 | 52.6 |
+| modulo_absorb | mace | qwen | upstream | BOUNDED | INVALID | REFUTED | INVALID | INVALID | 0/0 | 7743 | 59.8 |
+| overwrite_channel | mace | qwen | upstream | BOUNDED | REFUTED | REFUTED | REFUTED | REFUTED | 0/12 | 13659 | 59.8 |
+| parity_snap | mace | qwen | upstream | BOUNDED | INVALID | INVALID | INVALID | INVALID | 0/0 | 8337 | 78.7 |
+| sort_channel | mace | qwen | upstream | BOUNDED | REFUTED | BOUNDED | REFUTED | REFUTED | 0/7046 | 11168 | 50.2 |
+| swap_channels | mace | qwen | upstream | BOUNDED | REFUTED | INVALID | REFUTED | REFUTED | 12/0 | 13180 | 61.8 |
+
+First bad stage over all cases: none 1, upstream 8
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| mace | qwen | 9 | 3 | 1 | 2 | 1 | 1 | 0 | 4 | 88092 | 525.6 |

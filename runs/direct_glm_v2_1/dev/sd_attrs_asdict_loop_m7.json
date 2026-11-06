@@ -1,0 +1,157 @@
+{
+  "task_id": "sd_attrs_asdict_loop_m7",
+  "split": "DEV",
+  "mechanism": "M7_LOOP_STATE",
+  "model": "glm-4.7-flash:q4_K_M",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900,
+    "think": false
+  },
+  "public_source_sha256": "0a2400a69bb4930113ac9f7ca24f1ce0f01833ed77e40e240d7e4cdd34117464",
+  "prompt_sha256": "625d5fb0967c3f5aacb031f00300e2e4650484ff8a701282c49bb26cd2f2a9e3",
+  "prompt_chars": 22347,
+  "declared_inputs": 2,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_attrs_asdict_loop_m7\n\n## File\n`src/attr/_funcs.py`\n\n## Program with source line numbers\n```text\n   1 | # SPDX-License-Identifier: MIT\n   2 | \n   3 | \n   4 | import copy\n   5 | \n   6 | from ._compat import PY_3_9_PLUS, get_generic_base\n   7 | from ._make import NOTHING, _obj_setattr, fields\n   8 | from .exceptions import AttrsAttributeNotFoundError\n   9 | \n  10 | \n  11 | def asdict(\n  12 |     inst,\n  13 |     recurse=True,\n  14 |     filter=None,\n  15 |     dict_factory=dict,\n  16 |     retain_collection_types=False,\n  17 |     value_serializer=None,\n  18 | ):\n  19 |     \"\"\"\n  20 |     Return the *attrs* attribute values of *inst* as a dict.\n  21 | \n  22 |     Optionally recurse into other *attrs*-decorated classes.\n  23 | \n  24 |     :param inst: Instance of an *attrs*-decorated class.\n  25 |     :param bool recurse: Recurse into classes that are also\n  26 |         *attrs*-decorated.\n  27 |     :param callable filter: A callable whose return code determines whether an\n  28 |         attribute or element is included (``True``) or dropped (``False``).  Is\n  29 |         called with the `attrs.Attribute` as the first argument and the\n  30 |         value as the second argument.\n  31 |     :param callable dict_factory: A callable to produce dictionaries from.  For\n  32 |         example, to produce ordered dictionaries instead of normal Python\n  33 |         dictionaries, pass in ``collections.OrderedDict``.\n  34 |     :param bool retain_collection_types: Do not convert to ``list`` when\n  35 |         encountering an attribute whose type is ``tuple`` or ``set``.  Only\n  36 |         meaningful if ``recurse`` is ``True``.\n  37 |     :param Optional[callable] value_serializer: A hook that is called for every\n  38 |         attribute or dict key/value.  It receives the current instance, field\n  39 |         and value and must return the (updated) value.  The hook is run *after*\n  40 |         the optional *filter* has been applied.\n  41 | \n  42 |     :rtype: return type of *dict_factory*\n  43 | \n  44 |     :raise attrs.exceptions.NotAnAttrsClassError: If *cls* is not an *attrs*\n  45 |         class.\n  46 | \n  47 |     ..  versionadded:: 16.0.0 *dict_factory*\n  48 |     ..  versionadded:: 16.1.0 *retain_collection_types*\n  49 |     ..  versionadded:: 20.3.0 *value_serializer*\n  50 |     ..  versionadded:: 21.3.0 If a dict has a collection for a key, it is\n  51 |         serialized as a tuple.\n  52 |     \"\"\"\n  53 |     attrs = fields(inst.__class__)\n  54 |     rv = dict_factory()\n  55 |     for a in attrs:\n  56 |         v = getattr(inst, a.name)\n  57 |         if filter is not None and not filter(a, v):\n  58 |             continue\n  59 | \n  60 |         if value_serializer is not None:\n  61 |             v = value_serializer(inst, a, v)\n  62 | \n  63 |         if recurse is True:\n  64 |             if has(v.__class__):\n  65 |                 rv[a.name] = asdict(\n  66 |                     v,\n  67 |                     recurse=True,\n  68 |                     filter=filter,\n  69 |                     dict_factory=dict_factory,\n  70 |                     retain_collection_types=retain_collection_types,\n  71 |                     value_serializer=value_serializer,\n  72 |                 )\n  73 |             elif isinstance(v, (tuple, list, set, frozenset)):\n  74 |                 cf = v.__class__ if retain_collection_types is True else list\n  75 |                 items = [\n  76 |                     _asdict_anything(\n  77 |                         i,\n  78 |                         is_key=False,\n  79 |                         filter=filter,\n  80 |                         dict_factory=dict_factory,\n  81 |                         retain_collection_types=retain_collection_types,\n  82 |                         value_serializer=value_serializer,\n  83 |                     )\n  84 |                     for i in v\n  85 |                 ]\n  86 |                 try:\n  87 |                     rv[a.name] = cf(items)\n  88 |                 except TypeError:\n  89 |                     if not issubclass(cf, tuple):\n  90 |                         raise\n  91 |                     # Workaround for TypeError: cf.__new__() missing 1 required\n  92 |                     # positional argument (which appears, for a namedturle)\n  93 |                     rv[a.name] = cf(*items)\n  94 |             elif isinstance(v, dict):\n  95 |                 df = dict_factory\n  96 |                 rv[a.name] = df(\n  97 |                     (\n  98 |                         _asdict_anything(\n  99 |                             kk,\n 100 |                             is_key=True,\n 101 |                             filter=filter,\n 102 |                             dict_factory=df,\n 103 |                             retain_collection_types=retain_collection_types,\n 104 |                             value_serializer=value_serializer,\n 105 |                         ),\n 106 |                         _asdict_anything(\n 107 |                             vv,\n 108 |                             is_key=False,\n 109 |                             filter=filter,\n 110 |                             dict_factory=df,\n 111 |                             retain_collection_types=retain_collection_types,\n 112 |                             value_serializer=value_serializer,\n 113 |                         ),\n 114 |                     )\n 115 |                     for kk, vv in v.items()\n 116 |                 )\n 117 |             else:\n 118 |                 rv[a.name] = v\n 119 | \n 120 |                 if a.name != \"y\":\n 121 |                     rv[a.name] = v\n 122 | \n 123 |         else:\n 124 |             rv[a.name] = v\n 125 |     return rv\n 126 | \n 127 | \n 128 | def _asdict_anything(\n 129 |     val,\n 130 |     is_key,\n 131 |     filter,\n 132 |     dict_factory,\n 133 |     retain_collection_types,\n 134 |     value_serializer,\n 135 | ):\n 136 |     \"\"\"\n 137 |     ``asdict`` only works on attrs instances, this works on anything.\n 138 |     \"\"\"\n 139 |     if getattr(val.__class__, \"__attrs_attrs__\", None) is not None:\n 140 |         # Attrs class.\n 141 |         rv = asdict(\n 142 |             val,\n 143 |             recurse=True,\n 144 |             filter=filter,\n 145 |             dict_factory=dict_factory,\n 146 |             retain_collection_types=retain_collection_types,\n 147 |             value_serializer=value_serializer,\n 148 |         )\n 149 |     elif isinstance(val, (tuple, list, set, frozenset)):\n 150 |         if retain_collection_types is True:\n 151 |             cf = val.__class__\n 152 |         elif is_key:\n 153 |             cf = tuple\n 154 |         else:\n 155 |             cf = list\n 156 | \n 157 |         rv = cf(\n 158 |             [\n 159 |                 _asdict_anything(\n 160 |                     i,\n 161 |                     is_key=False,\n 162 |                     filter=filter,\n 163 |                     dict_factory=dict_factory,\n 164 |                     retain_collection_types=retain_collection_types,\n 165 |                     value_serializer=value_serializer,\n 166 |                 )\n 167 |                 for i in val\n 168 |             ]\n 169 |         )\n 170 |     elif isinstance(val, dict):\n 171 |         df = dict_factory\n 172 |         rv = df(\n 173 |             (\n 174 |                 _asdict_anything(\n 175 |                     kk,\n 176 |                     is_key=True,\n 177 |                     filter=filter,\n 178 |                     dict_factory=df,\n 179 |                     retain_collection_types=retain_collection_types,\n 180 |                     value_serializer=value_serializer,\n 181 |                 ),\n 182 |                 _asdict_anything(\n 183 |                     vv,\n 184 |                     is_key=False,\n 185 |                     filter=filter,\n 186 |                     dict_factory=df,\n 187 |                     retain_collection_types=retain_collection_types,\n 188 |                     value_serializer=value_serializer,\n 189 |                 ),\n 190 |             )\n 191 |             for kk, vv in val.items()\n 192 |         )\n 193 |     else:\n 194 |         rv = val\n 195 |         if value_serializer is not None:\n 196 |             rv = value_serializer(None, None, rv)\n 197 | \n 198 |     return rv\n 199 | \n 200 | \n 201 | def astuple(\n 202 |     inst,\n 203 |     recurse=True,\n 204 |     filter=None,\n 205 |     tuple_factory=tuple,\n 206 |     retain_collection_types=False,\n 207 | ):\n 208 |     \"\"\"\n 209 |     Return the *attrs* attribute values of *inst* as a tuple.\n 210 | \n 211 |     Optionally recurse into other *attrs*-decorated classes.\n 212 | \n 213 |     :param inst: Instance of an *attrs*-decorated class.\n 214 |     :param bool recurse: Recurse into classes that are also\n 215 |         *attrs*-decorated.\n 216 |     :param callable filter: A callable whose return code determines whether an\n 217 |         attribute or element is included (``True``) or dropped (``False``).  Is\n 218 |         called with the `attrs.Attribute` as the first argument and the\n 219 |         value as the second argument.\n 220 |     :param callable tuple_factory: A callable to produce tuples from.  For\n 221 |         example, to produce lists instead of tuples.\n 222 |     :param bool retain_collection_types: Do not convert to ``list``\n 223 |         or ``dict`` when encountering an attribute which type is\n 224 |         ``tuple``, ``dict`` or ``set``.  Only meaningful if ``recurse`` is\n 225 |         ``True``.\n 226 | \n 227 |     :rtype: return type of *tuple_factory*\n 228 | \n 229 |     :raise attrs.exceptions.NotAnAttrsClassError: If *cls* is not an *attrs*\n 230 |         class.\n 231 | \n 232 |     ..  versionadded:: 16.2.0\n 233 |     \"\"\"\n 234 |     attrs = fields(inst.__class__)\n 235 |     rv = []\n 236 |     retain = retain_collection_types  # Very long. :/\n 237 |     for a in attrs:\n 238 |         v = getattr(inst, a.name)\n 239 |         if filter is not None and not filter(a, v):\n 240 |             continue\n 241 |         if recurse is True:\n 242 |             if has(v.__class__):\n 243 |                 rv.append(\n 244 |                     astuple(\n 245 |                         v,\n 246 |                         recurse=True,\n 247 |                         filter=filter,\n 248 |                         tuple_factory=tuple_factory,\n 249 |                         retain_collection_types=retain,\n 250 |                     )\n 251 |                 )\n 252 |             elif isinstance(v, (tuple, list, set, frozenset)):\n 253 |                 cf = v.__class__ if retain is True else list\n 254 |                 items = [\n 255 |                     astuple(\n 256 |                         j,\n 257 |                         recurse=True,\n 258 |                         filter=filter,\n 259 |                         tuple_factory=tuple_factory,\n 260 |                         retain_collection_types=retain,\n 261 |                     )\n 262 |                     if has(j.__class__)\n 263 |                     else j\n 264 |                     for j in v\n 265 |                 ]\n 266 |                 try:\n 267 |                     rv.append(cf(items))\n 268 |                 except TypeError:\n 269 |                     if not issubclass(cf, tuple):\n 270 |                         raise\n 271 |                     # Workaround for TypeError: cf.__new__() missing 1 required\n 272 |                     # positional argument (which appears, for a namedturle)\n 273 |                     rv.append(cf(*items))\n 274 |             elif isinstance(v, dict):\n 275 |                 df = v.__class__ if retain is True else dict\n 276 |                 rv.append(\n 277 |                     df(\n 278 |                         (\n 279 |                             astuple(\n 280 |                                 kk,\n 281 |                                 tuple_factory=tuple_factory,\n 282 |                                 retain_collection_types=retain,\n 283 |                             )\n 284 |                             if has(kk.__class__)\n 285 |                             else kk,\n 286 |                             astuple(\n 287 |                                 vv,\n 288 |                                 tuple_factory=tuple_factory,\n 289 |                                 retain_collection_types=retain,\n 290 |                             )\n 291 |                             if has(vv.__class__)\n 292 |                             else vv,\n 293 |                         )\n 294 |                         for kk, vv in v.items()\n 295 |                     )\n 296 |                 )\n 297 |             else:\n 298 |                 rv.append(v)\n 299 |         else:\n 300 |             rv.append(v)\n 301 | \n 302 |     return rv if tuple_factory is list else tuple_factory(rv)\n 303 | \n 304 | \n 305 | def has(cls):\n 306 |     \"\"\"\n 307 |     Check whether *cls* is a class with *attrs* attributes.\n 308 | \n 309 |     :param type cls: Class to introspect.\n 310 |     :raise TypeError: If *cls* is not a class.\n 311 | \n 312 |     :rtype: bool\n 313 |     \"\"\"\n 314 |     attrs = getattr(cls, \"__attrs_attrs__\", None)\n 315 |     if attrs is not None:\n 316 |         return True\n 317 | \n 318 |     # No attrs, maybe it's a specialized generic (A[str])?\n 319 |     generic_base = get_generic_base(cls)\n 320 |     if generic_base is not None:\n 321 |         generic_attrs = getattr(generic_base, \"__attrs_attrs__\", None)\n 322 |         if generic_attrs is not None:\n 323 |             # Stick it on here for speed next time.\n 324 |             cls.__attrs_attrs__ = generic_attrs\n 325 |         return generic_attrs is not None\n 326 |     return False\n 327 | \n 328 | \n 329 | def assoc(inst, **changes):\n 330 |     \"\"\"\n 331 |     Copy *inst* and apply *changes*.\n 332 | \n 333 |     This is different from `evolve` that applies the changes to the arguments\n 334 |     that create the new instance.\n 335 | \n 336 |     `evolve`'s behavior is preferable, but there are `edge cases`_ where it\n 337 |     doesn't work. Therefore `assoc` is deprecated, but will not be removed.\n 338 | \n 339 |     .. _`edge cases`: https://github.com/python-attrs/attrs/issues/251\n 340 | \n 341 |     :param inst: Instance of a class with *attrs* attributes.\n 342 |     :param changes: Keyword changes in the new copy.\n 343 | \n 344 |     :return: A copy of inst with *changes* incorporated.\n 345 | \n 346 |     :raise attrs.exceptions.AttrsAttributeNotFoundError: If *attr_name*\n 347 |         couldn't be found on *cls*.\n 348 |     :raise attrs.exceptions.NotAnAttrsClassError: If *cls* is not an *attrs*\n 349 |         class.\n 350 | \n 351 |     ..  deprecated:: 17.1.0\n 352 |         Use `attrs.evolve` instead if you can.\n 353 |         This function will not be removed du to the slightly different approach\n 354 |         compared to `attrs.evolve`.\n 355 |     \"\"\"\n 356 |     new = copy.copy(inst)\n 357 |     attrs = fields(inst.__class__)\n 358 |     for k, v in changes.items():\n 359 |         a = getattr(attrs, k, NOTHING)\n 360 |         if a is NOTHING:\n 361 |             msg = f\"{k} is not an attrs attribute on {new.__class__}.\"\n 362 |             raise AttrsAttributeNotFoundError(msg)\n 363 |         _obj_setattr(new, k, v)\n 364 |     return new\n 365 | \n 366 | \n 367 | def evolve(*args, **changes):\n 368 |     \"\"\"\n 369 |     Create a new instance, based on the first positional argument with\n 370 |     *changes* applied.\n 371 | \n 372 |     :param inst: Instance of a class with *attrs* attributes.\n 373 |     :param changes: Keyword changes in the new copy.\n 374 | \n 375 |     :return: A copy of inst with *changes* incorporated.\n 376 | \n 377 |     :raise TypeError: If *attr_name* couldn't be found in the class\n 378 |         ``__init__``.\n 379 |     :raise attrs.exceptions.NotAnAttrsClassError: If *cls* is not an *attrs*\n 380 |         class.\n 381 | \n 382 |     .. versionadded:: 17.1.0\n 383 |     .. deprecated:: 23.1.0\n 384 |        It is now deprecated to pass the instance using the keyword argument\n 385 |        *inst*. It will raise a warning until at least April 2024, after which\n 386 |        it will become an error. Always pass the instance as a positional\n 387 |        argument.\n 388 |     \"\"\"\n 389 |     # Try to get instance by positional argument first.\n 390 |     # Use changes otherwise and warn it'll break.\n 391 |     if args:\n 392 |         try:\n 393 |             (inst,) = args\n 394 |         except ValueError:\n 395 |             msg = f\"evolve() takes 1 positional argument, but {len(args)} were given\"\n 396 |             raise TypeError(msg) from None\n 397 |     else:\n 398 |         try:\n 399 |             inst = changes.pop(\"inst\")\n 400 |         except KeyError:\n 401 |             msg = \"evolve() missing 1 required positional argument: 'inst'\"\n 402 |             raise TypeError(msg) from None\n 403 | \n 404 |         import warnings\n 405 | \n 406 |         warnings.warn(\n 407 |             \"Passing the instance per keyword argument is deprecated and \"\n 408 |             \"will stop working in, or after, April 2024.\",\n 409 |             DeprecationWarning,\n 410 |             stacklevel=2,\n 411 |         )\n 412 | \n 413 |     cls = inst.__class__\n 414 |     attrs = fields(cls)\n 415 |     for a in attrs:\n 416 |         if not a.init:\n 417 |             continue\n 418 |         attr_name = a.name  # To deal with private attributes.\n 419 |         init_name = a.alias\n 420 |         if init_name not in changes:\n 421 |             changes[init_name] = getattr(inst, attr_name)\n 422 | \n 423 |     return cls(**changes)\n 424 | \n 425 | \n 426 | def resolve_types(\n 427 |     cls, globalns=None, localns=None, attribs=None, include_extras=True\n 428 | ):\n 429 |     \"\"\"\n 430 |     Resolve any strings and forward annotations in type annotations.\n 431 | \n 432 |     This is only required if you need concrete types in `Attribute`'s *type*\n 433 |     field. In other words, you don't need to resolve your types if you only\n 434 |     use them for static type checking.\n 435 | \n 436 |     With no arguments, names will be looked up in the module in which the class\n 437 |     was created. If this is not what you want, e.g. if the name only exists\n 438 |     inside a method, you may pass *globalns* or *localns* to specify other\n 439 |     dictionaries in which to look up these names. See the docs of\n 440 |     `typing.get_type_hints` for more details.\n 441 | \n 442 |     :param type cls: Class to resolve.\n 443 |     :param Optional[dict] globalns: Dictionary containing global variables.\n 444 |     :param Optional[dict] localns: Dictionary containing local variables.\n 445 |     :param Optional[list] attribs: List of attribs for the given class.\n 446 |         This is necessary when calling from inside a ``field_transformer``\n 447 |         since *cls* is not an *attrs* class yet.\n 448 |     :param bool include_extras: Resolve more accurately, if possible.\n 449 |         Pass ``include_extras`` to ``typing.get_hints``, if supported by the\n 450 |         typing module. On supported Python versions (3.9+), this resolves the\n 451 |         types more accurately.\n 452 | \n 453 |     :raise TypeError: If *cls* is not a class.\n 454 |     :raise attrs.exceptions.NotAnAttrsClassError: If *cls* is not an *attrs*\n 455 |         class and you didn't pass any attribs.\n 456 |     :raise NameError: If types cannot be resolved because of missing variables.\n 457 | \n 458 |     :returns: *cls* so you can use this function also as a class decorator.\n 459 |         Please note that you have to apply it **after** `attrs.define`. That\n 460 |         means the decorator has to come in the line **before** `attrs.define`.\n 461 | \n 462 |     ..  versionadded:: 20.1.0\n 463 |     ..  versionadded:: 21.1.0 *attribs*\n 464 |     ..  versionadded:: 23.1.0 *include_extras*\n 465 | \n 466 |     \"\"\"\n 467 |     # Since calling get_type_hints is expensive we cache whether we've\n 468 |     # done it already.\n 469 |     if getattr(cls, \"__attrs_types_resolved__\", None) != cls:\n 470 |         import typing\n 471 | \n 472 |         kwargs = {\"globalns\": globalns, \"localns\": localns}\n 473 | \n 474 |         if PY_3_9_PLUS:\n 475 |             kwargs[\"include_extras\"] = include_extras\n 476 | \n 477 |         hints = typing.get_type_hints(cls, **kwargs)\n 478 |         for field in fields(cls) if attribs is None else attribs:\n 479 |             if field.name in hints:\n 480 |                 # Since fields have been frozen we must work around it.\n 481 |                 _obj_setattr(field, \"type\", hints[field.name])\n 482 |         # We store the class we resolved so that subclasses know they haven't\n 483 |         # been resolved.\n 484 |         cls.__attrs_types_resolved__ = cls\n 485 | \n 486 |     # Return the class so you can use it as a decorator too.\n 487 |     return cls\n```\n\n## Target A\nLine 118: `rv[a.name] = v`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/attr/_funcs.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/attr/_funcs.py\", \"line\": 120, \"text\": \"if a.name != \\\"y\\\":\\n                    rv[a.name] = v\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The assignment at line 118 is immediately overwritten by the assignment at line 121, making the first assignment unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/attr/_funcs.py\", \"line\": 123, \"text\": \"else:\\n            rv[a.name] = v\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The assignment at line 118 is immediately overwritten by the assignment at line 124, making the first assignment unobservable.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 5854,
+      "completion_tokens": 178,
+      "total_duration_ns": 5426779353,
+      "load_duration_ns": 2838902,
+      "prompt_eval_duration_ns": 1708288000,
+      "eval_duration_ns": 3485207000,
+      "model": "glm-4.7-flash:q4_K_M",
+      "done_reason": "stop",
+      "wall_seconds": 5.56,
+      "attempt": 0
+    },
+    "model": "glm-4.7-flash:q4_K_M"
+  },
+  "prompt_tokens": 5854,
+  "completion_tokens": 178,
+  "runtime_s": 5.56,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "src/attr/_funcs.py:120-121"
+      ],
+      "ops": [
+        {
+          "id": "src/attr/_funcs.py:120-121",
+          "key": "src/attr/_funcs.py:120-121",
+          "file": "src/attr/_funcs.py",
+          "first_line": 120,
+          "last_line": 121,
+          "line": 120,
+          "end_line": 121,
+          "col": 16,
+          "end_col": 34,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if a.name != \"y\":\n                    rv[a.name] = v",
+          "text": "if a.name != \"y\":\n                    rv[a.name] = v",
+          "node_key": [
+            "If",
+            120,
+            16,
+            121,
+            34
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "The assignment at line 118 is immediately overwritten by the assignment at line 121, making the first assignment unobservable."
+    }
+  ],
+  "rejected": [
+    {
+      "relation": {
+        "operations": [
+          {
+            "file": "src/attr/_funcs.py",
+            "line": 123,
+            "text": "else:\n            rv[a.name] = v"
+          }
+        ],
+        "condition": "true",
+        "rationale": "The assignment at line 118 is immediately overwritten by the assignment at line 124, making the first assignment unobservable."
+      },
+      "rejected": [
+        {
+          "status": "rejected",
+          "reason": "text_mismatch",
+          "line": 123,
+          "text": "else:\n            rv[a.name] = v",
+          "proposal": {
+            "file": "src/attr/_funcs.py",
+            "line": 123,
+            "text": "else:\n            rv[a.name] = v"
+          }
+        }
+      ]
+    }
+  ],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_single_attr",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "OK"
+}

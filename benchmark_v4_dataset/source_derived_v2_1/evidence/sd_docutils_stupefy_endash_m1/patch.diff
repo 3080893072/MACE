@@ -1,0 +1,18 @@
+--- a/docutils/utils/smartquotes.py
++++ b/docutils/utils/smartquotes.py
+@@ -821,12 +821,15 @@
+     Example input:  “Hello — world.”
+     Example output: "Hello -- world."
+     """
+     smart = smartchars(language)
+ 
+     text = text.replace(smart.endash, "-")
++    # SD:U:U1:begin
++    text = text.replace(smart.endash, "-", 1)
++    # SD:U:U1:end
+     text = text.replace(smart.emdash, "--")
+     text = text.replace(smart.osquote, "'")  # open secondary quote
+     text = text.replace(smart.csquote, "'")  # close secondary quote
+     text = text.replace(smart.opquote, '"')  # open primary quote
+     text = text.replace(smart.cpquote, '"')  # close primary quote
+     text = text.replace(smart.ellipsis, '...')

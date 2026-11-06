@@ -1,0 +1,152 @@
+{
+  "task_id": "sd_humanize_filesize_gnu_m5",
+  "split": "DEV",
+  "mechanism": "M5_CONDITIONAL_BRANCH",
+  "model": "qwen2.5-coder:32b",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900
+  },
+  "public_source_sha256": "663bee405032f05ffe356185f2e2d4ab909d9943c8a60ab9c6d720d90ed15135",
+  "prompt_sha256": "f32f71193cff91206bee307d03775cfc5299cdd0718e35c614a2ce353869bcfc",
+  "prompt_chars": 4568,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_humanize_filesize_gnu_m5\n\n## File\n`src/humanize/filesize.py`\n\n## Program with source line numbers\n```text\n   1 | #!/usr/bin/env python\n   2 | \n   3 | \"\"\"Bits and bytes related humanization.\"\"\"\n   4 | from __future__ import annotations\n   5 | \n   6 | suffixes = {\n   7 |     \"decimal\": (\" kB\", \" MB\", \" GB\", \" TB\", \" PB\", \" EB\", \" ZB\", \" YB\"),\n   8 |     \"binary\": (\" KiB\", \" MiB\", \" GiB\", \" TiB\", \" PiB\", \" EiB\", \" ZiB\", \" YiB\"),\n   9 |     \"gnu\": \"KMGTPEZY\",\n  10 | }\n  11 | \n  12 | \n  13 | def naturalsize(\n  14 |     value: float | str,\n  15 |     binary: bool = False,\n  16 |     gnu: bool = False,\n  17 |     format: str = \"%.1f\",\n  18 | ) -> str:\n  19 |     \"\"\"Format a number of bytes like a human readable filesize (e.g. 10 kB).\n  20 | \n  21 |     By default, decimal suffixes (kB, MB) are used.\n  22 | \n  23 |     Non-GNU modes are compatible with jinja2's `filesizeformat` filter.\n  24 | \n  25 |     Examples:\n  26 |         ```pycon\n  27 |         >>> naturalsize(3000000)\n  28 |         '3.0 MB'\n  29 |         >>> naturalsize(300, False, True)\n  30 |         '300B'\n  31 |         >>> naturalsize(3000, False, True)\n  32 |         '2.9K'\n  33 |         >>> naturalsize(3000, False, True, \"%.3f\")\n  34 |         '2.930K'\n  35 |         >>> naturalsize(3000, True)\n  36 |         '2.9 KiB'\n  37 |         >>> naturalsize(10**28)\n  38 |         '10000.0 YB'\n  39 |         >>> naturalsize(-4096, True)\n  40 |         '-4.0 KiB'\n  41 | \n  42 |         ```\n  43 | \n  44 |     Args:\n  45 |         value (int, float, str): Integer to convert.\n  46 |         binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base\n  47 |             2<sup>10</sup> instead of 10<sup>3</sup>.\n  48 |         gnu (bool): If `True`, the binary argument is ignored and GNU-style\n  49 |             (`ls -sh` style) prefixes are used (K, M) with the 2**10 definition.\n  50 |         format (str): Custom formatter.\n  51 | \n  52 |     Returns:\n  53 |         str: Human readable representation of a filesize.\n  54 |     \"\"\"\n  55 |     if gnu:\n  56 |         suffix = suffixes[\"gnu\"]\n  57 | \n  58 |         if gnu and value >= 0:\n  59 |             suffix = suffixes[\"gnu\"]\n  60 | \n  61 |     elif binary:\n  62 |         suffix = suffixes[\"binary\"]\n  63 |     else:\n  64 |         suffix = suffixes[\"decimal\"]\n  65 | \n  66 |     base = 1024 if (gnu or binary) else 1000\n  67 |     bytes_ = float(value)\n  68 |     abs_bytes = abs(bytes_)\n  69 | \n  70 |     if abs_bytes == 1 and not gnu:\n  71 |         return \"%d Byte\" % bytes_\n  72 | \n  73 |     if abs_bytes < base and not gnu:\n  74 |         return \"%d Bytes\" % bytes_\n  75 | \n  76 |     if abs_bytes < base and gnu:\n  77 |         return \"%dB\" % bytes_\n  78 | \n  79 |     for i, s in enumerate(suffix):\n  80 |         unit = base ** (i + 2)\n  81 | \n  82 |         if abs_bytes < unit:\n  83 |             break\n  84 | \n  85 |     ret: str = format % (base * bytes_ / unit) + s\n  86 |     return ret\n```\n\n## Target A\nLine 56: `suffix = suffixes[\"gnu\"]`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/humanize/filesize.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/humanize/filesize.py\", \"line\": 58, \"text\": \"if gnu and value >= 0:\"},\n        {\"file\": \"src/humanize/filesize.py\", \"line\": 59, \"text\": \"    suffix = suffixes[\\\"gnu\\\"]\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting these lines has no effect because the suffix is already set on line 56.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 1581,
+      "completion_tokens": 120,
+      "total_duration_ns": 7933898568,
+      "load_duration_ns": 2202355,
+      "prompt_eval_duration_ns": 690002000,
+      "eval_duration_ns": 6066959000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 8.119,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b"
+  },
+  "prompt_tokens": 1581,
+  "completion_tokens": 120,
+  "runtime_s": 8.119,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "src/humanize/filesize.py:58-59",
+        "src/humanize/filesize.py:59-59"
+      ],
+      "ops": [
+        {
+          "id": "src/humanize/filesize.py:58-59",
+          "key": "src/humanize/filesize.py:58-59",
+          "file": "src/humanize/filesize.py",
+          "first_line": 58,
+          "last_line": 59,
+          "line": 58,
+          "end_line": 59,
+          "col": 8,
+          "end_col": 36,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if gnu and value >= 0:\n            suffix = suffixes[\"gnu\"]",
+          "text": "if gnu and value >= 0:\n            suffix = suffixes[\"gnu\"]",
+          "node_key": [
+            "If",
+            58,
+            8,
+            59,
+            36
+          ]
+        },
+        {
+          "id": "src/humanize/filesize.py:59-59",
+          "key": "src/humanize/filesize.py:59-59",
+          "file": "src/humanize/filesize.py",
+          "first_line": 59,
+          "last_line": 59,
+          "line": 59,
+          "end_line": 59,
+          "col": 12,
+          "end_col": 36,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "suffix = suffixes[\"gnu\"]",
+          "text": "suffix = suffixes[\"gnu\"]",
+          "node_key": [
+            "Assign",
+            59,
+            12,
+            59,
+            36
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "Deleting these lines has no effect because the suffix is already set on line 56."
+    }
+  ],
+  "rejected": [],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_gnu_positive",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "OK"
+}

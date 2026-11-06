@@ -1,0 +1,62 @@
+{
+  "task_id": "sd_pygments_latex297_italic",
+  "project": "Pygments",
+  "version": "2.17.2",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M6_CROSS_FUNCTION_STATE",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "A grows cmndef in _make_styles, which is later stored in self.cmd2def and consumed by get_style_defs.  U1 rebuilds the missing italic entry in that other function from self.style, preserving the original entry order and the position of the italic let inside each definition.  The repair is declared for inline mode, so full-document mode exposes the deletion.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "pygments/formatters/latex.py",
+    "line": 297,
+    "function": "rgbcolor",
+    "code": "                cmndef += r'\\let\\$$@it=\\textit'",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "pygments.highlight(code, lexer, LatexFormatter(style=...)); Formatter(style=...).get_style_defs()",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_inline_italic",
+      "role": "masking",
+      "description": "italic-only style, inline (full=False) style definitions"
+    },
+    {
+      "id": "mask_inline_italic_color",
+      "role": "masking",
+      "description": "italic + colour style, inline definitions"
+    },
+    {
+      "id": "expose_full_italic",
+      "role": "exposing",
+      "description": "italic-only style, full document mode"
+    },
+    {
+      "id": "control_inline_bold",
+      "role": "control",
+      "description": "bold-only style; A is not executed"
+    }
+  ],
+  "original_tests": [
+    "tests/test_latex_formatter.py"
+  ],
+  "original_test_suite": {
+    "tests": [
+      "tests/test_latex_formatter.py"
+    ],
+    "returncode": 0,
+    "summary": "3 passed in 0.75s",
+    "passed": true
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

@@ -1,0 +1,129 @@
+{
+  "schema": "mace_source_derived_v2_statistics/1",
+  "as_of": "2026-11-05",
+  "count_axes_note": "Tasks counted per accepted case. Source-derived tasks are RESEARCHER_CONSTRUCTED and satisfy the track-C acceptance. attempted/accepted/rejected count only cases that reached formal acceptance; candidates refused during construction are listed separately in construction_rejections and are never counted.",
+  "attempted": 50,
+  "accepted": 50,
+  "rejected": 0,
+  "rejections": [],
+  "construction_rejections": [
+    {
+      "candidate": "sd_lark_anon_terminal_m4",
+      "project": "lark",
+      "version": "1.1.9",
+      "file": "lark/load_grammar.py",
+      "line": 468,
+      "mechanism": "M4_ALTERNATIVE_PATHS",
+      "stage": "formal_acceptance_run",
+      "reason": "文件为 CRLF 行尾；验收按字节比较 A 行，行尾 \\r 使 A_code 无法匹配，除非在 A_code 中嵌入 \\r。整个 lark 文件因此弃用。"
+    },
+    {
+      "candidate": "sd_parso_issue_dedup_m8",
+      "project": "parso",
+      "version": "0.8.3",
+      "file": "parso/python/diff.py",
+      "line": 74,
+      "mechanism": "M8_OBJECT_SHARED_STATE",
+      "stage": "formal_acceptance_run",
+      "reason": "上游在第 74 行已有 `if issue not in self.issues:` 守卫，删除目标行对重复 issue 输入不可观测；换成同文件 _NodesTreeNode.add_child_node 的无条件 append 后通过。"
+    },
+    {
+      "candidate": "dateutil_parser_token_comma",
+      "project": "python-dateutil",
+      "version": "2.8.2",
+      "file": "dateutil/parser/_parser.py",
+      "line": 182,
+      "mechanism": "M1/M4（未定型）",
+      "stage": "construction_analysis",
+      "reason": "`_timelex(\"0,5\")` 会把逗号切分成独立 token，目标行 `token = token.replace(',', '.')` 对可构造输入不可触发，无法给出 exposing 输入。"
+    },
+    {
+      "candidate": "h11_writer_reader_m6",
+      "project": "h11",
+      "version": "0.14.0",
+      "file": "h11/_connection.py",
+      "line": 81,
+      "mechanism": "M6_CROSS_FUNCTION_STATE",
+      "stage": "construction_analysis",
+      "reason": "SEND_BODY 的 `_get_io_object` 会调用 `_body_framing`，后者在第 88 行断言事件类型必须是 Request/Response；U 无法只凭 next_event/send 重建 writer/reader，故放弃。"
+    },
+    {
+      "candidate": "passlib_hash_info_cache_m6",
+      "project": "passlib",
+      "version": "1.7.4",
+      "file": "passlib/crypto/digest.py",
+      "line": 313,
+      "mechanism": "M6_CROSS_FUNCTION_STATE",
+      "stage": "construction_analysis",
+      "reason": "别名归一化缓存（第 313 行 `cache[digest] = info`）使删除单条缓存写入难以构造出可观测的 exposing 输入；放弃该锚点。"
+    }
+  ],
+  "by_mechanism": {
+    "M10_NEGATIVE_CONTROL": 5,
+    "M1_SINGLE_OPERATION": 8,
+    "M2_TWO_OPERATION_COOPERATIVE": 8,
+    "M3_THREE_OPERATION_COOPERATIVE": 6,
+    "M4_ALTERNATIVE_PATHS": 5,
+    "M5_CONDITIONAL_BRANCH": 5,
+    "M6_CROSS_FUNCTION_STATE": 4,
+    "M7_LOOP_STATE": 3,
+    "M8_OBJECT_SHARED_STATE": 3,
+    "M9_EXCEPTION_FALLBACK": 3
+  },
+  "by_project": {
+    "Markdown": 2,
+    "PyYAML": 1,
+    "Pygments": 5,
+    "attrs": 2,
+    "coverage": 1,
+    "docutils": 9,
+    "h11": 1,
+    "humanize": 1,
+    "isort": 2,
+    "jedi": 1,
+    "jsonschema": 3,
+    "msgpack": 1,
+    "multidict": 2,
+    "networkx": 2,
+    "parso": 1,
+    "passlib": 2,
+    "pycodestyle": 1,
+    "requests": 2,
+    "simplejson": 2,
+    "sqlparse": 2,
+    "tabulate": 3,
+    "toml": 3,
+    "urllib3": 1
+  },
+  "by_split": {
+    "DEV": 25,
+    "HELDOUT": 25
+  },
+  "cooperative_tasks": 14,
+  "alternative_path_tasks": 5,
+  "all_u_necessary": 40,
+  "u_size_total": 75,
+  "masking_inputs_total": 50,
+  "exposing_inputs_total": 45,
+  "control_inputs_total": 47,
+  "negative_control_inputs_total": 10,
+  "dev_accepted": 25,
+  "heldout_accepted": 25,
+  "target": {
+    "total": 50,
+    "dev_new": 15,
+    "heldout_new": 25,
+    "mechanisms": {
+      "M1_SINGLE_OPERATION": 6,
+      "M2_TWO_OPERATION_COOPERATIVE": 10,
+      "M3_THREE_OPERATION_COOPERATIVE": 6,
+      "M4_ALTERNATIVE_PATHS": 5,
+      "M5_CONDITIONAL_BRANCH": 5,
+      "M6_CROSS_FUNCTION_STATE": 4,
+      "M7_LOOP_STATE": 3,
+      "M8_OBJECT_SHARED_STATE": 3,
+      "M9_EXCEPTION_FALLBACK": 3,
+      "M10_NEGATIVE_CONTROL": 5
+    }
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "task_id": "sd_pygments_groff73_italic",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_italic_mono",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "confirmed": [
+        [
+          "pygments/formatters/groff.py:75-75",
+          "pygments/formatters/groff.py:78-78",
+          "pygments/formatters/groff.py:82-82"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:75-75",
+            "pygments/formatters/groff.py:78-78",
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "ndef['italic'] and self.monospaced and _sd_it and not end.startswith(regular)",
+          "rationale": "These operations collectively ensure that the value of end is modified in a way that masks the effect of deleting the target operation.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:75-75"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "ndef['italic'] and self.monospaced",
+          "rationale": "The operation sets _sd_it, which influences the value of end through _sd_tag in the subsequent operations.",
+          "disabled_operations": [
+            "pygments/formatters/groff.py:78-78",
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:78-78"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "_sd_it",
+          "rationale": "The operation sets _sd_tag based on _sd_it, which influences the value of end in the subsequent operation.",
+          "disabled_operations": [
+            "pygments/formatters/groff.py:75-75",
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "_sd_it and not end.startswith(regular)",
+          "rationale": "The operation modifies end based on _sd_tag, which is influenced by _sd_it and the initial value of end.",
+          "disabled_operations": [
+            "pygments/formatters/groff.py:75-75",
+            "pygments/formatters/groff.py:78-78"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:75-75",
+            "pygments/formatters/groff.py:78-78"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:75-75",
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "pygments/formatters/groff.py:78-78"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/groff.py:78-78",
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "pygments/formatters/groff.py:75-75"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 1,
+    "c0_probes": 6,
+    "direct_exact": 0,
+    "old_full_exact": 0,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U3"
+      ],
+      "stray_candidates": [],
+      "recall": 0.333,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U3"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/groff.py:70-70",
+        "pygments/formatters/groff.py:64-64",
+        "pygments/formatters/groff.py:67-67",
+        "pygments/formatters/groff.py:86-86",
+        "pygments/formatters/groff.py:59-59"
+      ],
+      "recall": 0.333,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/groff.py:59-59",
+        "pygments/formatters/groff.py:60-60",
+        "pygments/formatters/groff.py:61-61",
+        "pygments/formatters/groff.py:64-64",
+        "pygments/formatters/groff.py:66-66",
+        "pygments/formatters/groff.py:67-67",
+        "pygments/formatters/groff.py:69-69",
+        "pygments/formatters/groff.py:70-70",
+        "pygments/formatters/groff.py:72-72",
+        "pygments/formatters/groff.py:85-85",
+        "pygments/formatters/groff.py:86-86",
+        "pygments/formatters/groff.py:88-88"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 12
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

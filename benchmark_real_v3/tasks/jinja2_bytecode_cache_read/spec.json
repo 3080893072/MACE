@@ -1,0 +1,60 @@
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "project_id": "jinja2-3.1.3",
+  "source_version": "Jinja2 3.1.3",
+  "difficulty": "medium",
+  "mechanism": "coexisting backup path (cache read is masked by the compile fallback)",
+  "target_operation": {
+    "file": "src/jinja2/loaders.py",
+    "line": 132,
+    "code": "code = bucket.code",
+    "function": "BaseLoader.load",
+    "note": "read of a bytecode-cache bucket; deleting it makes the loader ignore a hit and recompile"
+  },
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "test_scope": "Jinja2 3.1.3 released tests/ suite, no protocol-level deselection; P+ result 845 passed",
+  "candidate_universe": [
+    {
+      "id": "compile_fallback",
+      "file": "src/jinja2/loaders.py",
+      "line": 137,
+      "code": "code = environment.compile(source, name, filename)",
+      "kind": "assignment",
+      "role": "backup path that keeps P- working when the cache read is removed"
+    }
+  ],
+  "universe_notes": [
+    "U is the set of statements in BaseLoader.load that can supply the local 'code' consumed by Template.from_code.",
+    "The bucket write at lines 142-143 is not in U: it runs after the observable is produced and its deletion does not change the rendered value on either variant.",
+    "Completeness outside these statements is not claimed."
+  ],
+  "probe": "probe_jinja_bytecode_cache.py",
+  "inputs": [
+    {
+      "id": "expose_cache_poisoned",
+      "role": "exposing",
+      "payload": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      },
+      "note": "A legal user-supplied BytecodeCache returns code compiled from different source. P+ renders the cached value, P- recompiles the actual template."
+    },
+    {
+      "id": "mask_cache_benign",
+      "role": "masking",
+      "payload": {
+        "template": "{{ 6*7 }}"
+      },
+      "note": "The cache returns code compiled from the same source. P+ and P- render identically; disabling the compile fallback exposes the missing cache read."
+    }
+  ],
+  "scope": {
+    "inputs_executed": 2,
+    "operations_in_universe": 1,
+    "not_claimed": [
+      "All legal BytecodeCache implementations",
+      "All templates and environments",
+      "Operations outside the declared U"
+    ]
+  }
+}

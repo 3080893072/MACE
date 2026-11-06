@@ -1,0 +1,339 @@
+{
+  "case_id": "sd_pygments_groff73_italic",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "slug": "pygments-2.17.2",
+  "file": "pygments/formatters/groff.py",
+  "A_line": 73,
+  "A_code": "                end = regular + end",
+  "original_sha256": "bdadb195208df9efe2d1cfc3cf4760dc757d023b7d1b8e4f5da0a2ec212c2dd8",
+  "patched_sha256": "6892443fdcde2ff9a16eec539af679f3d56ef84899874d4e2dfb356cd74c60aa",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 73,
+      "role": "Leg 1: decides whether the monospaced italic reset is needed.",
+      "lines": [
+        "_sd_it = bool(ndef['italic']) and self.monospaced"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 73,
+      "role": "Leg 2: materialises the reset token selected by leg 1.",
+      "lines": [
+        "_sd_tag = regular if _sd_it else ''"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 73,
+      "role": "Leg 3: prepends the reset only when it is needed and not already present.",
+      "lines": [
+        "if _sd_it and not end.startswith(regular):",
+        "    end = _sd_tag + end"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 73,
+      "end": 75
+    },
+    "U2": {
+      "begin": 76,
+      "end": 78
+    },
+    "U3": {
+      "begin": 79,
+      "end": 82
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_italic_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\n\\f[I]abc\\f[R] = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "P_MINUS": {
+      "mask_italic_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_italic_mono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U1": {
+      "mask_italic_mono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U2": {
+      "mask_italic_mono": {
+        "error": "NameError: name '_sd_it' is not defined"
+      },
+      "expose_italic_nonmono": {
+        "error": "NameError: name '_sd_it' is not defined"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U3": {
+      "mask_italic_mono": {
+        "error": "NameError: name '_sd_it' is not defined"
+      },
+      "expose_italic_nonmono": {
+        "error": "NameError: name '_sd_it' is not defined"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_italic_mono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U1_U3": {
+      "mask_italic_mono": {
+        "error": "NameError: name '_sd_tag' is not defined"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U2_U3": {
+      "mask_italic_mono": {
+        "error": "NameError: name '_sd_it' is not defined"
+      },
+      "expose_italic_nonmono": {
+        "error": "NameError: name '_sd_it' is not defined"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    },
+    "KEEP_U1_U2_U3": {
+      "mask_italic_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "expose_italic_nonmono": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "control_bold_mono": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      }
+    }
+  },
+  "per_input": {
+    "mask_italic_mono": {
+      "plus": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U1": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U2": {
+          "error": "NameError: name '_sd_it' is not defined"
+        },
+        "KEEP_U3": {
+          "error": "NameError: name '_sd_it' is not defined"
+        },
+        "KEEP_U1_U2": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U1_U3": {
+          "error": "NameError: name '_sd_tag' is not defined"
+        },
+        "KEEP_U2_U3": {
+          "error": "NameError: name '_sd_it' is not defined"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+        }
+      }
+    },
+    "expose_italic_nonmono": {
+      "plus": {
+        "out": ".nf\n\\f[CR]\n\\f[I]abc\\f[R] = 1\n\n.fi"
+      },
+      "p_minus": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U1": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U2": {
+          "error": "NameError: name '_sd_it' is not defined"
+        },
+        "KEEP_U3": {
+          "error": "NameError: name '_sd_it' is not defined"
+        },
+        "KEEP_U1_U2": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U1_U3": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        },
+        "KEEP_U2_U3": {
+          "error": "NameError: name '_sd_it' is not defined"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+        }
+      }
+    },
+    "control_bold_mono": {
+      "plus": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U1": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U2": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U3": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U1_U2": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U1_U3": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U2_U3": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+        }
+      }
+    }
+  }
+}

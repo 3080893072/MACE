@@ -1,0 +1,136 @@
+{
+  "task_id": "sd_pygments_groff73_italic",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "pygments/formatters/groff.py",
+    "line": 73,
+    "function": "_make_styles",
+    "code": "                end = regular + end",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "pygments/formatters/groff.py",
+      "line": 75,
+      "code": "_sd_it = bool(ndef['italic']) and self.monospaced",
+      "role": "Leg 1: decides whether the monospaced italic reset is needed.",
+      "patch_anchor_line": 73,
+      "block_span": [
+        74,
+        76
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "pygments/formatters/groff.py",
+      "line": 78,
+      "code": "_sd_tag = regular if _sd_it else ''",
+      "role": "Leg 2: materialises the reset token selected by leg 1.",
+      "patch_anchor_line": 73,
+      "block_span": [
+        77,
+        79
+      ]
+    },
+    {
+      "id": "U3",
+      "file": "pygments/formatters/groff.py",
+      "line": 81,
+      "code": "if _sd_it and not end.startswith(regular):",
+      "role": "Leg 3: prepends the reset only when it is needed and not already present.",
+      "patch_anchor_line": 73,
+      "block_span": [
+        80,
+        83
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_italic_mono": {
+      "role": "masking",
+      "description": "italic-only style, monospaced output",
+      "p_plus": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus": {
+        "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_italic_nonmono": {
+      "role": "exposing",
+      "description": "italic-only style, non-monospaced output",
+      "p_plus": {
+        "out": ".nf\n\\f[CR]\n\\f[I]abc\\f[R] = 1\n\n.fi"
+      },
+      "p_minus": {
+        "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_bold_mono": {
+      "role": "control",
+      "description": "bold-only style; A is not executed",
+      "p_plus": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus": {
+        "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2,U3]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "differs from P+",
+      "[U2]": "differs from P+",
+      "[U3]": "differs from P+",
+      "[U1,U2]": "differs from P+",
+      "[U1,U3]": "differs from P+",
+      "[U2,U3]": "differs from P+",
+      "[U1,U2,U3]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_pygments_groff73_italic/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

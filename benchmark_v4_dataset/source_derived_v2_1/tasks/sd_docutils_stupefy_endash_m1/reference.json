@@ -1,0 +1,98 @@
+{
+  "task_id": "sd_docutils_stupefy_endash_m1",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "docutils/utils/smartquotes.py",
+    "line": 826,
+    "function": "stupefyEntities",
+    "code": "    text = text.replace(smart.endash, \"-\")",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "docutils/utils/smartquotes.py",
+      "line": 828,
+      "code": "text = text.replace(smart.endash, \"-\", 1)",
+      "role": "One-occurrence leg: rewrites a single en dash.",
+      "patch_anchor_line": 826,
+      "block_span": [
+        827,
+        829
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_one_endash": {
+      "role": "masking",
+      "description": "text containing one en dash",
+      "p_plus": {
+        "out": "left-right"
+      },
+      "p_minus": {
+        "out": "left-right"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_two_endashes": {
+      "role": "exposing",
+      "description": "text containing two en dashes: only the first is repaired",
+      "p_plus": {
+        "out": "a-b-c"
+      },
+      "p_minus": {
+        "out": "a-b�Cc"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain": {
+      "role": "control",
+      "description": "text with no special dash",
+      "p_plus": {
+        "out": "plain text"
+      },
+      "p_minus": {
+        "out": "plain text"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_docutils_stupefy_endash_m1/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

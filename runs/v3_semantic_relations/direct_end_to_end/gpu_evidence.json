@@ -1,0 +1,63 @@
+{
+  "schema": "mace-direct-qwen-gpu-evidence-v1",
+  "captured_utc": "2026-11-04T01:35:07Z",
+  "ssh_host": "connect.cqa1.seetacloud.com",
+  "ssh_port": 37377,
+  "credential_policy": "password supplied only through environment variables; never stored in this repository",
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 4090 D",
+    "memory_total_mib": 24564,
+    "memory_used_mib": 21205,
+    "utilization_gpu_percent": 0
+  },
+  "ollama": {
+    "version": "0.40.13",
+    "loaded": {
+      "name": "qwen2.5-coder:32b",
+      "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+      "size": "21 GB",
+      "processor": "100% GPU",
+      "context": 8192,
+      "runner": "llamacpp"
+    }
+  },
+  "task_calls": {
+    "ctrl_02": {
+      "prompt_tokens": 1068,
+      "completion_tokens": 286,
+      "wall_seconds": 24.243,
+      "attempt": 0
+    },
+    "ctrl_03": {
+      "prompt_tokens": 1356,
+      "completion_tokens": 665,
+      "wall_seconds": 36.276,
+      "attempt": 0
+    },
+    "werkzeug_get_host_default_empty": {
+      "prompt_tokens": 1421,
+      "completion_tokens": 1320,
+      "wall_seconds": 69.485,
+      "attempt": 0
+    },
+    "werkzeug_filestorage_stream_name": {
+      "prompt_tokens": 1109,
+      "completion_tokens": 877,
+      "wall_seconds": 46.335,
+      "attempt": 0
+    }
+  },
+  "totals": {
+    "completed_task_calls": 4,
+    "prompt_tokens": 4954,
+    "completion_tokens": 3148,
+    "total_tokens": 8102,
+    "wall_seconds": 176.339
+  },
+  "leakage_scan": {
+    "scope": "saved request prompts under direct_end_to_end/requests/",
+    "terms": ["MSMS", "MMBS", "witness", "truth", "attribution", "absorber", "coexisting_unmasking", "case_00", "hidden"],
+    "hits": 0
+  },
+  "note": "These are four additional calls made after the original four-task budget, one call per existing task. No new tasks, no HIDDEN access, no scorer change, no retry, no aborted attempt."
+}

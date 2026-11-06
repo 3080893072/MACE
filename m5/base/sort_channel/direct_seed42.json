@@ -1,0 +1,2689 @@
+{
+  "fixture": "sort_channel",
+  "mode": "direct",
+  "provider": "ollama",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen2.5-coder:32b",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 3,
+  "status": "ROUNDS_EXHAUSTED",
+  "final_guard": "use_left == False and use_right == False",
+  "final_bundle": null,
+  "final_report": {
+    "guard_ok": false,
+    "evidence_level": "BOUNDED",
+    "domain_size": 10912,
+    "usable_rows": 10912,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "pre": "bool",
+      "use_left": "bool",
+      "use_right": "bool"
+    },
+    "relations": [],
+    "guard": {
+      "id": "G",
+      "expr": "use_left == False and use_right == False",
+      "source_lines": [],
+      "status": "REFUTED",
+      "checked": 10912,
+      "unsound": 1134,
+      "incomplete": 6452,
+      "shape": "and",
+      "parts": [
+        "use_left == False",
+        "use_right == False"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          1134,
+          1134
+        ],
+        "rejects_wrong": [
+          4590,
+          4590
+        ]
+      },
+      "counterexamples": [
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": false,
+            "use_right": true
+          },
+          "out_plus": [
+            -1,
+            -1
+          ],
+          "out_minus": [
+            -1,
+            -1
+          ],
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": false,
+            "use_right": true
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": false,
+            "use_right": true
+          },
+          "diagnostic": {
+            "A_changed_local_state": false
+          },
+          "kind": "incomplete",
+          "predicted": false,
+          "parts": [
+            true,
+            false
+          ],
+          "part_text": [
+            "use_left == False",
+            "use_right == False"
+          ]
+        },
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": true,
+            "use_right": false
+          },
+          "out_plus": [
+            -1,
+            -1
+          ],
+          "out_minus": [
+            -1,
+            -1
+          ],
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": true,
+            "use_right": false
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": true,
+            "use_right": false
+          },
+          "diagnostic": {
+            "A_changed_local_state": false
+          },
+          "kind": "incomplete",
+          "predicted": false,
+          "parts": [
+            false,
+            true
+          ],
+          "part_text": [
+            "use_left == False",
+            "use_right == False"
+          ]
+        },
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": true,
+            "use_right": true
+          },
+          "out_plus": [
+            -1,
+            -1
+          ],
+          "out_minus": [
+            -1,
+            -1
+          ],
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": true,
+            "use_right": true
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "pre": false,
+            "use_left": true,
+            "use_right": true
+          },
+          "diagnostic": {
+            "A_changed_local_state": false
+          },
+          "kind": "incomplete",
+          "predicted": false,
+          "parts": [
+            false,
+            false
+          ],
+          "part_text": [
+            "use_left == False",
+            "use_right == False"
+          ]
+        }
+      ],
+      "contrasts": [
+        {
+          "only_differing_argument": "xs",
+          "masked": {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              -1
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              -1
+            ],
+            "guard_says": true
+          }
+        },
+        {
+          "only_differing_argument": "pre",
+          "masked": {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": true,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              -1
+            ],
+            "guard_says": true
+          }
+        },
+        {
+          "only_differing_argument": "use_left",
+          "masked": {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "guard_says": false
+          },
+          "exposed": {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              0
+            ],
+            "guard_says": false
+          }
+        }
+      ]
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "reason": "no upstream relation with role='fixed_point' was verified"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0,
+          1
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 5956,
+      "active_masked": 2090,
+      "active_exposed": 2866
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [
+            0,
+            -1
+          ],
+          "pre": false,
+          "use_left": false,
+          "use_right": false
+        },
+        "out_plus": [
+          -1,
+          0
+        ],
+        "out_minus": [
+          0,
+          -1
+        ],
+        "snap_plus": {
+          "xs": [
+            -1,
+            0
+          ],
+          "pre": false,
+          "use_left": false,
+          "use_right": false
+        },
+        "snap_minus": {
+          "xs": [
+            0,
+            -1
+          ],
+          "pre": false,
+          "use_left": false,
+          "use_right": false
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            0,
+            -1
+          ],
+          "pre": false,
+          "use_left": false,
+          "use_right": true
+        },
+        "out_plus": [
+          -1,
+          0
+        ],
+        "out_minus": [
+          0,
+          0
+        ],
+        "snap_plus": {
+          "xs": [
+            -1,
+            0
+          ],
+          "pre": false,
+          "use_left": false,
+          "use_right": true
+        },
+        "snap_minus": {
+          "xs": [
+            0,
+            -1
+          ],
+          "pre": false,
+          "use_left": false,
+          "use_right": true
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            0,
+            -1
+          ],
+          "pre": false,
+          "use_left": true,
+          "use_right": false
+        },
+        "out_plus": [
+          -1,
+          0
+        ],
+        "out_minus": [
+          -1,
+          -1
+        ],
+        "snap_plus": {
+          "xs": [
+            -1,
+            0
+          ],
+          "pre": false,
+          "use_left": true,
+          "use_right": false
+        },
+        "snap_minus": {
+          "xs": [
+            0,
+            -1
+          ],
+          "pre": false,
+          "use_left": true,
+          "use_right": false
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 8,
+            "contexts_with_flip": 3,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "xs",
+              "args": {
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "masked": {
+                "value": [
+                  -1
+                ],
+                "out_plus": [
+                  -1,
+                  -1
+                ],
+                "out_minus": [
+                  -1,
+                  -1
+                ]
+              },
+              "exposed": {
+                "value": [
+                  0,
+                  -1
+                ],
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ]
+              }
+            }
+          },
+          "pre": {
+            "contexts": 5456,
+            "contexts_with_flip": 2866,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "pre",
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "use_left": false,
+                "use_right": false
+              },
+              "masked": {
+                "value": true,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ]
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ]
+              }
+            }
+          },
+          "use_left": {
+            "contexts": 5456,
+            "contexts_with_flip": 1134,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "use_left",
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_right": true
+              },
+              "masked": {
+                "value": true,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ]
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "use_right": {
+            "contexts": 5456,
+            "contexts_with_flip": 1134,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "use_right",
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": true
+              },
+              "masked": {
+                "value": true,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ]
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  -1
+                ]
+              }
+            }
+          }
+        },
+        "causally_relevant": [
+          "xs",
+          "pre",
+          "use_left",
+          "use_right"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [],
+            "status": "REFUTED"
+          }
+        ],
+        "edges": [],
+        "unsupported": [],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 31,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 905,
+        "completion_tokens": 36,
+        "total_duration_ns": 2399739172,
+        "load_duration_ns": 1890019,
+        "prompt_eval_duration_ns": 318560000,
+        "eval_duration_ns": 1768896000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 2.402,
+        "attempt": 0
+      },
+      "raw_response": "{\"mask_guard\": \"sorted(xs) == xs\", \"explanation\": \"The deletion of the sorting operation does not change the output if the list is already sorted.\"}",
+      "guard": "sorted(xs) == xs",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 10912,
+        "usable_rows": 10912,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "pre": "bool",
+          "use_left": "bool",
+          "use_right": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "sorted(xs) == xs",
+          "source_lines": [],
+          "status": "REFUTED",
+          "checked": 10912,
+          "unsound": 0,
+          "incomplete": 7046,
+          "shape": null,
+          "parts": [
+            "sorted(xs) == xs"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0
+            ],
+            "rejects_wrong": [
+              7046
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": true
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                -1,
+                0
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": true
+              },
+              "snap_minus": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": true
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false
+              ],
+              "part_text": [
+                "sorted(xs) == xs"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                -1,
+                0
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": false
+              },
+              "snap_minus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false
+              ],
+              "part_text": [
+                "sorted(xs) == xs"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": true
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                -1,
+                0
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": true
+              },
+              "snap_minus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": true
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false
+              ],
+              "part_text": [
+                "sorted(xs) == xs"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "pre",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": true,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ],
+                "guard_says": false
+              }
+            },
+            {
+              "only_differing_argument": "use_left",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": true,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  0
+                ],
+                "guard_says": false
+              }
+            },
+            {
+              "only_differing_argument": "use_right",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": true,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": true,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  -1
+                ],
+                "guard_says": false
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 5956,
+          "active_masked": 2090,
+          "active_exposed": 2866
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 8,
+                "contexts_with_flip": 3,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "pre": false,
+                    "use_left": false,
+                    "use_right": false
+                  },
+                  "masked": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": [
+                      -1,
+                      -1
+                    ],
+                    "out_minus": [
+                      -1,
+                      -1
+                    ]
+                  },
+                  "exposed": {
+                    "value": [
+                      0,
+                      -1
+                    ],
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      -1
+                    ]
+                  }
+                }
+              },
+              "pre": {
+                "contexts": 5456,
+                "contexts_with_flip": 2866,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "pre",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "use_left": false,
+                    "use_right": false
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      -1
+                    ]
+                  }
+                }
+              },
+              "use_left": {
+                "contexts": 5456,
+                "contexts_with_flip": 1134,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "use_left",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "pre": false,
+                    "use_right": true
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              },
+              "use_right": {
+                "contexts": 5456,
+                "contexts_with_flip": 1134,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "use_right",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "pre": false,
+                    "use_left": true
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      -1
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "pre",
+              "use_left",
+              "use_right"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 31,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 31 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     result = []\n003:     for value in xs:\n004:         pos = len(result)\n005:         while pos > 0 and result[pos - 1] > value:\n006:             pos -= 1\n007:         result.insert(pos, value)\n008:     return result\n009: \n010: \n011: def fn_1(xs):\n012:     value = xs[0]\n013:     for item in xs[1:]:\n014:         if item < value:\n015:             value = item\n016:     return value\n017: \n018: \n019: def fn_2(xs):\n020:     value = xs[0]\n021:     for item in xs[1:]:\n022:         if item > value:\n023:             value = item\n024:     return value\n025: \n026: \n027: def program(xs, pre, use_left, use_right):\n028:     if pre:\n029:         xs = fn_0(xs)\n030: \n031:     xs = sorted(xs)  # TARGET_A\n032: \n033:     first = fn_1(xs) if use_left else xs[0]\n034:     last = fn_2(xs) if use_right else xs[-1]\n035:     return first, last\n\nInput domain: xs: list[int] with length 1..5, values in {-1, 0, 1, 2}; pre: bool; use_left: bool; use_right: bool (every combination is enumerated; 10912 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  pre: bool\n  use_left: bool\n  use_right: bool\n  xs: list[int]\n\nDeclared function types:\n  fn_0(list[int]) -> list[int]\n  fn_1(list[int]) -> int\n  fn_2(list[int]) -> int\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 1180,
+        "completion_tokens": 63,
+        "total_duration_ns": 3290476653,
+        "load_duration_ns": 2042813,
+        "prompt_eval_duration_ns": 167522000,
+        "eval_duration_ns": 3099822000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 3.292,
+        "attempt": 0
+      },
+      "raw_response": "{\"mask_guard\": \"True\", \"explanation\": \"The deletion of the sorting operation does not change the output because the subsequent operations (fn_1 and fn_2) are independent of the order of the list when the list is already sorted or when the operations do not rely on the order.\"}",
+      "guard": "True",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 10912,
+        "usable_rows": 10912,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "pre": "bool",
+          "use_left": "bool",
+          "use_right": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "True",
+          "source_lines": [],
+          "status": "REFUTED",
+          "checked": 10912,
+          "unsound": 2866,
+          "incomplete": 0,
+          "shape": null,
+          "parts": [
+            "True"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              2866
+            ],
+            "rejects_wrong": [
+              0
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                0,
+                -1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "snap_minus": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": true
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                0,
+                0
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": true
+              },
+              "snap_minus": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": true
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                -1,
+                -1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  0
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": false
+              },
+              "snap_minus": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  -1
+                ],
+                "out_minus": [
+                  -1,
+                  -1
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ],
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "pre",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": true,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ],
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "use_left",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": true,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  0
+                ],
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 5956,
+          "active_masked": 2090,
+          "active_exposed": 2866
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 8,
+                "contexts_with_flip": 3,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "pre": false,
+                    "use_left": false,
+                    "use_right": false
+                  },
+                  "masked": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": [
+                      -1,
+                      -1
+                    ],
+                    "out_minus": [
+                      -1,
+                      -1
+                    ]
+                  },
+                  "exposed": {
+                    "value": [
+                      0,
+                      -1
+                    ],
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      -1
+                    ]
+                  }
+                }
+              },
+              "pre": {
+                "contexts": 5456,
+                "contexts_with_flip": 2866,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "pre",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "use_left": false,
+                    "use_right": false
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      -1
+                    ]
+                  }
+                }
+              },
+              "use_left": {
+                "contexts": 5456,
+                "contexts_with_flip": 1134,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "use_left",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "pre": false,
+                    "use_right": true
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              },
+              "use_right": {
+                "contexts": 5456,
+                "contexts_with_flip": 1134,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "use_right",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "pre": false,
+                    "use_left": true
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      -1
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "pre",
+              "use_left",
+              "use_right"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 31,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 31 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     result = []\n003:     for value in xs:\n004:         pos = len(result)\n005:         while pos > 0 and result[pos - 1] > value:\n006:             pos -= 1\n007:         result.insert(pos, value)\n008:     return result\n009: \n010: \n011: def fn_1(xs):\n012:     value = xs[0]\n013:     for item in xs[1:]:\n014:         if item < value:\n015:             value = item\n016:     return value\n017: \n018: \n019: def fn_2(xs):\n020:     value = xs[0]\n021:     for item in xs[1:]:\n022:         if item > value:\n023:             value = item\n024:     return value\n025: \n026: \n027: def program(xs, pre, use_left, use_right):\n028:     if pre:\n029:         xs = fn_0(xs)\n030: \n031:     xs = sorted(xs)  # TARGET_A\n032: \n033:     first = fn_1(xs) if use_left else xs[0]\n034:     last = fn_2(xs) if use_right else xs[-1]\n035:     return first, last\n\nInput domain: xs: list[int] with length 1..5, values in {-1, 0, 1, 2}; pre: bool; use_left: bool; use_right: bool (every combination is enumerated; 10912 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  pre: bool\n  use_left: bool\n  use_right: bool\n  xs: list[int]\n\nDeclared function types:\n  fn_0(list[int]) -> list[int]\n  fn_1(list[int]) -> int\n  fn_2(list[int]) -> int\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"mask_guard\": \"sorted(xs) == xs\", \"explanation\": \"The deletion of the sorting operation does not change the output if the list is already sorted.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: sorted(xs) == xs\nThe bounded checker ran 10912 paired executions.\nINCOMPLETE in 7046 cases: outputs are equal but the guard rejects the input. First counterexample: {\"args\": {\"xs\": [0, -1], \"pre\": false, \"use_left\": true, \"use_right\": true}, \"out_plus\": [-1, 0], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1, 0], \"pre\": false, \"use_left\": true, \"use_right\": true}, \"snap_minus\": {\"xs\": [0, -1], \"pre\": false, \"use_left\": true, \"use_right\": true}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"sorted(xs) == xs\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "stats": {
+        "prompt_tokens": 1475,
+        "completion_tokens": 61,
+        "total_duration_ns": 3259196169,
+        "load_duration_ns": 3027021,
+        "prompt_eval_duration_ns": 139540000,
+        "eval_duration_ns": 3086723000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 3.261,
+        "attempt": 0
+      },
+      "raw_response": "{\"mask_guard\": \"use_left == False and use_right == False\", \"explanation\": \"The deletion of the sorting operation does not change the output if neither use_left nor use_right is True, as the first and last elements of the list are returned directly without relying on the order.\"}",
+      "guard": "use_left == False and use_right == False",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 10912,
+        "usable_rows": 10912,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "pre": "bool",
+          "use_left": "bool",
+          "use_right": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "use_left == False and use_right == False",
+          "source_lines": [],
+          "status": "REFUTED",
+          "checked": 10912,
+          "unsound": 1134,
+          "incomplete": 6452,
+          "shape": "and",
+          "parts": [
+            "use_left == False",
+            "use_right == False"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              1134,
+              1134
+            ],
+            "rejects_wrong": [
+              4590,
+              4590
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": true
+              },
+              "out_plus": [
+                -1,
+                -1
+              ],
+              "out_minus": [
+                -1,
+                -1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": true
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": true
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                true,
+                false
+              ],
+              "part_text": [
+                "use_left == False",
+                "use_right == False"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                -1
+              ],
+              "out_minus": [
+                -1,
+                -1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": false
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false,
+                true
+              ],
+              "part_text": [
+                "use_left == False",
+                "use_right == False"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": true
+              },
+              "out_plus": [
+                -1,
+                -1
+              ],
+              "out_minus": [
+                -1,
+                -1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": true
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": true,
+                "use_right": true
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false,
+                false
+              ],
+              "part_text": [
+                "use_left == False",
+                "use_right == False"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  -1
+                ],
+                "out_minus": [
+                  -1,
+                  -1
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ],
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "pre",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": true,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": false
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  -1
+                ],
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "use_left",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": true,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0,
+                    -1
+                  ],
+                  "pre": false,
+                  "use_left": false,
+                  "use_right": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  0,
+                  0
+                ],
+                "guard_says": false
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 5956,
+          "active_masked": 2090,
+          "active_exposed": 2866
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": false
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              0,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                0,
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 8,
+                "contexts_with_flip": 3,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "pre": false,
+                    "use_left": false,
+                    "use_right": false
+                  },
+                  "masked": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": [
+                      -1,
+                      -1
+                    ],
+                    "out_minus": [
+                      -1,
+                      -1
+                    ]
+                  },
+                  "exposed": {
+                    "value": [
+                      0,
+                      -1
+                    ],
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      -1
+                    ]
+                  }
+                }
+              },
+              "pre": {
+                "contexts": 5456,
+                "contexts_with_flip": 2866,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "pre",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "use_left": false,
+                    "use_right": false
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      -1
+                    ]
+                  }
+                }
+              },
+              "use_left": {
+                "contexts": 5456,
+                "contexts_with_flip": 1134,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "use_left",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "pre": false,
+                    "use_right": true
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              },
+              "use_right": {
+                "contexts": 5456,
+                "contexts_with_flip": 1134,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "use_right",
+                  "args": {
+                    "xs": [
+                      0,
+                      -1
+                    ],
+                    "pre": false,
+                    "use_left": true
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      -1
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "pre",
+              "use_left",
+              "use_right"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 31,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 31 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     result = []\n003:     for value in xs:\n004:         pos = len(result)\n005:         while pos > 0 and result[pos - 1] > value:\n006:             pos -= 1\n007:         result.insert(pos, value)\n008:     return result\n009: \n010: \n011: def fn_1(xs):\n012:     value = xs[0]\n013:     for item in xs[1:]:\n014:         if item < value:\n015:             value = item\n016:     return value\n017: \n018: \n019: def fn_2(xs):\n020:     value = xs[0]\n021:     for item in xs[1:]:\n022:         if item > value:\n023:             value = item\n024:     return value\n025: \n026: \n027: def program(xs, pre, use_left, use_right):\n028:     if pre:\n029:         xs = fn_0(xs)\n030: \n031:     xs = sorted(xs)  # TARGET_A\n032: \n033:     first = fn_1(xs) if use_left else xs[0]\n034:     last = fn_2(xs) if use_right else xs[-1]\n035:     return first, last\n\nInput domain: xs: list[int] with length 1..5, values in {-1, 0, 1, 2}; pre: bool; use_left: bool; use_right: bool (every combination is enumerated; 10912 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  pre: bool\n  use_left: bool\n  use_right: bool\n  xs: list[int]\n\nDeclared function types:\n  fn_0(list[int]) -> list[int]\n  fn_1(list[int]) -> int\n  fn_2(list[int]) -> int\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"mask_guard\": \"sorted(xs) == xs\", \"explanation\": \"The deletion of the sorting operation does not change the output if the list is already sorted.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: sorted(xs) == xs\nThe bounded checker ran 10912 paired executions.\nINCOMPLETE in 7046 cases: outputs are equal but the guard rejects the input. First counterexample: {\"args\": {\"xs\": [0, -1], \"pre\": false, \"use_left\": true, \"use_right\": true}, \"out_plus\": [-1, 0], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1, 0], \"pre\": false, \"use_left\": true, \"use_right\": true}, \"snap_minus\": {\"xs\": [0, -1], \"pre\": false, \"use_left\": true, \"use_right\": true}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"sorted(xs) == xs\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        },
+        {
+          "role": "assistant",
+          "content": "{\"mask_guard\": \"True\", \"explanation\": \"The deletion of the sorting operation does not change the output because the subsequent operations (fn_1 and fn_2) are independent of the order of the list when the list is already sorted or when the operations do not rely on the order.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: True\nThe bounded checker ran 10912 paired executions.\nUNSOUND in 2866 cases: the guard accepts an input where the two versions differ. First counterexample: {\"args\": {\"xs\": [0, -1], \"pre\": false, \"use_left\": false, \"use_right\": false}, \"out_plus\": [-1, 0], \"out_minus\": [0, -1], \"snap_plus\": {\"xs\": [-1, 0], \"pre\": false, \"use_left\": false, \"use_right\": false}, \"snap_minus\": {\"xs\": [0, -1], \"pre\": false, \"use_left\": false, \"use_right\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"True\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 3,
+    "prompt_tokens": 3560,
+    "completion_tokens": 160,
+    "decode_seconds": 8.955,
+    "wall_seconds": 17.82
+  },
+  "domain": {
+    "size": 10912,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-10-30T10:53:21.360825+00:00"
+}

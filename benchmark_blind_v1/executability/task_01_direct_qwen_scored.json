@@ -1,0 +1,293 @@
+{
+  "schema_version": "mace-blind-baseline-raw-v1",
+  "task_id": "blind_01_parse_header_links",
+  "method": "direct_qwen",
+  "provider": "transformers-local",
+  "model_info": {
+    "provider": "transformers-local",
+    "model": "qwen15b",
+    "path": "D:/tmp/qwen15b",
+    "dtype": "torch.bfloat16",
+    "device": "cuda:0",
+    "parameters": 1543714304,
+    "max_position_embeddings": 32768
+  },
+  "generation": {
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1536,
+    "do_sample": false
+  },
+  "prompt_sha256": "423c5fa2aa9f56df37658a189b7834c65e2d486172d49a061578ac89c9b01be7",
+  "public_task_sha256": "a20efe0664a8539553c64c122222b2debbef12c1ed55f4fab30f29aeb4472486",
+  "public_schema_sha256": "c367fec1e5c9ceac971c97610a8e264f6582df9ef4591964c77de8345e024d2b",
+  "private_data_used_before_answer": false,
+  "started_at_utc": "2026-11-01T09:41:32+00:00",
+  "finished_at_utc": "2026-11-01T09:41:49+00:00",
+  "wall_seconds": 17.236,
+  "stats": {
+    "prompt_tokens": 1131,
+    "completion_tokens": 217,
+    "total_tokens": 1348,
+    "wall_seconds": 7.599,
+    "model": "qwen15b",
+    "provider": "transformers-local",
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1536,
+    "device": "cuda:0"
+  },
+  "status": "ANSWERED",
+  "parse_error": null,
+  "answer": {
+    "guard": {
+      "expr": "len(value) <= 0",
+      "status": "BOUNDED"
+    },
+    "masking": {
+      "probes": [
+        {
+          "probe_id": "p1",
+          "absorber_sets": [
+            [
+              "op_1"
+            ]
+          ],
+          "kind": "independent"
+        },
+        {
+          "probe_id": "p2",
+          "absorber_sets": [
+            [
+              "op_2"
+            ]
+          ],
+          "kind": "independent"
+        },
+        {
+          "probe_id": "p3",
+          "absorber_sets": [
+            [
+              "op_3"
+            ]
+          ],
+          "kind": "independent"
+        },
+        {
+          "probe_id": "p4",
+          "absorber_sets": [
+            [
+              "op_1"
+            ],
+            [
+              "op_2"
+            ],
+            [
+              "op_3"
+            ]
+          ],
+          "kind": "cooperative"
+        }
+      ]
+    },
+    "counterexample": {
+      "exists": false
+    },
+    "test_gap": {
+      "verdict": "no gap",
+      "tests": []
+    },
+    "evidence": "The deletion is observable on all probes because it does not affect the output."
+  },
+  "counted_as_analyzed": true,
+  "scoring": {
+    "guard": {
+      "status": "INVALID",
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "false_accept": [],
+      "false_reject": [],
+      "errors": [
+        {
+          "case_id": "m1",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "m2",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "m3",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "m4",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "m5",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "m6",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "e1",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "e2",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "e3",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "e4",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "n1",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "n2",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "n3",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        },
+        {
+          "case_id": "n4",
+          "error": "ValueError: guard uses syntax outside the public restricted language"
+        }
+      ],
+      "evidence_level": "BOUNDED",
+      "note": "Finite hidden-eval check only; never PROVEN."
+    },
+    "masking": {
+      "probes": [
+        {
+          "probe_id": "p1",
+          "status": "exact",
+          "got_sets": [
+            [
+              "op_1"
+            ]
+          ],
+          "got_kind": "independent",
+          "expected_sets": [
+            [
+              "op_1"
+            ]
+          ],
+          "expected_kind": "independent"
+        },
+        {
+          "probe_id": "p2",
+          "status": "wrong",
+          "got_sets": [
+            [
+              "op_2"
+            ]
+          ],
+          "got_kind": "independent",
+          "expected_sets": [
+            [
+              "op_3"
+            ]
+          ],
+          "expected_kind": "independent"
+        },
+        {
+          "probe_id": "p3",
+          "status": "wrong",
+          "got_sets": [
+            [
+              "op_3"
+            ]
+          ],
+          "got_kind": "independent",
+          "expected_sets": [
+            [
+              "op_1",
+              "op_3"
+            ]
+          ],
+          "expected_kind": "cooperative"
+        },
+        {
+          "probe_id": "p4",
+          "status": "wrong",
+          "got_sets": [
+            [
+              "op_1"
+            ],
+            [
+              "op_2"
+            ],
+            [
+              "op_3"
+            ]
+          ],
+          "got_kind": "cooperative",
+          "expected_sets": [],
+          "expected_kind": "none"
+        }
+      ],
+      "exact": false,
+      "covered": 4,
+      "total": 4
+    },
+    "counterexample": {
+      "claim": null,
+      "value": null,
+      "valid": null,
+      "hidden_exposed_count": 4,
+      "status": "unscored"
+    },
+    "test_gap": {
+      "tests": [
+        {
+          "test": "t1",
+          "expected": "masked",
+          "got": null,
+          "status": "uncovered"
+        },
+        {
+          "test": "t2",
+          "expected": "unexercised",
+          "got": null,
+          "status": "uncovered"
+        },
+        {
+          "test": "t3",
+          "expected": "unexercised",
+          "got": null,
+          "status": "uncovered"
+        },
+        {
+          "test": "t4",
+          "expected": "unexercised",
+          "got": null,
+          "status": "uncovered"
+        },
+        {
+          "test": "t5",
+          "expected": "unexercised",
+          "got": null,
+          "status": "uncovered"
+        }
+      ],
+      "exact": false,
+      "covered": 0,
+      "total": 5
+    },
+    "overall_exact_is_not_a_single_score": true
+  },
+  "scored_after_raw_write": true
+}

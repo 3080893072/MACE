@@ -1,0 +1,255 @@
+{
+  "case_id": "sd_jsonschema_1145_pointer",
+  "method": "c_fixed",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "project": "jsonschema",
+  "universe": [
+    {
+      "id": "jsonschema/validators.py:1147-1147",
+      "file": "jsonschema/validators.py",
+      "first_line": 1147,
+      "last_line": 1147,
+      "kind": "assignment",
+      "code": "            part = part.replace(\"~0\", \"~\")"
+    }
+  ],
+  "discovery": {
+    "method": "c_fixed",
+    "rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+    "candidate_ops": 2,
+    "kept": 1,
+    "considered": 2,
+    "dropped_no_effect": 1,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0,
+    "u_covered": [
+      "U1"
+    ],
+    "u_total": [
+      "U1"
+    ],
+    "u_recall": 1.0,
+    "u_exact": true
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_tilde0",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 2,
+        "subsets_total": 2,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 4,
+        "first_msms": {
+          "set": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "evaluations": 1,
+          "elapsed_seconds": 0.0
+        },
+        "first_mmbs": {
+          "set": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": 0.0
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "mask_nested_tilde0",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 2,
+        "subsets_total": 2,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 4,
+        "first_msms": {
+          "set": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "evaluations": 1,
+          "elapsed_seconds": 0.0
+        },
+        "first_mmbs": {
+          "set": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": 0.0
+        }
+      }
+    },
+    {
+      "public_id": "in3",
+      "input_key": "expose_tilde1",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in4",
+      "input_key": "control_plain",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 2,
+        "subsets_total": 2,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 4,
+        "first_msms": {
+          "set": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "evaluations": 1,
+          "elapsed_seconds": 0.0
+        },
+        "first_mmbs": null
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 2,
+    "msms_exact_intervention": 2,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 2,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 2
+  },
+  "detail": [
+    {
+      "input": "mask_tilde0",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        [
+          "U1"
+        ]
+      ],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [
+        [
+          [
+            "U1"
+          ]
+        ]
+      ],
+      "msms_exact": true,
+      "intervention_equivalent": true,
+      "got_mmbs_disabled_sets": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ]
+    },
+    {
+      "input": "mask_nested_tilde0",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        [
+          "U1"
+        ]
+      ],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [
+        [
+          [
+            "U1"
+          ]
+        ]
+      ],
+      "msms_exact": true,
+      "intervention_equivalent": true,
+      "got_mmbs_disabled_sets": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 2.51,
+    "probe_executions_algorithm": 6,
+    "probe_executions_scoring": 0,
+    "variant_builds": 6,
+    "subsets_evaluated": 6
+  }
+}

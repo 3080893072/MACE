@@ -1,0 +1,127 @@
+{
+  "case_id": "sd_docutils_educate_dashes_m2",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "docutils/utils/smartquotes.py:765-765",
+      "file": "docutils/utils/smartquotes.py",
+      "first_line": 765,
+      "last_line": 765,
+      "kind": "assign",
+      "code": "    text = text.replace(r'---', smartchars.endash, 1)",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "docutils/utils/smartquotes.py:763-763",
+          "to": "docutils/utils/smartquotes.py:765-765",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:text",
+          "guard": ""
+        }
+      ],
+      "graph_function": "educateDashes"
+    },
+    {
+      "id": "docutils/utils/smartquotes.py:768-768",
+      "file": "docutils/utils/smartquotes.py",
+      "first_line": 768,
+      "last_line": 768,
+      "kind": "assign",
+      "code": "    text = text.replace(r'---', smartchars.endash, 1)",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "docutils/utils/smartquotes.py:763-763",
+          "to": "docutils/utils/smartquotes.py:768-768",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:text",
+          "guard": ""
+        }
+      ],
+      "graph_function": "educateDashes"
+    },
+    {
+      "id": "docutils/utils/smartquotes.py:770-770",
+      "file": "docutils/utils/smartquotes.py",
+      "first_line": 770,
+      "last_line": 770,
+      "kind": "assign",
+      "code": "    text = text.replace(r'--', smartchars.emdash)   # em (yes, backwards)",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "docutils/utils/smartquotes.py:763-763",
+          "to": "docutils/utils/smartquotes.py:770-770",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:text",
+          "guard": ""
+        }
+      ],
+      "graph_function": "educateDashes"
+    },
+    {
+      "id": "docutils/utils/smartquotes.py:771-771",
+      "file": "docutils/utils/smartquotes.py",
+      "first_line": 771,
+      "last_line": 771,
+      "kind": "return",
+      "code": "    return text",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "docutils/utils/smartquotes.py:763-763",
+          "to": "docutils/utils/smartquotes.py:771-771",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:text",
+          "guard": ""
+        }
+      ],
+      "graph_function": "educateDashes"
+    },
+    {
+      "id": "docutils/utils/smartquotes.py:594-594",
+      "file": "docutils/utils/smartquotes.py",
+      "first_line": 594,
+      "last_line": 594,
+      "kind": "assign",
+      "code": "            text = text.replace('&quot;', '\"')",
+      "graph_score": 1.314754,
+      "graph_path": [
+        {
+          "from": "docutils/utils/smartquotes.py:763-763",
+          "to": "docutils/utils/smartquotes.py:594-594",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:replace",
+          "guard": ""
+        }
+      ],
+      "graph_function": "educate_tokens"
+    },
+    {
+      "id": "docutils/utils/smartquotes.py:591-591",
+      "file": "docutils/utils/smartquotes.py",
+      "first_line": 591,
+      "last_line": 591,
+      "kind": "assign",
+      "code": "        text = processEscapes(text)",
+      "graph_score": 1.114754,
+      "graph_path": [
+        {
+          "from": "docutils/utils/smartquotes.py:763-763",
+          "to": "docutils/utils/smartquotes.py:591-591",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:processEscapes",
+          "guard": ""
+        }
+      ],
+      "graph_function": "educate_tokens"
+    }
+  ],
+  "source": "computed_v2_1"
+}

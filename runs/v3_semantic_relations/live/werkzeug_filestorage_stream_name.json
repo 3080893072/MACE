@@ -1,0 +1,3300 @@
+{
+  "schema": "mace-semantic-relation-discovery-v1",
+  "budget_per_input": 16,
+  "tasks": {
+    "werkzeug_filestorage_stream_name": {
+      "kind": "real_v3",
+      "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_filestorage_stream_name\n\n## Files\n`src/werkzeug/datastructures.py`\n\n## Program with source line numbers\n```text\n2902 |     def __init__(\n2903 |         self,\n2904 |         stream=None,\n2905 |         filename=None,\n2906 |         name=None,\n2907 |         content_type=None,\n2908 |         content_length=None,\n2909 |         headers=None,\n2910 |     ):\n2911 |         self.name = name\n2912 |         self.stream = stream or BytesIO()\n2913 | \n2914 |         # If no filename is provided, attempt to get the filename from\n2915 |         # the stream object. Python names special streams like\n2916 |         # ``<stderr>`` with angular brackets, skip these streams.\n2917 |         if filename is None:\n2918 |             filename = getattr(stream, \"name\", None)\n2919 | \n2920 |             if filename is not None:\n2921 |                 filename = os.fsdecode(filename)\n2922 | \n2923 |             if filename and filename[0] == \"<\" and filename[-1] == \">\":\n2924 |                 filename = None\n2925 |         else:\n2926 |             filename = os.fsdecode(filename)\n2927 | \n2928 |         self.filename = filename\n2929 | \n2930 |         if headers is None:\n2931 |             headers = Headers()\n2932 |         self.headers = headers\n2933 |         if content_type is not None:\n2934 |             headers[\"Content-Type\"] = content_type\n2935 |         if content_length is not None:\n2936 |             headers[\"Content-Length\"] = str(content_length)\n```\n\n## Target A\nLine 2918: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\n\n## Legal inputs\nArguments: {\"data\": {\"description\": \"Bytes encoded as UTF-8 for none/named streams.\", \"required\": false, \"type\": \"string\"}, \"name\": {\"description\": \"Required when stream is 'named'.\", \"required\": false, \"type\": \"string\"}, \"stream\": {\"description\": \"Kind of stream object passed to FileStorage.\", \"enum\": [\"tempfile\", \"stderr\", \"none\", \"named\"], \"required\": true, \"type\": \"string\"}}\nFrozen legal cases: [{\"stream\": \"tempfile\"}, {\"stream\": \"stderr\"}, {\"stream\": \"none\", \"data\": \"abc\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"x.txt\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stderr>\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stdin>\"}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; stream must be one of tempfile, stderr, none, named.; data, when present, must be a string.; name is required for stream='named' and must be a string.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"filename\": \"string|null\", \"filename_type\": \"Python type name\", \"outcome\": \"return\"}}\n\n## Operations already proposed by the static graph\n- id=src/werkzeug/datastructures.py:2924-2924  line=2924  kind=assignment  `                filename = None `\n- id=src/werkzeug/datastructures.py:2921-2921  line=2921  kind=assignment  `                filename = os.fsdecode(filename) `\n- id=src/werkzeug/datastructures.py:2926-2926  line=2926  kind=assignment  `            filename = os.fsdecode(filename) `\n\nYou may propose operations that are NOT in this list. Every operation you\nreport must be a real, complete statement in the file above: give its exact\n1-based starting line and its source text. Do not invent lines.\n\n## What to analyse\n1. Operations that may **independently mask A**: one operation alone is enough\n   to make the deletion unobservable.\n2. Operations that may **cooperatively mask A**: two or more operations are\n   jointly sufficient, and no proper non-empty subset is.\n3. **Alternative / fallback masking paths**: different sets of operations that\n   each mask A, so more than one path has to fail before A is exposed.\n4. The **input conditions** under which each relation holds. Use only the\n   argument names, int/bool constants, comparisons, arithmetic, `and`, `or`,\n   `not`. If the relation holds for every legal input, write `true`.\n5. Source locations, and whether the relation is **data-dependent** (it reads\n   or overwrites the value A writes) or **control-dependent** (it changes\n   whether A's statement executes).\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"kind\": \"independent | cooperative | fallback | coexisting\",\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ],\n  \"notes\": \"<optional>\"\n}\n\n`coexisting` means: disabling the named operations together exposes A, while\nno proper non-empty subset does. Return at most 12 different\nrelations. Return one JSON object and no prose outside it.\n",
+      "prompt_sha256": "bbf518a48166a3776a64e68dee0f409f9cb10d40f5f76ae7c98d20b0b88159f5",
+      "model_output": {
+        "format": "structured",
+        "source": "live",
+        "raw_response": "{\n  \"relations\": [\n    {\n      \"kind\": \"independent\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"                filename = None\"}\n      ],\n      \"condition\": \"filename is not None and filename[0] == '<' and filename[-1] == '>'\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2924: If the filename is wrapped in angular brackets, it is set to None, masking the effect of line 2918.\",\n      \"rationale\": \"Line 2924 directly sets filename to None if it is wrapped in angular brackets, making the assignment in line 2918 irrelevant.\"\n    },\n    {\n      \"kind\": \"independent\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"                filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"filename is not None and filename[0] != '<' and filename[-1] != '>'\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2921: If the filename is not wrapped in angular brackets, it is decoded, masking the effect of line 2918.\",\n      \"rationale\": \"Line 2921 decodes the filename if it is not wrapped in angular brackets, making the assignment in line 2918 irrelevant.\"\n    },\n    {\n      \"kind\": \"independent\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2926, \"text\": \"            filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"filename is not None\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2926: The filename is decoded, masking the effect of line 2918.\",\n      \"rationale\": \"Line 2926 decodes the filename, making the assignment in line 2918 irrelevant.\"\n    },\n    {\n      \"kind\": \"cooperative\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"                filename = os.fsdecode(filename)\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"                filename = None\"}\n      ],\n      \"condition\": \"filename is not None\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2921: Decodes the filename; 2924: Sets filename to None if wrapped in angular brackets.\",\n      \"rationale\": \"Lines 2921 and 2924 together ensure that the filename is either decoded or set to None, masking the effect of line 2918.\"\n    },\n    {\n      \"kind\": \"cooperative\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2926, \"text\": \"            filename = os.fsdecode(filename)\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"                filename = None\"}\n      ],\n      \"condition\": \"filename is not None\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2926: Decodes the filename; 2924: Sets filename to None if wrapped in angular brackets.\",\n      \"rationale\": \"Lines 2926 and 2924 together ensure that the filename is either decoded or set to None, masking the effect of line 2918.\"\n    },\n    {\n      \"kind\": \"fallback\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"                filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"filename is not None and filename[0] != '<' and filename[-1] != '>'\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2921: Decodes the filename if not wrapped in angular brackets.\",\n      \"rationale\": \"Line 2921 decodes the filename if it is not wrapped in angular brackets, providing a fallback masking path for line 2918.\"\n    },\n    {\n      \"kind\": \"fallback\",\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"                filename = None\"}\n      ],\n      \"condition\": \"filename is not None and filename[0] == '<' and filename[-1] == '>'\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"2924: Sets filename to None if wrapped in angular brackets.\",\n      \"rationale\": \"Line 2924 sets the filename to None if it is wrapped in angular brackets, providing a fallback masking path for line 2918.\"\n    }\n  ],\n  \"notes\": \"The operations identified provide various paths to mask the effect of line 2918, ensuring that the deletion of line 2918 does not alter the observable behavior under the given legal inputs.\"\n}",
+        "stats": {
+          "prompt_tokens": 1376,
+          "completion_tokens": 1203,
+          "total_duration_ns": 61662484262,
+          "load_duration_ns": 3066898,
+          "prompt_eval_duration_ns": 658429000,
+          "eval_duration_ns": 60099987000,
+          "model": "qwen2.5-coder:32b",
+          "done_reason": "stop",
+          "wall_seconds": 62.42,
+          "attempt": 0
+        },
+        "model": "qwen2.5-coder:32b",
+        "wall_seconds": 62.425
+      },
+      "relations": [
+        {
+          "relation_index": 0,
+          "kind": "independent",
+          "ops": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2924: If the filename is wrapped in angular brackets, it is set to None, masking the effect of line 2918.",
+          "rationale": "Line 2924 directly sets filename to None if it is wrapped in angular brackets, making the assignment in line 2918 irrelevant.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 1,
+          "kind": "independent",
+          "ops": [
+            "src/werkzeug/datastructures.py:2921-2921"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2921-2921"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2921,
+              "text": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2921: If the filename is not wrapped in angular brackets, it is decoded, masking the effect of line 2918.",
+          "rationale": "Line 2921 decodes the filename if it is not wrapped in angular brackets, making the assignment in line 2918 irrelevant.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 2,
+          "kind": "independent",
+          "ops": [
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2926,
+              "text": "            filename = os.fsdecode(filename)"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2926: The filename is decoded, masking the effect of line 2918.",
+          "rationale": "Line 2926 decodes the filename, making the assignment in line 2918 irrelevant.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 3,
+          "kind": "cooperative",
+          "ops": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2921,
+              "text": "                filename = os.fsdecode(filename)"
+            },
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2921: Decodes the filename; 2924: Sets filename to None if wrapped in angular brackets.",
+          "rationale": "Lines 2921 and 2924 together ensure that the filename is either decoded or set to None, masking the effect of line 2918.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 4,
+          "kind": "cooperative",
+          "ops": [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2926-2926",
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2926,
+              "text": "            filename = os.fsdecode(filename)"
+            },
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2926: Decodes the filename; 2924: Sets filename to None if wrapped in angular brackets.",
+          "rationale": "Lines 2926 and 2924 together ensure that the filename is either decoded or set to None, masking the effect of line 2918.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 5,
+          "kind": "fallback",
+          "ops": [
+            "src/werkzeug/datastructures.py:2921-2921"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2921-2921"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2921,
+              "text": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2921: Decodes the filename if not wrapped in angular brackets.",
+          "rationale": "Line 2921 decodes the filename if it is not wrapped in angular brackets, providing a fallback masking path for line 2918.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 6,
+          "kind": "fallback",
+          "ops": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "operations": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "proposals": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            }
+          ],
+          "in_graph": true,
+          "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+          "data_dependence": true,
+          "control_dependence": false,
+          "source_evidence": "2924: Sets filename to None if wrapped in angular brackets.",
+          "rationale": "Line 2924 sets the filename to None if it is wrapped in angular brackets, providing a fallback masking path for line 2918.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        }
+      ],
+      "rejected_relations": [],
+      "universes": {
+        "U_graph": [
+          "src/werkzeug/datastructures.py:2924-2924",
+          "src/werkzeug/datastructures.py:2921-2921",
+          "src/werkzeug/datastructures.py:2926-2926"
+        ],
+        "U_qwen": [],
+        "U_union": [
+          "src/werkzeug/datastructures.py:2924-2924",
+          "src/werkzeug/datastructures.py:2921-2921",
+          "src/werkzeug/datastructures.py:2926-2926"
+        ],
+        "U_union_executable": [
+          "src/werkzeug/datastructures.py:2924-2924",
+          "src/werkzeug/datastructures.py:2921-2921",
+          "src/werkzeug/datastructures.py:2926-2926"
+        ],
+        "unexecutable": [],
+        "mapped": [
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            },
+            "id": "src/werkzeug/datastructures.py:2924-2924",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2921,
+              "text": "                filename = os.fsdecode(filename)"
+            },
+            "id": "src/werkzeug/datastructures.py:2921-2921",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2926,
+              "text": "            filename = os.fsdecode(filename)"
+            },
+            "id": "src/werkzeug/datastructures.py:2926-2926",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2921,
+              "text": "                filename = os.fsdecode(filename)"
+            },
+            "id": "src/werkzeug/datastructures.py:2921-2921",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            },
+            "id": "src/werkzeug/datastructures.py:2924-2924",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2926,
+              "text": "            filename = os.fsdecode(filename)"
+            },
+            "id": "src/werkzeug/datastructures.py:2926-2926",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            },
+            "id": "src/werkzeug/datastructures.py:2924-2924",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2921,
+              "text": "                filename = os.fsdecode(filename)"
+            },
+            "id": "src/werkzeug/datastructures.py:2921-2921",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924,
+              "text": "                filename = None"
+            },
+            "id": "src/werkzeug/datastructures.py:2924-2924",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          }
+        ],
+        "rejected": [],
+        "duplicates": []
+      },
+      "role_hypotheses": {
+        "msms": [
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 2,
+            "kind": "independent",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 3,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 4,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 5,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 6,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "mmbs": [
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 2,
+            "kind": "independent",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 3,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 4,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 5,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 6,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "skipped": []
+      },
+      "role_hypotheses_graph_only": {
+        "msms": [
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 2,
+            "kind": "independent",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 3,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 4,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 5,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 6,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "mmbs": [
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 2,
+            "kind": "independent",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 3,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "relation_index": 4,
+            "kind": "cooperative",
+            "condition": "filename is not None",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "relation_index": 5,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] != '<' and filename[-1] != '>'",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            "relation_index": 6,
+            "kind": "fallback",
+            "condition": "filename is not None and filename[0] == '<' and filename[-1] == '>'",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "skipped": []
+      },
+      "arms": {
+        "A_graph": {
+          "task": "werkzeug_filestorage_stream_name",
+          "universe": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "inputs": [
+            {
+              "input": {
+                "stream": "tempfile"
+              },
+              "searched": false
+            },
+            {
+              "input": {
+                "stream": "stderr"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                }
+              ]
+            },
+            {
+              "input": {
+                "stream": "none",
+                "data": "abc"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 6,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": null,
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2921-2921"
+                ],
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ],
+                [
+                  "src/werkzeug/datastructures.py:2926-2926"
+                ]
+              ],
+              "mmbs_ids": [],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                }
+              ]
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "x.txt"
+              },
+              "searched": false
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stderr>"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                }
+              ]
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stdin>"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                }
+              ]
+            }
+          ],
+          "probe_executions": 68
+        },
+        "B_old_qwen": {
+          "task": "werkzeug_filestorage_stream_name",
+          "universe": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "inputs": [
+            {
+              "input": {
+                "stream": "tempfile"
+              },
+              "searched": false
+            },
+            {
+              "input": {
+                "stream": "stderr"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 8,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 7,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                }
+              ]
+            },
+            {
+              "input": {
+                "stream": "none",
+                "data": "abc"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 5,
+                "set": [
+                  "src/werkzeug/datastructures.py:2926-2926"
+                ]
+              },
+              "first_mmbs": null,
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2921-2921"
+                ],
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ],
+                [
+                  "src/werkzeug/datastructures.py:2926-2926"
+                ]
+              ],
+              "mmbs_ids": [],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                }
+              ]
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "x.txt"
+              },
+              "searched": false
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stderr>"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 8,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 7,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                }
+              ]
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stdin>"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 8,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 7,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 0
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true,
+                  "probes": 2
+                },
+                {
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false,
+                  "probes": 2
+                }
+              ]
+            }
+          ],
+          "probe_executions": 68
+        },
+        "C_semantic": {
+          "task": "werkzeug_filestorage_stream_name",
+          "universe": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "inputs": [
+            {
+              "input": {
+                "stream": "tempfile"
+              },
+              "searched": false
+            },
+            {
+              "input": {
+                "stream": "stderr"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 2,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 5,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 6,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 7,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 8,
+                  "role": "mmbs",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 13,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 0.333
+                }
+              },
+              "probe_executions": 14
+            },
+            {
+              "input": {
+                "stream": "none",
+                "data": "abc"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 2,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": null,
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2921-2921"
+                ],
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ],
+                [
+                  "src/werkzeug/datastructures.py:2926-2926"
+                ]
+              ],
+              "mmbs_ids": [],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 4,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 5,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 6,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 7,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 8,
+                  "role": "mmbs",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 13,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 3,
+                  "mmbs": 0
+                },
+                "witness_rate": {
+                  "msms": 1.0,
+                  "mmbs": 0.0
+                }
+              },
+              "probe_executions": 14
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "x.txt"
+              },
+              "searched": false
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stderr>"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 2,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 5,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 6,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 7,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 8,
+                  "role": "mmbs",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 13,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 0.333
+                }
+              },
+              "probe_executions": 14
+            },
+            {
+              "input": {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stdin>"
+              },
+              "searched": true,
+              "evaluations": 8,
+              "complete": true,
+              "first_msms": {
+                "index": 2,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "src/werkzeug/datastructures.py:2924-2924"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 5,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 6,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 7,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 8,
+                  "role": "mmbs",
+                  "disabled": [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ],
+                  [
+                    "src/werkzeug/datastructures.py:2921-2921",
+                    "src/werkzeug/datastructures.py:2924-2924",
+                    "src/werkzeug/datastructures.py:2926-2926"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 13,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2921-2921",
+                      "src/werkzeug/datastructures.py:2924-2924"
+                    ],
+                    [
+                      "src/werkzeug/datastructures.py:2924-2924",
+                      "src/werkzeug/datastructures.py:2926-2926"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924",
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921",
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2924-2924"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2921-2921"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "disabled": [
+                        "src/werkzeug/datastructures.py:2926-2926"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 0.333
+                }
+              },
+              "probe_executions": 14
+            }
+          ],
+          "probe_executions": 68,
+          "variants": 16
+        }
+      },
+      "summaries": {
+        "A_graph": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_values": [
+            4,
+            6,
+            4,
+            4
+          ],
+          "first_msms_mean": 4.5,
+          "first_mmbs_values": [
+            3,
+            3,
+            3
+          ],
+          "first_mmbs_mean": 3.0,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 0,
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "probe_executions": 68,
+          "universe": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        },
+        "B_old_qwen": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_values": [
+            8,
+            5,
+            8,
+            8
+          ],
+          "first_msms_mean": 7.25,
+          "first_mmbs_values": [
+            7,
+            7,
+            7
+          ],
+          "first_mmbs_mean": 7.0,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 0,
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "probe_executions": 68,
+          "universe": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        },
+        "C_semantic": {
+          "universe_size": 3,
+          "inputs_searched": 4,
+          "evaluations": 32,
+          "complete_inputs": 4,
+          "first_msms_values": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "first_msms_mean": 2.0,
+          "first_mmbs_values": [
+            3,
+            3,
+            3
+          ],
+          "first_mmbs_mean": 3.0,
+          "msms_relations": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 52,
+          "hypothesis_witness": {
+            "msms": 6,
+            "mmbs": 3
+          },
+          "hypothesis_probed": {
+            "msms": 12,
+            "mmbs": 12
+          },
+          "probe_executions": 68,
+          "universe": [
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:2092:name:numalign",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "tabulate",
+  "mechanism": "name",
+  "target_A": {
+    "line": 2092,
+    "end_line": 2092,
+    "kind": "Assign",
+    "code": "numalign = \"center\" if numalign == _DEFAULT_ALIGN else numalign"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_pretty",
+    "test/test_output.py::test_pretty_headerless",
+    "test/test_output.py::test_pretty_multiline",
+    "test/test_output.py::test_pretty_multiline_headerless",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells_headerless",
+    "test/test_output.py::test_pretty_multiline_with_links"
+  ],
+  "original_hit_test_count": 7,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        numalign = \"center\" if numalign == _DEFAULT_ALIGN else numalign",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "FULL_SUITE_SURVIVES",
+  "status": "TEST_SURVIVING_DELETION",
+  "targeted_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 0.44,
+    "failed_nodeids": [],
+    "stdout_tail": ".......                                                                  [100%]\n- generated xml file: <local-path> -\n7 passed in 0.09s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 1.83,
+    "failed_nodeids": [],
+    "stdout_tail": ".................sssssssss..............................s..s............ [ 25%]\n.s..................s......s......s......s......s......s......s.......s. [ 50%]\n.s..s..s..s..s..s....................................................... [ 76%]\n............ssss.........................s..ss.s............sss.....     [100%]\n- generated xml file: <local-path> -\n247 passed, 37 skipped in 1.50s\n",
+    "stderr_tail": ""
+  },
+  "stage4_probe": null,
+  "verdict": "SURVIVES_BUT_STAGE4_NOT_RUN"
+}

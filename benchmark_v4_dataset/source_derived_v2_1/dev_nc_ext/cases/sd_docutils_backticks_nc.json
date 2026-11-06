@@ -1,0 +1,31 @@
+{
+  "case_id": "sd_docutils_backticks_nc",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M10_NEGATIVE_CONTROL",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 735,
+    "A_code": "    text = text.replace(r'``', smart.opquote)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 735,
+      "indent": 4,
+      "role": "Rewrites the marker with a plain apostrophe; not the configured opening quote.",
+      "lines": [
+        "if \"``\" in text:",
+        "    text = text.replace(\"``\", \"'\")"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived_v2_1/dev_nc_ext/probes/sd_docutils_backticks_nc.py",
+  "inputs": {
+    "nc_one_pair": "one backtick pair",
+    "nc_two_pairs": "two backtick pairs",
+    "nc_three_pairs": "three backtick pairs"
+  },
+  "rationale": "A substitutes the smart-quote opening quote for every `` marker. The candidate patch substitutes a plain apostrophe and is inert when A has already consumed every marker: with A present the guard is false, but with A removed the text differs from A's. Neither the patch nor its absence reproduces A, so no masking relation exists."
+}

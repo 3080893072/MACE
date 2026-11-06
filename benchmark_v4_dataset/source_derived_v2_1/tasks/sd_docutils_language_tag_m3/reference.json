@@ -1,0 +1,164 @@
+{
+  "task_id": "sd_docutils_language_tag_m3",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "docutils/utils/__init__.py",
+    "line": 704,
+    "function": "normalize_language_tag",
+    "code": "    tag = tag.lower().replace('-', '_')",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "docutils/utils/__init__.py",
+      "line": 706,
+      "code": "tag = tag.lower()",
+      "role": "Case folding leg: restores the lower() half of A.",
+      "patch_anchor_line": 704,
+      "block_span": [
+        705,
+        707
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "docutils/utils/__init__.py",
+      "line": 709,
+      "code": "tag = tag.replace('-', '_', 1)",
+      "role": "First separator leg: rewrites at most one '-' separator.",
+      "patch_anchor_line": 704,
+      "block_span": [
+        708,
+        710
+      ]
+    },
+    {
+      "id": "U3",
+      "file": "docutils/utils/__init__.py",
+      "line": 712,
+      "code": "tag = tag.replace('-', '_', 1)",
+      "role": "Second separator leg: rewrites at most one further '-' separator.",
+      "patch_anchor_line": 704,
+      "block_span": [
+        711,
+        713
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_two_separators": {
+      "role": "masking",
+      "description": "two '-' separators and mixed case",
+      "p_plus": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "p_minus": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_three_separators": {
+      "role": "exposing",
+      "description": "three '-' separators: the bounded rewrite leaves one behind",
+      "p_plus": {
+        "out": [
+          "de-at-1901-x",
+          "de-at-1901",
+          "de-at-x",
+          "de-1901-x",
+          "de-at",
+          "de-1901",
+          "de-x",
+          "de"
+        ]
+      },
+      "p_minus": {
+        "out": [
+          "de-at-1901-x",
+          "de-at",
+          "de-1901-x",
+          "de"
+        ]
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_single_subtag": {
+      "role": "control",
+      "description": "already normalised single subtag",
+      "p_plus": {
+        "out": [
+          "en"
+        ]
+      },
+      "p_minus": {
+        "out": [
+          "en"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2,U3]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "differs from P+",
+      "[U2]": "differs from P+",
+      "[U3]": "differs from P+",
+      "[U1,U2]": "differs from P+",
+      "[U1,U3]": "differs from P+",
+      "[U2,U3]": "differs from P+",
+      "[U1,U2,U3]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_docutils_language_tag_m3/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

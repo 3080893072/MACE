@@ -1,0 +1,1076 @@
+{
+  "case_id": "x_sd_jsonschema_pointer_m4",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "slug": "jsonschema-4.20.0",
+  "file": "jsonschema/validators.py",
+  "A_line": 1145,
+  "A_code": "            part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")",
+  "original_sha256": "2d5eba00920efbe9653c0af3a63fcc38324da5d7317a9d6ae33cf18f8408c7a5",
+  "patched_sha256": "2726ece5d1eb3d90d7fbefa60a4f10363e75caf6399dab9f637c3361a30b613f",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 1145,
+      "role": "Unescapes when the segment has no '#' marker.",
+      "lines": [
+        "if \"#\" not in part:",
+        "    part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 1145,
+      "role": "Unescapes when the segment has no '?' marker.",
+      "lines": [
+        "if \"?\" not in part:",
+        "    part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 1145,
+      "role": "Removes NUL bytes from a pointer segment; none are declared.",
+      "lines": [
+        "if \"\\x00\" in part:",
+        "    part = part.replace(\"\\x00\", \"\")"
+      ]
+    },
+    {
+      "id": "U4",
+      "after_line": 1145,
+      "role": "Decodes percent escapes; the declared segments contain no percent sign.",
+      "lines": [
+        "if \"%\" in part:",
+        "    part = part.replace(\"%25\", \"%\")"
+      ]
+    },
+    {
+      "id": "U5",
+      "after_line": 1145,
+      "role": "Normalises backslashes; the declared segments contain none.",
+      "lines": [
+        "if \"\\\\\" in part:",
+        "    part = part.replace(\"\\\\\", \"/\")"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 1145,
+      "end": 1148
+    },
+    "U2": {
+      "begin": 1149,
+      "end": 1152
+    },
+    "U3": {
+      "begin": 1153,
+      "end": 1156
+    },
+    "U4": {
+      "begin": 1157,
+      "end": 1160
+    },
+    "U5": {
+      "begin": 1161,
+      "end": 1164
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "out": 2
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "P_MINUS": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U3": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U4": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U5": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U3": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U4": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U3": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U4": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U3_U4": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U3_U5": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U4_U5": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U3": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U4": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U3_U4": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U3_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U4_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U3_U4": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U3_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U4_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U3_U4_U5": {
+      "mask_plain_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U3_U4": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U3_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U4_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U3_U4_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U2_U3_U4_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    },
+    "KEEP_U1_U2_U3_U4_U5": {
+      "mask_plain_segment": {
+        "out": 1
+      },
+      "expose_marker_segment": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "control_no_escape": {
+        "out": 3
+      }
+    }
+  },
+  "per_input": {
+    "mask_plain_segment": {
+      "plus": {
+        "out": 1
+      },
+      "p_minus": {
+        "out": 1
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U1",
+          "U4"
+        ],
+        [
+          "U1",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U2",
+          "U4"
+        ],
+        [
+          "U2",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U5"
+        ],
+        [
+          "U1",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U4",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U1": {
+          "out": 1
+        },
+        "KEEP_U2": {
+          "out": 1
+        },
+        "KEEP_U3": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U1_U2": {
+          "out": 1
+        },
+        "KEEP_U1_U3": {
+          "out": 1
+        },
+        "KEEP_U1_U4": {
+          "out": 1
+        },
+        "KEEP_U1_U5": {
+          "out": 1
+        },
+        "KEEP_U2_U3": {
+          "out": 1
+        },
+        "KEEP_U2_U4": {
+          "out": 1
+        },
+        "KEEP_U2_U5": {
+          "out": 1
+        },
+        "KEEP_U3_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U3_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": 1
+        },
+        "KEEP_U1_U2_U4": {
+          "out": 1
+        },
+        "KEEP_U1_U2_U5": {
+          "out": 1
+        },
+        "KEEP_U1_U3_U4": {
+          "out": 1
+        },
+        "KEEP_U1_U3_U5": {
+          "out": 1
+        },
+        "KEEP_U1_U4_U5": {
+          "out": 1
+        },
+        "KEEP_U2_U3_U4": {
+          "out": 1
+        },
+        "KEEP_U2_U3_U5": {
+          "out": 1
+        },
+        "KEEP_U2_U4_U5": {
+          "out": 1
+        },
+        "KEEP_U3_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+        },
+        "KEEP_U1_U2_U3_U4": {
+          "out": 1
+        },
+        "KEEP_U1_U2_U3_U5": {
+          "out": 1
+        },
+        "KEEP_U1_U2_U4_U5": {
+          "out": 1
+        },
+        "KEEP_U1_U3_U4_U5": {
+          "out": 1
+        },
+        "KEEP_U2_U3_U4_U5": {
+          "out": 1
+        },
+        "KEEP_U1_U2_U3_U4_U5": {
+          "out": 1
+        }
+      }
+    },
+    "expose_marker_segment": {
+      "plus": {
+        "out": 2
+      },
+      "p_minus": {
+        "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U3": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U3": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U3": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U3_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U3_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U3": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U3_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U3_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U3_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U3_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U3_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U3_U4": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U3_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U3_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U2_U3_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        },
+        "KEEP_U1_U2_U3_U4_U5": {
+          "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+        }
+      }
+    },
+    "control_no_escape": {
+      "plus": {
+        "out": 3
+      },
+      "p_minus": {
+        "out": 3
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ],
+        [
+          "U4"
+        ],
+        [
+          "U5"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U1",
+          "U4"
+        ],
+        [
+          "U1",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U2",
+          "U4"
+        ],
+        [
+          "U2",
+          "U5"
+        ],
+        [
+          "U3",
+          "U4"
+        ],
+        [
+          "U3",
+          "U5"
+        ],
+        [
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U5"
+        ],
+        [
+          "U1",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U4",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": 3
+        },
+        "KEEP_U1": {
+          "out": 3
+        },
+        "KEEP_U2": {
+          "out": 3
+        },
+        "KEEP_U3": {
+          "out": 3
+        },
+        "KEEP_U4": {
+          "out": 3
+        },
+        "KEEP_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U2": {
+          "out": 3
+        },
+        "KEEP_U1_U3": {
+          "out": 3
+        },
+        "KEEP_U1_U4": {
+          "out": 3
+        },
+        "KEEP_U1_U5": {
+          "out": 3
+        },
+        "KEEP_U2_U3": {
+          "out": 3
+        },
+        "KEEP_U2_U4": {
+          "out": 3
+        },
+        "KEEP_U2_U5": {
+          "out": 3
+        },
+        "KEEP_U3_U4": {
+          "out": 3
+        },
+        "KEEP_U3_U5": {
+          "out": 3
+        },
+        "KEEP_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U3": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U4": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U3_U4": {
+          "out": 3
+        },
+        "KEEP_U1_U3_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U2_U3_U4": {
+          "out": 3
+        },
+        "KEEP_U2_U3_U5": {
+          "out": 3
+        },
+        "KEEP_U2_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U3_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U3_U4": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U3_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U3_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U2_U3_U4_U5": {
+          "out": 3
+        },
+        "KEEP_U1_U2_U3_U4_U5": {
+          "out": 3
+        }
+      }
+    }
+  }
+}

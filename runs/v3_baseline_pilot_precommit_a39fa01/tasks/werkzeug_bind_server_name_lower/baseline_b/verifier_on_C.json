@@ -1,0 +1,201 @@
+{
+  "verifier_version": "intervention-verifier-1.0",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "universe": [
+    {
+      "id": "src/werkzeug/routing/map.py:219-219",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 219,
+      "last_line": 219,
+      "kind": "assignment",
+      "code": "        server_name = server_name.lower()"
+    }
+  ],
+  "universe_problems": [],
+  "verdicts": [
+    {
+      "verdict": "VERIFIED",
+      "reason": "P+ and P- differ on the submitted input",
+      "observations": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/routing/map.py:219-219"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/routing/map.py:219-219"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 1,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/routing/map.py:219-219"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/routing/map.py:219-219"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 2,
+      "type": "MMBS"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "minimal breaking set on input, not breaking on control",
+      "index": 3,
+      "type": "PREREQUISITE_BREAKING"
+    }
+  ],
+  "verified_submission": {
+    "task_id": "werkzeug_bind_server_name_lower",
+    "submission_id": "baseline-C",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        "control_input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "counts": {
+    "total": 4,
+    "verified": 4,
+    "refuted": 0,
+    "unknown": 0
+  },
+  "probe_executions": 12
+}

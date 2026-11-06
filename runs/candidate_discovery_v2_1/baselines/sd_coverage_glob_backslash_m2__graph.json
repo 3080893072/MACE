@@ -1,0 +1,167 @@
+{
+  "case_id": "sd_coverage_glob_backslash_m2",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "coverage/files.py:334-334",
+      "file": "coverage/files.py",
+      "first_line": 334,
+      "last_line": 334,
+      "kind": "assign",
+      "code": "    pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "coverage/files.py:332-332",
+          "to": "coverage/files.py:334-334",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:pattern",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_glob_to_regex"
+    },
+    {
+      "id": "coverage/files.py:337-337",
+      "file": "coverage/files.py",
+      "first_line": 337,
+      "last_line": 337,
+      "kind": "assign",
+      "code": "    pattern = pattern.replace(\"\\\\\", \"/\", 1)",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "coverage/files.py:332-332",
+          "to": "coverage/files.py:337-337",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:pattern",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_glob_to_regex"
+    },
+    {
+      "id": "coverage/files.py:340-340",
+      "file": "coverage/files.py",
+      "first_line": 340,
+      "last_line": 340,
+      "kind": "assign",
+      "code": "        pattern = \"**/\" + pattern",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "coverage/files.py:332-332",
+          "to": "coverage/files.py:340-340",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:pattern",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_glob_to_regex"
+    },
+    {
+      "id": "coverage/files.py:351-351",
+      "file": "coverage/files.py",
+      "first_line": 351,
+      "last_line": 351,
+      "kind": "return",
+      "code": "    return \"\".join(path_rx)",
+      "graph_score": 0.791546,
+      "graph_path": [
+        {
+          "from": "coverage/files.py:332-332",
+          "to": "coverage/files.py:343-350",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "coverage/files.py:343-350",
+          "to": "coverage/files.py:348-348",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "pos < len(pattern)"
+        },
+        {
+          "from": "coverage/files.py:348-348",
+          "to": "coverage/files.py:351-351",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:path_rx",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_glob_to_regex"
+    },
+    {
+      "id": "coverage/files.py:341-341",
+      "file": "coverage/files.py",
+      "first_line": 341,
+      "last_line": 341,
+      "kind": "assign",
+      "code": "    path_rx = []",
+      "graph_score": 0.591546,
+      "graph_path": [
+        {
+          "from": "coverage/files.py:332-332",
+          "to": "coverage/files.py:343-350",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "coverage/files.py:343-350",
+          "to": "coverage/files.py:348-348",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "pos < len(pattern)"
+        },
+        {
+          "from": "coverage/files.py:348-348",
+          "to": "coverage/files.py:341-341",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:path_rx",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_glob_to_regex"
+    },
+    {
+      "id": "coverage/files.py:348-348",
+      "file": "coverage/files.py",
+      "first_line": 348,
+      "last_line": 348,
+      "kind": "expr",
+      "code": "                path_rx.append(m.expand(sub))",
+      "graph_score": 0.568471,
+      "graph_path": [
+        {
+          "from": "coverage/files.py:332-332",
+          "to": "coverage/files.py:343-350",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        },
+        {
+          "from": "coverage/files.py:343-350",
+          "to": "coverage/files.py:348-348",
+          "kind": "control",
+          "confidence": "MUST",
+          "evidence": "control-dependence",
+          "guard": "pos < len(pattern)"
+        }
+      ],
+      "graph_function": "_glob_to_regex"
+    }
+  ],
+  "source": "computed_v2_1"
+}

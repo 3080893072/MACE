@@ -1,0 +1,66 @@
+{
+  "analysis_scope": "The public package contains the target source file only.  The hidden candidate universe is not disclosed.  Operations outside it cannot be attributed by the scorer and are reported UNVERIFIED.",
+  "difficulty": "medium",
+  "frozen_t_task": [
+    "tests/test_utils.py::test_secure_filename"
+  ],
+  "frozen_t_task_count": 1,
+  "label": "DEVELOPMENT/PILOT",
+  "legal_input_contract": {
+    "fields": {
+      "filename": {
+        "description": "Filename supplied by the caller.",
+        "max_length": 4096,
+        "required": true,
+        "type": "string"
+      }
+    },
+    "legal_constraints": [
+      "The payload is a JSON object with only the field filename.",
+      "filename must be a string of at most the published length."
+    ],
+    "observation": {
+      "raise": {
+        "message": "string",
+        "outcome": "raise",
+        "type": "exception class name"
+      },
+      "return": {
+        "filename": "string",
+        "outcome": "return"
+      }
+    }
+  },
+  "not_claimed": [
+    "All filenames, platforms and Windows device names",
+    "Operations outside the declared U",
+    "A task-level certificate over the whole legal input domain"
+  ],
+  "observation_contract": {
+    "raise": {
+      "message": "string",
+      "outcome": "raise",
+      "type": "exception class name"
+    },
+    "return": {
+      "filename": "string",
+      "outcome": "return"
+    }
+  },
+  "project": "Werkzeug 2.2.3",
+  "project_id": "werkzeug-2.2.3",
+  "project_source_tree_sha256": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+  "schema": "mace_benchmark_v3_public_task",
+  "source_file": "src/werkzeug/utils.py",
+  "source_path": "source/src/werkzeug/utils.py",
+  "source_sha256": "0435f9ffb382315825fa26fce1b0847411b9315bebc5a4a57dd83b0b1878343d",
+  "submission_format": "submission_format.md",
+  "target_operation": {
+    "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")",
+    "file": "src/werkzeug/utils.py",
+    "function": "secure_filename",
+    "line": 222
+  },
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected; tests/test_utils.py::test_secure_filename executes A"
+}

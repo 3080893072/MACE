@@ -1,0 +1,591 @@
+{
+  "candidate_operations": [
+    {
+      "end_line": 119,
+      "file": "src/jinja2/loaders.py",
+      "line": 119,
+      "variable": "code"
+    },
+    {
+      "end_line": 137,
+      "file": "src/jinja2/loaders.py",
+      "line": 137,
+      "variable": "code"
+    }
+  ],
+  "claims": [
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "input": {
+        "cached_source": "Hello",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    }
+  ],
+  "inputs_evaluated": [
+    {
+      "a_executes": true,
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "kind": "masked",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "kind": "exposing",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "2"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "kind": "masked",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "Hello World"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "Hello World"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "kind": "masked",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "012"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "012"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "cached_source": "Hello",
+        "template": "{{ 6*7 }}"
+      },
+      "kind": "exposing",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "Hello"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    }
+  ],
+  "masked_rows_used": 3,
+  "method": "diff_guided",
+  "rows": [
+    {
+      "base_masked": true,
+      "candidate_universe": [
+        {
+          "end_line": 137,
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "claims": [
+        {
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "evidence": {
+        "119": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "post_plus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "pre_minus": "UNBOUND",
+          "pre_plus": "UNBOUND",
+          "score": 1
+        },
+        "137": {
+          "absorb": false,
+          "after_a_minus": true,
+          "after_a_plus": false,
+          "control_divergence": true,
+          "difference_carrying": true,
+          "downstream": true,
+          "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "in_minus": true,
+          "in_plus": false,
+          "post_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "post_plus": null,
+          "pre_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 4
+        }
+      },
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "submitted": {
+        "end_line": 137,
+        "file": "src/jinja2/loaders.py",
+        "line": 137
+      },
+      "validation": [
+        {
+          "delete_exposed": true,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": true,
+            "after_a_plus": false,
+            "control_divergence": true,
+            "difference_carrying": true,
+            "downstream": true,
+            "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "in_minus": true,
+            "in_plus": false,
+            "post_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "post_plus": null,
+            "pre_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 4
+          },
+          "keep_only_masked": true,
+          "operation": {
+            "end_line": 137,
+            "file": "src/jinja2/loaders.py",
+            "line": 137
+          },
+          "passes_singleton": true
+        }
+      ]
+    },
+    {
+      "base_masked": true,
+      "candidate_universe": [
+        {
+          "end_line": 137,
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "claims": [
+        {
+          "input": {
+            "context": {
+              "name": "World"
+            },
+            "template": "Hello {{ name }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "context": {
+              "name": "World"
+            },
+            "template": "Hello {{ name }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "evidence": {
+        "119": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "post_plus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "pre_minus": "UNBOUND",
+          "pre_plus": "UNBOUND",
+          "score": 1
+        },
+        "137": {
+          "absorb": false,
+          "after_a_minus": true,
+          "after_a_plus": false,
+          "control_divergence": true,
+          "difference_carrying": true,
+          "downstream": true,
+          "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "in_minus": true,
+          "in_plus": false,
+          "post_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "post_plus": null,
+          "pre_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 4
+        }
+      },
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "submitted": {
+        "end_line": 137,
+        "file": "src/jinja2/loaders.py",
+        "line": 137
+      },
+      "validation": [
+        {
+          "delete_exposed": true,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": true,
+            "after_a_plus": false,
+            "control_divergence": true,
+            "difference_carrying": true,
+            "downstream": true,
+            "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "in_minus": true,
+            "in_plus": false,
+            "post_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "post_plus": null,
+            "pre_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 4
+          },
+          "keep_only_masked": true,
+          "operation": {
+            "end_line": 137,
+            "file": "src/jinja2/loaders.py",
+            "line": 137
+          },
+          "passes_singleton": true
+        }
+      ]
+    },
+    {
+      "base_masked": true,
+      "candidate_universe": [
+        {
+          "end_line": 137,
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "claims": [
+        {
+          "input": {
+            "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "evidence": {
+        "119": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "post_plus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "pre_minus": "UNBOUND",
+          "pre_plus": "UNBOUND",
+          "score": 1
+        },
+        "137": {
+          "absorb": false,
+          "after_a_minus": true,
+          "after_a_plus": false,
+          "control_divergence": true,
+          "difference_carrying": true,
+          "downstream": true,
+          "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "in_minus": true,
+          "in_plus": false,
+          "post_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+          "post_plus": null,
+          "pre_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 4
+        }
+      },
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "submitted": {
+        "end_line": 137,
+        "file": "src/jinja2/loaders.py",
+        "line": 137
+      },
+      "validation": [
+        {
+          "delete_exposed": true,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": true,
+            "after_a_plus": false,
+            "control_divergence": true,
+            "difference_carrying": true,
+            "downstream": true,
+            "final_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "final_plus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "in_minus": true,
+            "in_plus": false,
+            "post_minus": "af74062a1e665ff13c4fc54cfd1262246c7c4b0b",
+            "post_plus": null,
+            "pre_minus": "c4a0c6f9a9c9ceb21141f61b6b10a3df31c92c60",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 4
+          },
+          "keep_only_masked": true,
+          "operation": {
+            "end_line": 137,
+            "file": "src/jinja2/loaders.py",
+            "line": 137
+          },
+          "passes_singleton": true
+        }
+      ]
+    }
+  ],
+  "target": {
+    "code": "code = bucket.code",
+    "file": "src/jinja2/loaders.py",
+    "function": "BaseLoader.load",
+    "line": 132
+  },
+  "task_id": "jinja2_bytecode_cache_read",
+  "unresolved": [],
+  "variant_builds": 4
+}

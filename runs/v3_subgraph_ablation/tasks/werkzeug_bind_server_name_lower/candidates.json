@@ -1,0 +1,354 @@
+{
+  "selection": {
+    "ops": [
+      {
+        "id": "src/werkzeug/routing/map.py:305-305",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 305,
+        "last_line": 305,
+        "kind": "assign",
+        "code": "            server_name = wsgi_server_name",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:305-305",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:311-311",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 311,
+        "last_line": 311,
+        "kind": "assign",
+        "code": "                server_name = server_name[:-3]",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:311-311",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:313-313",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 313,
+        "last_line": 313,
+        "kind": "assign",
+        "code": "                server_name = server_name[:-4]",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:313-313",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:344-353",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 344,
+        "last_line": 353,
+        "kind": "return",
+        "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:344-353",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "def-use:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:219-219",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 219,
+        "last_line": 219,
+        "kind": "assign",
+        "code": "        server_name = server_name.lower()",
+        "graph_score": 1.314754,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:219-219",
+            "kind": "alias",
+            "confidence": "MAY",
+            "evidence": "call may mutate:lower",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:231-231",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 231,
+        "last_line": 231,
+        "kind": "assign",
+        "code": "            server_name = _encode_idna(server_name)  # type: ignore",
+        "graph_score": 1.064754,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:231-231",
+            "kind": "alias",
+            "confidence": "MAY",
+            "evidence": "call may mutate:_encode_idna",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind"
+      }
+    ],
+    "eligible": 49,
+    "selected": 6,
+    "truncated": true,
+    "omitted": [
+      {
+        "id": "src/werkzeug/routing/map.py:317-317",
+        "first_line": 317,
+        "score": 1.05
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:326-330",
+        "first_line": 326,
+        "score": 1.05
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:294-294",
+        "first_line": 294,
+        "score": 0.914754
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:296-299",
+        "first_line": 296,
+        "score": 0.864754
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:235-244",
+        "first_line": 235,
+        "score": 0.814754
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:295-295",
+        "first_line": 295,
+        "score": 0.683333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:302-302",
+        "first_line": 302,
+        "score": 0.683333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:331-331",
+        "first_line": 331,
+        "score": 0.683333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:341-341",
+        "first_line": 341,
+        "score": 0.683333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:342-342",
+        "first_line": 342,
+        "score": 0.683333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:343-343",
+        "first_line": 343,
+        "score": 0.683333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:293-293",
+        "first_line": 293,
+        "score": 0.633333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:333-333",
+        "first_line": 333,
+        "score": 0.583333
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:318-318",
+        "first_line": 318,
+        "score": 0.55
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:316-316",
+        "first_line": 316,
+        "score": 0.510784
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:109-109",
+        "first_line": 109,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:110-110",
+        "first_line": 110,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:113-113",
+        "first_line": 113,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:114-114",
+        "first_line": 114,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:115-115",
+        "first_line": 115,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:116-116",
+        "first_line": 116,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:117-117",
+        "first_line": 117,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:118-118",
+        "first_line": 118,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:119-119",
+        "first_line": 119,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:123-123",
+        "first_line": 123,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:125-125",
+        "first_line": 125,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:126-126",
+        "first_line": 126,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:129-129",
+        "first_line": 129,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:174-174",
+        "first_line": 174,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:176-176",
+        "first_line": 176,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:178-178",
+        "first_line": 178,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:224-224",
+        "first_line": 224,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:226-226",
+        "first_line": 226,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:228-228",
+        "first_line": 228,
+        "score": 0.495616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:108-108",
+        "first_line": 108,
+        "score": 0.445616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:111-111",
+        "first_line": 111,
+        "score": 0.445616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:121-121",
+        "first_line": 121,
+        "score": 0.445616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:336-336",
+        "first_line": 336,
+        "score": 0.445616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:338-338",
+        "first_line": 338,
+        "score": 0.445616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:177-177",
+        "first_line": 177,
+        "score": 0.395616
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:222-222",
+        "first_line": 222,
+        "score": 0.391729
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:233-233",
+        "first_line": 233,
+        "score": 0.391729
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:339-339",
+        "first_line": 339,
+        "score": 0.339912
+      }
+    ]
+  },
+  "graph_scores": {
+    "src/werkzeug/routing/map.py:305-305": 1.35,
+    "src/werkzeug/routing/map.py:311-311": 1.35,
+    "src/werkzeug/routing/map.py:313-313": 1.35,
+    "src/werkzeug/routing/map.py:344-353": 1.35,
+    "src/werkzeug/routing/map.py:219-219": 1.314754,
+    "src/werkzeug/routing/map.py:231-231": 1.064754
+  }
+}

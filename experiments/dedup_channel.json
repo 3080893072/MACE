@@ -1,0 +1,17 @@
+{
+  "id": "dedup_channel",
+  "source": "fixtures/dedup_channel.py",
+  "entry": "program",
+  "channels": 1,
+  "domain": {
+    "kind": "exhaustive",
+    "args": [
+      {"name": "xs", "sort": "list[int]", "length": [1, 4], "values": [0, 1, 2]},
+      {"name": "pre", "sort": "bool"}
+    ]
+  },
+  "functions": {
+    "fn_0": {"params": ["list[int]"], "ret": "list[int]"}
+  },
+  "notes": "Downstream dedup loses the appended duplicate; upstream dedup makes A a duplicate insertion."
+}

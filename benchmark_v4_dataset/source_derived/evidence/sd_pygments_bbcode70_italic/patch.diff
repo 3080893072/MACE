@@ -1,0 +1,22 @@
+--- a/pygments/formatters/bbcode.py
++++ b/pygments/formatters/bbcode.py
+@@ -65,12 +65,19 @@
+             if ndef['bold']:
+                 start += '[b]'
+                 end = '[/b]' + end
+             if ndef['italic']:
+                 start += '[i]'
+                 end = '[/i]' + end
++                # SD:U:U1:begin
++                _sd_i = bool(ndef['italic']) and not ndef['color']
++                # SD:U:U1:end
++                # SD:U:U2:begin
++                if _sd_i and not end.startswith('[/i]'):
++                    end = '[/i]' + end
++                # SD:U:U2:end
+             if ndef['underline']:
+                 start += '[u]'
+                 end = '[/u]' + end
+             # there are no common BBcodes for background-color and border
+ 
+             self.styles[ttype] = start, end

@@ -1,0 +1,275 @@
+{
+ "schema": "mace_source_derived_v2_1_statistics/1",
+ "as_of_utc": "2026-11-05T00:00:00Z",
+ "formal_dataset": {
+  "total": 50,
+  "accepted": 50,
+  "failed": 0,
+  "dev": 25,
+  "heldout": 25,
+  "projects": 23,
+  "by_mechanism": {
+   "M10_NEGATIVE_CONTROL": 5,
+   "M1_SINGLE_OPERATION": 8,
+   "M2_TWO_OPERATION_COOPERATIVE": 8,
+   "M3_THREE_OPERATION_COOPERATIVE": 6,
+   "M4_ALTERNATIVE_PATHS": 5,
+   "M5_CONDITIONAL_BRANCH": 5,
+   "M6_CROSS_FUNCTION_STATE": 4,
+   "M7_LOOP_STATE": 3,
+   "M8_OBJECT_SHARED_STATE": 3,
+   "M9_EXCEPTION_FALLBACK": 3
+  },
+  "by_project": {
+   "Markdown": 2,
+   "PyYAML": 1,
+   "Pygments": 5,
+   "attrs": 2,
+   "coverage": 1,
+   "docutils": 9,
+   "h11": 1,
+   "humanize": 1,
+   "isort": 2,
+   "jedi": 1,
+   "jsonschema": 3,
+   "msgpack": 1,
+   "multidict": 2,
+   "networkx": 2,
+   "parso": 1,
+   "passlib": 2,
+   "pycodestyle": 1,
+   "requests": 2,
+   "simplejson": 2,
+   "sqlparse": 2,
+   "tabulate": 3,
+   "toml": 3,
+   "urllib3": 1
+  },
+  "acceptance_version": "v2.1"
+ },
+ "relation_corrections": {
+  "tasks_with_any_change": 35,
+  "inputs_with_msms_change": 38,
+  "inputs_with_mmbs_change": 58,
+  "mmbs_copy_defect": "v2 set mmbs = minimal_masking_sets; MMBS must be computed from the disabled-set observation table independently",
+  "empty_set_defect": "v2 reported [[]] as a minimal set for control inputs where the empty kept set is sufficient; minimal sets must be non-empty and the empty kept set suppresses non-empty minimal sets"
+ },
+ "function_metadata_corrections": [
+  {
+   "case_id": "sd_networkx_gexf448_slices",
+   "file": "networkx/readwrite/gexf.py",
+   "A_line": 448,
+   "legacy_v2_function": "edge_key_data",
+   "v2_1_function": "add_edges",
+   "reason": "recorded name is a nested helper defined inside the enclosing function but does not contain A"
+  },
+  {
+   "case_id": "sd_pygments_latex297_italic",
+   "file": "pygments/formatters/latex.py",
+   "A_line": 297,
+   "legacy_v2_function": "rgbcolor",
+   "v2_1_function": "_create_stylesheet",
+   "reason": "recorded name is a nested helper defined inside the enclosing function but does not contain A"
+  },
+  {
+   "case_id": "sd_pygments_style95_cache",
+   "file": "pygments/style.py",
+   "A_line": 95,
+   "legacy_v2_function": "colorformat",
+   "v2_1_function": "__new__",
+   "reason": "recorded name is a nested helper defined inside the enclosing function but does not contain A"
+  }
+ ],
+ "api_metadata_fixes": {
+  "count": 25,
+  "scope": "HELDOUT task.json legal_input_contract.api",
+  "reason": "v2 stored the placeholder 'see probe'; v2.1 records the concrete declared call site. DEV api strings were already concrete in v2 and are preserved byte-for-byte."
+ },
+ "hash_audit": {
+  "tasks": 50,
+  "all_checks_ok": 50,
+  "crlf_defect_fixed": "v2 delivered patched files and patch.diff with CRLF; enumeration hashed LF text, so patched_sha256 never matched delivered bytes for any of the 50 tasks. v2.1 normalises delivered text to LF and records both delivered and logical hashes."
+ },
+ "project_isolation": {
+  "dev_projects": [
+   "Pygments",
+   "attrs",
+   "coverage",
+   "docutils",
+   "humanize",
+   "isort",
+   "jsonschema",
+   "networkx",
+   "tabulate",
+   "toml"
+  ],
+  "heldout_projects": [
+   "Markdown",
+   "PyYAML",
+   "attrs",
+   "h11",
+   "isort",
+   "jedi",
+   "jsonschema",
+   "msgpack",
+   "multidict",
+   "parso",
+   "passlib",
+   "pycodestyle",
+   "requests",
+   "simplejson",
+   "sqlparse",
+   "toml",
+   "urllib3"
+  ],
+  "intersection": [
+   "attrs",
+   "isort",
+   "jsonschema",
+   "toml"
+  ],
+  "overlap_heldout_tasks": [
+   "sd_attrs_tobool_nc",
+   "sd_isort_module_key_m5",
+   "sd_jsonschema_pointer_m4",
+   "sd_jsonschema_pointer_nc",
+   "sd_toml_quote_escape_m4",
+   "sd_toml_quote_nc"
+  ],
+  "project_disjoint_heldout_tasks": 19,
+  "project_disjoint_projects": [
+   "Markdown",
+   "PyYAML",
+   "h11",
+   "jedi",
+   "msgpack",
+   "multidict",
+   "parso",
+   "passlib",
+   "pycodestyle",
+   "requests",
+   "simplejson",
+   "sqlparse",
+   "urllib3"
+  ],
+  "restored_to_25": false,
+  "replacement_plan": {
+   "needed": 6,
+   "mechanisms": {
+    "M10_NEGATIVE_CONTROL": 3,
+    "M4_ALTERNATIVE_PATHS": 2,
+    "M5_CONDITIONAL_BRANCH": 1
+   },
+   "eligible_projects": [
+    "Markdown",
+    "PyYAML",
+    "h11",
+    "jedi",
+    "msgpack",
+    "multidict",
+    "parso",
+    "passlib",
+    "pycodestyle",
+    "requests",
+    "simplejson",
+    "sqlparse",
+    "urllib3"
+   ],
+   "built": false,
+   "reason": "Optional per charter; replacements require new real anchors, probes, and independent acceptance. None were counted or substituted, so the formal 50 is unchanged."
+  }
+ },
+ "template_isolation": {
+  "classes": {
+   "B_same_template_other_mechanism": 8,
+   "A_same_mechanism_diff_template": 16,
+   "B_same_template": 1
+  },
+  "same_template_tasks_total": 9,
+  "exact_template_and_mechanism_matches": 1,
+  "same_template_other_mechanism": 8,
+  "same_mechanism_different_template": 16,
+  "both_novel": 0,
+  "template_disjoint_heldout_tasks": 16,
+  "caveat": "no HELDOUT task is both mechanism-novel and template-novel"
+ },
+ "complexity": {
+  "candidate_universe_size_distribution": {
+   "1": 31,
+   "2": 13,
+   "3": 6
+  },
+  "tasks_with_at_most_3_candidates": 50,
+  "probe_count_distribution": {
+   "4": 31,
+   "6": 13,
+   "10": 6
+  },
+  "irrelevant_candidates_total": 5,
+  "extended_challenge_set": {
+   "cases": 5,
+   "u_sizes": [
+    4,
+    5,
+    4,
+    5,
+    5
+   ],
+   "added_distractors_per_case": 3,
+   "acceptance": "5/5 pass (tools/sd_acceptance.py)",
+   "independent_relation_check": "5/5 match"
+  }
+ },
+ "negative_controls": {
+  "heldout_m10": 5,
+  "heldout_m10_all_pass": true,
+  "semantics": "candidate-specific: this patch has no masking relation on the declared inputs; not a claim about A in general",
+  "new_dev_nc_tasks": 3,
+  "new_dev_nc_acceptance": "3/3 pass",
+  "new_dev_nc_projects": [
+   "docutils",
+   "tabulate",
+   "Pygments"
+  ]
+ },
+ "license": {
+  "projects": 23,
+  "spdx": {
+   "attrs": "MIT",
+   "coverage": "Apache-2.0",
+   "docutils": "LicenseRef-docutils-compound",
+   "h11": "MIT",
+   "humanize": "MIT",
+   "isort": "MIT",
+   "jedi": "MIT",
+   "jsonschema": "MIT",
+   "Markdown": "BSD-3-Clause",
+   "msgpack": "Apache-2.0",
+   "multidict": "Apache-2.0",
+   "networkx": "BSD-3-Clause",
+   "parso": "MIT",
+   "passlib": "BSD-3-Clause",
+   "pycodestyle": "MIT",
+   "Pygments": "BSD-2-Clause",
+   "PyYAML": "MIT",
+   "requests": "Apache-2.0",
+   "simplejson": "MIT",
+   "sqlparse": "BSD-3-Clause",
+   "tabulate": "MIT",
+   "toml": "MIT",
+   "urllib3": "MIT"
+  },
+  "recommended_distribution": "patch + pinned download script; sdist redistribution permitted with license and notice for every audited project"
+ },
+ "limits": [
+  "The formal 50 is unchanged; no task was added, removed, replaced, or re-scored.",
+  "HELDOUT remains 25 tasks but only 19 are project-disjoint from DEV; the optional replacement set was not built.",
+  "No HELDOUT task has both a novel mechanism and a novel template.",
+  "Every task has only 1-3 candidates; the 5-case challenge extension is an auxiliary set, not part of the formal 50.",
+  "Negative controls are candidate-specific, not operation-general.",
+  "One unreferenced v2 evidence directory (sd_docutils_optionxform_m2) has no case or task in v2.1. It is retained only to avoid destroying evidence and is not part of the formal 50."
+ ],
+ "unreferenced_evidence_dirs": [
+  "sd_docutils_optionxform_m2"
+ ]
+}

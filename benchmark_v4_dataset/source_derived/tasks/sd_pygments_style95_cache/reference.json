@@ -1,0 +1,146 @@
+{
+  "task_id": "sd_pygments_style95_cache",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "pygments/style.py",
+    "line": 95,
+    "function": "colorformat",
+    "code": "                _styles[token] = ndef",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "pygments/style.py",
+      "line": 128,
+      "code": "try:",
+      "role": "Exception fallback in style_for_token: on a missing cache entry, rebuild it from the parent entry when the token declares no own style.",
+      "patch_anchor_line": 126,
+      "block_span": [
+        127,
+        139
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_text": {
+      "role": "masking",
+      "description": "standard token whose declared style is empty",
+      "p_plus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "mask_name_other": {
+      "role": "masking",
+      "description": "token with no own declaration, inherits its parent entry",
+      "p_plus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_keyword": {
+      "role": "exposing",
+      "description": "token with its own style declaration (fallback re-raises)",
+      "p_plus": {
+        "color": null,
+        "bold": false,
+        "italic": true,
+        "underline": false
+      },
+      "p_minus": {
+        "error": "KeyError: Token.Keyword"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "mask_operator_inherited": {
+      "role": "masking",
+      "description": "another token without its own declaration; A executes and the fallback masks it",
+      "p_plus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_pygments_style95_cache/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U",
+    "no control input exists for this mechanism: A runs during class construction for every standard token, so no input reaches an observation without A or U; no prerequisite relation is claimed (PROTOCOL AC8 alternative)"
+  ]
+}

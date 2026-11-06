@@ -1,0 +1,708 @@
+{
+  "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+  "baseline": "C_ast_intervention",
+  "baseline_version": "C-ast-intervention-1.0",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "discovery": {
+    "target_variables": [
+      "server_name"
+    ],
+    "target_lhs_variables": [
+      "server_name"
+    ],
+    "reachable_functions": [
+      "bind_to_environ",
+      "_get_wsgi_string",
+      "bind",
+      "get_host"
+    ],
+    "candidate_ops": [
+      {
+        "id": "src/werkzeug/routing/map.py:219-219",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 219,
+        "last_line": 219,
+        "kind": "assignment",
+        "code": "        server_name = server_name.lower()"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:231-231",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 231,
+        "last_line": 231,
+        "kind": "assignment",
+        "code": "            server_name = _encode_idna(server_name)  # type: ignore"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:311-311",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 311,
+        "last_line": 311,
+        "kind": "assignment",
+        "code": "                server_name = server_name[:-3]"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:313-313",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 313,
+        "last_line": 313,
+        "kind": "assignment",
+        "code": "                server_name = server_name[:-4]"
+      }
+    ],
+    "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate"
+  },
+  "pruning": {
+    "universe": [
+      {
+        "id": "src/werkzeug/routing/map.py:219-219",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 219,
+        "last_line": 219,
+        "kind": "assignment",
+        "code": "        server_name = server_name.lower()"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:311-311",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 311,
+        "last_line": 311,
+        "kind": "assignment",
+        "code": "                server_name = server_name[:-3]"
+      }
+    ],
+    "ranking": [
+      {
+        "id": "src/werkzeug/routing/map.py:219-219",
+        "changed_cells": 4,
+        "cells": 14,
+        "span": 1
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:311-311",
+        "changed_cells": 2,
+        "cells": 14,
+        "span": 1
+      }
+    ],
+    "considered": 4,
+    "dropped_no_effect": 2,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0
+  },
+  "universe": [
+    {
+      "id": "src/werkzeug/routing/map.py:219-219",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 219,
+      "last_line": 219,
+      "kind": "assignment",
+      "code": "        server_name = server_name.lower()"
+    },
+    {
+      "id": "src/werkzeug/routing/map.py:311-311",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 311,
+      "last_line": 311,
+      "kind": "assignment",
+      "code": "                server_name = server_name[:-3]"
+    }
+  ],
+  "inputs": [
+    {
+      "host": "example.com",
+      "server_name": null,
+      "subdomain": null
+    },
+    {
+      "host": "example.com",
+      "server_name": "EXAMPLE.COM",
+      "subdomain": null
+    },
+    {
+      "host": "example.com",
+      "server_name": "EXAMPLE.COM",
+      "subdomain": "www"
+    },
+    {
+      "host": "sub.example.com",
+      "server_name": "EXAMPLE.COM",
+      "subdomain": null
+    },
+    {
+      "host": "example.com",
+      "server_name": "example.com:80",
+      "subdomain": "www"
+    },
+    {
+      "host": "example.com",
+      "server_name": "EXAMPLE.COM:443",
+      "subdomain": "www"
+    },
+    {
+      "host": "EXAMPLE.COM",
+      "server_name": null,
+      "subdomain": "api"
+    }
+  ],
+  "per_input": [
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": null,
+        "subdomain": null
+      },
+      "a_executes": false,
+      "active_ops": [],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "host": "sub.example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "sub"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "example.com:80",
+        "subdomain": "www"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/routing/map.py:311-311"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ],
+        [
+          "src/werkzeug/routing/map.py:311-311"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:311-311"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM:443",
+        "subdomain": "www"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com:443",
+          "subdomain": "www"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com:443",
+          "subdomain": "www"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "host": "EXAMPLE.COM",
+        "server_name": null,
+        "subdomain": "api"
+      },
+      "a_executes": false,
+      "active_ops": [],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "api"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "api"
+        }
+      },
+      "search_metrics": null
+    }
+  ],
+  "submission": {
+    "submission_id": "baseline-C",
+    "task_id": "werkzeug_bind_server_name_lower",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        "control_input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        },
+        {
+          "host": "sub.example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        }
+      ],
+      "basis": "execution"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MMBS",
+      "operations": [
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "operations": [
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "control_input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "level": "WITNESS_VERIFIED"
+    }
+  ],
+  "unknowns": [],
+  "probe_executions": 76,
+  "variant_builds": 12,
+  "discovery_source": "ast",
+  "emission_mode": "minimality_only",
+  "filter_stats": {
+    "msms_dropped": 0,
+    "mmbs_dropped": 0,
+    "msms_total": 4,
+    "mmbs_total": 2
+  },
+  "search": {
+    "mode": "exhaustive",
+    "inputs_with_search": 3,
+    "evaluations": 12,
+    "subsets_total": 12,
+    "complete": true,
+    "executor_cache_hits": 0,
+    "unknown_subsets": 0,
+    "invalid_subsets": 0,
+    "msms_unknown": 0,
+    "mmbs_unknown": 0
+  },
+  "graph_meta": null,
+  "search_runs": [
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "example.com:80",
+        "subdomain": "www"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:311-311"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM:443",
+        "subdomain": "www"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "mode": "C-fixed",
+  "wall_seconds": 24.059
+}

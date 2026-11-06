@@ -1,0 +1,142 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1464:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1464,
+    "end_line": 1464,
+    "kind": "Assign",
+    "code": "headers = list(map(str, headers))  # headers should be strings"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_iterable_of_iterables_firstrow",
+    "test/test_input.py::test_list_of_lists_firstrow",
+    "test/test_output.py::test_double_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_fancy_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_heavy_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_list_of_lists_with_index_firstrow",
+    "test/test_output.py::test_maxcolwidth_pad_tailing_widths",
+    "test/test_output.py::test_maxcolwidth_single_value",
+    "test/test_output.py::test_mixed_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_plain_maxcolwidth_autowraps",
+    "test/test_output.py::test_plain_maxcolwidth_autowraps_with_sep",
+    "test/test_output.py::test_plain_maxheadercolwidths_autowraps",
+    "test/test_output.py::test_plain_multiline_with_empty_cells",
+    "test/test_output.py::test_presto_multiline_with_empty_cells",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells",
+    "test/test_output.py::test_psql_multiline_with_empty_cells",
+    "test/test_output.py::test_rounded_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_rst_multiline_with_empty_cells",
+    "test/test_output.py::test_simple_grid_multiline_with_empty_cells",
+    "test/test_output.py::test_simple_multiline_2",
+    "test/test_output.py::test_simple_multiline_2_with_sep_line",
+    "test/test_output.py::test_simple_multiline_with_empty_cells"
+  ],
+  "original_hit_test_count": 23,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        headers = list(map(str, headers))  # headers should be strings",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "FULL_SUITE_SURVIVES",
+  "status": "TEST_SURVIVING_DELETION",
+  "targeted_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 0.47,
+    "failed_nodeids": [],
+    "stdout_tail": ".......................                                                  [100%]\n- generated xml file: <local-path> -\n23 passed in 0.11s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 1.71,
+    "failed_nodeids": [],
+    "stdout_tail": ".................sssssssss..............................s..s............ [ 25%]\n.s..................s......s......s......s......s......s......s.......s. [ 50%]\n.s..s..s..s..s..s....................................................... [ 76%]\n............ssss.........................s..ss.s............sss.....     [100%]\n- generated xml file: <local-path> -\n247 passed, 37 skipped in 1.39s\n",
+    "stderr_tail": ""
+  },
+  "stage4_probe": {
+    "probe_id": "tabulate_headers_firstrow",
+    "declared_inputs": [
+      {
+        "id": "int_firstrow",
+        "call": "tabulate([[1,2],[3,4]], headers='firstrow')"
+      },
+      {
+        "id": "str_firstrow",
+        "call": "tabulate([['a','b'],['c','d']], headers='firstrow')"
+      },
+      {
+        "id": "float_firstrow",
+        "call": "tabulate([[1.5,2.5],[3.0,4.0]], headers='firstrow')"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L1469",
+        "file": "tabulate/__init__.py",
+        "line": 1469,
+        "code": "headers = list(map(str, headers))",
+        "role": "unconditional re-conversion that overwrites A"
+      }
+    ],
+    "observations": {
+      "P_plus": {
+        "int_firstrow": "normal output",
+        "str_firstrow": "normal output",
+        "float_firstrow": "normal output"
+      },
+      "P_minus": {
+        "int_firstrow": "identical to P+",
+        "str_firstrow": "identical to P+",
+        "float_firstrow": "identical to P+"
+      },
+      "P_minus_U_disabled": {
+        "int_firstrow": "TypeError: object of type 'int' has no len()",
+        "str_firstrow": "normal output",
+        "float_firstrow": "TypeError: object of type 'float' has no len()"
+      },
+      "P_plus_U_disabled": {
+        "int_firstrow": "TypeError: object of type 'int' has no len()",
+        "str_firstrow": "normal output",
+        "float_firstrow": "TypeError: object of type 'float' has no len()"
+      }
+    },
+    "exposing_witness": null,
+    "masking_witness": {
+      "input": "int_firstrow",
+      "msms": [
+        [
+          "L1469"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L1469"
+        ]
+      ]
+    },
+    "u_necessity": true,
+    "verdict": "REJECT_NO_EXPOSING_INPUT",
+    "reason": "A is fully overwritten by the unconditional L1469 on every input where A executes; P+ and P- never differ, so no legal exposing witness exists (AC5). Deleting A plus U changes both P+ and P-, which shows U is necessary for the equality but produces no exposing witness for A itself."
+  },
+  "verdict": "REJECT_NO_EXPOSING_INPUT"
+}

@@ -1,0 +1,46 @@
+{
+  "case_id": "sd_pygments_bbcode64_color",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "base": {
+    "slug": "pygments-2.17.2",
+    "file": "pygments/formatters/bbcode.py",
+    "A_line": 64,
+    "A_code": "                end = '[/color]' + end"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 64,
+      "indent": 16,
+      "role": "Alternative path 1: incremental prepend of the closing colour tag at the colour step.",
+      "lines": [
+        "if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):",
+        "    end = '[/color]' + end"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 76,
+      "indent": 12,
+      "role": "Alternative path 2: rebuild the whole closing-tag sequence from ndef when the style entry is stored.",
+      "lines": [
+        "if ndef['color'] and not ndef['underline']:",
+        "    _sd_close = ''",
+        "    if ndef['italic']:",
+        "        _sd_close += '[/i]'",
+        "    if ndef['bold']:",
+        "        _sd_close += '[/b]'",
+        "    _sd_close += '[/color]'",
+        "    self.styles[ttype] = (start, _sd_close)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_pygments_bbcode64.py",
+  "inputs": {
+    "mask_color": "colour-only token style",
+    "expose_color_underline": "colour + underline token style (both repair paths are guarded off)",
+    "control_bold": "bold-only style; A is not executed"
+  },
+  "rationale": "Two disjoint singleton repairs reproduce A's effect on mask_color: U1 re-applies the prepend, U2 reconstructs the closing sequence from ndef at store time.  Undeclared combination (colour + underline) exposes the deletion."
+}

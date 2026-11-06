@@ -1,0 +1,163 @@
+{
+  "task_id": "sd_humanize_filesize_gnu_m5",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_gnu_positive",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "src/humanize/filesize.py:59-59"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "src/humanize/filesize.py:59-59"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "gnu and value >= 0",
+          "rationale": "Keeping the operation at line 59 ensures that the value of `suffix` remains consistent, making the deletion of line 56 unobservable.",
+          "disabled_operations": [
+            "src/humanize/filesize.py:64-64"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "src/humanize/filesize.py:59-59",
+            "src/humanize/filesize.py:64-64"
+          ],
+          "source": "qwen_graph_pair",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "src/humanize/filesize.py:59-59"
+          ],
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "src/humanize/filesize.py:64-64"
+          ],
+          "source": "graph_combo_1",
+          "disabled_operations": [
+            "src/humanize/filesize.py:59-59"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 1,
+    "c0_false": 0,
+    "c0_probes": 2,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "src/humanize/filesize.py:64-64"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "src/humanize/filesize.py:62-62",
+        "src/humanize/filesize.py:64-64",
+        "src/humanize/filesize.py:71-71",
+        "src/humanize/filesize.py:74-74",
+        "src/humanize/filesize.py:77-77"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "src/humanize/filesize.py:62-62",
+        "src/humanize/filesize.py:64-64",
+        "src/humanize/filesize.py:66-66",
+        "src/humanize/filesize.py:67-67",
+        "src/humanize/filesize.py:68-68",
+        "src/humanize/filesize.py:71-71",
+        "src/humanize/filesize.py:74-74",
+        "src/humanize/filesize.py:77-77",
+        "src/humanize/filesize.py:80-80",
+        "src/humanize/filesize.py:85-85",
+        "src/humanize/filesize.py:86-86"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 11
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "src/humanize/filesize.py:64-64"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    }
+  }
+}

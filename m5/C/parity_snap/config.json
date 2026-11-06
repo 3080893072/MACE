@@ -1,0 +1,87 @@
+{
+  "fixture": {
+    "id": "parity_snap",
+    "source": "fixtures/parity_snap.py",
+    "entry": "program",
+    "channels": 1,
+    "domain": {
+      "kind": "exhaustive",
+      "args": [
+        {
+          "name": "xs",
+          "sort": "list[int]",
+          "length": [
+            0,
+            3
+          ],
+          "values": [
+            -1,
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "even",
+          "sort": "bool"
+        }
+      ]
+    },
+    "functions": {},
+    "notes": "Held-out. Rounding down to an even number absorbs a +1 exactly when the sum was already even."
+  },
+  "fixture_path": "parity_snap.json",
+  "model_info": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": ""
+  },
+  "runtime": {
+    "ps": {
+      "models": [
+        {
+          "name": "qwen2.5-coder:32b",
+          "model": "qwen2.5-coder:32b",
+          "size": 21775106702,
+          "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen2",
+            "families": [
+              "qwen2"
+            ],
+            "parameter_size": "32.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2319-02-09T10:43:48.974122354+08:00",
+          "size_vram": 21775106702,
+          "context_length": 8192,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "seed": 42,
+  "rounds": 2,
+  "modes": [
+    "oracle"
+  ],
+  "num_ctx": 8192,
+  "temperature": 0.0,
+  "domain_size": 170,
+  "domain_exhaustive": true,
+  "started_utc": "2026-10-30T02:56:34.531678+00:00",
+  "oracle_contract": "/root/mace/experiments/hidden/parity_snap_reference.json",
+  "diagnostic_only": true
+}

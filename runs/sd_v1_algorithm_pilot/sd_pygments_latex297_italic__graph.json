@@ -1,0 +1,355 @@
+{
+  "case_id": "sd_pygments_latex297_italic",
+  "method": "graph",
+  "mechanism": "M6_CROSS_FUNCTION_STATE",
+  "project": "Pygments",
+  "universe": [
+    {
+      "id": "pygments/formatters/latex.py:293-293",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 293,
+      "last_line": 293,
+      "kind": "assign",
+      "code": "            cmndef = ''",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/latex.py:297-297",
+          "to": "pygments/formatters/latex.py:293-293",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:cmndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_create_stylesheet"
+    },
+    {
+      "id": "pygments/formatters/latex.py:295-295",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 295,
+      "last_line": 295,
+      "kind": "augassign",
+      "code": "                cmndef += r'\\let\\$$@bf=\\textbf'",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/latex.py:297-297",
+          "to": "pygments/formatters/latex.py:295-295",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:cmndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_create_stylesheet"
+    },
+    {
+      "id": "pygments/formatters/latex.py:299-299",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 299,
+      "last_line": 299,
+      "kind": "augassign",
+      "code": "                cmndef += r'\\let\\$$@ul=\\underline'",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/latex.py:297-297",
+          "to": "pygments/formatters/latex.py:299-299",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:cmndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_create_stylesheet"
+    },
+    {
+      "id": "pygments/formatters/latex.py:301-301",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 301,
+      "last_line": 301,
+      "kind": "augassign",
+      "code": "                cmndef += r'\\let\\$$@ff=\\textrm'",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/latex.py:297-297",
+          "to": "pygments/formatters/latex.py:301-301",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:cmndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_create_stylesheet"
+    },
+    {
+      "id": "pygments/formatters/latex.py:303-303",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 303,
+      "last_line": 303,
+      "kind": "augassign",
+      "code": "                cmndef += r'\\let\\$$@ff=\\textsf'",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/latex.py:297-297",
+          "to": "pygments/formatters/latex.py:303-303",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:cmndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_create_stylesheet"
+    },
+    {
+      "id": "pygments/formatters/latex.py:305-305",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 305,
+      "last_line": 305,
+      "kind": "augassign",
+      "code": "                cmndef += r'\\let\\$$@ff=\\textsf'",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/latex.py:297-297",
+          "to": "pygments/formatters/latex.py:305-305",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:cmndef",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_create_stylesheet"
+    }
+  ],
+  "discovery": {
+    "method": "graph",
+    "rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic",
+    "stats": {
+      "nodes": 157,
+      "edges": 2610,
+      "edge_kinds": {
+        "alias": 1644,
+        "call": 188,
+        "control": 293,
+        "data": 485
+      },
+      "edge_confidence": {
+        "MAY": 1834,
+        "MUST": 721,
+        "UNKNOWN": 55
+      },
+      "deletable": 101,
+      "unresolved_calls": [
+        "UNKNOWN:StringIO",
+        "UNKNOWN:abs",
+        "UNKNOWN:append",
+        "UNKNOWN:escape_tex",
+        "UNKNOWN:get",
+        "UNKNOWN:get_bool_opt",
+        "UNKNOWN:get_int_opt",
+        "UNKNOWN:getvalue",
+        "UNKNOWN:join",
+        "UNKNOWN:partition",
+        "UNKNOWN:replace",
+        "UNKNOWN:reversed",
+        "UNKNOWN:setdefault",
+        "UNKNOWN:split",
+        "UNKNOWN:write"
+      ]
+    },
+    "eligible": 101,
+    "selected": 6,
+    "truncated": true,
+    "u_covered": [],
+    "u_total": [
+      "U1"
+    ],
+    "u_recall": 0.0,
+    "u_exact": false
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_inline_italic",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/latex.py:293-293"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 13,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/latex.py:293-293"
+          ],
+          "evaluations": 14,
+          "elapsed_seconds": 0.005
+        },
+        "first_mmbs": null
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "mask_inline_italic_color",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/latex.py:293-293"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 13,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/latex.py:293-293"
+          ],
+          "evaluations": 14,
+          "elapsed_seconds": 0.004
+        },
+        "first_mmbs": null
+      }
+    },
+    {
+      "public_id": "in3",
+      "input_key": "expose_full_italic",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in4",
+      "input_key": "control_inline_bold",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/latex.py:293-293"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 12,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/latex.py:293-293"
+          ],
+          "evaluations": 14,
+          "elapsed_seconds": 0.005
+        },
+        "first_mmbs": null
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 0,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 2,
+    "false_relations": 4,
+    "unmatched_sets": 2,
+    "mmbs_emitted_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_inline_italic",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/latex.py:293-293"
+        ]
+      ],
+      "got_msms_blocks": [
+        []
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/latex.py:293-293"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": []
+    },
+    {
+      "input": "mask_inline_italic_color",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/latex.py:293-293"
+        ]
+      ],
+      "got_msms_blocks": [
+        []
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/latex.py:293-293"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": []
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 3.35,
+    "probe_executions_algorithm": 128,
+    "probe_executions_scoring": 0,
+    "variant_builds": 128,
+    "subsets_evaluated": 192
+  }
+}

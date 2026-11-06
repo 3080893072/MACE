@@ -1,0 +1,209 @@
+{
+  "acceptance": {
+    "errors": [],
+    "p_minus_suite_log": "evidence/werkzeug_bind_server_name_lower_p_minus_full.log",
+    "p_minus_suite_success": true,
+    "p_minus_suite_summary": {
+      "deselected": 24,
+      "error": 0,
+      "failed": 0,
+      "passed": 816,
+      "skipped": 0,
+      "xfailed": 0
+    },
+    "t_task_success": true,
+    "t_task_summary": {
+      "deselected": 0,
+      "error": 0,
+      "failed": 0,
+      "passed": 8,
+      "skipped": 0,
+      "xfailed": 0
+    },
+    "verdict": "PASS"
+  },
+  "candidate_universe": [
+    {
+      "code": "server_name = server_name.lower()",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 219,
+      "id": "bind_relower",
+      "kind": "assignment",
+      "last_line": 219,
+      "line": 219,
+      "role": "downstream re-derivation of the same normalization in Map.bind"
+    }
+  ],
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "evidence": {
+    "independent_matrix": "evidence/werkzeug_bind_server_name_lower_independent_matrix.json",
+    "matrix": "evidence/werkzeug_bind_server_name_lower_matrix.json",
+    "p_minus_junit": "evidence/werkzeug_bind_server_name_lower_p_minus_full.junit.xml",
+    "p_minus_log": "evidence/werkzeug_bind_server_name_lower_p_minus_full.log",
+    "t_task_log": "evidence/werkzeug_bind_server_name_lower_t_task.log"
+  },
+  "frozen_t_task": [
+    "tests/test_routing.py::test_external_building_with_port_bind_to_environ",
+    "tests/test_routing.py::test_external_building_with_port_bind_to_environ_wrong_servername",
+    "tests/test_routing.py::test_http_host_before_server_name",
+    "tests/test_routing.py::test_invalid_subdomain_warning",
+    "tests/test_routing.py::test_server_name_casing",
+    "tests/test_routing.py::test_server_name_interpolation",
+    "tests/test_routing.py::test_server_name_match_default_port[http://localhost-localhost:80]",
+    "tests/test_routing.py::test_server_name_match_default_port[https://localhost-localhost:443]"
+  ],
+  "label": "DEVELOPMENT/PILOT",
+  "partial_truth": {
+    "attribution_scope": "Exact only for the 1 declared candidate operation(s) and executed inputs.  No claim that all possible B/C/D/E operations were found.",
+    "confirmed_level": "FINITE_DOMAIN_EXACT over the frozen witnesses and all subsets of the declared U; never PROVEN over the legal input domain.",
+    "exposing_witnesses": [
+      "expose_subdomain_path"
+    ],
+    "masking_witnesses": [
+      "mask_subdomain_supplied"
+    ]
+  },
+  "probe": "probe_werkzeug_bind_server_name.py",
+  "project": "Werkzeug",
+  "project_id": "werkzeug-2.2.3",
+  "project_source_tree_sha256": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+  "reference_claims": [
+    {
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "witness_id": "expose_subdomain_path"
+    },
+    {
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "operations": [
+        {
+          "code": "server_name = server_name.lower()",
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219
+        }
+      ],
+      "type": "MSMS",
+      "witness_id": "mask_subdomain_supplied"
+    },
+    {
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "operations": [
+        {
+          "code": "server_name = server_name.lower()",
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219
+        }
+      ],
+      "type": "MMBS",
+      "witness_id": "mask_subdomain_supplied"
+    },
+    {
+      "control_input": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "operations": [
+        {
+          "code": "server_name = server_name.lower()",
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219
+        }
+      ],
+      "prerequisite": "subdomain is not None",
+      "type": "PREREQUISITE_BREAKING"
+    }
+  ],
+  "reference_relations": {
+    "expose_subdomain_path": {
+      "exposed_EMPTY": true,
+      "exposed_with_universe_disabled": {
+        "EMPTY": true,
+        "bind_relower": true
+      },
+      "masked_strict_EMPTY": false,
+      "mmbs": [],
+      "msms": [],
+      "role": "exposing"
+    },
+    "mask_subdomain_supplied": {
+      "exposed_EMPTY": false,
+      "exposed_with_universe_disabled": {
+        "EMPTY": false,
+        "bind_relower": true
+      },
+      "masked_strict_EMPTY": true,
+      "mmbs": [
+        [
+          "bind_relower"
+        ]
+      ],
+      "msms": [
+        [
+          "bind_relower"
+        ]
+      ],
+      "role": "masking"
+    }
+  },
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "schema": "mace_benchmark_v3_hidden_reference",
+  "scope": {
+    "inputs_executed": 2,
+    "not_claimed": [
+      "All WSGI environments and host configurations",
+      "host_matching maps",
+      "Operations outside the declared U"
+    ],
+    "operations_in_universe": 1
+  },
+  "source_version": "Werkzeug 2.2.3",
+  "target_operation": {
+    "code": "server_name = server_name.lower()",
+    "file": "src/werkzeug/routing/map.py",
+    "function": "Map.bind_to_environ",
+    "line": 307,
+    "note": "normalizes an explicitly supplied server name before subdomain comparison"
+  },
+  "task_id": "werkzeug_bind_server_name_lower",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected",
+  "universe_notes": [
+    "U is the only later normalization of the value passed from bind_to_environ to Map.bind.",
+    "When subdomain is None, A's value is consumed by the subdomain comparison before Map.bind runs, so the downstream lowercasing cannot mask A; that is the exposing input.",
+    "When subdomain is supplied, the comparison block is skipped and the downstream lowercasing becomes the only consumer, which is the masking input.  This is a control prerequisite, not a candidate operation.",
+    "Completeness outside the declared U is not claimed."
+  ],
+  "version": "2.2.3",
+  "witnesses": {
+    "expose_subdomain_path": {
+      "payload": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "role": "exposing"
+    },
+    "mask_subdomain_supplied": {
+      "payload": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "role": "masking"
+    }
+  }
+}

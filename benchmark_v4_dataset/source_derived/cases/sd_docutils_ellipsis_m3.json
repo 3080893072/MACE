@@ -1,0 +1,48 @@
+{
+  "case_id": "sd_docutils_ellipsis_m3",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 810,
+    "A_code": "    text = text.replace(r'...', smartchars.ellipsis)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 810,
+      "indent": 4,
+      "role": "First ellipsis leg: one occurrence.",
+      "lines": [
+        "text = text.replace(r'...', smartchars.ellipsis, 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 810,
+      "indent": 4,
+      "role": "Second ellipsis leg: one further occurrence.",
+      "lines": [
+        "text = text.replace(r'...', smartchars.ellipsis, 1)"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 810,
+      "indent": 4,
+      "role": "Third ellipsis leg: one further occurrence.",
+      "lines": [
+        "text = text.replace(r'...', smartchars.ellipsis, 1)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_ellipsis_m3.py",
+  "inputs": {
+    "mask_three_ellipses": "text with three '...' occurrences",
+    "expose_four_ellipses": "text with four '...' occurrences: one survives",
+    "control_plain": "text with no ellipsis"
+  },
+  "rationale": "educateEllipses() maps every '...' to the ellipsis character. Three legs each convert one occurrence, so all three are needed for a three-ellipsis string; a four-ellipsis string keeps the last one raw."
+}

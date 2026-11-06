@@ -1,0 +1,67 @@
+{
+  "note": "Reference contract for CPU self-checks and later scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "xs_post == sorted(xs)",
+        "source_lines": [
+          31
+        ],
+        "rationale": "A replaces xs by its sorted copy."
+      }
+    ],
+    "upstream": [
+      {
+        "id": "U1",
+        "expr": "fn_0(xs) == sorted(xs)",
+        "condition": "pre",
+        "source_lines": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "rationale": "fn_0 inserts every element in order, so under pre the state entering A is already sorted.",
+        "role": "fixed_point"
+      }
+    ],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "min(xs) if use_left else xs[0]",
+        "condition": "use_left or xs[0] == min(xs)",
+        "source_lines": [
+          33
+        ],
+        "rationale": "Channel 0 folds for the minimum when use_left, otherwise reads the head."
+      },
+      {
+        "id": "O1",
+        "channel": 1,
+        "expr": "max(xs) if use_right else xs[-1]",
+        "condition": "use_right or xs[-1] == max(xs)",
+        "source_lines": [
+          34
+        ],
+        "rationale": "Channel 1 folds for the maximum when use_right, otherwise reads the tail."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "pre or ((use_left or xs[0] == min(xs)) and (use_right or xs[-1] == max(xs)))",
+      "source_lines": [
+        31,
+        33,
+        34
+      ],
+      "rationale": "Upstream fixed point under pre, otherwise both observer conditions must hold."
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

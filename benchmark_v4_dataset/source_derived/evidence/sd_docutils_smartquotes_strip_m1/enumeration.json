@@ -1,0 +1,246 @@
+{
+  "case_id": "sd_docutils_smartquotes_strip_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/frontend.py",
+  "A_line": 272,
+  "A_code": "        quotes = quotes.strip()",
+  "original_sha256": "5d5f915e784f10ed05e56af8a2a24913584a338996da2f6bfdd1be1026df59bc",
+  "patched_sha256": "4e98b2fbfe28fef479ea44ff25221a719deb47e9af6e9cd2f64c65f0eba1e8e4",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 272,
+      "role": "Space-only trimming of the quote specification: restores A for space padding.",
+      "lines": [
+        "if \"\\t\" not in quotes:",
+        "    quotes = quotes.strip(\" \")"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 272,
+      "end": 275
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_space_padding": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "expose_tab_padding": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "control_unpadded": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      }
+    },
+    "P_MINUS": {
+      "mask_space_padding": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "expose_tab_padding": {
+        "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+      },
+      "control_unpadded": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_space_padding": {
+        "error": "ValueError: Invalid value \"b'en: abcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+      },
+      "expose_tab_padding": {
+        "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+      },
+      "control_unpadded": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      }
+    },
+    "KEEP_U1": {
+      "mask_space_padding": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "expose_tab_padding": {
+        "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+      },
+      "control_unpadded": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      }
+    }
+  },
+  "per_input": {
+    "mask_space_padding": {
+      "plus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "ValueError: Invalid value \"b'en: abcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+        },
+        "KEEP_U1": {
+          "out": [
+            [
+              "en",
+              "abcd"
+            ]
+          ]
+        }
+      }
+    },
+    "expose_tab_padding": {
+      "plus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus": {
+        "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+        },
+        "KEEP_U1": {
+          "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+        }
+      }
+    },
+    "control_unpadded": {
+      "plus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": [
+            [
+              "en",
+              "abcd"
+            ]
+          ]
+        },
+        "KEEP_U1": {
+          "out": [
+            [
+              "en",
+              "abcd"
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

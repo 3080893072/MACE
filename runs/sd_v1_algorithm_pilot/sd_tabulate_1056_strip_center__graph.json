@@ -1,0 +1,397 @@
+{
+  "case_id": "sd_tabulate_1056_strip_center",
+  "method": "graph",
+  "mechanism": "M5_CONDITIONAL_BRANCH",
+  "project": "tabulate",
+  "universe": [
+    {
+      "id": "tabulate/__init__.py:1052-1052",
+      "file": "tabulate/__init__.py",
+      "first_line": 1052,
+      "last_line": 1052,
+      "kind": "assign",
+      "code": "            strings = [s.strip() for s in strings]",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "tabulate/__init__.py:1056-1056",
+          "to": "tabulate/__init__.py:1052-1052",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:strings",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_align_column_choose_padfn"
+    },
+    {
+      "id": "tabulate/__init__.py:1059-1059",
+      "file": "tabulate/__init__.py",
+      "first_line": 1059,
+      "last_line": 1059,
+      "kind": "assign",
+      "code": "                strings = [s.strip() for s in strings]",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "tabulate/__init__.py:1056-1056",
+          "to": "tabulate/__init__.py:1059-1059",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:strings",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_align_column_choose_padfn"
+    },
+    {
+      "id": "tabulate/__init__.py:1074-1074",
+      "file": "tabulate/__init__.py",
+      "first_line": 1074,
+      "last_line": 1074,
+      "kind": "assign",
+      "code": "            strings = [s.strip() for s in strings]",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "tabulate/__init__.py:1056-1056",
+          "to": "tabulate/__init__.py:1074-1074",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:strings",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_align_column_choose_padfn"
+    },
+    {
+      "id": "tabulate/__init__.py:1068-1068",
+      "file": "tabulate/__init__.py",
+      "first_line": 1068,
+      "last_line": 1068,
+      "kind": "assign",
+      "code": "        strings = [s + (maxdecimals - decs) * \" \" for s, decs in zip(strings, decimals)]",
+      "graph_score": 1.55,
+      "graph_path": [
+        {
+          "from": "tabulate/__init__.py:1056-1056",
+          "to": "tabulate/__init__.py:1068-1068",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:strings",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_align_column_choose_padfn"
+    },
+    {
+      "id": "tabulate/__init__.py:1064-1064",
+      "file": "tabulate/__init__.py",
+      "first_line": 1064,
+      "last_line": 1064,
+      "kind": "assign",
+      "code": "            decimals = [_afterpoint(_strip_ansi(s)) for s in strings]",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "tabulate/__init__.py:1056-1056",
+          "to": "tabulate/__init__.py:1064-1064",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:strings",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_align_column_choose_padfn"
+    },
+    {
+      "id": "tabulate/__init__.py:1066-1066",
+      "file": "tabulate/__init__.py",
+      "first_line": 1066,
+      "last_line": 1066,
+      "kind": "assign",
+      "code": "            decimals = [_afterpoint(s) for s in strings]",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "tabulate/__init__.py:1056-1056",
+          "to": "tabulate/__init__.py:1066-1066",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:strings",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_align_column_choose_padfn"
+    }
+  ],
+  "discovery": {
+    "method": "graph",
+    "rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic",
+    "stats": {
+      "nodes": 217,
+      "edges": 3986,
+      "edge_kinds": {
+        "alias": 2998,
+        "call": 377,
+        "control": 290,
+        "data": 321
+      },
+      "edge_confidence": {
+        "MAY": 3337,
+        "MUST": 576,
+        "UNKNOWN": 73
+      },
+      "deletable": 143,
+      "unresolved_calls": [
+        "UNKNOWN:_CustomTextWrap",
+        "UNKNOWN:_align_column_choose_width_fn",
+        "UNKNOWN:_align_header",
+        "UNKNOWN:_choose_width_fn",
+        "UNKNOWN:_expand_iterable",
+        "UNKNOWN:_expand_numparse",
+        "UNKNOWN:_flat_list",
+        "UNKNOWN:_format_table",
+        "UNKNOWN:_normalize_tabular_data",
+        "UNKNOWN:_reinsert_separating_lines",
+        "UNKNOWN:_remove_separating_lines",
+        "UNKNOWN:_rst_escape_first_column",
+        "UNKNOWN:append",
+        "UNKNOWN:chain",
+        "UNKNOWN:conv",
+        "UNKNOWN:decode",
+        "UNKNOWN:extend",
+        "UNKNOWN:format",
+        "UNKNOWN:from_iterable",
+        "UNKNOWN:get",
+        "UNKNOWN:izip_longest",
+        "UNKNOWN:join",
+        "UNKNOWN:len_fn",
+        "UNKNOWN:lower",
+        "UNKNOWN:match",
+        "UNKNOWN:padfn",
+        "UNKNOWN:readlines",
+        "UNKNOWN:reduce",
+        "UNKNOWN:replace",
+        "UNKNOWN:rfind",
+        "UNKNOWN:rstrip",
+        "UNKNOWN:search",
+        "UNKNOWN:split",
+        "UNKNOWN:splitlines",
+        "UNKNOWN:strip",
+        "UNKNOWN:sub",
+        "UNKNOWN:wcswidth",
+        "UNKNOWN:width_fn",
+        "UNKNOWN:wrap"
+      ]
+    },
+    "eligible": 143,
+    "selected": 6,
+    "truncated": true,
+    "u_covered": [
+      "U1"
+    ],
+    "u_total": [
+      "U1"
+    ],
+    "u_recall": 1.0,
+    "u_exact": true
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_numeric",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "tabulate/__init__.py:1059-1059"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "tabulate/__init__.py:1059-1059"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 14,
+        "first_msms": {
+          "set": [
+            "tabulate/__init__.py:1059-1059"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": 0.002
+        },
+        "first_mmbs": {
+          "set": [
+            "tabulate/__init__.py:1059-1059"
+          ],
+          "evaluations": 4,
+          "elapsed_seconds": 0.001
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "expose_alpha",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in3",
+      "input_key": "control_right_numeric",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "tabulate/__init__.py:1052-1052"
+        ],
+        [
+          "tabulate/__init__.py:1059-1059"
+        ],
+        [
+          "tabulate/__init__.py:1064-1064"
+        ],
+        [
+          "tabulate/__init__.py:1066-1066"
+        ],
+        [
+          "tabulate/__init__.py:1068-1068"
+        ],
+        [
+          "tabulate/__init__.py:1074-1074"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 13,
+        "first_msms": {
+          "set": [
+            "tabulate/__init__.py:1074-1074"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": 0.002
+        },
+        "first_mmbs": null
+      }
+    },
+    {
+      "public_id": "in4",
+      "input_key": "control_no_space",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "tabulate/__init__.py:1052-1052"
+        ],
+        [
+          "tabulate/__init__.py:1059-1059"
+        ],
+        [
+          "tabulate/__init__.py:1064-1064"
+        ],
+        [
+          "tabulate/__init__.py:1066-1066"
+        ],
+        [
+          "tabulate/__init__.py:1068-1068"
+        ],
+        [
+          "tabulate/__init__.py:1074-1074"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 14,
+        "first_msms": {
+          "set": [
+            "tabulate/__init__.py:1074-1074"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": 0.002
+        },
+        "first_mmbs": null
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 1,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 1
+  },
+  "detail": [
+    {
+      "input": "mask_numeric",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "tabulate/__init__.py:1059-1059"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": true,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "tabulate/__init__.py:1059-1059"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 7.08,
+    "probe_executions_algorithm": 128,
+    "probe_executions_scoring": 0,
+    "variant_builds": 128,
+    "subsets_evaluated": 192
+  }
+}

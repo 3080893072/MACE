@@ -1,0 +1,57 @@
+{
+  "task_id": "sd_docutils_make_id_nonid_m2",
+  "project": "docutils",
+  "version": "0.20.1",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "A rewrites every run of non-identifier characters to a single hyphen. The patch covers exactly the comma and '!' runs (one leg each), so an identifier containing only those two runs is fully masked, while an identifier with a third run keeps it raw and is the exposing witness.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "docutils/nodes.py",
+    "line": 2239,
+    "function": "make_id",
+    "code": "    id = _non_id_chars.sub('-', ' '.join(id.split()))",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "make_id"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "docutils.nodes.make_id(text)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_two_runs",
+      "role": "masking",
+      "description": "identifier with exactly two runs of non-identifier characters"
+    },
+    {
+      "id": "expose_three_runs",
+      "role": "exposing",
+      "description": "identifier with three runs: the bounded rewrite leaves one behind"
+    },
+    {
+      "id": "control_no_runs",
+      "role": "control",
+      "description": "identifier with no non-identifier characters"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

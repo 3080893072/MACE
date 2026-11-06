@@ -1,0 +1,64 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219,
+          "code": "        server_name = server_name.lower()"
+        },
+        {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 344,
+          "end_line": 353,
+          "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/routing/map.py",
+          "line": 219,
+          "code": "        server_name = server_name.lower()"
+        }
+      ]
+    }
+  ]
+}

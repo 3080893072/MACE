@@ -1,0 +1,1360 @@
+{
+  "rows": [
+    {
+      "run": "engine_alt_masking",
+      "fixture": "alt_masking",
+      "model": "qwen2.5-coder:32b",
+      "mode": "direct",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "GUARD_VERIFIED",
+      "rounds": 1,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "first_bad": "none",
+      "first_bad_round1": "none",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "mode == 0 or mode == 1"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 648,
+      "completion_tokens": 53,
+      "wall_seconds": 3.0
+    },
+    {
+      "run": "engine_alt_masking",
+      "fixture": "alt_masking",
+      "model": "qwen2.5-coder:32b",
+      "mode": "fixed",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "GUARD_VERIFIED",
+      "rounds": 1,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "first_bad": "none",
+      "first_bad_round1": "none",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "mode == 0 or mode == 1"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 782,
+      "completion_tokens": 67,
+      "wall_seconds": 5.8
+    },
+    {
+      "run": "engine_alt_masking",
+      "fixture": "alt_masking",
+      "model": "qwen2.5-coder:32b",
+      "mode": "generic",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "GUARD_VERIFIED",
+      "rounds": 1,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "first_bad": "none",
+      "first_bad_round1": "none",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "mode == 0 or mode == 1"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 980,
+      "completion_tokens": 203,
+      "wall_seconds": 12.1
+    },
+    {
+      "run": "engine_alt_masking",
+      "fixture": "alt_masking",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 3,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "INVALID",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "INVALID",
+        "guard": "BOUNDED"
+      },
+      "first_bad": "upstream",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [
+        [
+          "O0",
+          "post_reference"
+        ]
+      ],
+      "invalid_kinds": [
+        "post_reference"
+      ],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "mode == 0 or mode == 1"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "v_post == v + 1",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "mode == 0 or mode == 1",
+          "condition": "True",
+          "role": "supporting",
+          "reason": null
+        },
+        "U2": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "mode == 2",
+          "condition": "True",
+          "role": "fixed_point",
+          "reason": null
+        },
+        "U3": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "mode == 3",
+          "condition": "True",
+          "role": "fixed_point",
+          "reason": null
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "INVALID",
+          "expr": "0 if mode == 0 or mode == 1 else v_post",
+          "condition": "mode == 0 or mode == 1",
+          "role": null,
+          "reason": "unknown variable: v_post"
+        }
+      },
+      "prompt_tokens": 15048,
+      "completion_tokens": 2083,
+      "wall_seconds": 109.1
+    },
+    {
+      "run": "engine_modulo_absorb",
+      "fixture": "modulo_absorb",
+      "model": "qwen2.5-coder:32b",
+      "mode": "direct",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 47,
+        "incomplete_rows": 212,
+        "invalid_kind": "",
+        "expr": "cap and fn_0(xs) % 10 == 9"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 4103,
+      "completion_tokens": 268,
+      "wall_seconds": 19.6
+    },
+    {
+      "run": "engine_modulo_absorb",
+      "fixture": "modulo_absorb",
+      "model": "qwen2.5-coder:32b",
+      "mode": "fixed",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 259,
+        "incomplete_rows": 169,
+        "invalid_kind": "",
+        "expr": "not cap or (cap and sum(xs) % 10 == 0)"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 4323,
+      "completion_tokens": 275,
+      "wall_seconds": 16.9
+    },
+    {
+      "run": "engine_modulo_absorb",
+      "fixture": "modulo_absorb",
+      "model": "qwen2.5-coder:32b",
+      "mode": "generic",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 259,
+        "incomplete_rows": 212,
+        "invalid_kind": "",
+        "expr": "not cap"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 5252,
+      "completion_tokens": 517,
+      "wall_seconds": 31.3
+    },
+    {
+      "run": "engine_modulo_absorb",
+      "fixture": "modulo_absorb",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 1,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "BOUNDED",
+        "observer": "REFUTED",
+        "guard": "INVALID"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "ABSENT"
+      },
+      "first_bad": "observer",
+      "first_bad_round1": "none",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": false,
+        "typecheck_ok": false,
+        "status": "INVALID",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "local_out_of_scope",
+        "expr": "cap or (not cap and fn_0(xs) % 10 != 9) or (not cap and fn_0(xs) == 0 and total == 0)"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "total_post == total + 1",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "BOUNDED",
+          "expr": "cap",
+          "condition": "cap",
+          "role": "supporting",
+          "reason": null
+        },
+        "U2": {
+          "kind": "upstream",
+          "status": "BOUNDED",
+          "expr": "not cap",
+          "condition": "not cap",
+          "role": "fixed_point",
+          "reason": null
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "REFUTED",
+          "expr": "total if not cap else total - total % 10",
+          "condition": "cap or (not cap and fn_0(xs) % 10 != 9) or (not cap and fn_0(xs) == 0 and total == 0)",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 14667,
+      "completion_tokens": 1636,
+      "wall_seconds": 86.5
+    },
+    {
+      "run": "engine_overwrite_channel",
+      "fixture": "overwrite_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "direct",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 28,
+        "incomplete_rows": 40,
+        "invalid_kind": "",
+        "expr": "not keep"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 4672,
+      "completion_tokens": 241,
+      "wall_seconds": 17.9
+    },
+    {
+      "run": "engine_overwrite_channel",
+      "fixture": "overwrite_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "fixed",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": false,
+        "typecheck_ok": false,
+        "status": "INVALID",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "local_out_of_scope",
+        "expr": "keep and value == fn_0(xs)"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 4803,
+      "completion_tokens": 92,
+      "wall_seconds": 8.0
+    },
+    {
+      "run": "engine_overwrite_channel",
+      "fixture": "overwrite_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "generic",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 28,
+        "incomplete_rows": 28,
+        "invalid_kind": "",
+        "expr": "not keep or fn_0(xs) == 0"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 5465,
+      "completion_tokens": 536,
+      "wall_seconds": 32.1
+    },
+    {
+      "run": "engine_overwrite_channel",
+      "fixture": "overwrite_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "INVALID",
+        "observer": "BOUNDED",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "BOUNDED",
+        "guard": "REFUTED"
+      },
+      "first_bad": "upstream",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [
+        [
+          "U1",
+          "unknown_name"
+        ],
+        [
+          "U2",
+          "unknown_name"
+        ]
+      ],
+      "invalid_kinds": [
+        "unknown_name"
+      ],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "keep or fn_0(xs) == 0"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "value_post == 0",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "INVALID",
+          "expr": "keep and value == fn_0(xs)",
+          "condition": "True",
+          "role": "supporting",
+          "reason": "unknown variable: value"
+        },
+        "U2": {
+          "kind": "upstream",
+          "status": "INVALID",
+          "expr": "not keep and value == 0",
+          "condition": "True",
+          "role": "fixed_point",
+          "reason": "unknown variable: value"
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "fn_0(xs) if keep else 0",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "O1": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "fn_0(xs) + 1 if keep else 1",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 18580,
+      "completion_tokens": 1282,
+      "wall_seconds": 72.1
+    },
+    {
+      "run": "engine_dedup_channel",
+      "fixture": "dedup_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "direct",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "GUARD_VERIFIED",
+      "rounds": 2,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "none",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "distinct(xs) == distinct(xs + [xs[0] + 1])"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 1438,
+      "completion_tokens": 135,
+      "wall_seconds": 10.0
+    },
+    {
+      "run": "engine_dedup_channel",
+      "fixture": "dedup_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "fixed",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "GUARD_VERIFIED",
+      "rounds": 2,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "none",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "distinct(xs) == distinct(xs + [xs[0] + 1])"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 1920,
+      "completion_tokens": 123,
+      "wall_seconds": 9.4
+    },
+    {
+      "run": "engine_dedup_channel",
+      "fixture": "dedup_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "generic",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": false,
+        "typecheck_ok": false,
+        "status": "INVALID",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "sort",
+        "expr": "len(xs) == 1 or (pre and distinct(xs) and len(xs) + 1 == len(xs_post))"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 5210,
+      "completion_tokens": 401,
+      "wall_seconds": 23.5
+    },
+    {
+      "run": "engine_dedup_channel",
+      "fixture": "dedup_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 3,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "INVALID",
+        "observer": "BOUNDED",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "INVALID",
+        "observer": "BOUNDED",
+        "guard": "REFUTED"
+      },
+      "first_bad": "upstream",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [
+        [
+          "U2",
+          "sort"
+        ]
+      ],
+      "invalid_kinds": [
+        "sort"
+      ],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 100,
+        "invalid_kind": "",
+        "expr": "len(xs) == 0"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "xs_post == xs + [xs[0] + 1]",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "len(xs) == 0",
+          "condition": "True",
+          "role": "fixed_point",
+          "reason": null
+        },
+        "U2": {
+          "kind": "upstream",
+          "status": "INVALID",
+          "expr": "pre and distinct(xs)",
+          "condition": "True",
+          "role": "supporting",
+          "reason": "expected bool, got int"
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "len(fn_0(xs))",
+          "condition": "len(xs) == 0",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 13375,
+      "completion_tokens": 1588,
+      "wall_seconds": 82.8
+    },
+    {
+      "run": "engine_sort_channel",
+      "fixture": "sort_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "direct",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 2866,
+        "incomplete_rows": 2728,
+        "invalid_kind": "",
+        "expr": "use_left == False or use_right == False"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 5510,
+      "completion_tokens": 221,
+      "wall_seconds": 26.2
+    },
+    {
+      "run": "engine_sort_channel",
+      "fixture": "sort_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "fixed",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 7046,
+        "invalid_kind": "",
+        "expr": "xs == sorted(xs) or (not pre and xs == fn_0(xs)) or (pre and xs == fn_0(xs))"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 5945,
+      "completion_tokens": 303,
+      "wall_seconds": 27.6
+    },
+    {
+      "run": "engine_sort_channel",
+      "fixture": "sort_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "generic",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 1134,
+        "incomplete_rows": 6452,
+        "invalid_kind": "",
+        "expr": "use_left == False and use_right == False"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 6870,
+      "completion_tokens": 509,
+      "wall_seconds": 36.2
+    },
+    {
+      "run": "engine_sort_channel",
+      "fixture": "sort_channel",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "INVALID",
+        "observer": "BOUNDED",
+        "guard": "INVALID"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "BOUNDED",
+        "guard": "REFUTED"
+      },
+      "first_bad": "upstream",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [
+        [
+          "U1",
+          "post_reference"
+        ]
+      ],
+      "invalid_kinds": [
+        "post_reference"
+      ],
+      "guard": {
+        "parsed": false,
+        "typecheck_ok": false,
+        "status": "INVALID",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "post_reference",
+        "expr": "xs == xs_post"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "xs_post == sorted(xs)",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "INVALID",
+          "expr": "xs == xs_post",
+          "condition": "True",
+          "role": "fixed_point",
+          "reason": "unknown variable: xs_post"
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "fn_1(xs) if use_left else xs[0]",
+          "condition": "xs == sorted(xs)",
+          "role": null,
+          "reason": null
+        },
+        "O1": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "fn_2(xs) if use_right else xs[-1]",
+          "condition": "xs == sorted(xs)",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 18931,
+      "completion_tokens": 872,
+      "wall_seconds": 59.4
+    },
+    {
+      "run": "engine_swap_channels",
+      "fixture": "swap_channels",
+      "model": "qwen2.5-coder:32b",
+      "mode": "direct",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 4,
+        "invalid_kind": "",
+        "expr": "show_gap == False"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 3718,
+      "completion_tokens": 185,
+      "wall_seconds": 12.9
+    },
+    {
+      "run": "engine_swap_channels",
+      "fixture": "swap_channels",
+      "model": "qwen2.5-coder:32b",
+      "mode": "fixed",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 4,
+        "invalid_kind": "",
+        "expr": "not show_gap"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 4395,
+      "completion_tokens": 281,
+      "wall_seconds": 17.9
+    },
+    {
+      "run": "engine_swap_channels",
+      "fixture": "swap_channels",
+      "model": "qwen2.5-coder:32b",
+      "mode": "generic",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "ABSENT",
+        "upstream": "ABSENT",
+        "observer": "ABSENT",
+        "guard": "INVALID"
+      },
+      "first_bad": "guard",
+      "first_bad_round1": "guard",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 4,
+        "invalid_kind": "",
+        "expr": "show_gap == False"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {},
+      "prompt_tokens": 4568,
+      "completion_tokens": 397,
+      "wall_seconds": 23.5
+    },
+    {
+      "run": "engine_swap_channels",
+      "fixture": "swap_channels",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 4,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "BOUNDED",
+        "observer": "INVALID",
+        "guard": "INVALID"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "INVALID",
+        "observer": "REFUTED",
+        "guard": "INVALID"
+      },
+      "first_bad": "observer",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [
+        [
+          "O2",
+          "post_reference"
+        ]
+      ],
+      "invalid_kinds": [
+        "post_reference"
+      ],
+      "guard": {
+        "parsed": false,
+        "typecheck_ok": false,
+        "status": "INVALID",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "local_out_of_scope",
+        "expr": "a == b_post and b == a_post"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "a_post == b and b_post == a",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "BOUNDED",
+          "expr": "True",
+          "condition": "True",
+          "role": "fixed_point",
+          "reason": null
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "a + b",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "O1": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "a * b",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "O2": {
+          "kind": "observer",
+          "status": "INVALID",
+          "expr": "0 if not show_gap else (a_post - b_post)",
+          "condition": "True",
+          "role": null,
+          "reason": "unknown variable: a_post"
+        }
+      },
+      "prompt_tokens": 18954,
+      "completion_tokens": 1287,
+      "wall_seconds": 76.8
+    }
+  ],
+  "proportions": {
+    "cells": 24,
+    "guard_typecheck_fail": 5,
+    "guard_typecheck_fail_post": 1,
+    "guard_typecheck_fail_other": 4,
+    "guard_typecheck_ok": 19,
+    "guard_correct_among_typed": 7,
+    "semantic_bad_among_typed": 12,
+    "invalid_relation_ids": [
+      "O0",
+      "O2",
+      "U1",
+      "U2"
+    ]
+  }
+}

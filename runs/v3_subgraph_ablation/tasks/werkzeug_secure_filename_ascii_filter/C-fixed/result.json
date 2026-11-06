@@ -1,0 +1,896 @@
+{
+  "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+  "baseline": "C_ast_intervention",
+  "baseline_version": "C-ast-intervention-1.0",
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "discovery": {
+    "target_variables": [
+      "filename"
+    ],
+    "target_lhs_variables": [
+      "filename"
+    ],
+    "reachable_functions": [
+      "secure_filename"
+    ],
+    "candidate_ops": [
+      {
+        "id": "src/werkzeug/utils.py:226-226",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 226,
+        "last_line": 226,
+        "kind": "assignment",
+        "code": "            filename = filename.replace(sep, \" \")"
+      },
+      {
+        "id": "src/werkzeug/utils.py:227-229",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 227,
+        "last_line": 229,
+        "kind": "assignment",
+        "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+      },
+      {
+        "id": "src/werkzeug/utils.py:239-239",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 239,
+        "last_line": 239,
+        "kind": "assignment",
+        "code": "        filename = f\"_{filename}\""
+      }
+    ],
+    "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate"
+  },
+  "pruning": {
+    "universe": [
+      {
+        "id": "src/werkzeug/utils.py:227-229",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 227,
+        "last_line": 229,
+        "kind": "assignment",
+        "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+      },
+      {
+        "id": "src/werkzeug/utils.py:226-226",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 226,
+        "last_line": 226,
+        "kind": "assignment",
+        "code": "            filename = filename.replace(sep, \" \")"
+      },
+      {
+        "id": "src/werkzeug/utils.py:239-239",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 239,
+        "last_line": 239,
+        "kind": "assignment",
+        "code": "        filename = f\"_{filename}\""
+      }
+    ],
+    "ranking": [
+      {
+        "id": "src/werkzeug/utils.py:227-229",
+        "changed_cells": 11,
+        "cells": 16,
+        "span": 3
+      },
+      {
+        "id": "src/werkzeug/utils.py:226-226",
+        "changed_cells": 2,
+        "cells": 16,
+        "span": 1
+      },
+      {
+        "id": "src/werkzeug/utils.py:239-239",
+        "changed_cells": 2,
+        "cells": 16,
+        "span": 1
+      }
+    ],
+    "considered": 3,
+    "dropped_no_effect": 0,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0
+  },
+  "universe": [
+    {
+      "id": "src/werkzeug/utils.py:227-229",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 227,
+      "last_line": 229,
+      "kind": "assignment",
+      "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+    },
+    {
+      "id": "src/werkzeug/utils.py:226-226",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 226,
+      "last_line": 226,
+      "kind": "assignment",
+      "code": "            filename = filename.replace(sep, \" \")"
+    },
+    {
+      "id": "src/werkzeug/utils.py:239-239",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 239,
+      "last_line": 239,
+      "kind": "assignment",
+      "code": "        filename = f\"_{filename}\""
+    }
+  ],
+  "inputs": [
+    {
+      "filename": "a b"
+    },
+    {
+      "filename": "北京.txt"
+    },
+    {
+      "filename": "My cool movie.mov"
+    },
+    {
+      "filename": "../../../etc/passwd"
+    },
+    {
+      "filename": "i contain cool ümläuts.txt"
+    },
+    {
+      "filename": "CON"
+    },
+    {
+      "filename": "a b"
+    },
+    {
+      "filename": ""
+    }
+  ],
+  "per_input": [
+    {
+      "input": {
+        "filename": "a b"
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "ab",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "a_b",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "filename": "北京.txt"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:227-229"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/utils.py:227-229"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": "txt",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "txt",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "My cool movie.mov"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "My_cool_movie.mov",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "My_cool_movie.mov",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "../../../etc/passwd"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:227-229",
+        "src/werkzeug/utils.py:226-226"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "etc_passwd",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "etc_passwd",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "i contain cool ümläuts.txt"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:227-229"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/utils.py:227-229"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": "i_contain_cool_umlauts.txt",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "i_contain_cool_umlauts.txt",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "CON"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:239-239"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "_CON",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "_CON",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "a b"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "a_b",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "a_b",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": ""
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "submission": {
+    "submission_id": "baseline-C",
+    "task_id": "werkzeug_secure_filename_ascii_filter",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "filename": "a b"
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 227,
+            "end_line": 229,
+            "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 227,
+            "end_line": 229,
+            "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "filename": "北京.txt"
+        },
+        "control_input": {
+          "filename": "a b"
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 227,
+            "end_line": 229,
+            "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "inputs": [
+        {
+          "filename": "a b"
+        }
+      ],
+      "basis": "execution"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MMBS",
+      "operations": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "operations": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "input": {
+        "filename": "北京.txt"
+      },
+      "control_input": {
+        "filename": "a b"
+      },
+      "level": "WITNESS_VERIFIED"
+    }
+  ],
+  "unknowns": [],
+  "probe_executions": 120,
+  "variant_builds": 16,
+  "discovery_source": "ast",
+  "emission_mode": "minimality_only",
+  "filter_stats": {
+    "msms_dropped": 0,
+    "mmbs_dropped": 0,
+    "msms_total": 17,
+    "mmbs_total": 2
+  },
+  "search": {
+    "mode": "exhaustive",
+    "inputs_with_search": 7,
+    "evaluations": 56,
+    "subsets_total": 56,
+    "complete": true,
+    "executor_cache_hits": 0,
+    "unknown_subsets": 0,
+    "invalid_subsets": 0,
+    "msms_unknown": 0,
+    "mmbs_unknown": 0
+  },
+  "graph_meta": null,
+  "search_runs": [
+    {
+      "input": {
+        "filename": "北京.txt"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "My cool movie.mov"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "../../../etc/passwd"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "i contain cool ümläuts.txt"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "CON"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "a b"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": ""
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "mode": "C-fixed",
+  "wall_seconds": 33.652
+}

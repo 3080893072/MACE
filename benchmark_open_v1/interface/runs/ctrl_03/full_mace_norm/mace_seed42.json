@@ -1,0 +1,2635 @@
+{
+  "fixture": "ctrl_03",
+  "mode": "mace",
+  "provider": "transformers-local+notation-normalizer",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen15b",
+  "seed": 42,
+  "rounds_allowed": 2,
+  "rounds_used": 2,
+  "status": "ROUNDS_EXHAUSTED",
+  "final_guard": "True",
+  "final_bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "x_post == x + 4",
+        "condition": "True",
+        "source_lines": [
+          3
+        ],
+        "rationale": "A now increments x by 4 instead of just adding 4."
+      }
+    ],
+    "upstream": [
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "True",
+        "condition": "True",
+        "source_lines": [
+          3
+        ],
+        "rationale": "A is a no-op.",
+        "role": "fixed_point"
+      }
+    ],
+    "observers": [
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "x_post == x",
+        "condition": "True",
+        "source_lines": [
+          3
+        ],
+        "rationale": "A does not affect the output.",
+        "channel": 0
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "kind": "mask_guard",
+      "expr": "True",
+      "condition": "True",
+      "source_lines": [
+        3
+      ],
+      "rationale": ""
+    },
+    "uncertainty": ""
+  },
+  "final_report": {
+    "guard_ok": false,
+    "evidence_level": "BOUNDED",
+    "domain_size": 20,
+    "usable_rows": 20,
+    "execution_errors": 0,
+    "post_sorts": {
+      "p": "int",
+      "q": "int",
+      "x": "int",
+      "c": "int",
+      "d": "int",
+      "v": "int"
+    },
+    "relations": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "x_post == x + 4",
+        "condition": "True",
+        "source_lines": [
+          3
+        ],
+        "rationale": "A now increments x by 4 instead of just adding 4.",
+        "status": "REFUTED",
+        "checked": 20,
+        "condition_false": 0,
+        "failures": 20,
+        "counterexamples": [
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 3,
+            "out_minus": 3,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 7
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 3
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 4,
+            "out_minus": 4,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 8
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 4
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 5,
+            "out_minus": 5,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 9
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 5
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "True",
+        "condition": "True",
+        "source_lines": [
+          3
+        ],
+        "rationale": "A is a no-op.",
+        "role": "fixed_point",
+        "status": "REFUTED",
+        "checked": 20,
+        "condition_false": 0,
+        "failures": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 3,
+            "out_minus": 3,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 7
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 3
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            }
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 4,
+            "out_minus": 4,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 8
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 4
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            }
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 5,
+            "out_minus": 5,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 9
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 5
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            }
+          }
+        ],
+        "fixed_point_checked": 20,
+        "fixed_point_failures": 20,
+        "reason": "the condition holds on 20 input(s) where A still changes the local state, so it is not a fixed point"
+      },
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "x_post == x",
+        "condition": "True",
+        "source_lines": [
+          3
+        ],
+        "rationale": "A does not affect the output.",
+        "channel": 0,
+        "status": "INVALID",
+        "reason": "unknown variable: x_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+        "checked": 0,
+        "faithful_failures": 0,
+        "invariance_failures": 0,
+        "counterexamples": []
+      }
+    ],
+    "guard": {
+      "id": "G",
+      "expr": "True",
+      "source_lines": [
+        3
+      ],
+      "status": "REFUTED",
+      "checked": 20,
+      "unsound": 6,
+      "incomplete": 0,
+      "shape": null,
+      "parts": [
+        "True"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          6
+        ],
+        "rejects_wrong": [
+          0
+        ]
+      },
+      "counterexamples": [
+        {
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "out_plus": 7,
+          "out_minus": 0,
+          "snap_plus": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0,
+            "v": 9
+          },
+          "snap_minus": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0,
+            "v": 5
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            true
+          ],
+          "part_text": [
+            "True"
+          ]
+        },
+        {
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          "out_plus": 7,
+          "out_minus": 0,
+          "snap_plus": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0,
+            "v": 10
+          },
+          "snap_minus": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0,
+            "v": 6
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            true
+          ],
+          "part_text": [
+            "True"
+          ]
+        },
+        {
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "out_plus": 7,
+          "out_minus": 3,
+          "snap_plus": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1,
+            "v": 7
+          },
+          "snap_minus": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1,
+            "v": 3
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            true
+          ],
+          "part_text": [
+            "True"
+          ]
+        }
+      ],
+      "contrasts": [
+        {
+          "only_differing_argument": "p",
+          "masked": {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 3,
+            "out_minus": 3,
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 7,
+            "out_minus": 3,
+            "guard_says": true
+          }
+        },
+        {
+          "only_differing_argument": "q",
+          "masked": {
+            "args": {
+              "p": 1,
+              "q": 0,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 3,
+            "out_minus": 3,
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 7,
+            "out_minus": 3,
+            "guard_says": true
+          }
+        },
+        {
+          "only_differing_argument": "x",
+          "masked": {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 7,
+            "out_minus": 0,
+            "guard_says": true
+          }
+        }
+      ]
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "REFUTED",
+        "checked": 20,
+        "failures": 20,
+        "counterexamples": [
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 3,
+            "out_minus": 3,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 7
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 3
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            }
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 4,
+            "out_minus": 4,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 8
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 4,
+              "c": 1,
+              "d": 1,
+              "v": 4
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            }
+          },
+          {
+            "args": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 5,
+            "out_minus": 5,
+            "snap_plus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 9
+            },
+            "snap_minus": {
+              "p": 0,
+              "q": 1,
+              "x": 5,
+              "c": 1,
+              "d": 1,
+              "v": 5
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            }
+          }
+        ],
+        "reason": "a fixed-point condition holds where A still changes the state"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 14,
+      "active_exposed": 6
+    },
+    "witnesses": [
+      {
+        "args": {
+          "p": 1,
+          "q": 1,
+          "x": 5,
+          "c": 0,
+          "d": 0
+        },
+        "out_plus": 7,
+        "out_minus": 0,
+        "snap_plus": {
+          "p": 1,
+          "q": 1,
+          "x": 5,
+          "c": 0,
+          "d": 0,
+          "v": 9
+        },
+        "snap_minus": {
+          "p": 1,
+          "q": 1,
+          "x": 5,
+          "c": 0,
+          "d": 0,
+          "v": 5
+        }
+      },
+      {
+        "args": {
+          "p": 1,
+          "q": 1,
+          "x": 6,
+          "c": 0,
+          "d": 0
+        },
+        "out_plus": 7,
+        "out_minus": 0,
+        "snap_plus": {
+          "p": 1,
+          "q": 1,
+          "x": 6,
+          "c": 0,
+          "d": 0,
+          "v": 10
+        },
+        "snap_minus": {
+          "p": 1,
+          "q": 1,
+          "x": 6,
+          "c": 0,
+          "d": 0,
+          "v": 6
+        }
+      },
+      {
+        "args": {
+          "p": 1,
+          "q": 1,
+          "x": 3,
+          "c": 1,
+          "d": 1
+        },
+        "out_plus": 7,
+        "out_minus": 3,
+        "snap_plus": {
+          "p": 1,
+          "q": 1,
+          "x": 3,
+          "c": 1,
+          "d": 1,
+          "v": 7
+        },
+        "snap_minus": {
+          "p": 1,
+          "q": 1,
+          "x": 3,
+          "c": 1,
+          "d": 1,
+          "v": 3
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "p": {
+            "contexts": 12,
+            "contexts_with_flip": 4,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "p",
+              "args": {
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              },
+              "masked": {
+                "value": 0,
+                "out_plus": 3,
+                "out_minus": 3
+              },
+              "exposed": {
+                "value": 1,
+                "out_plus": 7,
+                "out_minus": 3
+              }
+            }
+          },
+          "q": {
+            "contexts": 12,
+            "contexts_with_flip": 4,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "q",
+              "args": {
+                "p": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              },
+              "masked": {
+                "value": 0,
+                "out_plus": 3,
+                "out_minus": 3
+              },
+              "exposed": {
+                "value": 1,
+                "out_plus": 7,
+                "out_minus": 3
+              }
+            }
+          },
+          "x": {
+            "contexts": 5,
+            "contexts_with_flip": 1,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "x",
+              "args": {
+                "p": 1,
+                "q": 1,
+                "c": 0,
+                "d": 0
+              },
+              "masked": {
+                "value": 3,
+                "out_plus": 0,
+                "out_minus": 0
+              },
+              "exposed": {
+                "value": 5,
+                "out_plus": 7,
+                "out_minus": 0
+              }
+            }
+          },
+          "c": {
+            "contexts": 20,
+            "contexts_with_flip": 0,
+            "causally_relevant": false,
+            "example": null
+          },
+          "d": {
+            "contexts": 20,
+            "contexts_with_flip": 0,
+            "causally_relevant": false,
+            "example": null
+          }
+        },
+        "causally_relevant": [
+          "p",
+          "q",
+          "x"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "source_lines": [
+              3
+            ]
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "source_lines": [
+              3
+            ],
+            "role": "fixed_point"
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "source_lines": [
+              3
+            ],
+            "channel": 0
+          },
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [
+              3
+            ],
+            "status": "REFUTED"
+          }
+        ],
+        "edges": [
+          {
+            "from": "O0",
+            "to": "G",
+            "op": "and"
+          }
+        ],
+        "unsupported": [
+          "U1"
+        ],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 3,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 1380,
+        "completion_tokens": 219,
+        "total_tokens": 1599,
+        "wall_seconds": 6.669,
+        "model": "qwen15b",
+        "provider": "transformers-local",
+        "temperature": 0.0,
+        "seed": 42,
+        "max_new_tokens": 1200,
+        "device": "cuda:0"
+      },
+      "raw_response": "{\"target_effects\": [{\"id\": \"T1\", \"expr\": \"x_post == x\", \"source_lines\": [3, 3], \"rationale\": \"A simply increments x by 4.\"}], \"upstream\": [{\"id\": \"U1\", \"expr\": \"True\", \"condition\": \"True\", \"role\": \"fixed_point\", \"source_lines\": [3], \"rationale\": \"A is a no-op.\"}], \"observers\": [{\"id\": \"O0\", \"channel\": 0, \"expr\": \"x_post == x\", \"condition\": \"True\", \"source_lines\": [3], \"rationale\": \"A does not affect the output.\"}], \"mask_guard\": {\"id\": \"G\", \"expr\": \"True\", \"source_lines\": [3]}, \"uncertainty\": \"\"}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "x_post == x",
+            "condition": "True",
+            "source_lines": [
+              3,
+              3
+            ],
+            "rationale": "A simply increments x by 4."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A is a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "x_post == x",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A does not affect the output.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "True",
+          "condition": "True",
+          "source_lines": [
+            3
+          ],
+          "rationale": ""
+        },
+        "uncertainty": ""
+      },
+      "patch_notes": [],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 20,
+        "usable_rows": 20,
+        "execution_errors": 0,
+        "post_sorts": {
+          "p": "int",
+          "q": "int",
+          "x": "int",
+          "c": "int",
+          "d": "int",
+          "v": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "x_post == x",
+            "condition": "True",
+            "source_lines": [
+              3,
+              3
+            ],
+            "rationale": "A simply increments x by 4.",
+            "status": "BOUNDED",
+            "checked": 20,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A is a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 20,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 4,
+                "out_minus": 4,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 8
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 4
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 5,
+                "out_minus": 5,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 5
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              }
+            ],
+            "fixed_point_checked": 20,
+            "fixed_point_failures": 20,
+            "reason": "the condition holds on 20 input(s) where A still changes the local state, so it is not a fixed point"
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "x_post == x",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A does not affect the output.",
+            "channel": 0,
+            "status": "INVALID",
+            "reason": "unknown variable: x_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+            "checked": 0,
+            "faithful_failures": 0,
+            "invariance_failures": 0,
+            "counterexamples": []
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "True",
+          "source_lines": [
+            3
+          ],
+          "status": "REFUTED",
+          "checked": 20,
+          "unsound": 6,
+          "incomplete": 0,
+          "shape": null,
+          "parts": [
+            "True"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              6
+            ],
+            "rejects_wrong": [
+              0
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 5,
+                "c": 0,
+                "d": 0
+              },
+              "out_plus": 7,
+              "out_minus": 0,
+              "snap_plus": {
+                "p": 1,
+                "q": 1,
+                "x": 5,
+                "c": 0,
+                "d": 0,
+                "v": 9
+              },
+              "snap_minus": {
+                "p": 1,
+                "q": 1,
+                "x": 5,
+                "c": 0,
+                "d": 0,
+                "v": 5
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            },
+            {
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 6,
+                "c": 0,
+                "d": 0
+              },
+              "out_plus": 7,
+              "out_minus": 0,
+              "snap_plus": {
+                "p": 1,
+                "q": 1,
+                "x": 6,
+                "c": 0,
+                "d": 0,
+                "v": 10
+              },
+              "snap_minus": {
+                "p": 1,
+                "q": 1,
+                "x": 6,
+                "c": 0,
+                "d": 0,
+                "v": 6
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            },
+            {
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              },
+              "out_plus": 7,
+              "out_minus": 3,
+              "snap_plus": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1,
+                "v": 7
+              },
+              "snap_minus": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1,
+                "v": 3
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "p",
+              "masked": {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 3,
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "q",
+              "masked": {
+                "args": {
+                  "p": 1,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 3,
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "x",
+              "masked": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "REFUTED",
+            "checked": 20,
+            "failures": 20,
+            "counterexamples": [
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 4,
+                "out_minus": 4,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 8
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 4
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 5,
+                "out_minus": 5,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 5
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              }
+            ],
+            "reason": "a fixed-point condition holds where A still changes the state"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 14,
+          "active_exposed": 6
+        },
+        "witnesses": [
+          {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 7,
+            "out_minus": 0,
+            "snap_plus": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0,
+              "v": 9
+            },
+            "snap_minus": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0,
+              "v": 5
+            }
+          },
+          {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 6,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 7,
+            "out_minus": 0,
+            "snap_plus": {
+              "p": 1,
+              "q": 1,
+              "x": 6,
+              "c": 0,
+              "d": 0,
+              "v": 10
+            },
+            "snap_minus": {
+              "p": 1,
+              "q": 1,
+              "x": 6,
+              "c": 0,
+              "d": 0,
+              "v": 6
+            }
+          },
+          {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 7,
+            "out_minus": 3,
+            "snap_plus": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 7
+            },
+            "snap_minus": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 3
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "p": {
+                "contexts": 12,
+                "contexts_with_flip": 4,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "p",
+                  "args": {
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "masked": {
+                    "value": 0,
+                    "out_plus": 3,
+                    "out_minus": 3
+                  },
+                  "exposed": {
+                    "value": 1,
+                    "out_plus": 7,
+                    "out_minus": 3
+                  }
+                }
+              },
+              "q": {
+                "contexts": 12,
+                "contexts_with_flip": 4,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "q",
+                  "args": {
+                    "p": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "masked": {
+                    "value": 0,
+                    "out_plus": 3,
+                    "out_minus": 3
+                  },
+                  "exposed": {
+                    "value": 1,
+                    "out_plus": 7,
+                    "out_minus": 3
+                  }
+                }
+              },
+              "x": {
+                "contexts": 5,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "x",
+                  "args": {
+                    "p": 1,
+                    "q": 1,
+                    "c": 0,
+                    "d": 0
+                  },
+                  "masked": {
+                    "value": 3,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": 5,
+                    "out_plus": 7,
+                    "out_minus": 0
+                  }
+                }
+              },
+              "c": {
+                "contexts": 20,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              },
+              "d": {
+                "contexts": 20,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": [
+              "p",
+              "q",
+              "x"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  3
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  3
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  3
+                ],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(p, q, x, c, d):\n002:     v = x\n003:     v = v + 4  # TARGET_A\n004:     if p == 0:\n005:         v = x\n006:     if q == 0:\n007:         v = x\n008:     if d == 0:\n009:         v = v // 3 * 3\n010:     if c == 0:\n011:         v = v // 7 * 7\n012:     return v\n\nInput domain used by the bounded checker:\np: int, q: int, x: int, c: int, d: int; the declared finite set has 20 cases (The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  p: int\n  q: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 3735,
+        "completion_tokens": 139,
+        "total_tokens": 3874,
+        "wall_seconds": 6.08,
+        "model": "qwen15b",
+        "provider": "transformers-local",
+        "temperature": 0.0,
+        "seed": 42,
+        "max_new_tokens": 1200,
+        "device": "cuda:0"
+      },
+      "raw_response": "{\"revise\": [{\"id\": \"T1\", \"expr\": \"x_post == x + 4\", \"condition\": \"True\", \"source_lines\": [3], \"rationale\": \"A now increments x by 4 instead of just adding 4.\"}], \"add_observers\": [], \"mask_guard\": {\"id\": \"G\", \"expr\": \"True\", \"condition\": \"True\", \"source_lines\": [3], \"rationale\": \"\"}, \"uncertainty\": \"\"}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "x_post == x + 4",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A now increments x by 4 instead of just adding 4."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A is a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "x_post == x",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A does not affect the output.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "True",
+          "condition": "True",
+          "source_lines": [
+            3
+          ],
+          "rationale": ""
+        },
+        "uncertainty": ""
+      },
+      "patch_notes": [
+        "revised T1",
+        "replaced mask_guard"
+      ],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 20,
+        "usable_rows": 20,
+        "execution_errors": 0,
+        "post_sorts": {
+          "p": "int",
+          "q": "int",
+          "x": "int",
+          "c": "int",
+          "d": "int",
+          "v": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "x_post == x + 4",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A now increments x by 4 instead of just adding 4.",
+            "status": "REFUTED",
+            "checked": 20,
+            "condition_false": 0,
+            "failures": 20,
+            "counterexamples": [
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 4,
+                "out_minus": 4,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 8
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 4
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 5,
+                "out_minus": 5,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 5
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A is a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 20,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 4,
+                "out_minus": 4,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 8
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 4
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 5,
+                "out_minus": 5,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 5
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              }
+            ],
+            "fixed_point_checked": 20,
+            "fixed_point_failures": 20,
+            "reason": "the condition holds on 20 input(s) where A still changes the local state, so it is not a fixed point"
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "x_post == x",
+            "condition": "True",
+            "source_lines": [
+              3
+            ],
+            "rationale": "A does not affect the output.",
+            "channel": 0,
+            "status": "INVALID",
+            "reason": "unknown variable: x_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+            "checked": 0,
+            "faithful_failures": 0,
+            "invariance_failures": 0,
+            "counterexamples": []
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "True",
+          "source_lines": [
+            3
+          ],
+          "status": "REFUTED",
+          "checked": 20,
+          "unsound": 6,
+          "incomplete": 0,
+          "shape": null,
+          "parts": [
+            "True"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              6
+            ],
+            "rejects_wrong": [
+              0
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 5,
+                "c": 0,
+                "d": 0
+              },
+              "out_plus": 7,
+              "out_minus": 0,
+              "snap_plus": {
+                "p": 1,
+                "q": 1,
+                "x": 5,
+                "c": 0,
+                "d": 0,
+                "v": 9
+              },
+              "snap_minus": {
+                "p": 1,
+                "q": 1,
+                "x": 5,
+                "c": 0,
+                "d": 0,
+                "v": 5
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            },
+            {
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 6,
+                "c": 0,
+                "d": 0
+              },
+              "out_plus": 7,
+              "out_minus": 0,
+              "snap_plus": {
+                "p": 1,
+                "q": 1,
+                "x": 6,
+                "c": 0,
+                "d": 0,
+                "v": 10
+              },
+              "snap_minus": {
+                "p": 1,
+                "q": 1,
+                "x": 6,
+                "c": 0,
+                "d": 0,
+                "v": 6
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            },
+            {
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              },
+              "out_plus": 7,
+              "out_minus": 3,
+              "snap_plus": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1,
+                "v": 7
+              },
+              "snap_minus": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1,
+                "v": 3
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "True"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "p",
+              "masked": {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 3,
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "q",
+              "masked": {
+                "args": {
+                  "p": 1,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 7,
+                "out_minus": 3,
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "x",
+              "masked": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 5,
+                  "c": 0,
+                  "d": 0
+                },
+                "out_plus": 7,
+                "out_minus": 0,
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "REFUTED",
+            "checked": 20,
+            "failures": 20,
+            "counterexamples": [
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 3,
+                "out_minus": 3,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 7
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1,
+                  "v": 3
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 4,
+                "out_minus": 4,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 8
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 4,
+                  "c": 1,
+                  "d": 1,
+                  "v": 4
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              },
+              {
+                "args": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1
+                },
+                "out_plus": 5,
+                "out_minus": 5,
+                "snap_plus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 9
+                },
+                "snap_minus": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 5,
+                  "c": 1,
+                  "d": 1,
+                  "v": 5
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                }
+              }
+            ],
+            "reason": "a fixed-point condition holds where A still changes the state"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 14,
+          "active_exposed": 6
+        },
+        "witnesses": [
+          {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 7,
+            "out_minus": 0,
+            "snap_plus": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0,
+              "v": 9
+            },
+            "snap_minus": {
+              "p": 1,
+              "q": 1,
+              "x": 5,
+              "c": 0,
+              "d": 0,
+              "v": 5
+            }
+          },
+          {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 6,
+              "c": 0,
+              "d": 0
+            },
+            "out_plus": 7,
+            "out_minus": 0,
+            "snap_plus": {
+              "p": 1,
+              "q": 1,
+              "x": 6,
+              "c": 0,
+              "d": 0,
+              "v": 10
+            },
+            "snap_minus": {
+              "p": 1,
+              "q": 1,
+              "x": 6,
+              "c": 0,
+              "d": 0,
+              "v": 6
+            }
+          },
+          {
+            "args": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "out_plus": 7,
+            "out_minus": 3,
+            "snap_plus": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 7
+            },
+            "snap_minus": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1,
+              "v": 3
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "p": {
+                "contexts": 12,
+                "contexts_with_flip": 4,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "p",
+                  "args": {
+                    "q": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "masked": {
+                    "value": 0,
+                    "out_plus": 3,
+                    "out_minus": 3
+                  },
+                  "exposed": {
+                    "value": 1,
+                    "out_plus": 7,
+                    "out_minus": 3
+                  }
+                }
+              },
+              "q": {
+                "contexts": 12,
+                "contexts_with_flip": 4,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "q",
+                  "args": {
+                    "p": 1,
+                    "x": 3,
+                    "c": 1,
+                    "d": 1
+                  },
+                  "masked": {
+                    "value": 0,
+                    "out_plus": 3,
+                    "out_minus": 3
+                  },
+                  "exposed": {
+                    "value": 1,
+                    "out_plus": 7,
+                    "out_minus": 3
+                  }
+                }
+              },
+              "x": {
+                "contexts": 5,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "x",
+                  "args": {
+                    "p": 1,
+                    "q": 1,
+                    "c": 0,
+                    "d": 0
+                  },
+                  "masked": {
+                    "value": 3,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": 5,
+                    "out_plus": 7,
+                    "out_minus": 0
+                  }
+                }
+              },
+              "c": {
+                "contexts": 20,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              },
+              "d": {
+                "contexts": 20,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": [
+              "p",
+              "q",
+              "x"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  3
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  3
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  3
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  3
+                ],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(p, q, x, c, d):\n002:     v = x\n003:     v = v + 4  # TARGET_A\n004:     if p == 0:\n005:         v = x\n006:     if q == 0:\n007:         v = x\n008:     if d == 0:\n009:         v = v // 3 * 3\n010:     if c == 0:\n011:         v = v // 7 * 7\n012:     return v\n\nInput domain used by the bounded checker:\np: int, q: int, x: int, c: int, d: int; the declared finite set has 20 cases (The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  c: int\n  d: int\n  p: int\n  q: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"target_effects\": [{\"id\": \"T1\", \"expr\": \"x_post == x\", \"source_lines\": [3, 3], \"rationale\": \"A simply increments x by 4.\"}], \"upstream\": [{\"id\": \"U1\", \"expr\": \"True\", \"condition\": \"True\", \"role\": \"fixed_point\", \"source_lines\": [3], \"rationale\": \"A is a no-op.\"}], \"observers\": [{\"id\": \"O0\", \"channel\": 0, \"expr\": \"x_post == x\", \"condition\": \"True\", \"source_lines\": [3], \"rationale\": \"A does not affect the output.\"}], \"mask_guard\": {\"id\": \"G\", \"expr\": \"True\", \"source_lines\": [3]}, \"uncertainty\": \"\"}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 20 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: True\n  condition:  True\n  checker note: the condition holds on 20 input(s) where A still changes the local state, so it is not a fixed point\n  diagnosis:  the condition is true on inputs where deleting A still changes the local state, so it does not make A a no-op. Either state a condition under which the state is unchanged, or mark the relation as 'supporting' -- a fixed_point condition is used directly in the guard\n  counterexample: {\"args\": {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, \"out_plus\": 3, \"out_minus\": 3, \"snap_plus\": {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1, \"v\": 7}, \"snap_minus\": {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1, \"v\": 3}, \"diagnostic\": {\"A_changed_local_state\": true}}\n  counterexample: {\"args\": {\"p\": 0, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1}, \"out_plus\": 4, \"out_minus\": 4, \"snap_plus\": {\"p\": 0, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1, \"v\": 8}, \"snap_minus\": {\"p\": 0, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1, \"v\": 4}, \"diagnostic\": {\"A_changed_local_state\": true}}\n  counterexample: {\"args\": {\"p\": 0, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1}, \"out_plus\": 5, \"out_minus\": 5, \"snap_plus\": {\"p\": 0, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1, \"v\": 9}, \"snap_minus\": {\"p\": 0, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1, \"v\": 5}, \"diagnostic\": {\"A_changed_local_state\": true}}\nRELATION O0 (observer) FAILED.\n  expression: x_post == x\n  condition:  True\n  checker note: unknown variable: x_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only\nRELATION G (mask_guard) FAILED.\n  expression: True\n  condition:  None\n  diagnosis:  the guard is true on inputs where the two versions really return different values, so it accepts too much; the subterms below are the ones that made it true there\n  counterexample: {\"args\": {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 0, \"d\": 0}, \"out_plus\": 7, \"out_minus\": 0, \"snap_plus\": {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 0, \"d\": 0, \"v\": 9}, \"snap_minus\": {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 0, \"d\": 0, \"v\": 5}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"True\"]}\n  counterexample: {\"args\": {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 0, \"d\": 0}, \"out_plus\": 7, \"out_minus\": 0, \"snap_plus\": {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 0, \"d\": 0, \"v\": 10}, \"snap_minus\": {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 0, \"d\": 0, \"v\": 6}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"True\"]}\n  counterexample: {\"args\": {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, \"out_plus\": 7, \"out_minus\": 3, \"snap_plus\": {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1, \"v\": 7}, \"snap_minus\": {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1, \"v\": 3}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"True\"]}\n  subterm #0 becomes true on 6 exposed input(s) it must reject: True\n  contrast on p: {\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1} -> both versions return 3; {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1} -> 7 vs 3. Only that one argument differs, so the guard must give different answers on these two inputs.\n  contrast on q: {\"p\": 1, \"q\": 0, \"x\": 3, \"c\": 1, \"d\": 1} -> both versions return 3; {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1} -> 7 vs 3. Only that one argument differs, so the guard must give different answers on these two inputs.\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"x_post == x\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        3,\n        3\n      ],\n      \"rationale\": \"A simply increments x by 4.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"True\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        3\n      ],\n      \"rationale\": \"A is a no-op.\",\n      \"role\": \"fixed_point\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"x_post == x\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        3\n      ],\n      \"rationale\": \"A does not affect the output.\",\n      \"channel\": 0\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"True\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      3\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"\"\n}"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 2,
+    "prompt_tokens": 5115,
+    "completion_tokens": 358,
+    "decode_seconds": 12.749,
+    "wall_seconds": 13.063
+  },
+  "domain": {
+    "size": 20,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-11-01T11:28:53.250920+00:00"
+}

@@ -1,0 +1,582 @@
+[
+  {
+    "run": "engine_alt_masking",
+    "run_file": "direct_seed42.json",
+    "fixture": "alt_masking",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 648,
+    "completion_tokens": 53,
+    "wall_seconds": 3.041,
+    "rounds": 1,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_alt_masking",
+    "run_file": "fixed_seed42.json",
+    "fixture": "alt_masking",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 782,
+    "completion_tokens": 67,
+    "wall_seconds": 5.8,
+    "rounds": 1,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_alt_masking",
+    "run_file": "generic_seed42.json",
+    "fixture": "alt_masking",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 980,
+    "completion_tokens": 203,
+    "wall_seconds": 12.082,
+    "rounds": 1,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_alt_masking",
+    "run_file": "mace_seed42.json",
+    "fixture": "alt_masking",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 15048,
+    "completion_tokens": 2083,
+    "wall_seconds": 109.106,
+    "rounds": 4,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 5,
+      "relations_good": 1,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "REFUTED",
+        "U2": "REFUTED",
+        "U3": "REFUTED",
+        "O0": "INVALID"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "mode == 0 or mode == 1"
+    },
+    "guard_derived": {
+      "status": "UNKNOWN",
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": "UNKNOWN",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 5,
+      "relations_on_reference_lines": 4,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        5,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "engine_modulo_absorb",
+    "run_file": "direct_seed42.json",
+    "fixture": "modulo_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 4103,
+    "completion_tokens": 268,
+    "wall_seconds": 19.557,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_modulo_absorb",
+    "run_file": "fixed_seed42.json",
+    "fixture": "modulo_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 4323,
+    "completion_tokens": 275,
+    "wall_seconds": 16.883,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_modulo_absorb",
+    "run_file": "generic_seed42.json",
+    "fixture": "modulo_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 5252,
+    "completion_tokens": 517,
+    "wall_seconds": 31.31,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_modulo_absorb",
+    "run_file": "mace_seed42.json",
+    "fixture": "modulo_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 14667,
+    "completion_tokens": 1636,
+    "wall_seconds": 86.543,
+    "rounds": 4,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 2,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "BOUNDED",
+        "U2": "REFUTED",
+        "O0": "REFUTED"
+      }
+    },
+    "guard_qwen": {
+      "status": "INVALID",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "cap or (not cap and fn_0(xs) % 10 != 9) or (not cap and fn_0(xs) == 0 and total == 0)"
+    },
+    "guard_derived": {
+      "status": "UNKNOWN",
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": "UNKNOWN",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 1,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        9,
+        11,
+        12
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "engine_overwrite_channel",
+    "run_file": "direct_seed42.json",
+    "fixture": "overwrite_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 4672,
+    "completion_tokens": 241,
+    "wall_seconds": 17.856,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_overwrite_channel",
+    "run_file": "fixed_seed42.json",
+    "fixture": "overwrite_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 4803,
+    "completion_tokens": 92,
+    "wall_seconds": 8.002,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_overwrite_channel",
+    "run_file": "generic_seed42.json",
+    "fixture": "overwrite_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 5465,
+    "completion_tokens": 536,
+    "wall_seconds": 32.113,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_overwrite_channel",
+    "run_file": "mace_seed42.json",
+    "fixture": "overwrite_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 18580,
+    "completion_tokens": 1282,
+    "wall_seconds": 72.103,
+    "rounds": 4,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 5,
+      "relations_good": 1,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "INVALID",
+        "U2": "INVALID",
+        "O0": "REFUTED",
+        "O1": "REFUTED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "keep or fn_0(xs) == 0"
+    },
+    "guard_derived": {
+      "status": "UNKNOWN",
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": "UNKNOWN",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 5,
+      "relations_on_reference_lines": 3,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "engine_dedup_channel",
+    "run_file": "direct_seed42.json",
+    "fixture": "dedup_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 1438,
+    "completion_tokens": 135,
+    "wall_seconds": 9.966,
+    "rounds": 2,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_dedup_channel",
+    "run_file": "fixed_seed42.json",
+    "fixture": "dedup_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 1920,
+    "completion_tokens": 123,
+    "wall_seconds": 9.387,
+    "rounds": 2,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_dedup_channel",
+    "run_file": "generic_seed42.json",
+    "fixture": "dedup_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 5210,
+    "completion_tokens": 401,
+    "wall_seconds": 23.507,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_dedup_channel",
+    "run_file": "mace_seed42.json",
+    "fixture": "dedup_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 13375,
+    "completion_tokens": 1588,
+    "wall_seconds": 82.804,
+    "rounds": 4,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 2,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "REFUTED",
+        "U2": "INVALID",
+        "O0": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "len(xs) == 0"
+    },
+    "guard_derived": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "((len(xs) == 0))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 1,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        14,
+        16
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "engine_sort_channel",
+    "run_file": "direct_seed42.json",
+    "fixture": "sort_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 5510,
+    "completion_tokens": 221,
+    "wall_seconds": 26.158,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_sort_channel",
+    "run_file": "fixed_seed42.json",
+    "fixture": "sort_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 5945,
+    "completion_tokens": 303,
+    "wall_seconds": 27.624,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_sort_channel",
+    "run_file": "generic_seed42.json",
+    "fixture": "sort_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 6870,
+    "completion_tokens": 509,
+    "wall_seconds": 36.224,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_sort_channel",
+    "run_file": "mace_seed42.json",
+    "fixture": "sort_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 18931,
+    "completion_tokens": 872,
+    "wall_seconds": 59.443,
+    "rounds": 4,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 3,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "INVALID",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "INVALID",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "xs == xs_post"
+    },
+    "guard_derived": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "(((xs == sorted(xs))) and ((xs == sorted(xs))))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 4,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        31,
+        33,
+        34
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "engine_swap_channels",
+    "run_file": "direct_seed42.json",
+    "fixture": "swap_channels",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 3718,
+    "completion_tokens": 185,
+    "wall_seconds": 12.9,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_swap_channels",
+    "run_file": "fixed_seed42.json",
+    "fixture": "swap_channels",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 4395,
+    "completion_tokens": 281,
+    "wall_seconds": 17.895,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_swap_channels",
+    "run_file": "generic_seed42.json",
+    "fixture": "swap_channels",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 4568,
+    "completion_tokens": 397,
+    "wall_seconds": 23.497,
+    "rounds": 4,
+    "cell": null,
+    "note": "no parsed bundle"
+  },
+  {
+    "run": "engine_swap_channels",
+    "run_file": "mace_seed42.json",
+    "fixture": "swap_channels",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 18954,
+    "completion_tokens": 1287,
+    "wall_seconds": 76.793,
+    "rounds": 4,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 5,
+      "relations_good": 3,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "REFUTED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED",
+        "O2": "INVALID"
+      }
+    },
+    "guard_qwen": {
+      "status": "INVALID",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "a == b_post and b == a_post"
+    },
+    "guard_derived": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "(((True)) and ((True)))"
+    },
+    "derived_compose_status": "INCOMPLETE",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 5,
+      "relations_on_reference_lines": 5,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        5,
+        7,
+        8
+      ]
+    },
+    "diagnostic_only": false
+  }
+]

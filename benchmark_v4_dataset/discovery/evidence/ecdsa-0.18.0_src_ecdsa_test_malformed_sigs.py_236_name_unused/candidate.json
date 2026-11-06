@@ -1,0 +1,51 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/test_malformed_sigs.py:236:name:unused",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/test_malformed_sigs.py",
+  "function": "st_der_bit_string",
+  "mechanism": "name",
+  "target_A": {
+    "line": 236,
+    "end_line": 236,
+    "kind": "Assign",
+    "code": "unused = draw(st.integers(min_value=0, max_value=7))"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_malformed_sigs.py::test_random_der_as_signature"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        unused = draw(st.integers(min_value=0, max_value=7))",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.47,
+    "failed_nodeids": [
+      "src.ecdsa.test_malformed_sigs::test_random_der_as_signature"
+    ],
+    "stdout_tail": "{'max_size': 1048576}, data = bytearray(b'\\x00')\n\n    @st.composite\n    def st_der_bit_string(draw, *args, **kwargs):\n        \"\"\"\n        Hypothesis strategy that returns a random DER BIT STRING.\n        Parameters are passed to hypothesis.strategy.binary.\n        \"\"\"\n        data = draw(st.binary(*args, **kwargs))\n        if data:\n            pass  # P-: target A deleted\n            data = bytearray(data)\n>           data[-1] &= -(2**unused)\nE           UnboundLocalError: cannot access local variable 'unused' where it is not associated with a value\nE           while generating 'der' from recursive(one_of(just(b''), builds(encode_integer, integers(min_value=0, max_value=0x1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000)), st_der_bit_string(max_size=1048576), builds(encode_octet_string, binary(max_size=1048576)), just(b'\\x05\\x00'), st_der_oid()), lambda children: st.builds(lambda x: encode_octet_string(x), st.one_of(children)) | st.builds(lambda x: encode_bitstring(x, 0), st.one_of(children)) | st.builds(lambda x: encode_sequence(*x), st.lists(children, max_size=200)) | st.builds(lambda tag, x: encode_constructed(tag, x), st.integers(min_value=0, max_value=63), st.one_of(children)), min_leaves=None, max_leaves=40)\nE           Explanation:\nE               These lines were always and only run by failing test cases:\nE                   <local-path> UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_malformed_sigs.py::test_random_der_as_signature - Unbou...\n1 failed in 1.12s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

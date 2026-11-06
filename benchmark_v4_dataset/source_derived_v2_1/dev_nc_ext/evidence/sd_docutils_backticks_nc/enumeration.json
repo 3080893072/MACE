@@ -1,0 +1,170 @@
+{
+  "case_id": "sd_docutils_backticks_nc",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M10_NEGATIVE_CONTROL",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/utils/smartquotes.py",
+  "A_line": 735,
+  "A_code": "    text = text.replace(r'``', smart.opquote)",
+  "original_sha256": "c3a7bbcb5f0abcaac04e6b3a3fcb40b4e69b77c4a7fa884fd06f961b30edd1d7",
+  "patched_sha256": "cdfa6248b6d14e79aef49f87a9a8781e8975125210e41d06d4aaa6f129163b24",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 735,
+      "role": "Rewrites the marker with a plain apostrophe; not the configured opening quote.",
+      "lines": [
+        "if \"``\" in text:",
+        "    text = text.replace(\"``\", \"'\")"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 735,
+      "end": 738
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "nc_one_pair": {
+        "out": "a��b"
+      },
+      "nc_two_pairs": {
+        "out": "a��b��c"
+      },
+      "nc_three_pairs": {
+        "out": "a��b��c��d"
+      }
+    },
+    "P_MINUS": {
+      "nc_one_pair": {
+        "out": "a'b"
+      },
+      "nc_two_pairs": {
+        "out": "a'b'c"
+      },
+      "nc_three_pairs": {
+        "out": "a'b'c'd"
+      }
+    },
+    "KEEP_EMPTY": {
+      "nc_one_pair": {
+        "out": "a``b"
+      },
+      "nc_two_pairs": {
+        "out": "a``b``c"
+      },
+      "nc_three_pairs": {
+        "out": "a``b``c``d"
+      }
+    },
+    "KEEP_U1": {
+      "nc_one_pair": {
+        "out": "a'b"
+      },
+      "nc_two_pairs": {
+        "out": "a'b'c"
+      },
+      "nc_three_pairs": {
+        "out": "a'b'c'd"
+      }
+    }
+  },
+  "per_input": {
+    "nc_one_pair": {
+      "plus": {
+        "out": "a��b"
+      },
+      "p_minus": {
+        "out": "a'b"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a``b"
+        },
+        "KEEP_U1": {
+          "out": "a'b"
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "nc_two_pairs": {
+      "plus": {
+        "out": "a��b��c"
+      },
+      "p_minus": {
+        "out": "a'b'c"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a``b``c"
+        },
+        "KEEP_U1": {
+          "out": "a'b'c"
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "nc_three_pairs": {
+      "plus": {
+        "out": "a��b��c��d"
+      },
+      "p_minus": {
+        "out": "a'b'c'd"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a``b``c``d"
+        },
+        "KEEP_U1": {
+          "out": "a'b'c'd"
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 3,
+    "mmbs_NOT_SEPARABLE": 3,
+    "msms_NONE": 3
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "sd_coverage_glob_backslash_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "split": "DEV",
+  "base": {
+    "slug": "coverage-7.4.0",
+    "file": "coverage/files.py",
+    "A_line": 332,
+    "A_code": "    pattern = pattern.replace(\"\\\\\", \"/\")"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 332,
+      "indent": 4,
+      "role": "First backslash leg.",
+      "lines": [
+        "pattern = pattern.replace(\"\\\\\", \"/\", 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 332,
+      "indent": 4,
+      "role": "Second backslash leg.",
+      "lines": [
+        "pattern = pattern.replace(\"\\\\\", \"/\", 1)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_coverage_glob_backslash_m2.py",
+  "inputs": {
+    "mask_two_backslashes": "glob with two Windows separators",
+    "expose_three_backslashes": "glob with three Windows separators: one survives",
+    "control_posix": "glob that already uses forward slashes"
+  },
+  "rationale": "The glob tokenizer first turns Windows separators into slashes. Each leg converts one backslash, so both are required for a two-separator glob; a three-separator glob keeps one backslash and exposes the bounded repair."
+}

@@ -1,0 +1,143 @@
+{
+  "protocol": "mace_benchmark_v3_scoring",
+  "scorer_version": "mace-benchmark-v3-scorer-1.0",
+  "task_id": "werkzeug_filestorage_stream_name",
+  "submission_id": "baseline-C",
+  "status_counts": {
+    "WITNESS_VERIFIED": 3,
+    "FINITE_DOMAIN_EXACT": 1,
+    "PROVEN": 0,
+    "FALSE": 0,
+    "INVALID": 0,
+    "UNVERIFIED": 0,
+    "UNSUPPORTED": 0,
+    "DUPLICATE": 0
+  },
+  "score": {
+    "credited_relations": 4,
+    "claim_credit": 4,
+    "domain_exact_relations": 1,
+    "witness_verified_relations": 3,
+    "deduplicated": 0
+  },
+  "claims": [
+    {
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "status": "WITNESS_VERIFIED",
+      "reason": "Both sides executed and produced different observations.",
+      "scope": "one submitted input; no claim over other legal inputs",
+      "relation_key": "EXPOSING",
+      "observations": {
+        "plus": {
+          "filename": "<home>\\AppData\\Local\\Temp\\tmp2jc39pp8",
+          "filename_type": "str",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "credit": 1
+    },
+    {
+      "index": 1,
+      "type": "MSMS",
+      "status": "WITNESS_VERIFIED",
+      "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+      "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+      "relation_key": "MSMS:src/werkzeug/datastructures.py:2924",
+      "operations": [
+        "src/werkzeug/datastructures.py:2924"
+      ],
+      "per_input": [
+        {
+          "verified": true,
+          "reason": "set matches an enumerated minimal relation",
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/datastructures.py:2924"
+            ]
+          ]
+        }
+      ],
+      "credit": 1
+    },
+    {
+      "index": 2,
+      "type": "MMBS",
+      "status": "FINITE_DOMAIN_EXACT",
+      "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+      "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+      "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+      "operations": [
+        "src/werkzeug/datastructures.py:2924"
+      ],
+      "per_input": [
+        {
+          "verified": true,
+          "reason": "set matches an enumerated minimal relation",
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/datastructures.py:2924"
+            ]
+          ]
+        },
+        {
+          "verified": true,
+          "reason": "set matches an enumerated minimal relation",
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/datastructures.py:2924"
+            ]
+          ]
+        },
+        {
+          "verified": true,
+          "reason": "set matches an enumerated minimal relation",
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/datastructures.py:2924"
+            ]
+          ]
+        }
+      ],
+      "credit": 1
+    },
+    {
+      "index": 3,
+      "type": "PREREQUISITE_BREAKING",
+      "status": "WITNESS_VERIFIED",
+      "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+      "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+      "relation_key": "PREREQUISITE:src/werkzeug/datastructures.py:2924",
+      "operations": [
+        "src/werkzeug/datastructures.py:2924"
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control",
+      "details": {
+        "condition_masked_EMPTY": true,
+        "condition_msms": [
+          [
+            "src/werkzeug/datastructures.py:2924"
+          ]
+        ],
+        "condition_mmbs": [
+          [
+            "src/werkzeug/datastructures.py:2924"
+          ]
+        ],
+        "control_masked_EMPTY": false,
+        "control_mmbs": []
+      },
+      "credit": 1
+    }
+  ],
+  "scope_notes": [
+    "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+    "A single witness is never promoted to a claim over the whole legal input domain.",
+    "Operations outside U are reported UNVERIFIED, not FALSE."
+  ]
+}

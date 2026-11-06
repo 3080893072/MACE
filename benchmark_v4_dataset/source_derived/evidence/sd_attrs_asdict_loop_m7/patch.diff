@@ -1,0 +1,19 @@
+--- a/src/attr/_funcs.py
++++ b/src/attr/_funcs.py
+@@ -113,12 +113,16 @@
+                         ),
+                     )
+                     for kk, vv in v.items()
+                 )
+             else:
+                 rv[a.name] = v
++                # SD:U:U1:begin
++                if a.name != "y":
++                    rv[a.name] = v
++                # SD:U:U1:end
+         else:
+             rv[a.name] = v
+     return rv
+ 
+ 
+ def _asdict_anything(

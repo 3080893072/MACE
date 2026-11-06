@@ -1,0 +1,30 @@
+{
+  "source": "\ndef stable_order(xs):\n    result = []\n    for value in xs:\n        pos = len(result)\n        while pos > 0 and result[pos - 1] > value:\n            pos -= 1\n        result.insert(pos, value)\n    return result\n\ndef fold_one(xs):\n    value = xs[0]\n    for item in xs[1:]:\n        if item < value:\n            value = item\n    return value\n\ndef fold_two(xs):\n    value = xs[0]\n    for item in xs[1:]:\n        if item > value:\n            value = item\n    return value\n\ndef program(xs, pre, use_left, use_right):\n    if pre:\n        xs = stable_order(xs)\n\n    xs = sorted(xs)  # TARGET_A\n\n    first = fold_one(xs) if use_left else xs[0]\n    last = fold_two(xs) if use_right else xs[-1]\n    return first, last\n",
+  "target_A_line": 29,
+  "task": "Given only the marked A, infer the observable equivalence conditions between the original program and the version without A. Do not guess or enumerate source-operation subsets.",
+  "required": [
+    "Derive the local state relation induced by A",
+    "Work backwards from output channels to derive observer-relative relations",
+    "Infer missing loop properties from function bodies, not function names",
+    "Supply mask_guard in the supported restricted expression language",
+    "Give source spans justifying each derived relation, without pre-labeled B sites",
+    "Keep unproven hypotheses distinct from verified semantic facts"
+  ],
+  "allowed_guard_names": [
+    "xs",
+    "pre",
+    "use_left",
+    "use_right"
+  ],
+  "checker_supported_syntax": [
+    "and",
+    "or",
+    "not",
+    "==",
+    "xs[0]",
+    "xs[-1]",
+    "min(xs)",
+    "max(xs)"
+  ],
+  "warning": "The checker tests a finite input domain; it does not prove arbitrary Python programs or automatically verify source provenance."
+}

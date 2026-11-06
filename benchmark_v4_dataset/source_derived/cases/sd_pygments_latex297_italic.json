@@ -1,0 +1,51 @@
+{
+  "case_id": "sd_pygments_latex297_italic",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M6_CROSS_FUNCTION_STATE",
+  "base": {
+    "slug": "pygments-2.17.2",
+    "file": "pygments/formatters/latex.py",
+    "A_line": 297,
+    "A_code": "                cmndef += r'\\let\\$$@it=\\textit'"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 330,
+      "indent": 8,
+      "role": "Cross-function repair inside get_style_defs: rebuilds the command-definition map that _make_styles (A's function) would have stored, inserting the italic let at its original position.",
+      "lines": [
+        "if not self.full:",
+        "    _sd_new = {}",
+        "    for _sd_tt, _sd_ndef in self.style:",
+        "        _sd_name = _get_ttype_name(_sd_tt)",
+        "        if _sd_name in _sd_new:",
+        "            continue",
+        "        _sd_def = self.cmd2def.get(_sd_name)",
+        "        if _sd_def is None:",
+        "            if not _sd_ndef['italic']:",
+        "                continue",
+        "            _sd_def = ''",
+        "        if _sd_ndef['italic'] and 'textit' not in _sd_def:",
+        "            _sd_tc = '\\\\def' + '\\\\' + cp + '@tc'",
+        "            _sd_let = r'\\let' + '\\\\' + cp + r'@it=\\textit'",
+        "            if _sd_tc in _sd_def:",
+        "                _sd_def = _sd_def.replace(_sd_tc, _sd_let + _sd_tc, 1)",
+        "            else:",
+        "                _sd_def = _sd_def + _sd_let",
+        "        _sd_new[_sd_name] = _sd_def",
+        "    for _sd_name, _sd_def in self.cmd2def.items():",
+        "        _sd_new.setdefault(_sd_name, _sd_def)",
+        "    self.cmd2def = _sd_new"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_pygments_latex297.py",
+  "inputs": {
+    "mask_inline_italic": "italic-only style, inline (full=False) style definitions",
+    "mask_inline_italic_color": "italic + colour style, inline definitions",
+    "expose_full_italic": "italic-only style, full document mode",
+    "control_inline_bold": "bold-only style; A is not executed"
+  },
+  "rationale": "A grows cmndef in _make_styles, which is later stored in self.cmd2def and consumed by get_style_defs.  U1 rebuilds the missing italic entry in that other function from self.style, preserving the original entry order and the position of the italic let inside each definition.  The repair is declared for inline mode, so full-document mode exposes the deletion."
+}

@@ -1,0 +1,245 @@
+{
+  "case_id": "sd_pygments_bbcode64_color",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "slug": "pygments-2.17.2",
+  "file": "pygments/formatters/bbcode.py",
+  "A_line": 64,
+  "A_code": "                end = '[/color]' + end",
+  "original_sha256": "ef370d727a0d8fe742c8996b1e79adab4576a3c6460f5e0de5a9c5578150e4f1",
+  "patched_sha256": "c8a2f946a73b23ca598371b9ad280a9ee0bd5cc8b420440aed25e71eab961f64",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 64,
+      "role": "Alternative path 1: incremental prepend of the closing colour tag at the colour step.",
+      "lines": [
+        "if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):",
+        "    end = '[/color]' + end"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 76,
+      "role": "Alternative path 2: rebuild the whole closing-tag sequence from ndef when the style entry is stored.",
+      "lines": [
+        "if ndef['color'] and not ndef['underline']:",
+        "    _sd_close = ''",
+        "    if ndef['italic']:",
+        "        _sd_close += '[/i]'",
+        "    if ndef['bold']:",
+        "        _sd_close += '[/b]'",
+        "    _sd_close += '[/color]'",
+        "    self.styles[ttype] = (start, _sd_close)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 64,
+      "end": 67
+    },
+    "U2": {
+      "begin": 80,
+      "end": 89
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_color": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "expose_color_underline": {
+        "out": "[color=#ff0000][u]abc[/u][/color] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      }
+    },
+    "P_MINUS": {
+      "mask_color": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "expose_color_underline": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_color": {
+        "out": "[color=#ff0000]abc = 1\n"
+      },
+      "expose_color_underline": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      }
+    },
+    "KEEP_U1": {
+      "mask_color": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "expose_color_underline": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      }
+    },
+    "KEEP_U2": {
+      "mask_color": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "expose_color_underline": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_color": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "expose_color_underline": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      }
+    }
+  },
+  "per_input": {
+    "mask_color": {
+      "plus": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[color=#ff0000]abc = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[color=#ff0000]abc[/color] = 1\n"
+        },
+        "KEEP_U2": {
+          "out": "[color=#ff0000]abc[/color] = 1\n"
+        },
+        "KEEP_U1_U2": {
+          "out": "[color=#ff0000]abc[/color] = 1\n"
+        }
+      }
+    },
+    "expose_color_underline": {
+      "plus": {
+        "out": "[color=#ff0000][u]abc[/u][/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[color=#ff0000][u]abc[/u] = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[color=#ff0000][u]abc[/u] = 1\n"
+        },
+        "KEEP_U2": {
+          "out": "[color=#ff0000][u]abc[/u] = 1\n"
+        },
+        "KEEP_U1_U2": {
+          "out": "[color=#ff0000][u]abc[/u] = 1\n"
+        }
+      }
+    },
+    "control_bold": {
+      "plus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[b]abc[/b] = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[b]abc[/b] = 1\n"
+        },
+        "KEEP_U2": {
+          "out": "[b]abc[/b] = 1\n"
+        },
+        "KEEP_U1_U2": {
+          "out": "[b]abc[/b] = 1\n"
+        }
+      }
+    }
+  }
+}

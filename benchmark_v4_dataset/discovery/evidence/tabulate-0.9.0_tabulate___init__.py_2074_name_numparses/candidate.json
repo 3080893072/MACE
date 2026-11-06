@@ -1,0 +1,135 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:2074:name:numparses",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "tabulate",
+  "mechanism": "name",
+  "target_A": {
+    "line": 2074,
+    "end_line": 2074,
+    "kind": "Assign",
+    "code": "numparses = _expand_numparse(disable_numparse, num_cols)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_plain_maxheadercolwidths_autowraps"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        numparses = _expand_numparse(disable_numparse, num_cols)",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "FULL_SUITE_SURVIVES",
+  "status": "TEST_SURVIVING_DELETION",
+  "targeted_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 0.41,
+    "failed_nodeids": [],
+    "stdout_tail": ".                                                                        [100%]\n- generated xml file: <local-path> -\n1 passed in 0.09s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 1.72,
+    "failed_nodeids": [],
+    "stdout_tail": ".................sssssssss..............................s..s............ [ 25%]\n.s..................s......s......s......s......s......s......s.......s. [ 50%]\n.s..s..s..s..s..s....................................................... [ 76%]\n............ssss.........................s..ss.s............sss.....     [100%]\n- generated xml file: <local-path> -\n247 passed, 37 skipped in 1.39s\n",
+    "stderr_tail": ""
+  },
+  "stage4_probe": {
+    "probe_id": "tabulate_numparses_header_wrap",
+    "declared_inputs": [
+      {
+        "id": "mask_both_widths",
+        "role": "masking",
+        "call": "tabulate(table, headers='firstrow', tablefmt='plain', maxcolwidths=[10,10], maxheadercolwidths=[None,2])"
+      },
+      {
+        "id": "expose_no_maxcolwidths",
+        "role": "exposing",
+        "call": "tabulate(table, headers='firstrow', tablefmt='plain', maxheadercolwidths=[None,2])"
+      },
+      {
+        "id": "control_no_maxheader",
+        "role": "control",
+        "call": "tabulate(table, headers='firstrow', tablefmt='plain', maxcolwidths=[10,10])"
+      }
+    ],
+    "candidate_universe": [
+      {
+        "id": "L2060",
+        "line": 2060,
+        "code": "numparses = _expand_numparse(disable_numparse, num_cols)",
+        "role": "same computation executed when maxcolwidths is provided"
+      },
+      {
+        "id": "L2129",
+        "line": 2129,
+        "code": "numparses = _expand_numparse(disable_numparse, len(cols))",
+        "role": "post-transpose recomputation; does not affect header wrapping"
+      }
+    ],
+    "observations": {
+      "P_plus": {
+        "mask_both_widths": "normal",
+        "expose_no_maxcolwidths": "normal",
+        "control_no_maxheader": "normal"
+      },
+      "P_minus": {
+        "mask_both_widths": "identical to P+",
+        "expose_no_maxcolwidths": "UnboundLocalError: numparses",
+        "control_no_maxheader": "identical to P+"
+      },
+      "P_minus_keep_L2060": {
+        "mask_both_widths": "identical to P+",
+        "expose_no_maxcolwidths": "UnboundLocalError"
+      },
+      "P_minus_keep_L2129": {
+        "mask_both_widths": "UnboundLocalError",
+        "expose_no_maxcolwidths": "UnboundLocalError"
+      },
+      "P_minus_keep_none": {
+        "mask_both_widths": "UnboundLocalError",
+        "expose_no_maxcolwidths": "UnboundLocalError"
+      }
+    },
+    "exposing_witness": {
+      "input": "expose_no_maxcolwidths",
+      "p_plus": "normal",
+      "p_minus": "UnboundLocalError"
+    },
+    "masking_witness": {
+      "input": "mask_both_widths",
+      "msms": [
+        [
+          "L2060"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L2060"
+        ]
+      ],
+      "masked_at_empty": false
+    },
+    "u_necessity": true,
+    "verdict": "ACCEPTED_DEV",
+    "acceptance": "benchmark_v4_dataset/tasks/tabulate_numparses_header_wrap/acceptance/acceptance_report.json"
+  },
+  "verdict": "ACCEPTED_DEV"
+}

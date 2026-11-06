@@ -1,0 +1,83 @@
+You are analysing a proposed deletion in a Python function. Use only
+the public information below. A Python exception is an observation. The best
+evidence level is BOUNDED: execution on the declared finite domain, never a proof.
+
+## Task
+ctrl_03
+
+## Files
+`<program>`
+
+## Program with source line numbers
+```text
+   1 | def program(p, q, x, c, d):
+   2 |     v = x
+   3 |     v = v + 4  # TARGET_A
+   4 |     if p == 0:
+   5 |         v = x
+   6 |     if q == 0:
+   7 |         v = x
+   8 |     if d == 0:
+   9 |         v = v // 3 * 3
+  10 |     if c == 0:
+  11 |         v = v // 7 * 7
+  12 |     return v
+```
+
+## Target A
+Line 3: `v = v + 4`
+Deletion rule: replace exactly this line with `pass` at the same indentation.
+
+## Legal inputs
+Arguments: [{"name": "p", "sort": "int", "legal_values": [0, 1]}, {"name": "q", "sort": "int", "legal_values": [0, 1]}, {"name": "x", "sort": "int", "legal_values": [3, 4, 5, 6]}, {"name": "c", "sort": "int", "legal_values": [0, 1]}, {"name": "d", "sort": "int", "legal_values": [0, 1]}]
+Frozen legal cases: [{"p": 0, "q": 1, "x": 3, "c": 1, "d": 1}, {"p": 0, "q": 1, "x": 4, "c": 1, "d": 1}, {"p": 0, "q": 1, "x": 5, "c": 1, "d": 1}, {"p": 0, "q": 1, "x": 6, "c": 1, "d": 1}, {"p": 1, "q": 0, "x": 3, "c": 1, "d": 1}, {"p": 1, "q": 0, "x": 4, "c": 1, "d": 1}, {"p": 1, "q": 0, "x": 5, "c": 1, "d": 1}, {"p": 1, "q": 0, "x": 6, "c": 1, "d": 1}, {"p": 0, "q": 0, "x": 3, "c": 1, "d": 1}, {"p": 0, "q": 0, "x": 4, "c": 1, "d": 1}, {"p": 0, "q": 0, "x": 5, "c": 1, "d": 1}, {"p": 0, "q": 0, "x": 6, "c": 1, "d": 1}, {"p": 1, "q": 1, "x": 3, "c": 0, "d": 0}, {"p": 1, "q": 1, "x": 4, "c": 0, "d": 0}, {"p": 1, "q": 1, "x": 5, "c": 0, "d": 0}, {"p": 1, "q": 1, "x": 6, "c": 0, "d": 0}, {"p": 1, "q": 1, "x": 3, "c": 1, "d": 1}, {"p": 1, "q": 1, "x": 4, "c": 1, "d": 1}, {"p": 1, "q": 1, "x": 5, "c": 1, "d": 1}, {"p": 1, "q": 1, "x": 6, "c": 1, "d": 1}]
+Legal constraints: The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.
+
+## Observable
+{"kind": "return_value", "equality": "same return value; a raise in either version is a distinguishable observation"}
+
+## Operations already proposed by the static graph
+- id=op_L4_C4_if  line=4  kind=if  `if p == 0: `
+- id=op_L6_C4_if  line=6  kind=if  `if q == 0: `
+- id=op_L8_C4_if  line=8  kind=if  `if d == 0: `
+- id=op_L10_C4_if  line=10  kind=if  `if c == 0: `
+
+You may propose operations that are NOT in this list. Every operation you
+report must be a real, complete statement in the file above: give its exact
+1-based starting line and its source text. Do not invent lines.
+
+## What to analyse
+1. Operations that may **independently mask A**: one operation alone is enough
+   to make the deletion unobservable.
+2. Operations that may **cooperatively mask A**: two or more operations are
+   jointly sufficient, and no proper non-empty subset is.
+3. **Alternative / fallback masking paths**: different sets of operations that
+   each mask A, so more than one path has to fail before A is exposed.
+4. The **input conditions** under which each relation holds. Use only the
+   argument names, int/bool constants, comparisons, arithmetic, `and`, `or`,
+   `not`. If the relation holds for every legal input, write `true`.
+5. Source locations, and whether the relation is **data-dependent** (it reads
+   or overwrites the value A writes) or **control-dependent** (it changes
+   whether A's statement executes).
+
+## Required JSON
+{
+  "relations": [
+    {
+      "kind": "independent | cooperative | fallback | coexisting",
+      "operations": [
+        {"file": "<path from Files>", "line": <int>, "text": "<source text>"}
+      ],
+      "condition": "<restricted boolean expression or null>",
+      "data_dependence": true,
+      "control_dependence": false,
+      "source_evidence": "<line numbers and why>",
+      "rationale": "<one sentence>"
+    }
+  ],
+  "notes": "<optional>"
+}
+
+`coexisting` means: disabling the named operations together exposes A, while
+no proper non-empty subset does. Return at most 12 different
+relations. Return one JSON object and no prose outside it.

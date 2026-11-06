@@ -1,0 +1,40 @@
+{
+  "case_id": "sd_pygments_bbcode70_italic",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "base": {
+    "slug": "pygments-2.17.2",
+    "file": "pygments/formatters/bbcode.py",
+    "A_line": 70,
+    "A_code": "                end = '[/i]' + end"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 70,
+      "indent": 16,
+      "role": "First cooperation leg: decides whether the local repair applies (italic and no colour).",
+      "lines": [
+        "_sd_i = bool(ndef['italic']) and not ndef['color']"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 70,
+      "indent": 16,
+      "role": "Second cooperation leg: consumes the U1 flag and prepends the missing closing italic tag.",
+      "lines": [
+        "if _sd_i and not end.startswith('[/i]'):",
+        "    end = '[/i]' + end"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_pygments_bbcode70.py",
+  "inputs": {
+    "mask_italic": "italic-only token style, default formatter mode",
+    "expose_italic_color": "italic + colour token style (U1 is false, so U2 cannot run)",
+    "control_bold": "bold-only style; A is not executed",
+    "mask_italic_codetag": "italic-only style, codetag mode; A executes and the same repair pair masks it"
+  },
+  "rationale": "A prepends the closing italic tag.  Neither U1 (a flag) nor U2 (the tag insertion) alone restores the P+ output on mask_italic; only their cooperation does.  The pair is declared for tokens without colour, so expose_italic_color is the legal exposing witness."
+}

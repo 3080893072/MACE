@@ -1,0 +1,210 @@
+{
+  "case_id": "sd_tabulate_1056_strip_center",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M5_CONDITIONAL_BRANCH",
+  "slug": "tabulate-0.9.0",
+  "file": "tabulate/__init__.py",
+  "A_line": 1056,
+  "A_code": "            strings = [s.strip() for s in strings]",
+  "original_sha256": "5f7af0a28fcd713b830c97388675945fa8c4950b05b58f8d187c900a5752d57d",
+  "patched_sha256": "6a90676485d7ab9ecc84b119920c9bacf187dc14b8e82e4f17cce9512ef286ac",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 1056,
+      "role": "Conditional recomputation that restores the strip only for numeric-looking cell groups.",
+      "lines": [
+        "if all(s.strip().isdigit() for s in strings):",
+        "    strings = [s.strip() for s in strings]"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 1056,
+      "end": 1059
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_numeric": {
+        "out": "12\n7"
+      },
+      "expose_alpha": {
+        "out": "ab\nc"
+      },
+      "control_right_numeric": {
+        "out": "12\n 7"
+      },
+      "control_no_space": {
+        "out": "12\n7"
+      }
+    },
+    "P_MINUS": {
+      "mask_numeric": {
+        "out": "12\n7"
+      },
+      "expose_alpha": {
+        "out": "  ab\n  c"
+      },
+      "control_right_numeric": {
+        "out": "12\n 7"
+      },
+      "control_no_space": {
+        "out": "12\n7"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_numeric": {
+        "out": "  12\n  7"
+      },
+      "expose_alpha": {
+        "out": "  ab\n  c"
+      },
+      "control_right_numeric": {
+        "out": "12\n 7"
+      },
+      "control_no_space": {
+        "out": "12\n7"
+      }
+    },
+    "KEEP_U1": {
+      "mask_numeric": {
+        "out": "12\n7"
+      },
+      "expose_alpha": {
+        "out": "  ab\n  c"
+      },
+      "control_right_numeric": {
+        "out": "12\n 7"
+      },
+      "control_no_space": {
+        "out": "12\n7"
+      }
+    }
+  },
+  "per_input": {
+    "mask_numeric": {
+      "plus": {
+        "out": "12\n7"
+      },
+      "p_minus": {
+        "out": "12\n7"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "  12\n  7"
+        },
+        "KEEP_U1": {
+          "out": "12\n7"
+        }
+      }
+    },
+    "expose_alpha": {
+      "plus": {
+        "out": "ab\nc"
+      },
+      "p_minus": {
+        "out": "  ab\n  c"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "  ab\n  c"
+        },
+        "KEEP_U1": {
+          "out": "  ab\n  c"
+        }
+      }
+    },
+    "control_right_numeric": {
+      "plus": {
+        "out": "12\n 7"
+      },
+      "p_minus": {
+        "out": "12\n 7"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "12\n 7"
+        },
+        "KEEP_U1": {
+          "out": "12\n 7"
+        }
+      }
+    },
+    "control_no_space": {
+      "plus": {
+        "out": "12\n7"
+      },
+      "p_minus": {
+        "out": "12\n7"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "12\n7"
+        },
+        "KEEP_U1": {
+          "out": "12\n7"
+        }
+      }
+    }
+  }
+}

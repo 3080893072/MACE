@@ -1,0 +1,517 @@
+{
+  "schema": "mace-v3-baseline-freeze-1.0",
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "branch": "baseline/mace-v3-pilot",
+  "code_commit": "a51faab7075e6b0c58d93e4e86e50061f27360a5",
+  "code_commit_subject": "benchmark v3: add fair baselines A/B/C pilot harness",
+  "results_commit": "5600f92f3c802554265a092166835375cdbe5ddb",
+  "package_tree_sha": "28612d92118ddf1dfd2a12fefd398b429e3d615c",
+  "config_sha256": "7cd4df5c0478ec7b84f01b557cc0e498767e5a786505459c39663e11d76b591b",
+  "config_file_sha256": "c9f29b110f70b2f9b9909eece5007b3bee3f96b6654b3de21a12ccea811106b7",
+  "experiment_config": {
+    "experiment": "mace_v3_baseline_pilot",
+    "schema_version": "mace-v3-baseline-claims-1.0",
+    "release_version": "v3.0-dev-pilot-2026-11-02",
+    "git_commit": "a51faab7075e6b0c58d93e4e86e50061f27360a5",
+    "git_branch": "baseline/mace-v3-pilot",
+    "model": {
+      "provider": "ollama",
+      "model": "qwen2.5-coder:32b",
+      "endpoint": "http://127.0.0.1:11434",
+      "temperature": 0.0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 4096,
+      "json_mode": true,
+      "timeout_seconds": 900,
+      "retries": 1
+    },
+    "budget": {
+      "max_model_calls_per_task": 3,
+      "max_model_calls_total": 15,
+      "max_completion_tokens_per_task": 12288,
+      "max_probe_executions_per_task": 6000,
+      "max_probe_executions_total": 30000,
+      "max_candidate_ops": 6,
+      "max_inputs": 8,
+      "probe_timeout_seconds": 180,
+      "max_claims_per_task": 40
+    },
+    "b_conditions": [
+      "pure_verification",
+      "feedback_regeneration"
+    ],
+    "task_ids": [
+      "jinja2_bytecode_cache_read",
+      "werkzeug_bind_server_name_lower",
+      "werkzeug_filestorage_stream_name",
+      "werkzeug_get_host_default_empty",
+      "werkzeug_secure_filename_ascii_filter"
+    ],
+    "task_story": {
+      "jinja2_bytecode_cache_read": "NO_LOCAL_EFFECT",
+      "werkzeug_filestorage_stream_name": "ASSERTION_GAP_STORY",
+      "werkzeug_bind_server_name_lower": "NO_LOCAL_EFFECT",
+      "werkzeug_get_host_default_empty": "FULL_MASKING_STORY",
+      "werkzeug_secure_filename_ascii_filter": "FULL_MASKING_STORY"
+    },
+    "task_hashes": {
+      "jinja2_bytecode_cache_read": {
+        "task_json_sha256": "4be5966f7278eeb297c4de8cde31eaa71b661c8a2edeef4f37f629c1c8bfc538",
+        "source_sha256": "6b2030c5fac0d5201f7d0b5ad27c120e6dd30d3e0a62220637f0fd678e41df5d"
+      },
+      "werkzeug_bind_server_name_lower": {
+        "task_json_sha256": "ec1495a433cb36c257d9bd97edb9bc767d0f88fcf35fc6ad6d670b6abc645bff",
+        "source_sha256": "5cde198f3105d527ccc6d768bfcf520c4fb5fd4efc2959e7a1b4df9c7cea6e61"
+      },
+      "werkzeug_filestorage_stream_name": {
+        "task_json_sha256": "eb6addb7779681af29a8df994b960de54230174059a6bbf37995b03f1eaae00c",
+        "source_sha256": "bf65987ecd6b6f53ae4205f22eb8a91d017082876b7d33427793f97fc9f7b9e0"
+      },
+      "werkzeug_get_host_default_empty": {
+        "task_json_sha256": "5a9197c2318fc16f9e18153ad89f94f40445d6e36d0ee41e7dd9e68d6f796be8",
+        "source_sha256": "1236ea747753f8965682351069a592801508469ad7524aec31042a265247a555"
+      },
+      "werkzeug_secure_filename_ascii_filter": {
+        "task_json_sha256": "5fd15dfb8dbf0596b74fa08ac77f377bd9a43fb655bfa996617954387af90fe8",
+        "source_sha256": "0435f9ffb382315825fa26fce1b0847411b9315bebc5a4a57dd83b0b1878343d"
+      }
+    },
+    "public_root": "<local-path>",
+    "probe_root": "<local-path>",
+    "hidden_data_in_scope": false
+  },
+  "baseline_version": "C-ast-intervention-1.0",
+  "model_config": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "endpoint": "http://127.0.0.1:11434",
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 32768,
+    "num_predict": 4096,
+    "json_mode": true,
+    "timeout_seconds": 900,
+    "retries": 1
+  },
+  "budget": {
+    "max_model_calls_per_task": 3,
+    "max_model_calls_total": 15,
+    "max_completion_tokens_per_task": 12288,
+    "max_probe_executions_per_task": 6000,
+    "max_probe_executions_total": 30000,
+    "max_candidate_ops": 6,
+    "max_inputs": 8,
+    "probe_timeout_seconds": 180,
+    "max_claims_per_task": 40
+  },
+  "task_status": {
+    "jinja2_bytecode_cache_read": "DEV_TUNED",
+    "werkzeug_bind_server_name_lower": "DEV_TUNED",
+    "werkzeug_filestorage_stream_name": "DEV_TUNED",
+    "werkzeug_get_host_default_empty": "DEV_TUNED",
+    "werkzeug_secure_filename_ascii_filter": "DEV_TUNED"
+  },
+  "generalization_claim_permitted": false,
+  "dev_tuned_statement": "All five tasks were used while designing and debugging the AST discovery rule. Results on them are development-set results and must never be reported as held-out generalization accuracy.",
+  "hidden_isolation": {
+    "baseline_package_reads_hidden": false,
+    "scorer_invoked_as_subprocess": true,
+    "reference_match_is_evaluation_side_only": true
+  },
+  "code_files": {
+    "benchmark_v3_baselines/__init__.py": "0ff827b3374f97b2f87d3f2ee72501de74976d3455062694a60e00af4d22e799",
+    "benchmark_v3_baselines/ast_discovery.py": "681ee3a693e6b127da7cd6e6c8c7fbb448971e6742409503cac5f2ea4793443e",
+    "benchmark_v3_baselines/baseline_c.py": "747423a018e99b561bd6c698a242c69b556f6f5041a4622dfeed0805d41ca8b6",
+    "benchmark_v3_baselines/claims.py": "f71bf8cd0e505718065a0ebdbdab6639663698f71988be073bfdb2ba81c90e9f",
+    "benchmark_v3_baselines/config.py": "70d6c2205e97ab239163d532beb822dee3a64653cf564a4295ec98cc51510037",
+    "benchmark_v3_baselines/direct_qwen.py": "3f85f1393c477988e2d8c85a55b4bbbcda030a5721ed4d3f23892b41f140ad14",
+    "benchmark_v3_baselines/execution.py": "a66dfaaca27287c122a62a103724327749834c6a95b40a6b6e1e1a8f2709d74c",
+    "benchmark_v3_baselines/inputs.py": "c293af59cd6162dde51eceb2454988dde02069db75aefb9b38826193f86c4fc2",
+    "benchmark_v3_baselines/public_io.py": "38008c9877448a002101918777ccd3fd85983dd100660434e891da8ae9a1a1f4",
+    "benchmark_v3_baselines/run_pilot.py": "abacf2b3cb4a40abf4cf772d899202fcf0a81e18a72143641147298cbabb3b6b",
+    "benchmark_v3_baselines/trace_runner.py": "52c5f08044ff7890348240ad7352a18889e752739b202eea4902f1103d74082f",
+    "benchmark_v3_baselines/verifier.py": "1e624602c00ebbf3ddaed7de31cc8e9e82acbeb8c729e65614ce6cc13b34f859",
+    "tests/test_v3_baselines.py": "a13fcdcdba14e4661c49c60c6278442107b9963a7537696a18565628f3d499a5",
+    "scripts/v3_reference_match.py": "92d86a0473a870af51133560c79545fa1d5b6d662f31ac857bfaa7b5e06fbf91",
+    "scripts/v3_no_model_checks.py": "491813141a5798ab57d7206012e5330469d5d007b51c195bcca39a647d2ecb05",
+    "benchmark_v3_baselines/fixtures/dry_run/jinja2_bytecode_cache_read.json": "3874259b03f259e4aef8750b018008aa3a1bcda33a25aff0a8bf0a299c279324",
+    "benchmark_v3_baselines/fixtures/dry_run/werkzeug_bind_server_name_lower.json": "3874259b03f259e4aef8750b018008aa3a1bcda33a25aff0a8bf0a299c279324",
+    "benchmark_v3_baselines/fixtures/dry_run/werkzeug_filestorage_stream_name.json": "3874259b03f259e4aef8750b018008aa3a1bcda33a25aff0a8bf0a299c279324",
+    "benchmark_v3_baselines/fixtures/dry_run/werkzeug_get_host_default_empty.json": "3874259b03f259e4aef8750b018008aa3a1bcda33a25aff0a8bf0a299c279324",
+    "benchmark_v3_baselines/fixtures/dry_run/werkzeug_secure_filename_ascii_filter.json": "3874259b03f259e4aef8750b018008aa3a1bcda33a25aff0a8bf0a299c279324"
+  },
+  "run_artifacts": {
+    "reference_match.json": "336c93f05c7cc37d9d77010d33a078d4d0d9fa33b6f14fdbe78f1009e563eb0f",
+    "no_model_checks.json": "dae86ed4e580cec054a246afed53b33ba529a9fd51f9cf7d7a003ef034c3963d",
+    "availability.json": "76829bb57b0826eaa884188854407ecd5b3d8c54a27d723f7cf151d4e0c84117",
+    "summary.json": "b3b8ac4bc595c082c67414bb96be8373d3cadaa875fb38bbbafb7b15a1c442b6"
+  },
+  "tasks": {
+    "jinja2_bytecode_cache_read": {
+      "status": "DEV_TUNED",
+      "source_sha256": "6b2030c5fac0d5201f7d0b5ad27c120e6dd30d3e0a62220637f0fd678e41df5d",
+      "story": "NO_LOCAL_EFFECT",
+      "baseline_version": "C-ast-intervention-1.0",
+      "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+      "universe_ids": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 1+1 }}"
+        },
+        {
+          "template": "hello {{ name }}",
+          "cached_source": "{{ 1+1 }}",
+          "context": {
+            "name": "x"
+          }
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "unknowns": [],
+      "probe_executions": 24,
+      "variant_builds": 4,
+      "claims_submitted": 4,
+      "credited_relation_keys": [
+        "EXPOSING",
+        "MMBS:src/jinja2/loaders.py:137",
+        "MSMS:src/jinja2/loaders.py:137",
+        "PREREQUISITE:src/jinja2/loaders.py:137"
+      ],
+      "credited_relation_keys_sha256": "c448facba4e883d7e2cef9d4cc7205e33ae288412496b3f5d37f3e2dd47774d0",
+      "files": {
+        "submission": {
+          "path": "tasks/jinja2_bytecode_cache_read/baseline_c/submission.json",
+          "sha256": "09edeffe7ac625a8890f9e0bab6b0451016ac3bc7051937da281e247e63d02bb"
+        },
+        "baseline_c": {
+          "path": "tasks/jinja2_bytecode_cache_read/baseline_c/baseline_c.json",
+          "sha256": "7256cd40ffc33d3d376cf50c3cd2d6052cb3185e6481b3de5dd4ee34aeeaab68"
+        },
+        "score": {
+          "path": "tasks/jinja2_bytecode_cache_read/scores/C.json",
+          "sha256": "4efc2f3fd95b3c8b560eece5beb3ca3e5553ed57891f139190169c9354263a50"
+        }
+      }
+    },
+    "werkzeug_bind_server_name_lower": {
+      "status": "DEV_TUNED",
+      "source_sha256": "5cde198f3105d527ccc6d768bfcf520c4fb5fd4efc2959e7a1b4df9c7cea6e61",
+      "story": "NO_LOCAL_EFFECT",
+      "baseline_version": "C-ast-intervention-1.0",
+      "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+      "universe_ids": [
+        "src/werkzeug/routing/map.py:219-219",
+        "src/werkzeug/routing/map.py:311-311"
+      ],
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": null,
+          "subdomain": null
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "sub.example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        },
+        {
+          "host": "example.com",
+          "server_name": "example.com:80",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        },
+        {
+          "host": "EXAMPLE.COM",
+          "server_name": null,
+          "subdomain": "api"
+        }
+      ],
+      "unknowns": [],
+      "probe_executions": 76,
+      "variant_builds": 12,
+      "claims_submitted": 4,
+      "credited_relation_keys": [
+        "EXPOSING",
+        "MMBS:src/werkzeug/routing/map.py:219",
+        "MSMS:src/werkzeug/routing/map.py:219",
+        "PREREQUISITE:src/werkzeug/routing/map.py:219"
+      ],
+      "credited_relation_keys_sha256": "2a9e8d3874a8a3cbe2fb74d7aa718f978c6d85bbaac5ce58d63db3be3cfa2f7e",
+      "files": {
+        "submission": {
+          "path": "tasks/werkzeug_bind_server_name_lower/baseline_c/submission.json",
+          "sha256": "1ab7c225b200b303ec5e59cd1d51bc0e5963017a8c49bfcd2068d7bde891ab0e"
+        },
+        "baseline_c": {
+          "path": "tasks/werkzeug_bind_server_name_lower/baseline_c/baseline_c.json",
+          "sha256": "a4cada9bb15eb9ccc0e1fe22b387f6beabf2e40beed383f5cc63c168c6782007"
+        },
+        "score": {
+          "path": "tasks/werkzeug_bind_server_name_lower/scores/C.json",
+          "sha256": "4aaf9e9264a7c3c12ec92cad60a58b59665f19e3189a3620f7e21f8c54bc5698"
+        }
+      }
+    },
+    "werkzeug_filestorage_stream_name": {
+      "status": "DEV_TUNED",
+      "source_sha256": "bf65987ecd6b6f53ae4205f22eb8a91d017082876b7d33427793f97fc9f7b9e0",
+      "story": "ASSERTION_GAP_STORY",
+      "baseline_version": "C-ast-intervention-1.0",
+      "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+      "universe_ids": [
+        "src/werkzeug/datastructures.py:2924-2924",
+        "src/werkzeug/datastructures.py:2921-2921",
+        "src/werkzeug/datastructures.py:2926-2926"
+      ],
+      "inputs": [
+        {
+          "stream": "tempfile"
+        },
+        {
+          "stream": "stderr"
+        },
+        {
+          "stream": "none",
+          "data": "abc"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "x.txt"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stderr>"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stdin>"
+        }
+      ],
+      "unknowns": [
+        "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"stream\":\"none\"}",
+        "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"name\":\"<stderr>\",\"stream\":\"named\"}",
+        "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"name\":\"<stdin>\",\"stream\":\"named\"}"
+      ],
+      "probe_executions": 80,
+      "variant_builds": 16,
+      "claims_submitted": 4,
+      "credited_relation_keys": [
+        "EXPOSING",
+        "MMBS:src/werkzeug/datastructures.py:2924",
+        "MSMS:src/werkzeug/datastructures.py:2924",
+        "PREREQUISITE:src/werkzeug/datastructures.py:2924"
+      ],
+      "credited_relation_keys_sha256": "bb087cc981049f693c3840131a0f961b806758f832f60e07f11a11c3dcbf9f83",
+      "files": {
+        "submission": {
+          "path": "tasks/werkzeug_filestorage_stream_name/baseline_c/submission.json",
+          "sha256": "960b5e6488ed63193a975eb4a2f2455aa7b18a6fcf84f4450f63f1f3f65d6790"
+        },
+        "baseline_c": {
+          "path": "tasks/werkzeug_filestorage_stream_name/baseline_c/baseline_c.json",
+          "sha256": "92285bfa8b561df5121538e73dca3e05c315abf68d6da800143f2d75b0029035"
+        },
+        "score": {
+          "path": "tasks/werkzeug_filestorage_stream_name/scores/C.json",
+          "sha256": "524bee2d322a965b018222d02e6e713c8d3e35f1a1f6ca387d1169e47ad4e20c"
+        }
+      }
+    },
+    "werkzeug_get_host_default_empty": {
+      "status": "DEV_TUNED",
+      "source_sha256": "1236ea747753f8965682351069a592801508469ad7524aec31042a265247a555",
+      "story": "FULL_MASKING_STORY",
+      "baseline_version": "C-ast-intervention-1.0",
+      "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+      "universe_ids": [
+        "src/werkzeug/sansio/utils.py:85-85",
+        "src/werkzeug/sansio/utils.py:87-87",
+        "src/werkzeug/sansio/utils.py:90-90",
+        "src/werkzeug/sansio/utils.py:93-93",
+        "src/werkzeug/sansio/utils.py:95-95"
+      ],
+      "inputs": [
+        {
+          "scheme": "http",
+          "host_header": null,
+          "server": null
+        },
+        {
+          "scheme": "http",
+          "host_header": "example.com",
+          "server": null
+        },
+        {
+          "scheme": "http",
+          "host_header": null,
+          "server": [
+            "example.com",
+            8080
+          ]
+        },
+        {
+          "scheme": "https",
+          "host_header": "example.com:443",
+          "server": [
+            "example.com",
+            443
+          ]
+        },
+        {
+          "scheme": "ws",
+          "host_header": "Example.COM:80",
+          "server": null
+        },
+        {
+          "scheme": "http",
+          "host_header": "spam",
+          "server": [
+            "spam",
+            80
+          ]
+        },
+        {
+          "scheme": "wss",
+          "host_header": null,
+          "server": [
+            "unix/socket",
+            null
+          ]
+        }
+      ],
+      "unknowns": [],
+      "probe_executions": 396,
+      "variant_builds": 64,
+      "claims_submitted": 7,
+      "credited_relation_keys": [
+        "EXPOSING",
+        "MMBS:src/werkzeug/sansio/utils.py:85",
+        "MMBS:src/werkzeug/sansio/utils.py:87",
+        "MSMS:src/werkzeug/sansio/utils.py:85",
+        "MSMS:src/werkzeug/sansio/utils.py:87",
+        "PREREQUISITE:src/werkzeug/sansio/utils.py:85",
+        "PREREQUISITE:src/werkzeug/sansio/utils.py:87"
+      ],
+      "credited_relation_keys_sha256": "5774fb40251b16d7278cf42633546bcd00e21c6921d59132b9e3261787eeee82",
+      "files": {
+        "submission": {
+          "path": "tasks/werkzeug_get_host_default_empty/baseline_c/submission.json",
+          "sha256": "da3a464b2f79643f4af3fb4951237c668360a80a87cee08ce0cb7692659e36c7"
+        },
+        "baseline_c": {
+          "path": "tasks/werkzeug_get_host_default_empty/baseline_c/baseline_c.json",
+          "sha256": "a1abe1c07feb2ab3b94b765f6e9049539a136268865065eaa78b35484381d994"
+        },
+        "score": {
+          "path": "tasks/werkzeug_get_host_default_empty/scores/C.json",
+          "sha256": "2922812f43e7343b2658bada891a6b502ab870cb22e4170a2158bc8503ec699a"
+        }
+      }
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "status": "DEV_TUNED",
+      "source_sha256": "0435f9ffb382315825fa26fce1b0847411b9315bebc5a4a57dd83b0b1878343d",
+      "story": "FULL_MASKING_STORY",
+      "baseline_version": "C-ast-intervention-1.0",
+      "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+      "universe_ids": [
+        "src/werkzeug/utils.py:227-229",
+        "src/werkzeug/utils.py:226-226",
+        "src/werkzeug/utils.py:239-239"
+      ],
+      "inputs": [
+        {
+          "filename": "a b"
+        },
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "My cool movie.mov"
+        },
+        {
+          "filename": "../../../etc/passwd"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        },
+        {
+          "filename": "CON"
+        },
+        {
+          "filename": "a b"
+        },
+        {
+          "filename": ""
+        }
+      ],
+      "unknowns": [
+        "masked input with no causally active minimal sufficient set: {\"filename\":\"\"}"
+      ],
+      "probe_executions": 120,
+      "variant_builds": 16,
+      "claims_submitted": 4,
+      "credited_relation_keys": [
+        "EXPOSING",
+        "MMBS:src/werkzeug/utils.py:227-229",
+        "MSMS:src/werkzeug/utils.py:227-229",
+        "PREREQUISITE:src/werkzeug/utils.py:227-229"
+      ],
+      "credited_relation_keys_sha256": "f4e2b50695e0dba7c9b9c4577ae3ac18ce6c516edfb662136ddb316a57d25349",
+      "files": {
+        "submission": {
+          "path": "tasks/werkzeug_secure_filename_ascii_filter/baseline_c/submission.json",
+          "sha256": "e4fc7ea1beba899ecd4efb35b14811c10e3fc5e7d5f00bffd194ccd80323c9c0"
+        },
+        "baseline_c": {
+          "path": "tasks/werkzeug_secure_filename_ascii_filter/baseline_c/baseline_c.json",
+          "sha256": "8a398908b61161a101edd40e998db6ac723de214daf3433ed8c597d235ad0bd1"
+        },
+        "score": {
+          "path": "tasks/werkzeug_secure_filename_ascii_filter/scores/C.json",
+          "sha256": "bfb92ec86c5830870c602b15f56efa52161035e320e7ddde8cd7ebfbe2bacdc7"
+        }
+      }
+    }
+  },
+  "totals": {
+    "tasks": 5,
+    "claims_submitted": 23,
+    "credited_relation_keys": 23,
+    "probe_executions": 696,
+    "variant_builds": 112
+  }
+}

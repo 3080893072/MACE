@@ -1,0 +1,30 @@
+{
+  "case_id": "sd_docutils_stupefy_endash_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 826,
+    "A_code": "    text = text.replace(smart.endash, \"-\")"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 826,
+      "indent": 4,
+      "role": "One-occurrence leg: rewrites a single en dash.",
+      "lines": [
+        "text = text.replace(smart.endash, \"-\", 1)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_stupefy_endash_m1.py",
+  "inputs": {
+    "mask_one_endash": "text containing one en dash",
+    "expose_two_endashes": "text containing two en dashes: only the first is repaired",
+    "control_plain": "text with no special dash"
+  },
+  "rationale": "stupefyEntities() maps every en dash back to ASCII '-'. The patch rewrites one occurrence only, so a single-dash string is masked while a two-dash string keeps the second en dash (the exposing witness)."
+}

@@ -1,0 +1,21 @@
+$ <local-path> -m pytest tests -q --disable-warnings -m not dev_server -p pytest_trace_plugin
+
+--- stdout ---
+
+=================================== ERRORS ====================================
+__________________ ERROR collecting tests/test_send_file.py ___________________
+tests\test_send_file.py:17: in <module>
+    environ = EnvironBuilder().get_environ()
+src\werkzeug\test.py:391: in __init__
+    self.path = iri_to_uri(request_uri.path)
+src\werkzeug\urls.py:816: in iri_to_uri
+    return url_unparse((iri.scheme, iri.encode_netloc(), path, query, fragment))
+src\werkzeug\urls.py:616: in url_unparse
+    url += path
+E   UnboundLocalError: cannot access local variable 'url' where it is not associated with a value
+=========================== short test summary info ===========================
+ERROR tests/test_send_file.py - UnboundLocalError: cannot access local variab...
+!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+24 deselected, 1 error in 1.06s
+
+--- stderr ---

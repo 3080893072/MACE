@@ -1,0 +1,1023 @@
+{
+  "case_id": "x_sd_markdown_cdata_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "slug": "markdown-3.5.1",
+  "file": "markdown/serializers.py",
+  "A_line": 73,
+  "A_code": "            text = text.replace(\"<\", \"&lt;\")",
+  "original_sha256": "03a60b687125f2d2e5b6ba2083ced2e60d994c90ddb0c122d5a9290eff71a441",
+  "patched_sha256": "bece7c339da2b6c687cfe597fd357d764bab045c3b232ea31d66a72e63ac4e4b",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 73,
+      "role": "Escapes the first remaining '<' only.",
+      "lines": [
+        "text = text.replace(\"<\", \"&lt;\", 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 73,
+      "role": "Escapes the next remaining '<' only.",
+      "lines": [
+        "text = text.replace(\"<\", \"&lt;\", 1)"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 73,
+      "role": "Removes NUL bytes; none of the declared inputs contain one.",
+      "lines": [
+        "if \"\\x00\" in text:",
+        "    text = text.replace(\"\\x00\", \"\")"
+      ]
+    },
+    {
+      "id": "U4",
+      "after_line": 73,
+      "role": "Decodes an ampersand entity; the declared inputs contain only '<'.",
+      "lines": [
+        "if \"&amp;\" in text:",
+        "    text = text.replace(\"&amp;\", \"&\")"
+      ]
+    },
+    {
+      "id": "U5",
+      "after_line": 73,
+      "role": "Removes carriage returns; the declared inputs are LF-only.",
+      "lines": [
+        "if \"\\r\" in text:",
+        "    text = text.replace(\"\\r\", \"\")"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 73,
+      "end": 75
+    },
+    "U2": {
+      "begin": 76,
+      "end": 78
+    },
+    "U3": {
+      "begin": 79,
+      "end": 82
+    },
+    "U4": {
+      "begin": 83,
+      "end": 86
+    },
+    "U5": {
+      "begin": 87,
+      "end": 90
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b&lt;c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "P_MINUS": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U3": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U4": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U5": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U3": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U4": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U3": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U4": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U3_U4": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U3_U5": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U4_U5": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U3": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U4": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U3_U4": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U3_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U4_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U3_U4": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U3_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U4_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U3_U4_U5": {
+      "mask_two_lt": {
+        "out": "<a<b"
+      },
+      "expose_three_lt": {
+        "out": "<a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U3_U4": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U3_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U4_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U3_U4_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U2_U3_U4_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a<b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a<b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    },
+    "KEEP_U1_U2_U3_U4_U5": {
+      "mask_two_lt": {
+        "out": "&lt;a&lt;b"
+      },
+      "expose_three_lt": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "control_plain": {
+        "out": "ab"
+      }
+    }
+  },
+  "per_input": {
+    "mask_two_lt": {
+      "plus": {
+        "out": "&lt;a&lt;b"
+      },
+      "p_minus": {
+        "out": "&lt;a&lt;b"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "<a<b"
+        },
+        "KEEP_U1": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U3": {
+          "out": "<a<b"
+        },
+        "KEEP_U4": {
+          "out": "<a<b"
+        },
+        "KEEP_U5": {
+          "out": "<a<b"
+        },
+        "KEEP_U1_U2": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U3": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U1_U4": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U1_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U3": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U4": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U3_U4": {
+          "out": "<a<b"
+        },
+        "KEEP_U3_U5": {
+          "out": "<a<b"
+        },
+        "KEEP_U4_U5": {
+          "out": "<a<b"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U2_U4": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U2_U5": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U3_U4": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U1_U3_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U1_U4_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U3_U4": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U3_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U4_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U3_U4_U5": {
+          "out": "<a<b"
+        },
+        "KEEP_U1_U2_U3_U4": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U2_U3_U5": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U2_U4_U5": {
+          "out": "&lt;a&lt;b"
+        },
+        "KEEP_U1_U3_U4_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U2_U3_U4_U5": {
+          "out": "&lt;a<b"
+        },
+        "KEEP_U1_U2_U3_U4_U5": {
+          "out": "&lt;a&lt;b"
+        }
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_three_lt": {
+      "plus": {
+        "out": "&lt;a&lt;b&lt;c"
+      },
+      "p_minus": {
+        "out": "&lt;a&lt;b<c"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U1": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U3": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U4": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U5": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U1_U2": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U3": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U1_U4": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U1_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U3": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U4": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U3_U4": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U3_U5": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U4_U5": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U2_U4": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U2_U5": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U3_U4": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U1_U3_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U1_U4_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U3_U4": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U3_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U4_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U3_U4_U5": {
+          "out": "<a<b<c"
+        },
+        "KEEP_U1_U2_U3_U4": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U2_U3_U5": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U2_U4_U5": {
+          "out": "&lt;a&lt;b<c"
+        },
+        "KEEP_U1_U3_U4_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U2_U3_U4_U5": {
+          "out": "&lt;a<b<c"
+        },
+        "KEEP_U1_U2_U3_U4_U5": {
+          "out": "&lt;a&lt;b<c"
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_plain": {
+      "plus": {
+        "out": "ab"
+      },
+      "p_minus": {
+        "out": "ab"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ],
+        [
+          "U4"
+        ],
+        [
+          "U5"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U1",
+          "U4"
+        ],
+        [
+          "U1",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U2",
+          "U4"
+        ],
+        [
+          "U2",
+          "U5"
+        ],
+        [
+          "U3",
+          "U4"
+        ],
+        [
+          "U3",
+          "U5"
+        ],
+        [
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U5"
+        ],
+        [
+          "U1",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U4",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "ab"
+        },
+        "KEEP_U1": {
+          "out": "ab"
+        },
+        "KEEP_U2": {
+          "out": "ab"
+        },
+        "KEEP_U3": {
+          "out": "ab"
+        },
+        "KEEP_U4": {
+          "out": "ab"
+        },
+        "KEEP_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2": {
+          "out": "ab"
+        },
+        "KEEP_U1_U3": {
+          "out": "ab"
+        },
+        "KEEP_U1_U4": {
+          "out": "ab"
+        },
+        "KEEP_U1_U5": {
+          "out": "ab"
+        },
+        "KEEP_U2_U3": {
+          "out": "ab"
+        },
+        "KEEP_U2_U4": {
+          "out": "ab"
+        },
+        "KEEP_U2_U5": {
+          "out": "ab"
+        },
+        "KEEP_U3_U4": {
+          "out": "ab"
+        },
+        "KEEP_U3_U5": {
+          "out": "ab"
+        },
+        "KEEP_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U4": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U3_U4": {
+          "out": "ab"
+        },
+        "KEEP_U1_U3_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U2_U3_U4": {
+          "out": "ab"
+        },
+        "KEEP_U2_U3_U5": {
+          "out": "ab"
+        },
+        "KEEP_U2_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U3_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U3_U4": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U3_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U3_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U2_U3_U4_U5": {
+          "out": "ab"
+        },
+        "KEEP_U1_U2_U3_U4_U5": {
+          "out": "ab"
+        }
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 2,
+    "mmbs_COMPUTED": 1,
+    "mmbs_NONE": 1,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 1,
+    "msms_NONE": 2
+  }
+}

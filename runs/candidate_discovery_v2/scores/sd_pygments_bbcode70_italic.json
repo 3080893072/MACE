@@ -1,0 +1,255 @@
+{
+  "task_id": "sd_pygments_bbcode70_italic",
+  "scoring": {
+    "masking_inputs": 2,
+    "exact": 2,
+    "present": 2,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_italic",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "confirmed": [
+        [
+          "pygments/formatters/bbcode.py:72-72",
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:72-72",
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "ndef['italic'] and not ndef['color']",
+          "rationale": "Keeping the assignment to _sd_i and the conditional assignment in line 76 ensures that the deletion of line 70 is unobservable when the color is present.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:72-72"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "ndef['italic'] and not ndef['color']",
+          "rationale": "The variable _sd_i is set based on the italic and color conditions, affecting the subsequent conditional assignment.",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "control_flow",
+          "masking_condition": "_sd_i and not end.startswith('[/i]')",
+          "rationale": "This line conditionally appends '[/i]' to end, which is affected by the deletion of line 70.",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:72-72"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    },
+    {
+      "input": "mask_italic_codetag",
+      "public_id": "in4",
+      "hidden": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "confirmed": [
+        [
+          "pygments/formatters/bbcode.py:72-72",
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:72-72",
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "ndef['italic'] and not ndef['color']",
+          "rationale": "Keeping the assignment to _sd_i and the conditional assignment in line 76 ensures that the deletion of line 70 is unobservable when the color is present.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:72-72"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "ndef['italic'] and not ndef['color']",
+          "rationale": "The variable _sd_i is set based on the italic and color conditions, affecting the subsequent conditional assignment.",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "control_flow",
+          "masking_condition": "_sd_i and not end.startswith('[/i]')",
+          "rationale": "This line conditionally appends '[/i]' to end, which is affected by the deletion of line 70.",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:72-72"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 2,
+    "c0_probes": 6,
+    "direct_exact": 2,
+    "old_full_exact": 0,
+    "masking_inputs": 3
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 0.5,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U2"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:61-61",
+        "pygments/formatters/bbcode.py:64-64",
+        "pygments/formatters/bbcode.py:67-67",
+        "pygments/formatters/bbcode.py:80-80",
+        "pygments/formatters/bbcode.py:83-83"
+      ],
+      "recall": 0.5,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:61-61",
+        "pygments/formatters/bbcode.py:63-63",
+        "pygments/formatters/bbcode.py:64-64",
+        "pygments/formatters/bbcode.py:66-66",
+        "pygments/formatters/bbcode.py:67-67",
+        "pygments/formatters/bbcode.py:69-69",
+        "pygments/formatters/bbcode.py:79-79",
+        "pygments/formatters/bbcode.py:80-80",
+        "pygments/formatters/bbcode.py:83-83"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 9
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

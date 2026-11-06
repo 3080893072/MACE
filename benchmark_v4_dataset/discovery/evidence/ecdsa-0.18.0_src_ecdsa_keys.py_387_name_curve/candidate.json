@@ -1,0 +1,57 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/keys.py:387:name:curve",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/keys.py",
+  "function": "from_der",
+  "mechanism": "name",
+  "target_A": {
+    "line": 387,
+    "end_line": 387,
+    "kind": "Assign",
+    "code": "curve = Ed448"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_ed448_export_import",
+    "src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_ed448_from_pem",
+    "src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_ed448_sig_verify",
+    "src/ecdsa/test_pyecdsa.py::OpenSSL::test_from_openssl_ed448"
+  ],
+  "original_hit_test_count": 4,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                curve = Ed448",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.28,
+    "failed_nodeids": [
+      "src.ecdsa.test_keys.TestVerifyingKeyFromDer::test_ed448_export_import",
+      "src.ecdsa.test_keys.TestVerifyingKeyFromDer::test_ed448_from_pem",
+      "src.ecdsa.test_keys.TestVerifyingKeyFromDer::test_ed448_sig_verify",
+      "src.ecdsa.test_pyecdsa.OpenSSL::test_from_openssl_ed448"
+    ],
+    "stdout_tail": "       SubjectPublicKeyInfo.algorithm.algorithm field must specify\n        id-ecPublicKey (see RFC3279).\n    \n        Only the named curve encoding is supported, thus the\n        SubjectPublicKeyInfo.algorithm.parameters field needs to be an\n        object identifier. A sequence in that field indicates an explicit\n        parameter curve encoding, this format is not supported. A NULL object\n        in that field indicates an \"implicitlyCA\" encoding, where the curve\n        parameters come from CA certificate, those, again, are not supported.\n    \n        :param string: binary string with the DER encoding of public ECDSA key\n        :type string: bytes-like object\n        :param valid_encodings: list of allowed point encodings.\n            By default :term:`uncompressed`, :term:`compressed`, and\n            :term:`hybrid`. To read malformed files, include\n            :term:`raw encoding` with ``raw`` in the list.\n        :type valid_encodings: :term:`set-like object`\n        :param valid_curve_encodings: list of allowed encoding formats\n            for curve parameters. By default (``None``) all are supported:\n            ``named_curve`` and ``explicit``.\n        :type valid_curve_encodings: :term:`set-like object`\n    \n        :return: Initialised VerifyingKey object\n        :rtype: VerifyingKey\n        \"\"\"\n        if valid_encodings is None:\n            valid_encodings = set([\"uncompressed\", \"compressed\", \"hybrid\"])\n        string = normalise_bytes(string)\n        # [[oid_ecPublicKey,oid_curve], point_str_bitstring]\n        s1, empty = der.remove_sequence(string)\n        if empty != b\"\":\n            raise der.UnexpectedDER(\n                \"trailing junk after DER pubkey: %s\" % binascii.hexlify(empty)\n            )\n        s2, point_str_bitstring = der.remove_sequence(s1)\n        # s2 = oid_ecPublicKey,oid_curve\n        oid_pk, rest = der.remove_object(s2)\n        if oid_pk in (Ed25519.oid, Ed448.oid):\n            if oid_pk == Ed25519.oid:\n                curve = Ed25519\n            else:\n                assert oid_pk == Ed448.oid\n                pass  # P-: target A deleted\n            point_str, empty = der.remove_bitstring(point_str_bitstring, 0)\n            if empty:\n                raise der.UnexpectedDER(\"trailing junk after public key\")\n>           return cls.from_string(point_str, curve, None)\nE           UnboundLocalError: cannot access local variable 'curve' where it is not associated with a value\n\nsrc\\ecdsa\\keys.py:391: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_ed448_export_import\nFAILED src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_ed448_from_pem\nFAILED src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_ed448_sig_verify\nFAILED src/ecdsa/test_pyecdsa.py::OpenSSL::test_from_openssl_ed448 - UnboundL...\n4 failed in 0.90s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

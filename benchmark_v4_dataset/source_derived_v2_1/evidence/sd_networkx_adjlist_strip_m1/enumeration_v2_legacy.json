@@ -1,0 +1,253 @@
+{
+  "case_id": "sd_networkx_adjlist_strip_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "slug": "networkx-3.2.1",
+  "file": "networkx/readwrite/adjlist.py",
+  "A_line": 204,
+  "A_code": "        vlist = line.strip().split(delimiter)",
+  "original_sha256": "3fc5bf750bbed4d4020bc157f99a72b5afdbd0bf8dbabb911385fe18a4963524",
+  "patched_sha256": "dc727c43ef052118805e6fa7dc4e910348f2e59a8b902fa4ca59af9f39dd502e",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 204,
+      "role": "Space-only trim: restores A for space-padded adjacency lines.",
+      "lines": [
+        "if \"\\t\" not in line:",
+        "    vlist = line.strip(\" \").split(delimiter)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 204,
+      "end": 207
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_space_padding": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "expose_tab_padding": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "control_plain": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      }
+    },
+    "P_MINUS": {
+      "mask_space_padding": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "expose_tab_padding": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      },
+      "control_plain": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_space_padding": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      },
+      "expose_tab_padding": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      },
+      "control_plain": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      }
+    },
+    "KEEP_U1": {
+      "mask_space_padding": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "expose_tab_padding": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      },
+      "control_plain": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      }
+    }
+  },
+  "per_input": {
+    "mask_space_padding": {
+      "plus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "nodes": [
+            "a",
+            "b"
+          ],
+          "edges": [
+            "('a', 'b')"
+          ]
+        }
+      }
+    },
+    "expose_tab_padding": {
+      "plus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+        }
+      }
+    },
+    "control_plain": {
+      "plus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "nodes": [
+            "a",
+            "b"
+          ],
+          "edges": [
+            "('a', 'b')"
+          ]
+        }
+      }
+    }
+  }
+}

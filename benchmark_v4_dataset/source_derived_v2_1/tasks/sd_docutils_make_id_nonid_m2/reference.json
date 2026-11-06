@@ -1,0 +1,116 @@
+{
+  "task_id": "sd_docutils_make_id_nonid_m2",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "docutils/nodes.py",
+    "line": 2239,
+    "function": "make_id",
+    "code": "    id = _non_id_chars.sub('-', ' '.join(id.split()))",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "docutils/nodes.py",
+      "line": 2241,
+      "code": "id = id.replace(',', '-')",
+      "role": "Comma leg: rewrites the comma run of non-identifier characters.",
+      "patch_anchor_line": 2239,
+      "block_span": [
+        2240,
+        2242
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "docutils/nodes.py",
+      "line": 2244,
+      "code": "id = id.replace('!', '-')",
+      "role": "Exclamation leg: rewrites the '!' run of non-identifier characters.",
+      "patch_anchor_line": 2239,
+      "block_span": [
+        2243,
+        2245
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_two_runs": {
+      "role": "masking",
+      "description": "identifier with exactly two runs of non-identifier characters",
+      "p_plus": {
+        "out": "a-b-c"
+      },
+      "p_minus": {
+        "out": "a-b-c"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_three_runs": {
+      "role": "exposing",
+      "description": "identifier with three runs: the bounded rewrite leaves one behind",
+      "p_plus": {
+        "out": "a-b-c-d"
+      },
+      "p_minus": {
+        "out": "a-b-c?d"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_no_runs": {
+      "role": "control",
+      "description": "identifier with no non-identifier characters",
+      "p_plus": {
+        "out": "abc"
+      },
+      "p_minus": {
+        "out": "abc"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "differs from P+",
+      "[U2]": "differs from P+",
+      "[U1,U2]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_docutils_make_id_nonid_m2/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

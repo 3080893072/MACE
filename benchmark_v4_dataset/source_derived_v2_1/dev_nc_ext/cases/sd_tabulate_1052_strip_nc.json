@@ -1,0 +1,30 @@
+{
+  "case_id": "sd_tabulate_1052_strip_nc",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M10_NEGATIVE_CONTROL",
+  "split": "DEV",
+  "base": {
+    "slug": "tabulate-0.9.0",
+    "file": "tabulate/__init__.py",
+    "A_line": 1052,
+    "A_code": "            strings = [s.strip() for s in strings]"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 1052,
+      "indent": 12,
+      "role": "Strips only spaces on the left; trailing and tab padding survive.",
+      "lines": [
+        "strings = [s.lstrip(\" \") for s in strings]"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived_v2_1/dev_nc_ext/probes/sd_tabulate_1052_strip_nc.py",
+  "inputs": {
+    "nc_space_padded": "space-padded right-aligned cells",
+    "nc_tab_padded": "tab-padded right-aligned cells",
+    "nc_mixed_padded": "space-and-tab-padded right-aligned cells"
+  },
+  "rationale": "A strips both sides of every cell in the right-aligned branch. The candidate patch strips only leading spaces: with A present it is inert, but with A removed trailing spaces and tabs survive and the rendered table differs from A's. Neither the patch nor its absence reproduces A."
+}

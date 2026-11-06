@@ -1,0 +1,750 @@
+{
+  "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+  "baseline": "C_ast_intervention",
+  "baseline_version": "C-ast-intervention-1.0",
+  "task_id": "werkzeug_filestorage_stream_name",
+  "discovery": {
+    "target_variables": [
+      "filename",
+      "getattr",
+      "stream"
+    ],
+    "target_lhs_variables": [
+      "filename"
+    ],
+    "reachable_functions": [
+      "__init__"
+    ],
+    "candidate_ops": [
+      {
+        "id": "src/werkzeug/datastructures.py:2921-2921",
+        "file": "src/werkzeug/datastructures.py",
+        "first_line": 2921,
+        "last_line": 2921,
+        "kind": "assignment",
+        "code": "                filename = os.fsdecode(filename)"
+      },
+      {
+        "id": "src/werkzeug/datastructures.py:2924-2924",
+        "file": "src/werkzeug/datastructures.py",
+        "first_line": 2924,
+        "last_line": 2924,
+        "kind": "assignment",
+        "code": "                filename = None"
+      },
+      {
+        "id": "src/werkzeug/datastructures.py:2926-2926",
+        "file": "src/werkzeug/datastructures.py",
+        "first_line": 2926,
+        "last_line": 2926,
+        "kind": "assignment",
+        "code": "            filename = os.fsdecode(filename)"
+      }
+    ],
+    "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate"
+  },
+  "pruning": {
+    "universe": [
+      {
+        "id": "src/werkzeug/datastructures.py:2924-2924",
+        "file": "src/werkzeug/datastructures.py",
+        "first_line": 2924,
+        "last_line": 2924,
+        "kind": "assignment",
+        "code": "                filename = None"
+      },
+      {
+        "id": "src/werkzeug/datastructures.py:2921-2921",
+        "file": "src/werkzeug/datastructures.py",
+        "first_line": 2921,
+        "last_line": 2921,
+        "kind": "assignment",
+        "code": "                filename = os.fsdecode(filename)"
+      },
+      {
+        "id": "src/werkzeug/datastructures.py:2926-2926",
+        "file": "src/werkzeug/datastructures.py",
+        "first_line": 2926,
+        "last_line": 2926,
+        "kind": "assignment",
+        "code": "            filename = os.fsdecode(filename)"
+      }
+    ],
+    "ranking": [
+      {
+        "id": "src/werkzeug/datastructures.py:2924-2924",
+        "changed_cells": 4,
+        "cells": 12,
+        "span": 1
+      },
+      {
+        "id": "src/werkzeug/datastructures.py:2921-2921",
+        "changed_cells": 1,
+        "cells": 12,
+        "span": 1
+      },
+      {
+        "id": "src/werkzeug/datastructures.py:2926-2926",
+        "changed_cells": 1,
+        "cells": 12,
+        "span": 1
+      }
+    ],
+    "considered": 3,
+    "dropped_no_effect": 0,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0
+  },
+  "universe": [
+    {
+      "id": "src/werkzeug/datastructures.py:2924-2924",
+      "file": "src/werkzeug/datastructures.py",
+      "first_line": 2924,
+      "last_line": 2924,
+      "kind": "assignment",
+      "code": "                filename = None"
+    },
+    {
+      "id": "src/werkzeug/datastructures.py:2921-2921",
+      "file": "src/werkzeug/datastructures.py",
+      "first_line": 2921,
+      "last_line": 2921,
+      "kind": "assignment",
+      "code": "                filename = os.fsdecode(filename)"
+    },
+    {
+      "id": "src/werkzeug/datastructures.py:2926-2926",
+      "file": "src/werkzeug/datastructures.py",
+      "first_line": 2926,
+      "last_line": 2926,
+      "kind": "assignment",
+      "code": "            filename = os.fsdecode(filename)"
+    }
+  ],
+  "inputs": [
+    {
+      "stream": "tempfile"
+    },
+    {
+      "stream": "stderr"
+    },
+    {
+      "stream": "none",
+      "data": "abc"
+    },
+    {
+      "stream": "named",
+      "data": "abc",
+      "name": "x.txt"
+    },
+    {
+      "stream": "named",
+      "data": "abc",
+      "name": "<stderr>"
+    },
+    {
+      "stream": "named",
+      "data": "abc",
+      "name": "<stdin>"
+    }
+  ],
+  "per_input": [
+    {
+      "input": {
+        "stream": "tempfile"
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "<home>\\AppData\\Local\\Temp\\tmpshoh0ynh",
+          "filename_type": "str",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "stream": "stderr"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/datastructures.py:2924-2924"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "stream": "none",
+        "data": "abc"
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/datastructures.py:2921-2921"
+        ],
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ],
+        [
+          "src/werkzeug/datastructures.py:2926-2926"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "stream": "named",
+        "data": "abc",
+        "name": "x.txt"
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "x.txt",
+          "filename_type": "str",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "stream": "named",
+        "data": "abc",
+        "name": "<stderr>"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/datastructures.py:2924-2924"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "stream": "named",
+        "data": "abc",
+        "name": "<stdin>"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/datastructures.py:2924-2924"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/datastructures.py:2924-2924"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "submission": {
+    "submission_id": "baseline-C",
+    "task_id": "werkzeug_filestorage_stream_name",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "stream": "tempfile"
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "stream": "stderr"
+          },
+          {
+            "stream": "named",
+            "data": "abc",
+            "name": "<stderr>"
+          },
+          {
+            "stream": "named",
+            "data": "abc",
+            "name": "<stdin>"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2924,
+            "code": "                filename = None"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "stream": "stderr"
+          },
+          {
+            "stream": "named",
+            "data": "abc",
+            "name": "<stderr>"
+          },
+          {
+            "stream": "named",
+            "data": "abc",
+            "name": "<stdin>"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2924,
+            "code": "                filename = None"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "stream": "stderr"
+        },
+        "control_input": {
+          "stream": "tempfile"
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/datastructures.py",
+            "line": 2924,
+            "code": "                filename = None"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "inputs": [
+        {
+          "stream": "tempfile"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "x.txt"
+        }
+      ],
+      "basis": "execution"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/datastructures.py:2924-2924"
+      ],
+      "inputs": [
+        {
+          "stream": "stderr"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stderr>"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stdin>"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MMBS",
+      "operations": [
+        "src/werkzeug/datastructures.py:2924-2924"
+      ],
+      "inputs": [
+        {
+          "stream": "stderr"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stderr>"
+        },
+        {
+          "stream": "named",
+          "data": "abc",
+          "name": "<stdin>"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "operations": [
+        "src/werkzeug/datastructures.py:2924-2924"
+      ],
+      "input": {
+        "stream": "stderr"
+      },
+      "control_input": {
+        "stream": "tempfile"
+      },
+      "level": "WITNESS_VERIFIED"
+    }
+  ],
+  "unknowns": [
+    "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"stream\":\"none\"}",
+    "EXP-1 emission filter dropped verified minimal sets: MSMS 3/6, MMBS 0/3"
+  ],
+  "probe_executions": 80,
+  "variant_builds": 16,
+  "discovery_source": "ast",
+  "emission_mode": "active_filtered",
+  "filter_stats": {
+    "msms_dropped": 3,
+    "mmbs_dropped": 0,
+    "msms_total": 6,
+    "mmbs_total": 3
+  },
+  "search": {
+    "mode": "exhaustive",
+    "inputs_with_search": 4,
+    "evaluations": 32,
+    "subsets_total": 32,
+    "complete": true,
+    "executor_cache_hits": 0,
+    "unknown_subsets": 0,
+    "invalid_subsets": 0,
+    "msms_unknown": 0,
+    "mmbs_unknown": 0
+  },
+  "graph_meta": null,
+  "search_runs": [
+    {
+      "input": {
+        "stream": "stderr"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "stream": "none",
+        "data": "abc"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "evaluations": 5,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "stream": "named",
+        "data": "abc",
+        "name": "<stderr>"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "stream": "named",
+        "data": "abc",
+        "name": "<stdin>"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 8,
+        "subsets_total": 8,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "mode": "C-original",
+  "wall_seconds": 23.741
+}

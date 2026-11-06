@@ -1,0 +1,1944 @@
+{
+  "schema": "mace-benchmark-pilot-oracle/1",
+  "evidence_level": "BOUNDED",
+  "generation": "Each case was executed on P+ and P- (and on every enable/disable combination of the marked operations for controlled tasks) by scripts/pilot_build.py using benchmark_pilot.engine.  Equality is equality of the specified observable, with exception type and message as the observation when a version raises.  This is a complete enumeration of the frozen finite domain, not a proof over all legal inputs.",
+  "domain_status": "BOUNDED on the explicitly listed frozen cases.  No PROVEN claim is made anywhere in this file.",
+  "tasks": {
+    "ctrl_01": {
+      "kind": "controlled",
+      "domain_size": 6,
+      "masked_count": 3,
+      "exposed_count": 3,
+      "masked_with_local_effect_count": 3,
+      "cases": [
+        {
+          "case_id": "case_0000",
+          "args": {
+            "mode": 0,
+            "x": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0001",
+          "args": {
+            "mode": 0,
+            "x": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              1
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              1
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0002",
+          "args": {
+            "mode": 0,
+            "x": 2
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              2
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              2
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0003",
+          "args": {
+            "mode": 1,
+            "x": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              1
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0004",
+          "args": {
+            "mode": 1,
+            "x": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              2
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              1
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0005",
+          "args": {
+            "mode": 1,
+            "x": 2
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              2
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        }
+      ],
+      "existing_tests": {
+        "t_mode0_x0": {
+          "input": {
+            "mode": 0,
+            "x": 0
+          },
+          "case_id": "case_0000",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "t_mode0_x1": {
+          "input": {
+            "mode": 0,
+            "x": 1
+          },
+          "case_id": "case_0001",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        }
+      }
+    },
+    "ctrl_02": {
+      "kind": "controlled",
+      "domain_size": 24,
+      "masked_count": 5,
+      "exposed_count": 19,
+      "masked_with_local_effect_count": 5,
+      "cases": [
+        {
+          "case_id": "case_0000",
+          "args": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0001",
+          "args": {
+            "x": 1,
+            "c": 0,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0002",
+          "args": {
+            "x": 1,
+            "c": 1,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0003",
+          "args": {
+            "x": 1,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              1
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0004",
+          "args": {
+            "x": 2,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0005",
+          "args": {
+            "x": 2,
+            "c": 0,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0006",
+          "args": {
+            "x": 2,
+            "c": 1,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0007",
+          "args": {
+            "x": 2,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              8
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              2
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0008",
+          "args": {
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0009",
+          "args": {
+            "x": 3,
+            "c": 0,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0010",
+          "args": {
+            "x": 3,
+            "c": 1,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0011",
+          "args": {
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              9
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0012",
+          "args": {
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0013",
+          "args": {
+            "x": 4,
+            "c": 0,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0014",
+          "args": {
+            "x": 4,
+            "c": 1,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0015",
+          "args": {
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              10
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0016",
+          "args": {
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0017",
+          "args": {
+            "x": 5,
+            "c": 0,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0018",
+          "args": {
+            "x": 5,
+            "c": 1,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0019",
+          "args": {
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              11
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0020",
+          "args": {
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0021",
+          "args": {
+            "x": 6,
+            "c": 0,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              12
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0022",
+          "args": {
+            "x": 6,
+            "c": 1,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0023",
+          "args": {
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              12
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        }
+      ],
+      "existing_tests": {
+        "t_rounds_x3": {
+          "input": {
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "case_id": "case_0008",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "t_rounds_x5": {
+          "input": {
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "case_id": "case_0016",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        }
+      }
+    },
+    "ctrl_03": {
+      "kind": "controlled",
+      "domain_size": 20,
+      "masked_count": 14,
+      "exposed_count": 6,
+      "masked_with_local_effect_count": 14,
+      "cases": [
+        {
+          "case_id": "case_0000",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0001",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0002",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0003",
+          "args": {
+            "p": 0,
+            "q": 1,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0004",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0005",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0006",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0007",
+          "args": {
+            "p": 1,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0008",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0009",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0010",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0011",
+          "args": {
+            "p": 0,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0012",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0013",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0014",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0015",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              0
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0016",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              7
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              3
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0017",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              8
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              4
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0018",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              9
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              5
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        },
+        {
+          "case_id": "case_0019",
+          "args": {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "observation_plus": [
+            "return",
+            [
+              "int",
+              10
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "int",
+              6
+            ]
+          ],
+          "observable_equal": false,
+          "a_has_local_effect": true
+        }
+      ],
+      "existing_tests": {
+        "t_b_only": {
+          "input": {
+            "p": 0,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "case_id": "case_0002",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "t_e_only": {
+          "input": {
+            "p": 1,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "case_id": "case_0007",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "t_coop": {
+          "input": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "case_id": "case_0013",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "t_both_overwrite": {
+          "input": {
+            "p": 0,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "case_id": "case_0010",
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          }
+        }
+      }
+    },
+    "real_formatdef": {
+      "kind": "real",
+      "domain_size": 8,
+      "masked_count": 8,
+      "exposed_count": 0,
+      "masked_with_local_effect_count": 8,
+      "cases": [
+        {
+          "case_id": "function1",
+          "args": {
+            "function": "function1",
+            "signature": "()",
+            "name": "_function1"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function1()"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function1()"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function2",
+          "args": {
+            "function": "function2",
+            "signature": "(arg1)",
+            "name": "_function2"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function2(arg1)"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function2(arg1)"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function3",
+          "args": {
+            "function": "function3",
+            "signature": "(arg1, arg2='qwe')",
+            "name": "_function3"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function3(arg1, arg2='qwe')"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function3(arg1, arg2='qwe')"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function4",
+          "args": {
+            "function": "function4",
+            "signature": "(arg1, *args, **kwargs)",
+            "name": "_function4"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function4(arg1, *args, **kwargs)"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function4(arg1, *args, **kwargs)"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function5",
+          "args": {
+            "function": "function5",
+            "signature": "(a, b=2, *, c=3)",
+            "name": "_function5"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function5(a, b=2, *, c=3)"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function5(a, b=2, *, c=3)"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function6",
+          "args": {
+            "function": "function6",
+            "signature": "(*args, **kwargs)",
+            "name": "_function6"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function6(*args, **kwargs)"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function6(*args, **kwargs)"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function7",
+          "args": {
+            "function": "function7",
+            "signature": "(x: 'int', y: 'str' = 'z') -> 'bool'",
+            "name": "_function7"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function7(x: 'int', y: 'str' = 'z') -> 'bool'"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function7(x: 'int', y: 'str' = 'z') -> 'bool'"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        },
+        {
+          "case_id": "function8",
+          "args": {
+            "function": "function8",
+            "signature": "()",
+            "name": "_function8"
+          },
+          "observation_plus": [
+            "return",
+            [
+              "str",
+              "_function8()"
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "str",
+              "_function8()"
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": true,
+          "local_effect_detail": {
+            "local_effect": true,
+            "plus_type": "str",
+            "minus_type": "Signature"
+          }
+        }
+      ],
+      "existing_tests": {
+        "test_formatdef": {
+          "input": {
+            "case_ids": [
+              "function1",
+              "function2",
+              "function3",
+              "function4"
+            ]
+          },
+          "observable_equal": true,
+          "plus": {
+            "passed": true,
+            "error": null
+          },
+          "minus": {
+            "passed": true,
+            "error": null
+          },
+          "gold_verdict": "masked"
+        }
+      },
+      "global_test_verdict": "masked"
+    },
+    "real_setdiff": {
+      "kind": "real",
+      "domain_size": 6,
+      "masked_count": 6,
+      "exposed_count": 0,
+      "masked_with_local_effect_count": 0,
+      "cases": [
+        {
+          "case_id": "empty_empty",
+          "args": {
+            "declared": [],
+            "provided": {}
+          },
+          "observation_plus": [
+            "return",
+            [
+              "seq",
+              []
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "seq",
+              []
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": false,
+          "local_effect_detail": {
+            "local_effect": false,
+            "plus": [],
+            "minus": []
+          }
+        },
+        {
+          "case_id": "ab_a",
+          "args": {
+            "declared": [
+              "a",
+              "b"
+            ],
+            "provided": {
+              "a": 1
+            }
+          },
+          "observation_plus": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "str",
+                  "b"
+                ]
+              ]
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "str",
+                  "b"
+                ]
+              ]
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": false,
+          "local_effect_detail": {
+            "local_effect": false,
+            "plus": [
+              "b"
+            ],
+            "minus": [
+              "b"
+            ]
+          }
+        },
+        {
+          "case_id": "ab_ab",
+          "args": {
+            "declared": [
+              "a",
+              "b"
+            ],
+            "provided": {
+              "a": 1,
+              "b": 2
+            }
+          },
+          "observation_plus": [
+            "return",
+            [
+              "seq",
+              []
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "seq",
+              []
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": false,
+          "local_effect_detail": {
+            "local_effect": false,
+            "plus": [],
+            "minus": []
+          }
+        },
+        {
+          "case_id": "a_extra",
+          "args": {
+            "declared": [
+              "a"
+            ],
+            "provided": {
+              "a": 1,
+              "b": 2
+            }
+          },
+          "observation_plus": [
+            "return",
+            [
+              "seq",
+              []
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "seq",
+              []
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": false,
+          "local_effect_detail": {
+            "local_effect": false,
+            "plus": [],
+            "minus": []
+          }
+        },
+        {
+          "case_id": "abc_none",
+          "args": {
+            "declared": [
+              "a",
+              "b",
+              "c"
+            ],
+            "provided": {}
+          },
+          "observation_plus": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "str",
+                  "a"
+                ],
+                [
+                  "str",
+                  "b"
+                ],
+                [
+                  "str",
+                  "c"
+                ]
+              ]
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "str",
+                  "a"
+                ],
+                [
+                  "str",
+                  "b"
+                ],
+                [
+                  "str",
+                  "c"
+                ]
+              ]
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": false,
+          "local_effect_detail": {
+            "local_effect": false,
+            "plus": [
+              "a",
+              "b",
+              "c"
+            ],
+            "minus": [
+              "a",
+              "b",
+              "c"
+            ]
+          }
+        },
+        {
+          "case_id": "a_empty",
+          "args": {
+            "declared": [
+              "a"
+            ],
+            "provided": {}
+          },
+          "observation_plus": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "str",
+                  "a"
+                ]
+              ]
+            ]
+          ],
+          "observation_minus": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "str",
+                  "a"
+                ]
+              ]
+            ]
+          ],
+          "observable_equal": true,
+          "a_has_local_effect": false,
+          "local_effect_detail": {
+            "local_effect": false,
+            "plus": [
+              "a"
+            ],
+            "minus": [
+              "a"
+            ]
+          }
+        }
+      ],
+      "existing_tests": {},
+      "global_test_verdict": "not_covered"
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "task_id": "sd_isort_format_strip_m4",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_padded",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "confirmed": [
+        [
+          "isort/format.py:24-24"
+        ],
+        [
+          "isort/format.py:28-28"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "isort/format.py:24-24"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "import_line contains newline",
+          "rationale": "Keeping line 24 ensures that any newline characters are stripped, making the deletion of line 21 unobservable if the import_line contains a newline.",
+          "disabled_operations": [
+            "isort/format.py:28-28"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "isort/format.py:28-28"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "import_line contains tab",
+          "rationale": "Keeping line 28 ensures that any tab characters are stripped, making the deletion of line 21 unobservable if the import_line contains a tab.",
+          "disabled_operations": [
+            "isort/format.py:24-24"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "isort/format.py:24-24",
+            "isort/format.py:28-28"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "isort/format.py:24-24"
+          ],
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 0,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [],
+      "stray_candidates": [],
+      "recall": 0.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "isort/format.py:36-36",
+        "isort/format.py:31-31",
+        "isort/format.py:32-32",
+        "isort/format.py:34-34"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 4
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "isort/format.py:31-31",
+        "isort/format.py:32-32",
+        "isort/format.py:34-34",
+        "isort/format.py:36-36"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 4
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

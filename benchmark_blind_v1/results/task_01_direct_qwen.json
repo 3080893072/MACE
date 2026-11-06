@@ -1,0 +1,52 @@
+{
+  "schema_version": "mace-benchmark-blind-v1-method-result",
+  "task_id": "blind_01_parse_header_links",
+  "method": "direct_qwen",
+  "status": "BLOCKED",
+  "counted_as_analyzed": false,
+  "correctness": null,
+  "tokens": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "llm_calls": 0
+  },
+  "wall_seconds": 0.61,
+  "started_at_utc": "2026-11-01T07:05:08+00:00",
+  "finished_at_utc": "2026-11-01T07:05:08+00:00",
+  "answer": null,
+  "explanation": [
+    "No Qwen model service is reachable on this machine.",
+    "No call was made, so no tokens were consumed and no answer exists.",
+    "A blocked method is not a wrong answer and is not counted as analysed."
+  ],
+  "input_information": {
+    "public_task_sha256": "a20efe0664a8539553c64c122222b2debbef12c1ed55f4fab30f29aeb4472486",
+    "freeze_public_sha256": "a20efe0664a8539553c64c122222b2debbef12c1ed55f4fab30f29aeb4472486",
+    "freeze_sha256": "931a20237c2047e5a476b15effba108eaee8247956398a2eddc556cef62afc52",
+    "public_schema_sha256": "c367fec1e5c9ceac971c97610a8e264f6582df9ef4591964c77de8345e024d2b",
+    "private_data_used": false
+  },
+  "environment": {
+    "python": "3.11.7",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "provider_probe": {
+    "ollama_binary": null,
+    "ollama_endpoint": "http://127.0.0.1:11434",
+    "ollama_reachable": false,
+    "ollama_probe_error": "TimeoutError: timed out",
+    "dashscope_key_present": false,
+    "available": false,
+    "note": "No secret value is recorded; only whether the variable is set."
+  },
+  "model_config": {
+    "intended_provider": "ollama",
+    "intended_model": "qwen2.5-coder:7b",
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192
+  },
+  "prompt": "You are analysing a proposed code deletion.  Answer only from the\npublic information below.  A Python exception is an observation.  Do not claim\na proof over all inputs; the best evidence level is BOUNDED.\n\n## Program P+\n```python\nimport re\n\n\ndef parse_header_links(value):\n    \"\"\"Return a list of parsed link headers proxies.\n\n    i.e. Link: <http:/.../front.jpeg>; rel=front; type=\"image/jpeg\",<http://.../back.jpeg>; rel=back;type=\"image/jpeg\"\n\n    :rtype: list\n    \"\"\"\n\n    links = []\n\n    replace_chars = \" '\\\"\"\n\n    value = value.strip(replace_chars)  # TARGET_A\n    if not value:\n        return links\n\n    for val in re.split(\", *<\", value):\n        try:\n            url, params = val.split(\";\", 1)\n        except ValueError:\n            url, params = val, \"\"\n\n        link = {\"url\": url.strip(\"<> '\\\"\")}\n\n        for param in params.split(\";\"):\n            try:\n                key, value = param.split(\"=\")\n            except ValueError:\n                break\n\n            link[key.strip(replace_chars)] = value.strip(replace_chars)\n\n        links.append(link)\n\n    return links\n```\n\n## Target A\nLine 16: `value = value.strip(replace_chars)  # TARGET_A`\nDeletion rule: Replace the entire target line with ``pass`` at the same indentation.  No other edit.\n\n## Legal inputs and observable\nvalue must be a Python str (any Unicode, including the empty string).  Non-str values are outside the legal input domain; the function raises AttributeError on them.\nObservable: The return value.  A Python exception is also an observation. Equality is type-aware: bool and int are distinct, and dict order is ignored.\n\n## Public guard features (the correct expression is hidden)\n- nonempty: len(value) > 0\n- all_special: all(ch in \" '\"\" for ch in value)\nUse only these features, int/bool constants, and/or/not, comparisons, and\narithmetic.  Return the Guard expression as a string in `guard.expr`.\n\n## Neutral candidate operations\n- op_1: line 26, expression `url.strip(\"<> '\\\"\")`; disable by replace the expression at the source position with its receiver ``url``; no other edit\n- op_2: line 34, expression `key.strip(replace_chars)`; disable by replace the expression at the source position with its receiver ``key``; no other edit\n- op_3: line 34, expression `value.strip(replace_chars)`; disable by replace the expression at the source position with its receiver ``value``; no other edit\n\n## Public probes (inputs are public; labels are private)\n- p1: ' \"<http://p>\" '\n- p2: '<http://p>; rel=y '\n- p3: ' \"<http://p>; rel=y\" '\n- p4: '  '\n\nFor each probe, report the exact set of minimal enabled operations that makes\nP+ and P- observationally equal, or [] plus kind \"none\" if the deletion is\nobservable on that probe.\n\n## T_original (the programmer's existing tests; real upstream test)\n```python\ndef test_parse_header_links():\n    cases = (\n        ('<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\"', [{'url': 'http:/.../front.jpeg', 'rel': 'front', 'type': 'image/jpeg'}]),\n        ('<http:/.../front.jpeg>', [{'url': 'http:/.../front.jpeg'}]),\n        ('<http:/.../front.jpeg>;', [{'url': 'http:/.../front.jpeg'}]),\n        ('<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;', [{'url': 'http:/.../front.jpeg', 'type': 'image/jpeg'}, {'url': 'http://.../back.jpeg'}]),\n        ('', []),\n    )\n    for value, expected in cases:\n        assert parse_header_links(value) == expected\n```\n\n## Required JSON answer\n{\n  \"guard\": {\"expr\": \"...\", \"status\": \"BOUNDED or UNKNOWN\"},\n  \"masking\": {\n      \"probes\": [\n        {\"probe_id\": \"p1\", \"absorber_sets\": [[\"op_<k>\"]], \"kind\": \"independent | cooperative | mixed | none\"},\n        {\"probe_id\": \"p2\", \"absorber_sets\": [[\"op_<k>\"]], \"kind\": \"independent | cooperative | mixed | none\"},\n        {\"probe_id\": \"p3\", \"absorber_sets\": [[\"op_<k>\"]], \"kind\": \"independent | cooperative | mixed | none\"},\n        {\"probe_id\": \"p4\", \"absorber_sets\": [[\"op_<k>\"]], \"kind\": \"independent | cooperative | mixed | none\"}\n      ]\n  },\n  \"counterexample\": {\"exists\": true, \"value\": \"...\"},\n  \"test_gap\": {\"verdict\": \"...\", \"tests\": [{\"name\": \"...\", \"verdict\": \"...\"}]},\n  \"evidence\": \"...\"\n}\nReturn one JSON object and no prose outside it.\n",
+  "prompt_sha256": "423c5fa2aa9f56df37658a189b7834c65e2d486172d49a061578ac89c9b01be7"
+}

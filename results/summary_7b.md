@@ -1,0 +1,29 @@
+| fixture | model | mode | guard ok | unsound/incomplete | round1 -> final | failing rels | parse err | prompt tok | out tok | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| dedup_channel | qwen2.5-coder:7b | direct | no | 55/75 | 120 -> 130 | 0 | 0 | 1366 | 93 | 3.2 |
+| dedup_channel | qwen2.5-coder:7b | fixed | no | 0/0 | 0 -> 0 | 0 | 0 | 1216 | 133 | 4.6 |
+| dedup_channel | qwen2.5-coder:7b | generic | no | 55/75 | 120 -> 130 | 0 | 0 | 1738 | 373 | 9.0 |
+| dedup_channel | qwen2.5-coder:7b | mace | no | 140/0 | 140 -> 140 | 1 | 2 | 2735 | 407 | 10.2 |
+| sort_channel | qwen2.5-coder:7b | direct | no | 1134/7816 | 8322 -> 8950 | 0 | 0 | 1630 | 103 | 6.3 |
+| sort_channel | qwen2.5-coder:7b | fixed | no | 1134/7816 | 8950 -> 8950 | 0 | 0 | 1933 | 169 | 11.4 |
+| sort_channel | qwen2.5-coder:7b | generic | no | 2000/5954 | 8322 -> 7954 | 0 | 0 | 2447 | 540 | 14.8 |
+| sort_channel | qwen2.5-coder:7b | mace | no | 2866/5456 | 8322 -> 8322 | 3 | 1 | 6192 | 1000 | 22.4 |
+| swap_channels | qwen2.5-coder:7b | direct | no | 3/11 | 12 -> 14 | 0 | 0 | 1374 | 75 | 3.3 |
+| swap_channels | qwen2.5-coder:7b | fixed | no | 3/11 | 12 -> 14 | 0 | 0 | 1508 | 92 | 4.1 |
+| swap_channels | qwen2.5-coder:7b | generic | no | 3/11 | 12 -> 14 | 0 | 0 | 1687 | 266 | 7.3 |
+| swap_channels | qwen2.5-coder:7b | mace | no | 0/12 | 12 -> 12 | 3 | 0 | 6189 | 984 | 20.3 |
+| None | qwen2.5-coder:7b | direct | no | None/None | 0 -> 0 | 0 | 0 | None | None | 0.0 |
+| None | qwen2.5-coder:7b | generic | no | None/None | 0 -> 0 | 0 | 0 | None | None | 0.0 |
+| None | qwen2.5-coder:7b | target | no | None/None | 0 -> 0 | 0 | 0 | None | None | 0.0 |
+| alt_masking | qwen2.5-coder:7b | direct | no | 13/82 | 120 -> 95 | 0 | 0 | 4861 | 262 | 8.6 |
+| alt_masking | qwen2.5-coder:7b | fixed | no | 40/0 | 80 -> 40 | 0 | 0 | 4817 | 205 | 6.8 |
+| alt_masking | qwen2.5-coder:7b | generic | no | 13/82 | 120 -> 95 | 0 | 0 | 5347 | 245 | 7.1 |
+| alt_masking | qwen2.5-coder:7b | mace | no | 40/80 | 120 -> 120 | 1 | 0 | 18484 | 849 | 19.6 |
+| modulo_absorb | qwen2.5-coder:7b | direct | no | 1/212 | 471 -> 213 | 0 | 0 | 4577 | 178 | 8.0 |
+| modulo_absorb | qwen2.5-coder:7b | fixed | no | 0/0 | 306 -> 0 | 0 | 0 | 4988 | 235 | 7.8 |
+| modulo_absorb | qwen2.5-coder:7b | generic | no | 1/212 | 471 -> 213 | 0 | 0 | 5789 | 399 | 11.4 |
+| modulo_absorb | qwen2.5-coder:7b | mace | no | 259/212 | 471 -> 471 | 2 | 0 | 18350 | 772 | 19.6 |
+| overwrite_channel | qwen2.5-coder:7b | direct | no | 2/52 | 68 -> 54 | 0 | 0 | 4897 | 243 | 12.8 |
+| overwrite_channel | qwen2.5-coder:7b | fixed | no | 2/49 | 68 -> 51 | 0 | 0 | 5643 | 411 | 12.7 |
+| overwrite_channel | qwen2.5-coder:7b | generic | no | 28/41 | 68 -> 69 | 0 | 0 | 5831 | 324 | 9.1 |
+| overwrite_channel | qwen2.5-coder:7b | mace | no | 0/50 | 50 -> 50 | 2 | 0 | 18485 | 814 | 23.8 |

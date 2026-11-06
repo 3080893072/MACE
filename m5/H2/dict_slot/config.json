@@ -1,0 +1,84 @@
+{
+  "fixture": {
+    "id": "dict_slot",
+    "source": "fixtures/dict_slot.py",
+    "entry": "program",
+    "channels": 2,
+    "domain": {
+      "kind": "exhaustive",
+      "args": [
+        {
+          "name": "xs",
+          "sort": "list[int]",
+          "length": [
+            0,
+            3
+          ],
+          "values": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "mode",
+          "sort": "bool"
+        }
+      ]
+    },
+    "functions": {},
+    "notes": "Held-out. A writes one dictionary slot that a later branch overwrites; the other channel is a length-based identity."
+  },
+  "fixture_path": "dict_slot.json",
+  "model_info": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": ""
+  },
+  "runtime": {
+    "ps": {
+      "models": [
+        {
+          "name": "qwen2.5-coder:32b",
+          "model": "qwen2.5-coder:32b",
+          "size": 21775106702,
+          "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen2",
+            "families": [
+              "qwen2"
+            ],
+            "parameter_size": "32.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-10-30T18:44:22.543014193+08:00",
+          "size_vram": 21775106702,
+          "context_length": 8192,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "seed": 42,
+  "rounds": 3,
+  "modes": [
+    "mace"
+  ],
+  "num_ctx": 8192,
+  "temperature": 0.0,
+  "domain_size": 80,
+  "domain_exhaustive": true,
+  "started_utc": "2026-10-30T10:39:22.782886+00:00"
+}

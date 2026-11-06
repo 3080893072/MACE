@@ -1,0 +1,19 @@
+--- a/tabulate/__init__.py
++++ b/tabulate/__init__.py
+@@ -2552,12 +2552,16 @@
+                 self._handle_long_word(chunks, cur_line, cur_len, width)
+                 cur_len = sum(map(self._len, cur_line))
+ 
+             # If the last chunk on this line is all whitespace, drop it.
+             if self.drop_whitespace and cur_line and cur_line[-1].strip() == "":
+                 cur_len -= self._len(cur_line[-1])
++                # SD:U:U1:begin
++                if self.max_lines == 2:
++                    cur_len = sum(map(self._len, cur_line[:-1]))
++                # SD:U:U1:end
+                 del cur_line[-1]
+ 
+             if cur_line:
+                 if (
+                     self.max_lines is None
+                     or len(lines) + 1 < self.max_lines

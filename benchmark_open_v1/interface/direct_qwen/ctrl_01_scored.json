@@ -1,0 +1,251 @@
+{
+  "schema_version": "mace-open-discovery-raw-v1",
+  "task_id": "ctrl_01",
+  "method": "direct_qwen",
+  "provider": "transformers-local",
+  "model_info": {
+    "provider": "transformers-local",
+    "model": "qwen15b",
+    "path": "D:/tmp/qwen15b",
+    "dtype": "torch.bfloat16",
+    "device": "cuda:0",
+    "parameters": 1543714304,
+    "max_position_embeddings": 32768
+  },
+  "generation": {
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "do_sample": false
+  },
+  "prompt_sha256": "690e77b200405ea502f84436b66ed8f2885f1eea6ffd3d07789c2a3ab0d042c0",
+  "started_at_utc": "2026-11-01T11:26:50+00:00",
+  "finished_at_utc": "2026-11-01T11:27:08+00:00",
+  "wall_seconds": 17.757,
+  "stats": {
+    "prompt_tokens": 972,
+    "completion_tokens": 299,
+    "total_tokens": 1271,
+    "wall_seconds": 8.598,
+    "model": "qwen15b",
+    "provider": "transformers-local",
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "device": "cuda:0"
+  },
+  "parse_status": "ANSWERED",
+  "parse_error": null,
+  "answer": {
+    "task_id": "ctrl_01",
+    "relations": [
+      {
+        "operations": [
+          {
+            "line": 4,
+            "text": "if mode == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "mode": 0,
+          "x": 0
+        },
+        "condition": "True",
+        "explanation": "The if block is not executed when mode is 0.",
+        "counterexample": null
+      },
+      {
+        "operations": [
+          {
+            "line": 4,
+            "text": "if mode == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "mode": 0,
+          "x": 1
+        },
+        "condition": "True",
+        "explanation": "The if block is not executed when mode is 0.",
+        "counterexample": null
+      },
+      {
+        "operations": [
+          {
+            "line": 4,
+            "text": "if mode == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "mode": 0,
+          "x": 2
+        },
+        "condition": "True",
+        "explanation": "The if block is not executed when mode is 0.",
+        "counterexample": null
+      }
+    ],
+    "guard": {
+      "expr": "True",
+      "status": "BOUNDED"
+    },
+    "test_gap": [],
+    "evidence": null
+  },
+  "verification": {
+    "status": "SEMANTIC_ERROR",
+    "relation_results": [
+      {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_mask": {}
+        },
+        "operations": [
+          "B"
+        ],
+        "kind": "independent",
+        "case_id": "case_0000",
+        "input": {
+          "mode": 0,
+          "x": 0
+        },
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0003",
+            "case_0004",
+            "case_0005"
+          ],
+          "false_reject": [],
+          "witness_value": true
+        },
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold"
+      },
+      {
+        "status": "DUPLICATE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_mask": {}
+        },
+        "operations": [
+          "B"
+        ],
+        "kind": "independent",
+        "case_id": "case_0001",
+        "input": {
+          "mode": 0,
+          "x": 1
+        },
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0003",
+            "case_0004",
+            "case_0005"
+          ],
+          "false_reject": [],
+          "witness_value": true
+        },
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+        "duplicate_of": 0
+      },
+      {
+        "status": "DUPLICATE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_mask": {}
+        },
+        "operations": [
+          "B"
+        ],
+        "kind": "independent",
+        "case_id": "case_0002",
+        "input": {
+          "mode": 0,
+          "x": 2
+        },
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0003",
+            "case_0004",
+            "case_0005"
+          ],
+          "false_reject": [],
+          "witness_value": true
+        },
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+        "duplicate_of": 0
+      }
+    ],
+    "counts": {
+      "submitted": 1,
+      "verified": 0,
+      "incomplete": 0,
+      "false": 1,
+      "unverified": 0,
+      "format_error": 0,
+      "duplicates_ignored": 2
+    }
+  },
+  "guard": {
+    "status": "BOUNDED",
+    "exact": false,
+    "sound": false,
+    "complete": true,
+    "false_accept": [
+      "case_0003",
+      "case_0004",
+      "case_0005"
+    ],
+    "false_reject": [],
+    "errors": []
+  },
+  "test_gap": {
+    "status": "BOUNDED",
+    "rows": [
+      {
+        "test": "t_mode0_x0",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      },
+      {
+        "test": "t_mode0_x1",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      }
+    ],
+    "exact": false,
+    "covered": 0,
+    "total": 2
+  },
+  "counterexample": {
+    "status": "ABSENT"
+  },
+  "verification_executions": 36,
+  "raw_path": "benchmark_open_v1\\interface\\direct_qwen\\ctrl_01_raw.json"
+}

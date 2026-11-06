@@ -1,0 +1,178 @@
+[
+  {
+    "run": "dead_flag",
+    "run_file": "mace_seed42.json",
+    "fixture": "dead_flag",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 1250,
+    "completion_tokens": 308,
+    "wall_seconds": 17.796,
+    "rounds": 1,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 4,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "True"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "(((True)) and ((True)))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 4,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "dict_slot",
+    "run_file": "mace_seed42.json",
+    "fixture": "dict_slot",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 11796,
+    "completion_tokens": 933,
+    "wall_seconds": 51.765,
+    "rounds": 3,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 5,
+      "relations_good": 3,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "REFUTED",
+        "U2": "BOUNDED",
+        "O0": "REFUTED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "mode"
+    },
+    "guard_derived": {
+      "status": "INCOMPLETE",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": "INCOMPLETE",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 5,
+      "relations_on_reference_lines": 5,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "parity_snap",
+    "run_file": "mace_seed42.json",
+    "fixture": "parity_snap",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 13270,
+    "completion_tokens": 1600,
+    "wall_seconds": 86.375,
+    "rounds": 3,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 8,
+      "relations_good": 3,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "REFUTED",
+        "U2": "REFUTED",
+        "U3": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "REFUTED",
+        "O2": "REFUTED",
+        "O3": "REFUTED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": true,
+      "exact": false,
+      "expr": "even and sum(xs) % 2 == 0 or not even"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "((even and sum(xs) % 2 == 0))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": false,
+    "attribution": {
+      "relations_cited": 8,
+      "relations_on_reference_lines": 8,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "diagnostic_only": false
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/engine/filter_stack.py:29:name:stream",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/engine/filter_stack.py",
+  "function": "run",
+  "mechanism": "name",
+  "target_A": {
+    "line": 29,
+    "end_line": 29,
+    "kind": "Assign",
+    "code": "stream = filter_.process(stream)"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_format.py::TestFormat::test_identifiercase",
+    "tests/test_format.py::TestFormat::test_identifiercase_quotes",
+    "tests/test_format.py::TestFormat::test_keywordcase",
+    "tests/test_format.py::test_truncate_strings",
+    "tests/test_format.py::test_truncate_strings_doesnt_truncate_identifiers[select \"verrrylongcolumn\" from \"foo\"]",
+    "tests/test_format.py::test_truncate_strings_doesnt_truncate_identifiers[select verrrylongcolumn from foo]",
+    "tests/test_regressions.py::test_issue469_copy_as_psql_command"
+  ],
+  "original_hit_test_count": 7,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            stream = filter_.process(stream)",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.57,
+    "failed_nodeids": [
+      "tests.test_format.TestFormat::test_identifiercase",
+      "tests.test_format.TestFormat::test_keywordcase",
+      "tests.test_format::test_truncate_strings",
+      "tests.test_regressions::test_issue469_copy_as_psql_command"
+    ],
+    "stdout_tail": " fro... select foo\\n' == 'SELECT * FRO... select foo\\n'\nE         - SELECT * FROM bar; -- select foo\nE         + select * from bar; -- select foo\n\ntests\\test_format.py:11: AssertionError\n_______________________ TestFormat.test_identifiercase ________________________\n\nself = <tests.test_format.TestFormat object at 0x00000228BAF9E310>\n\n    def test_identifiercase(self):\n        sql = 'select * from bar; -- select foo\\n'\n        res = sqlparse.format(sql, identifier_case='upper')\n>       assert res == 'select * from BAR; -- select foo\\n'\nE       AssertionError: assert 'select * fro... select foo\\n' == 'select * fro... select foo\\n'\nE         - select * from BAR; -- select foo\nE         ?               ^^^\nE         + select * from bar; -- select foo\nE         ?               ^^^\n\ntests\\test_format.py:25: AssertionError\n____________________________ test_truncate_strings ____________________________\n\n    def test_truncate_strings():\n        sql = \"update foo set value = '{}';\".format('x' * 1000)\n        formatted = sqlparse.format(sql, truncate_strings=10)\n>       assert formatted == \"update foo set value = 'xxxxxxxxxx[...]';\"\nE       assert \"update foo s...xxxxxxxxxxx';\" == \"update foo s...xxxxxx[...]';\"\nE         - update foo set value = 'xxxxxxxxxx[...]';\nE         + update foo set value = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...\nE         \nE         ...Full output truncated (1 line hidden), use '-vv' to show\n\ntests\\test_format.py:683: AssertionError\n_____________________ test_issue469_copy_as_psql_command ______________________\n\n    def test_issue469_copy_as_psql_command():\n        formatted = sqlparse.format(\n            '\\\\copy select * from foo',\n            keyword_case='upper', identifier_case='capitalize')\n>       assert formatted == '\\\\copy SELECT * FROM Foo'\nE       AssertionError: assert '\\\\copy select * from foo' == '\\\\copy SELECT * FROM Foo'\nE         - \\copy SELECT * FROM Foo\nE         + \\copy select * from foo\n\ntests\\test_regressions.py:368: AssertionError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_format.py::TestFormat::test_keywordcase - AssertionError: a...\nFAILED tests/test_format.py::TestFormat::test_identifiercase - AssertionError...\nFAILED tests/test_format.py::test_truncate_strings - assert \"update foo s...x...\nFAILED tests/test_regressions.py::test_issue469_copy_as_psql_command - Assert...\n4 failed, 3 passed in 0.21s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

@@ -1,0 +1,78 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1056:name:strings",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_align_column_choose_padfn",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1056,
+    "end_line": 1056,
+    "kind": "Assign",
+    "code": "strings = [s.strip() for s in strings]"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_internal.py::test_align_column_multiline",
+    "test/test_output.py::test_column_alignment",
+    "test/test_output.py::test_double_grid_multiline_headerless",
+    "test/test_output.py::test_fancy_grid_multiline_headerless",
+    "test/test_output.py::test_grid_multiline_headerless",
+    "test/test_output.py::test_heavy_grid_multiline_headerless",
+    "test/test_output.py::test_mixed_grid_multiline_headerless",
+    "test/test_output.py::test_plain_multiline_headerless",
+    "test/test_output.py::test_presto_multiline_headerless",
+    "test/test_output.py::test_pretty",
+    "test/test_output.py::test_pretty_headerless",
+    "test/test_output.py::test_pretty_multiline",
+    "test/test_output.py::test_pretty_multiline_headerless",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells_headerless",
+    "test/test_output.py::test_pretty_multiline_with_links",
+    "test/test_output.py::test_psql_multiline_headerless",
+    "test/test_output.py::test_rounded_grid_multiline_headerless",
+    "test/test_output.py::test_simple_grid_multiline_headerless",
+    "test/test_output.py::test_simple_multiline_2",
+    "test/test_output.py::test_simple_multiline_2_with_sep_line",
+    "test/test_output.py::test_simple_multiline_headerless",
+    "test/test_output.py::test_textile_with_center_align"
+  ],
+  "original_hit_test_count": 23,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            strings = [s.strip() for s in strings]",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "FULL_SUITE_SURVIVES",
+  "status": "TEST_SURVIVING_DELETION",
+  "targeted_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 0.44,
+    "failed_nodeids": [],
+    "stdout_tail": ".......................                                                  [100%]\n- generated xml file: <local-path> -\n23 passed in 0.11s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": {
+    "returncode": 0,
+    "timed_out": null,
+    "seconds": 1.68,
+    "failed_nodeids": [],
+    "stdout_tail": ".................sssssssss..............................s..s............ [ 25%]\n.s..................s......s......s......s......s......s......s.......s. [ 50%]\n.s..s..s..s..s..s....................................................... [ 76%]\n............ssss.........................s..ss.s............sss.....     [100%]\n- generated xml file: <local-path> -\n247 passed, 37 skipped in 1.36s\n",
+    "stderr_tail": ""
+  },
+  "stage4_probe": null,
+  "verdict": "SURVIVES_BUT_STAGE4_NOT_RUN"
+}

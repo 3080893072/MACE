@@ -1,0 +1,53 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/numbertheory.py:372:name:n",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/numbertheory.py",
+  "function": "factorization",
+  "mechanism": "name",
+  "target_A": {
+    "line": 372,
+    "end_line": 372,
+    "kind": "Assign",
+    "code": "n = q"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_numbertheory.py::TestNumbertheory::test_factorisation_not_smallprimes",
+    "src/ecdsa/test_numbertheory.py::TestNumbertheory::test_factorization"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                    n = q",
+    "replacement": "                    pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 0.99,
+    "failed_nodeids": [
+      "src.ecdsa.test_numbertheory.TestNumbertheory::test_factorisation_not_smallprimes",
+      "src.ecdsa.test_numbertheory.TestNumbertheory::test_factorization"
+    ],
+    "stdout_tail": "FF                                                                       [100%]\n================================== FAILURES ===================================\n_____________ TestNumbertheory.test_factorisation_not_smallprimes _____________\n\nself = <ecdsa.test_numbertheory.TestNumbertheory testMethod=test_factorisation_not_smallprimes>\n\n    def test_factorisation_not_smallprimes(self):\n        exp = 1231 * 1237\n        assert 1231 not in smallprimes\n        assert 1237 not in smallprimes\n        factors = factorization(exp)\n        mult = 1\n        for i in factors:\n            mult *= i[0] ** i[1]\n>       assert mult == exp\nE       assert 1874501557 == 1522747\n\nsrc\\ecdsa\\test_numbertheory.py:396: AssertionError\n_____________________ TestNumbertheory.test_factorization _____________________\n\nself = <ecdsa.test_numbertheory.TestNumbertheory testMethod=test_factorization>\n\n    @settings(**HYP_SETTINGS)\n>   @given(st.integers(min_value=1, max_value=10**12))\n\nsrc\\ecdsa\\test_numbertheory.py:368: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\..\\broad_venvs\\ecdsa-0.18.0\\Lib\\site-packages\\hypothesis\\core.py:1726: in _raise_to_user\n    raise the_error_hypothesis_found\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <ecdsa.test_numbertheory.TestNumbertheory testMethod=test_factorization>\nnum = 405245429671\n\n    @settings(**HYP_SETTINGS)\n    @given(st.integers(min_value=1, max_value=10**12))\n    @example(265399 * 1526929)\n    @example(373297**2 * 553991)\n    def test_factorization(self, num):\n        factors = factorization(num)\n        mult = 1\n        for i in factors:\n            mult *= i[0] ** i[1]\n>       assert mult == num\nE       assert 107551731789253729 == 405245429671\nE       (note: 1 other explicit example also failed with this error; use Verbosity.verbose to view)\nE       Failing explicit example: test_factorization(\nE           self=<ecdsa.test_numbertheory.TestNumbertheory testMethod=test_factorization>,\nE           num=405_245_429_671,\nE       )\n\nsrc\\ecdsa\\test_numbertheory.py:376: AssertionError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_numbertheory.py::TestNumbertheory::test_factorisation_not_smallprimes\nFAILED src/ecdsa/test_numbertheory.py::TestNumbertheory::test_factorization\n2 failed in 0.66s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

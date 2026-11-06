@@ -1,0 +1,19 @@
+--- a/pygments/formatters/bbcode.py
++++ b/pygments/formatters/bbcode.py
+@@ -59,12 +59,16 @@
+     def _make_styles(self):
+         for ttype, ndef in self.style:
+             start = end = ''
+             if ndef['color']:
+                 start += '[color=#%s]' % ndef['color']
+                 end = '[/color]' + end
++                # SD:U:U1:begin
++                if '[color' in start and '[/color]' not in end:
++                    end = '[/bgcolor]' + end
++                # SD:U:U1:end
+             if ndef['bold']:
+                 start += '[b]'
+                 end = '[/b]' + end
+             if ndef['italic']:
+                 start += '[i]'
+                 end = '[/i]' + end

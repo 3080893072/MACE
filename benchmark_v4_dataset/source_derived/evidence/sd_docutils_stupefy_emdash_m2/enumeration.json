@@ -1,0 +1,227 @@
+{
+  "case_id": "sd_docutils_stupefy_emdash_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/utils/smartquotes.py",
+  "A_line": 827,
+  "A_code": "    text = text.replace(smart.emdash, \"--\")",
+  "original_sha256": "c3a7bbcb5f0abcaac04e6b3a3fcb40b4e69b77c4a7fa884fd06f961b30edd1d7",
+  "patched_sha256": "e22f3b52637d56f726307603099e1b3e26bf013a08171e49c388303d9a0d8bbd",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 827,
+      "role": "First em-dash leg: rewrites one em dash.",
+      "lines": [
+        "text = text.replace(smart.emdash, \"--\", 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 827,
+      "role": "Second em-dash leg: rewrites one further em dash.",
+      "lines": [
+        "text = text.replace(smart.emdash, \"--\", 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 827,
+      "end": 829
+    },
+    "U2": {
+      "begin": 830,
+      "end": 832
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_two_emdashes": {
+        "out": "a--b--c"
+      },
+      "expose_three_emdashes": {
+        "out": "a--b--c--d"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "P_MINUS": {
+      "mask_two_emdashes": {
+        "out": "a--b--c"
+      },
+      "expose_three_emdashes": {
+        "out": "a--b--c��d"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_two_emdashes": {
+        "out": "a��b��c"
+      },
+      "expose_three_emdashes": {
+        "out": "a��b��c��d"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1": {
+      "mask_two_emdashes": {
+        "out": "a--b��c"
+      },
+      "expose_three_emdashes": {
+        "out": "a--b��c��d"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U2": {
+      "mask_two_emdashes": {
+        "out": "a--b��c"
+      },
+      "expose_three_emdashes": {
+        "out": "a--b��c��d"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_two_emdashes": {
+        "out": "a--b--c"
+      },
+      "expose_three_emdashes": {
+        "out": "a--b--c��d"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    }
+  },
+  "per_input": {
+    "mask_two_emdashes": {
+      "plus": {
+        "out": "a--b--c"
+      },
+      "p_minus": {
+        "out": "a--b--c"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a��b��c"
+        },
+        "KEEP_U1": {
+          "out": "a--b��c"
+        },
+        "KEEP_U2": {
+          "out": "a--b��c"
+        },
+        "KEEP_U1_U2": {
+          "out": "a--b--c"
+        }
+      }
+    },
+    "expose_three_emdashes": {
+      "plus": {
+        "out": "a--b--c--d"
+      },
+      "p_minus": {
+        "out": "a--b--c��d"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a��b��c��d"
+        },
+        "KEEP_U1": {
+          "out": "a--b��c��d"
+        },
+        "KEEP_U2": {
+          "out": "a--b��c��d"
+        },
+        "KEEP_U1_U2": {
+          "out": "a--b--c��d"
+        }
+      }
+    },
+    "control_plain": {
+      "plus": {
+        "out": "plain text"
+      },
+      "p_minus": {
+        "out": "plain text"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "plain text"
+        },
+        "KEEP_U1": {
+          "out": "plain text"
+        },
+        "KEEP_U2": {
+          "out": "plain text"
+        },
+        "KEEP_U1_U2": {
+          "out": "plain text"
+        }
+      }
+    }
+  }
+}

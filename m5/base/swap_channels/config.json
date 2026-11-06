@@ -1,0 +1,91 @@
+{
+  "fixture": {
+    "id": "swap_channels",
+    "source": "fixtures/swap_channels.py",
+    "entry": "program",
+    "channels": 3,
+    "domain": {
+      "kind": "exhaustive",
+      "args": [
+        {
+          "name": "n",
+          "sort": "int",
+          "values": [
+            -1,
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "k",
+          "sort": "int",
+          "values": [
+            -1,
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "show_gap",
+          "sort": "bool"
+        }
+      ]
+    },
+    "functions": {},
+    "notes": "Two channels are symmetric under the swap (cross-field compensation); the third is gated by show_gap."
+  },
+  "fixture_path": "swap_channels.json",
+  "model_info": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": ""
+  },
+  "runtime": {
+    "ps": {
+      "models": [
+        {
+          "name": "qwen2.5-coder:32b",
+          "model": "qwen2.5-coder:32b",
+          "size": 21775106702,
+          "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen2",
+            "families": [
+              "qwen2"
+            ],
+            "parameter_size": "32.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-10-30T18:59:40.320252581+08:00",
+          "size_vram": 21775106702,
+          "context_length": 8192,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "seed": 42,
+  "rounds": 3,
+  "modes": [
+    "fixed"
+  ],
+  "num_ctx": 8192,
+  "temperature": 0.0,
+  "domain_size": 32,
+  "domain_exhaustive": true,
+  "started_utc": "2026-10-30T10:54:42.417255+00:00"
+}

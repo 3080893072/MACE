@@ -1,0 +1,143 @@
+{
+  "generated": "2026-11-02",
+  "criteria": {
+    "P_plus_passes": true,
+    "P_minus_passes": true,
+    "at_least_one_upstream_test_hits_A": true,
+    "hit_is_not_a_nonexecuted_path": true
+  },
+  "environment": {
+    "os": "Windows 11",
+    "python": "3.11.7",
+    "click_python": "D:/Anaconda3/python.exe",
+    "click_pytest": "7.4.0",
+    "werkzeug_python": "<local-path>",
+    "werkzeug_pytest": "7.2.0",
+    "werkzeug_extra_args": ["-m", "not dev_server"],
+    "werkzeug_full_suite_environment_failures": {
+      "failed": 15,
+      "errors": 8,
+      "reason": "ConnectionRefusedError in dev-server tests on this host"
+    }
+  },
+  "tasks": {
+    "real_click_truncate_visible": {
+      "project": "click",
+      "version": "8.4.1",
+      "source": "src/click/_textwrap.py",
+      "symbol": "_truncate_visible",
+      "target_A": {
+        "upstream_line": 23,
+        "local_line": 27,
+        "code": "cut = 0"
+      },
+      "operation_B": {
+        "upstream_line": 32,
+        "local_line": 36,
+        "code": "cut = i"
+      },
+      "p_plus": {
+        "result": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "log": "out/click-8.4.1_plus.log"
+      },
+      "p_minus": {
+        "result": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "log": "out/click-8.4.1_minus_truncate_visible.log"
+      },
+      "upstream_A_hit": {
+        "nodeid": "tests/test_formatting.py::test_wrap_text_visible_width[styled-long-word-breaks-on-visible-width]",
+        "count": 2,
+        "outcome_p_plus": "passed",
+        "outcome_p_minus": "passed"
+      },
+      "hit_test_output_comparison": {
+        "input": {
+          "body": "\\x1b[31mabcdefghij\\x1b[0m",
+          "width": 5,
+          "initial_indent": ""
+        },
+        "p_plus": "'\\x1b[31mabcde\\nfghij\\x1b[0m'",
+        "p_minus": "'\\x1b[31mabcde\\nfghij\\x1b[0m'",
+        "log": "out/click_visible_width_compare.log"
+      },
+      "target_A_execution_on_other_cases": {
+        "nonexecuted_n_zero": false,
+        "mask_plain_long_word": true,
+        "mask_styled_long_word": true,
+        "mask_short_text": true,
+        "expose_empty": true,
+        "expose_ansi_only": true
+      },
+      "qualified": true,
+      "qualification_limitation": "The upstream hit test exercises a path where A's deletion is masked; the suite passing P- is the intended qualification, not evidence that the test would detect A's deletion. The relation remains single-witness."
+    },
+    "real_werkzeug_headerset_update": {
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "source": "src/werkzeug/datastructures.py",
+      "symbol": "HeaderSet.update",
+      "target_A": {
+        "upstream_line": 2266,
+        "local_line": 62,
+        "code": "inserted_any = False"
+      },
+      "operation_B": {
+        "upstream_line": 2272,
+        "local_line": 68,
+        "code": "inserted_any = True"
+      },
+      "p_plus": {
+        "result": "816 passed, 24 deselected",
+        "log": "out/werkzeug-2.2.3_plus.log"
+      },
+      "p_minus": {
+        "result": "1 failed, 815 passed, 24 deselected",
+        "failure": "tests/test_http.py::TestHTTPUtility::test_set_header",
+        "error": "UnboundLocalError: cannot access local variable 'inserted_any'",
+        "log": "out/werkzeug-2.2.3_minus_headerset_update.log"
+      },
+      "upstream_A_hits": {
+        "tests/test_datastructures.py::TestHeaderSet::test_basic_interface": 2,
+        "tests/test_http.py::TestHTTPUtility::test_set_header": 1,
+        "tests/test_wrappers.py::test_common_response_descriptors": 5
+      },
+      "qualified": false,
+      "status": "would_be_caught",
+      "note": "The old ported test_basic_interface_add passes P-, but the full upstream suite includes test_set_header and catches the deletion."
+    },
+    "real_werkzeug_url_unparse": {
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "source": "src/werkzeug/urls.py",
+      "symbol": "url_unparse",
+      "target_A": {
+        "upstream_line": 605,
+        "local_line": 48,
+        "code": "url = s(\"\")"
+      },
+      "operation_B": {
+        "upstream_line": 614,
+        "local_line": 57,
+        "code": "url = s(\"//\") + ..."
+      },
+      "p_plus": {
+        "result": "816 passed, 24 deselected",
+        "log": "out/werkzeug-2.2.3_plus.log"
+      },
+      "p_minus": {
+        "result": "collection error, 0 tests run, 24 deselected",
+        "failure": "tests/test_send_file.py",
+        "error": "UnboundLocalError: cannot access local variable 'url' at src/werkzeug/urls.py:616",
+        "log": "out/werkzeug-2.2.3_minus_url_unparse.log"
+      },
+      "upstream_A_hit": {
+        "path": "module-level EnvironBuilder().get_environ() -> iri_to_uri -> url_unparse",
+        "trace_hits": "not recorded because collection aborted before pytest_runtest_call",
+        "evidence": "the UnboundLocalError at url += path proves execution reached the read after A"
+      },
+      "qualified": false,
+      "status": "would_be_caught",
+      "note": "The old static not_covered status missed a module-level import path. The full suite catches the deletion during collection."
+    }
+  }
+}

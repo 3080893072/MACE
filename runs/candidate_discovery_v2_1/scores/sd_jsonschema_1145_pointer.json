@@ -1,0 +1,179 @@
+{
+  "task_id": "sd_jsonschema_1145_pointer",
+  "scoring": {
+    "masking_inputs": 2,
+    "exact": 2,
+    "present": 2,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_tilde0",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Keeping operation 1147 while deleting operation 1145 maintains the correct processing of 'part', making the deletion unobservable.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    },
+    {
+      "input": "mask_nested_tilde0",
+      "public_id": "in2",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "jsonschema/validators.py:1147-1147"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "jsonschema/validators.py:1147-1147"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Keeping operation 1147 while deleting operation 1145 maintains the correct processing of 'part', making the deletion unobservable.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 2,
+    "c0_false": 0,
+    "c0_probes": 6,
+    "direct_exact": 0,
+    "old_full_exact": 2,
+    "masking_inputs": 3
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "jsonschema/validators.py:1152-1152",
+        "jsonschema/validators.py:1156-1156",
+        "jsonschema/validators.py:1162-1162",
+        "jsonschema/validators.py:1124-1124",
+        "jsonschema/validators.py:1136-1136"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "jsonschema/validators.py:1121-1121",
+        "jsonschema/validators.py:1124-1124",
+        "jsonschema/validators.py:1127-1127",
+        "jsonschema/validators.py:1136-1136",
+        "jsonschema/validators.py:1140-1140",
+        "jsonschema/validators.py:1143-1143",
+        "jsonschema/validators.py:1152-1152",
+        "jsonschema/validators.py:1156-1156",
+        "jsonschema/validators.py:1158-1160",
+        "jsonschema/validators.py:1162-1162",
+        "jsonschema/validators.py:1225-1225",
+        "jsonschema/validators.py:1236-1236",
+        "jsonschema/validators.py:1238-1238",
+        "jsonschema/validators.py:1242-1242"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 14
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

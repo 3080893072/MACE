@@ -1,0 +1,57 @@
+{
+  "candidate_id": "humanize-4.9.0:src/humanize/number.py:153:name:value",
+  "project": "humanize",
+  "version": "4.9.0",
+  "split": "DEV",
+  "file": "src/humanize/number.py",
+  "function": "intcomma",
+  "mechanism": "name",
+  "target_A": {
+    "line": 153,
+    "end_line": 153,
+    "kind": "Assign",
+    "code": "value = float(value)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": true,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_i18n.py::test_intcomma",
+    "tests/test_number.py::test_intcomma[test_args11-1,234,567.1234567]",
+    "tests/test_number.py::test_intcomma[test_args12-1,234,567]",
+    "tests/test_number.py::test_intcomma[test_args13-1,234,567.1]",
+    "tests/test_number.py::test_intcomma[test_args14-1,234,567.1234567000]"
+  ],
+  "original_hit_test_count": 5,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                value = float(value)",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.6,
+    "failed_nodeids": [
+      "tests.test_number::test_intcomma[test_args12-1,234,567]",
+      "tests.test_number::test_intcomma[test_args13-1,234,567.1]",
+      "tests.test_number::test_intcomma[test_args14-1,234,567.1234567000]"
+    ],
+    "stdout_tail": "e:\n>       assert humanize.intcomma(*test_args) == expected\n\n\u001b[1m\u001b[31mtests\\test_number.py\u001b[0m:82: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nvalue = '1234567.1234567', ndigits = 10\n\n    def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:\n        \"\"\"Converts an integer to a string containing commas every three digits.\n    \n        For example, 3000 becomes \"3,000\" and 45000 becomes \"45,000\". To maintain some\n        compatibility with Django's `intcomma`, this function also accepts floats.\n    \n        Examples:\n            ```pycon\n            >>> intcomma(100)\n            '100'\n            >>> intcomma(\"1000\")\n            '1,000'\n            >>> intcomma(1_000_000)\n            '1,000,000'\n            >>> intcomma(1_234_567.25)\n            '1,234,567.25'\n            >>> intcomma(1234.5454545, 2)\n            '1,234.55'\n            >>> intcomma(14308.40, 1)\n            '14,308.4'\n            >>> intcomma(\"14308.40\", 1)\n            '14,308.4'\n            >>> intcomma(None)\n            'None'\n    \n            ```\n    \n        Args:\n            value (int, float, str): Integer or float to convert.\n            ndigits (int, None): Digits of precision for rounding after the decimal point.\n    \n        Returns:\n            str: String containing commas every three digits.\n        \"\"\"\n        thousands_sep = thousands_separator()\n        decimal_sep = decimal_separator()\n        try:\n            if isinstance(value, str):\n                value = value.replace(thousands_sep, \"\").replace(decimal_sep, \".\")\n                if not math.isfinite(float(value)):\n                    return _format_not_finite(float(value))\n                if \".\" in value:\n                    pass  # P-: target A deleted\n                else:\n                    value = int(value)\n            else:\n                if not math.isfinite(float(value)):\n                    return _format_not_finite(float(value))\n                float(value)\n        except (TypeError, ValueError):\n            return str(value)\n    \n        if ndigits is not None:\n>           orig = \"{0:.{1}f}\".format(value, ndigits)\n\u001b[1m\u001b[31mE           ValueError: Unknown format code 'f' for object of type 'str'\u001b[0m\n\n\u001b[1m\u001b[31msrc\\humanize\\number.py\u001b[0m:164: ValueError\n- generated xml file: <local-path> -\n\u001b[36m\u001b[1m=========================== short test summary info ===========================\u001b[0m\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args12-1,234,567]\u001b[0m - ValueError: Unknown format code 'f' for object of type 'str'\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args13-1,234,567.1]\u001b[0m - ValueError: Unknown format code 'f' for object of type 'str'\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args14-1,234,567.1234567000]\u001b[0m - ValueError: Unknown format code 'f' for object of type 'str'\n\u001b[31m\u001b[31m\u001b[1m3 failed\u001b[0m, \u001b[32m2 passed\u001b[0m\u001b[31m in 0.26s\u001b[0m\u001b[0m\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "modulo_absorb",
+  "source": "fixtures/modulo_absorb.py",
+  "entry": "program",
+  "channels": 1,
+  "domain": {
+    "kind": "exhaustive",
+    "args": [
+      {
+        "name": "xs",
+        "sort": "list[int]",
+        "length": [
+          0,
+          3
+        ],
+        "values": [
+          -1,
+          0,
+          1,
+          3,
+          9,
+          10
+        ]
+      },
+      {
+        "name": "cap",
+        "sort": "bool"
+      }
+    ]
+  },
+  "functions": {
+    "fn_0": {
+      "params": [
+        "list[int]"
+      ],
+      "ret": "int"
+    }
+  },
+  "notes": "Rounding to a multiple of ten absorbs a +1 unless the total ends in 9; only when cap is set."
+}

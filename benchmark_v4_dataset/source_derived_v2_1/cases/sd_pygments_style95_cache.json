@@ -1,0 +1,40 @@
+{
+  "case_id": "sd_pygments_style95_cache",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M9_EXCEPTION_FALLBACK",
+  "base": {
+    "slug": "pygments-2.17.2",
+    "file": "pygments/style.py",
+    "A_line": 95,
+    "A_code": "                _styles[token] = ndef"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 126,
+      "indent": 8,
+      "role": "Exception fallback in style_for_token: on a missing cache entry, rebuild it from the parent entry when the token declares no own style.",
+      "lines": [
+        "try:",
+        "    t = cls._styles[token]",
+        "except KeyError:",
+        "    if cls.styles.get(token, '') != '':",
+        "        raise",
+        "    _sd_parent = cls._styles.get(token.parent)",
+        "    if _sd_parent is None:",
+        "        _sd_parent = cls._styles.get(Token)",
+        "    if _sd_parent is None:",
+        "        _sd_parent = ['', 0, 0, 0, '', '', 0, 0, 0]",
+        "    t = cls._styles[token] = list(_sd_parent)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_pygments_style95.py",
+  "inputs": {
+    "mask_text": "standard token whose declared style is empty",
+    "mask_name_other": "token with no own declaration, inherits its parent entry",
+    "expose_keyword": "token with its own style declaration (fallback re-raises)",
+    "mask_operator_inherited": "another token without its own declaration; A executes and the fallback masks it"
+  },
+  "rationale": "A inserts the resolved style into the class-level shared cache consumed by style_for_token.  U1 catches the resulting KeyError and rebuilds the entry from the parent.  Tokens with their own style declarations are outside the declared fallback and expose the deletion."
+}

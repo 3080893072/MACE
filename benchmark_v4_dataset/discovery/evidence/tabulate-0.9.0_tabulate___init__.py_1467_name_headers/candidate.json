@@ -1,0 +1,52 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1467:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1467,
+    "end_line": 1467,
+    "kind": "Assign",
+    "code": "headers = []"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_empty_data_with_headers",
+    "test/test_output.py::test_list_of_lists_with_index_firstrow"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        headers = []",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.5,
+    "failed_nodeids": [
+      "test.test_output::test_empty_data_with_headers"
+    ],
+    "stdout_tail": "F.                                                                       [100%]\n================================== FAILURES ===================================\n________________________ test_empty_data_with_headers _________________________\n\n    def test_empty_data_with_headers():\n        \"Output: table with empty data and headers as firstrow\"\n        expected = \"\"\n        result = tabulate([], headers=\"firstrow\")\n>       assert_equal(expected, result)\n\ntest\\test_output.py:2645: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = ''\nresult = 'f    i    r    s    t    r    o    w\\n---  ---  ---  ---  ---  ---  ---  ---'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n\n\nGot:\nf    i    r    s    t    r    o    w\n---  ---  ---  ---  ---  ---  ---  ---\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_output.py::test_empty_data_with_headers - AssertionError\n1 failed, 1 passed in 0.15s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "mode": "direct",
+    "guard_source": "qwen",
+    "status": "ROUNDS_EXHAUSTED",
+    "rounds_used": 12,
+    "guard": "use_left == False or use_right == False or len(xs) == 1 or (use_left and use_right and xs == sorted(xs)) or (use_left and not use_right and xs[0] == min(xs)) or (not use_left and use_right and xs[-1] == max(xs)) or (use_left and use_right and min(xs) == max(xs)) or (use_left and not use_right and xs == sorted(xs)) or (not use_left and use_right and xs == sorted(xs)) or (use_left and use_right and xs[0] == min(xs) and xs[-1] == max(xs))",
+    "guard_status": "REFUTED",
+    "guard_ok": false,
+    "usage": {
+      "calls": 12,
+      "prompt_tokens": 40670,
+      "completion_tokens": 1459,
+      "decode_seconds": 77.791,
+      "wall_seconds": 112.283
+    }
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "verifier_version": "intervention-verifier-1.0",
+  "task_id": "jinja2_bytecode_cache_read",
+  "universe": [
+    {
+      "id": "src/jinja2/loaders.py:132-132",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 132,
+      "last_line": 132,
+      "kind": "assignment",
+      "code": "            code = bucket.code"
+    }
+  ],
+  "universe_problems": [],
+  "verdicts": [
+    {
+      "verdict": "REFUTED",
+      "reason": "P+ and P- observations are equal",
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "template": "test_template.html",
+            "context": {}
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/jinja2/loaders.py:132-132"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 1,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "REFUTED",
+      "reason": "set is not a minimal relation over the proposal's operation universe on a submitted input",
+      "inputs": [
+        {
+          "input": {
+            "template": "test_template.html",
+            "context": {}
+          },
+          "matched": false,
+          "computed_minimal_sets": [],
+          "masked_at_empty": true
+        }
+      ],
+      "index": 2,
+      "type": "MMBS"
+    }
+  ],
+  "verified_submission": {
+    "task_id": "jinja2_bytecode_cache_read",
+    "submission_id": "baseline-A",
+    "claims": [
+      {
+        "type": "MSMS",
+        "input": {
+          "template": "test_template.html",
+          "context": {}
+        },
+        "operations": [
+          {
+            "file": "src/jinja2/loaders.py",
+            "line": 132,
+            "code": "code = bucket.code"
+          }
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "total": 3,
+    "verified": 1,
+    "refuted": 2,
+    "unknown": 0
+  },
+  "probe_executions": 4
+}

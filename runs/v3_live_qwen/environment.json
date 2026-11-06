@@ -1,0 +1,52 @@
+{
+  "experiment_id": "mace_v3_live_qwen_baseline_2026-11-03",
+  "recorded_utc": "2026-11-03T08:19:59Z",
+  "code_commit": "86e1b543f5ee6193e76994c7bfd757f4b9ece02d",
+  "branch": "baseline/mace-v3-pilot",
+  "endpoint": "http://127.0.0.1:11434 (local SSH forward to AutoDL 127.0.0.1:11434)",
+  "model": {
+    "name": "qwen2.5-coder:32b",
+    "model": "qwen2.5-coder:32b",
+    "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+    "size": 19851349898,
+    "modified_at": "2026-10-30T09:35:42.40703532+08:00"
+  },
+  "model_details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "qwen2",
+    "families": [
+      "qwen2"
+    ],
+    "parameter_size": "32.8B",
+    "quantization_level": "Q4_K_M",
+    "context_length": 32768,
+    "embedding_length": 5120,
+    "runner": "ggml"
+  },
+  "runtime_ps_at_record": {
+    "models": [
+      {
+        "name": "qwen2.5-coder:32b",
+        "model": "qwen2.5-coder:32b",
+        "size": 25522937527,
+        "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "32.8B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-11-03T16:23:30.319491546+08:00",
+        "size_vram": 23535435120,
+        "context_length": 32768,
+        "runner": "llamacpp"
+      }
+    ]
+  },
+  "remote": "ollama version is 0.40.13\n---\nNVIDIA GeForce RTX 4090 D, 24564 MiB, 22861 MiB, 580.76.05\n---\nac3d1ba8aa77755dab3806d9024e9c385ea0d5b412d6bdf9157f8a4a7e9fc0d9  /root/autodl-tmp/ollama_models/blobs/sha256-ac3d1ba8aa77755dab3806d9024e9c385ea0d5b412d6bdf9157f8a4a7e9fc0d9\n---\nsrv  get_availabl: prompt cache update took 0.03 ms\nslot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> greedy \nslot launch_slot_: id  0 | task -1 | sampler params: \n\trepeat_last_n = 64, repeat_penalty = 1.000, frequency_penalty = 0.000, presence_penalty = 0.000\n\tdry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64\n\ttop_k = 40, top_p = 0.900, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 0.000\n\tmirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900\nslot launch_slot_: id  0 | task 0 | processing task, is_child = 0\nslot   operator(): id  0 | task 0 | new prompt, n_ctx_slot = 32768, n_keep = 4, task.n_tokens = 25\nslot   operator(): id  0 | task 0 | cached n_tokens = 0, memory_seq_rm [0, end)\nslot init_sampler: id  0 | task 0 | init sampler, took 0.02 ms, tokens: text = 25, total = 25\nsched_graph_realloc: graph reallocation: nodes = 2252 (changed = 0), splits = 2, n_same = 1, n_diff = 0\nslot print_timing: id  0 | task 0 | prompt eval time =    1441.58 ms /    25 tokens (   57.66 ms per token,    17.34 tokens per second)\nslot print_timing: id  0 | task 0 |        eval time =    2100.13 ms /     6 tokens (  420.03 ms per token,     2.38 tokens per second)\nslot print_timing: id  0 | task 0 |       total time =    3541.70 ms /    31 tokens\nslot print_timing: id  0 | task 0 |    graphs reused =          5\nslot print_timing: id  0 | task 0 |   graph reallocs =          1    /     0        (same size) / (changed size)\nslot      release: id  0 | task 0 | stop processing: n_tokens = 30, truncated = 0\nsrv  update_slots: all slots are idle\n[GIN] 2026/11/03 - 16:18:30 | 200 |   34.93s |       127.0.0.1 | POST     \"/api/chat\"\n[GIN] 2026/11/03 - 16:18:30 | 200 | 266.495µs |       127.0.0.1 | GET      \"/api/ps\"\n[GIN] 2026/11/03 - 16:18:31 | 200 | 329.06ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/11/03 - 16:18:48 | 200 |  10.07ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/11/03 - 16:18:48 | 200 | 113.225µs |       127.0.0.1 | GET      \"/api/ps\"\n[GIN] 2026/11/03 - 16:18:49 | 200 | 106.653µs |       127.0.0.1 | GET      \"/api/version\"\n"
+}

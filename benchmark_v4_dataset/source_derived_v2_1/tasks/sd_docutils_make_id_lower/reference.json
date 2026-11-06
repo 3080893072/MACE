@@ -1,0 +1,106 @@
+{
+  "task_id": "sd_docutils_make_id_lower",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "docutils/nodes.py",
+    "line": 2231,
+    "function": "make_id",
+    "code": "    id = string.lower()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "docutils/nodes.py",
+      "line": 2233,
+      "code": "if string.isascii():",
+      "role": "ASCII-only case folding: restores A for identifiers that are entirely ASCII.",
+      "patch_anchor_line": 2231,
+      "block_span": [
+        2232,
+        2235
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_ascii_mixed_case": {
+      "role": "masking",
+      "description": "ASCII source text with mixed case",
+      "p_plus": {
+        "out": "hello-world"
+      },
+      "p_minus": {
+        "out": "hello-world"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_non_ascii": {
+      "role": "exposing",
+      "description": "non-ASCII source text: A folds it, the ASCII-only repair does not",
+      "p_plus": {
+        "out": "arger-im-buro"
+      },
+      "p_minus": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_lowercase": {
+      "role": "control",
+      "description": "already lowercase ASCII identifier",
+      "p_plus": {
+        "out": "already-lower"
+      },
+      "p_minus": {
+        "out": "already-lower"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_docutils_make_id_lower/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

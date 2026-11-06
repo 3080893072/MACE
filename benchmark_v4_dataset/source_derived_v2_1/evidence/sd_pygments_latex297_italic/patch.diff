@@ -1,0 +1,39 @@
+--- a/pygments/formatters/latex.py
++++ b/pygments/formatters/latex.py
+@@ -325,12 +325,36 @@
+         """
+         Return the command sequences needed to define the commands
+         used to format text in the verbatim environment. ``arg`` is ignored.
+         """
+         cp = self.commandprefix
+         styles = []
++        # SD:U:U1:begin
++        if not self.full:
++            _sd_new = {}
++            for _sd_tt, _sd_ndef in self.style:
++                _sd_name = _get_ttype_name(_sd_tt)
++                if _sd_name in _sd_new:
++                    continue
++                _sd_def = self.cmd2def.get(_sd_name)
++                if _sd_def is None:
++                    if not _sd_ndef['italic']:
++                        continue
++                    _sd_def = ''
++                if _sd_ndef['italic'] and 'textit' not in _sd_def:
++                    _sd_tc = '\\def' + '\\' + cp + '@tc'
++                    _sd_let = r'\let' + '\\' + cp + r'@it=\textit'
++                    if _sd_tc in _sd_def:
++                        _sd_def = _sd_def.replace(_sd_tc, _sd_let + _sd_tc, 1)
++                    else:
++                        _sd_def = _sd_def + _sd_let
++                _sd_new[_sd_name] = _sd_def
++            for _sd_name, _sd_def in self.cmd2def.items():
++                _sd_new.setdefault(_sd_name, _sd_def)
++            self.cmd2def = _sd_new
++        # SD:U:U1:end
+         for name, definition in self.cmd2def.items():
+             styles.append(r'\@namedef{%s@tok@%s}{%s}' % (cp, name, definition))
+         return STYLE_TEMPLATE % {'cp': self.commandprefix,
+                                  'styles': '\n'.join(styles)}
+ 
+     def format_unencoded(self, tokensource, outfile):

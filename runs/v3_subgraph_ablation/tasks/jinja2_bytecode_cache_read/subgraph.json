@@ -1,0 +1,1775 @@
+{
+  "schema": "mace-a-centered-subgraph-0.1",
+  "file": "src/jinja2/loaders.py",
+  "target": {
+    "id": "src/jinja2/loaders.py:132-132",
+    "line": 132,
+    "function": "load",
+    "defs": [
+      "code"
+    ],
+    "uses": [
+      "bucket"
+    ],
+    "attr_defs": []
+  },
+  "functions": [
+    {
+      "name": "get_source",
+      "first_line": 74,
+      "last_line": 98
+    },
+    {
+      "name": "load",
+      "first_line": 107,
+      "last_line": 148
+    }
+  ],
+  "nodes": [
+    {
+      "id": "src/jinja2/loaders.py:77-93",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 77,
+      "last_line": 93,
+      "kind": "expr",
+      "code": "        \"\"\"Get the template source, filename and reload helper for a template.\n        It's passed the environment and template name and has to return a\n        tuple in the form ``(source, filename, uptodate)`` or raise a\n        `TemplateNotFound` error if it can't locate the template.\n\n        The source part of the returned tuple must be the source of the\n        template as a string. The filename should be the name of the\n        file on the filesystem if it was loaded from there, otherwise\n        ``None``. The filename is used by Python for the tracebacks\n        if no loader extension is used.\n\n        The last item in the tuple is the `uptodate` function.  If auto\n        reloading is enabled it's always called to check if the template\n        changed.  No arguments are passed so the function must store the\n        old state somewhere (for example in a closure).  If it returns `False`\n        the template will be reloaded.\n        \"\"\"",
+      "function": "get_source",
+      "contains_target": false,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:94-97",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 94,
+      "last_line": 97,
+      "kind": "If",
+      "code": "        if not self.has_source_access:\n            raise RuntimeError(\n                f\"{type(self).__name__} cannot provide access to the source\"\n            )",
+      "function": "get_source",
+      "contains_target": false,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "has_source_access",
+        "self"
+      ],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:95-97",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 95,
+      "last_line": 97,
+      "kind": "raise",
+      "code": "            raise RuntimeError(\n                f\"{type(self).__name__} cannot provide access to the source\"\n            )",
+      "function": "get_source",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "RuntimeError",
+        "__name__",
+        "self",
+        "type"
+      ],
+      "calls": [
+        "RuntimeError",
+        "type"
+      ],
+      "guards": [
+        "not self.has_source_access"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:98-98",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 98,
+      "last_line": 98,
+      "kind": "raise",
+      "code": "        raise TemplateNotFound(template)",
+      "function": "get_source",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "TemplateNotFound",
+        "template"
+      ],
+      "calls": [
+        "TemplateNotFound"
+      ],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:113-118",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 113,
+      "last_line": 118,
+      "kind": "expr",
+      "code": "        \"\"\"Loads a template.  This method looks up the template in the cache\n        or loads one by calling :meth:`get_source`.  Subclasses should not\n        override this method as loaders working on collections of other\n        loaders (such as :class:`PrefixLoader` or :class:`ChoiceLoader`)\n        will not call this method but `get_source` directly.\n        \"\"\"",
+      "function": "load",
+      "contains_target": false,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:119-119",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 119,
+      "last_line": 119,
+      "kind": "assign",
+      "code": "        code = None",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "code"
+      ],
+      "attr_defs": [],
+      "uses": [],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:120-121",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 120,
+      "last_line": 121,
+      "kind": "If",
+      "code": "        if globals is None:\n            globals = {}",
+      "function": "load",
+      "contains_target": false,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "globals"
+      ],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:121-121",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 121,
+      "last_line": 121,
+      "kind": "assign",
+      "code": "            globals = {}",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "globals"
+      ],
+      "attr_defs": [],
+      "uses": [],
+      "calls": [],
+      "guards": [
+        "globals is None"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:125-125",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 125,
+      "last_line": 125,
+      "kind": "assign",
+      "code": "        source, filename, uptodate = self.get_source(environment, name)",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "filename",
+        "source",
+        "uptodate"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "environment",
+        "get_source",
+        "name",
+        "self"
+      ],
+      "calls": [
+        "get_source"
+      ],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:129-129",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 129,
+      "last_line": 129,
+      "kind": "assign",
+      "code": "        bcc = environment.bytecode_cache",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "bcc"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "bytecode_cache",
+        "environment"
+      ],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:130-132",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 130,
+      "last_line": 132,
+      "kind": "If",
+      "code": "        if bcc is not None:\n            bucket = bcc.get_bucket(environment, name, filename, source)\n            code = bucket.code",
+      "function": "load",
+      "contains_target": true,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "bcc"
+      ],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:131-131",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 131,
+      "last_line": 131,
+      "kind": "assign",
+      "code": "            bucket = bcc.get_bucket(environment, name, filename, source)",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "bucket"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "bcc",
+        "environment",
+        "filename",
+        "get_bucket",
+        "name",
+        "source"
+      ],
+      "calls": [
+        "get_bucket"
+      ],
+      "guards": [
+        "bcc is not None"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:132-132",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 132,
+      "last_line": 132,
+      "kind": "assign",
+      "code": "            code = bucket.code",
+      "function": "load",
+      "contains_target": true,
+      "deletable": false,
+      "defs": [
+        "code"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "bucket"
+      ],
+      "calls": [],
+      "guards": [
+        "bcc is not None"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:136-137",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 136,
+      "last_line": 137,
+      "kind": "If",
+      "code": "        if code is None:\n            code = environment.compile(source, name, filename)",
+      "function": "load",
+      "contains_target": false,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "code"
+      ],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:137-137",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 137,
+      "last_line": 137,
+      "kind": "assign",
+      "code": "            code = environment.compile(source, name, filename)",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "code"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "compile",
+        "environment",
+        "filename",
+        "name",
+        "source"
+      ],
+      "calls": [
+        "compile"
+      ],
+      "guards": [
+        "code is None"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:142-144",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 142,
+      "last_line": 144,
+      "kind": "If",
+      "code": "        if bcc is not None and bucket.code is None:\n            bucket.code = code\n            bcc.set_bucket(bucket)",
+      "function": "load",
+      "contains_target": false,
+      "deletable": false,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "bcc",
+        "bucket",
+        "code"
+      ],
+      "calls": [],
+      "guards": [],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:143-143",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 143,
+      "last_line": 143,
+      "kind": "assign",
+      "code": "            bucket.code = code",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [
+        "bucket"
+      ],
+      "attr_defs": [
+        "code"
+      ],
+      "uses": [
+        "code"
+      ],
+      "calls": [],
+      "guards": [
+        "bcc is not None and bucket.code is None"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:144-144",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 144,
+      "last_line": 144,
+      "kind": "expr",
+      "code": "            bcc.set_bucket(bucket)",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "bcc",
+        "bucket",
+        "set_bucket"
+      ],
+      "calls": [
+        "set_bucket"
+      ],
+      "guards": [
+        "bcc is not None and bucket.code is None"
+      ],
+      "in_loop": false
+    },
+    {
+      "id": "src/jinja2/loaders.py:146-148",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 146,
+      "last_line": 148,
+      "kind": "return",
+      "code": "        return environment.template_class.from_code(\n            environment, code, globals, uptodate\n        )",
+      "function": "load",
+      "contains_target": false,
+      "deletable": true,
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "code",
+        "environment",
+        "from_code",
+        "globals",
+        "template_class",
+        "uptodate"
+      ],
+      "calls": [
+        "from_code"
+      ],
+      "guards": [],
+      "in_loop": false
+    }
+  ],
+  "edges": [
+    {
+      "src": "src/jinja2/loaders.py:129-129",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:bcc",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:129-129",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:bcc",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:132-132",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:143-143",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "redefinition:bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:119-119",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:119-119",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:119-119",
+      "dst": "src/jinja2/loaders.py:132-132",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "redefinition:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:119-119",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "redefinition:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "redefinition:code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:filename",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:filename",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:121-121",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:globals",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "data",
+      "confidence": "MUST",
+      "evidence": "def-use:uptodate",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:143-143",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "attribute alias:.code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:94-97",
+      "dst": "src/jinja2/loaders.py:95-97",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "not self.has_source_access"
+    },
+    {
+      "src": "src/jinja2/loaders.py:120-121",
+      "dst": "src/jinja2/loaders.py:121-121",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "globals is None"
+    },
+    {
+      "src": "src/jinja2/loaders.py:130-132",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "bcc is not None"
+    },
+    {
+      "src": "src/jinja2/loaders.py:130-132",
+      "dst": "src/jinja2/loaders.py:132-132",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "bcc is not None"
+    },
+    {
+      "src": "src/jinja2/loaders.py:136-137",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "code is None"
+    },
+    {
+      "src": "src/jinja2/loaders.py:142-144",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "bcc is not None and bucket.code is None"
+    },
+    {
+      "src": "src/jinja2/loaders.py:142-144",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "control",
+      "confidence": "MUST",
+      "evidence": "control-dependence",
+      "guard": "bcc is not None and bucket.code is None"
+    },
+    {
+      "src": "src/jinja2/loaders.py:95-97",
+      "dst": "src/jinja2/loaders.py:94-97",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:RuntimeError",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:95-97",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:RuntimeError",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:95-97",
+      "dst": "src/jinja2/loaders.py:94-97",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:type",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:95-97",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:type",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:94-97",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:95-97",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:129-129",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:129-129",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:129-129",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:129-129",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:119-119",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:120-121",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:136-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:142-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:121-121",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:132-132",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:130-132",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:142-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:130-132",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:142-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:119-119",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:136-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:142-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:137-137",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:132-132",
+      "dst": "src/jinja2/loaders.py:144-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "assignment alias",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:125-125",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:compile",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:compile",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:146-148",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:compile",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:compile",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "src/jinja2/loaders.py:129-129",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:set_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "src/jinja2/loaders.py:130-132",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:set_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "src/jinja2/loaders.py:142-144",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:set_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "src/jinja2/loaders.py:131-131",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:set_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "src/jinja2/loaders.py:132-132",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:set_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "src/jinja2/loaders.py:143-143",
+      "kind": "alias",
+      "confidence": "MAY",
+      "evidence": "call may mutate:set_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:98-98",
+      "dst": "UNKNOWN:TemplateNotFound",
+      "kind": "call",
+      "confidence": "UNKNOWN",
+      "evidence": "unresolved call:TemplateNotFound",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:95-97",
+      "dst": "UNKNOWN:RuntimeError",
+      "kind": "call",
+      "confidence": "UNKNOWN",
+      "evidence": "unresolved call:RuntimeError",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:77-93",
+      "kind": "call",
+      "confidence": "MAY",
+      "evidence": "call:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:94-97",
+      "kind": "call",
+      "confidence": "MAY",
+      "evidence": "call:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:98-98",
+      "kind": "call",
+      "confidence": "MAY",
+      "evidence": "call:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:125-125",
+      "dst": "src/jinja2/loaders.py:95-97",
+      "kind": "call",
+      "confidence": "MAY",
+      "evidence": "call:get_source",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:146-148",
+      "dst": "UNKNOWN:from_code",
+      "kind": "call",
+      "confidence": "UNKNOWN",
+      "evidence": "unresolved call:from_code",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:131-131",
+      "dst": "UNKNOWN:get_bucket",
+      "kind": "call",
+      "confidence": "UNKNOWN",
+      "evidence": "unresolved call:get_bucket",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:137-137",
+      "dst": "UNKNOWN:compile",
+      "kind": "call",
+      "confidence": "UNKNOWN",
+      "evidence": "unresolved call:compile",
+      "guard": ""
+    },
+    {
+      "src": "src/jinja2/loaders.py:144-144",
+      "dst": "UNKNOWN:set_bucket",
+      "kind": "call",
+      "confidence": "UNKNOWN",
+      "evidence": "unresolved call:set_bucket",
+      "guard": ""
+    }
+  ],
+  "candidates": [
+    {
+      "id": "src/jinja2/loaders.py:119-119",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 119,
+      "last_line": 119,
+      "kind": "assign",
+      "code": "        code = None",
+      "function": "load",
+      "defs": [
+        "code"
+      ],
+      "attr_defs": [],
+      "uses": [],
+      "calls": [],
+      "guards": [],
+      "score": 1.35,
+      "distance_to_A": 1.0,
+      "distance_to_observation": 1.0,
+      "shared_state": 1,
+      "writes_target": 1,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:119-119",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:code",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:143-143",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 143,
+      "last_line": 143,
+      "kind": "assign",
+      "code": "            bucket.code = code",
+      "function": "load",
+      "defs": [
+        "bucket"
+      ],
+      "attr_defs": [
+        "code"
+      ],
+      "uses": [
+        "code"
+      ],
+      "calls": [],
+      "guards": [
+        "bcc is not None and bucket.code is None"
+      ],
+      "score": 1.35,
+      "distance_to_A": 1.0,
+      "distance_to_observation": 1.0,
+      "shared_state": 2,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:143-143",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:code",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:137-137",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 137,
+      "last_line": 137,
+      "kind": "assign",
+      "code": "            code = environment.compile(source, name, filename)",
+      "function": "load",
+      "defs": [
+        "code"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "compile",
+        "environment",
+        "filename",
+        "name",
+        "source"
+      ],
+      "calls": [
+        "compile"
+      ],
+      "guards": [
+        "code is None"
+      ],
+      "score": 1.3,
+      "distance_to_A": 1.0,
+      "distance_to_observation": 1.0,
+      "shared_state": 1,
+      "writes_target": 1,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:137-137",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:code",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:146-148",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 146,
+      "last_line": 148,
+      "kind": "return",
+      "code": "        return environment.template_class.from_code(\n            environment, code, globals, uptodate\n        )",
+      "function": "load",
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "code",
+        "environment",
+        "from_code",
+        "globals",
+        "template_class",
+        "uptodate"
+      ],
+      "calls": [
+        "from_code"
+      ],
+      "guards": [],
+      "score": 1.3,
+      "distance_to_A": 1.0,
+      "distance_to_observation": 0.0,
+      "shared_state": 1,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:146-148",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:code",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:131-131",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 131,
+      "last_line": 131,
+      "kind": "assign",
+      "code": "            bucket = bcc.get_bucket(environment, name, filename, source)",
+      "function": "load",
+      "defs": [
+        "bucket"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "bcc",
+        "environment",
+        "filename",
+        "get_bucket",
+        "name",
+        "source"
+      ],
+      "calls": [
+        "get_bucket"
+      ],
+      "guards": [
+        "bcc is not None"
+      ],
+      "score": 1.05,
+      "distance_to_A": 1.0,
+      "distance_to_observation": 1.0,
+      "shared_state": 1,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:131-131",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:bucket",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:144-144",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 144,
+      "last_line": 144,
+      "kind": "expr",
+      "code": "            bcc.set_bucket(bucket)",
+      "function": "load",
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "bcc",
+        "bucket",
+        "set_bucket"
+      ],
+      "calls": [
+        "set_bucket"
+      ],
+      "guards": [
+        "bcc is not None and bucket.code is None"
+      ],
+      "score": 0.914754,
+      "distance_to_A": 1.44,
+      "distance_to_observation": 1.44,
+      "shared_state": 1,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:144-144",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "assignment alias",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:121-121",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 121,
+      "last_line": 121,
+      "kind": "assign",
+      "code": "            globals = {}",
+      "function": "load",
+      "defs": [
+        "globals"
+      ],
+      "attr_defs": [],
+      "uses": [],
+      "calls": [],
+      "guards": [
+        "globals is None"
+      ],
+      "score": 0.683333,
+      "distance_to_A": 2.0,
+      "distance_to_observation": 1.0,
+      "shared_state": 0,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:146-148",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:code",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:146-148",
+          "to": "src/jinja2/loaders.py:121-121",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:globals",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:125-125",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 125,
+      "last_line": 125,
+      "kind": "assign",
+      "code": "        source, filename, uptodate = self.get_source(environment, name)",
+      "function": "load",
+      "defs": [
+        "filename",
+        "source",
+        "uptodate"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "environment",
+        "get_source",
+        "name",
+        "self"
+      ],
+      "calls": [
+        "get_source"
+      ],
+      "guards": [],
+      "score": 0.683333,
+      "distance_to_A": 2.0,
+      "distance_to_observation": 1.0,
+      "shared_state": 0,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:131-131",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:bucket",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:131-131",
+          "to": "src/jinja2/loaders.py:125-125",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:filename",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:129-129",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 129,
+      "last_line": 129,
+      "kind": "assign",
+      "code": "        bcc = environment.bytecode_cache",
+      "function": "load",
+      "defs": [
+        "bcc"
+      ],
+      "attr_defs": [],
+      "uses": [
+        "bytecode_cache",
+        "environment"
+      ],
+      "calls": [],
+      "guards": [],
+      "score": 0.638251,
+      "distance_to_A": 2.0,
+      "distance_to_observation": 1.44,
+      "shared_state": 0,
+      "writes_target": 0,
+      "same_function": true,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:131-131",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:bucket",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:131-131",
+          "to": "src/jinja2/loaders.py:129-129",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:bcc",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:98-98",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 98,
+      "last_line": 98,
+      "kind": "raise",
+      "code": "        raise TemplateNotFound(template)",
+      "function": "get_source",
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "TemplateNotFound",
+        "template"
+      ],
+      "calls": [
+        "TemplateNotFound"
+      ],
+      "guards": [],
+      "score": 0.289912,
+      "distance_to_A": 3.8,
+      "distance_to_observation": 2.8,
+      "shared_state": 0,
+      "writes_target": 0,
+      "same_function": false,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:131-131",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:bucket",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:131-131",
+          "to": "src/jinja2/loaders.py:125-125",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:filename",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:125-125",
+          "to": "src/jinja2/loaders.py:98-98",
+          "kind": "call",
+          "confidence": "MAY",
+          "evidence": "call:get_source",
+          "guard": ""
+        }
+      ]
+    },
+    {
+      "id": "src/jinja2/loaders.py:95-97",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 95,
+      "last_line": 97,
+      "kind": "raise",
+      "code": "            raise RuntimeError(\n                f\"{type(self).__name__} cannot provide access to the source\"\n            )",
+      "function": "get_source",
+      "defs": [],
+      "attr_defs": [],
+      "uses": [
+        "RuntimeError",
+        "__name__",
+        "self",
+        "type"
+      ],
+      "calls": [
+        "RuntimeError",
+        "type"
+      ],
+      "guards": [
+        "not self.has_source_access"
+      ],
+      "score": 0.270574,
+      "distance_to_A": 3.44,
+      "distance_to_observation": 2.44,
+      "shared_state": 0,
+      "writes_target": 0,
+      "same_function": false,
+      "path": [
+        {
+          "from": "src/jinja2/loaders.py:132-132",
+          "to": "src/jinja2/loaders.py:131-131",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:bucket",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:131-131",
+          "to": "src/jinja2/loaders.py:125-125",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:filename",
+          "guard": ""
+        },
+        {
+          "from": "src/jinja2/loaders.py:125-125",
+          "to": "src/jinja2/loaders.py:95-97",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:RuntimeError",
+          "guard": ""
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "nodes": 19,
+    "edges": 100,
+    "edge_kinds": {
+      "alias": 62,
+      "call": 10,
+      "control": 7,
+      "data": 21
+    },
+    "edge_confidence": {
+      "MAY": 66,
+      "MUST": 28,
+      "UNKNOWN": 6
+    },
+    "deletable": 11,
+    "unresolved_calls": [
+      "UNKNOWN:RuntimeError",
+      "UNKNOWN:TemplateNotFound",
+      "UNKNOWN:compile",
+      "UNKNOWN:from_code",
+      "UNKNOWN:get_bucket",
+      "UNKNOWN:set_bucket"
+    ]
+  },
+  "unknowns": [
+    "ambiguous call get_source from load left as MAY/UNKNOWN (different class scope)",
+    "ambiguous call get_source from load left as MAY/UNKNOWN (different class scope)",
+    "ambiguous call get_source from load left as MAY/UNKNOWN (different class scope)",
+    "ambiguous call get_source from load left as MAY/UNKNOWN (different class scope)",
+    "ambiguous call get_source from load left as MAY/UNKNOWN (different class scope)",
+    "ambiguous call get_source from load left as MAY/UNKNOWN (different class scope)",
+    "unresolved call: UNKNOWN:RuntimeError",
+    "unresolved call: UNKNOWN:TemplateNotFound",
+    "unresolved call: UNKNOWN:compile",
+    "unresolved call: UNKNOWN:from_code",
+    "unresolved call: UNKNOWN:get_bucket",
+    "unresolved call: UNKNOWN:set_bucket"
+  ],
+  "discovery_rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic"
+}

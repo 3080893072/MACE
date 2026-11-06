@@ -1,0 +1,52 @@
+{
+  "task_id": "sd_attrs_asdict_loop_m7",
+  "project": "attrs",
+  "version": "23.2.0",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M7_LOOP_STATE",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "asdict() copies each attribute inside the per-attribute loop. The patch restores the copy for every attribute except one named 'y', so an object with only the repaired attribute is masked, while an object that also has 'y' loses that key and exposes the bounded loop-state repair.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "src/attr/_funcs.py",
+    "line": 118,
+    "function": "asdict",
+    "code": "                rv[a.name] = v",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "asdict"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "attr.asdict(instance)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_single_attr",
+      "role": "masking",
+      "description": "object whose only attribute is not 'y'"
+    },
+    {
+      "id": "expose_two_attrs",
+      "role": "exposing",
+      "description": "object with a second attribute named 'y' that U skips"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

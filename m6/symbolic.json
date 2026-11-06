@@ -1,0 +1,1312 @@
+{
+  "fixtures": [
+    "alt_masking",
+    "dedup_channel",
+    "modulo_absorb",
+    "overwrite_channel",
+    "sort_channel",
+    "swap_channels",
+    "dead_flag",
+    "dict_slot",
+    "parity_snap",
+    "clamp_absorb",
+    "toggle_pair"
+  ],
+  "sets": {
+    "dev6": [
+      "alt_masking",
+      "dedup_channel",
+      "modulo_absorb",
+      "overwrite_channel",
+      "sort_channel",
+      "swap_channels"
+    ],
+    "held1": [
+      "dead_flag",
+      "dict_slot",
+      "parity_snap"
+    ],
+    "held2": [
+      "clamp_absorb",
+      "toggle_pair"
+    ]
+  },
+  "rows": [
+    {
+      "fixture": "alt_masking",
+      "method": "direct",
+      "guard": "mode == 0 or mode == 1",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 22,
+      "set": "dev6",
+      "stored_status": "GUARD_VERIFIED",
+      "tokens": 701,
+      "wall_seconds": 5.324,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "alt_masking",
+      "method": "mace",
+      "guard": "mode == 0 or mode == 1",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 22,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 13280,
+      "wall_seconds": 72.7,
+      "explain": {
+        "relations": 5,
+        "rationales": 5,
+        "source_lines": 11
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "alt_masking",
+      "method": "pure",
+      "guard": "mode == 0 or mode == 1",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 22,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.002517799846827984,
+      "explain": {
+        "paths": 4,
+        "channel_rules": 4
+      },
+      "paths": 6,
+      "coverage": {
+        "reached": 6,
+        "summarized": 0,
+        "covered": 6,
+        "total": 9,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "alt_masking",
+      "method": "symbolic",
+      "guard": "mode == 0 or mode == 1",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 22,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.002121400088071823,
+      "explain": {
+        "paths": 4,
+        "channel_rules": 4
+      },
+      "paths": 6,
+      "coverage": {
+        "reached": 6,
+        "summarized": 0,
+        "covered": 6,
+        "total": 9,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "dedup_channel",
+      "method": "direct",
+      "guard": "distinct(xs) == distinct(xs + [xs[0] + 1])",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 24,
+      "chars": 42,
+      "set": "dev6",
+      "stored_status": "GUARD_VERIFIED",
+      "tokens": 1573,
+      "wall_seconds": 8.507,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "dedup_channel",
+      "method": "mace",
+      "guard": "len(xs) == 0 or (pre and distinct(xs) and len(fn_0(xs)) == len(fn_0(xs + [xs[0] + 1])))",
+      "check": {
+        "status": "INVALID",
+        "typed": false,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": false,
+        "error": "expected bool, got int"
+      },
+      "nodes": 49,
+      "chars": 87,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 12087,
+      "wall_seconds": 69.231,
+      "explain": {
+        "relations": 6,
+        "rationales": 6,
+        "source_lines": 7
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "dedup_channel",
+      "method": "pure",
+      "guard": null,
+      "check": {
+        "status": "ABSENT",
+        "typed": false,
+        "unsound": null,
+        "incomplete": null,
+        "exact": false,
+        "error": "no guard"
+      },
+      "nodes": 0,
+      "chars": 0,
+      "set": "dev6",
+      "stored_status": "UNKNOWN",
+      "tokens": 0,
+      "wall_seconds": 0.0007007000967860222,
+      "explain": {
+        "paths": 0,
+        "channel_rules": 0
+      },
+      "paths": 0,
+      "coverage": {
+        "reached": 1,
+        "summarized": 0,
+        "covered": 1,
+        "total": 11,
+        "ratio": 0.091
+      },
+      "reason": "no semantic summary for helper 'fn_0'"
+    },
+    {
+      "fixture": "dedup_channel",
+      "method": "symbolic",
+      "guard": "count(xs, xs[0] + 1) > 0",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 16,
+      "chars": 24,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0014168000780045986,
+      "explain": {
+        "paths": 2,
+        "channel_rules": 2
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 3,
+        "summarized": 6,
+        "covered": 9,
+        "total": 11,
+        "ratio": 0.818
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "modulo_absorb",
+      "method": "direct",
+      "guard": "cap and (fn_0(xs) + 1) % 10 == 0",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 47,
+        "incomplete": 212,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 18,
+      "chars": 32,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 2793,
+      "wall_seconds": 13.549,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "modulo_absorb",
+      "method": "mace",
+      "guard": "cap and (fn_0(xs) - fn_0(xs) % 10) == fn_0(xs) + 1 if not cap else fn_0(xs)",
+      "check": {
+        "status": "INVALID",
+        "typed": false,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": false,
+        "error": "conditional branches differ: bool vs int"
+      },
+      "nodes": 39,
+      "chars": 75,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 13931,
+      "wall_seconds": 66.653,
+      "explain": {
+        "relations": 5,
+        "rationales": 5,
+        "source_lines": 8
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "modulo_absorb",
+      "method": "pure",
+      "guard": null,
+      "check": {
+        "status": "ABSENT",
+        "typed": false,
+        "unsound": null,
+        "incomplete": null,
+        "exact": false,
+        "error": "no guard"
+      },
+      "nodes": 0,
+      "chars": 0,
+      "set": "dev6",
+      "stored_status": "UNKNOWN",
+      "tokens": 0,
+      "wall_seconds": 0.0005966001190245152,
+      "explain": {
+        "paths": 0,
+        "channel_rules": 0
+      },
+      "paths": 0,
+      "coverage": {
+        "reached": 1,
+        "summarized": 0,
+        "covered": 1,
+        "total": 11,
+        "ratio": 0.091
+      },
+      "reason": "no semantic summary for helper 'fn_0'"
+    },
+    {
+      "fixture": "modulo_absorb",
+      "method": "symbolic",
+      "guard": "cap and sum(xs) % 10 != 9",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 15,
+      "chars": 25,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.00108480011112988,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 1
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 5,
+        "covered": 9,
+        "total": 11,
+        "ratio": 0.818
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "overwrite_channel",
+      "method": "direct",
+      "guard": "fn_0(xs) == 0 if not keep else True",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 14,
+      "chars": 35,
+      "set": "dev6",
+      "stored_status": "GUARD_VERIFIED",
+      "tokens": 2634,
+      "wall_seconds": 7.695,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "overwrite_channel",
+      "method": "mace",
+      "guard": "keep or not keep",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 28,
+        "incomplete": 0,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 8,
+      "chars": 16,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 15024,
+      "wall_seconds": 66.874,
+      "explain": {
+        "relations": 5,
+        "rationales": 5,
+        "source_lines": 5
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "overwrite_channel",
+      "method": "pure",
+      "guard": null,
+      "check": {
+        "status": "ABSENT",
+        "typed": false,
+        "unsound": null,
+        "incomplete": null,
+        "exact": false,
+        "error": "no guard"
+      },
+      "nodes": 0,
+      "chars": 0,
+      "set": "dev6",
+      "stored_status": "UNKNOWN",
+      "tokens": 0,
+      "wall_seconds": 0.0006055999547243118,
+      "explain": {
+        "paths": 0,
+        "channel_rules": 0
+      },
+      "paths": 0,
+      "coverage": {
+        "reached": 1,
+        "summarized": 0,
+        "covered": 1,
+        "total": 11,
+        "ratio": 0.091
+      },
+      "reason": "no semantic summary for helper 'fn_0'"
+    },
+    {
+      "fixture": "overwrite_channel",
+      "method": "symbolic",
+      "guard": "keep or sum(xs) == 0",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 20,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.001105800038203597,
+      "explain": {
+        "paths": 2,
+        "channel_rules": 4
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 5,
+        "covered": 9,
+        "total": 11,
+        "ratio": 0.818
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "sort_channel",
+      "method": "direct",
+      "guard": "use_left == False and use_right == False",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 1134,
+        "incomplete": 6452,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 40,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 3720,
+      "wall_seconds": 17.82,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "sort_channel",
+      "method": "mace",
+      "guard": "xs == sorted(xs)",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 7046,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 9,
+      "chars": 16,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 11886,
+      "wall_seconds": 50.318,
+      "explain": {
+        "relations": 4,
+        "rationales": 4,
+        "source_lines": 4
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "sort_channel",
+      "method": "pure",
+      "guard": null,
+      "check": {
+        "status": "ABSENT",
+        "typed": false,
+        "unsound": null,
+        "incomplete": null,
+        "exact": false,
+        "error": "no guard"
+      },
+      "nodes": 0,
+      "chars": 0,
+      "set": "dev6",
+      "stored_status": "UNKNOWN",
+      "tokens": 0,
+      "wall_seconds": 0.0019249001052230597,
+      "explain": {
+        "paths": 0,
+        "channel_rules": 0
+      },
+      "paths": 0,
+      "coverage": {
+        "reached": 1,
+        "summarized": 0,
+        "covered": 1,
+        "total": 27,
+        "ratio": 0.037
+      },
+      "reason": "no semantic summary for helper 'fn_0'"
+    },
+    {
+      "fixture": "sort_channel",
+      "method": "symbolic",
+      "guard": "use_left and use_right or pre or (not use_left and (not use_right) and (max(xs) == xs[-1]) and (min(xs) == xs[0])) or (not use_left and min(xs) == xs[0] and use_right) or (not use_right and max(xs) == xs[-1] and use_left)",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 88,
+      "chars": 221,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.004872600082308054,
+      "explain": {
+        "paths": 8,
+        "channel_rules": 16
+      },
+      "paths": 8,
+      "coverage": {
+        "reached": 5,
+        "summarized": 20,
+        "covered": 25,
+        "total": 27,
+        "ratio": 0.926
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "swap_channels",
+      "method": "direct",
+      "guard": "not show_gap",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 4,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 4,
+      "chars": 12,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 2801,
+      "wall_seconds": 8.584,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "swap_channels",
+      "method": "mace",
+      "guard": "True",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 12,
+        "incomplete": 0,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 1,
+      "chars": 4,
+      "set": "dev6",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 14299,
+      "wall_seconds": 61.913,
+      "explain": {
+        "relations": 5,
+        "rationales": 5,
+        "source_lines": 12
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "swap_channels",
+      "method": "pure",
+      "guard": "not show_gap or k == n",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 22,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.000986600061878562,
+      "explain": {
+        "paths": 2,
+        "channel_rules": 6
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 6,
+        "ratio": 0.833
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "swap_channels",
+      "method": "symbolic",
+      "guard": "not show_gap or k == n",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 22,
+      "set": "dev6",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0009896999690681696,
+      "explain": {
+        "paths": 2,
+        "channel_rules": 6
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 6,
+        "ratio": 0.833
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "dead_flag",
+      "method": "direct",
+      "guard": "True",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 1,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "GUARD_VERIFIED",
+      "tokens": 1319,
+      "wall_seconds": 4.893,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "dead_flag",
+      "method": "mace",
+      "guard": "True",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 1,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "ALL_VERIFIED",
+      "tokens": 1558,
+      "wall_seconds": 17.796,
+      "explain": {
+        "relations": 4,
+        "rationales": 4,
+        "source_lines": 4
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "dead_flag",
+      "method": "pure",
+      "guard": "True",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 1,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0005224000196903944,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 2
+      },
+      "paths": 1,
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 6,
+        "ratio": 0.833
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "dead_flag",
+      "method": "symbolic",
+      "guard": "True",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 1,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0005367998965084553,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 2
+      },
+      "paths": 1,
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 6,
+        "ratio": 0.833
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "dict_slot",
+      "method": "direct",
+      "guard": "mode",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 2,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "GUARD_VERIFIED",
+      "tokens": 642,
+      "wall_seconds": 2.785,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "dict_slot",
+      "method": "mace",
+      "guard": "mode",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 2,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 12729,
+      "wall_seconds": 51.765,
+      "explain": {
+        "relations": 5,
+        "rationales": 5,
+        "source_lines": 7
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "dict_slot",
+      "method": "pure",
+      "guard": "mode",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 2,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0014062998816370964,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 2
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "dict_slot",
+      "method": "symbolic",
+      "guard": "mode",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 2,
+      "chars": 4,
+      "set": "held1",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.00107150012627244,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 2
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "parity_snap",
+      "method": "direct",
+      "guard": "sum(xs) % 2 == 0 and not even",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 43,
+        "incomplete": 43,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 17,
+      "chars": 29,
+      "set": "held1",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 2460,
+      "wall_seconds": 11.471,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "parity_snap",
+      "method": "mace",
+      "guard": "even and sum(xs) % 2 == 0 or not even",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 85,
+        "incomplete": 0,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 21,
+      "chars": 37,
+      "set": "held1",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 14870,
+      "wall_seconds": 86.375,
+      "explain": {
+        "relations": 8,
+        "rationales": 8,
+        "source_lines": 13
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "parity_snap",
+      "method": "pure",
+      "guard": "even and sum(xs) % 2 == 0",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 15,
+      "chars": 25,
+      "set": "held1",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0009900000877678394,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 1
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "parity_snap",
+      "method": "symbolic",
+      "guard": "even and sum(xs) % 2 == 0",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 15,
+      "chars": 25,
+      "set": "held1",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0009419999551028013,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 1
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "clamp_absorb",
+      "method": "direct",
+      "guard": "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 74,
+        "incomplete": 11,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 40,
+      "chars": 70,
+      "set": "held2",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 2404,
+      "wall_seconds": 12.089,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "clamp_absorb",
+      "method": "mace",
+      "guard": "total_post <= 10 or not cap",
+      "check": {
+        "status": "INVALID",
+        "typed": false,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": false,
+        "error": "unknown variable: total_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects"
+      },
+      "nodes": 11,
+      "chars": 27,
+      "set": "held2",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 15391,
+      "wall_seconds": 89.208,
+      "explain": {
+        "relations": 7,
+        "rationales": 7,
+        "source_lines": 12
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "clamp_absorb",
+      "method": "pure",
+      "guard": "cap and sum(xs) >= 10",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 21,
+      "set": "held2",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0008541001006960869,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 1
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "clamp_absorb",
+      "method": "symbolic",
+      "guard": "cap and sum(xs) >= 10",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 12,
+      "chars": 21,
+      "set": "held2",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0008733998984098434,
+      "explain": {
+        "paths": 1,
+        "channel_rules": 1
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 4,
+        "summarized": 0,
+        "covered": 4,
+        "total": 6,
+        "ratio": 0.667
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "toggle_pair",
+      "method": "direct",
+      "guard": "not flag",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 6,
+        "incomplete": 9,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 4,
+      "chars": 8,
+      "set": "held2",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 2579,
+      "wall_seconds": 9.595,
+      "explain": {
+        "relations": 0,
+        "rationales": 0,
+        "source_lines": 0
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "toggle_pair",
+      "method": "mace",
+      "guard": "flag",
+      "check": {
+        "status": "REFUTED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 3,
+        "exact": false,
+        "error": null
+      },
+      "nodes": 2,
+      "chars": 4,
+      "set": "held2",
+      "stored_status": "ROUNDS_EXHAUSTED",
+      "tokens": 16026,
+      "wall_seconds": 71.677,
+      "explain": {
+        "relations": 5,
+        "rationales": 5,
+        "source_lines": 7
+      },
+      "paths": null,
+      "coverage": null
+    },
+    {
+      "fixture": "toggle_pair",
+      "method": "pure",
+      "guard": "flag or n == 0",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 9,
+      "chars": 14,
+      "set": "held2",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0011559000704437494,
+      "explain": {
+        "paths": 2,
+        "channel_rules": 4
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 7,
+        "ratio": 0.714
+      },
+      "reason": "source-level path equality"
+    },
+    {
+      "fixture": "toggle_pair",
+      "method": "symbolic",
+      "guard": "flag or n == 0",
+      "check": {
+        "status": "BOUNDED",
+        "typed": true,
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "nodes": 9,
+      "chars": 14,
+      "set": "held2",
+      "stored_status": "DERIVED",
+      "tokens": 0,
+      "wall_seconds": 0.0008443000260740519,
+      "explain": {
+        "paths": 2,
+        "channel_rules": 4
+      },
+      "paths": 2,
+      "coverage": {
+        "reached": 5,
+        "summarized": 0,
+        "covered": 5,
+        "total": 7,
+        "ratio": 0.714
+      },
+      "reason": "source-level path equality"
+    }
+  ]
+}

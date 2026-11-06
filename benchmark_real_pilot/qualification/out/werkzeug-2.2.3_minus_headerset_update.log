@@ -1,0 +1,57 @@
+$ <local-path> -m pytest tests -q --disable-warnings -m not dev_server -p pytest_trace_plugin
+
+--- stdout ---
+........................................................................ [  8%]
+........................................................................ [ 17%]
+........................................................................ [ 26%]
+...................F.................................................... [ 35%]
+........................................................................ [ 44%]
+........................................................................ [ 52%]
+........................................................................ [ 61%]
+........................................................................ [ 70%]
+........................................................................ [ 79%]
+........................................................................ [ 88%]
+........................................................................ [ 97%]
+........................                                                 [100%]
+================================== FAILURES ===================================
+_______________________ TestHTTPUtility.test_set_header _______________________
+
+self = <test_http.TestHTTPUtility object at 0x000002406C1292D0>
+
+    def test_set_header(self):
+        hs = http.parse_set_header('foo, Bar, "Blah baz", Hehe')
+        assert "blah baz" in hs
+        assert "foobar" not in hs
+        assert "foo" in hs
+        assert list(hs) == ["foo", "Bar", "Blah baz", "Hehe"]
+>       hs.add("Foo")
+
+tests\test_http.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\werkzeug\datastructures.py:2238: in add
+    self.update((header,))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = HeaderSet(['foo', 'Bar', 'Blah baz', 'Hehe']), iterable = ('Foo',)
+
+    def update(self, iterable):
+        """Add all the headers from the iterable to the set.
+    
+        :param iterable: updates the set with the items from the iterable.
+        """
+        pass  # P-: target A deleted
+        for header in iterable:
+            key = header.lower()
+            if key not in self._set:
+                self._headers.append(header)
+                self._set.add(key)
+                inserted_any = True
+>       if inserted_any and self.on_update is not None:
+E       UnboundLocalError: cannot access local variable 'inserted_any' where it is not associated with a value
+
+src\werkzeug\datastructures.py:2273: UnboundLocalError
+=========================== short test summary info ===========================
+FAILED tests/test_http.py::TestHTTPUtility::test_set_header - UnboundLocalErr...
+1 failed, 815 passed, 24 deselected in 14.69s
+
+--- stderr ---

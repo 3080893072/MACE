@@ -1,0 +1,696 @@
+{
+  "analyzer": "mace-reliable-ast-analyzer",
+  "cases": {
+    "click_2482_callback_return": {
+      "claims": [
+        {
+          "input": {
+            "callback": "const",
+            "value": "42"
+          },
+          "operations": [
+            {
+              "file": "src/click/core.py",
+              "line": 2497
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "callback": "const",
+            "value": "42"
+          },
+          "operations": [
+            {
+              "file": "src/click/core.py",
+              "line": 2497
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "callback": "echo",
+            "value": "42"
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        }
+      ],
+      "executions": 6,
+      "masked_rows": 1,
+      "rows": [
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [
+              {
+                "deleted": [],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": "CONST",
+                  "result_type": "str"
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": "CONST",
+                  "result_type": "str"
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "src/click/core.py",
+                    "line": 2497
+                  }
+                ],
+                "kind": "EXPOSED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": "42",
+                  "result_type": "str"
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": 42,
+                  "result_type": "int"
+                },
+                "status": "EXPOSED"
+              }
+            ],
+            "mmbs": [
+              [
+                {
+                  "file": "src/click/core.py",
+                  "line": 2497
+                }
+              ]
+            ],
+            "msms": [
+              [
+                {
+                  "file": "src/click/core.py",
+                  "line": 2497
+                }
+              ]
+            ],
+            "status": "VALIDATED"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "callback": "const",
+            "value": "42"
+          },
+          "universe": [
+            {
+              "file": "src/click/core.py",
+              "line": 2497
+            }
+          ]
+        },
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": null,
+          "base_kind": "EXPOSED",
+          "input": {
+            "callback": "echo",
+            "value": "42"
+          },
+          "universe": [
+            {
+              "file": "src/click/core.py",
+              "line": 2497
+            }
+          ]
+        }
+      ],
+      "status": "WITNESS_VERIFIED_LOCAL",
+      "target": {
+        "file": "src/click/core.py",
+        "line": 2482,
+        "state_key": "value"
+      },
+      "variant_builds": 4,
+      "wall_seconds": 3.116
+    },
+    "click_607_args_cooperative": {
+      "claims": [],
+      "executions": 8,
+      "masked_rows": 4,
+      "rows": [
+        {
+          "a_event_count": 0,
+          "a_executes": false,
+          "analysis": null,
+          "base_kind": "MASKED",
+          "input": {
+            "args": [
+              "get",
+              "full",
+              ""
+            ],
+            "incomplete": ""
+          },
+          "universe": []
+        },
+        {
+          "a_event_count": 0,
+          "a_executes": false,
+          "analysis": null,
+          "base_kind": "MASKED",
+          "input": {
+            "args": [
+              "get",
+              ""
+            ],
+            "incomplete": ""
+          },
+          "universe": []
+        },
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [],
+            "mmbs": [],
+            "msms": [],
+            "status": "FALSE"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "args": [
+              "get",
+              "full"
+            ],
+            "incomplete": ""
+          },
+          "universe": []
+        },
+        {
+          "a_event_count": 0,
+          "a_executes": false,
+          "analysis": null,
+          "base_kind": "MASKED",
+          "input": {
+            "args": [
+              "set",
+              "-y",
+              ""
+            ],
+            "incomplete": ""
+          },
+          "universe": []
+        }
+      ],
+      "status": "UNVERIFIED",
+      "target": {
+        "file": "src/click/shell_completion.py",
+        "line": 607,
+        "state_key": "args"
+      },
+      "variant_builds": 2,
+      "wall_seconds": 3.308
+    },
+    "pyparsing_3228_quoted_fallbacks": {
+      "claims": [],
+      "executions": 10,
+      "masked_rows": 2,
+      "rows": [
+        {
+          "a_event_count": 4,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3236
+                  }
+                ],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "sdf:jls::djf"
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "sdf:jls::djf"
+                  ]
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3232
+                  }
+                ],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "sdf\\:jls:djf"
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "sdf\\:jls:djf"
+                  ]
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3232
+                  },
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3236
+                  }
+                ],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "sdf\\:jls::djf"
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "sdf\\:jls::djf"
+                  ]
+                },
+                "status": "MASKED"
+              }
+            ],
+            "mmbs": [],
+            "msms": [],
+            "status": "FALSE"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "convert_ws": true,
+            "esc": "\\",
+            "esc_quote": "::",
+            "quote": ":",
+            "text": ":sdf\\:jls::djf:",
+            "unquote": true
+          },
+          "universe": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3232
+            },
+            {
+              "file": "pyparsing/core.py",
+              "line": 3236
+            }
+          ]
+        },
+        {
+          "a_event_count": 0,
+          "a_executes": false,
+          "analysis": null,
+          "base_kind": "MASKED",
+          "input": {
+            "convert_ws": true,
+            "esc": "\\",
+            "esc_quote": "::",
+            "quote": ":",
+            "text": ":noescapes:",
+            "unquote": true
+          },
+          "universe": []
+        }
+      ],
+      "status": "UNVERIFIED",
+      "target": {
+        "file": "pyparsing/core.py",
+        "line": 3228,
+        "state_key": "ret"
+      },
+      "variant_builds": 8,
+      "wall_seconds": 8.001
+    },
+    "pyparsing_3310_loop_loc": {
+      "claims": [],
+      "executions": 12,
+      "masked_rows": 3,
+      "rows": [
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [
+              {
+                "deleted": [],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "aaaa"
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "aaaa"
+                  ]
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3313
+                  }
+                ],
+                "kind": "NOT_RELATION",
+                "minus_class": "TIMEOUT",
+                "minus_observation": null,
+                "plus_class": "TIMEOUT",
+                "plus_observation": null,
+                "status": "BROKEN_INTERVENTION"
+              }
+            ],
+            "mmbs": [],
+            "msms": [],
+            "status": "UNVERIFIED"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "max": 4,
+            "not_chars": "x",
+            "text": "aaaa"
+          },
+          "universe": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3313
+            }
+          ]
+        },
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [
+              {
+                "deleted": [],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "aaaa"
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "aaaa"
+                  ]
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3313
+                  }
+                ],
+                "kind": "NOT_RELATION",
+                "minus_class": "TIMEOUT",
+                "minus_observation": null,
+                "plus_class": "TIMEOUT",
+                "plus_observation": null,
+                "status": "BROKEN_INTERVENTION"
+              }
+            ],
+            "mmbs": [],
+            "msms": [],
+            "status": "UNVERIFIED"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "max": 8,
+            "not_chars": "x",
+            "text": "aaaa"
+          },
+          "universe": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3313
+            }
+          ]
+        },
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [
+              {
+                "deleted": [],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "bbbb"
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "bbbb"
+                  ]
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3313
+                  }
+                ],
+                "kind": "NOT_RELATION",
+                "minus_class": "TIMEOUT",
+                "minus_observation": null,
+                "plus_class": "TIMEOUT",
+                "plus_observation": null,
+                "status": "BROKEN_INTERVENTION"
+              }
+            ],
+            "mmbs": [],
+            "msms": [],
+            "status": "UNVERIFIED"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "max": 4,
+            "not_chars": "a",
+            "text": "bbbb"
+          },
+          "universe": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3313
+            }
+          ]
+        }
+      ],
+      "status": "UNVERIFIED",
+      "target": {
+        "file": "pyparsing/core.py",
+        "line": 3310,
+        "state_key": "loc"
+      },
+      "variant_builds": 4,
+      "wall_seconds": 186.919
+    },
+    "pyparsing_3371_self_maxlen": {
+      "claims": [
+        {
+          "input": {
+            "exact": 2,
+            "max": 4,
+            "min": 1,
+            "text": "    "
+          },
+          "operations": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3376
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "exact": 2,
+            "max": 4,
+            "min": 1,
+            "text": "    "
+          },
+          "operations": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3376
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "exact": 0,
+            "max": 4,
+            "min": 1,
+            "text": "    "
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        }
+      ],
+      "executions": 6,
+      "masked_rows": 1,
+      "rows": [
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": {
+            "evaluations": [
+              {
+                "deleted": [],
+                "kind": "MASKED",
+                "minus_class": "RETURN",
+                "minus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "  "
+                  ]
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "  "
+                  ]
+                },
+                "status": "MASKED"
+              },
+              {
+                "deleted": [
+                  {
+                    "file": "pyparsing/core.py",
+                    "line": 3376
+                  }
+                ],
+                "kind": "EXPOSED",
+                "minus_class": "LEGAL_RAISE",
+                "minus_observation": {
+                  "message": "'White' object has no attribute 'maxLen'",
+                  "outcome": "raise",
+                  "type": "AttributeError"
+                },
+                "plus_class": "RETURN",
+                "plus_observation": {
+                  "outcome": "return",
+                  "result": [
+                    "    "
+                  ]
+                },
+                "status": "EXPOSED"
+              }
+            ],
+            "mmbs": [
+              [
+                {
+                  "file": "pyparsing/core.py",
+                  "line": 3376
+                }
+              ]
+            ],
+            "msms": [
+              [
+                {
+                  "file": "pyparsing/core.py",
+                  "line": 3376
+                }
+              ]
+            ],
+            "status": "VALIDATED"
+          },
+          "base_kind": "MASKED",
+          "input": {
+            "exact": 2,
+            "max": 4,
+            "min": 1,
+            "text": "    "
+          },
+          "universe": [
+            {
+              "file": "pyparsing/core.py",
+              "line": 3376
+            }
+          ]
+        },
+        {
+          "a_event_count": 1,
+          "a_executes": true,
+          "analysis": null,
+          "base_kind": "EXPOSED",
+          "input": {
+            "exact": 0,
+            "max": 4,
+            "min": 1,
+            "text": "    "
+          },
+          "universe": []
+        }
+      ],
+      "status": "WITNESS_VERIFIED_LOCAL",
+      "target": {
+        "file": "pyparsing/core.py",
+        "line": 3371,
+        "state_key": "self.maxLen"
+      },
+      "variant_builds": 4,
+      "wall_seconds": 4.73
+    }
+  },
+  "protocol": {
+    "gpu": false,
+    "independent_test_set": false,
+    "model_calls": 0
+  },
+  "version": "1.0.1"
+}

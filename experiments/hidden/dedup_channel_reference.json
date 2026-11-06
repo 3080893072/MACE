@@ -1,0 +1,53 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "xs_post == xs + [xs[0] + 1]",
+        "source_lines": [
+          14
+        ],
+        "rationale": "A appends the successor of the first element."
+      }
+    ],
+    "upstream": [
+      {
+        "id": "U1",
+        "expr": "fn_0(fn_0(xs)) == fn_0(xs)",
+        "condition": "True",
+        "role": "supporting",
+        "source_lines": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "rationale": "Deduplication is idempotent, so the output is the number of distinct elements."
+      }
+    ],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "len(fn_0(xs))",
+        "condition": "count(xs, xs[0] + 1) > 0",
+        "source_lines": [
+          16
+        ],
+        "rationale": "Appending an element already present does not change the distinct count."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "count(xs, xs[0] + 1) > 0",
+      "source_lines": [
+        14,
+        16
+      ]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

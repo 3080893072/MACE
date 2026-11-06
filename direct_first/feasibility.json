@@ -1,0 +1,2014 @@
+{
+  "fixtures": [
+    "alt_masking",
+    "dedup_channel",
+    "modulo_absorb",
+    "overwrite_channel",
+    "sort_channel",
+    "swap_channels",
+    "dead_flag",
+    "dict_slot",
+    "parity_snap",
+    "clamp_absorb",
+    "toggle_pair"
+  ],
+  "rows": [
+    {
+      "fixture": "alt_masking",
+      "set": "dev6",
+      "direct": {
+        "guard": "mode == 0 or mode == 1",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "guard_eval_errors": 0,
+        "counterexamples": [],
+        "contrasts": []
+      },
+      "mace": {
+        "guard": "mode == 0 or mode == 1",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "relations": 5,
+        "refuted": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "invalid": [],
+        "observer_failures": [],
+        "tokens": 13280,
+        "wall_seconds": 72.7
+      },
+      "composer": {
+        "guard": "((mode == 0 or mode == 1))",
+        "outcome": "exact"
+      },
+      "gated": {
+        "guard": "((mode == 0 or mode == 1))",
+        "outcome": "exact"
+      },
+      "choice": "Direct",
+      "chosen_exact": true,
+      "direct_tokens": 701,
+      "direct_wall": 5.324,
+      "mace_tokens": 13280,
+      "mace_wall": 72.7
+    },
+    {
+      "fixture": "dedup_channel",
+      "set": "dev6",
+      "direct": {
+        "guard": "distinct(xs) == distinct(xs + [xs[0] + 1])",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "guard_eval_errors": 0,
+        "counterexamples": [],
+        "contrasts": []
+      },
+      "mace": {
+        "guard": "len(xs) == 0 or (pre and distinct(xs) and len(fn_0(xs)) == len(fn_0(xs + [xs[0] + 1])))",
+        "outcome": "invalid",
+        "unsound": 0,
+        "incomplete": 0,
+        "relations": 6,
+        "refuted": [
+          "U1",
+          "O1"
+        ],
+        "invalid": [
+          "U2",
+          "O2"
+        ],
+        "observer_failures": [
+          {
+            "id": "O1",
+            "invariance_checked": 240,
+            "invariance_failures": 0,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 140,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 12087,
+        "wall_seconds": 69.231
+      },
+      "composer": {
+        "guard": "((len(xs) == 0))",
+        "outcome": "incomplete"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct",
+      "chosen_exact": true,
+      "direct_tokens": 1573,
+      "direct_wall": 8.507,
+      "mace_tokens": 12087,
+      "mace_wall": 69.231
+    },
+    {
+      "fixture": "modulo_absorb",
+      "set": "dev6",
+      "direct": {
+        "guard": "cap and (fn_0(xs) + 1) % 10 == 0",
+        "outcome": "unsound",
+        "unsound": 47,
+        "incomplete": 212,
+        "guard_eval_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "cap": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "cap": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "cap": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false
+            ],
+            "part_text": [
+              "cap",
+              "(fn_0(xs) + 1) % 10 == 0"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "cap": true
+            },
+            "out_plus": 0,
+            "out_minus": -10,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "cap": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "cap": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true,
+              true
+            ],
+            "part_text": [
+              "cap",
+              "(fn_0(xs) + 1) % 10 == 0"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "cap": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "cap": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "cap": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false
+            ],
+            "part_text": [
+              "cap",
+              "(fn_0(xs) + 1) % 10 == 0"
+            ]
+          }
+        ],
+        "contrasts": [
+          {
+            "only_differing_argument": "xs",
+            "masked": {
+              "args": {
+                "xs": [],
+                "cap": true
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "cap": true
+              },
+              "out_plus": 0,
+              "out_minus": -10,
+              "guard_says": true
+            }
+          },
+          {
+            "only_differing_argument": "cap",
+            "masked": {
+              "args": {
+                "xs": [],
+                "cap": true
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "xs": [],
+                "cap": false
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "guard_says": false
+            }
+          }
+        ]
+      },
+      "mace": {
+        "guard": "cap and (fn_0(xs) - fn_0(xs) % 10) == fn_0(xs) + 1 if not cap else fn_0(xs)",
+        "outcome": "invalid",
+        "unsound": 0,
+        "incomplete": 0,
+        "relations": 5,
+        "refuted": [
+          "U2",
+          "O0",
+          "O1"
+        ],
+        "invalid": [],
+        "observer_failures": [
+          {
+            "id": "O0",
+            "invariance_checked": 259,
+            "invariance_failures": 0,
+            "faithful_failures": 341,
+            "faithful_minus_failures": 35,
+            "evaluation_errors": 0
+          },
+          {
+            "id": "O1",
+            "invariance_checked": 259,
+            "invariance_failures": 0,
+            "faithful_failures": 216,
+            "faithful_minus_failures": 475,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 13931,
+        "wall_seconds": 66.653
+      },
+      "composer": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct (unrepaired)",
+      "chosen_exact": false,
+      "direct_tokens": 2793,
+      "direct_wall": 13.549,
+      "mace_tokens": 13931,
+      "mace_wall": 66.653
+    },
+    {
+      "fixture": "overwrite_channel",
+      "set": "dev6",
+      "direct": {
+        "guard": "fn_0(xs) == 0 if not keep else True",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "guard_eval_errors": 0,
+        "counterexamples": [],
+        "contrasts": []
+      },
+      "mace": {
+        "guard": "keep or not keep",
+        "outcome": "unsound",
+        "unsound": 28,
+        "incomplete": 0,
+        "relations": 5,
+        "refuted": [
+          "U1",
+          "U2",
+          "O0",
+          "O1"
+        ],
+        "invalid": [],
+        "observer_failures": [
+          {
+            "id": "O0",
+            "invariance_checked": 80,
+            "invariance_failures": 28,
+            "faithful_failures": 28,
+            "faithful_minus_failures": 28,
+            "evaluation_errors": 0
+          },
+          {
+            "id": "O1",
+            "invariance_checked": 80,
+            "invariance_failures": 28,
+            "faithful_failures": 28,
+            "faithful_minus_failures": 28,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 15024,
+        "wall_seconds": 66.874
+      },
+      "composer": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct",
+      "chosen_exact": true,
+      "direct_tokens": 2634,
+      "direct_wall": 7.695,
+      "mace_tokens": 15024,
+      "mace_wall": 66.874
+    },
+    {
+      "fixture": "sort_channel",
+      "set": "dev6",
+      "direct": {
+        "guard": "use_left == False and use_right == False",
+        "outcome": "unsound",
+        "unsound": 1134,
+        "incomplete": 6452,
+        "guard_eval_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              -1
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": false,
+              "use_right": true
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false
+            ],
+            "part_text": [
+              "use_left == False",
+              "use_right == False"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "out_plus": [
+              -1,
+              -1
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": false
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false,
+              true
+            ],
+            "part_text": [
+              "use_left == False",
+              "use_right == False"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": true
+            },
+            "out_plus": [
+              -1,
+              -1
+            ],
+            "out_minus": [
+              -1,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": true
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "pre": false,
+              "use_left": true,
+              "use_right": true
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false,
+              false
+            ],
+            "part_text": [
+              "use_left == False",
+              "use_right == False"
+            ]
+          }
+        ],
+        "contrasts": [
+          {
+            "only_differing_argument": "xs",
+            "masked": {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                -1
+              ],
+              "out_minus": [
+                -1,
+                -1
+              ],
+              "guard_says": true
+            },
+            "exposed": {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                0,
+                -1
+              ],
+              "guard_says": true
+            }
+          },
+          {
+            "only_differing_argument": "pre",
+            "masked": {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": true,
+                "use_left": false,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                -1,
+                0
+              ],
+              "guard_says": true
+            },
+            "exposed": {
+              "args": {
+                "xs": [
+                  0,
+                  -1
+                ],
+                "pre": false,
+                "use_left": false,
+                "use_right": false
+              },
+              "out_plus": [
+                -1,
+                0
+              ],
+              "out_minus": [
+                0,
+                -1
+              ],
+              "guard_says": true
+            }
+          }
+        ]
+      },
+      "mace": {
+        "guard": "xs == sorted(xs)",
+        "outcome": "incomplete",
+        "unsound": 0,
+        "incomplete": 7046,
+        "relations": 4,
+        "refuted": [
+          "U1"
+        ],
+        "invalid": [],
+        "observer_failures": [],
+        "tokens": 11886,
+        "wall_seconds": 50.318
+      },
+      "composer": {
+        "guard": "(((xs == sorted(xs))) and ((xs == sorted(xs))))",
+        "outcome": "incomplete"
+      },
+      "gated": {
+        "guard": "(((xs == sorted(xs))) and ((xs == sorted(xs))))",
+        "outcome": "incomplete"
+      },
+      "choice": "Direct (unrepaired)",
+      "chosen_exact": false,
+      "direct_tokens": 3720,
+      "direct_wall": 17.82,
+      "mace_tokens": 11886,
+      "mace_wall": 50.318
+    },
+    {
+      "fixture": "swap_channels",
+      "set": "dev6",
+      "direct": {
+        "guard": "not show_gap",
+        "outcome": "incomplete",
+        "unsound": 0,
+        "incomplete": 4,
+        "guard_eval_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "n": -1,
+              "k": -1,
+              "show_gap": true
+            },
+            "out_plus": [
+              -2,
+              1,
+              0
+            ],
+            "out_minus": [
+              -2,
+              1,
+              0
+            ],
+            "snap_plus": {
+              "n": -1,
+              "k": -1,
+              "show_gap": true,
+              "a": -1,
+              "b": -1
+            },
+            "snap_minus": {
+              "n": -1,
+              "k": -1,
+              "show_gap": true,
+              "a": -1,
+              "b": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false
+            ],
+            "part_text": [
+              "not show_gap"
+            ]
+          },
+          {
+            "args": {
+              "n": 0,
+              "k": 0,
+              "show_gap": true
+            },
+            "out_plus": [
+              0,
+              0,
+              0
+            ],
+            "out_minus": [
+              0,
+              0,
+              0
+            ],
+            "snap_plus": {
+              "n": 0,
+              "k": 0,
+              "show_gap": true,
+              "a": 0,
+              "b": 0
+            },
+            "snap_minus": {
+              "n": 0,
+              "k": 0,
+              "show_gap": true,
+              "a": 0,
+              "b": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false
+            ],
+            "part_text": [
+              "not show_gap"
+            ]
+          },
+          {
+            "args": {
+              "n": 1,
+              "k": 1,
+              "show_gap": true
+            },
+            "out_plus": [
+              2,
+              1,
+              0
+            ],
+            "out_minus": [
+              2,
+              1,
+              0
+            ],
+            "snap_plus": {
+              "n": 1,
+              "k": 1,
+              "show_gap": true,
+              "a": 1,
+              "b": 1
+            },
+            "snap_minus": {
+              "n": 1,
+              "k": 1,
+              "show_gap": true,
+              "a": 1,
+              "b": 1
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false
+            ],
+            "part_text": [
+              "not show_gap"
+            ]
+          }
+        ],
+        "contrasts": [
+          {
+            "only_differing_argument": "n",
+            "masked": {
+              "args": {
+                "n": -1,
+                "k": -1,
+                "show_gap": true
+              },
+              "out_plus": [
+                -2,
+                1,
+                0
+              ],
+              "out_minus": [
+                -2,
+                1,
+                0
+              ],
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "n": 0,
+                "k": -1,
+                "show_gap": true
+              },
+              "out_plus": [
+                -1,
+                0,
+                -1
+              ],
+              "out_minus": [
+                -1,
+                0,
+                1
+              ],
+              "guard_says": false
+            }
+          },
+          {
+            "only_differing_argument": "k",
+            "masked": {
+              "args": {
+                "n": -1,
+                "k": -1,
+                "show_gap": true
+              },
+              "out_plus": [
+                -2,
+                1,
+                0
+              ],
+              "out_minus": [
+                -2,
+                1,
+                0
+              ],
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "n": -1,
+                "k": 0,
+                "show_gap": true
+              },
+              "out_plus": [
+                -1,
+                0,
+                1
+              ],
+              "out_minus": [
+                -1,
+                0,
+                -1
+              ],
+              "guard_says": false
+            }
+          }
+        ]
+      },
+      "mace": {
+        "guard": "True",
+        "outcome": "unsound",
+        "unsound": 12,
+        "incomplete": 0,
+        "relations": 5,
+        "refuted": [
+          "U1",
+          "O2"
+        ],
+        "invalid": [],
+        "observer_failures": [
+          {
+            "id": "O2",
+            "invariance_checked": 32,
+            "invariance_failures": 12,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 14299,
+        "wall_seconds": 61.913
+      },
+      "composer": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct (unrepaired)",
+      "chosen_exact": false,
+      "direct_tokens": 2801,
+      "direct_wall": 8.584,
+      "mace_tokens": 14299,
+      "mace_wall": 61.913
+    },
+    {
+      "fixture": "dead_flag",
+      "set": "held1",
+      "direct": {
+        "guard": "True",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "guard_eval_errors": 0,
+        "counterexamples": [],
+        "contrasts": []
+      },
+      "mace": {
+        "guard": "True",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "relations": 4,
+        "refuted": [],
+        "invalid": [],
+        "observer_failures": [],
+        "tokens": 1558,
+        "wall_seconds": 17.796
+      },
+      "composer": {
+        "guard": "(((True)) and ((True)))",
+        "outcome": "exact"
+      },
+      "gated": {
+        "guard": "(((True)) and ((True)))",
+        "outcome": "exact"
+      },
+      "choice": "Direct",
+      "chosen_exact": true,
+      "direct_tokens": 1319,
+      "direct_wall": 4.893,
+      "mace_tokens": 1558,
+      "mace_wall": 17.796
+    },
+    {
+      "fixture": "dict_slot",
+      "set": "held1",
+      "direct": {
+        "guard": "mode",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "guard_eval_errors": 0,
+        "counterexamples": [],
+        "contrasts": []
+      },
+      "mace": {
+        "guard": "mode",
+        "outcome": "exact",
+        "unsound": 0,
+        "incomplete": 0,
+        "relations": 5,
+        "refuted": [
+          "U1",
+          "O0"
+        ],
+        "invalid": [],
+        "observer_failures": [
+          {
+            "id": "O0",
+            "invariance_checked": 80,
+            "invariance_failures": 40,
+            "faithful_failures": 80,
+            "faithful_minus_failures": 40,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 12729,
+        "wall_seconds": 51.765
+      },
+      "composer": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct",
+      "chosen_exact": true,
+      "direct_tokens": 642,
+      "direct_wall": 2.785,
+      "mace_tokens": 12729,
+      "mace_wall": 51.765
+    },
+    {
+      "fixture": "parity_snap",
+      "set": "held1",
+      "direct": {
+        "guard": "sum(xs) % 2 == 0 and not even",
+        "outcome": "unsound",
+        "unsound": 43,
+        "incomplete": 43,
+        "guard_eval_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true,
+              true
+            ],
+            "part_text": [
+              "sum(xs) % 2 == 0",
+              "not even"
+            ]
+          },
+          {
+            "args": {
+              "xs": [],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              true,
+              false
+            ],
+            "part_text": [
+              "sum(xs) % 2 == 0",
+              "not even"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "even": false,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true,
+              true
+            ],
+            "part_text": [
+              "sum(xs) % 2 == 0",
+              "not even"
+            ]
+          }
+        ],
+        "contrasts": [
+          {
+            "only_differing_argument": "xs",
+            "masked": {
+              "args": {
+                "xs": [],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": -2,
+              "guard_says": false
+            }
+          },
+          {
+            "only_differing_argument": "even",
+            "masked": {
+              "args": {
+                "xs": [],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "xs": [],
+                "even": false
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "guard_says": true
+            }
+          }
+        ]
+      },
+      "mace": {
+        "guard": "even and sum(xs) % 2 == 0 or not even",
+        "outcome": "unsound",
+        "unsound": 85,
+        "incomplete": 0,
+        "relations": 8,
+        "refuted": [
+          "U1",
+          "U2",
+          "O1",
+          "O2",
+          "O3"
+        ],
+        "invalid": [],
+        "observer_failures": [
+          {
+            "id": "O1",
+            "invariance_checked": 42,
+            "invariance_failures": 42,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "evaluation_errors": 0
+          },
+          {
+            "id": "O2",
+            "invariance_checked": 85,
+            "invariance_failures": 85,
+            "faithful_failures": 170,
+            "faithful_minus_failures": 170,
+            "evaluation_errors": 0
+          },
+          {
+            "id": "O3",
+            "invariance_checked": 43,
+            "invariance_failures": 43,
+            "faithful_failures": 170,
+            "faithful_minus_failures": 170,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 14870,
+        "wall_seconds": 86.375
+      },
+      "composer": {
+        "guard": "((even and sum(xs) % 2 == 0))",
+        "outcome": "exact"
+      },
+      "gated": {
+        "guard": "((even and sum(xs) % 2 == 0))",
+        "outcome": "exact"
+      },
+      "choice": "Composer",
+      "chosen_exact": true,
+      "direct_tokens": 2460,
+      "direct_wall": 11.471,
+      "mace_tokens": 14870,
+      "mace_wall": 86.375
+    },
+    {
+      "fixture": "clamp_absorb",
+      "set": "held2",
+      "direct": {
+        "guard": "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)",
+        "outcome": "unsound",
+        "unsound": 74,
+        "incomplete": 11,
+        "guard_eval_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "cap": true
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "cap": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "cap": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true
+            ],
+            "part_text": [
+              "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "cap": true
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "cap": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "cap": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true
+            ],
+            "part_text": [
+              "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)"
+            ]
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "cap": true
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "cap": true,
+              "total": 2
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "cap": true,
+              "total": 1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "kind": "unsound",
+            "predicted": true,
+            "parts": [
+              true
+            ],
+            "part_text": [
+              "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)"
+            ]
+          }
+        ],
+        "contrasts": [
+          {
+            "only_differing_argument": "xs",
+            "masked": {
+              "args": {
+                "xs": [
+                  5,
+                  5
+                ],
+                "cap": true
+              },
+              "out_plus": 10,
+              "out_minus": 10,
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "xs": [],
+                "cap": true
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "guard_says": true
+            }
+          },
+          {
+            "only_differing_argument": "cap",
+            "masked": {
+              "args": {
+                "xs": [
+                  5,
+                  5
+                ],
+                "cap": true
+              },
+              "out_plus": 10,
+              "out_minus": 10,
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "xs": [
+                  5,
+                  5
+                ],
+                "cap": false
+              },
+              "out_plus": 11,
+              "out_minus": 10,
+              "guard_says": false
+            }
+          }
+        ]
+      },
+      "mace": {
+        "guard": "total_post <= 10 or not cap",
+        "outcome": "invalid",
+        "unsound": 0,
+        "incomplete": 0,
+        "relations": 7,
+        "refuted": [
+          "U3"
+        ],
+        "invalid": [
+          "U1",
+          "U2",
+          "O0",
+          "O1",
+          "O2"
+        ],
+        "observer_failures": [],
+        "tokens": 15391,
+        "wall_seconds": 89.208
+      },
+      "composer": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct (unrepaired)",
+      "chosen_exact": false,
+      "direct_tokens": 2404,
+      "direct_wall": 12.089,
+      "mace_tokens": 15391,
+      "mace_wall": 89.208
+    },
+    {
+      "fixture": "toggle_pair",
+      "set": "held2",
+      "direct": {
+        "guard": "not flag",
+        "outcome": "unsound",
+        "unsound": 6,
+        "incomplete": 9,
+        "guard_eval_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "n": 0,
+              "k": 0,
+              "flag": true
+            },
+            "out_plus": [
+              0,
+              0
+            ],
+            "out_minus": [
+              0,
+              0
+            ],
+            "snap_plus": {
+              "n": 0,
+              "k": 0,
+              "flag": true,
+              "a": 0,
+              "b": 0
+            },
+            "snap_minus": {
+              "n": 0,
+              "k": 0,
+              "flag": true,
+              "a": 0,
+              "b": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false
+            ],
+            "part_text": [
+              "not flag"
+            ]
+          },
+          {
+            "args": {
+              "n": 0,
+              "k": 1,
+              "flag": true
+            },
+            "out_plus": [
+              1,
+              -1
+            ],
+            "out_minus": [
+              1,
+              -1
+            ],
+            "snap_plus": {
+              "n": 0,
+              "k": 1,
+              "flag": true,
+              "a": 0,
+              "b": 1
+            },
+            "snap_minus": {
+              "n": 0,
+              "k": 1,
+              "flag": true,
+              "a": 0,
+              "b": 1
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false
+            ],
+            "part_text": [
+              "not flag"
+            ]
+          },
+          {
+            "args": {
+              "n": 0,
+              "k": 2,
+              "flag": true
+            },
+            "out_plus": [
+              2,
+              -2
+            ],
+            "out_minus": [
+              2,
+              -2
+            ],
+            "snap_plus": {
+              "n": 0,
+              "k": 2,
+              "flag": true,
+              "a": 0,
+              "b": 2
+            },
+            "snap_minus": {
+              "n": 0,
+              "k": 2,
+              "flag": true,
+              "a": 0,
+              "b": 2
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "kind": "incomplete",
+            "predicted": false,
+            "parts": [
+              false
+            ],
+            "part_text": [
+              "not flag"
+            ]
+          }
+        ],
+        "contrasts": [
+          {
+            "only_differing_argument": "n",
+            "masked": {
+              "args": {
+                "n": 0,
+                "k": 0,
+                "flag": false
+              },
+              "out_plus": [
+                0,
+                0
+              ],
+              "out_minus": [
+                0,
+                0
+              ],
+              "guard_says": true
+            },
+            "exposed": {
+              "args": {
+                "n": 1,
+                "k": 0,
+                "flag": false
+              },
+              "out_plus": [
+                0,
+                0
+              ],
+              "out_minus": [
+                1,
+                1
+              ],
+              "guard_says": true
+            }
+          },
+          {
+            "only_differing_argument": "flag",
+            "masked": {
+              "args": {
+                "n": 1,
+                "k": 0,
+                "flag": true
+              },
+              "out_plus": [
+                1,
+                1
+              ],
+              "out_minus": [
+                1,
+                1
+              ],
+              "guard_says": false
+            },
+            "exposed": {
+              "args": {
+                "n": 1,
+                "k": 0,
+                "flag": false
+              },
+              "out_plus": [
+                0,
+                0
+              ],
+              "out_minus": [
+                1,
+                1
+              ],
+              "guard_says": true
+            }
+          }
+        ]
+      },
+      "mace": {
+        "guard": "flag",
+        "outcome": "incomplete",
+        "unsound": 0,
+        "incomplete": 3,
+        "relations": 5,
+        "refuted": [
+          "U1",
+          "U2",
+          "O0",
+          "O1"
+        ],
+        "invalid": [],
+        "observer_failures": [
+          {
+            "id": "O0",
+            "invariance_checked": 18,
+            "invariance_failures": 0,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 6,
+            "evaluation_errors": 0
+          },
+          {
+            "id": "O1",
+            "invariance_checked": 18,
+            "invariance_failures": 0,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 6,
+            "evaluation_errors": 0
+          }
+        ],
+        "tokens": 16026,
+        "wall_seconds": 71.677
+      },
+      "composer": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "gated": {
+        "guard": null,
+        "outcome": "unknown"
+      },
+      "choice": "Direct (unrepaired)",
+      "chosen_exact": false,
+      "direct_tokens": 2579,
+      "direct_wall": 9.595,
+      "mace_tokens": 16026,
+      "mace_wall": 71.677
+    }
+  ],
+  "matrix": {
+    "both_exact": [
+      "alt_masking",
+      "dead_flag",
+      "dict_slot"
+    ],
+    "direct_only": [
+      "dedup_channel",
+      "overwrite_channel"
+    ],
+    "mace_only": [],
+    "both_wrong": [
+      "modulo_absorb",
+      "sort_channel",
+      "swap_channels",
+      "parity_snap",
+      "clamp_absorb",
+      "toggle_pair"
+    ]
+  },
+  "oracle_union": [
+    "alt_masking",
+    "dead_flag",
+    "dedup_channel",
+    "dict_slot",
+    "overwrite_channel"
+  ],
+  "policies": [
+    {
+      "policy": "Direct only",
+      "exact": 5,
+      "cases": [
+        {
+          "fixture": "alt_masking",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "dedup_channel",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "modulo_absorb",
+          "method": "direct",
+          "exact": false
+        },
+        {
+          "fixture": "overwrite_channel",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "sort_channel",
+          "method": "direct",
+          "exact": false
+        },
+        {
+          "fixture": "swap_channels",
+          "method": "direct",
+          "exact": false
+        },
+        {
+          "fixture": "dead_flag",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "dict_slot",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "parity_snap",
+          "method": "direct",
+          "exact": false
+        },
+        {
+          "fixture": "clamp_absorb",
+          "method": "direct",
+          "exact": false
+        },
+        {
+          "fixture": "toggle_pair",
+          "method": "direct",
+          "exact": false
+        }
+      ]
+    },
+    {
+      "policy": "Full MACE only",
+      "exact": 3,
+      "cases": [
+        {
+          "fixture": "alt_masking",
+          "method": "mace",
+          "exact": true
+        },
+        {
+          "fixture": "dedup_channel",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "modulo_absorb",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "overwrite_channel",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "sort_channel",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "swap_channels",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "dead_flag",
+          "method": "mace",
+          "exact": true
+        },
+        {
+          "fixture": "dict_slot",
+          "method": "mace",
+          "exact": true
+        },
+        {
+          "fixture": "parity_snap",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "clamp_absorb",
+          "method": "mace",
+          "exact": false
+        },
+        {
+          "fixture": "toggle_pair",
+          "method": "mace",
+          "exact": false
+        }
+      ]
+    },
+    {
+      "policy": "Composer only",
+      "exact": 3,
+      "cases": [
+        {
+          "fixture": "alt_masking",
+          "method": "composer",
+          "exact": true
+        },
+        {
+          "fixture": "dedup_channel",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "modulo_absorb",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "overwrite_channel",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "sort_channel",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "swap_channels",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "dead_flag",
+          "method": "composer",
+          "exact": true
+        },
+        {
+          "fixture": "dict_slot",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "parity_snap",
+          "method": "composer",
+          "exact": true
+        },
+        {
+          "fixture": "clamp_absorb",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "toggle_pair",
+          "method": "composer",
+          "exact": false
+        }
+      ]
+    },
+    {
+      "policy": "Direct-First (keep exact G0, else composer)",
+      "exact": 6,
+      "cases": [
+        {
+          "fixture": "alt_masking",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "dedup_channel",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "modulo_absorb",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "overwrite_channel",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "sort_channel",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "swap_channels",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "dead_flag",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "dict_slot",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "parity_snap",
+          "method": "composer",
+          "exact": true
+        },
+        {
+          "fixture": "clamp_absorb",
+          "method": "composer",
+          "exact": false
+        },
+        {
+          "fixture": "toggle_pair",
+          "method": "composer",
+          "exact": false
+        }
+      ]
+    },
+    {
+      "policy": "Direct-First (keep exact G0, else gated composer)",
+      "exact": 6,
+      "cases": [
+        {
+          "fixture": "alt_masking",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "dedup_channel",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "modulo_absorb",
+          "method": "gated",
+          "exact": false
+        },
+        {
+          "fixture": "overwrite_channel",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "sort_channel",
+          "method": "gated",
+          "exact": false
+        },
+        {
+          "fixture": "swap_channels",
+          "method": "gated",
+          "exact": false
+        },
+        {
+          "fixture": "dead_flag",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "dict_slot",
+          "method": "direct",
+          "exact": true
+        },
+        {
+          "fixture": "parity_snap",
+          "method": "gated",
+          "exact": true
+        },
+        {
+          "fixture": "clamp_absorb",
+          "method": "gated",
+          "exact": false
+        },
+        {
+          "fixture": "toggle_pair",
+          "method": "gated",
+          "exact": false
+        }
+      ]
+    }
+  ],
+  "cost": {
+    "direct_tokens_all": 23626,
+    "direct_wall_all": 102.31,
+    "mace_tokens_on_refuted": 86403,
+    "mace_wall_on_refuted": 426.14,
+    "mace_tokens_all": 141081,
+    "mace_wall_all": 704.51,
+    "direct_first_tokens": 110029,
+    "direct_first_wall": 528.45
+  },
+  "note": "Oracle union is a post-hoc ceiling scored with the reference semantics; it is not a method result. Selection in the Direct-First policies uses only the bounded check."
+}

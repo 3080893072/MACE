@@ -1,0 +1,6289 @@
+{
+ "schema": "mace_source_derived_v2_1_msms_mmbs/1",
+ "generated_utc": "2026-11-04T17:17:13Z",
+ "definition": {
+  "msms": "minimal non-empty sufficient kept sets: obs(U\\S)==obs(PLUS)",
+  "mmbs": "minimal non-empty breaking disabled sets: obs(D)!=obs(PLUS), only when obs(empty disabled)==obs(PLUS)"
+ },
+ "tasks": [
+  {
+   "case_id": "sd_attrs_asdict_loop_m7",
+   "slug": "attrs-23.2.0",
+   "file": "src/attr/_funcs.py",
+   "A_line": 118,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_single_attr": {
+     "p_plus": {
+      "out": {
+       "x": 1
+      }
+     },
+     "p_minus": {
+      "out": {
+       "x": 1
+      }
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_two_attrs": {
+     "p_plus": {
+      "out": {
+       "x": 1,
+       "y": 2
+      }
+     },
+     "p_minus": {
+      "out": {
+       "x": 1
+      }
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_coverage_glob_backslash_m2",
+   "slug": "coverage-7.4.0",
+   "file": "coverage/files.py",
+   "A_line": 332,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_two_backslashes": {
+     "p_plus": {
+      "out": "src[/\\\\]a[/\\\\]b\\.py"
+     },
+     "p_minus": {
+      "out": "src[/\\\\]a[/\\\\]b\\.py"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_three_backslashes": {
+     "p_plus": {
+      "out": "src[/\\\\]a[/\\\\]b[/\\\\]c\\.py"
+     },
+     "p_minus": {
+      "out": "src[/\\\\]a[/\\\\]b\\\\c\\.py"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_posix": {
+     "p_plus": {
+      "out": "src[/\\\\]a[/\\\\]b\\.py"
+     },
+     "p_minus": {
+      "out": "src[/\\\\]a[/\\\\]b\\.py"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_backticks_m1",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/utils/smartquotes.py",
+   "A_line": 735,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_one_backtick": {
+     "p_plus": {
+      "out": "a��b"
+     },
+     "p_minus": {
+      "out": "a��b"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_two_backticks": {
+     "p_plus": {
+      "out": "a��b��c"
+     },
+     "p_minus": {
+      "out": "a��b``c"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "plain text"
+     },
+     "p_minus": {
+      "out": "plain text"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_educate_dashes_m2",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/utils/smartquotes.py",
+   "A_line": 763,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_two_triple": {
+     "p_plus": {
+      "out": "a�Cb�Cc"
+     },
+     "p_minus": {
+      "out": "a�Cb�Cc"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_three_triple": {
+     "p_plus": {
+      "out": "a�Cb�Cc�Cd"
+     },
+     "p_minus": {
+      "out": "a�Cb�Cc��-d"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "a-b"
+     },
+     "p_minus": {
+      "out": "a-b"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_ellipsis_m3",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/utils/smartquotes.py",
+   "A_line": 810,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2",
+    "U3"
+   ],
+   "subsets_enumerated": 8,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_three_ellipses": {
+     "p_plus": {
+      "out": "a��b��c��d"
+     },
+     "p_minus": {
+      "out": "a��b��c��d"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ],
+      [
+       "U3"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2,U3": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U3": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 8,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_four_ellipses": {
+     "p_plus": {
+      "out": "a��b��c��d��e"
+     },
+     "p_minus": {
+      "out": "a��b��c��d...e"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "plain text"
+     },
+     "p_minus": {
+      "out": "plain text"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_language_tag_m3",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/utils/__init__.py",
+   "A_line": 704,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2",
+    "U3"
+   ],
+   "subsets_enumerated": 8,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_two_separators": {
+     "p_plus": {
+      "out": [
+       "de-at-1901",
+       "de-at",
+       "de-1901",
+       "de"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "de-at-1901",
+       "de-at",
+       "de-1901",
+       "de"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ],
+      [
+       "U3"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2,U3": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U3": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 8,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_three_separators": {
+     "p_plus": {
+      "out": [
+       "de-at-1901-x",
+       "de-at-1901",
+       "de-at-x",
+       "de-1901-x",
+       "de-at",
+       "de-1901",
+       "de-x",
+       "de"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "de-at-1901-x",
+       "de-at",
+       "de-1901-x",
+       "de"
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_single_subtag": {
+     "p_plus": {
+      "out": [
+       "en"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "en"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_make_id_lower",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/nodes.py",
+   "A_line": 2231,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_ascii_mixed_case": {
+     "p_plus": {
+      "out": "hello-world"
+     },
+     "p_minus": {
+      "out": "hello-world"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_non_ascii": {
+     "p_plus": {
+      "out": "arger-im-buro"
+     },
+     "p_minus": {
+      "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_lowercase": {
+     "p_plus": {
+      "out": "already-lower"
+     },
+     "p_minus": {
+      "out": "already-lower"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_make_id_nonid_m2",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/nodes.py",
+   "A_line": 2239,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_two_runs": {
+     "p_plus": {
+      "out": "a-b-c"
+     },
+     "p_minus": {
+      "out": "a-b-c"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_three_runs": {
+     "p_plus": {
+      "out": "a-b-c-d"
+     },
+     "p_minus": {
+      "out": "a-b-c?d"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_no_runs": {
+     "p_plus": {
+      "out": "abc"
+     },
+     "p_minus": {
+      "out": "abc"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_smartquotes_strip_m1",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/frontend.py",
+   "A_line": 272,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_space_padding": {
+     "p_plus": {
+      "out": [
+       [
+        "en",
+        "abcd"
+       ]
+      ]
+     },
+     "p_minus": {
+      "out": [
+       [
+        "en",
+        "abcd"
+       ]
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_tab_padding": {
+     "p_plus": {
+      "out": [
+       [
+        "en",
+        "abcd"
+       ]
+      ]
+     },
+     "p_minus": {
+      "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_unpadded": {
+     "p_plus": {
+      "out": [
+       [
+        "en",
+        "abcd"
+       ]
+      ]
+     },
+     "p_minus": {
+      "out": [
+       [
+        "en",
+        "abcd"
+       ]
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_stupefy_emdash_m2",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/utils/smartquotes.py",
+   "A_line": 827,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_two_emdashes": {
+     "p_plus": {
+      "out": "a--b--c"
+     },
+     "p_minus": {
+      "out": "a--b--c"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_three_emdashes": {
+     "p_plus": {
+      "out": "a--b--c--d"
+     },
+     "p_minus": {
+      "out": "a--b--c��d"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "plain text"
+     },
+     "p_minus": {
+      "out": "plain text"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_docutils_stupefy_endash_m1",
+   "slug": "docutils-0.20.1",
+   "file": "docutils/utils/smartquotes.py",
+   "A_line": 826,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_one_endash": {
+     "p_plus": {
+      "out": "left-right"
+     },
+     "p_minus": {
+      "out": "left-right"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_two_endashes": {
+     "p_plus": {
+      "out": "a-b-c"
+     },
+     "p_minus": {
+      "out": "a-b�Cc"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "plain text"
+     },
+     "p_minus": {
+      "out": "plain text"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_humanize_filesize_gnu_m5",
+   "slug": "humanize-4.9.0",
+   "file": "src/humanize/filesize.py",
+   "A_line": 56,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_gnu_positive": {
+     "p_plus": {
+      "out": "2.0K"
+     },
+     "p_minus": {
+      "out": "2.0K"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_gnu_negative": {
+     "p_plus": {
+      "out": "-4.0K"
+     },
+     "p_minus": {
+      "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_decimal": {
+     "p_plus": {
+      "out": "2.0 kB"
+     },
+     "p_minus": {
+      "out": "2.0 kB"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_isort_format_strip_m4",
+   "slug": "isort-5.13.2",
+   "file": "isort/format.py",
+   "A_line": 21,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_padded": {
+     "p_plus": {
+      "out": "a.b"
+     },
+     "p_minus": {
+      "out": "a.b"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_tab_newline": {
+     "p_plus": {
+      "out": "a.b"
+     },
+     "p_minus": {
+      "out": "\ta.b\n"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "a.b"
+     },
+     "p_minus": {
+      "out": "a.b"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_jsonschema_1145_pointer",
+   "slug": "jsonschema-4.20.0",
+   "file": "jsonschema/validators.py",
+   "A_line": 1145,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_tilde0": {
+     "p_plus": {
+      "value": 1
+     },
+     "p_minus": {
+      "value": 1
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "mask_nested_tilde0": {
+     "p_plus": {
+      "value": 4
+     },
+     "p_minus": {
+      "value": 4
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_tilde1": {
+     "p_plus": {
+      "value": 2
+     },
+     "p_minus": {
+      "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_plain": {
+     "p_plus": {
+      "value": 3
+     },
+     "p_minus": {
+      "value": 3
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_networkx_adjlist_strip_m1",
+   "slug": "networkx-3.2.1",
+   "file": "networkx/readwrite/adjlist.py",
+   "A_line": 204,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_space_padding": {
+     "p_plus": {
+      "nodes": [
+       "a",
+       "b"
+      ],
+      "edges": [
+       "('a', 'b')"
+      ]
+     },
+     "p_minus": {
+      "nodes": [
+       "a",
+       "b"
+      ],
+      "edges": [
+       "('a', 'b')"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_tab_padding": {
+     "p_plus": {
+      "nodes": [
+       "a",
+       "b"
+      ],
+      "edges": [
+       "('a', 'b')"
+      ]
+     },
+     "p_minus": {
+      "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain": {
+     "p_plus": {
+      "nodes": [
+       "a",
+       "b"
+      ],
+      "edges": [
+       "('a', 'b')"
+      ]
+     },
+     "p_minus": {
+      "nodes": [
+       "a",
+       "b"
+      ],
+      "edges": [
+       "('a', 'b')"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_networkx_gexf448_slices",
+   "slug": "networkx-3.2.1",
+   "file": "networkx/readwrite/gexf.py",
+   "A_line": 448,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_undirected_slices": {
+     "p_plus": {
+      "children": [
+       [
+        "slices",
+        {}
+       ]
+      ]
+     },
+     "p_minus": {
+      "children": [
+       [
+        "slices",
+        {}
+       ]
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_directed_slices": {
+     "p_plus": {
+      "children": [
+       [
+        "slices",
+        {}
+       ]
+      ]
+     },
+     "p_minus": {
+      "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_undirected_no_slices": {
+     "p_plus": {
+      "children": []
+     },
+     "p_minus": {
+      "children": []
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    },
+    "control_directed_no_slices": {
+     "p_plus": {
+      "children": []
+     },
+     "p_minus": {
+      "children": []
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pygments_bbcode64_color",
+   "slug": "pygments-2.17.2",
+   "file": "pygments/formatters/bbcode.py",
+   "A_line": 64,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_color": {
+     "p_plus": {
+      "out": "[color=#ff0000]abc[/color] = 1\n"
+     },
+     "p_minus": {
+      "out": "[color=#ff0000]abc[/color] = 1\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_color_underline": {
+     "p_plus": {
+      "out": "[color=#ff0000][u]abc[/u][/color] = 1\n"
+     },
+     "p_minus": {
+      "out": "[color=#ff0000][u]abc[/u] = 1\n"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_bold": {
+     "p_plus": {
+      "out": "[b]abc[/b] = 1\n"
+     },
+     "p_minus": {
+      "out": "[b]abc[/b] = 1\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pygments_bbcode70_italic",
+   "slug": "pygments-2.17.2",
+   "file": "pygments/formatters/bbcode.py",
+   "A_line": 70,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_italic": {
+     "p_plus": {
+      "out": "[i]abc[/i] = 1\n"
+     },
+     "p_minus": {
+      "out": "[i]abc[/i] = 1\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_italic_color": {
+     "p_plus": {
+      "out": "[color=#ff0000][i]abc[/i][/color] = 1\n"
+     },
+     "p_minus": {
+      "out": "[color=#ff0000][i]abc[/color] = 1\n"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_bold": {
+     "p_plus": {
+      "out": "[b]abc[/b] = 1\n"
+     },
+     "p_minus": {
+      "out": "[b]abc[/b] = 1\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    },
+    "mask_italic_codetag": {
+     "p_plus": {
+      "out": "[code][i]abc[/i] = 1\n[/code]\n"
+     },
+     "p_minus": {
+      "out": "[code][i]abc[/i] = 1\n[/code]\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pygments_groff73_italic",
+   "slug": "pygments-2.17.2",
+   "file": "pygments/formatters/groff.py",
+   "A_line": 73,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2",
+    "U3"
+   ],
+   "subsets_enumerated": 8,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_italic_mono": {
+     "p_plus": {
+      "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+     },
+     "p_minus": {
+      "out": ".nf\n\\f[CR]\n\\f[CI]abc\\f[CR] = 1\n\n.fi"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ],
+      [
+       "U3"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2,U3": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U3": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_italic_nonmono": {
+     "p_plus": {
+      "out": ".nf\n\\f[CR]\n\\f[I]abc\\f[R] = 1\n\n.fi"
+     },
+     "p_minus": {
+      "out": ".nf\n\\f[CR]\nabc = 1\n\n.fi"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_bold_mono": {
+     "p_plus": {
+      "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+     },
+     "p_minus": {
+      "out": ".nf\n\\f[CR]\n\\f[CB]abc\\f[CR] = 1\n\n.fi"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pygments_latex297_italic",
+   "slug": "pygments-2.17.2",
+   "file": "pygments/formatters/latex.py",
+   "A_line": 297,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_inline_italic": {
+     "p_plus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "mask_inline_italic_color": {
+     "p_plus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_full_italic": {
+     "p_plus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_inline_bold": {
+     "p_plus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@na}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nb}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@bp}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@no}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nd}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ni}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ne}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nf}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@fm}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@py}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nl}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nn}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nx}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nt}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nv}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vg}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vi}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vm}{\\let\\PY@bf=\\textbf}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus": {
+      "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@na}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nb}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@bp}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@no}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nd}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ni}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ne}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nf}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@fm}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@py}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nl}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nn}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nx}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nt}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nv}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vg}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vi}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vm}{\\let\\PY@bf=\\textbf}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pygments_style95_cache",
+   "slug": "pygments-2.17.2",
+   "file": "pygments/style.py",
+   "A_line": 95,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_text": {
+     "p_plus": {
+      "color": null,
+      "bold": false,
+      "italic": false,
+      "underline": false
+     },
+     "p_minus": {
+      "color": null,
+      "bold": false,
+      "italic": false,
+      "underline": false
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "mask_name_other": {
+     "p_plus": {
+      "color": null,
+      "bold": false,
+      "italic": false,
+      "underline": false
+     },
+     "p_minus": {
+      "color": null,
+      "bold": false,
+      "italic": false,
+      "underline": false
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_keyword": {
+     "p_plus": {
+      "color": null,
+      "bold": false,
+      "italic": true,
+      "underline": false
+     },
+     "p_minus": {
+      "error": "KeyError: Token.Keyword"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "mask_operator_inherited": {
+     "p_plus": {
+      "color": null,
+      "bold": false,
+      "italic": false,
+      "underline": false
+     },
+     "p_minus": {
+      "color": null,
+      "bold": false,
+      "italic": false,
+      "underline": false
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_tabulate_1052_strip_right",
+   "slug": "tabulate-0.9.0",
+   "file": "tabulate/__init__.py",
+   "A_line": 1052,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_spaces": {
+     "p_plus": {
+      "out": "a\nb"
+     },
+     "p_minus": {
+      "out": "a\nb"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_tabs": {
+     "p_plus": {
+      "out": "a\nb"
+     },
+     "p_minus": {
+      "out": "\ta\n  b"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "a\nb"
+     },
+     "p_minus": {
+      "out": "a\nb"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    },
+    "control_center": {
+     "p_plus": {
+      "out": "a\nb"
+     },
+     "p_minus": {
+      "out": "a\nb"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_tabulate_1056_strip_center",
+   "slug": "tabulate-0.9.0",
+   "file": "tabulate/__init__.py",
+   "A_line": 1056,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_numeric": {
+     "p_plus": {
+      "out": "12\n7"
+     },
+     "p_minus": {
+      "out": "12\n7"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_alpha": {
+     "p_plus": {
+      "out": "ab\nc"
+     },
+     "p_minus": {
+      "out": "  ab\n  c"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_right_numeric": {
+     "p_plus": {
+      "out": "12\n 7"
+     },
+     "p_minus": {
+      "out": "12\n 7"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    },
+    "control_no_space": {
+     "p_plus": {
+      "out": "12\n7"
+     },
+     "p_minus": {
+      "out": "12\n7"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_tabulate_2557_curlen",
+   "slug": "tabulate-0.9.0",
+   "file": "tabulate/__init__.py",
+   "A_line": 2557,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_two_lines": {
+     "p_plus": {
+      "lines": [
+       "word word",
+       "word [...]"
+      ]
+     },
+     "p_minus": {
+      "lines": [
+       "word word",
+       "word [...]"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_three_lines": {
+     "p_plus": {
+      "lines": [
+       "one two",
+       "three four",
+       "five [...]"
+      ]
+     },
+     "p_minus": {
+      "lines": [
+       "one two",
+       "three four",
+       "[...]"
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_line_fits": {
+     "p_plus": {
+      "lines": [
+       "aaa bbb",
+       "ccc ddd"
+      ]
+     },
+     "p_minus": {
+      "lines": [
+       "aaa bbb",
+       "ccc ddd"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    },
+    "control_no_max_lines": {
+     "p_plus": {
+      "lines": [
+       "word word",
+       "word word",
+       "word"
+      ]
+     },
+     "p_minus": {
+      "lines": [
+       "word word",
+       "word word",
+       "word"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_toml_strict_num_strip_m1",
+   "slug": "toml-0.10.2",
+   "file": "toml/decoder.py",
+   "A_line": 91,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "UNKNOWN",
+   "per_input": {
+    "mask_space_padded_leading_zero": {
+     "p_plus": {
+      "out": false
+     },
+     "p_minus": {
+      "out": false
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "expose_tab_padded_leading_zero": {
+     "p_plus": {
+      "out": false
+     },
+     "p_minus": {
+      "out": true
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    },
+    "control_plain_integer": {
+     "p_plus": {
+      "out": true
+     },
+     "p_minus": {
+      "out": true
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": null,
+     "reference_mmbs": null,
+     "status": "UNKNOWN"
+    }
+   }
+  },
+  {
+   "case_id": "sd_attrs_tobool_nc",
+   "slug": "attrs-23.2.0",
+   "file": "src/attr/converters.py",
+   "A_line": 132,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "nc_mixed_true": {
+     "p_plus": {
+      "out": true
+     },
+     "p_minus": {
+      "error": "ValueError: Cannot convert value to bool: TRUE"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "nc_mixed_false": {
+     "p_plus": {
+      "out": false
+     },
+     "p_minus": {
+      "error": "ValueError: Cannot convert value to bool: FALSE"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_h11_comma_header_m5",
+   "slug": "h11-0.14.0",
+   "file": "h11/_headers.py",
+   "A_line": 246,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_space_padded": {
+     "p_plus": {
+      "out": [
+       "chunked"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "chunked"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_tab_padded": {
+     "p_plus": {
+      "out": [
+       "chunked"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "\tchunked"
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_clean": {
+     "p_plus": {
+      "out": [
+       "chunked"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "chunked"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_isort_module_key_m5",
+   "slug": "isort-5.13.2",
+   "file": "isort/sorting.py",
+   "A_line": 53,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_length_sort": {
+     "p_plus": {
+      "out": "B1:b"
+     },
+     "p_minus": {
+      "out": "B1:b"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_plain_sort": {
+     "p_plus": {
+      "out": "Bb"
+     },
+     "p_minus": {
+      "error": "UnboundLocalError: cannot access local variable '_length_sort_maybe' where it is not associated with a value"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_other_name": {
+     "p_plus": {
+      "out": "B2:cc"
+     },
+     "p_minus": {
+      "out": "B2:cc"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_jedi_param_hyphen_m2",
+   "slug": "jedi-0.19.1",
+   "file": "jedi/inference/compiled/value.py",
+   "A_line": 568,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_two_hyphens": {
+     "p_plus": {
+      "out": [
+       "a_b, c_d",
+       ""
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "a_b, c_d",
+       ""
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_three_hyphens": {
+     "p_plus": {
+      "out": [
+       "a_b_c_d",
+       ""
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "a_b_c-d",
+       ""
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_no_hyphens": {
+     "p_plus": {
+      "out": [
+       "a",
+       ""
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "a",
+       ""
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_jsonschema_pointer_m4",
+   "slug": "jsonschema-4.20.0",
+   "file": "jsonschema/validators.py",
+   "A_line": 1145,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_plain_segment": {
+     "p_plus": {
+      "out": 1
+     },
+     "p_minus": {
+      "out": 1
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_marker_segment": {
+     "p_plus": {
+      "out": 2
+     },
+     "p_minus": {
+      "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b#c?d'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_no_escape": {
+     "p_plus": {
+      "out": 3
+     },
+     "p_minus": {
+      "out": 3
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_jsonschema_pointer_nc",
+   "slug": "jsonschema-4.20.0",
+   "file": "jsonschema/validators.py",
+   "A_line": 1145,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "nc_both_escapes_a": {
+     "p_plus": {
+      "out": 1
+     },
+     "p_minus": {
+      "error": "_RefResolutionError: Unresolvable JSON pointer: 'a~1b~0c'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "nc_both_escapes_b": {
+     "p_plus": {
+      "out": 2
+     },
+     "p_minus": {
+      "error": "_RefResolutionError: Unresolvable JSON pointer: 'x~0y~1z'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_markdown_attrib_m3",
+   "slug": "markdown-3.5.1",
+   "file": "markdown/serializers.py",
+   "A_line": 92,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2",
+    "U3"
+   ],
+   "subsets_enumerated": 8,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_three_quotes": {
+     "p_plus": {
+      "out": "&quot;a&quot;b&quot;"
+     },
+     "p_minus": {
+      "out": "&quot;a&quot;b&quot;"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ],
+      [
+       "U3"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2,U3": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U3": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_four_quotes": {
+     "p_plus": {
+      "out": "&quot;a&quot;b&quot;c&quot;"
+     },
+     "p_minus": {
+      "out": "&quot;a&quot;b&quot;c\""
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_no_quotes": {
+     "p_plus": {
+      "out": "abc"
+     },
+     "p_minus": {
+      "out": "abc"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_markdown_cdata_m2",
+   "slug": "markdown-3.5.1",
+   "file": "markdown/serializers.py",
+   "A_line": 73,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_two_lt": {
+     "p_plus": {
+      "out": "&lt;a&lt;b"
+     },
+     "p_minus": {
+      "out": "&lt;a&lt;b"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_three_lt": {
+     "p_plus": {
+      "out": "&lt;a&lt;b&lt;c"
+     },
+     "p_minus": {
+      "out": "&lt;a&lt;b<c"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "ab"
+     },
+     "p_minus": {
+      "out": "ab"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_msgpack_timestamp_m9",
+   "slug": "msgpack-1.0.7",
+   "file": "msgpack/ext.py",
+   "A_line": 125,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_float_seconds": {
+     "p_plus": {
+      "out": 1.5
+     },
+     "p_minus": {
+      "out": 1.5
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_non_numeric": {
+     "p_plus": {
+      "error": "TypeError: unsupported operand type(s) for //: 'str' and 'int'"
+     },
+     "p_minus": {
+      "out": 0.0
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_epoch": {
+     "p_plus": {
+      "out": 0.0
+     },
+     "p_minus": {
+      "out": 0.0
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_multidict_version_m6",
+   "slug": "multidict-6.0.4",
+   "file": "multidict/_multidict_py.py",
+   "A_line": 47,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_one_impl": {
+     "p_plus": {
+      "out": [
+       2
+      ]
+     },
+     "p_minus": {
+      "out": [
+       2
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_two_impls": {
+     "p_plus": {
+      "out": [
+       4,
+       6
+      ]
+     },
+     "p_minus": {
+      "out": [
+       6,
+       6
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_non_multidict": {
+     "p_plus": {
+      "error": "TypeError: Parameter should be multidict or proxy"
+     },
+     "p_minus": {
+      "error": "TypeError: Parameter should be multidict or proxy"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_multidict_version_nc",
+   "slug": "multidict-6.0.4",
+   "file": "multidict/_multidict_py.py",
+   "A_line": 47,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "nc_single_impl": {
+     "p_plus": {
+      "out": [
+       2
+      ]
+     },
+     "p_minus": {
+      "out": [
+       -1
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "nc_two_impls": {
+     "p_plus": {
+      "out": [
+       4,
+       6
+      ]
+     },
+     "p_minus": {
+      "out": [
+       -1,
+       -1
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_parso_child_registry_m8",
+   "slug": "parso-0.8.3",
+   "file": "parso/python/diff.py",
+   "A_line": 553,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_first_child": {
+     "p_plus": {
+      "out": [
+       1,
+       [
+        1
+       ]
+      ]
+     },
+     "p_minus": {
+      "out": [
+       1,
+       [
+        1
+       ]
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_repeated_child": {
+     "p_plus": {
+      "out": [
+       2,
+       [
+        1,
+        1
+       ]
+      ]
+     },
+     "p_minus": {
+      "out": [
+       1,
+       [
+        1
+       ]
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_second_child": {
+     "p_plus": {
+      "out": [
+       2,
+       [
+        1,
+        2
+       ]
+      ]
+     },
+     "p_minus": {
+      "out": [
+       2,
+       [
+        1,
+        2
+       ]
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_passlib_hashname_m2",
+   "slug": "passlib-1.7.4",
+   "file": "passlib/crypto/digest.py",
+   "A_line": 195,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_two_hyphens": {
+     "p_plus": {
+      "out": [
+       "foo_bar_baz",
+       "foo-bar-baz"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "foo_bar_baz",
+       "foo-bar-baz"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_three_hyphens": {
+     "p_plus": {
+      "out": [
+       "foo_bar_baz_qux",
+       "foo-bar-baz-qux"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "foo_bar_baz-qux",
+       "foo-bar-baz-qux"
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_no_hyphens": {
+     "p_plus": {
+      "out": [
+       "foo123abc",
+       "foo123abc"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "foo123abc",
+       "foo123abc"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_passlib_name_norm_m3",
+   "slug": "passlib-1.7.4",
+   "file": "passlib/crypto/digest.py",
+   "A_line": 155,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2",
+    "U3"
+   ],
+   "subsets_enumerated": 8,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_padded_word": {
+     "p_plus": {
+      "out": [
+       "sha256",
+       "sha-256",
+       "sha2-256"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "sha256",
+       "sha-256",
+       "sha2-256"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ],
+      [
+       "U3"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2,U3": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U3": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_underscore": {
+     "p_plus": {
+      "out": [
+       "sha256",
+       "sha-256",
+       "sha2-256"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "sha_256",
+       "sha_256"
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": [
+       "sha",
+       "sha"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "sha",
+       "sha"
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pycodestyle_paths_nc",
+   "slug": "pycodestyle-2.11.1",
+   "file": "pycodestyle.py",
+   "A_line": 1795,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "nc_trailing_pair": {
+     "p_plus": {
+      "out": [
+       "a",
+       "b"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "a ",
+       "b "
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "nc_trailing_single": {
+     "p_plus": {
+      "out": [
+       "c"
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "c "
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_pyyaml_int_underscore_m3",
+   "slug": "pyyaml-6.0.1",
+   "file": "lib/yaml/constructor.py",
+   "A_line": 239,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2",
+    "U3"
+   ],
+   "subsets_enumerated": 8,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_three_underscores": {
+     "p_plus": {
+      "out": 10
+     },
+     "p_minus": {
+      "out": 10
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ],
+      [
+       "U3"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1,U2,U3": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U2"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U1",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       },
+       {
+        "subset": [
+         "U2",
+         "U3"
+        ],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ],
+      "U3": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1",
+       "U2",
+       "U3"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_four_underscores": {
+     "p_plus": {
+      "out": 10
+     },
+     "p_minus": {
+      "error": "ValueError: invalid literal for int() with base 10: '10_'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": 10
+     },
+     "p_minus": {
+      "out": 10
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 8,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_requests_casedict_m8",
+   "slug": "requests-2.31.0",
+   "file": "requests/structures.py",
+   "A_line": 49,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_new_key": {
+     "p_plus": {
+      "out": "a"
+     },
+     "p_minus": {
+      "out": "a"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_case_update": {
+     "p_plus": {
+      "out": "b"
+     },
+     "p_minus": {
+      "out": "a"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_same_value": {
+     "p_plus": {
+      "out": "a"
+     },
+     "p_minus": {
+      "out": "a"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_requests_contenttype_m7",
+   "slug": "requests-2.31.0",
+   "file": "requests/utils.py",
+   "A_line": 527,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_padded_param": {
+     "p_plus": {
+      "out": [
+       "text/html",
+       {
+        "charset": true
+       }
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "text/html",
+       {
+        "charset": true
+       }
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_blank_param": {
+     "p_plus": {
+      "out": [
+       "text/html",
+       {}
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "text/html",
+       {
+        "    ": true
+       }
+      ]
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_key_value": {
+     "p_plus": {
+      "out": [
+       "text/html",
+       {
+        "charset": "utf-8"
+       }
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "text/html",
+       {
+        "charset": "utf-8"
+       }
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_simplejson_decoder_m6",
+   "slug": "simplejson-3.19.2",
+   "file": "simplejson/__init__.py",
+   "A_line": 554,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_loads_after_toggle": {
+     "p_plus": {
+      "out": false
+     },
+     "p_minus": {
+      "out": false
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_no_loads": {
+     "p_plus": {
+      "out": false
+     },
+     "p_minus": {
+      "out": true
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_no_toggle": {
+     "p_plus": {
+      "out": true
+     },
+     "p_minus": {
+      "out": true
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_simplejson_htmlamp_m4",
+   "slug": "simplejson-3.19.2",
+   "file": "simplejson/encoder.py",
+   "A_line": 410,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_amp_only": {
+     "p_plus": {
+      "out": "\"a\\u0026b\""
+     },
+     "p_minus": {
+      "out": "\"a\\u0026b\""
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_amp_both_angles": {
+     "p_plus": {
+      "out": "\"a\\u0026b\\u003cc\\u003ed\""
+     },
+     "p_minus": {
+      "out": "\"a&b\\u003cc\\u003ed\""
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_plain": {
+     "p_plus": {
+      "out": "\"ab\""
+     },
+     "p_minus": {
+      "out": "\"ab\""
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_sqlparse_indentwidth_m9",
+   "slug": "sqlparse-0.4.4",
+   "file": "sqlparse/formatter.py",
+   "A_line": 98,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_numeric_string": {
+     "p_plus": {
+      "out": {
+       "indent_width": 4,
+       "indent_columns": false,
+       "indent_after_first": false,
+       "indent_char": " ",
+       "wrap_after": 0,
+       "comma_first": false,
+       "right_margin": null
+      }
+     },
+     "p_minus": {
+      "out": {
+       "indent_width": 4,
+       "indent_columns": false,
+       "indent_after_first": false,
+       "indent_char": " ",
+       "wrap_after": 0,
+       "comma_first": false,
+       "right_margin": null
+      }
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_non_numeric": {
+     "p_plus": {
+      "error": "SQLParseError: indent_width requires an integer"
+     },
+     "p_minus": {
+      "out": {
+       "indent_width": 2,
+       "indent_columns": false,
+       "indent_after_first": false,
+       "indent_char": " ",
+       "wrap_after": 0,
+       "comma_first": false,
+       "right_margin": null
+      }
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_int": {
+     "p_plus": {
+      "out": {
+       "indent_width": 4,
+       "indent_columns": false,
+       "indent_after_first": false,
+       "indent_char": " ",
+       "wrap_after": 0,
+       "comma_first": false,
+       "right_margin": null
+      }
+     },
+     "p_minus": {
+      "out": {
+       "indent_width": 4,
+       "indent_columns": false,
+       "indent_after_first": false,
+       "indent_char": " ",
+       "wrap_after": 0,
+       "comma_first": false,
+       "right_margin": null
+      }
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_sqlparse_normalized_m5",
+   "slug": "sqlparse-0.4.4",
+   "file": "sqlparse/sql.py",
+   "A_line": 58,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_lower_keyword": {
+     "p_plus": {
+      "out": "SELECT"
+     },
+     "p_minus": {
+      "out": "SELECT"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_non_keyword": {
+     "p_plus": {
+      "out": "abc"
+     },
+     "p_minus": {
+      "error": "AttributeError: 'Token' object has no attribute 'normalized'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_upper_keyword": {
+     "p_plus": {
+      "out": "SELECT"
+     },
+     "p_minus": {
+      "out": "SELECT"
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_toml_quote_escape_m4",
+   "slug": "toml-0.10.2",
+   "file": "toml/encoder.py",
+   "A_line": 97,
+   "A_line_match": true,
+   "U": [
+    "U1",
+    "U2"
+   ],
+   "subsets_enumerated": 4,
+   "status": "MISMATCH",
+   "per_input": {
+    "mask_plain_quote": {
+     "p_plus": {
+      "out": "\"a\\\"b\""
+     },
+     "p_minus": {
+      "out": "\"a\\\"b\""
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1",
+       "U2"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ],
+      "U2": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1,U2": [
+       {
+        "subset": [],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U1"
+        ],
+        "breaking": false
+       },
+       {
+        "subset": [
+         "U2"
+        ],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ],
+      [
+       "U2"
+      ]
+     ],
+     "status": "MISMATCH"
+    },
+    "expose_escaped_quote": {
+     "p_plus": {
+      "out": "\"a\\\\\\\"b\\\"c\""
+     },
+     "p_minus": {
+      "out": "\"a\\\\\"b\"c\""
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_no_quote": {
+     "p_plus": {
+      "out": "\"ab\""
+     },
+     "p_minus": {
+      "out": "\"ab\""
+     },
+     "p_minus_equals_plus": true,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 4,
+     "reference_msms": [
+      []
+     ],
+     "reference_mmbs": [
+      []
+     ],
+     "status": "MISMATCH"
+    }
+   }
+  },
+  {
+   "case_id": "sd_toml_quote_nc",
+   "slug": "toml-0.10.2",
+   "file": "toml/encoder.py",
+   "A_line": 97,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "nc_single_quote_char": {
+     "p_plus": {
+      "out": "\"a\\\"b\""
+     },
+     "p_minus": {
+      "out": "\"a\\'b\""
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "nc_double_quote_char": {
+     "p_plus": {
+      "out": "\"c\\\"d\\\"e\""
+     },
+     "p_minus": {
+      "out": "\"c\\'d\\'e\""
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    }
+   }
+  },
+  {
+   "case_id": "sd_urllib3_headerdict_m6",
+   "slug": "urllib3-2.1.0",
+   "file": "src/urllib3/_collections.py",
+   "A_line": 244,
+   "A_line_match": true,
+   "U": [
+    "U1"
+   ],
+   "subsets_enumerated": 2,
+   "status": "OK",
+   "per_input": {
+    "mask_construct_with_headers": {
+     "p_plus": {
+      "out": [
+       "b",
+       1
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "b",
+       1
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    },
+    "expose_empty_length": {
+     "p_plus": {
+      "out": 0
+     },
+     "p_minus": {
+      "error": "AttributeError: 'HTTPHeaderDict' object has no attribute '_container'"
+     },
+     "p_minus_equals_plus": false,
+     "msms": [],
+     "mmbs": [],
+     "mmbs_defined": false,
+     "msms_strict_subset_evidence": {},
+     "mmbs_strict_subset_evidence": {},
+     "subsets_enumerated": 2,
+     "reference_msms": [],
+     "reference_mmbs": [],
+     "status": "OK"
+    },
+    "control_manual_add": {
+     "p_plus": {
+      "out": [
+       "b",
+       2
+      ]
+     },
+     "p_minus": {
+      "out": [
+       "b",
+       2
+      ]
+     },
+     "p_minus_equals_plus": true,
+     "msms": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "mmbs_defined": true,
+     "msms_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "observation_equals_plus": false
+       }
+      ]
+     },
+     "mmbs_strict_subset_evidence": {
+      "U1": [
+       {
+        "subset": [],
+        "breaking": false
+       }
+      ]
+     },
+     "subsets_enumerated": 2,
+     "reference_msms": [
+      [
+       "U1"
+      ]
+     ],
+     "reference_mmbs": [
+      [
+       "U1"
+      ]
+     ],
+     "status": "OK"
+    }
+   }
+  }
+ ]
+}

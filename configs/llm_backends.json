@@ -1,0 +1,59 @@
+{
+  "schema": "mace-llm-backends/1",
+  "note": "Model identities and decoding parameters exactly as recorded in the frozen experiment files. Model names appear only here and in the experiment scripts, not in the paper's method description.",
+  "transport": {
+    "provider": "ollama",
+    "default_endpoint": "http://127.0.0.1:11434",
+    "endpoint_note": "The reported runs used an SSH tunnel from the analysis workstation to an AutoDL RTX 4090 D host running Ollama. Any reachable Ollama endpoint works; the client code is in mace/qwen.py."
+  },
+  "backends": {
+    "qwen2.5-coder:32b": {
+      "role": "Full MACE candidate discovery; Direct Qwen baseline",
+      "quantization": "Q4_K_M",
+      "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+      "reported_by": "ollama (Q4_K_M, 32.8B)",
+      "temperature": 0.0,
+      "seed": 42,
+      "retries": 0,
+      "num_ctx": {
+        "candidate_discovery": 16384,
+        "direct_baseline": 8192
+      },
+      "num_predict": 4096,
+      "timeout_s": 900,
+      "recorded_in": [
+        "results/MACE_v2_1_frozen_config.json",
+        "docs/MACE_direct_Qwen_v2_1_DEV_completion.md"
+      ]
+    },
+    "qwen2.5-coder:7b": {
+      "role": "Historical fixture-level study (M1/M5 predecessor), not used for the v2.1 main table",
+      "quantization": "Q4_K_M",
+      "parameter_size": "7.6B",
+      "disk_size": "4.7 GB",
+      "temperature": 0.0,
+      "seed": 42,
+      "num_ctx": 8192,
+      "response_format": "json",
+      "recorded_in": [
+        "results/summary_7b.md",
+        "docs/M1_report.md"
+      ],
+      "evidence_status": "Aggregate per-fixture table only; per-call raw JSONL for this batch is not present in the repository. No v2.1 strict-MSMS scoring was run with 7B."
+    },
+    "glm-4.7-flash:q4_K_M": {
+      "role": "Direct GLM baseline",
+      "quantization": "q4_K_M",
+      "temperature": 0.0,
+      "seed": 42,
+      "num_ctx": 8192,
+      "num_predict": 4096,
+      "timeout_s": 900,
+      "recorded_in": [
+        "scripts/run_direct_glm_v2_1.py",
+        "results/MACE_direct_GLM_v2_1_config.json"
+      ],
+      "known_anomaly": "The serving stack truncated prompts at 4098 tokens although num_ctx was declared as 8192; 15 of 25 DEV tasks were affected. Disclosed in docs/MACE_direct_GLM_v2_1_report.md."
+    }
+  }
+}

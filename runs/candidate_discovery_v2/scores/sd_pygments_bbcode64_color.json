@@ -1,0 +1,236 @@
+{
+  "task_id": "sd_pygments_bbcode64_color",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "present": 0,
+    "false_relations": 3,
+    "unmatched_sets": 2
+  },
+  "detail": [
+    {
+      "input": "mask_color",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "confirmed": [
+        [
+          "pygments/formatters/bbcode.py:67-67"
+        ],
+        [
+          "pygments/formatters/bbcode.py:71-71"
+        ],
+        [
+          "pygments/formatters/bbcode.py:77-77"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:67-67"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "ndef['color'] and not ndef['underline'] and not end.startswith('[/color]')",
+          "rationale": "Keeping operation 67 ensures that '[/color]' is added to 'end', making the deletion of operation 64 unobservable.",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:71-71",
+            "pygments/formatters/bbcode.py:77-77"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:71-71"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "ndef['bold']",
+          "rationale": "Keeping operation 71 ensures that '[/b]' is added to 'end', making the deletion of operation 64 unobservable.",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:67-67",
+            "pygments/formatters/bbcode.py:77-77"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:67-67",
+            "pygments/formatters/bbcode.py:71-71"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:77-77"
+          ],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "pygments/formatters/bbcode.py:67-67"
+          ],
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:67-67",
+            "pygments/formatters/bbcode.py:77-77"
+          ],
+          "source": "qwen_graph_pair",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:71-71"
+          ],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "pygments/formatters/bbcode.py:67-67"
+          ],
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:71-71",
+            "pygments/formatters/bbcode.py:77-77"
+          ],
+          "source": "qwen_graph_pair",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:67-67"
+          ],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "pygments/formatters/bbcode.py:71-71"
+          ],
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "pygments/formatters/bbcode.py:77-77"
+          ],
+          "source": "graph_combo_1",
+          "disabled_operations": [
+            "pygments/formatters/bbcode.py:67-67",
+            "pygments/formatters/bbcode.py:71-71"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [],
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [
+          "pygments/formatters/bbcode.py:71-71",
+          "pygments/formatters/bbcode.py:77-77"
+        ],
+        "msms_exact": false,
+        "hidden_msms_present": false,
+        "false_relations": 3,
+        "unmatched_sets": 2
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 3,
+    "c0_probes": 12,
+    "direct_exact": 1,
+    "old_full_exact": 0,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:71-71",
+        "pygments/formatters/bbcode.py:77-77"
+      ],
+      "recall": 0.0,
+      "wrong_candidates": 2
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:61-61",
+        "pygments/formatters/bbcode.py:71-71",
+        "pygments/formatters/bbcode.py:74-74",
+        "pygments/formatters/bbcode.py:77-77",
+        "pygments/formatters/bbcode.py:80-80"
+      ],
+      "recall": 0.5,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:61-61",
+        "pygments/formatters/bbcode.py:63-63",
+        "pygments/formatters/bbcode.py:70-70",
+        "pygments/formatters/bbcode.py:71-71",
+        "pygments/formatters/bbcode.py:73-73",
+        "pygments/formatters/bbcode.py:74-74",
+        "pygments/formatters/bbcode.py:76-76",
+        "pygments/formatters/bbcode.py:77-77",
+        "pygments/formatters/bbcode.py:80-80"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 9
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:71-71"
+      ],
+      "recall": 0.5,
+      "wrong_candidates": 1
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "pygments/formatters/bbcode.py:71-71",
+        "pygments/formatters/bbcode.py:77-77"
+      ],
+      "recall": 0.5,
+      "wrong_candidates": 2
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "original_test_ids": [
+    "tests/test_datastructures.py::TestHeaderSet::test_basic_interface",
+    "tests/test_http.py::TestHTTPUtility::test_set_header",
+    "tests/test_wrappers.py::test_common_response_descriptors"
+  ],
+  "original_test_source": {
+    "tests/test_datastructures.py::TestHeaderSet::test_basic_interface": "tests/test_datastructures.py",
+    "tests/test_http.py::TestHTTPUtility::test_set_header": "tests/test_http.py",
+    "tests/test_wrappers.py::test_common_response_descriptors": "tests/test_wrappers.py"
+  },
+  "p_minus": {
+    "all_pass": false,
+    "collection_error": false,
+    "command": [
+      "<local-path>",
+      "-m",
+      "pytest",
+      "tests/test_datastructures.py::TestHeaderSet::test_basic_interface",
+      "tests/test_http.py::TestHTTPUtility::test_set_header",
+      "tests/test_wrappers.py::test_common_response_descriptors",
+      "-q",
+      "--disable-warnings",
+      "-p",
+      "pytest_trace_plugin"
+    ],
+    "counts": {
+      "error": 0,
+      "failed": 1,
+      "not_run": 0,
+      "passed": 2
+    },
+    "duration_seconds": 1.092837,
+    "log": "<local-path>",
+    "per_test": {
+      "tests/test_datastructures.py::TestHeaderSet::test_basic_interface": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_http.py::TestHTTPUtility::test_set_header": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "self = <test_http.TestHTTPUtility object at 0x000001FB2DD27290>\n\n    def test_set_header(self):\n        hs = http.parse_set_header('foo, Bar, \"Blah baz\", Hehe')\n        assert \"blah baz\" in hs\n        assert \"foobar\" not in hs\n        assert \"foo\" in hs\n        assert list(hs) == [\"foo\", \"Bar\", \"Blah baz\", \"Hehe\"]\n>       hs.add(\"Foo\")\n\ntests\\test_http.py:88: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\datastructures.py:2238: in add\n    self.update((header,))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = HeaderSet(['foo', 'Bar', 'Blah baz', 'Hehe']), iterable = ('Foo',)\n\n    def update(self, iterable):\n        \"\"\"Add all the headers from the iterable to the set.\n    \n        :param iterable: updates the set with the items from the iterable.\n        \"\"\"\n        pass  # P-: target A deleted\n        for header in iterable:\n            key = header.lower()\n            if key not in self._set:\n                self._headers.append(header)\n                self._set.add(key)\n                inserted_any = True\n>       if inserted_any and self.on_update is not None:\nE       UnboundLocalError: cannot access local variable 'inserted_any' where it is not associated with a value\n\nsrc\\werkzeug\\datastructures.py:2273: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_wrappers.py::test_common_response_descriptors": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 5
+      }
+    },
+    "reports_count": 3,
+    "returncode": 1,
+    "started_utc": "2026-11-02T00:55:25.119997+00:00",
+    "stderr_tail": "",
+    "stdout_tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n_______________________ TestHTTPUtility.test_set_header _______________________\n\nself = <test_http.TestHTTPUtility object at 0x000001FB2DD27290>\n\n    def test_set_header(self):\n        hs = http.parse_set_header('foo, Bar, \"Blah baz\", Hehe')\n        assert \"blah baz\" in hs\n        assert \"foobar\" not in hs\n        assert \"foo\" in hs\n        assert list(hs) == [\"foo\", \"Bar\", \"Blah baz\", \"Hehe\"]\n>       hs.add(\"Foo\")\n\ntests\\test_http.py:88: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\datastructures.py:2238: in add\n    self.update((header,))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = HeaderSet(['foo', 'Bar', 'Blah baz', 'Hehe']), iterable = ('Foo',)\n\n    def update(self, iterable):\n        \"\"\"Add all the headers from the iterable to the set.\n    \n        :param iterable: updates the set with the items from the iterable.\n        \"\"\"\n        pass  # P-: target A deleted\n        for header in iterable:\n            key = header.lower()\n            if key not in self._set:\n                self._headers.append(header)\n                self._set.add(key)\n                inserted_any = True\n>       if inserted_any and self.on_update is not None:\nE       UnboundLocalError: cannot access local variable 'inserted_any' where it is not associated with a value\n\nsrc\\werkzeug\\datastructures.py:2273: UnboundLocalError\n=========================== short test summary info ===========================\nFAILED tests/test_http.py::TestHTTPUtility::test_set_header - UnboundLocalErr...\n1 failed, 2 passed in 0.41s\n",
+    "timed_out": false,
+    "trace_json": "<local-path>",
+    "variant": "real_werkzeug_headerset_update_t_task_minus"
+  },
+  "p_plus": {
+    "all_pass": true,
+    "collection_error": false,
+    "command": [
+      "<local-path>",
+      "-m",
+      "pytest",
+      "tests/test_datastructures.py::TestHeaderSet::test_basic_interface",
+      "tests/test_http.py::TestHTTPUtility::test_set_header",
+      "tests/test_wrappers.py::test_common_response_descriptors",
+      "-q",
+      "--disable-warnings",
+      "-p",
+      "pytest_trace_plugin"
+    ],
+    "counts": {
+      "error": 0,
+      "failed": 0,
+      "not_run": 0,
+      "passed": 3
+    },
+    "duration_seconds": 0.969953,
+    "log": "<local-path>",
+    "per_test": {
+      "tests/test_datastructures.py::TestHeaderSet::test_basic_interface": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_http.py::TestHTTPUtility::test_set_header": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_wrappers.py::test_common_response_descriptors": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 5
+      }
+    },
+    "reports_count": 3,
+    "returncode": 0,
+    "started_utc": "2026-11-02T00:55:24.149045+00:00",
+    "stderr_tail": "",
+    "stdout_tail": "...                                                                      [100%]\n3 passed in 0.32s\n",
+    "timed_out": false,
+    "trace_json": "<local-path>",
+    "variant": "real_werkzeug_headerset_update_t_task_plus"
+  },
+  "selection_hash": "8247c7ee67b72b315c9f722fcf6211f0b2c01d21e671d6193881c4b95fbd56ee",
+  "target_A_hit": {
+    "all_selected_tests_hit": true,
+    "per_test_hit_count": {
+      "tests/test_datastructures.py::TestHeaderSet::test_basic_interface": 2,
+      "tests/test_http.py::TestHTTPUtility::test_set_header": 1,
+      "tests/test_wrappers.py::test_common_response_descriptors": 5
+    },
+    "trace_variant": "p_plus"
+  },
+  "task_id": "real_werkzeug_headerset_update",
+  "task_tests_detect": true,
+  "task_tests_survive": false
+}

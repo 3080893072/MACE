@@ -1,0 +1,252 @@
+{
+  "case_id": "sd_pygments_bbcode70_italic",
+  "method": "c0",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "project": "Pygments",
+  "universe": [
+    {
+      "id": "pygments/formatters/bbcode.py:76-76",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 76,
+      "last_line": 76,
+      "kind": "assignment",
+      "code": "                    end = '[/i]' + end"
+    }
+  ],
+  "discovery": {
+    "method": "c0",
+    "rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+    "candidate_ops": 2,
+    "kept": 1,
+    "considered": 2,
+    "dropped_no_effect": 1,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0,
+    "u_covered": [
+      "U2"
+    ],
+    "u_total": [
+      "U1",
+      "U2"
+    ],
+    "u_recall": 0.5,
+    "u_exact": false
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_italic",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 2,
+        "subsets_total": 2,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 6,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 1
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 2
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "expose_italic_color",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in3",
+      "input_key": "control_bold",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 2,
+        "subsets_total": 2,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 4,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 1
+        },
+        "first_mmbs": null
+      }
+    },
+    {
+      "public_id": "in4",
+      "input_key": "mask_italic_codetag",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 2,
+        "subsets_total": 2,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 6,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 1
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 2
+        }
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 0,
+    "msms_exact_intervention": 2,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 2,
+    "false_relations": 2,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 2,
+    "coop_exact": false
+  },
+  "detail": [
+    {
+      "input": "mask_italic",
+      "hidden_msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U2"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [
+        [
+          [
+            "U1",
+            "U2"
+          ]
+        ]
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": true,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ]
+    },
+    {
+      "input": "mask_italic_codetag",
+      "hidden_msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U2"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [
+        [
+          [
+            "U1",
+            "U2"
+          ]
+        ]
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": true,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 1.4,
+    "probe_executions_algorithm": 6,
+    "probe_executions_scoring": 0,
+    "variant_builds": 6,
+    "subsets_evaluated": 6
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "project_id": "werkzeug-2.2.3",
+  "project": "Werkzeug",
+  "version": "2.2.3",
+  "target_operation": {
+    "file": "src/werkzeug/utils.py",
+    "line": 222,
+    "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")",
+    "function": "secure_filename",
+    "note": "drops every non-ASCII character before the later whitelist sanitization"
+  },
+  "candidate_universe": [
+    {
+      "id": "sanitize_whitelist",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 227,
+      "last_line": 229,
+      "code": "filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\"._\")",
+      "kind": "block",
+      "role": "later whitelist sanitization that absorbs the characters A would have removed"
+    }
+  ],
+  "probe": "probe_werkzeug_secure_filename.py",
+  "scope": {
+    "declared_inputs": [
+      "expose_ogham_space",
+      "mask_nonascii_letters"
+    ],
+    "candidate_universe_size": 1,
+    "all_subsets_enumerated": true,
+    "exposing_inputs": [
+      "expose_ogham_space"
+    ],
+    "masking_inputs": [
+      "mask_nonascii_letters"
+    ],
+    "claim": "Exact over the declared finite inputs and declared candidate universe U.  Not a claim over the whole legal input domain or over operations outside U."
+  },
+  "inputs": {
+    "expose_ogham_space": {
+      "role": "exposing",
+      "payload": {
+        "filename": "a b"
+      },
+      "executable": {
+        "EMPTY": true,
+        "sanitize_whitelist": true
+      },
+      "masked_strict": {
+        "EMPTY": false,
+        "sanitize_whitelist": false
+      },
+      "exposed": {
+        "EMPTY": true,
+        "sanitize_whitelist": true
+      },
+      "msms": [],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "filename": "ab",
+          "outcome": "return"
+        },
+        "sanitize_whitelist": {
+          "filename": "ab",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "filename": "a_b",
+          "outcome": "return"
+        },
+        "sanitize_whitelist": {
+          "filename": "a b",
+          "outcome": "return"
+        }
+      }
+    },
+    "mask_nonascii_letters": {
+      "role": "masking",
+      "payload": {
+        "filename": "北京.txt"
+      },
+      "executable": {
+        "EMPTY": true,
+        "sanitize_whitelist": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "sanitize_whitelist": false
+      },
+      "exposed": {
+        "EMPTY": false,
+        "sanitize_whitelist": true
+      },
+      "msms": [
+        [
+          "sanitize_whitelist"
+        ]
+      ],
+      "mmbs": [
+        [
+          "sanitize_whitelist"
+        ]
+      ],
+      "plus_observations": {
+        "EMPTY": {
+          "filename": "txt",
+          "outcome": "return"
+        },
+        "sanitize_whitelist": {
+          "filename": ".txt",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "filename": "txt",
+          "outcome": "return"
+        },
+        "sanitize_whitelist": {
+          "filename": "北京.txt",
+          "outcome": "return"
+        }
+      }
+    }
+  },
+  "runs": {
+    "plus": {
+      "expose_ogham_space": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "a b"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "ab",
+            "outcome": "return"
+          }
+        },
+        "sanitize_whitelist": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "a b"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "ab",
+            "outcome": "return"
+          }
+        }
+      },
+      "mask_nonascii_letters": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "北京.txt"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "txt",
+            "outcome": "return"
+          }
+        },
+        "sanitize_whitelist": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "北京.txt"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": ".txt",
+            "outcome": "return"
+          }
+        }
+      }
+    },
+    "minus": {
+      "expose_ogham_space": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "a b"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "a_b",
+            "outcome": "return"
+          }
+        },
+        "sanitize_whitelist": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "a b"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "a b",
+            "outcome": "return"
+          }
+        }
+      },
+      "mask_nonascii_letters": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "北京.txt"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "txt",
+            "outcome": "return"
+          }
+        },
+        "sanitize_whitelist": {
+          "probe": "probe_werkzeug_secure_filename.py",
+          "payload": {
+            "filename": "北京.txt"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "filename": "北京.txt",
+            "outcome": "return"
+          }
+        }
+      }
+    }
+  }
+}

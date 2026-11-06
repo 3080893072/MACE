@@ -1,0 +1,120 @@
+{
+  "task_id": "sd_pygments_latex297_italic",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "pygments/formatters/latex.py",
+    "line": 297,
+    "function": "rgbcolor",
+    "code": "                cmndef += r'\\let\\$$@it=\\textit'",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "pygments/formatters/latex.py",
+      "line": 332,
+      "code": "if not self.full:",
+      "role": "Cross-function repair inside get_style_defs: rebuilds the command-definition map that _make_styles (A's function) would have stored, inserting the italic let at its original position.",
+      "patch_anchor_line": 330,
+      "block_span": [
+        331,
+        354
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_inline_italic": {
+      "role": "masking",
+      "description": "italic-only style, inline (full=False) style definitions",
+      "p_plus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "mask_inline_italic_color": {
+      "role": "masking",
+      "description": "italic + colour style, inline definitions",
+      "p_plus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit\\def\\PY@tc##1{\\textcolor[rgb]{1.00,0.00,0.00}{##1}}}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_full_italic": {
+      "role": "exposing",
+      "description": "italic-only style, full document mode",
+      "p_plus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@na}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nb}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@bp}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@no}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nd}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ni}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@ne}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nf}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@fm}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@py}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nl}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nn}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nx}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nt}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@nv}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vc}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vg}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vi}{\\let\\PY@it=\\textit}\n\\@namedef{PY@tok@vm}{\\let\\PY@it=\\textit}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_inline_bold": {
+      "role": "control",
+      "description": "bold-only style; A is not executed",
+      "p_plus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@na}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nb}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@bp}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@no}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nd}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ni}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ne}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nf}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@fm}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@py}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nl}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nn}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nx}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nt}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nv}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vg}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vi}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vm}{\\let\\PY@bf=\\textbf}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus": {
+        "defs": "\n\\makeatletter\n\\def\\PY@reset{\\let\\PY@it=\\relax \\let\\PY@bf=\\relax%\n    \\let\\PY@ul=\\relax \\let\\PY@tc=\\relax%\n    \\let\\PY@bc=\\relax \\let\\PY@ff=\\relax}\n\\def\\PY@tok#1{\\csname PY@tok@#1\\endcsname}\n\\def\\PY@toks#1+{\\ifx\\relax#1\\empty\\else%\n    \\PY@tok{#1}\\expandafter\\PY@toks\\fi}\n\\def\\PY@do#1{\\PY@bc{\\PY@tc{\\PY@ul{%\n    \\PY@it{\\PY@bf{\\PY@ff{#1}}}}}}}\n\\def\\PY#1#2{\\PY@reset\\PY@toks#1+\\relax+\\PY@do{#2}}\n\n\\@namedef{PY@tok@n}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@na}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nb}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@bp}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@no}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nd}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ni}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@ne}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nf}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@fm}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@py}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nl}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nn}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nx}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nt}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@nv}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vc}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vg}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vi}{\\let\\PY@bf=\\textbf}\n\\@namedef{PY@tok@vm}{\\let\\PY@bf=\\textbf}\n\n\\def\\PYZbs{\\char`\\\\}\n\\def\\PYZus{\\char`\\_}\n\\def\\PYZob{\\char`\\{}\n\\def\\PYZcb{\\char`\\}}\n\\def\\PYZca{\\char`\\^}\n\\def\\PYZam{\\char`\\&}\n\\def\\PYZlt{\\char`\\<}\n\\def\\PYZgt{\\char`\\>}\n\\def\\PYZsh{\\char`\\#}\n\\def\\PYZpc{\\char`\\%}\n\\def\\PYZdl{\\char`\\$}\n\\def\\PYZhy{\\char`\\-}\n\\def\\PYZsq{\\char`\\'}\n\\def\\PYZdq{\\char`\\\"}\n\\def\\PYZti{\\char`\\~}\n% for compatibility with earlier versions\n\\def\\PYZat{@}\n\\def\\PYZlb{[}\n\\def\\PYZrb{]}\n\\makeatother\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_pygments_latex297_italic/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

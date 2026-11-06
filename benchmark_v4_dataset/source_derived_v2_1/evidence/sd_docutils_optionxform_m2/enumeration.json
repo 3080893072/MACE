@@ -1,0 +1,213 @@
+{
+  "case_id": "sd_docutils_optionxform_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/frontend.py",
+  "A_line": 921,
+  "A_code": "        return optionstr.lower().replace('-', '_')",
+  "original_sha256": "5d5f915e784f10ed05e56af8a2a24913584a338996da2f6bfdd1be1026df59bc",
+  "patched_sha256": "d36c40d2659cf158edfea13728a9d09df91cf1982a57203b5f6817d1f0cf6d92",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 920,
+      "role": "Case-folding leg of option-name normalisation.",
+      "lines": [
+        "optionstr = optionstr.lower()"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 920,
+      "role": "Separator leg, bounded to one '-' conversion.",
+      "lines": [
+        "optionstr = optionstr.replace('-', '_', 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 920,
+      "end": 922
+    },
+    "U2": {
+      "begin": 923,
+      "end": 925
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_one_separator": {
+        "out": "a_b"
+      },
+      "expose_two_separators": {
+        "out": "a_b_c"
+      },
+      "control_plain": {
+        "out": "abc"
+      }
+    },
+    "P_MINUS": {
+      "mask_one_separator": {
+        "out": null
+      },
+      "expose_two_separators": {
+        "out": null
+      },
+      "control_plain": {
+        "out": null
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_one_separator": {
+        "out": null
+      },
+      "expose_two_separators": {
+        "out": null
+      },
+      "control_plain": {
+        "out": null
+      }
+    },
+    "KEEP_U1": {
+      "mask_one_separator": {
+        "out": null
+      },
+      "expose_two_separators": {
+        "out": null
+      },
+      "control_plain": {
+        "out": null
+      }
+    },
+    "KEEP_U2": {
+      "mask_one_separator": {
+        "out": null
+      },
+      "expose_two_separators": {
+        "out": null
+      },
+      "control_plain": {
+        "out": null
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_one_separator": {
+        "out": null
+      },
+      "expose_two_separators": {
+        "out": null
+      },
+      "control_plain": {
+        "out": null
+      }
+    }
+  },
+  "per_input": {
+    "mask_one_separator": {
+      "plus": {
+        "out": "a_b"
+      },
+      "p_minus": {
+        "out": null
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": null
+        },
+        "KEEP_U1": {
+          "out": null
+        },
+        "KEEP_U2": {
+          "out": null
+        },
+        "KEEP_U1_U2": {
+          "out": null
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "expose_two_separators": {
+      "plus": {
+        "out": "a_b_c"
+      },
+      "p_minus": {
+        "out": null
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": null
+        },
+        "KEEP_U1": {
+          "out": null
+        },
+        "KEEP_U2": {
+          "out": null
+        },
+        "KEEP_U1_U2": {
+          "out": null
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_plain": {
+      "plus": {
+        "out": "abc"
+      },
+      "p_minus": {
+        "out": null
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": null
+        },
+        "KEEP_U1": {
+          "out": null
+        },
+        "KEEP_U2": {
+          "out": null
+        },
+        "KEEP_U1_U2": {
+          "out": null
+        }
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    }
+  },
+  "status_summary": {
+    "EXPOSING": 3,
+    "mmbs_NOT_SEPARABLE": 3,
+    "msms_NONE": 3
+  }
+}

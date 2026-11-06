@@ -1,0 +1,5589 @@
+{
+  "schema": "mace-semantic-relation-discovery-v1",
+  "budget_per_input": 16,
+  "tasks": {
+    "ctrl_02": {
+      "kind": "pilot",
+      "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Operations already proposed by the static graph\n- id=op_L4_C4_if  line=4  kind=if  `if c == 0: `\n- id=op_L6_C4_if  line=6  kind=if  `if d == 0: `\n\nYou may propose operations that are NOT in this list. Every operation you\nreport must be a real, complete statement in the file above: give its exact\n1-based starting line and its source text. Do not invent lines.\n\n## What to analyse\n1. Operations that may **independently mask A**: one operation alone is enough\n   to make the deletion unobservable.\n2. Operations that may **cooperatively mask A**: two or more operations are\n   jointly sufficient, and no proper non-empty subset is.\n3. **Alternative / fallback masking paths**: different sets of operations that\n   each mask A, so more than one path has to fail before A is exposed.\n4. The **input conditions** under which each relation holds. Use only the\n   argument names, int/bool constants, comparisons, arithmetic, `and`, `or`,\n   `not`. If the relation holds for every legal input, write `true`.\n5. Source locations, and whether the relation is **data-dependent** (it reads\n   or overwrites the value A writes) or **control-dependent** (it changes\n   whether A's statement executes).\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"kind\": \"independent | cooperative | fallback | coexisting\",\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"data_dependence\": true,\n      \"control_dependence\": false,\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ],\n  \"notes\": \"<optional>\"\n}\n\n`coexisting` means: disabling the named operations together exposes A, while\nno proper non-empty subset does. Return at most 12 different\nrelations. Return one JSON object and no prose outside it.\n",
+      "prompt_sha256": "bb2ac8db7f441300e55ed0bf7f3889ccdeb2256123949d6781186d594340609a",
+      "model_output": {
+        "format": "structured",
+        "source": "live",
+        "raw_response": "{\n  \"relations\": [\n    {\n      \"kind\": \"independent\",\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0: \"}\n      ],\n      \"condition\": \"c == 0\",\n      \"data_dependence\": true,\n      \"control_dependence\": true,\n      \"source_evidence\": \"Line 4: if c == 0: This condition can mask the effect of TARGET_A by resetting v to a multiple of 6.\",\n      \"rationale\": \"If c is 0, the value of v is reset to a multiple of 6, masking the addition of 6.\"\n    },\n    {\n      \"kind\": \"independent\",\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0: \"}\n      ],\n      \"condition\": \"d == 0\",\n      \"data_dependence\": true,\n      \"control_dependence\": true,\n      \"source_evidence\": \"Line 6: if d == 0: This condition can mask the effect of TARGET_A by resetting v to a multiple of 7.\",\n      \"rationale\": \"If d is 0, the value of v is reset to a multiple of 7, masking the addition of 6.\"\n    },\n    {\n      \"kind\": \"cooperative\",\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0: \"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0: \"}\n      ],\n      \"condition\": \"c == 0 and d == 0\",\n      \"data_dependence\": true,\n      \"control_dependence\": true,\n      \"source_evidence\": \"Lines 4 and 6: Both conditions can mask the effect of TARGET_A by resetting v to a multiple of 6 and 7 respectively.\",\n      \"rationale\": \"If both c and d are 0, the value of v is reset to a multiple of 6 and then 7, masking the addition of 6.\"\n    },\n    {\n      \"kind\": \"fallback\",\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0: \"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0: \"}\n      ],\n      \"condition\": \"c == 0 or d == 0\",\n      \"data_dependence\": true,\n      \"control_dependence\": true,\n      \"source_evidence\": \"Lines 4 and 6: Either condition can mask the effect of TARGET_A by resetting v to a multiple of 6 or 7.\",\n      \"rationale\": \"If either c or d is 0, the value of v is reset to a multiple of 6 or 7, masking the addition of 6.\"\n    }\n  ],\n  \"notes\": \"The cooperative and fallback relations are related but distinct. Cooperative requires both conditions to be true, while fallback requires at least one condition to be true.\"\n}",
+        "stats": {
+          "prompt_tokens": 1265,
+          "completion_tokens": 665,
+          "total_duration_ns": 42645253821,
+          "load_duration_ns": 8719200395,
+          "prompt_eval_duration_ns": 596520000,
+          "eval_duration_ns": 33225330000,
+          "model": "qwen2.5-coder:32b",
+          "done_reason": "stop",
+          "wall_seconds": 43.364,
+          "attempt": 0
+        },
+        "model": "qwen2.5-coder:32b",
+        "wall_seconds": 43.368
+      },
+      "relations": [
+        {
+          "relation_index": 0,
+          "kind": "independent",
+          "ops": [
+            "op_L4_C4_if"
+          ],
+          "operations": [
+            "op_L4_C4_if"
+          ],
+          "proposals": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0: "
+            }
+          ],
+          "in_graph": true,
+          "condition": "c == 0",
+          "data_dependence": true,
+          "control_dependence": true,
+          "source_evidence": "Line 4: if c == 0: This condition can mask the effect of TARGET_A by resetting v to a multiple of 6.",
+          "rationale": "If c is 0, the value of v is reset to a multiple of 6, masking the addition of 6.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 1,
+          "kind": "independent",
+          "ops": [
+            "op_L6_C4_if"
+          ],
+          "operations": [
+            "op_L6_C4_if"
+          ],
+          "proposals": [
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0: "
+            }
+          ],
+          "in_graph": true,
+          "condition": "d == 0",
+          "data_dependence": true,
+          "control_dependence": true,
+          "source_evidence": "Line 6: if d == 0: This condition can mask the effect of TARGET_A by resetting v to a multiple of 7.",
+          "rationale": "If d is 0, the value of v is reset to a multiple of 7, masking the addition of 6.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 2,
+          "kind": "cooperative",
+          "ops": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "operations": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "proposals": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0: "
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0: "
+            }
+          ],
+          "in_graph": true,
+          "condition": "c == 0 and d == 0",
+          "data_dependence": true,
+          "control_dependence": true,
+          "source_evidence": "Lines 4 and 6: Both conditions can mask the effect of TARGET_A by resetting v to a multiple of 6 and 7 respectively.",
+          "rationale": "If both c and d are 0, the value of v is reset to a multiple of 6 and then 7, masking the addition of 6.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        },
+        {
+          "relation_index": 3,
+          "kind": "fallback",
+          "ops": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "operations": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "proposals": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0: "
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0: "
+            }
+          ],
+          "in_graph": true,
+          "condition": "c == 0 or d == 0",
+          "data_dependence": true,
+          "control_dependence": true,
+          "source_evidence": "Lines 4 and 6: Either condition can mask the effect of TARGET_A by resetting v to a multiple of 6 or 7.",
+          "rationale": "If either c or d is 0, the value of v is reset to a multiple of 6 or 7, masking the addition of 6.",
+          "status": "HYPOTHESIS",
+          "role_sets": {
+            "roles": [
+              "msms",
+              "mmbs"
+            ],
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "status": "HYPOTHESIS"
+          }
+        }
+      ],
+      "rejected_relations": [],
+      "universes": {
+        "U_graph": [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ],
+        "U_qwen": [],
+        "U_union": [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ],
+        "U_union_executable": [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ],
+        "unexecutable": [],
+        "mapped": [
+          {
+            "proposal": {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0: "
+            },
+            "id": "op_L4_C4_if",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0: "
+            },
+            "id": "op_L6_C4_if",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0: "
+            },
+            "id": "op_L4_C4_if",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0: "
+            },
+            "id": "op_L6_C4_if",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0: "
+            },
+            "id": "op_L4_C4_if",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          },
+          {
+            "proposal": {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0: "
+            },
+            "id": "op_L6_C4_if",
+            "in_graph": true,
+            "match": "text",
+            "line_shift": 0
+          }
+        ],
+        "rejected": [],
+        "duplicates": []
+      },
+      "role_hypotheses": {
+        "msms": [
+          {
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "c == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 2,
+            "kind": "cooperative",
+            "condition": "c == 0 and d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 3,
+            "kind": "fallback",
+            "condition": "c == 0 or d == 0",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "mmbs": [
+          {
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "c == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 2,
+            "kind": "cooperative",
+            "condition": "c == 0 and d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 3,
+            "kind": "fallback",
+            "condition": "c == 0 or d == 0",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "skipped": []
+      },
+      "role_hypotheses_graph_only": {
+        "msms": [
+          {
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "c == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 2,
+            "kind": "cooperative",
+            "condition": "c == 0 and d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 3,
+            "kind": "fallback",
+            "condition": "c == 0 or d == 0",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "mmbs": [
+          {
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "relation_index": 0,
+            "kind": "independent",
+            "condition": "c == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "relation_index": 1,
+            "kind": "independent",
+            "condition": "d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 2,
+            "kind": "cooperative",
+            "condition": "c == 0 and d == 0",
+            "status": "HYPOTHESIS"
+          },
+          {
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "relation_index": 3,
+            "kind": "fallback",
+            "condition": "c == 0 or d == 0",
+            "status": "HYPOTHESIS"
+          }
+        ],
+        "skipped": []
+      },
+      "arms": {
+        "A_graph": {
+          "task": "ctrl_02",
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "inputs": [
+            {
+              "case_id": "case_0000",
+              "input": {
+                "x": 1,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 3,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "probed": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 0
+                },
+                "witness_rate": {
+                  "msms": null,
+                  "mmbs": null
+                }
+              },
+              "probe_executions": 192
+            },
+            {
+              "case_id": "case_0004",
+              "input": {
+                "x": 2,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 3,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "probed": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 0
+                },
+                "witness_rate": {
+                  "msms": null,
+                  "mmbs": null
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0008",
+              "input": {
+                "x": 3,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 3,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "probed": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 0
+                },
+                "witness_rate": {
+                  "msms": null,
+                  "mmbs": null
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0012",
+              "input": {
+                "x": 4,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 3,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "probed": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 0
+                },
+                "witness_rate": {
+                  "msms": null,
+                  "mmbs": null
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0016",
+              "input": {
+                "x": 5,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 3,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "probed": {
+                  "msms": [],
+                  "mmbs": []
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 0
+                },
+                "witness_rate": {
+                  "msms": null,
+                  "mmbs": null
+                }
+              },
+              "probe_executions": 0
+            }
+          ],
+          "probe_executions": 240
+        },
+        "B_old_qwen": {
+          "task": "ctrl_02",
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "inputs": [
+            {
+              "case_id": "case_0000",
+              "input": {
+                "x": 1,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 5,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 2
+                },
+                "witness_rate": {
+                  "msms": 0.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0004",
+              "input": {
+                "x": 2,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 5,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 2
+                },
+                "witness_rate": {
+                  "msms": 0.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0008",
+              "input": {
+                "x": 3,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 5,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 2
+                },
+                "witness_rate": {
+                  "msms": 0.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0012",
+              "input": {
+                "x": 4,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 5,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 2
+                },
+                "witness_rate": {
+                  "msms": 0.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0016",
+              "input": {
+                "x": 5,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 5,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 0,
+                  "mmbs": 2
+                },
+                "witness_rate": {
+                  "msms": 0.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            }
+          ],
+          "probe_executions": 240
+        },
+        "C_semantic": {
+          "task": "ctrl_02",
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "inputs": [
+            {
+              "case_id": "case_0000",
+              "input": {
+                "x": 1,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 0,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 3
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0004",
+              "input": {
+                "x": 2,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 0,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 3
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0008",
+              "input": {
+                "x": 3,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 0,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 3
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0012",
+              "input": {
+                "x": 4,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 0,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 3
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0016",
+              "input": {
+                "x": 5,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 3,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 2,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "msms_hypothesis",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 0,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if"
+                    ],
+                    [
+                      "op_L6_C4_if"
+                    ],
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": false,
+                      "prioritised": false
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    },
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 3
+                },
+                "witness_rate": {
+                  "msms": 0.333,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            }
+          ],
+          "probe_executions": 240
+        },
+        "C_fixture": {
+          "task": "ctrl_02",
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "inputs": [
+            {
+              "case_id": "case_0000",
+              "input": {
+                "x": 1,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 2,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 1.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0004",
+              "input": {
+                "x": 2,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 2,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 1.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0008",
+              "input": {
+                "x": 3,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 2,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 1.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0012",
+              "input": {
+                "x": 4,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 2,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 1.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            },
+            {
+              "case_id": "case_0016",
+              "input": {
+                "x": 5,
+                "c": 0,
+                "d": 0
+              },
+              "searched": true,
+              "evaluations": 4,
+              "complete": true,
+              "first_msms": {
+                "index": 4,
+                "set": [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              },
+              "first_mmbs": {
+                "index": 3,
+                "set": [
+                  "op_L6_C4_if"
+                ]
+              },
+              "msms_ids": [
+                [
+                  "op_L4_C4_if",
+                  "op_L6_C4_if"
+                ]
+              ],
+              "mmbs_ids": [
+                [
+                  "op_L4_C4_if"
+                ],
+                [
+                  "op_L6_C4_if"
+                ]
+              ],
+              "schedule": [
+                {
+                  "step": 1,
+                  "role": "baseline",
+                  "disabled": [],
+                  "status": "OK",
+                  "masked": true,
+                  "exposed": false
+                },
+                {
+                  "step": 2,
+                  "role": "mmbs_hypothesis",
+                  "disabled": [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 3,
+                  "role": "msms",
+                  "disabled": [
+                    "op_L6_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                },
+                {
+                  "step": 4,
+                  "role": "mmbs",
+                  "disabled": [
+                    "op_L4_C4_if"
+                  ],
+                  "status": "OK",
+                  "masked": false,
+                  "exposed": true
+                }
+              ],
+              "queues": {
+                "msms": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ],
+                "mmbs": [
+                  [
+                    "op_L4_C4_if",
+                    "op_L6_C4_if"
+                  ],
+                  [
+                    "op_L4_C4_if"
+                  ],
+                  [
+                    "op_L6_C4_if"
+                  ]
+                ]
+              },
+              "unknown_subsets": 0,
+              "invalid_subsets": 0,
+              "reused_evidence": 2,
+              "duplicate_probes": 0,
+              "hypotheses": {
+                "accepted": {
+                  "msms": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ],
+                  "mmbs": [
+                    [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ]
+                  ]
+                },
+                "rejected": [],
+                "gate": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "probed": {
+                  "msms": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ],
+                  "mmbs": [
+                    {
+                      "ops": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "disabled": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "status": "OK",
+                      "witness": true,
+                      "prioritised": true
+                    }
+                  ]
+                },
+                "witness_hits": {
+                  "msms": 1,
+                  "mmbs": 1
+                },
+                "witness_rate": {
+                  "msms": 1.0,
+                  "mmbs": 1.0
+                }
+              },
+              "probe_executions": 0
+            }
+          ],
+          "probe_executions": 240
+        }
+      },
+      "summaries": {
+        "A_graph": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_values": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "first_msms_mean": 3.0,
+          "first_mmbs_values": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "first_mmbs_mean": 2.0,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 15,
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "hypothesis_probed": {
+            "msms": 0,
+            "mmbs": 0
+          },
+          "probe_executions": 240,
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ]
+        },
+        "B_old_qwen": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_values": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "first_msms_mean": 3.0,
+          "first_mmbs_values": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "first_mmbs_mean": 2.0,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 25,
+          "hypothesis_witness": {
+            "msms": 0,
+            "mmbs": 10
+          },
+          "hypothesis_probed": {
+            "msms": 10,
+            "mmbs": 10
+          },
+          "probe_executions": 240,
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ]
+        },
+        "C_semantic": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_values": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "first_msms_mean": 3.0,
+          "first_mmbs_values": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "first_mmbs_mean": 2.0,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 0,
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 15
+          },
+          "hypothesis_probed": {
+            "msms": 15,
+            "mmbs": 15
+          },
+          "probe_executions": 240,
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ]
+        },
+        "C_fixture": {
+          "universe_size": 2,
+          "inputs_searched": 5,
+          "evaluations": 20,
+          "complete_inputs": 5,
+          "first_msms_values": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "first_msms_mean": 4.0,
+          "first_mmbs_values": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "first_mmbs_mean": 3.0,
+          "msms_relations": [
+            [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ]
+          ],
+          "mmbs_relations": [
+            [
+              "op_L4_C4_if"
+            ],
+            [
+              "op_L6_C4_if"
+            ]
+          ],
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "duplicate_probes": 0,
+          "reused_evidence": 10,
+          "hypothesis_witness": {
+            "msms": 5,
+            "mmbs": 5
+          },
+          "hypothesis_probed": {
+            "msms": 5,
+            "mmbs": 5
+          },
+          "probe_executions": 240,
+          "universe": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ]
+        }
+      },
+      "relation_verification": [
+        {
+          "relation_index": 0,
+          "kind": "independent",
+          "ops": [
+            "op_L4_C4_if"
+          ],
+          "names": [
+            "C"
+          ],
+          "status": "FALSE",
+          "reason": "the declared set enabled alone does not mask A",
+          "case_id": "case_0000",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": false,
+            "disabling_set_exposes": true
+          },
+          "condition": null,
+          "attempts": 5
+        },
+        {
+          "relation_index": 1,
+          "kind": "independent",
+          "ops": [
+            "op_L6_C4_if"
+          ],
+          "names": [
+            "D"
+          ],
+          "status": "FALSE",
+          "reason": "the declared set enabled alone does not mask A",
+          "case_id": "case_0000",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": false,
+            "disabling_set_exposes": true
+          },
+          "condition": null,
+          "attempts": 5
+        },
+        {
+          "relation_index": 2,
+          "kind": "cooperative",
+          "ops": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "names": [
+            "C",
+            "D"
+          ],
+          "status": "FALSE",
+          "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+          "case_id": "case_0000",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_mask": {
+              "C": true,
+              "D": true
+            }
+          },
+          "condition": {
+            "status": "VALID",
+            "exact": false,
+            "sound": false,
+            "complete": true,
+            "false_accept": [
+              "case_0020"
+            ],
+            "false_reject": [],
+            "witness_value": true
+          },
+          "attempts": 5
+        },
+        {
+          "relation_index": 3,
+          "kind": "fallback",
+          "ops": [
+            "op_L4_C4_if",
+            "op_L6_C4_if"
+          ],
+          "names": [
+            "C",
+            "D"
+          ],
+          "status": "FALSE",
+          "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+          "case_id": "case_0000",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_mask": {
+              "C": true,
+              "D": true
+            }
+          },
+          "condition": {
+            "status": "VALID",
+            "exact": false,
+            "sound": false,
+            "complete": true,
+            "false_accept": [
+              "case_0001",
+              "case_0002",
+              "case_0005",
+              "case_0006",
+              "case_0009",
+              "case_0010",
+              "case_0013",
+              "case_0014",
+              "case_0017",
+              "case_0018",
+              "case_0020",
+              "case_0021",
+              "case_0022"
+            ],
+            "false_reject": [],
+            "witness_value": true
+          },
+          "attempts": 5
+        }
+      ],
+      "candidate_metrics": {
+        "truth_ops": [
+          "C",
+          "D"
+        ],
+        "mapped_ops": [
+          {
+            "id": "op_L4_C4_if",
+            "name": "C",
+            "in_graph": true,
+            "new": false
+          },
+          {
+            "id": "op_L6_C4_if",
+            "name": "D",
+            "in_graph": true,
+            "new": false
+          },
+          {
+            "id": "op_L4_C4_if",
+            "name": "C",
+            "in_graph": true,
+            "new": false
+          },
+          {
+            "id": "op_L6_C4_if",
+            "name": "D",
+            "in_graph": true,
+            "new": false
+          },
+          {
+            "id": "op_L4_C4_if",
+            "name": "C",
+            "in_graph": true,
+            "new": false
+          },
+          {
+            "id": "op_L6_C4_if",
+            "name": "D",
+            "in_graph": true,
+            "new": false
+          }
+        ],
+        "mapped_count": 6,
+        "new_ops": [],
+        "new_real_ops": [],
+        "new_false_ops": [],
+        "precision": 1.0,
+        "recall": 1.0,
+        "rejected": []
+      },
+      "truth": {
+        "case_0000": {
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0001": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0002": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0003": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0004": {
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0005": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0006": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0007": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0008": {
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0009": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0010": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0011": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0012": {
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0013": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0014": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0015": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0016": {
+          "masked": true,
+          "absorber_sets": [
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0017": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0018": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0019": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0020": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0021": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0022": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        },
+        "case_0023": {
+          "masked": false,
+          "absorber_sets": [],
+          "individually_masking_ops": [],
+          "coexisting_unmasking_sets": []
+        }
+      },
+      "legacy_model_output": {
+        "format": "structured",
+        "raw_response": "```json\n{\n  \"task_id\": \"ctrl_02\",\n  \"relations\": [\n    {\n      \"operations\": [{\"line\": 4, \"text\": \"if c == 0:\"}],\n      \"kind\": \"independent\",\n      \"input\": {\"x\": 1, \"c\": 0, \"d\": 0},\n      \"condition\": \"True\",\n      \"explanation\": \"Disabling the 'if c == 0' block makes the return value unchanged.\",\n      \"counterexample\": null\n    },\n    {\n      \"operations\": [{\"line\": 6, \"text\": \"if d == 0:\"}],\n      \"kind\": \"independent\",\n      \"input\": {\"x\": 1, \"c\": 0, \"d\": 0},\n      \"condition\": \"True\",\n      \"explanation\": \"Disabling the 'if d == 0' block makes the return value unchanged.\",\n      \"counterexample\": null\n    }\n  ],\n  \"guard\": {\"expr\": \"True\", \"status\": \"BOUNDED\"},\n  \"test_gap\": [],\n  \"evidence\": null\n}\n```",
+        "relations": [
+          {
+            "relation_index": 0,
+            "kind": "independent",
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "operations": [
+              "op_L4_C4_if"
+            ],
+            "proposals": [
+              {
+                "line": 4,
+                "text": "if c == 0:"
+              }
+            ],
+            "in_graph": true,
+            "condition": "True",
+            "data_dependence": null,
+            "control_dependence": null,
+            "source_evidence": null,
+            "rationale": null,
+            "status": "HYPOTHESIS",
+            "role_sets": {
+              "roles": [
+                "msms",
+                "mmbs"
+              ],
+              "ops": [
+                "op_L4_C4_if"
+              ],
+              "status": "HYPOTHESIS"
+            }
+          },
+          {
+            "relation_index": 1,
+            "kind": "independent",
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "operations": [
+              "op_L6_C4_if"
+            ],
+            "proposals": [
+              {
+                "line": 6,
+                "text": "if d == 0:"
+              }
+            ],
+            "in_graph": true,
+            "condition": "True",
+            "data_dependence": null,
+            "control_dependence": null,
+            "source_evidence": null,
+            "rationale": null,
+            "status": "HYPOTHESIS",
+            "role_sets": {
+              "roles": [
+                "msms",
+                "mmbs"
+              ],
+              "ops": [
+                "op_L6_C4_if"
+              ],
+              "status": "HYPOTHESIS"
+            }
+          }
+        ],
+        "rejected": [],
+        "verification": [
+          {
+            "relation_index": 0,
+            "kind": "independent",
+            "ops": [
+              "op_L4_C4_if"
+            ],
+            "names": [
+              "C"
+            ],
+            "status": "FALSE",
+            "reason": "the declared set enabled alone does not mask A",
+            "case_id": "case_0000",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": false,
+              "disabling_set_exposes": true
+            },
+            "condition": null,
+            "attempts": 5
+          },
+          {
+            "relation_index": 1,
+            "kind": "independent",
+            "ops": [
+              "op_L6_C4_if"
+            ],
+            "names": [
+              "D"
+            ],
+            "status": "FALSE",
+            "reason": "the declared set enabled alone does not mask A",
+            "case_id": "case_0000",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": false,
+              "disabling_set_exposes": true
+            },
+            "condition": null,
+            "attempts": 5
+          }
+        ],
+        "candidate_metrics": {
+          "truth_ops": [
+            "C",
+            "D"
+          ],
+          "mapped_ops": [
+            {
+              "id": "op_L4_C4_if",
+              "name": "C",
+              "in_graph": true,
+              "new": false
+            },
+            {
+              "id": "op_L6_C4_if",
+              "name": "D",
+              "in_graph": true,
+              "new": false
+            }
+          ],
+          "mapped_count": 2,
+          "new_ops": [],
+          "new_real_ops": [],
+          "new_false_ops": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "rejected": []
+        }
+      },
+      "fixture_control": {
+        "source": "graph-derived fixture, not model output",
+        "relations": [
+          {
+            "relation_index": 0,
+            "kind": "cooperative",
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "operations": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "proposals": [
+              {
+                "line": 4,
+                "text": "if c == 0:"
+              },
+              {
+                "line": 6,
+                "text": "if d == 0:"
+              }
+            ],
+            "in_graph": true,
+            "condition": "((c < 1) and ((d < 1) and (x < 6)))",
+            "data_dependence": null,
+            "control_dependence": null,
+            "source_evidence": "graph discovery: case_0000",
+            "rationale": "deterministic graph relation, used as a pipeline fixture",
+            "status": "HYPOTHESIS",
+            "role_sets": {
+              "roles": [
+                "msms",
+                "mmbs"
+              ],
+              "ops": [
+                "op_L4_C4_if",
+                "op_L6_C4_if"
+              ],
+              "status": "HYPOTHESIS"
+            }
+          }
+        ],
+        "rejected": [],
+        "verification": [
+          {
+            "relation_index": 0,
+            "kind": "cooperative",
+            "ops": [
+              "op_L4_C4_if",
+              "op_L6_C4_if"
+            ],
+            "names": [
+              "C",
+              "D"
+            ],
+            "status": "VERIFIED",
+            "reason": null,
+            "case_id": "case_0000",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": true,
+              "disabling_set_exposes": true,
+              "proper_subsets_do_not_mask": {
+                "C": true,
+                "D": true
+              }
+            },
+            "condition": {
+              "status": "VALID",
+              "exact": true,
+              "sound": true,
+              "complete": true,
+              "false_accept": [],
+              "false_reject": [],
+              "witness_value": true
+            },
+            "attempts": 1
+          }
+        ],
+        "candidate_metrics": {
+          "truth_ops": [
+            "C",
+            "D"
+          ],
+          "mapped_ops": [
+            {
+              "id": "op_L4_C4_if",
+              "name": "C",
+              "in_graph": true,
+              "new": false
+            },
+            {
+              "id": "op_L6_C4_if",
+              "name": "D",
+              "in_graph": true,
+              "new": false
+            }
+          ],
+          "mapped_count": 2,
+          "new_ops": [],
+          "new_real_ops": [],
+          "new_false_ops": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "rejected": []
+        }
+      }
+    }
+  }
+}

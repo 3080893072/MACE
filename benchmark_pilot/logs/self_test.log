@@ -1,0 +1,103 @@
+== ctrl_01 (controlled)
+  A guard='(mode == 0 and x == 0) or (mode == 0 and x == 1) or (mode == 0 and x == 2)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['B']] gold=[['B']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[] gold=[] exact=True kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=3
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== ctrl_02 (controlled)
+  A guard='(x == 1 and c == 0 and d == 0) or (x == 2 and c == 0 and d == 0) or (x == 3 and c == 0 and d == 0) or (x == 4 and c == 0 and d == 0) or (x == 5 and c == 0 and d == 0)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['C', 'D']] gold=[['C', 'D']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[] gold=[] exact=True kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=19
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== ctrl_03 (controlled)
+  A guard='(p == 0 and q == 1 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 1 and x == 3 and c == 0 and d == 0) or (p == 1 and q == 1 and x == 4 and c == 0 and d == 0)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['B'], ['E'], ['C', 'D']] gold=[['B'], ['E'], ['C', 'D']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[['B', 'E']] gold=[['B', 'E']] exact=True kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=6
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== real_formatdef (real)
+  A guard='True' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B not applicable: No safely controllable operation exists in this real task; causal attribution is recorded as unconfirmed.
+  C verdict=correctly_none_exists valid=0 invalid=0 exposed=0
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== real_setdiff (real)
+  A guard='True' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B not applicable: No safely controllable operation exists in this real task; causal attribution is recorded as unconfirmed.
+  C verdict=correctly_none_exists valid=0 invalid=0 exposed=0
+  D global=not_covered gold=not_covered agree=True per_test=1.00 named_ops_all_valid=True
+summary: {"controlled": {"tasks": 3, "guard_exact": 3, "guard_sound": 3, "guard_complete": 3, "masking_sets_exact": 3, "witness_correct": 3, "test_gap_global_agree": 3, "test_gap_per_test_accuracy_mean": 1.0}, "real": {"tasks": 2, "guard_exact": 2, "guard_sound": 2, "guard_complete": 2, "masking_sets_exact": 0, "witness_correct": 2, "test_gap_global_agree": 2, "test_gap_per_test_accuracy_mean": 1.0}, "note": "Controlled and real tasks are reported separately; the aggregate must not be presented as real-project generalization."}
+
+PASS perfect/ctrl_01/guard_exact
+PASS perfect/ctrl_01/witness_correct
+PASS perfect/ctrl_01/test_gap_global
+PASS perfect/ctrl_02/guard_exact
+PASS perfect/ctrl_02/witness_correct
+PASS perfect/ctrl_02/test_gap_global
+PASS perfect/ctrl_03/guard_exact
+PASS perfect/ctrl_03/witness_correct
+PASS perfect/ctrl_03/test_gap_global
+PASS perfect/real_formatdef/guard_exact
+PASS perfect/real_formatdef/witness_correct
+PASS perfect/real_formatdef/test_gap_global
+PASS perfect/real_setdiff/guard_exact
+PASS perfect/real_setdiff/witness_correct
+PASS perfect/real_setdiff/test_gap_global
+PASS perfect/ctrl_01/masking_exact
+PASS perfect/ctrl_01/per_test
+PASS perfect/ctrl_02/masking_exact
+PASS perfect/ctrl_02/per_test
+PASS perfect/ctrl_03/masking_exact
+PASS perfect/ctrl_03/per_test
+PASS sabotage/ctrl_01/guard_not_exact
+PASS sabotage/ctrl_02/cooperative_missed
+PASS sabotage/ctrl_03/coexisting_missed
+PASS sabotage/real_formatdef/guard_incomplete
+PASS sabotage/real_setdiff/invalid_witness
+PASS sabotage/ctrl_01/test_verdict_detected
+
+wrote <local-path>, <local-path>, <local-path>
+1 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 1 and x == 3 and c == 0 and d == 0) or (p == 1 and q == 1 and x == 4 and c == 0 and d == 0)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['B'], ['E'], ['C', 'D']] gold=[['B'], ['E'], ['C', 'D']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[] gold=[['B', 'E']] exact=False kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=6
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== real_formatdef (real)
+  A guard='False' status=BOUNDED sound=True complete=False exact=False false_accept=0 false_reject=8
+  B not applicable: No safely controllable operation exists in this real task; causal attribution is recorded as unconfirmed.
+  C verdict=correctly_none_exists valid=0 invalid=0 exposed=0
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== real_setdiff (real)
+  A guard='True' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B not applicable: No safely controllable operation exists in this real task; causal attribution is recorded as unconfirmed.
+  C verdict=claimed_exists_without_valid_witness valid=0 invalid=1 exposed=0
+  D global=not_covered gold=not_covered agree=True per_test=1.00 named_ops_all_valid=True
+summary: {"controlled": {"tasks": 3, "guard_exact": 2, "guard_sound": 2, "guard_complete": 2, "masking_sets_exact": 1, "witness_correct": 3, "test_gap_global_agree": 3, "test_gap_per_test_accuracy_mean": 0.8333333333333334}, "real": {"tasks": 2, "guard_exact": 1, "guard_sound": 2, "guard_complete": 1, "masking_sets_exact": 0, "witness_correct": 1, "test_gap_global_agree": 2, "test_gap_per_test_accuracy_mean": 1.0}, "note": "Controlled and real tasks are reported separately; the aggregate must not be presented as real-project generalization."}
+
+PASS perfect/ctrl_01/guard_exact
+PASS perfect/ctrl_01/witness_correct
+PASS perfect/ctrl_01/test_gap_global
+PASS perfect/ctrl_02/guard_exact
+PASS perfect/ctrl_02/witness_correct
+PASS perfect/ctrl_02/test_gap_global
+PASS perfect/ctrl_03/guard_exact
+PASS perfect/ctrl_03/witness_correct
+PASS perfect/ctrl_03/test_gap_global
+PASS perfect/real_formatdef/guard_exact
+PASS perfect/real_formatdef/witness_correct
+PASS perfect/real_formatdef/test_gap_global
+PASS perfect/real_setdiff/guard_exact
+PASS perfect/real_setdiff/witness_correct
+PASS perfect/real_setdiff/test_gap_global
+PASS perfect/ctrl_01/masking_exact
+PASS perfect/ctrl_01/per_test
+PASS perfect/ctrl_02/masking_exact
+PASS perfect/ctrl_02/per_test
+PASS perfect/ctrl_03/masking_exact
+PASS perfect/ctrl_03/per_test
+PASS sabotage/ctrl_01/guard_not_exact
+PASS sabotage/ctrl_02/cooperative_missed
+PASS sabotage/ctrl_03/coexisting_missed
+PASS sabotage/real_formatdef/guard_incomplete
+PASS sabotage/real_setdiff/invalid_witness
+PASS sabotage/ctrl_01/test_verdict_detected

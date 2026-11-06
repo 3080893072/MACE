@@ -1,0 +1,31 @@
+{
+  "case_id": "sd_tabulate_1056_strip_center",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M5_CONDITIONAL_BRANCH",
+  "base": {
+    "slug": "tabulate-0.9.0",
+    "file": "tabulate/__init__.py",
+    "A_line": 1056,
+    "A_code": "            strings = [s.strip() for s in strings]"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 1056,
+      "indent": 12,
+      "role": "Conditional recomputation that restores the strip only for numeric-looking cell groups.",
+      "lines": [
+        "if all(s.strip().isdigit() for s in strings):",
+        "    strings = [s.strip() for s in strings]"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_tabulate_1056.py",
+  "inputs": {
+    "mask_numeric": "center-aligned numeric cells padded with spaces",
+    "expose_alpha": "center-aligned alphabetic cells padded with spaces",
+    "control_right_numeric": "numeric cells but right-aligned (A's branch not taken)",
+    "control_no_space": "center-aligned numeric cells with no surrounding whitespace"
+  },
+  "rationale": "The conditional branch covers numeric centre-aligned columns only.  The masking witness is mask_numeric; expose_alpha satisfies AC5 because the compensation is not entered there."
+}

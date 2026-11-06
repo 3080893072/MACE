@@ -1,0 +1,368 @@
+{
+  "fixture": "dead_flag",
+  "mode": "direct",
+  "provider": "ollama",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen2.5-coder:32b",
+  "seed": 42,
+  "rounds_allowed": 12,
+  "rounds_used": 2,
+  "status": "GUARD_VERIFIED",
+  "final_guard": "True",
+  "final_bundle": null,
+  "final_report": {
+    "guard_ok": true,
+    "evidence_level": "BOUNDED",
+    "domain_size": 40,
+    "usable_rows": 40,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "flag": "bool"
+    },
+    "relations": [],
+    "guard": {
+      "id": "G",
+      "expr": "True",
+      "source_lines": [],
+      "status": "BOUNDED",
+      "checked": 40,
+      "unsound": 0,
+      "incomplete": 0,
+      "shape": null,
+      "parts": [
+        "True"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          0
+        ],
+        "rejects_wrong": [
+          0
+        ]
+      },
+      "counterexamples": []
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "reason": "no upstream relation with role='fixed_point' was verified"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0,
+          1
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 40,
+      "active_exposed": 0
+    },
+    "witnesses": [],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 1,
+            "contexts_with_flip": 0,
+            "causally_relevant": false,
+            "example": null
+          }
+        },
+        "causally_relevant": []
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [],
+            "status": "BOUNDED"
+          }
+        ],
+        "edges": [],
+        "unsupported": [],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 3,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 561,
+        "completion_tokens": 36,
+        "total_duration_ns": 2148308560,
+        "load_duration_ns": 1863907,
+        "prompt_eval_duration_ns": 256050000,
+        "eval_duration_ns": 1723059000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 2.15,
+        "attempt": 0
+      },
+      "raw_response": "{\"mask_guard\": \"flag_post == False\", \"explanation\": \"The flag's value after A must be False to match the output of the version without A.\"}",
+      "guard": "flag_post == False",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 40,
+        "usable_rows": 40,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "flag": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "flag_post == False",
+          "source_lines": [],
+          "status": "INVALID",
+          "reason": "unknown variable: flag_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects",
+          "unsound": 0,
+          "incomplete": 0,
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 40,
+          "active_exposed": 0
+        },
+        "witnesses": [],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 1,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": []
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "INVALID"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs):\n002:     flag = False\n003:     flag = True  # TARGET_A\n004:     flag = False\n005:     n = len(xs)\n006:     return n, n + 1\n\nInput domain: xs: list[int] with length 0..3, values in {0, 1, 2} (every combination is enumerated; 40 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  flag: bool\n  xs: list[int]\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 687,
+        "completion_tokens": 35,
+        "total_duration_ns": 1801519402,
+        "load_duration_ns": 2165940,
+        "prompt_eval_duration_ns": 79441000,
+        "eval_duration_ns": 1698398000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 1.803,
+        "attempt": 0
+      },
+      "raw_response": "{\"mask_guard\": \"True\", \"explanation\": \"The value of flag after A does not affect the output, which depends only on the length of xs.\"}",
+      "guard": "True",
+      "report": {
+        "guard_ok": true,
+        "evidence_level": "BOUNDED",
+        "domain_size": 40,
+        "usable_rows": 40,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "flag": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "True",
+          "source_lines": [],
+          "status": "BOUNDED",
+          "checked": 40,
+          "unsound": 0,
+          "incomplete": 0,
+          "shape": null,
+          "parts": [
+            "True"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0
+            ],
+            "rejects_wrong": [
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 40,
+          "active_exposed": 0
+        },
+        "witnesses": [],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 1,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": []
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "BOUNDED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs):\n002:     flag = False\n003:     flag = True  # TARGET_A\n004:     flag = False\n005:     n = len(xs)\n006:     return n, n + 1\n\nInput domain: xs: list[int] with length 0..3, values in {0, 1, 2} (every combination is enumerated; 40 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  flag: bool\n  xs: list[int]\n\nDeclared function types:\n(no user-defined functions)\n\nA is deleted in a second version. Read the whole program and directly infer\nthe condition under which the returned value is unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\"}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"mask_guard\": \"flag_post == False\", \"explanation\": \"The flag's value after A must be False to match the output of the version without A.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: flag_post == False\nThe bounded checker ran 40 paired executions.\nChecker note: unknown variable: flag_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 2,
+    "prompt_tokens": 1248,
+    "completion_tokens": 71,
+    "decode_seconds": 3.953,
+    "wall_seconds": 4.973
+  },
+  "domain": {
+    "size": 40,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-10-30T03:05:14.322210+00:00"
+}

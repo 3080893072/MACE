@@ -1,0 +1,70 @@
+{
+  "case_id": "x_sd_docutils_backticks_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 735,
+    "A_code": "    text = text.replace(r'``', smart.opquote)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 735,
+      "indent": 4,
+      "role": "One-occurrence leg: rewrites a single double backtick.",
+      "lines": [
+        "text = text.replace(r'``', smart.opquote, 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 735,
+      "indent": 4,
+      "role": "Removes NUL bytes; NUL never occurs in the declared inputs.",
+      "lines": [
+        "if \"\\x00\" in text:",
+        "    text = text.replace(\"\\x00\", \"\")"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 735,
+      "indent": 4,
+      "role": "Removes carriage returns; the declared inputs are LF-only.",
+      "lines": [
+        "if \"\\r\" in text:",
+        "    text = text.replace(\"\\r\", \"\")"
+      ]
+    },
+    {
+      "id": "U4",
+      "after_line": 735,
+      "indent": 4,
+      "role": "Decodes one HTML entity; no declared input carries it.",
+      "lines": [
+        "if \"&nbsp;\" in text:",
+        "    text = text.replace(\"&nbsp;\", \" \")"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived_v2_1/challenge_ext/probes/x_sd_docutils_backticks_m1.py",
+  "inputs": {
+    "mask_one_backtick": "text with one `` marker",
+    "expose_two_backticks": "text with two `` markers: only the first is repaired",
+    "control_plain": "text with no backtick"
+  },
+  "rationale": "educateBackticks() opens a primary quote at every `` marker. The patch rewrites one marker only; the second marker in a two-marker string stays raw and exposes the gap.",
+  "challenge": {
+    "kind": "candidate_distractor_extension",
+    "base_case": "sd_docutils_backticks_m1",
+    "added_candidate_ids": [
+      "U2",
+      "U3",
+      "U4"
+    ],
+    "note": "Only the candidate universe grows. A, the original U blocks and the declared inputs are unchanged, so every correct relation is unchanged; the added candidates are irrelevant on every declared input."
+  }
+}

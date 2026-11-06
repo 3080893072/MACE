@@ -1,0 +1,41 @@
+--- a/pygments/formatters/bbcode.py
++++ b/pygments/formatters/bbcode.py
+@@ -59,24 +59,38 @@
+     def _make_styles(self):
+         for ttype, ndef in self.style:
+             start = end = ''
+             if ndef['color']:
+                 start += '[color=#%s]' % ndef['color']
+                 end = '[/color]' + end
++                # SD:U:U1:begin
++                if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):
++                    end = '[/color]' + end
++                # SD:U:U1:end
+             if ndef['bold']:
+                 start += '[b]'
+                 end = '[/b]' + end
+             if ndef['italic']:
+                 start += '[i]'
+                 end = '[/i]' + end
+             if ndef['underline']:
+                 start += '[u]'
+                 end = '[/u]' + end
+             # there are no common BBcodes for background-color and border
+ 
+             self.styles[ttype] = start, end
++            # SD:U:U2:begin
++            if ndef['color'] and not ndef['underline']:
++                _sd_close = ''
++                if ndef['italic']:
++                    _sd_close += '[/i]'
++                if ndef['bold']:
++                    _sd_close += '[/b]'
++                _sd_close += '[/color]'
++                self.styles[ttype] = (start, _sd_close)
++            # SD:U:U2:end
+ 
+     def format_unencoded(self, tokensource, outfile):
+         if self._code:
+             outfile.write('[code]')
+         if self._mono:
+             outfile.write('[font=monospace]')

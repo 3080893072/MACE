@@ -1,0 +1,53 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/numbertheory.py:354:name:count",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/numbertheory.py",
+  "function": "factorization",
+  "mechanism": "name",
+  "target_A": {
+    "line": 354,
+    "end_line": 354,
+    "kind": "Assign",
+    "code": "count = count + 1"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_numbertheory.py::TestNumbertheory::test_factorization",
+    "src/ecdsa/test_numbertheory.py::TestNumbertheory::test_jacobi"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                count = count + 1",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.33,
+    "failed_nodeids": [
+      "src.ecdsa.test_numbertheory.TestNumbertheory::test_factorization",
+      "src.ecdsa.test_numbertheory.TestNumbertheory::test_jacobi"
+    ],
+    "stdout_tail": "0**12))\n\nsrc\\ecdsa\\test_numbertheory.py:368: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <ecdsa.test_numbertheory.TestNumbertheory testMethod=test_factorization>\nnum = 4\n\n    @settings(**HYP_SETTINGS)\n    @given(st.integers(min_value=1, max_value=10**12))\n    @example(265399 * 1526929)\n    @example(373297**2 * 553991)\n    def test_factorization(self, num):\n        factors = factorization(num)\n        mult = 1\n        for i in factors:\n            mult *= i[0] ** i[1]\n>       assert mult == num\nE       assert 2 == 4\nE       Failing test case: test_factorization(\nE           self=<ecdsa.test_numbertheory.TestNumbertheory testMethod=test_factorization>,\nE           num=4,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing test cases:\nE               <local-path> AssertionError\n________________________ TestNumbertheory.test_jacobi _________________________\n\nself = <ecdsa.test_numbertheory.TestNumbertheory testMethod=test_jacobi>\n\n    @settings(**HYP_SETTINGS)\n>   @given(st.integers(min_value=3, max_value=1000).filter(lambda x: x % 2))\n\nsrc\\ecdsa\\test_numbertheory.py:405: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <ecdsa.test_numbertheory.TestNumbertheory testMethod=test_jacobi>\nmod = 169\n\n    @settings(**HYP_SETTINGS)\n    @given(st.integers(min_value=3, max_value=1000).filter(lambda x: x % 2))\n    def test_jacobi(self, mod):\n        if is_prime(mod):\n            squares = set()\n            for root in range(1, mod):\n                assert jacobi(root * root, mod) == 1\n                squares.add(root * root % mod)\n            for i in range(1, mod):\n                if i not in squares:\n                    assert jacobi(i, mod) == -1\n        else:\n            factors = factorization(mod)\n            for a in range(1, mod):\n                c = 1\n                for i in factors:\n                    c *= jacobi(a, i[0]) ** i[1]\n>               assert c == jacobi(a, mod)\nE               assert -1 == 1\nE                +  where 1 = jacobi(2, 169)\nE               Failing test case: test_jacobi(\nE                   self=<ecdsa.test_numbertheory.TestNumbertheory testMethod=test_jacobi>,\nE                   mod=169,\nE               )\nE               Explanation:\nE                   These lines were always and only run by failing test cases:\nE                       <local-path> AssertionError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_numbertheory.py::TestNumbertheory::test_factorization\nFAILED src/ecdsa/test_numbertheory.py::TestNumbertheory::test_jacobi - assert...\n2 failed in 0.96s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

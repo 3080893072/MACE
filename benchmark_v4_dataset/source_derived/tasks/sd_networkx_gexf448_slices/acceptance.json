@@ -1,0 +1,93 @@
+{
+  "case_id": "sd_networkx_gexf448_slices",
+  "independent": true,
+  "shares_construction_code": false,
+  "checks": {
+    "AC1_sdist_matches_discovery": true,
+    "AC1_evidence_matches_source": true,
+    "AC1_A_line_text": true,
+    "patch_preserves_A": true,
+    "patch_only_inserts": true,
+    "U_blocks_outside_A": true,
+    "P_minus_only_deletes_A": true,
+    "patch_diff_does_not_remove_A": true,
+    "patch_diff_insert_count": true,
+    "enumeration_agrees": true,
+    "roles_declared": true,
+    "masking_inputs_satisfied": true,
+    "exposing_inputs_satisfied": true,
+    "control_inputs_satisfied": true,
+    "u_necessary_in_minimal_sets": true
+  },
+  "all_checks_pass": true,
+  "hashes": {
+    "sdist": "5193d5488950347fedd0a35312372511c27de8575e2d62d543ce1feeed4da033",
+    "discovery": "5193d5488950347fedd0a35312372511c27de8575e2d62d543ce1feeed4da033",
+    "evidence": "5193d5488950347fedd0a35312372511c27de8575e2d62d543ce1feeed4da033"
+  },
+  "A": {
+    "file": "networkx/readwrite/gexf.py",
+    "line": 448,
+    "code": "                edge_data = self.add_slices(edge_element, edge_data)",
+    "patched_index": 448
+  },
+  "U": [
+    "U1"
+  ],
+  "per_input": {
+    "mask_undirected_slices": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false
+    },
+    "expose_directed_slices": {
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "empty_kept_masks": false
+    },
+    "control_undirected_no_slices": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "empty_kept_masks": true
+    },
+    "control_directed_no_slices": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "empty_kept_masks": true
+    }
+  },
+  "notes": {
+    "source_sha256": "5193d5488950347fedd0a35312372511c27de8575e2d62d543ce1feeed4da033",
+    "inserted_lines": 4
+  }
+}

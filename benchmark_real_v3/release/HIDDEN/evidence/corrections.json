@@ -1,0 +1,41 @@
+{
+  "schema": "mace_benchmark_v3_corrections",
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "date": "2026-11-02",
+  "policy": "Task qualification labels were not changed. Intermediate results from the affected scorer/acceptance implementations are superseded and are not used as labels.",
+  "records": [
+    {
+      "id": "C1",
+      "stage": "normalized scorer",
+      "issue": "An input could make operation A not execute while still yielding a vacuous masking relation.",
+      "old_behavior": "The first scorer version could return WITNESS_VERIFIED for MSMS/MMBS on the bind task with input {} even though A never ran.",
+      "correction": "MSMS/MMBS now require sys.settrace confirmation that A executed; MSMS additionally requires a nonempty MMBS witness of a real local effect.",
+      "hidden_labels_changed": false,
+      "affected_tasks": [],
+      "regression_test": "benchmark_real_v3/scoring/tests/test_scoring.py::ScorerTests::test_non_executing_input_is_not_a_masking_witness",
+      "verification": "python -m benchmark_real_v3.scoring.demo -> all_expectations_met=true; unittest 9/9 OK"
+    },
+    {
+      "id": "C2",
+      "stage": "independent acceptance implementation",
+      "issue": "Three implementation defects were found while building the independent path.",
+      "old_behavior": "Subset ids were expanded into character lists; a target path was compared as jinja2/loaders.py instead of src/jinja2/loaders.py; whitespace or line layout affected code comparison.",
+      "correction": "Use sorted operation-id lists, source-dir-relative paths, and whitespace-normalized token comparison. All five tasks were accepted again from scratch.",
+      "hidden_labels_changed": false,
+      "affected_tasks": [],
+      "regression_test": "benchmark_real_v3/acceptance_v3.py",
+      "verification": "acceptance_report.json: accepted=5, needs_review=0"
+    },
+    {
+      "id": "C3",
+      "stage": "T_task execution trace",
+      "issue": "The first trace attempt set PYTHONPATH only to the kit, so Werkzeug test imports failed and Jinja2 could import an installed package instead of the copied tree.",
+      "old_behavior": "Werkzeug returned pytest exit code 4; Jinja2 tests passed but did not execute the copied A line.",
+      "correction": "Prepend the copied project's src/ to PYTHONPATH and run a fresh copy per task.",
+      "hidden_labels_changed": false,
+      "affected_tasks": [],
+      "regression_test": "python -m benchmark_real_v3.acceptance_t_task_trace",
+      "verification": "t_task_execution.json: all_executed=true for 5/5 tasks"
+    }
+  ]
+}

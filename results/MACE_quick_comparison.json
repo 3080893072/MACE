@@ -1,0 +1,652 @@
+{
+  "schema": "mace_quick_comparison/1",
+  "generated_utc": "2026-11-04T15:41:35Z",
+  "mode": "quick_30min",
+  "dataset": {
+    "name": "source-derived controlled (V4-DEV)",
+    "task_count": 10,
+    "split": "DEV",
+    "track": "SOURCE_DERIVED_CONTROLLED",
+    "researcher_constructed": true,
+    "note": "A is a real upstream statement; deletion and U are researcher-constructed.  Not a natural upstream defect."
+  },
+  "freeze": {
+    "code_commit": "2f1ee01",
+    "source_artifact": "benchmark_v4_dataset\\results\\source_derived_v1_algorithm_scores.json",
+    "source_sha256": "711178d30ab613c098123b13909717b4c375d23416287dcca6218b22f8bb275f",
+    "reused_artifacts": [
+      "benchmark_v4_dataset/results/source_derived_v1_algorithm_scores.json",
+      "benchmark_v4_dataset/registry/source_derived_accepted.json"
+    ],
+    "no_new_deterministic_runs": true
+  },
+  "methods": {
+    "C-fixed-1.1": {
+      "source": "A. C-fixed-1.1 (frozen artifact)",
+      "discovery": "AST discovery + rank_and_prune(max_ops=6)",
+      "search": "search_relations(mode=exhaustive)",
+      "model_calls": 0
+    },
+    "Graph-only": {
+      "source": "B. Graph-only (frozen artifact)",
+      "discovery": "subgraph.build + candidate_selection(max_ops=6)",
+      "search": "search_relations(mode=graph)",
+      "model_calls": 0
+    },
+    "Role-separated C0": {
+      "source": "C. Role-separated C0 (frozen artifact)",
+      "discovery": "AST discovery + rank_and_prune(max_ops=6)",
+      "search": "search_relations_role_separated(budget=16, no hypotheses)",
+      "model_calls": 0
+    }
+  },
+  "per_task": [
+    {
+      "task_id": "sd_jsonschema_1145_pointer",
+      "mechanism": "M1_SINGLE_OPERATION",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_tilde0",
+        "mask_nested_tilde0"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "msms_exact": 2,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 2,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 6,
+          "wall_seconds": 2.51
+        },
+        "Graph-only": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 6,
+          "discovered_candidates": 45,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 0,
+          "false_relations": 10,
+          "unmatched_sets": 8,
+          "probes": 128,
+          "wall_seconds": 6.4
+        },
+        "Role-separated C0": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "msms_exact": 2,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 2,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 6,
+          "wall_seconds": 2.48
+        }
+      }
+    },
+    {
+      "task_id": "sd_networkx_gexf448_slices",
+      "mechanism": "M8_OBJECT_SHARED_STATE",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_undirected_slices"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 3,
+          "discovered_candidates": 6,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "probes": 22,
+          "wall_seconds": 8.22
+        },
+        "Graph-only": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 6,
+          "discovered_candidates": 185,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 128,
+          "wall_seconds": 13.32
+        },
+        "Role-separated C0": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 3,
+          "discovered_candidates": 6,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "probes": 22,
+          "wall_seconds": 11.14
+        }
+      }
+    },
+    {
+      "task_id": "sd_pygments_bbcode64_color",
+      "mechanism": "M4_ALTERNATIVE_PATHS",
+      "u_blocks": [
+        "U1",
+        "U2"
+      ],
+      "masking_inputs": [
+        "mask_color"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 3,
+          "unmatched_sets": 2,
+          "probes": 12,
+          "wall_seconds": 1.72
+        },
+        "Graph-only": {
+          "u_exact": false,
+          "u_recall": 0.5,
+          "universe_size": 6,
+          "discovered_candidates": 20,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 3,
+          "unmatched_sets": 1,
+          "probes": 128,
+          "wall_seconds": 2.81
+        },
+        "Role-separated C0": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 3,
+          "unmatched_sets": 2,
+          "probes": 12,
+          "wall_seconds": 1.87
+        }
+      }
+    },
+    {
+      "task_id": "sd_pygments_bbcode70_italic",
+      "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+      "u_blocks": [
+        "U1",
+        "U2"
+      ],
+      "masking_inputs": [
+        "mask_italic",
+        "mask_italic_codetag"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": false,
+          "u_recall": 0.5,
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 2,
+          "false_relations": 2,
+          "unmatched_sets": 0,
+          "probes": 6,
+          "wall_seconds": 1.41
+        },
+        "Graph-only": {
+          "u_exact": false,
+          "u_recall": 0.5,
+          "universe_size": 6,
+          "discovered_candidates": 16,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 0,
+          "false_relations": 6,
+          "unmatched_sets": 0,
+          "probes": 128,
+          "wall_seconds": 3.04
+        },
+        "Role-separated C0": {
+          "u_exact": false,
+          "u_recall": 0.5,
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 2,
+          "false_relations": 2,
+          "unmatched_sets": 0,
+          "probes": 6,
+          "wall_seconds": 1.4
+        }
+      }
+    },
+    {
+      "task_id": "sd_pygments_groff73_italic",
+      "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+      "u_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "masking_inputs": [
+        "mask_italic_mono"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": false,
+          "u_recall": 0.333,
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 1,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "probes": 6,
+          "wall_seconds": 1.26
+        },
+        "Graph-only": {
+          "u_exact": false,
+          "u_recall": 0.333,
+          "universe_size": 6,
+          "discovered_candidates": 23,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 3,
+          "unmatched_sets": 0,
+          "probes": 128,
+          "wall_seconds": 2.85
+        },
+        "Role-separated C0": {
+          "u_exact": false,
+          "u_recall": 0.333,
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 1,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "probes": 6,
+          "wall_seconds": 1.24
+        }
+      }
+    },
+    {
+      "task_id": "sd_pygments_latex297_italic",
+      "mechanism": "M6_CROSS_FUNCTION_STATE",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_inline_italic",
+        "mask_inline_italic_color"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 2,
+          "discovered_candidates": 8,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 0,
+          "false_relations": 4,
+          "unmatched_sets": 2,
+          "probes": 20,
+          "wall_seconds": 2.13
+        },
+        "Graph-only": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 6,
+          "discovered_candidates": 101,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 0,
+          "false_relations": 4,
+          "unmatched_sets": 2,
+          "probes": 128,
+          "wall_seconds": 3.35
+        },
+        "Role-separated C0": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 2,
+          "discovered_candidates": 8,
+          "msms_exact": 0,
+          "masking_inputs": 2,
+          "msms_intervention_exact": 0,
+          "false_relations": 4,
+          "unmatched_sets": 2,
+          "probes": 20,
+          "wall_seconds": 2.24
+        }
+      }
+    },
+    {
+      "task_id": "sd_pygments_style95_cache",
+      "mechanism": "M9_EXCEPTION_FALLBACK",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_text",
+        "mask_name_other",
+        "mask_operator_inherited"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 0,
+          "discovered_candidates": 0,
+          "msms_exact": 0,
+          "masking_inputs": 3,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 2,
+          "wall_seconds": 0.44
+        },
+        "Graph-only": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 6,
+          "discovered_candidates": 28,
+          "msms_exact": 0,
+          "masking_inputs": 3,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 128,
+          "wall_seconds": 2.34
+        },
+        "Role-separated C0": {
+          "u_exact": false,
+          "u_recall": 0.0,
+          "universe_size": 0,
+          "discovered_candidates": 0,
+          "msms_exact": 0,
+          "masking_inputs": 3,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 2,
+          "wall_seconds": 0.42
+        }
+      }
+    },
+    {
+      "task_id": "sd_tabulate_1052_strip_right",
+      "mechanism": "M1_SINGLE_OPERATION",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_spaces"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 12,
+          "wall_seconds": 1.63
+        },
+        "Graph-only": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 6,
+          "discovered_candidates": 143,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 128,
+          "wall_seconds": 6.89
+        },
+        "Role-separated C0": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 12,
+          "wall_seconds": 1.79
+        }
+      }
+    },
+    {
+      "task_id": "sd_tabulate_1056_strip_center",
+      "mechanism": "M5_CONDITIONAL_BRANCH",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_numeric"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 1,
+          "discovered_candidates": 3,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 8,
+          "wall_seconds": 1.32
+        },
+        "Graph-only": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 6,
+          "discovered_candidates": 143,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 128,
+          "wall_seconds": 7.08
+        },
+        "Role-separated C0": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 1,
+          "discovered_candidates": 3,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 8,
+          "wall_seconds": 1.36
+        }
+      }
+    },
+    {
+      "task_id": "sd_tabulate_2557_curlen",
+      "mechanism": "M7_LOOP_STATE",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_two_lines"
+      ],
+      "methods": {
+        "C-fixed-1.1": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 2,
+          "discovered_candidates": 2,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 8,
+          "wall_seconds": 1.21
+        },
+        "Graph-only": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 6,
+          "discovered_candidates": 199,
+          "msms_exact": 0,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 2,
+          "unmatched_sets": 1,
+          "probes": 128,
+          "wall_seconds": 10.72
+        },
+        "Role-separated C0": {
+          "u_exact": true,
+          "u_recall": 1.0,
+          "universe_size": 2,
+          "discovered_candidates": 2,
+          "msms_exact": 1,
+          "masking_inputs": 1,
+          "msms_intervention_exact": 0,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "probes": 8,
+          "wall_seconds": 1.33
+        }
+      }
+    }
+  ],
+  "totals": {
+    "C-fixed-1.1": {
+      "tasks": 10,
+      "masking_inputs": 15,
+      "msms_exact": 5,
+      "msms_intervention_exact": 6,
+      "false_relations": 11,
+      "unmatched_sets": 4,
+      "probes": 102,
+      "wall_seconds": 21.85,
+      "u_exact_tasks": 5,
+      "cooperative_tasks": 2,
+      "cooperative_msms_exact_tasks": 0,
+      "u_recall_mean": 0.583
+    },
+    "Graph-only": {
+      "tasks": 10,
+      "masking_inputs": 15,
+      "msms_exact": 3,
+      "msms_intervention_exact": 0,
+      "false_relations": 28,
+      "unmatched_sets": 12,
+      "probes": 1280,
+      "wall_seconds": 58.8,
+      "u_exact_tasks": 5,
+      "cooperative_tasks": 2,
+      "cooperative_msms_exact_tasks": 0,
+      "u_recall_mean": 0.633
+    },
+    "Role-separated C0": {
+      "tasks": 10,
+      "masking_inputs": 15,
+      "msms_exact": 5,
+      "msms_intervention_exact": 6,
+      "false_relations": 11,
+      "unmatched_sets": 4,
+      "probes": 102,
+      "wall_seconds": 25.27,
+      "u_exact_tasks": 5,
+      "cooperative_tasks": 2,
+      "cooperative_msms_exact_tasks": 0,
+      "u_recall_mean": 0.583
+    }
+  },
+  "focus_tasks": [
+    "sd_pygments_bbcode70_italic",
+    "sd_pygments_groff73_italic",
+    "sd_pygments_bbcode64_color"
+  ],
+  "full_mace": {
+    "status": "NOT_RUN",
+    "reason": "AutoDL SSH endpoint was unreachable in this round. Port 37377 refused the connection; 37376 accepted TCP but rejected the stored credential; port 22 rejected password authentication. No nvidia-smi / Ollama / qwen2.5-coder:32b evidence could be collected, so the model stage was stopped rather than fabricating GPU results.",
+    "gpu_used": false,
+    "model_calls": 0,
+    "adapter_status": "NOT_IMPLEMENTED_BEYOND_INTERFACE_AUDIT: the existing v3 driver is bound to v3 public task ids, v3 payloads and v3 probe fixtures; the SD packages use a different public schema. A separate adapter would be needed, but the model endpoint was unavailable before the 5-minute cutoff.",
+    "attempts": [
+      {
+        "endpoint": "connect.cqa1.seetacloud.com:37377",
+        "result": "ConnectionRefused (WinError 10061)"
+      },
+      {
+        "endpoint": "connect.cqa1.seetacloud.com:37376",
+        "result": "TCP open; AuthenticationException"
+      },
+      {
+        "endpoint": "connect.cqa1.seetacloud.com:22",
+        "result": "BadAuthenticationType; password auth not accepted"
+      }
+    ]
+  },
+  "mmbs": {
+    "status": "NOT_SEPARABLE",
+    "reason": "reference.json sets mmbs = minimal_masking_sets on every input of every SD case; hidden MMBS is not an independent quantity. Emitted mmbs_ids are recorded but not scored."
+  },
+  "scoring_rules": {
+    "msms": "independent strict block-family match; minimality checked",
+    "mmbs": "NOT_SEPARABLE",
+    "unknown": "never counted as FALSE",
+    "incomplete": "reported as INCOMPLETE, not as zero",
+    "graph_only": "never relabeled as Full MACE"
+  },
+  "answers": {
+    "q1_most_correct_u": "Graph-only has the highest mean block recall (0.633 vs 0.583) but the same number of exact-U tasks (5/10); it adds stray operations and loses MSMS precision.",
+    "q2_best_msms": "C-fixed-1.1 and Role-separated C0 tie on exact MSMS (5/15 masking inputs); Graph-only is 3/15.",
+    "q3_cooperative_discovery": "No deterministic method finds either the two-operation or three-operation cooperative MSMS (0/2 tasks; 0/3 masking inputs).",
+    "q4_qwen_extra_gain": "NOT_RUN: no Qwen call and no Full MACE result in this round. No extra-gain claim is made.",
+    "q5_full_mace_actually_ran": "No. Status = NOT_RUN; GPU endpoint unreachable and adapter not installed."
+  }
+}

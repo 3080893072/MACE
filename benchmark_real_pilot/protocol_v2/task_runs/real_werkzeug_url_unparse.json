@@ -1,0 +1,816 @@
+{
+  "original_test_ids": [
+    "tests/test_urls.py::test_iri_safe_conversion",
+    "tests/test_urls.py::test_iri_safe_quoting",
+    "tests/test_urls.py::test_iri_support",
+    "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved",
+    "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only",
+    "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii",
+    "tests/test_urls.py::test_iri_to_uri_to_iri",
+    "tests/test_urls.py::test_quoting",
+    "tests/test_urls.py::test_quoting_of_local_urls",
+    "tests/test_urls.py::test_uri_iri_normalization",
+    "tests/test_urls.py::test_uri_to_iri_dont_unquote_space",
+    "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only",
+    "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii",
+    "tests/test_urls.py::test_uri_to_iri_to_uri",
+    "tests/test_urls.py::test_url_fixing",
+    "tests/test_urls.py::test_url_fixing_filepaths",
+    "tests/test_urls.py::test_url_fixing_qs",
+    "tests/test_urls.py::test_url_joining"
+  ],
+  "original_test_source": {
+    "tests/test_urls.py::test_iri_safe_conversion": "tests/test_urls.py",
+    "tests/test_urls.py::test_iri_safe_quoting": "tests/test_urls.py",
+    "tests/test_urls.py::test_iri_support": "tests/test_urls.py",
+    "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved": "tests/test_urls.py",
+    "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only": "tests/test_urls.py",
+    "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii": "tests/test_urls.py",
+    "tests/test_urls.py::test_iri_to_uri_to_iri": "tests/test_urls.py",
+    "tests/test_urls.py::test_quoting": "tests/test_urls.py",
+    "tests/test_urls.py::test_quoting_of_local_urls": "tests/test_urls.py",
+    "tests/test_urls.py::test_uri_iri_normalization": "tests/test_urls.py",
+    "tests/test_urls.py::test_uri_to_iri_dont_unquote_space": "tests/test_urls.py",
+    "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only": "tests/test_urls.py",
+    "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii": "tests/test_urls.py",
+    "tests/test_urls.py::test_uri_to_iri_to_uri": "tests/test_urls.py",
+    "tests/test_urls.py::test_url_fixing": "tests/test_urls.py",
+    "tests/test_urls.py::test_url_fixing_filepaths": "tests/test_urls.py",
+    "tests/test_urls.py::test_url_fixing_qs": "tests/test_urls.py",
+    "tests/test_urls.py::test_url_joining": "tests/test_urls.py"
+  },
+  "p_minus": {
+    "all_pass": false,
+    "collection_error": false,
+    "command": [
+      "<local-path>",
+      "-m",
+      "pytest",
+      "tests/test_urls.py::test_iri_safe_conversion",
+      "tests/test_urls.py::test_iri_safe_quoting",
+      "tests/test_urls.py::test_iri_support",
+      "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved",
+      "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only",
+      "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii",
+      "tests/test_urls.py::test_iri_to_uri_to_iri",
+      "tests/test_urls.py::test_quoting",
+      "tests/test_urls.py::test_quoting_of_local_urls",
+      "tests/test_urls.py::test_uri_iri_normalization",
+      "tests/test_urls.py::test_uri_to_iri_dont_unquote_space",
+      "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only",
+      "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii",
+      "tests/test_urls.py::test_uri_to_iri_to_uri",
+      "tests/test_urls.py::test_url_fixing",
+      "tests/test_urls.py::test_url_fixing_filepaths",
+      "tests/test_urls.py::test_url_fixing_qs",
+      "tests/test_urls.py::test_url_joining",
+      "-q",
+      "--disable-warnings",
+      "-p",
+      "pytest_trace_plugin"
+    ],
+    "counts": {
+      "error": 0,
+      "failed": 6,
+      "not_run": 0,
+      "passed": 12
+    },
+    "duration_seconds": 0.865374,
+    "log": "<local-path>",
+    "per_test": {
+      "tests/test_urls.py::test_iri_safe_conversion": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "def test_iri_safe_conversion():\n>       assert urls.iri_to_uri(\"magnet:?foo=bar\") == \"magnet:?foo=bar\"\n\ntests\\test_urls.py:230: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:816: in iri_to_uri\n    return url_unparse((iri.scheme, iri.encode_netloc(), path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('magnet', '', '', 'foo=bar', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n            url += path\n        if scheme:\n>           url = scheme + s(\":\") + url\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:618: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_iri_safe_quoting": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 3
+      },
+      "tests/test_urls.py::test_iri_support": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "def test_iri_support():\n        assert urls.uri_to_iri(\"http://xn--n3h.net/\") == \"http://\\u2603.net/\"\n        assert (\n            urls.uri_to_iri(b\"http://%C3%BCser:p%C3%A4ssword@xn--n3h.net/p%C3%A5th\")\n            == \"http://\\xfcser:p\\xe4ssword@\\u2603.net/p\\xe5th\"\n        )\n        assert urls.iri_to_uri(\"http://☃.net/\") == \"http://xn--n3h.net/\"\n        assert (\n            urls.iri_to_uri(\"http://üser:pässword@☃.net/påth\")\n            == \"http://%C3%BCser:p%C3%A4ssword@xn--n3h.net/p%C3%A5th\"\n        )\n    \n        assert (\n            urls.uri_to_iri(\"http://test.com/%3Fmeh?foo=%26%2F\")\n            == \"http://test.com/%3Fmeh?foo=%26%2F\"\n        )\n    \n        # this should work as well, might break on 2.4 because of a broken\n        # idna codec\n>       assert urls.uri_to_iri(b\"/foo\") == \"/foo\"\n\ntests\\test_urls.py:220: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:746: in uri_to_iri\n    return url_unparse((uri.scheme, uri.decode_netloc(), path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', '/foo', '', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 6
+      },
+      "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "def test_iri_to_uri_dont_quote_reserved():\n>       assert urls.iri_to_uri(\"/path[bracket]?(paren)\") == \"/path[bracket]?(paren)\"\n\ntests\\test_urls.py:385: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:816: in iri_to_uri\n    return url_unparse((iri.scheme, iri.encode_netloc(), path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', '/path[bracket]', '(paren)', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_iri_to_uri_to_iri": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_quoting": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_quoting_of_local_urls": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "def test_quoting_of_local_urls():\n>       rv = urls.iri_to_uri(\"/foo\\x8f\")\n\ntests\\test_urls.py:270: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:816: in iri_to_uri\n    return url_unparse((iri.scheme, iri.encode_netloc(), path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', '/foo%C2%8F', '', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_uri_iri_normalization": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 60
+      },
+      "tests/test_urls.py::test_uri_to_iri_dont_unquote_space": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "def test_uri_to_iri_dont_unquote_space():\n>       assert urls.uri_to_iri(\"abc%20def\") == \"abc%20def\"\n\ntests\\test_urls.py:381: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:746: in uri_to_iri\n    return url_unparse((uri.scheme, uri.decode_netloc(), path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', 'abc%20def', '', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_uri_to_iri_to_uri": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_url_fixing": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 3
+      },
+      "tests/test_urls.py::test_url_fixing_filepaths": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 6
+      },
+      "tests/test_urls.py::test_url_fixing_qs": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_url_joining": {
+        "outcome": "failed",
+        "phases": {
+          "call": {
+            "longrepr": "def test_url_joining():\n>       assert urls.url_join(\"/foo\", \"/bar\") == \"/bar\"\n\ntests\\test_urls.py:309: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:1067: in url_join\n    return url_unparse((scheme, netloc, path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', '/bar', '', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError",
+            "outcome": "failed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      }
+    },
+    "reports_count": 18,
+    "returncode": 1,
+    "started_utc": "2026-11-02T00:55:29.718293+00:00",
+    "stderr_tail": "",
+    "stdout_tail": "___________ test_uri_to_iri_dont_unquote_space ______________________\n\n    def test_uri_to_iri_dont_unquote_space():\n>       assert urls.uri_to_iri(\"abc%20def\") == \"abc%20def\"\n\ntests\\test_urls.py:381: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:746: in uri_to_iri\n    return url_unparse((uri.scheme, uri.decode_netloc(), path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', 'abc%20def', '', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError\n______________________________ test_url_joining _______________________________\n\n    def test_url_joining():\n>       assert urls.url_join(\"/foo\", \"/bar\") == \"/bar\"\n\ntests\\test_urls.py:309: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\werkzeug\\urls.py:1067: in url_join\n    return url_unparse((scheme, netloc, path, query, fragment))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncomponents = ('', '', '/bar', '', '')\n\n    def url_unparse(components: t.Tuple[str, str, str, str, str]) -> str:\n        \"\"\"The reverse operation to :meth:`url_parse`.  This accepts arbitrary\n        as well as :class:`URL` tuples and returns a URL as a string.\n    \n        :param components: the parsed URL as tuple which should be converted\n                           into a URL string.\n        \"\"\"\n        _check_str_tuple(components)\n        scheme, netloc, path, query, fragment = components\n        s = _make_encode_wrapper(scheme)\n        pass  # P-: target A deleted\n    \n        # We generally treat file:///x and file:/x the same which is also\n        # what browsers seem to do.  This also allows us to ignore a schema\n        # register for netloc utilization or having to differentiate between\n        # empty and missing netloc.\n        if netloc or (scheme and path.startswith(s(\"/\"))):\n            if path and path[:1] != s(\"/\"):\n                path = s(\"/\") + path\n            url = s(\"//\") + (netloc or s(\"\")) + path\n        elif path:\n>           url += path\nE           UnboundLocalError: cannot access local variable 'url' where it is not associated with a value\n\nsrc\\werkzeug\\urls.py:616: UnboundLocalError\n=========================== short test summary info ===========================\nFAILED tests/test_urls.py::test_iri_safe_conversion - UnboundLocalError: cann...\nFAILED tests/test_urls.py::test_iri_support - UnboundLocalError: cannot acces...\nFAILED tests/test_urls.py::test_iri_to_uri_dont_quote_reserved - UnboundLocal...\nFAILED tests/test_urls.py::test_quoting_of_local_urls - UnboundLocalError: ca...\nFAILED tests/test_urls.py::test_uri_to_iri_dont_unquote_space - UnboundLocalE...\nFAILED tests/test_urls.py::test_url_joining - UnboundLocalError: cannot acces...\n6 failed, 12 passed in 0.26s\n",
+    "timed_out": false,
+    "trace_json": "<local-path>",
+    "variant": "real_werkzeug_url_unparse_t_task_minus"
+  },
+  "p_plus": {
+    "all_pass": true,
+    "collection_error": false,
+    "command": [
+      "<local-path>",
+      "-m",
+      "pytest",
+      "tests/test_urls.py::test_iri_safe_conversion",
+      "tests/test_urls.py::test_iri_safe_quoting",
+      "tests/test_urls.py::test_iri_support",
+      "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved",
+      "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only",
+      "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii",
+      "tests/test_urls.py::test_iri_to_uri_to_iri",
+      "tests/test_urls.py::test_quoting",
+      "tests/test_urls.py::test_quoting_of_local_urls",
+      "tests/test_urls.py::test_uri_iri_normalization",
+      "tests/test_urls.py::test_uri_to_iri_dont_unquote_space",
+      "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only",
+      "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii",
+      "tests/test_urls.py::test_uri_to_iri_to_uri",
+      "tests/test_urls.py::test_url_fixing",
+      "tests/test_urls.py::test_url_fixing_filepaths",
+      "tests/test_urls.py::test_url_fixing_qs",
+      "tests/test_urls.py::test_url_joining",
+      "-q",
+      "--disable-warnings",
+      "-p",
+      "pytest_trace_plugin"
+    ],
+    "counts": {
+      "error": 0,
+      "failed": 0,
+      "not_run": 0,
+      "passed": 18
+    },
+    "duration_seconds": 0.732302,
+    "log": "<local-path>",
+    "per_test": {
+      "tests/test_urls.py::test_iri_safe_conversion": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_iri_safe_quoting": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 3
+      },
+      "tests/test_urls.py::test_iri_support": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 8
+      },
+      "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_iri_to_uri_to_iri": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_quoting": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_quoting_of_local_urls": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_uri_iri_normalization": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 60
+      },
+      "tests/test_urls.py::test_uri_to_iri_dont_unquote_space": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 1
+      },
+      "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_uri_to_iri_to_uri": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_url_fixing": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 3
+      },
+      "tests/test_urls.py::test_url_fixing_filepaths": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 6
+      },
+      "tests/test_urls.py::test_url_fixing_qs": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 2
+      },
+      "tests/test_urls.py::test_url_joining": {
+        "outcome": "passed",
+        "phases": {
+          "call": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "setup": {
+            "longrepr": null,
+            "outcome": "passed"
+          },
+          "teardown": {
+            "longrepr": null,
+            "outcome": "passed"
+          }
+        },
+        "target_hit_count": 5
+      }
+    },
+    "reports_count": 18,
+    "returncode": 0,
+    "started_utc": "2026-11-02T00:55:28.984992+00:00",
+    "stderr_tail": "",
+    "stdout_tail": "..................                                                       [100%]\n18 passed in 0.13s\n",
+    "timed_out": false,
+    "trace_json": "<local-path>",
+    "variant": "real_werkzeug_url_unparse_t_task_plus"
+  },
+  "selection_hash": "70b6f9f0d0a93b56f4e3ff948ad466d89263061dff4db8c16e35e6504ce28b90",
+  "target_A_hit": {
+    "all_selected_tests_hit": true,
+    "per_test_hit_count": {
+      "tests/test_urls.py::test_iri_safe_conversion": 2,
+      "tests/test_urls.py::test_iri_safe_quoting": 3,
+      "tests/test_urls.py::test_iri_support": 8,
+      "tests/test_urls.py::test_iri_to_uri_dont_quote_reserved": 1,
+      "tests/test_urls.py::test_iri_to_uri_idempotence_ascii_only": 2,
+      "tests/test_urls.py::test_iri_to_uri_idempotence_non_ascii": 2,
+      "tests/test_urls.py::test_iri_to_uri_to_iri": 2,
+      "tests/test_urls.py::test_quoting": 1,
+      "tests/test_urls.py::test_quoting_of_local_urls": 1,
+      "tests/test_urls.py::test_uri_iri_normalization": 60,
+      "tests/test_urls.py::test_uri_to_iri_dont_unquote_space": 1,
+      "tests/test_urls.py::test_uri_to_iri_idempotence_ascii_only": 2,
+      "tests/test_urls.py::test_uri_to_iri_idempotence_non_ascii": 2,
+      "tests/test_urls.py::test_uri_to_iri_to_uri": 2,
+      "tests/test_urls.py::test_url_fixing": 3,
+      "tests/test_urls.py::test_url_fixing_filepaths": 6,
+      "tests/test_urls.py::test_url_fixing_qs": 2,
+      "tests/test_urls.py::test_url_joining": 5
+    },
+    "trace_variant": "p_plus"
+  },
+  "task_id": "real_werkzeug_url_unparse",
+  "task_tests_detect": true,
+  "task_tests_survive": false
+}

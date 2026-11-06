@@ -1,0 +1,1364 @@
+{
+  "analyzer": "mace-reliable-ast-analyzer",
+  "claims": 36,
+  "credited_relations": 17,
+  "executions": 120,
+  "expected_credited": 17,
+  "global_relation_completeness": false,
+  "note": "17/17 means all known development-set relations were credited; it is not a claim of global relation completeness or an independent generalization result.",
+  "scope": "five frozen development tasks only",
+  "tasks": {
+    "jinja2_bytecode_cache_read": {
+      "analysis_status": "WITNESS_VERIFIED_LOCAL",
+      "claims": 8,
+      "credited_relations": 3,
+      "executions": 16,
+      "status_counts": {
+        "DUPLICATE": 0,
+        "FALSE": 0,
+        "FINITE_DOMAIN_EXACT": 0,
+        "INVALID": 0,
+        "PROVEN": 0,
+        "UNSUPPORTED": 0,
+        "UNVERIFIED": 0,
+        "WITNESS_VERIFIED": 8
+      },
+      "submitted_claims": [
+        {
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "cached_source": "{{ 1+1 }}",
+            "template": "{{ 6*7 }}"
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "context": {
+              "name": "World"
+            },
+            "template": "Hello {{ name }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "context": {
+              "name": "World"
+            },
+            "template": "Hello {{ name }}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+          },
+          "operations": [
+            {
+              "file": "src/jinja2/loaders.py",
+              "line": 137
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "cached_source": "Hello",
+            "template": "{{ 6*7 }}"
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        }
+      ],
+      "uncredited_details": [
+        {
+          "credit": 1,
+          "index": 0,
+          "operations": [
+            "src/jinja2/loaders.py:137"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MSMS:src/jinja2/loaders.py:137",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 1,
+          "index": 1,
+          "operations": [
+            "src/jinja2/loaders.py:137"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MMBS:src/jinja2/loaders.py:137",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 1,
+          "index": 2,
+          "observations": {
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            },
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "2"
+            }
+          },
+          "reason": "Both sides executed and produced different observations.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 3,
+          "operations": [
+            "src/jinja2/loaders.py:137"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "MSMS:src/jinja2/loaders.py:137",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 4,
+          "operations": [
+            "src/jinja2/loaders.py:137"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MMBS:src/jinja2/loaders.py:137",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 0,
+          "index": 5,
+          "operations": [
+            "src/jinja2/loaders.py:137"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "MSMS:src/jinja2/loaders.py:137",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 6,
+          "operations": [
+            "src/jinja2/loaders.py:137"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/jinja2/loaders.py:137"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MMBS:src/jinja2/loaders.py:137",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 0,
+          "index": 7,
+          "observations": {
+            "minus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "42"
+            },
+            "plus": {
+              "cache_dumps": 0,
+              "cache_loads": 1,
+              "outcome": "return",
+              "value": "Hello"
+            }
+          },
+          "reason": "Both sides executed and produced different observations. Relation already credited by claim #2; no duplicate credit.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        }
+      ],
+      "variant_builds": 4,
+      "wall_seconds": 6.325
+    },
+    "werkzeug_bind_server_name_lower": {
+      "analysis_status": "WITNESS_VERIFIED_LOCAL",
+      "claims": 8,
+      "credited_relations": 3,
+      "executions": 36,
+      "status_counts": {
+        "DUPLICATE": 0,
+        "FALSE": 0,
+        "FINITE_DOMAIN_EXACT": 0,
+        "INVALID": 0,
+        "PROVEN": 0,
+        "UNSUPPORTED": 0,
+        "UNVERIFIED": 0,
+        "WITNESS_VERIFIED": 8
+      },
+      "submitted_claims": [
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": null
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/routing/map.py",
+              "line": 219
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/routing/map.py",
+              "line": 219
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "Example.COM",
+            "subdomain": null
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "Example.COM",
+            "subdomain": "www"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/routing/map.py",
+              "line": 219
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host": "example.com",
+            "server_name": "Example.COM",
+            "subdomain": "www"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/routing/map.py",
+              "line": 219
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "host": "Example.COM",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": null
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "host": "Example.COM",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/routing/map.py",
+              "line": 219
+            }
+          ],
+          "type": "MSMS"
+        }
+      ],
+      "uncredited_details": [
+        {
+          "credit": 1,
+          "index": 0,
+          "observations": {
+            "minus": {
+              "outcome": "return",
+              "server_name": "example.com",
+              "subdomain": "<invalid>"
+            },
+            "plus": {
+              "outcome": "return",
+              "server_name": "example.com",
+              "subdomain": ""
+            }
+          },
+          "reason": "Both sides executed and produced different observations.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 1,
+          "index": 1,
+          "operations": [
+            "src/werkzeug/routing/map.py:219"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/routing/map.py:219"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MSMS:src/werkzeug/routing/map.py:219",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 1,
+          "index": 2,
+          "operations": [
+            "src/werkzeug/routing/map.py:219"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/routing/map.py:219"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 0,
+          "index": 3,
+          "observations": {
+            "minus": {
+              "outcome": "return",
+              "server_name": "example.com",
+              "subdomain": "<invalid>"
+            },
+            "plus": {
+              "outcome": "return",
+              "server_name": "example.com",
+              "subdomain": ""
+            }
+          },
+          "reason": "Both sides executed and produced different observations. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 4,
+          "operations": [
+            "src/werkzeug/routing/map.py:219"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/routing/map.py:219"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MSMS:src/werkzeug/routing/map.py:219",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 5,
+          "operations": [
+            "src/werkzeug/routing/map.py:219"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/routing/map.py:219"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #2; no duplicate credit.",
+          "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 0,
+          "index": 6,
+          "observations": {
+            "minus": {
+              "outcome": "return",
+              "server_name": "example.com",
+              "subdomain": "<invalid>"
+            },
+            "plus": {
+              "outcome": "return",
+              "server_name": "example.com",
+              "subdomain": ""
+            }
+          },
+          "reason": "Both sides executed and produced different observations. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 7,
+          "operations": [
+            "src/werkzeug/routing/map.py:219"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/routing/map.py:219"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MSMS:src/werkzeug/routing/map.py:219",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        }
+      ],
+      "variant_builds": 6,
+      "wall_seconds": 22.222
+    },
+    "werkzeug_filestorage_stream_name": {
+      "analysis_status": "WITNESS_VERIFIED_LOCAL",
+      "claims": 6,
+      "credited_relations": 3,
+      "executions": 18,
+      "status_counts": {
+        "DUPLICATE": 0,
+        "FALSE": 0,
+        "FINITE_DOMAIN_EXACT": 0,
+        "INVALID": 0,
+        "PROVEN": 0,
+        "UNSUPPORTED": 0,
+        "UNVERIFIED": 0,
+        "WITNESS_VERIFIED": 6
+      },
+      "submitted_claims": [
+        {
+          "input": {
+            "stream": "stderr"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "stream": "stderr"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "stream": "tempfile"
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "data": "abc",
+            "name": "file.txt",
+            "stream": "named"
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "data": "abc",
+            "name": "<special>",
+            "stream": "named"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "data": "abc",
+            "name": "<special>",
+            "stream": "named"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/datastructures.py",
+              "line": 2924
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "uncredited_details": [
+        {
+          "credit": 1,
+          "index": 0,
+          "operations": [
+            "src/werkzeug/datastructures.py:2924"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/datastructures.py:2924"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MSMS:src/werkzeug/datastructures.py:2924",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 1,
+          "index": 1,
+          "operations": [
+            "src/werkzeug/datastructures.py:2924"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/datastructures.py:2924"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 1,
+          "index": 2,
+          "observations": {
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            },
+            "plus": {
+              "filename": "<home>\\AppData\\Local\\Temp\\tmpv9if902k",
+              "filename_type": "str",
+              "outcome": "return"
+            }
+          },
+          "reason": "Both sides executed and produced different observations.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 3,
+          "observations": {
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            },
+            "plus": {
+              "filename": "file.txt",
+              "filename_type": "str",
+              "outcome": "return"
+            }
+          },
+          "reason": "Both sides executed and produced different observations. Relation already credited by claim #2; no duplicate credit.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 4,
+          "operations": [
+            "src/werkzeug/datastructures.py:2924"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/datastructures.py:2924"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "MSMS:src/werkzeug/datastructures.py:2924",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 5,
+          "operations": [
+            "src/werkzeug/datastructures.py:2924"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/datastructures.py:2924"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        }
+      ],
+      "variant_builds": 6,
+      "wall_seconds": 10.661
+    },
+    "werkzeug_get_host_default_empty": {
+      "analysis_status": "WITNESS_VERIFIED_LOCAL",
+      "claims": 7,
+      "credited_relations": 5,
+      "executions": 22,
+      "status_counts": {
+        "DUPLICATE": 0,
+        "FALSE": 0,
+        "FINITE_DOMAIN_EXACT": 0,
+        "INVALID": 0,
+        "PROVEN": 0,
+        "UNSUPPORTED": 0,
+        "UNVERIFIED": 0,
+        "WITNESS_VERIFIED": 7
+      },
+      "submitted_claims": [
+        {
+          "input": {
+            "host_header": "example.com",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host_header": "example.com",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "host_header": null,
+            "scheme": "http",
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 87
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host_header": null,
+            "scheme": "http",
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 87
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "host_header": null,
+            "scheme": "http",
+            "server": null
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "host_header": "example.com:80",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host_header": "example.com:80",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "uncredited_details": [
+        {
+          "credit": 1,
+          "index": 0,
+          "operations": [
+            "src/werkzeug/sansio/utils.py:85"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/sansio/utils.py:85"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MSMS:src/werkzeug/sansio/utils.py:85",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 1,
+          "index": 1,
+          "operations": [
+            "src/werkzeug/sansio/utils.py:85"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/sansio/utils.py:85"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MMBS:src/werkzeug/sansio/utils.py:85",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 1,
+          "index": 2,
+          "operations": [
+            "src/werkzeug/sansio/utils.py:87"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/sansio/utils.py:87"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MSMS:src/werkzeug/sansio/utils.py:87",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 1,
+          "index": 3,
+          "operations": [
+            "src/werkzeug/sansio/utils.py:87"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/sansio/utils.py:87"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MMBS:src/werkzeug/sansio/utils.py:87",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 1,
+          "index": 4,
+          "observations": {
+            "minus": {
+              "message": "cannot access local variable 'host' where it is not associated with a value",
+              "outcome": "raise",
+              "type": "UnboundLocalError"
+            },
+            "plus": {
+              "host": "",
+              "outcome": "return"
+            }
+          },
+          "reason": "Both sides executed and produced different observations.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 5,
+          "operations": [
+            "src/werkzeug/sansio/utils.py:85"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/sansio/utils.py:85"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "MSMS:src/werkzeug/sansio/utils.py:85",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 6,
+          "operations": [
+            "src/werkzeug/sansio/utils.py:85"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/sansio/utils.py:85"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MMBS:src/werkzeug/sansio/utils.py:85",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        }
+      ],
+      "variant_builds": 10,
+      "wall_seconds": 13.781
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "analysis_status": "WITNESS_VERIFIED_LOCAL",
+      "claims": 7,
+      "credited_relations": 3,
+      "executions": 28,
+      "status_counts": {
+        "DUPLICATE": 0,
+        "FALSE": 0,
+        "FINITE_DOMAIN_EXACT": 0,
+        "INVALID": 0,
+        "PROVEN": 0,
+        "UNSUPPORTED": 0,
+        "UNVERIFIED": 0,
+        "WITNESS_VERIFIED": 7
+      },
+      "submitted_claims": [
+        {
+          "input": {
+            "filename": "北京.txt"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/utils.py",
+              "line": 227
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "filename": "北京.txt"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/utils.py",
+              "line": 227
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "filename": "a b"
+          },
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/utils.py",
+              "line": 227
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/utils.py",
+              "line": 227
+            }
+          ],
+          "type": "MMBS"
+        },
+        {
+          "input": {
+            "filename": "ümläuts.txt"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/utils.py",
+              "line": 227
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "filename": "ümläuts.txt"
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/utils.py",
+              "line": 227
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "uncredited_details": [
+        {
+          "credit": 1,
+          "index": 0,
+          "operations": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/utils.py:227-229"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 1,
+          "index": 1,
+          "operations": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/utils.py:227-229"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+          "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 1,
+          "index": 2,
+          "observations": {
+            "minus": {
+              "filename": "a_b",
+              "outcome": "return"
+            },
+            "plus": {
+              "filename": "ab",
+              "outcome": "return"
+            }
+          },
+          "reason": "Both sides executed and produced different observations.",
+          "relation_key": "EXPOSING",
+          "scope": "one submitted input; no claim over other legal inputs",
+          "status": "WITNESS_VERIFIED",
+          "type": "EXPOSING_COUNTEREXAMPLE"
+        },
+        {
+          "credit": 0,
+          "index": 3,
+          "operations": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/utils.py:227-229"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 4,
+          "operations": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/utils.py:227-229"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        },
+        {
+          "credit": 0,
+          "index": 5,
+          "operations": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/utils.py:227-229"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #0; no duplicate credit.",
+          "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MSMS"
+        },
+        {
+          "credit": 0,
+          "index": 6,
+          "operations": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "per_input": [
+            {
+              "computed_minimal_sets": [
+                [
+                  "src/werkzeug/utils.py:227-229"
+                ]
+              ],
+              "reason": "set matches an enumerated minimal relation",
+              "verified": true
+            }
+          ],
+          "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked. Relation already credited by claim #1; no duplicate credit.",
+          "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+          "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+          "status": "WITNESS_VERIFIED",
+          "type": "MMBS"
+        }
+      ],
+      "variant_builds": 6,
+      "wall_seconds": 15.315
+    }
+  },
+  "variant_builds": 32,
+  "version": "1.0.1",
+  "wall_seconds": 68.304
+}

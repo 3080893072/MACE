@@ -1,0 +1,86 @@
+{
+  "verifier_version": "intervention-verifier-1.0",
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "universe": [
+    {
+      "id": "src/werkzeug/utils.py:222-222",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 222,
+      "last_line": 222,
+      "kind": "assignment",
+      "code": "    filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")"
+    }
+  ],
+  "universe_problems": [],
+  "verdicts": [
+    {
+      "verdict": "REFUTED",
+      "reason": "P+ and P- observations are equal",
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/utils.py:222-222"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 1,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "REFUTED",
+      "reason": "set is not a minimal relation over the proposal's operation universe on a submitted input",
+      "inputs": [
+        {
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "matched": false,
+          "computed_minimal_sets": [],
+          "masked_at_empty": true
+        }
+      ],
+      "index": 2,
+      "type": "MMBS"
+    }
+  ],
+  "verified_submission": {
+    "task_id": "werkzeug_secure_filename_ascii_filter",
+    "submission_id": "baseline-A",
+    "claims": [
+      {
+        "type": "MSMS",
+        "input": {
+          "filename": "i contain cool ümläuts.txt"
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 222,
+            "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")"
+          }
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "total": 3,
+    "verified": 1,
+    "refuted": 2,
+    "unknown": 0
+  },
+  "probe_executions": 4
+}

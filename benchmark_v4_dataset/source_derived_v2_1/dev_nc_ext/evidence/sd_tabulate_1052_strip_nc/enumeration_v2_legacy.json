@@ -1,0 +1,144 @@
+{
+  "case_id": "sd_tabulate_1052_strip_nc",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M10_NEGATIVE_CONTROL",
+  "slug": "tabulate-0.9.0",
+  "file": "tabulate/__init__.py",
+  "A_line": 1052,
+  "A_code": "            strings = [s.strip() for s in strings]",
+  "original_sha256": "5f7af0a28fcd713b830c97388675945fa8c4950b05b58f8d187c900a5752d57d",
+  "patched_sha256": "c64113eb9dadbb2ea1ba4ec29939f60d90eae87ae0b825fe900b0a9df502a248",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 1052,
+      "role": "Strips only spaces on the left; trailing and tab padding survive.",
+      "lines": [
+        "strings = [s.lstrip(\" \") for s in strings]"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 1052,
+      "end": 1054
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "nc_space_padded": {
+        "out": "a\nb"
+      },
+      "nc_tab_padded": {
+        "out": "a\nb"
+      },
+      "nc_mixed_padded": {
+        "out": "a\nb"
+      }
+    },
+    "P_MINUS": {
+      "nc_space_padded": {
+        "out": "a\n  b"
+      },
+      "nc_tab_padded": {
+        "out": "\ta\n  b"
+      },
+      "nc_mixed_padded": {
+        "out": "\ta\n   b"
+      }
+    },
+    "KEEP_EMPTY": {
+      "nc_space_padded": {
+        "out": "  a\n    b"
+      },
+      "nc_tab_padded": {
+        "out": "\ta\n  b"
+      },
+      "nc_mixed_padded": {
+        "out": " \ta\n    b"
+      }
+    },
+    "KEEP_U1": {
+      "nc_space_padded": {
+        "out": "a\n  b"
+      },
+      "nc_tab_padded": {
+        "out": "\ta\n  b"
+      },
+      "nc_mixed_padded": {
+        "out": "\ta\n   b"
+      }
+    }
+  },
+  "per_input": {
+    "nc_space_padded": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "a\n  b"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "  a\n    b"
+        },
+        "KEEP_U1": {
+          "out": "a\n  b"
+        }
+      }
+    },
+    "nc_tab_padded": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "\ta\n  b"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "\ta\n  b"
+        },
+        "KEEP_U1": {
+          "out": "\ta\n  b"
+        }
+      }
+    },
+    "nc_mixed_padded": {
+      "plus": {
+        "out": "a\nb"
+      },
+      "p_minus": {
+        "out": "\ta\n   b"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": " \ta\n    b"
+        },
+        "KEEP_U1": {
+          "out": "\ta\n   b"
+        }
+      }
+    }
+  }
+}

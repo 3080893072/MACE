@@ -1,0 +1,166 @@
+{
+  "case_id": "sd_toml_strict_num_strip_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "slug": "toml-0.10.2",
+  "file": "toml/decoder.py",
+  "A_line": 91,
+  "A_code": "    n = n.strip()",
+  "original_sha256": "8521932dffb65810d9fdd768087585cba37ae3b5f2312875a37acdda8e1d1058",
+  "patched_sha256": "e9598ebbd727b598c6b1538a756384c6f466402da8baa68c36292d6273be0ec0",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 91,
+      "role": "Space-only trimming before the numeric grammar check.",
+      "lines": [
+        "if \"\\t\" not in n:",
+        "    n = n.strip(\" \")"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 91,
+      "end": 94
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_space_padded_leading_zero": {
+        "out": false
+      },
+      "expose_tab_padded_leading_zero": {
+        "out": false
+      },
+      "control_plain_integer": {
+        "out": true
+      }
+    },
+    "P_MINUS": {
+      "mask_space_padded_leading_zero": {
+        "out": false
+      },
+      "expose_tab_padded_leading_zero": {
+        "out": true
+      },
+      "control_plain_integer": {
+        "out": true
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_space_padded_leading_zero": {
+        "out": true
+      },
+      "expose_tab_padded_leading_zero": {
+        "out": true
+      },
+      "control_plain_integer": {
+        "out": true
+      }
+    },
+    "KEEP_U1": {
+      "mask_space_padded_leading_zero": {
+        "out": false
+      },
+      "expose_tab_padded_leading_zero": {
+        "out": true
+      },
+      "control_plain_integer": {
+        "out": true
+      }
+    }
+  },
+  "per_input": {
+    "mask_space_padded_leading_zero": {
+      "plus": {
+        "out": false
+      },
+      "p_minus": {
+        "out": false
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": true
+        },
+        "KEEP_U1": {
+          "out": false
+        }
+      }
+    },
+    "expose_tab_padded_leading_zero": {
+      "plus": {
+        "out": false
+      },
+      "p_minus": {
+        "out": true
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": true
+        },
+        "KEEP_U1": {
+          "out": true
+        }
+      }
+    },
+    "control_plain_integer": {
+      "plus": {
+        "out": true
+      },
+      "p_minus": {
+        "out": true
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": true
+        },
+        "KEEP_U1": {
+          "out": true
+        }
+      }
+    }
+  }
+}

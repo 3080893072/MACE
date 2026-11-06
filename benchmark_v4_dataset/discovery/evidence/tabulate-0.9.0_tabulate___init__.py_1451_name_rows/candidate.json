@@ -1,0 +1,53 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1451:name:rows",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1451,
+    "end_line": 1451,
+    "kind": "Assign",
+    "code": "rows = [[getattr(row, f) for f in field_names] for row in rows]"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_py37orlater_list_of_dataclasses_headers",
+    "test/test_input.py::test_py37orlater_list_of_dataclasses_keys"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            rows = [[getattr(row, f) for f in field_names] for row in rows]",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.48,
+    "failed_nodeids": [
+      "test.test_input::test_py37orlater_list_of_dataclasses_headers",
+      "test.test_input::test_py37orlater_list_of_dataclasses_keys"
+    ],
+    "stdout_tail": "FF                                                                       [100%]\n================================== FAILURES ===================================\n__________________ test_py37orlater_list_of_dataclasses_keys __________________\n\n    def test_py37orlater_list_of_dataclasses_keys():\n        \"Input: a list of dataclasses with first item's fields as keys and headers\"\n        try:\n            from dataclasses import make_dataclass\n    \n            Person = make_dataclass(\"Person\", [\"name\", \"age\", \"height\"])\n            ld = [Person(\"Alice\", 23, 169.5), Person(\"Bob\", 27, 175.0)]\n>           result = tabulate(ld, headers=\"keys\")\n\ntest\\test_input.py:488: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntabulate\\__init__.py:2048: in tabulate\n    list_of_lists, headers = _normalize_tabular_data(\ntabulate\\__init__.py:1471: in _normalize_tabular_data\n    rows = list(map(lambda r: r if _is_separating_line(r) else list(r), rows))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nr = Person(name='Alice', age=23, height=169.5)\n\n>   rows = list(map(lambda r: r if _is_separating_line(r) else list(r), rows))\nE   TypeError: 'Person' object is not iterable\n\ntabulate\\__init__.py:1471: TypeError\n________________ test_py37orlater_list_of_dataclasses_headers _________________\n\n    def test_py37orlater_list_of_dataclasses_headers():\n        \"Input: a list of dataclasses with user-supplied headers\"\n        try:\n            from dataclasses import make_dataclass\n    \n            Person = make_dataclass(\"Person\", [\"name\", \"age\", \"height\"])\n            ld = [Person(\"Alice\", 23, 169.5), Person(\"Bob\", 27, 175.0)]\n>           result = tabulate(ld, headers=[\"person\", \"years\", \"cm\"])\n\ntest\\test_input.py:509: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntabulate\\__init__.py:2048: in tabulate\n    list_of_lists, headers = _normalize_tabular_data(\ntabulate\\__init__.py:1471: in _normalize_tabular_data\n    rows = list(map(lambda r: r if _is_separating_line(r) else list(r), rows))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nr = Person(name='Alice', age=23, height=169.5)\n\n>   rows = list(map(lambda r: r if _is_separating_line(r) else list(r), rows))\nE   TypeError: 'Person' object is not iterable\n\ntabulate\\__init__.py:1471: TypeError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_py37orlater_list_of_dataclasses_keys - TypeEr...\nFAILED test/test_input.py::test_py37orlater_list_of_dataclasses_headers - Typ...\n2 failed in 0.16s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

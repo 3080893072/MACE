@@ -1,0 +1,80 @@
+{
+  "experiment_id": "mace_v3_live_qwen_baseline_2026-11-03",
+  "purpose": "smoke_test",
+  "request": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return only JSON."
+      },
+      {
+        "role": "user",
+        "content": "Reply with exactly {\"ok\": true}."
+      }
+    ],
+    "options": {
+      "temperature": 0.0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 4096
+    },
+    "format": "json",
+    "stream": false
+  },
+  "raw_response": "{\"ok\": true}",
+  "response_stats": {
+    "prompt_tokens": 25,
+    "completion_tokens": 6,
+    "total_duration_ns": 34934425810,
+    "load_duration_ns": 31386616339,
+    "prompt_eval_duration_ns": 1441577000,
+    "eval_duration_ns": 2100128000,
+    "model": "qwen2.5-coder:32b",
+    "done_reason": "stop",
+    "wall_seconds": 35.07,
+    "attempt": 0
+  },
+  "wall_seconds_client": 35.068,
+  "runtime_ps": {
+    "models": [
+      {
+        "name": "qwen2.5-coder:32b",
+        "model": "qwen2.5-coder:32b",
+        "size": 25522937527,
+        "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "32.8B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-11-03T16:23:30.319491546+08:00",
+        "size_vram": 23535435120,
+        "context_length": 32768,
+        "runner": "llamacpp"
+      }
+    ]
+  },
+  "model_info": {
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": null,
+    "capabilities": [
+      "completion",
+      "tools",
+      "insert"
+    ]
+  }
+}

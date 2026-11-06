@@ -1,0 +1,57 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:181:name:rowhtml",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_html_row_with_attrs",
+  "mechanism": "name",
+  "target_A": {
+    "line": 181,
+    "end_line": 181,
+    "kind": "Assign",
+    "code": "rowhtml = \"<tr>{}</tr>\".format(\"\".join(values_with_attrs).rstrip())"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_html",
+    "test/test_output.py::test_html_headerless",
+    "test/test_output.py::test_unsafehtml",
+    "test/test_output.py::test_unsafehtml_headerless"
+  ],
+  "original_hit_test_count": 4,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "    rowhtml = \"<tr>{}</tr>\".format(\"\".join(values_with_attrs).rstrip())",
+    "replacement": "    pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.68,
+    "failed_nodeids": [
+      "test.test_output::test_html",
+      "test.test_output::test_html_headerless",
+      "test.test_output::test_unsafehtml",
+      "test.test_output::test_unsafehtml_headerless"
+    ],
+    "stdout_tail": " access local variable 'rowhtml' where it is not associated with a value\n\ntabulate\\__init__.py:184: UnboundLocalError\n_________________________ test_unsafehtml_headerless __________________________\n\n    def test_unsafehtml_headerless():\n        \"Output: unsafe html without headers\"\n        expected = \"\\n\".join(\n            [\n                \"<table>\",\n                \"<tbody>\",\n                '<tr><td>spam</td><td><font color=\"red\">41.9999</font></td></tr>',\n                '<tr><td>eggs</td><td><font color=\"red\">451.0</font>  </td></tr>',\n                \"</tbody>\",\n                \"</table>\",\n            ]\n        )\n>       result = tabulate(_test_table_unsafehtml, tablefmt=\"unsafehtml\")\n\ntest\\test_output.py:2475: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntabulate\\__init__.py:2198: in tabulate\n    return _format_table(\ntabulate\\__init__.py:2386: in _format_table\n    append_row(lines, row, padded_widths, colaligns, fmt.datarow)\ntabulate\\__init__.py:2261: in _append_basic_row\n    lines.append(_build_row(padded_cells, colwidths, colaligns, rowfmt))\ntabulate\\__init__.py:2254: in _build_row\n    return rowfmt(padded_cells, colwidths, colaligns)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncelltag = 'td', unsafe = True\ncell_values = ['spam', '<font color=\"red\">41.9999</font>'], colwidths = [4, 32]\ncolaligns = ['left', 'left']\n\n    def _html_row_with_attrs(celltag, unsafe, cell_values, colwidths, colaligns):\n        alignment = {\n            \"left\": \"\",\n            \"right\": ' style=\"text-align: right;\"',\n            \"center\": ' style=\"text-align: center;\"',\n            \"decimal\": ' style=\"text-align: right;\"',\n        }\n        if unsafe:\n            values_with_attrs = [\n                \"<{0}{1}>{2}</{0}>\".format(celltag, alignment.get(a, \"\"), c)\n                for c, a in zip(cell_values, colaligns)\n            ]\n        else:\n            values_with_attrs = [\n                \"<{0}{1}>{2}</{0}>\".format(celltag, alignment.get(a, \"\"), htmlescape(c))\n                for c, a in zip(cell_values, colaligns)\n            ]\n        pass  # P-: target A deleted\n        if celltag == \"th\":  # it's a header row, create a new table header\n            rowhtml = f\"<table>\\n<thead>\\n{rowhtml}\\n</thead>\\n<tbody>\"\n>       return rowhtml\nE       UnboundLocalError: cannot access local variable 'rowhtml' where it is not associated with a value\n\ntabulate\\__init__.py:184: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_output.py::test_html - UnboundLocalError: cannot access loca...\nFAILED test/test_output.py::test_unsafehtml - UnboundLocalError: cannot acces...\nFAILED test/test_output.py::test_html_headerless - UnboundLocalError: cannot ...\nFAILED test/test_output.py::test_unsafehtml_headerless - UnboundLocalError: c...\n4 failed in 0.34s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

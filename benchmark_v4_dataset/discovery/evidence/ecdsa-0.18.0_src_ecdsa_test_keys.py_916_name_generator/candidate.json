@@ -1,0 +1,51 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/test_keys.py:916:name:generator",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/test_keys.py",
+  "function": "test_SigningKey_with_custom_curve_old_point",
+  "mechanism": "name",
+  "target_A": {
+    "line": 916,
+    "end_line": 916,
+    "kind": "Assign",
+    "code": "generator = generator_brainpoolp160r1"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_keys.py::test_SigningKey_with_custom_curve_old_point"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "    generator = generator_brainpoolp160r1",
+    "replacement": "    pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 0.88,
+    "failed_nodeids": [
+      "src.ecdsa.test_keys::test_SigningKey_with_custom_curve_old_point"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n_________________ test_SigningKey_with_custom_curve_old_point _________________\n\n    def test_SigningKey_with_custom_curve_old_point():\n        pass  # P-: target A deleted\n        generator = Point(\n>           generator.curve(),\n            generator.x(),\n            generator.y(),\n            generator.order(),\n        )\nE       UnboundLocalError: cannot access local variable 'generator' where it is not associated with a value\n\nsrc\\ecdsa\\test_keys.py:918: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_keys.py::test_SigningKey_with_custom_curve_old_point - ...\n1 failed in 0.54s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

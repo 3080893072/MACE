@@ -1,0 +1,503 @@
+{
+  "attribution": {
+    "dynamic_downstream_filter": {
+      "comparison": "downstream_trace vs downstream_only",
+      "conclusion": "219 is textually before A but dynamically after; static line filter misses it",
+      "delta_credited": 2,
+      "tasks": [
+        "werkzeug_bind_server_name_lower"
+      ]
+    },
+    "execution_optimization": {
+      "build_ratio": 1.56,
+      "comparison": "downstream_trace vs ast_original",
+      "conclusion": "efficient tracer + singleton validation, not semantic discovery",
+      "wall_ratio": 21.52
+    },
+    "p_minus_candidate_inclusion": {
+      "comparison": "downstream_only/downstream_trace vs ast_original on jinja2",
+      "conclusion": "137 executes only in P-; including it replaces 119",
+      "delta_credited": 2,
+      "tasks": [
+        "jinja2_bytecode_cache_read"
+      ]
+    },
+    "scorer_repair": {
+      "conclusion": "no scorer change",
+      "delta_credited": 0
+    },
+    "semantic_difference_tracking": {
+      "comparison": "diff_guided vs downstream_trace",
+      "conclusion": "no credited gain",
+      "delta_credited": 0,
+      "identical_submitted_operations": true
+    }
+  },
+  "failure_cases": [
+    {
+      "A": "src/jinja2/loaders.py:132",
+      "actual_mask": "src/jinja2/loaders.py:137",
+      "ast_static_list_contained_actual": true,
+      "ast_submitted": "src/jinja2/loaders.py:119",
+      "failure_stage": "candidate execution filter/condition analysis",
+      "id": "F1",
+      "replay": "benchmark_baseline/audit/jinja_interventions.json",
+      "scorer_limitation": false,
+      "task": "jinja2_bytecode_cache_read"
+    },
+    {
+      "A": "src/werkzeug/routing/map.py:307",
+      "actual_mask": "src/werkzeug/routing/map.py:219",
+      "dynamic_after_A": true,
+      "failure_stage": "static source-order filter would miss it; dynamic trace fixes it",
+      "id": "F2",
+      "scorer_limitation": false,
+      "static_line_before_A": true,
+      "task": "werkzeug_bind_server_name_lower"
+    }
+  ],
+  "independent_u_out_classification": {
+    "jinja2_loaders_119": {
+      "classification": "FALSE",
+      "evidence": "benchmark_baseline/audit/jinja_interventions.json",
+      "reason": "pre-A initializer; deleting it makes P- raise UnboundLocalError; it does not overwrite/absorb A"
+    },
+    "jinja2_loaders_137": {
+      "classification": "VALID",
+      "evidence": "benchmark_baseline/audit/jinja_interventions.json",
+      "reason": "real fallback mask; base P+==P-, deleting 137 makes P- raise AttributeError; MSMS/MMBS [137]"
+    }
+  },
+  "max_possible_credited_relations": 17,
+  "methods": {
+    "ast_original": {
+      "tasks": {
+        "jinja2_bytecode_cache_read": {
+          "claims": 8,
+          "credited_relations": 1,
+          "resumed": true,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 6,
+            "WITNESS_VERIFIED": 2
+          },
+          "variant_builds": 4,
+          "wall_seconds": 0.009
+        },
+        "werkzeug_bind_server_name_lower": {
+          "claims": 8,
+          "credited_relations": 3,
+          "resumed": false,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 8
+          },
+          "variant_builds": 8,
+          "wall_seconds": 661.826
+        },
+        "werkzeug_filestorage_stream_name": {
+          "claims": 6,
+          "credited_relations": 3,
+          "resumed": false,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 6
+          },
+          "variant_builds": 8,
+          "wall_seconds": 241.596
+        },
+        "werkzeug_get_host_default_empty": {
+          "claims": 7,
+          "credited_relations": 5,
+          "resumed": false,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 14,
+          "wall_seconds": 274.834
+        },
+        "werkzeug_secure_filename_ascii_filter": {
+          "claims": 7,
+          "credited_relations": 3,
+          "resumed": false,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 16,
+          "wall_seconds": 352.835
+        }
+      },
+      "totals": {
+        "claims": 36,
+        "credited_relations": 15,
+        "semantic_false_note": "six UNVERIFIED claims all point to 119, independently classified FALSE",
+        "semantic_false_relations": 6,
+        "status_counts": {
+          "DUPLICATE": 0,
+          "FALSE": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "INVALID": 0,
+          "PROVEN": 0,
+          "UNSUPPORTED": 0,
+          "UNVERIFIED": 6,
+          "WITNESS_VERIFIED": 30
+        },
+        "variant_builds": 50,
+        "wall_seconds": 1531.1
+      }
+    },
+    "diff_guided": {
+      "tasks": {
+        "jinja2_bytecode_cache_read": {
+          "claims": 8,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 8
+          },
+          "variant_builds": 4,
+          "wall_seconds": 7.261
+        },
+        "werkzeug_bind_server_name_lower": {
+          "claims": 8,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 8
+          },
+          "variant_builds": 4,
+          "wall_seconds": 18.366
+        },
+        "werkzeug_filestorage_stream_name": {
+          "claims": 6,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 6
+          },
+          "variant_builds": 6,
+          "wall_seconds": 12.202
+        },
+        "werkzeug_get_host_default_empty": {
+          "claims": 7,
+          "credited_relations": 5,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 6,
+          "wall_seconds": 12.32
+        },
+        "werkzeug_secure_filename_ascii_filter": {
+          "claims": 7,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 4,
+          "wall_seconds": 14.048
+        }
+      },
+      "totals": {
+        "claims": 36,
+        "credited_relations": 17,
+        "status_counts": {
+          "DUPLICATE": 0,
+          "FALSE": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "INVALID": 0,
+          "PROVEN": 0,
+          "UNSUPPORTED": 0,
+          "UNVERIFIED": 0,
+          "WITNESS_VERIFIED": 36
+        },
+        "variant_builds": 24,
+        "wall_seconds": 64.197
+      }
+    },
+    "downstream_only": {
+      "tasks": {
+        "jinja2_bytecode_cache_read": {
+          "claims": 8,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 8
+          },
+          "variant_builds": 4,
+          "wall_seconds": 7.543
+        },
+        "werkzeug_bind_server_name_lower": {
+          "claims": 2,
+          "credited_relations": 1,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 2
+          },
+          "variant_builds": 6,
+          "wall_seconds": 22.707
+        },
+        "werkzeug_filestorage_stream_name": {
+          "claims": 6,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 6
+          },
+          "variant_builds": 14,
+          "wall_seconds": 20.259
+        },
+        "werkzeug_get_host_default_empty": {
+          "claims": 7,
+          "credited_relations": 5,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 22,
+          "wall_seconds": 29.165
+        },
+        "werkzeug_secure_filename_ascii_filter": {
+          "claims": 7,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 14,
+          "wall_seconds": 21.254
+        }
+      },
+      "totals": {
+        "claims": 30,
+        "credited_relations": 15,
+        "status_counts": {
+          "DUPLICATE": 0,
+          "FALSE": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "INVALID": 0,
+          "PROVEN": 0,
+          "UNSUPPORTED": 0,
+          "UNVERIFIED": 0,
+          "WITNESS_VERIFIED": 30
+        },
+        "variant_builds": 60,
+        "wall_seconds": 100.928
+      }
+    },
+    "downstream_trace": {
+      "tasks": {
+        "jinja2_bytecode_cache_read": {
+          "claims": 8,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 8
+          },
+          "variant_builds": 4,
+          "wall_seconds": 7.047
+        },
+        "werkzeug_bind_server_name_lower": {
+          "claims": 8,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 8
+          },
+          "variant_builds": 6,
+          "wall_seconds": 20.966
+        },
+        "werkzeug_filestorage_stream_name": {
+          "claims": 6,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 6
+          },
+          "variant_builds": 6,
+          "wall_seconds": 11.891
+        },
+        "werkzeug_get_host_default_empty": {
+          "claims": 7,
+          "credited_relations": 5,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 10,
+          "wall_seconds": 14.789
+        },
+        "werkzeug_secure_filename_ascii_filter": {
+          "claims": 7,
+          "credited_relations": 3,
+          "masked_rows_used": 3,
+          "status_counts": {
+            "DUPLICATE": 0,
+            "FALSE": 0,
+            "FINITE_DOMAIN_EXACT": 0,
+            "INVALID": 0,
+            "PROVEN": 0,
+            "UNSUPPORTED": 0,
+            "UNVERIFIED": 0,
+            "WITNESS_VERIFIED": 7
+          },
+          "variant_builds": 6,
+          "wall_seconds": 16.462
+        }
+      },
+      "totals": {
+        "claims": 36,
+        "credited_relations": 17,
+        "status_counts": {
+          "DUPLICATE": 0,
+          "FALSE": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "INVALID": 0,
+          "PROVEN": 0,
+          "UNSUPPORTED": 0,
+          "UNVERIFIED": 0,
+          "WITNESS_VERIFIED": 36
+        },
+        "variant_builds": 32,
+        "wall_seconds": 71.155
+      }
+    }
+  },
+  "protocol": {
+    "hidden_reference_used_to_propose_candidates": false,
+    "model_calls": 0,
+    "not_independent_generalization": true,
+    "scope": "five frozen development tasks only",
+    "scorer": "mace-benchmark-v3-scorer-1.0 unchanged"
+  }
+}

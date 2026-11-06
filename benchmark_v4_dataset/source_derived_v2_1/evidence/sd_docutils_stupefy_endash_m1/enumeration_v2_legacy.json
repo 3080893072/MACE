@@ -1,0 +1,165 @@
+{
+  "case_id": "sd_docutils_stupefy_endash_m1",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/utils/smartquotes.py",
+  "A_line": 826,
+  "A_code": "    text = text.replace(smart.endash, \"-\")",
+  "original_sha256": "c3a7bbcb5f0abcaac04e6b3a3fcb40b4e69b77c4a7fa884fd06f961b30edd1d7",
+  "patched_sha256": "f185764e4e06698ed978de178066de5a3af17ed81b43a5fe9498b0072f66f400",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 826,
+      "role": "One-occurrence leg: rewrites a single en dash.",
+      "lines": [
+        "text = text.replace(smart.endash, \"-\", 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 826,
+      "end": 828
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_one_endash": {
+        "out": "left-right"
+      },
+      "expose_two_endashes": {
+        "out": "a-b-c"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "P_MINUS": {
+      "mask_one_endash": {
+        "out": "left-right"
+      },
+      "expose_two_endashes": {
+        "out": "a-b�Cc"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_one_endash": {
+        "out": "left�Cright"
+      },
+      "expose_two_endashes": {
+        "out": "a�Cb�Cc"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1": {
+      "mask_one_endash": {
+        "out": "left-right"
+      },
+      "expose_two_endashes": {
+        "out": "a-b�Cc"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    }
+  },
+  "per_input": {
+    "mask_one_endash": {
+      "plus": {
+        "out": "left-right"
+      },
+      "p_minus": {
+        "out": "left-right"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "left�Cright"
+        },
+        "KEEP_U1": {
+          "out": "left-right"
+        }
+      }
+    },
+    "expose_two_endashes": {
+      "plus": {
+        "out": "a-b-c"
+      },
+      "p_minus": {
+        "out": "a-b�Cc"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a�Cb�Cc"
+        },
+        "KEEP_U1": {
+          "out": "a-b�Cc"
+        }
+      }
+    },
+    "control_plain": {
+      "plus": {
+        "out": "plain text"
+      },
+      "p_minus": {
+        "out": "plain text"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "plain text"
+        },
+        "KEEP_U1": {
+          "out": "plain text"
+        }
+      }
+    }
+  }
+}

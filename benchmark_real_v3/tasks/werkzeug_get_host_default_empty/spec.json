@@ -1,0 +1,82 @@
+{
+  "task_id": "werkzeug_get_host_default_empty",
+  "project_id": "werkzeug-2.2.3",
+  "source_version": "Werkzeug 2.2.3",
+  "difficulty": "medium",
+  "mechanism": "alternative conditional overwrite (two mutually exclusive branches independently mask the empty-string default on different inputs)",
+  "target_operation": {
+    "file": "src/werkzeug/sansio/utils.py",
+    "line": 82,
+    "code": "host = \"\"",
+    "function": "get_host",
+    "note": "default host used when neither a Host header nor a server address is supplied"
+  },
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected; 118 original tests execute A",
+  "candidate_universe": [
+    {
+      "id": "overwrite_host_header",
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 85,
+      "code": "host = host_header",
+      "kind": "assignment",
+      "role": "first conditional overwrite; masks A whenever a Host header is present"
+    },
+    {
+      "id": "overwrite_server",
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 87,
+      "code": "host = server[0]",
+      "kind": "assignment",
+      "role": "second conditional overwrite; masks A whenever only a server address is present"
+    }
+  ],
+  "universe_notes": [
+    "The two overwrites sit in mutually exclusive branches, so at most one of them can mask A on any single input; both are still independent masking paths over the legal input domain.",
+    "Line 90 reads the chosen host to append a port.  It consumes A only on the server branch, where the overwrite at line 87 is the actual supplier; it is not an alternative supplier and is not in U.",
+    "The port-stripping assignments at lines 93 and 95 rewrite the chosen host; they are normalization of the selected value, not alternative suppliers of a host, so they are not in U.",
+    "Completeness outside the declared U is not claimed."
+  ],
+  "probe": "probe_werkzeug_get_host.py",
+  "inputs": [
+    {
+      "id": "expose_neither",
+      "role": "exposing",
+      "payload": {
+        "scheme": "http",
+        "host_header": null,
+        "server": null
+      },
+      "note": "Legal call with neither source. P+ returns the empty default; P- raises UnboundLocalError at the first use of host."
+    },
+    {
+      "id": "mask_host_header",
+      "role": "masking",
+      "payload": {
+        "scheme": "http",
+        "host_header": "example.com",
+        "server": null
+      },
+      "note": "The first branch supplies the host. Disabling that overwrite exposes the missing default."
+    },
+    {
+      "id": "mask_server",
+      "role": "masking",
+      "payload": {
+        "scheme": "http",
+        "host_header": null,
+        "server": ["example.com", 8080]
+      },
+      "note": "The second branch supplies the host. Disabling that overwrite exposes the missing default in the same way."
+    }
+  ],
+  "scope": {
+    "inputs_executed": 3,
+    "operations_in_universe": 2,
+    "not_claimed": [
+      "All schemes, trusted-host configurations and malformed headers",
+      "Operations outside the declared U",
+      "A task-level certificate over the whole legal input domain"
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "task_id": "sd_pygments_style95_cache",
+  "project": "Pygments",
+  "version": "2.17.2",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M9_EXCEPTION_FALLBACK",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "A inserts the resolved style into the class-level shared cache consumed by style_for_token.  U1 catches the resulting KeyError and rebuilds the entry from the parent.  Tokens with their own style declarations are outside the declared fallback and expose the deletion.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "pygments/style.py",
+    "line": 95,
+    "function": "__new__",
+    "code": "                _styles[token] = ndef",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "__new__",
+    "style_for_token"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": true,
+    "legacy_v2_function": "colorformat"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "pygments.style.Style.style_for_token(token)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_text",
+      "role": "masking",
+      "description": "standard token whose declared style is empty"
+    },
+    {
+      "id": "mask_name_other",
+      "role": "masking",
+      "description": "token with no own declaration, inherits its parent entry"
+    },
+    {
+      "id": "expose_keyword",
+      "role": "exposing",
+      "description": "token with its own style declaration (fallback re-raises)"
+    },
+    {
+      "id": "mask_operator_inherited",
+      "role": "masking",
+      "description": "another token without its own declaration; A executes and the fallback masks it"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {
+    "tests": [],
+    "passed": null,
+    "summary": "no original test covers this path"
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

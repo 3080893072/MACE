@@ -1,0 +1,91 @@
+{
+  "fixture": "ctrl_01",
+  "mode": "mace",
+  "provider": "transformers-local",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen15b",
+  "seed": 42,
+  "rounds_allowed": 2,
+  "rounds_used": 2,
+  "status": "NO_RESULT",
+  "final_guard": null,
+  "final_bundle": null,
+  "final_report": null,
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 1244,
+        "completion_tokens": 299,
+        "total_tokens": 1543,
+        "wall_seconds": 8.695,
+        "model": "qwen15b",
+        "provider": "transformers-local",
+        "temperature": 0.0,
+        "seed": 42,
+        "max_new_tokens": 1024,
+        "device": "cuda:0"
+      },
+      "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<mode == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [4],\n      \"rationale\": \"When mode is 0, the value of v remains unchanged.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"<x == x>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [3],\n      \"rationale\": \"The initial value of v is equal to the initial value of x.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```",
+      "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(mode, x):\n002:     v = x\n003:     v = v + 1  # TARGET_A\n004:     if mode == 0:\n005:         v = x\n006:     return v\n\nInput domain used by the bounded checker:\nmode: int, x: int; the declared finite set has 6 cases (Full Cartesian product of the two argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  mode: int\n  v: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 1602,
+        "completion_tokens": 299,
+        "total_tokens": 1901,
+        "wall_seconds": 9.172,
+        "model": "qwen15b",
+        "provider": "transformers-local",
+        "temperature": 0.0,
+        "seed": 42,
+        "max_new_tokens": 1024,
+        "device": "cuda:0"
+      },
+      "raw_response": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<mode == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [4],\n      \"rationale\": \"When mode is 0, the value of v remains unchanged.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"<x == x>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [3],\n      \"rationale\": \"The initial value of v is equal to the initial value of x.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```",
+      "error": "parse: T1.expr is not a parsable expression: invalid syntax",
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(mode, x):\n002:     v = x\n003:     v = v + 1  # TARGET_A\n004:     if mode == 0:\n005:         v = x\n006:     return v\n\nInput domain used by the bounded checker:\nmode: int, x: int; the declared finite set has 6 cases (Full Cartesian product of the two argument domains.).\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  mode: int\n  v: int\n  x: int\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        },
+        {
+          "role": "assistant",
+          "content": "```json\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"expr\": \"<v_post == v>\",\n      \"source_lines\": [3, 4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"<mode == 0>\",\n      \"condition\": \"<True>\",\n      \"role\": \"fixed_point\",\n      \"source_lines\": [4],\n      \"rationale\": \"When mode is 0, the value of v remains unchanged.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"<x == x>\",\n      \"condition\": \"<True>\",\n      \"role\": \"supporting\",\n      \"source_lines\": [3],\n      \"rationale\": \"The initial value of v is equal to the initial value of x.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"<v_post == v>\",\n      \"condition\": \"<True>\",\n      \"source_lines\": [4],\n      \"rationale\": \"The value of v remains unchanged after the addition operation.\"\n    }\n  ],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<True>\", \"source_lines\": []},\n  \"uncertainty\": \"\"\n}\n```"
+        },
+        {
+          "role": "user",
+          "content": "Your previous reply was not a valid MACE contract: T1.expr is not a parsable expression: invalid syntax\nReturn the complete JSON contract again, in exactly the shape requested, using only ids that already exist plus the new ones you introduce."
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 2,
+    "prompt_tokens": 2846,
+    "completion_tokens": 598,
+    "decode_seconds": 17.867,
+    "wall_seconds": 17.959
+  },
+  "domain": {
+    "size": 6,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-11-01T09:44:36.539743+00:00"
+}

@@ -1,0 +1,211 @@
+{
+  "date": "2026-11-02",
+  "scope": "classification only; no Qwen/Full MACE run, no M1-M6 changes",
+  "definitions": {
+    "A_TEST_SURVIVING_DELETION": {
+      "rule": "Deleting A leaves the pre-specified original upstream test set passing, and there exists an exposing counterexample whose observation differs between P+ and P-.",
+      "may_support_test_gap_claim": true,
+      "note": "The exposing counterexample is not required to be a normal return. A binding-only task whose exposure is UnboundLocalError remains A-class because the original tests do not catch it."
+    },
+    "B_VERIFIED_MASKING_ONLY": {
+      "rule": "The real source has an execution-verified masking relation on a named witness, but deleting A does not satisfy original-test survival (the upstream suite fails or cannot run on P-).",
+      "may_support_test_gap_claim": false,
+      "note": "B-class evidence must never be cited as 'existing tests miss deletion risk'. It only proves that the masking mechanism exists."
+    }
+  },
+  "A": [
+    {
+      "case_id": "click_choice_normalize_choice",
+      "class": "TEST_SURVIVING_DELETION",
+      "project": "click",
+      "version": "8.4.1",
+      "file": "src/click/types.py",
+      "symbol": "Choice.normalize_choice",
+      "target_A": {
+        "upstream_line": 333,
+        "local_line": 20,
+        "code": "normed_value = ctx.token_normalize_func(normed_value)",
+        "kind": "concrete value change, not a dead binding"
+      },
+      "masking_operation_B": {
+        "upstream_line": 336,
+        "local_line": 23,
+        "code": "normed_value = normed_value.casefold()"
+      },
+      "defined_to_defined": true,
+      "mask_witness": {
+        "case_id": "mask_ascii",
+        "arguments": {"choice": "ABC", "normalize_mode": "lower", "case_sensitive": false},
+        "P_plus": "return 'abc'",
+        "P_minus": "return 'abc'",
+        "target_A_hit": true
+      },
+      "exposing_witness": {
+        "case_id": "expose_mapping",
+        "arguments": {"choice": "A-B", "normalize_mode": "map", "case_sensitive": false},
+        "P_plus": "return 'a_b'",
+        "P_minus": "return 'a-b'",
+        "target_A_hit": true,
+        "note": "Both versions return normally; this is not an UnboundLocalError exposure."
+      },
+      "relation": {
+        "kind": "independent",
+        "ops": ["B"],
+        "witness": "mask_ascii",
+        "status": "VERIFIED",
+        "minimal": true,
+        "scope": "single_witness"
+      },
+      "upstream_qualification": {
+        "P_plus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "P_minus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "hit_test": "tests/test_normalization.py::test_choice_normalization",
+        "hit_count": 23,
+        "hit_outcome_P_plus": "passed",
+        "hit_outcome_P_minus": "passed",
+        "why_missed": "The upstream test uses token_normalize_func=x.lower() and ASCII choices. On that configuration the later casefold() reproduces A's deletion invisibly. The exposing configuration uses a non-case-only normalizer, which the upstream suite does not exercise."
+      },
+      "extraction_body_equal_ignoring_docstring": true,
+      "evidence": [
+        "out/upstream_normalize_choice.json",
+        "out/click_normalize_choice_plus.log",
+        "out/click_normalize_choice_minus.log",
+        "out/verifier_v2_click_normalize_choice.json",
+        "candidates/click_normalize_choice.py",
+        "verify_normalize_choice.py",
+        "run_upstream_normalize_choice.py"
+      ]
+    },
+    {
+      "case_id": "real_click_truncate_visible",
+      "class": "TEST_SURVIVING_DELETION",
+      "project": "click",
+      "version": "8.4.1",
+      "file": "src/click/_textwrap.py",
+      "symbol": "_truncate_visible",
+      "target_A": {
+        "upstream_line": 23,
+        "local_line": 27,
+        "code": "cut = 0",
+        "kind": "binding overwritten by the loop; not a concrete value-change case"
+      },
+      "masking_operation_B": {
+        "upstream_line": 32,
+        "local_line": 36,
+        "code": "cut = i"
+      },
+      "defined_to_defined": false,
+      "mask_witness": {
+        "witness": "mask_plain_long_word",
+        "P_plus": "normal return",
+        "P_minus": "same return",
+        "target_A_hit": true
+      },
+      "exposing_witness": {
+        "witness": "expose_empty_or_ansi_only",
+        "P_plus": "normal return",
+        "P_minus": "UnboundLocalError at text[:cut]",
+        "note": "Exposure exists, but it is not a defined-to-defined value-change witness."
+      },
+      "relation": {
+        "kind": "independent",
+        "ops": ["B"],
+        "status": "VERIFIED",
+        "scope": "single_witness"
+      },
+      "upstream_qualification": {
+        "P_plus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "P_minus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "hit_test": "tests/test_formatting.py::test_wrap_text_visible_width[styled-long-word-breaks-on-visible-width]",
+        "hit_outcome_P_plus": "passed",
+        "hit_outcome_P_minus": "passed"
+      },
+      "evidence": [
+        "out/three_task_qualification.json",
+        "out/verifier_v2_real_tasks.json",
+        "out/upstream_runs.json"
+      ]
+    }
+  ],
+  "B": [
+    {
+      "case_id": "werkzeug_headerset_update",
+      "class": "VERIFIED_MASKING_ONLY",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "file": "src/werkzeug/datastructures.py",
+      "symbol": "HeaderSet.update",
+      "target_A": {"upstream_line": 2266, "code": "inserted_any = False"},
+      "masking_operation_B": {"upstream_line": 2272, "code": "inserted_any = True"},
+      "defined_to_defined": false,
+      "relation": {"kind": "independent", "ops": ["B"], "status": "VERIFIED", "scope": "single_witness"},
+      "upstream_qualification": {
+        "P_plus": "816 passed, 24 deselected",
+        "P_minus": "1 failed, 815 passed, 24 deselected",
+        "failure": "tests/test_http.py::TestHTTPUtility::test_set_header -> UnboundLocalError at inserted_any"
+      },
+      "evidence": ["out/three_task_qualification.json", "out/upstream_runs.json"]
+    },
+    {
+      "case_id": "werkzeug_url_unparse",
+      "class": "VERIFIED_MASKING_ONLY",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "file": "src/werkzeug/urls.py",
+      "symbol": "url_unparse",
+      "target_A": {"upstream_line": 605, "code": "url = s(\"\")"},
+      "masking_operation_B": {"upstream_line": 614, "code": "url = s(\"//\") + ..."},
+      "defined_to_defined": false,
+      "relation": {"kind": "independent", "ops": ["B"], "status": "VERIFIED", "scope": "single_witness"},
+      "upstream_qualification": {
+        "P_plus": "816 passed, 24 deselected",
+        "P_minus": "collection error in tests/test_send_file.py; 0 tests run"
+      },
+      "evidence": ["out/three_task_qualification.json", "out/upstream_runs.json"]
+    },
+    {
+      "case_id": "werkzeug_is_resource_modified",
+      "class": "VERIFIED_MASKING_ONLY",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "file": "src/werkzeug/sansio/http.py",
+      "symbol": "is_resource_modified",
+      "target_A": {"upstream_line": 49, "local_line": 43, "code": "unmodified = False"},
+      "masking_operations_B_C": {
+        "B": {"upstream_line": 71, "code": "unmodified = True"},
+        "C": {"upstream_line": 78, "code": "unmodified = parse_etags(if_range.etag).contains(etag)"}
+      },
+      "defined_to_defined": false,
+      "value_change": false,
+      "relation": {
+        "kind": "coexisting",
+        "ops": ["B", "C"],
+        "witness": "mask_b_c",
+        "status": "VERIFIED",
+        "minimal": true,
+        "scope": "single_witness"
+      },
+      "upstream_qualification": {
+        "P_plus_targeted": "2 passed",
+        "P_minus_targeted": "2 failed, both UnboundLocalError at return not unmodified",
+        "P_minus_applicable_suite": "34 failed, 782 passed, 24 deselected",
+        "P_plus_applicable_suite": "816 passed, 24 deselected"
+      },
+      "evidence": [
+        "candidates_round2.json",
+        "out/verifier_v2_is_resource_modified.json",
+        "out/werkzeug-2.2.3_minus_is_resource_modified_targeted.log",
+        "out/werkzeug-2.2.3_minus_is_resource_modified_full.log"
+      ]
+    }
+  ],
+  "summary": {
+    "A_class_count": 2,
+    "B_class_count": 3,
+    "defined_to_defined_value_change_A_class": ["click_choice_normalize_choice"],
+    "A_class_with_non_independent_relation": [],
+    "coexisting_found_in_A_class": false,
+    "cooperative_found": false,
+    "rule_enforced": "B-class cases are excluded from all claims about upstream tests missing deletion risk."
+  }
+}

@@ -1,0 +1,628 @@
+{
+  "case_id": "sd_docutils_language_tag_m3",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/utils/__init__.py",
+  "A_line": 704,
+  "A_code": "    tag = tag.lower().replace('-', '_')",
+  "original_sha256": "a45b7fa826eb909a0f78bcb01d55501f7a7eadbee3c3110ae686a8afd2fa4385",
+  "patched_sha256": "d86d4ad330f6923353c9fe29534578beba8e58058da50c1399fcdc12e3d3f85c",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 704,
+      "role": "Case folding leg: restores the lower() half of A.",
+      "lines": [
+        "tag = tag.lower()"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 704,
+      "role": "First separator leg: rewrites at most one '-' separator.",
+      "lines": [
+        "tag = tag.replace('-', '_', 1)"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 704,
+      "role": "Second separator leg: rewrites at most one further '-' separator.",
+      "lines": [
+        "tag = tag.replace('-', '_', 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 704,
+      "end": 706
+    },
+    "U2": {
+      "begin": 707,
+      "end": 709
+    },
+    "U3": {
+      "begin": 710,
+      "end": 712
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_two_separators": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-at-1901-x",
+          "de-at-1901",
+          "de-at-x",
+          "de-1901-x",
+          "de-at",
+          "de-1901",
+          "de-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "P_MINUS": {
+      "mask_two_separators": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-at-1901-x",
+          "de-at",
+          "de-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_two_separators": {
+        "out": [
+          "de-AT-1901"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-AT-1901-x"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U1": {
+      "mask_two_separators": {
+        "out": [
+          "de-at-1901"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-at-1901-x"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U2": {
+      "mask_two_separators": {
+        "out": [
+          "de-AT-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-AT-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U3": {
+      "mask_two_separators": {
+        "out": [
+          "de-AT-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-AT-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_two_separators": {
+        "out": [
+          "de-at-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-at-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U1_U3": {
+      "mask_two_separators": {
+        "out": [
+          "de-at-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-at-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U2_U3": {
+      "mask_two_separators": {
+        "out": [
+          "de-AT-1901",
+          "de-AT",
+          "de-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-AT-1901-x",
+          "de-AT",
+          "de-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    },
+    "KEEP_U1_U2_U3": {
+      "mask_two_separators": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "expose_three_separators": {
+        "out": [
+          "de-at-1901-x",
+          "de-at",
+          "de-1901-x",
+          "de"
+        ]
+      },
+      "control_single_subtag": {
+        "out": [
+          "en"
+        ]
+      }
+    }
+  },
+  "per_input": {
+    "mask_two_separators": {
+      "plus": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "p_minus": {
+        "out": [
+          "de-at-1901",
+          "de-at",
+          "de-1901",
+          "de"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": [
+            "de-AT-1901"
+          ]
+        },
+        "KEEP_U1": {
+          "out": [
+            "de-at-1901"
+          ]
+        },
+        "KEEP_U2": {
+          "out": [
+            "de-AT-1901",
+            "de"
+          ]
+        },
+        "KEEP_U3": {
+          "out": [
+            "de-AT-1901",
+            "de"
+          ]
+        },
+        "KEEP_U1_U2": {
+          "out": [
+            "de-at-1901",
+            "de"
+          ]
+        },
+        "KEEP_U1_U3": {
+          "out": [
+            "de-at-1901",
+            "de"
+          ]
+        },
+        "KEEP_U2_U3": {
+          "out": [
+            "de-AT-1901",
+            "de-AT",
+            "de-1901",
+            "de"
+          ]
+        },
+        "KEEP_U1_U2_U3": {
+          "out": [
+            "de-at-1901",
+            "de-at",
+            "de-1901",
+            "de"
+          ]
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "u_necessary": true
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_three_separators": {
+      "plus": {
+        "out": [
+          "de-at-1901-x",
+          "de-at-1901",
+          "de-at-x",
+          "de-1901-x",
+          "de-at",
+          "de-1901",
+          "de-x",
+          "de"
+        ]
+      },
+      "p_minus": {
+        "out": [
+          "de-at-1901-x",
+          "de-at",
+          "de-1901-x",
+          "de"
+        ]
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": [
+            "de-AT-1901-x"
+          ]
+        },
+        "KEEP_U1": {
+          "out": [
+            "de-at-1901-x"
+          ]
+        },
+        "KEEP_U2": {
+          "out": [
+            "de-AT-1901-x",
+            "de"
+          ]
+        },
+        "KEEP_U3": {
+          "out": [
+            "de-AT-1901-x",
+            "de"
+          ]
+        },
+        "KEEP_U1_U2": {
+          "out": [
+            "de-at-1901-x",
+            "de"
+          ]
+        },
+        "KEEP_U1_U3": {
+          "out": [
+            "de-at-1901-x",
+            "de"
+          ]
+        },
+        "KEEP_U2_U3": {
+          "out": [
+            "de-AT-1901-x",
+            "de-AT",
+            "de-1901-x",
+            "de"
+          ]
+        },
+        "KEEP_U1_U2_U3": {
+          "out": [
+            "de-at-1901-x",
+            "de-at",
+            "de-1901-x",
+            "de"
+          ]
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [],
+        "mmbs": [],
+        "u_necessary": true
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_single_subtag": {
+      "plus": {
+        "out": [
+          "en"
+        ]
+      },
+      "p_minus": {
+        "out": [
+          "en"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U1": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U2": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U3": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U1_U2": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U1_U3": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U2_U3": {
+          "out": [
+            "en"
+          ]
+        },
+        "KEEP_U1_U2_U3": {
+          "out": [
+            "en"
+          ]
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "changed_inputs": [
+      {
+        "input": "mask_two_separators",
+        "mmbs": {
+          "legacy_v2": [
+            [
+              "U1",
+              "U2",
+              "U3"
+            ]
+          ],
+          "v2_1": [
+            [
+              "U1"
+            ],
+            [
+              "U2"
+            ],
+            [
+              "U3"
+            ]
+          ]
+        }
+      },
+      {
+        "input": "control_single_subtag",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      }
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 2,
+    "mmbs_COMPUTED": 1,
+    "mmbs_NONE": 1,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 1,
+    "msms_NONE": 2
+  }
+}

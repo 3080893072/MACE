@@ -1,0 +1,66 @@
+{
+  "task_id": "sd_jsonschema_1145_pointer",
+  "project": "jsonschema",
+  "version": "4.20.0",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M1_SINGLE_OPERATION",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "A performs both RFC 6901 unescapes.  U1 reproduces only the ~0 half, which is a declared partial adaptation.  ~0 pointers are masked; a ~1 pointer is the legal exposing witness.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "jsonschema/validators.py",
+    "line": 1145,
+    "function": "resolve_fragment",
+    "code": "            part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "resolve_fragment"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": "resolve_fragment"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "validators.RefResolver(base_uri, referrer).resolve_fragment(document, fragment)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_tilde0",
+      "role": "masking",
+      "description": "JSON pointer segment containing ~0"
+    },
+    {
+      "id": "mask_nested_tilde0",
+      "role": "masking",
+      "description": "nested pointer segment containing ~0"
+    },
+    {
+      "id": "expose_tilde1",
+      "role": "exposing",
+      "description": "JSON pointer segment containing ~1"
+    },
+    {
+      "id": "control_plain",
+      "role": "control",
+      "description": "pointer segment with no escape"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {
+    "tests": [],
+    "passed": null,
+    "summary": "no original test covers this path"
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

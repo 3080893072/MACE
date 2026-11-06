@@ -1,0 +1,69 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/cli.py:185:name:formatter_opts",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/cli.py",
+  "function": "main",
+  "mechanism": "name",
+  "target_A": {
+    "line": 185,
+    "end_line": 185,
+    "kind": "Assign",
+    "code": "formatter_opts = vars(args)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_cli.py::test_encoding",
+    "tests/test_cli.py::test_encoding_output_file[encoding_gbk.sql-gbk]",
+    "tests/test_cli.py::test_encoding_output_file[encoding_utf8.sql-utf-8]",
+    "tests/test_cli.py::test_encoding_stdin[encoding_gbk.sql-gbk]",
+    "tests/test_cli.py::test_encoding_stdin[encoding_utf8.sql-utf-8]",
+    "tests/test_cli.py::test_encoding_stdout[encoding_gbk.sql-gbk]",
+    "tests/test_cli.py::test_encoding_stdout[encoding_utf8.sql-utf-8]",
+    "tests/test_cli.py::test_invalid_args",
+    "tests/test_cli.py::test_stdout",
+    "tests/test_cli.py::test_valid_args"
+  ],
+  "original_hit_test_count": 10,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "    formatter_opts = vars(args)",
+    "replacement": "    pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.53,
+    "failed_nodeids": [
+      "tests.test_cli::test_encoding",
+      "tests.test_cli::test_encoding_output_file[encoding_gbk.sql-gbk]",
+      "tests.test_cli::test_encoding_output_file[encoding_utf8.sql-utf-8]",
+      "tests.test_cli::test_encoding_stdin[encoding_gbk.sql-gbk]",
+      "tests.test_cli::test_encoding_stdin[encoding_utf8.sql-utf-8]",
+      "tests.test_cli::test_encoding_stdout[encoding_gbk.sql-gbk]",
+      "tests.test_cli::test_encoding_stdout[encoding_utf8.sql-utf-8]",
+      "tests.test_cli::test_invalid_args",
+      "tests.test_cli::test_stdout",
+      "tests.test_cli::test_valid_args"
+    ],
+    "stdout_tail": "__________________\n\nfilepath = <function filepath.<locals>.make_filepath at 0x0000026DB995D9E0>\ncapsys = <_pytest.capture.CaptureFixture object at 0x0000026DB7932410>\n\n    def test_encoding(filepath, capsys):\n        path = filepath('test_cp1251.sql')\n        expected = 'insert into foo values (1); -- ���֧�ߧ� ���� �ߧѧէ֧اէ�\\n'\n>       sqlparse.cli.main([path, '--encoding=cp1251'])\n\ntests\\test_cli.py:120: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nargs = Namespace(filename='D:\\\\tmp\\\\realbench\\\\broad_work\\\\sqlparse-0.4.4_minus\\\\tests\\\\files\\\\test_cp1251.sql', outfile=None...ns=False, reindent_aligned=False, use_space_around_operators=False, wrap_after=0, comma_first=False, encoding='cp1251')\n\n    def main(args=None):\n        parser = create_parser()\n        args = parser.parse_args(args)\n    \n        if args.filename == '-':  # read from stdin\n            wrapper = TextIOWrapper(sys.stdin.buffer, encoding=args.encoding)\n            try:\n                data = wrapper.read()\n            finally:\n                wrapper.detach()\n        else:\n            try:\n                with open(args.filename, encoding=args.encoding) as f:\n                    data = ''.join(f.readlines())\n            except OSError as e:\n                return _error(\n                    'Failed to read {}: {}'.format(args.filename, e))\n    \n        close_stream = False\n        if args.outfile:\n            try:\n                stream = open(args.outfile, 'w', encoding=args.encoding)\n                close_stream = True\n            except OSError as e:\n                return _error('Failed to open {}: {}'.format(args.outfile, e))\n        else:\n            stream = sys.stdout\n    \n        pass  # P-: target A deleted\n        try:\n>           formatter_opts = sqlparse.formatter.validate_options(formatter_opts)\nE           UnboundLocalError: cannot access local variable 'formatter_opts' where it is not associated with a value\n\nsqlparse\\cli.py:187: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_cli.py::test_valid_args - UnboundLocalError: cannot access ...\nFAILED tests/test_cli.py::test_invalid_args - UnboundLocalError: cannot acces...\nFAILED tests/test_cli.py::test_stdout - UnboundLocalError: cannot access loca...\nFAILED tests/test_cli.py::test_encoding_stdout[encoding_utf8.sql-utf-8] - Unb...\nFAILED tests/test_cli.py::test_encoding_stdout[encoding_gbk.sql-gbk] - Unboun...\nFAILED tests/test_cli.py::test_encoding_output_file[encoding_utf8.sql-utf-8]\nFAILED tests/test_cli.py::test_encoding_output_file[encoding_gbk.sql-gbk] - U...\nFAILED tests/test_cli.py::test_encoding_stdin[encoding_utf8.sql-utf-8] - Unbo...\nFAILED tests/test_cli.py::test_encoding_stdin[encoding_gbk.sql-gbk] - Unbound...\nFAILED tests/test_cli.py::test_encoding - UnboundLocalError: cannot access lo...\n10 failed in 0.19s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

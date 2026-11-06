@@ -1,0 +1,2436 @@
+{
+  "replay_label": "FIXED_PROPOSAL_REPLAY",
+  "summary": {
+    "replay_label": "FIXED_PROPOSAL_REPLAY",
+    "fixtures": [
+      "parity_snap"
+    ],
+    "note": "Offline replay of frozen M5 proposal strings; no model was called. Metrics come from the bounded checker only.",
+    "levels": {
+      "legacy": {
+        "exact": 0,
+        "sound": 0,
+        "invalid": 0,
+        "unknown": 0,
+        "degraded": 1,
+        "unresolved": 0
+      },
+      "bugs": {
+        "exact": 1,
+        "sound": 1,
+        "invalid": 0,
+        "unknown": 0,
+        "degraded": 0,
+        "unresolved": 0
+      },
+      "candidates": {
+        "exact": 1,
+        "sound": 1,
+        "invalid": 0,
+        "unknown": 0,
+        "degraded": 0,
+        "unresolved": 0
+      },
+      "full": {
+        "exact": 1,
+        "sound": 1,
+        "invalid": 0,
+        "unknown": 0,
+        "degraded": 0,
+        "unresolved": 0
+      }
+    }
+  },
+  "cells": [
+    {
+      "replay_label": "FIXED_PROPOSAL_REPLAY",
+      "fixture": "parity_snap",
+      "level": "legacy",
+      "proposal_source": "m5\\A3\\parity_snap\\mace_seed42.json",
+      "proposal_sha256": "ee694965d05d27dcc09f130c8662496431f51a4c59363e4b27bbce312a6c8aac",
+      "proposals_replayed": 3,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "final_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+      "selection": null,
+      "final": {
+        "classification": "FALSE_ACCEPT",
+        "exact": false,
+        "sound": false,
+        "status": "REFUTED",
+        "unsound": 127,
+        "incomplete": 0,
+        "evaluation_errors": 0,
+        "invalid": false,
+        "unknown": false,
+        "checked": 170
+      },
+      "best_round_exact": true,
+      "degraded": true,
+      "unresolved": false,
+      "rounds": [
+        {
+          "round": 1,
+          "domain_size": 170,
+          "domain_level": "BOUNDED",
+          "qwen_guard": "even and sum(xs) % 2 == 0",
+          "qwen_status": "BOUNDED",
+          "qwen_classification": "EXACT",
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "evaluation_errors": 0,
+          "invalid_relations": [],
+          "unknown_relations": [
+            "U1",
+            "U2",
+            "O1",
+            "O2"
+          ],
+          "derived_guard": null,
+          "derived_status": null,
+          "derived_classification": null,
+          "selected_guard": "even and sum(xs) % 2 == 0",
+          "selection_reason": null,
+          "all_relations_pass": false
+        },
+        {
+          "round": 2,
+          "domain_size": 170,
+          "domain_level": "BOUNDED",
+          "qwen_guard": "even and total_post % 2 == 0 or not even",
+          "qwen_status": "INVALID",
+          "qwen_classification": "INVALID_CONTRACT",
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "evaluation_errors": 0,
+          "invalid_relations": [
+            "U1",
+            "U2",
+            "O1"
+          ],
+          "unknown_relations": [
+            "U1",
+            "U2",
+            "O1",
+            "O2"
+          ],
+          "derived_guard": null,
+          "derived_status": null,
+          "derived_classification": null,
+          "selected_guard": "even and total_post % 2 == 0 or not even",
+          "selection_reason": null,
+          "all_relations_pass": false
+        },
+        {
+          "round": 3,
+          "domain_size": 170,
+          "domain_level": "BOUNDED",
+          "qwen_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+          "qwen_status": "REFUTED",
+          "qwen_classification": "FALSE_ACCEPT",
+          "false_accepts": 127,
+          "false_rejects": 0,
+          "evaluation_errors": 0,
+          "invalid_relations": [],
+          "unknown_relations": [
+            "U1",
+            "U2",
+            "O1",
+            "O2"
+          ],
+          "derived_guard": null,
+          "derived_status": null,
+          "derived_classification": null,
+          "selected_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+          "selection_reason": null,
+          "all_relations_pass": false
+        }
+      ],
+      "usage": {
+        "calls": 3,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "decode_seconds": 0.0,
+        "wall_seconds": 0.379
+      }
+    },
+    {
+      "replay_label": "FIXED_PROPOSAL_REPLAY",
+      "fixture": "parity_snap",
+      "level": "bugs",
+      "proposal_source": "m5\\A3\\parity_snap\\mace_seed42.json",
+      "proposal_sha256": "ee694965d05d27dcc09f130c8662496431f51a4c59363e4b27bbce312a6c8aac",
+      "proposals_replayed": 3,
+      "status": "GUARD_VERIFIED",
+      "rounds_used": 1,
+      "final_guard": "even and sum(xs) % 2 == 0",
+      "selection": null,
+      "final": {
+        "classification": "EXACT",
+        "exact": true,
+        "sound": true,
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "evaluation_errors": 0,
+        "invalid": false,
+        "unknown": false,
+        "checked": 170
+      },
+      "best_round_exact": true,
+      "degraded": false,
+      "unresolved": false,
+      "rounds": [
+        {
+          "round": 1,
+          "domain_size": 170,
+          "domain_level": "BOUNDED",
+          "qwen_guard": "even and sum(xs) % 2 == 0",
+          "qwen_status": "BOUNDED",
+          "qwen_classification": "EXACT",
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "evaluation_errors": 0,
+          "invalid_relations": [],
+          "unknown_relations": [
+            "U1",
+            "U2",
+            "O1",
+            "O2"
+          ],
+          "derived_guard": "((even and sum(xs) % 2 == 0))",
+          "derived_status": "BOUNDED",
+          "derived_classification": "EXACT",
+          "selected_guard": "even and sum(xs) % 2 == 0",
+          "selection_reason": null,
+          "all_relations_pass": false
+        }
+      ],
+      "usage": {
+        "calls": 1,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "decode_seconds": 0.0,
+        "wall_seconds": 0.291
+      }
+    },
+    {
+      "replay_label": "FIXED_PROPOSAL_REPLAY",
+      "fixture": "parity_snap",
+      "level": "candidates",
+      "proposal_source": "m5\\A3\\parity_snap\\mace_seed42.json",
+      "proposal_sha256": "ee694965d05d27dcc09f130c8662496431f51a4c59363e4b27bbce312a6c8aac",
+      "proposals_replayed": 3,
+      "status": "GUARD_VERIFIED",
+      "rounds_used": 1,
+      "final_guard": "even and sum(xs) % 2 == 0",
+      "selection": {
+        "expr": "even and sum(xs) % 2 == 0",
+        "source": "qwen",
+        "round": 1,
+        "guard": {
+          "id": "G",
+          "expr": "even and sum(xs) % 2 == 0",
+          "source_lines": [],
+          "status": "BOUNDED",
+          "checked": 170,
+          "unsound": 0,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": true,
+          "shape": "and",
+          "parts": [
+            "even",
+            "sum(xs) % 2 == 0"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0,
+              0
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "bundle": {
+          "target_effects": [
+            {
+              "id": "T1",
+              "kind": "target_effect",
+              "expr": "total_post == total + 1",
+              "condition": "True",
+              "source_lines": [
+                3,
+                2
+              ],
+              "rationale": "Line 3 increments the total by 1."
+            }
+          ],
+          "upstream": [
+            {
+              "id": "U1",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 0",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is already even, A does not change the final result.",
+              "role": "fixed_point"
+            },
+            {
+              "id": "U2",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 1",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.",
+              "role": "supporting"
+            },
+            {
+              "id": "U3",
+              "kind": "upstream",
+              "expr": "True",
+              "condition": "not even",
+              "source_lines": [
+                4
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "role": "supporting"
+            }
+          ],
+          "observers": [
+            {
+              "id": "O0",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 0",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+              "channel": 0
+            },
+            {
+              "id": "O1",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 1",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+              "channel": 0
+            },
+            {
+              "id": "O2",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "not even",
+              "source_lines": [
+                6
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "channel": 0
+            }
+          ],
+          "mask_guard": {
+            "id": "G",
+            "kind": "mask_guard",
+            "expr": "even and sum(xs) % 2 == 0",
+            "condition": "True",
+            "source_lines": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "rationale": ""
+          },
+          "uncertainty": "The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible."
+        },
+        "report": {
+          "guard_ok": true,
+          "evidence_level": "BOUNDED",
+          "domain_size": 170,
+          "usable_rows": 170,
+          "execution_errors": 0,
+          "post_sorts": {
+            "xs": "list[int]",
+            "even": "bool",
+            "total": "int"
+          },
+          "relations": [
+            {
+              "id": "T1",
+              "kind": "target_effect",
+              "expr": "total_post == total + 1",
+              "condition": "True",
+              "source_lines": [
+                3,
+                2
+              ],
+              "rationale": "Line 3 increments the total by 1.",
+              "status": "BOUNDED",
+              "checked": 170,
+              "condition_false": 0,
+              "failures": 0,
+              "counterexamples": []
+            },
+            {
+              "id": "U1",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 0",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is already even, A does not change the final result.",
+              "role": "fixed_point",
+              "status": "REFUTED",
+              "checked": 85,
+              "condition_false": 85,
+              "failures": 42,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                }
+              ]
+            },
+            {
+              "id": "U2",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 1",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.",
+              "role": "supporting",
+              "status": "REFUTED",
+              "checked": 85,
+              "condition_false": 85,
+              "failures": 43,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [],
+                    "even": true,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [],
+                    "even": true,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      2
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 2,
+                  "snap_plus": {
+                    "xs": [
+                      2
+                    ],
+                    "even": true,
+                    "total": 3
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      2
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                }
+              ]
+            },
+            {
+              "id": "U3",
+              "kind": "upstream",
+              "expr": "True",
+              "condition": "not even",
+              "source_lines": [
+                4
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "role": "supporting",
+              "status": "BOUNDED",
+              "checked": 85,
+              "condition_false": 85,
+              "failures": 0,
+              "counterexamples": []
+            },
+            {
+              "id": "O0",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 0",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+              "channel": 0,
+              "status": "BOUNDED",
+              "checked": 170,
+              "faithful_failures": 0,
+              "faithful_minus_failures": 0,
+              "invariance_checked": 43,
+              "invariance_failures": 0,
+              "evaluation_errors": 0,
+              "counterexamples": []
+            },
+            {
+              "id": "O1",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 1",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+              "channel": 0,
+              "status": "REFUTED",
+              "checked": 170,
+              "faithful_failures": 0,
+              "faithful_minus_failures": 0,
+              "invariance_checked": 42,
+              "invariance_failures": 42,
+              "evaluation_errors": 0,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 0,
+                  "observed_minus": -2,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 2,
+                  "observed_minus": 0,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 0,
+                  "observed_minus": -2,
+                  "kind": "invariance"
+                }
+              ]
+            },
+            {
+              "id": "O2",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "not even",
+              "source_lines": [
+                6
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "channel": 0,
+              "status": "REFUTED",
+              "checked": 170,
+              "faithful_failures": 0,
+              "faithful_minus_failures": 0,
+              "invariance_checked": 85,
+              "invariance_failures": 85,
+              "evaluation_errors": 0,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [],
+                    "even": false
+                  },
+                  "out_plus": 1,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [],
+                    "even": false,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [],
+                    "even": false,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 1,
+                  "observed_minus": 0,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": false
+                  },
+                  "out_plus": 0,
+                  "out_minus": -1,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": false,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": false,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 0,
+                  "observed_minus": -1,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      0
+                    ],
+                    "even": false
+                  },
+                  "out_plus": 1,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": false,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": false,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 1,
+                  "observed_minus": 0,
+                  "kind": "invariance"
+                }
+              ]
+            }
+          ],
+          "guard": {
+            "id": "G",
+            "expr": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "status": "BOUNDED",
+            "checked": 170,
+            "unsound": 0,
+            "incomplete": 0,
+            "evaluation_errors": 0,
+            "exact": true,
+            "shape": "and",
+            "parts": [
+              "even",
+              "sum(xs) % 2 == 0"
+            ],
+            "blame": {
+              "accepts_wrong": [
+                0,
+                0
+              ],
+              "rejects_wrong": [
+                0,
+                0
+              ]
+            },
+            "counterexamples": []
+          },
+          "observer_soundness": {
+            "status": "BOUNDED",
+            "classes": 11,
+            "collisions": 0,
+            "checked": 170,
+            "observers_used": [
+              "O0"
+            ],
+            "reason": "observation determines the real output"
+          },
+          "composition": {
+            "upstream_fixed_point": {
+              "status": "UNKNOWN",
+              "checked": 0,
+              "failures": 0,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                }
+              ],
+              "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U1'])"
+            },
+            "derived_guard": {
+              "reason": "assembled from verified fixed-point and observer conditions",
+              "expr": "((even and sum(xs) % 2 == 0))",
+              "partial_expr": "((even and sum(xs) % 2 == 0))",
+              "channels_covered": [
+                0
+              ],
+              "missing_channels": [],
+              "missing_reasons": [
+                "necessary conditions are not represented in the contract language"
+              ],
+              "fixed_point_relations": [],
+              "observer_relations": [
+                "O0"
+              ],
+              "parts": [
+                {
+                  "relation": "O0",
+                  "op": "and",
+                  "channel": 0,
+                  "text": "even and sum(xs) % 2 == 0",
+                  "source_lines": [
+                    5,
+                    6
+                  ]
+                }
+              ],
+              "semantics": "sufficient_only",
+              "sufficient_conditions": [
+                {
+                  "relation": "O0",
+                  "kind": "observer",
+                  "channel": 0,
+                  "condition": "even and sum(xs) % 2 == 0",
+                  "guarantee": "sufficient for channel invariance"
+                }
+              ],
+              "necessary_conditions": [],
+              "exact_equivalence": "not_established",
+              "complete": false,
+              "guard_complete": false,
+              "unverified_relations": [],
+              "compose_status": "COMPOSED",
+              "status": "BOUNDED",
+              "unsound": 0,
+              "incomplete": 0,
+              "counterexamples": [],
+              "same_as_guard": true,
+              "equivalent_to_declared_guard_on_domain": true
+            }
+          },
+          "behaviour": {
+            "local_inactive": 0,
+            "active_masked": 43,
+            "active_exposed": 127
+          },
+          "witnesses": [
+            {
+              "args": {
+                "xs": [],
+                "even": false
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "even": false,
+                "total": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "even": false,
+                "total": 0
+              }
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": false
+              },
+              "out_plus": 0,
+              "out_minus": -1,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": -1
+              }
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": -2,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": -1
+              }
+            }
+          ],
+          "attribution": {
+            "contrast": {
+              "status": "TESTED",
+              "arguments": {
+                "xs": {
+                  "contexts": 2,
+                  "contexts_with_flip": 1,
+                  "causally_relevant": true,
+                  "example": {
+                    "same_args_except": "xs",
+                    "args": {
+                      "even": true
+                    },
+                    "masked": {
+                      "value": [],
+                      "out_plus": 0,
+                      "out_minus": 0
+                    },
+                    "exposed": {
+                      "value": [
+                        -1
+                      ],
+                      "out_plus": 0,
+                      "out_minus": -2
+                    }
+                  }
+                },
+                "even": {
+                  "contexts": 85,
+                  "contexts_with_flip": 43,
+                  "causally_relevant": true,
+                  "example": {
+                    "same_args_except": "even",
+                    "args": {
+                      "xs": []
+                    },
+                    "masked": {
+                      "value": true,
+                      "out_plus": 0,
+                      "out_minus": 0
+                    },
+                    "exposed": {
+                      "value": false,
+                      "out_plus": 1,
+                      "out_minus": 0
+                    }
+                  }
+                }
+              },
+              "causally_relevant": [
+                "xs",
+                "even"
+              ]
+            },
+            "proof_dag": {
+              "nodes": [
+                {
+                  "id": "T1",
+                  "kind": "target_effect",
+                  "source_lines": [
+                    3,
+                    2
+                  ]
+                },
+                {
+                  "id": "U1",
+                  "kind": "upstream",
+                  "source_lines": [
+                    4,
+                    5
+                  ],
+                  "role": "fixed_point"
+                },
+                {
+                  "id": "U2",
+                  "kind": "upstream",
+                  "source_lines": [
+                    4,
+                    5
+                  ],
+                  "role": "supporting"
+                },
+                {
+                  "id": "U3",
+                  "kind": "upstream",
+                  "source_lines": [
+                    4
+                  ],
+                  "role": "supporting"
+                },
+                {
+                  "id": "O0",
+                  "kind": "observer",
+                  "source_lines": [
+                    5,
+                    6
+                  ],
+                  "channel": 0
+                },
+                {
+                  "id": "O1",
+                  "kind": "observer",
+                  "source_lines": [
+                    5,
+                    6
+                  ],
+                  "channel": 0
+                },
+                {
+                  "id": "O2",
+                  "kind": "observer",
+                  "source_lines": [
+                    6
+                  ],
+                  "channel": 0
+                },
+                {
+                  "id": "G",
+                  "kind": "mask_guard",
+                  "source_lines": [
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "status": "BOUNDED"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "O0",
+                  "to": "G",
+                  "op": "and"
+                },
+                {
+                  "from": "O1",
+                  "to": "G",
+                  "op": "and"
+                },
+                {
+                  "from": "O2",
+                  "to": "G",
+                  "op": "and"
+                }
+              ],
+              "unsupported": [
+                "U1",
+                "U2",
+                "U3"
+              ],
+              "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+            }
+          },
+          "all_relations_pass": false,
+          "status": "OK",
+          "target_line": 3,
+          "source_sha256": null
+        },
+        "classification": "EXACT",
+        "exact": true,
+        "sound": true,
+        "errors": [
+          0,
+          0,
+          0
+        ],
+        "selected": true,
+        "decision": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it; not selected: derived@1=EXACT",
+        "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it; not selected: derived@1=EXACT"
+      },
+      "final": {
+        "classification": "EXACT",
+        "exact": true,
+        "sound": true,
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "evaluation_errors": 0,
+        "invalid": false,
+        "unknown": false,
+        "checked": 170
+      },
+      "best_round_exact": true,
+      "degraded": false,
+      "unresolved": false,
+      "rounds": [
+        {
+          "round": 1,
+          "domain_size": 170,
+          "domain_level": "BOUNDED",
+          "qwen_guard": "even and sum(xs) % 2 == 0",
+          "qwen_status": "BOUNDED",
+          "qwen_classification": "EXACT",
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "evaluation_errors": 0,
+          "invalid_relations": [],
+          "unknown_relations": [
+            "U1",
+            "U2",
+            "O1",
+            "O2"
+          ],
+          "derived_guard": "((even and sum(xs) % 2 == 0))",
+          "derived_status": "BOUNDED",
+          "derived_classification": "EXACT",
+          "selected_guard": "even and sum(xs) % 2 == 0",
+          "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it; not selected: derived@1=EXACT",
+          "all_relations_pass": false
+        }
+      ],
+      "usage": {
+        "calls": 1,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "decode_seconds": 0.0,
+        "wall_seconds": 0.557
+      }
+    },
+    {
+      "replay_label": "FIXED_PROPOSAL_REPLAY",
+      "fixture": "parity_snap",
+      "level": "full",
+      "proposal_source": "m5\\A3\\parity_snap\\mace_seed42.json",
+      "proposal_sha256": "ee694965d05d27dcc09f130c8662496431f51a4c59363e4b27bbce312a6c8aac",
+      "proposals_replayed": 3,
+      "status": "GUARD_VERIFIED",
+      "rounds_used": 1,
+      "final_guard": "even and sum(xs) % 2 == 0",
+      "selection": {
+        "expr": "even and sum(xs) % 2 == 0",
+        "source": "qwen",
+        "round": 1,
+        "guard": {
+          "id": "G",
+          "expr": "even and sum(xs) % 2 == 0",
+          "source_lines": [],
+          "status": "BOUNDED",
+          "checked": 170,
+          "unsound": 0,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": true,
+          "shape": "and",
+          "parts": [
+            "even",
+            "sum(xs) % 2 == 0"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0,
+              0
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "bundle": {
+          "target_effects": [
+            {
+              "id": "T1",
+              "kind": "target_effect",
+              "expr": "total_post == total + 1",
+              "condition": "True",
+              "source_lines": [
+                3,
+                2
+              ],
+              "rationale": "Line 3 increments the total by 1."
+            }
+          ],
+          "upstream": [
+            {
+              "id": "U1",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 0",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is already even, A does not change the final result.",
+              "role": "fixed_point"
+            },
+            {
+              "id": "U2",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 1",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.",
+              "role": "supporting"
+            },
+            {
+              "id": "U3",
+              "kind": "upstream",
+              "expr": "True",
+              "condition": "not even",
+              "source_lines": [
+                4
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "role": "supporting"
+            }
+          ],
+          "observers": [
+            {
+              "id": "O0",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 0",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+              "channel": 0
+            },
+            {
+              "id": "O1",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 1",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+              "channel": 0
+            },
+            {
+              "id": "O2",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "not even",
+              "source_lines": [
+                6
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "channel": 0
+            }
+          ],
+          "mask_guard": {
+            "id": "G",
+            "kind": "mask_guard",
+            "expr": "even and sum(xs) % 2 == 0",
+            "condition": "True",
+            "source_lines": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "rationale": ""
+          },
+          "uncertainty": "The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible."
+        },
+        "report": {
+          "guard_ok": true,
+          "evidence_level": "BOUNDED",
+          "domain_size": 170,
+          "usable_rows": 170,
+          "execution_errors": 0,
+          "post_sorts": {
+            "xs": "list[int]",
+            "even": "bool",
+            "total": "int"
+          },
+          "relations": [
+            {
+              "id": "T1",
+              "kind": "target_effect",
+              "expr": "total_post == total + 1",
+              "condition": "True",
+              "source_lines": [
+                3,
+                2
+              ],
+              "rationale": "Line 3 increments the total by 1.",
+              "status": "BOUNDED",
+              "checked": 170,
+              "condition_false": 0,
+              "failures": 0,
+              "counterexamples": []
+            },
+            {
+              "id": "U1",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 0",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is already even, A does not change the final result.",
+              "role": "fixed_point",
+              "status": "REFUTED",
+              "checked": 85,
+              "condition_false": 85,
+              "failures": 42,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                }
+              ]
+            },
+            {
+              "id": "U2",
+              "kind": "upstream",
+              "expr": "sum(xs) % 2 == 1",
+              "condition": "even",
+              "source_lines": [
+                4,
+                5
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.",
+              "role": "supporting",
+              "status": "REFUTED",
+              "checked": 85,
+              "condition_false": 85,
+              "failures": 43,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [],
+                    "even": true,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [],
+                    "even": true,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      2
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 2,
+                  "snap_plus": {
+                    "xs": [
+                      2
+                    ],
+                    "even": true,
+                    "total": 3
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      2
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                }
+              ]
+            },
+            {
+              "id": "U3",
+              "kind": "upstream",
+              "expr": "True",
+              "condition": "not even",
+              "source_lines": [
+                4
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "role": "supporting",
+              "status": "BOUNDED",
+              "checked": 85,
+              "condition_false": 85,
+              "failures": 0,
+              "counterexamples": []
+            },
+            {
+              "id": "O0",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 0",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+              "channel": 0,
+              "status": "BOUNDED",
+              "checked": 170,
+              "faithful_failures": 0,
+              "faithful_minus_failures": 0,
+              "invariance_checked": 43,
+              "invariance_failures": 0,
+              "evaluation_errors": 0,
+              "counterexamples": []
+            },
+            {
+              "id": "O1",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "even and sum(xs) % 2 == 1",
+              "source_lines": [
+                5,
+                6
+              ],
+              "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+              "channel": 0,
+              "status": "REFUTED",
+              "checked": 170,
+              "faithful_failures": 0,
+              "faithful_minus_failures": 0,
+              "invariance_checked": 42,
+              "invariance_failures": 42,
+              "evaluation_errors": 0,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 0,
+                  "observed_minus": -2,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 2,
+                  "observed_minus": 0,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 0,
+                  "observed_minus": -2,
+                  "kind": "invariance"
+                }
+              ]
+            },
+            {
+              "id": "O2",
+              "kind": "observer",
+              "expr": "total if not even else total - total % 2",
+              "condition": "not even",
+              "source_lines": [
+                6
+              ],
+              "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+              "channel": 0,
+              "status": "REFUTED",
+              "checked": 170,
+              "faithful_failures": 0,
+              "faithful_minus_failures": 0,
+              "invariance_checked": 85,
+              "invariance_failures": 85,
+              "evaluation_errors": 0,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [],
+                    "even": false
+                  },
+                  "out_plus": 1,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [],
+                    "even": false,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [],
+                    "even": false,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 1,
+                  "observed_minus": 0,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": false
+                  },
+                  "out_plus": 0,
+                  "out_minus": -1,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": false,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": false,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 0,
+                  "observed_minus": -1,
+                  "kind": "invariance"
+                },
+                {
+                  "args": {
+                    "xs": [
+                      0
+                    ],
+                    "even": false
+                  },
+                  "out_plus": 1,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": false,
+                    "total": 1
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      0
+                    ],
+                    "even": false,
+                    "total": 0
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "observed_plus": 1,
+                  "observed_minus": 0,
+                  "kind": "invariance"
+                }
+              ]
+            }
+          ],
+          "guard": {
+            "id": "G",
+            "expr": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "status": "BOUNDED",
+            "checked": 170,
+            "unsound": 0,
+            "incomplete": 0,
+            "evaluation_errors": 0,
+            "exact": true,
+            "shape": "and",
+            "parts": [
+              "even",
+              "sum(xs) % 2 == 0"
+            ],
+            "blame": {
+              "accepts_wrong": [
+                0,
+                0
+              ],
+              "rejects_wrong": [
+                0,
+                0
+              ]
+            },
+            "counterexamples": []
+          },
+          "observer_soundness": {
+            "status": "BOUNDED",
+            "classes": 11,
+            "collisions": 0,
+            "checked": 170,
+            "observers_used": [
+              "O0"
+            ],
+            "reason": "observation determines the real output"
+          },
+          "composition": {
+            "upstream_fixed_point": {
+              "status": "UNKNOWN",
+              "checked": 0,
+              "failures": 0,
+              "counterexamples": [
+                {
+                  "args": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 2,
+                  "out_minus": 0,
+                  "snap_plus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 2
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      1
+                    ],
+                    "even": true,
+                    "total": 1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                },
+                {
+                  "args": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true
+                  },
+                  "out_plus": 0,
+                  "out_minus": -2,
+                  "snap_plus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": 0
+                  },
+                  "snap_minus": {
+                    "xs": [
+                      -1,
+                      0
+                    ],
+                    "even": true,
+                    "total": -1
+                  },
+                  "diagnostic": {
+                    "A_changed_local_state": true
+                  },
+                  "expr_value": false
+                }
+              ],
+              "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U1'])"
+            },
+            "derived_guard": {
+              "reason": "assembled from verified fixed-point and observer conditions",
+              "expr": "((even and sum(xs) % 2 == 0))",
+              "partial_expr": "((even and sum(xs) % 2 == 0))",
+              "channels_covered": [
+                0
+              ],
+              "missing_channels": [],
+              "missing_reasons": [
+                "necessary conditions are not represented in the contract language"
+              ],
+              "fixed_point_relations": [],
+              "observer_relations": [
+                "O0"
+              ],
+              "parts": [
+                {
+                  "relation": "O0",
+                  "op": "and",
+                  "channel": 0,
+                  "text": "even and sum(xs) % 2 == 0",
+                  "source_lines": [
+                    5,
+                    6
+                  ]
+                }
+              ],
+              "semantics": "sufficient_only",
+              "sufficient_conditions": [
+                {
+                  "relation": "O0",
+                  "kind": "observer",
+                  "channel": 0,
+                  "condition": "even and sum(xs) % 2 == 0",
+                  "guarantee": "sufficient for channel invariance"
+                }
+              ],
+              "necessary_conditions": [],
+              "exact_equivalence": "not_established",
+              "complete": false,
+              "guard_complete": false,
+              "unverified_relations": [],
+              "compose_status": "COMPOSED",
+              "status": "BOUNDED",
+              "unsound": 0,
+              "incomplete": 0,
+              "counterexamples": [],
+              "same_as_guard": true,
+              "equivalent_to_declared_guard_on_domain": true
+            }
+          },
+          "behaviour": {
+            "local_inactive": 0,
+            "active_masked": 43,
+            "active_exposed": 127
+          },
+          "witnesses": [
+            {
+              "args": {
+                "xs": [],
+                "even": false
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "even": false,
+                "total": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "even": false,
+                "total": 0
+              }
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": false
+              },
+              "out_plus": 0,
+              "out_minus": -1,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": -1
+              }
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": -2,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": -1
+              }
+            }
+          ],
+          "attribution": {
+            "contrast": {
+              "status": "TESTED",
+              "arguments": {
+                "xs": {
+                  "contexts": 2,
+                  "contexts_with_flip": 1,
+                  "causally_relevant": true,
+                  "example": {
+                    "same_args_except": "xs",
+                    "args": {
+                      "even": true
+                    },
+                    "masked": {
+                      "value": [],
+                      "out_plus": 0,
+                      "out_minus": 0
+                    },
+                    "exposed": {
+                      "value": [
+                        -1
+                      ],
+                      "out_plus": 0,
+                      "out_minus": -2
+                    }
+                  }
+                },
+                "even": {
+                  "contexts": 85,
+                  "contexts_with_flip": 43,
+                  "causally_relevant": true,
+                  "example": {
+                    "same_args_except": "even",
+                    "args": {
+                      "xs": []
+                    },
+                    "masked": {
+                      "value": true,
+                      "out_plus": 0,
+                      "out_minus": 0
+                    },
+                    "exposed": {
+                      "value": false,
+                      "out_plus": 1,
+                      "out_minus": 0
+                    }
+                  }
+                }
+              },
+              "causally_relevant": [
+                "xs",
+                "even"
+              ]
+            },
+            "proof_dag": {
+              "nodes": [
+                {
+                  "id": "T1",
+                  "kind": "target_effect",
+                  "source_lines": [
+                    3,
+                    2
+                  ]
+                },
+                {
+                  "id": "U1",
+                  "kind": "upstream",
+                  "source_lines": [
+                    4,
+                    5
+                  ],
+                  "role": "fixed_point"
+                },
+                {
+                  "id": "U2",
+                  "kind": "upstream",
+                  "source_lines": [
+                    4,
+                    5
+                  ],
+                  "role": "supporting"
+                },
+                {
+                  "id": "U3",
+                  "kind": "upstream",
+                  "source_lines": [
+                    4
+                  ],
+                  "role": "supporting"
+                },
+                {
+                  "id": "O0",
+                  "kind": "observer",
+                  "source_lines": [
+                    5,
+                    6
+                  ],
+                  "channel": 0
+                },
+                {
+                  "id": "O1",
+                  "kind": "observer",
+                  "source_lines": [
+                    5,
+                    6
+                  ],
+                  "channel": 0
+                },
+                {
+                  "id": "O2",
+                  "kind": "observer",
+                  "source_lines": [
+                    6
+                  ],
+                  "channel": 0
+                },
+                {
+                  "id": "G",
+                  "kind": "mask_guard",
+                  "source_lines": [
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "status": "BOUNDED"
+                }
+              ],
+              "edges": [
+                {
+                  "from": "O0",
+                  "to": "G",
+                  "op": "and"
+                },
+                {
+                  "from": "O1",
+                  "to": "G",
+                  "op": "and"
+                },
+                {
+                  "from": "O2",
+                  "to": "G",
+                  "op": "and"
+                }
+              ],
+              "unsupported": [
+                "U1",
+                "U2",
+                "U3"
+              ],
+              "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+            }
+          },
+          "all_relations_pass": false,
+          "status": "OK",
+          "target_line": 3,
+          "source_sha256": null
+        },
+        "classification": "EXACT",
+        "exact": true,
+        "sound": true,
+        "errors": [
+          0,
+          0,
+          0
+        ],
+        "selected": true,
+        "decision": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it; not selected: derived@1=EXACT",
+        "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it; not selected: derived@1=EXACT"
+      },
+      "final": {
+        "classification": "EXACT",
+        "exact": true,
+        "sound": true,
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "evaluation_errors": 0,
+        "invalid": false,
+        "unknown": false,
+        "checked": 170
+      },
+      "best_round_exact": true,
+      "degraded": false,
+      "unresolved": false,
+      "rounds": [
+        {
+          "round": 1,
+          "domain_size": 170,
+          "domain_level": "BOUNDED",
+          "qwen_guard": "even and sum(xs) % 2 == 0",
+          "qwen_status": "BOUNDED",
+          "qwen_classification": "EXACT",
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "evaluation_errors": 0,
+          "invalid_relations": [],
+          "unknown_relations": [
+            "U1",
+            "U2",
+            "O1",
+            "O2"
+          ],
+          "derived_guard": "((even and sum(xs) % 2 == 0))",
+          "derived_status": "BOUNDED",
+          "derived_classification": "EXACT",
+          "selected_guard": "even and sum(xs) % 2 == 0",
+          "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it; not selected: derived@1=EXACT",
+          "all_relations_pass": false
+        }
+      ],
+      "usage": {
+        "calls": 1,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "decode_seconds": 0.0,
+        "wall_seconds": 0.553
+      }
+    }
+  ]
+}

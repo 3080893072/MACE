@@ -1,0 +1,285 @@
+{
+  "case_id": "sd_pygments_style95_cache",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M9_EXCEPTION_FALLBACK",
+  "slug": "pygments-2.17.2",
+  "file": "pygments/style.py",
+  "A_line": 95,
+  "A_code": "                _styles[token] = ndef",
+  "original_sha256": "6fd2f478f9e025b7491dcd8637495943e38645e552d8b2c9ec2c340adaaf6247",
+  "patched_sha256": "75c5eadffce6a72e2a2b2c97861c79d274a8653b36d858b4027c3c7c4abb1a05",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 126,
+      "role": "Exception fallback in style_for_token: on a missing cache entry, rebuild it from the parent entry when the token declares no own style.",
+      "lines": [
+        "try:",
+        "    t = cls._styles[token]",
+        "except KeyError:",
+        "    if cls.styles.get(token, '') != '':",
+        "        raise",
+        "    _sd_parent = cls._styles.get(token.parent)",
+        "    if _sd_parent is None:",
+        "        _sd_parent = cls._styles.get(Token)",
+        "    if _sd_parent is None:",
+        "        _sd_parent = ['', 0, 0, 0, '', '', 0, 0, 0]",
+        "    t = cls._styles[token] = list(_sd_parent)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 126,
+      "end": 138
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_text": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "mask_name_other": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "expose_keyword": {
+        "color": null,
+        "bold": false,
+        "italic": true,
+        "underline": false
+      },
+      "mask_operator_inherited": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      }
+    },
+    "P_MINUS": {
+      "mask_text": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "mask_name_other": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "expose_keyword": {
+        "error": "KeyError: Token.Keyword"
+      },
+      "mask_operator_inherited": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_text": {
+        "error": "KeyError: Token.Text"
+      },
+      "mask_name_other": {
+        "error": "KeyError: Token.Name.Other"
+      },
+      "expose_keyword": {
+        "error": "KeyError: Token.Keyword"
+      },
+      "mask_operator_inherited": {
+        "error": "KeyError: Token.Operator"
+      }
+    },
+    "KEEP_U1": {
+      "mask_text": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "mask_name_other": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "expose_keyword": {
+        "error": "KeyError: Token.Keyword"
+      },
+      "mask_operator_inherited": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      }
+    }
+  },
+  "per_input": {
+    "mask_text": {
+      "plus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "KeyError: Token.Text"
+        },
+        "KEEP_U1": {
+          "color": null,
+          "bold": false,
+          "italic": false,
+          "underline": false
+        }
+      }
+    },
+    "mask_name_other": {
+      "plus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "KeyError: Token.Name.Other"
+        },
+        "KEEP_U1": {
+          "color": null,
+          "bold": false,
+          "italic": false,
+          "underline": false
+        }
+      }
+    },
+    "expose_keyword": {
+      "plus": {
+        "color": null,
+        "bold": false,
+        "italic": true,
+        "underline": false
+      },
+      "p_minus": {
+        "error": "KeyError: Token.Keyword"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "KeyError: Token.Keyword"
+        },
+        "KEEP_U1": {
+          "error": "KeyError: Token.Keyword"
+        }
+      }
+    },
+    "mask_operator_inherited": {
+      "plus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus": {
+        "color": null,
+        "bold": false,
+        "italic": false,
+        "underline": false
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "KeyError: Token.Operator"
+        },
+        "KEEP_U1": {
+          "color": null,
+          "bold": false,
+          "italic": false,
+          "underline": false
+        }
+      }
+    }
+  }
+}

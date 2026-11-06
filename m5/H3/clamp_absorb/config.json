@@ -1,0 +1,85 @@
+{
+  "fixture": {
+    "id": "clamp_absorb",
+    "source": "fixtures/clamp_absorb.py",
+    "entry": "program",
+    "channels": 1,
+    "domain": {
+      "kind": "exhaustive",
+      "args": [
+        {
+          "name": "xs",
+          "sort": "list[int]",
+          "length": [
+            0,
+            3
+          ],
+          "values": [
+            0,
+            1,
+            2,
+            5
+          ]
+        },
+        {
+          "name": "cap",
+          "sort": "bool"
+        }
+      ]
+    },
+    "functions": {},
+    "notes": "Held-out (second batch). A +1 is absorbed by a clamp to 10 only when the clamp is active and the sum has already reached the ceiling."
+  },
+  "fixture_path": "clamp_absorb.json",
+  "model_info": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": ""
+  },
+  "runtime": {
+    "ps": {
+      "models": [
+        {
+          "name": "qwen2.5-coder:32b",
+          "model": "qwen2.5-coder:32b",
+          "size": 21775106702,
+          "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen2",
+            "families": [
+              "qwen2"
+            ],
+            "parameter_size": "32.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-10-30T18:47:26.919183828+08:00",
+          "size_vram": 21775106702,
+          "context_length": 8192,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "seed": 42,
+  "rounds": 3,
+  "modes": [
+    "mace"
+  ],
+  "num_ctx": 8192,
+  "temperature": 0.0,
+  "domain_size": 170,
+  "domain_exhaustive": true,
+  "started_utc": "2026-10-30T10:42:29.052695+00:00"
+}

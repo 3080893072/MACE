@@ -1,0 +1,169 @@
+{
+  "case_id": "sd_docutils_make_id_lower",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/nodes.py",
+  "A_line": 2231,
+  "A_code": "    id = string.lower()",
+  "original_sha256": "eb9710e1fa99375d4954b83711484c2a51a446149b3882e0d080715345a2bea0",
+  "patched_sha256": "b25464e3eab776a548c72a4ff97b725d9eed304d8a1ffa1f640a62d2868c1569",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 2231,
+      "role": "ASCII-only case folding: restores A for identifiers that are entirely ASCII.",
+      "lines": [
+        "if string.isascii():",
+        "    id = string.lower()"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 2231,
+      "end": 2234
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_ascii_mixed_case": {
+        "out": "hello-world"
+      },
+      "expose_non_ascii": {
+        "out": "arger-im-buro"
+      },
+      "control_lowercase": {
+        "out": "already-lower"
+      }
+    },
+    "P_MINUS": {
+      "mask_ascii_mixed_case": {
+        "out": "hello-world"
+      },
+      "expose_non_ascii": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      },
+      "control_lowercase": {
+        "out": "already-lower"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_ascii_mixed_case": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      },
+      "expose_non_ascii": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      },
+      "control_lowercase": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      }
+    },
+    "KEEP_U1": {
+      "mask_ascii_mixed_case": {
+        "out": "hello-world"
+      },
+      "expose_non_ascii": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      },
+      "control_lowercase": {
+        "out": "already-lower"
+      }
+    }
+  },
+  "per_input": {
+    "mask_ascii_mixed_case": {
+      "plus": {
+        "out": "hello-world"
+      },
+      "p_minus": {
+        "out": "hello-world"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "out": "hello-world"
+        }
+      }
+    },
+    "expose_non_ascii": {
+      "plus": {
+        "out": "arger-im-buro"
+      },
+      "p_minus": {
+        "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+        }
+      }
+    },
+    "control_lowercase": {
+      "plus": {
+        "out": "already-lower"
+      },
+      "p_minus": {
+        "out": "already-lower"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'id' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "out": "already-lower"
+        }
+      }
+    }
+  }
+}

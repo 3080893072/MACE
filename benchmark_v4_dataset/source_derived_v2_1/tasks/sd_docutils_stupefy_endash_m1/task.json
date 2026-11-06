@@ -1,0 +1,57 @@
+{
+  "task_id": "sd_docutils_stupefy_endash_m1",
+  "project": "docutils",
+  "version": "0.20.1",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M1_SINGLE_OPERATION",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "stupefyEntities() maps every en dash back to ASCII '-'. The patch rewrites one occurrence only, so a single-dash string is masked while a two-dash string keeps the second en dash (the exposing witness).",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "docutils/utils/smartquotes.py",
+    "line": 826,
+    "function": "stupefyEntities",
+    "code": "    text = text.replace(smart.endash, \"-\")",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "stupefyEntities"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "docutils.utils.smartquotes.stupefyEntities(text)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_one_endash",
+      "role": "masking",
+      "description": "text containing one en dash"
+    },
+    {
+      "id": "expose_two_endashes",
+      "role": "exposing",
+      "description": "text containing two en dashes: only the first is repaired"
+    },
+    {
+      "id": "control_plain",
+      "role": "control",
+      "description": "text with no special dash"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

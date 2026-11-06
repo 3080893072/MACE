@@ -1,0 +1,93 @@
+== ctrl_01 (controlled)
+  A guard='(mode == 0 and x == 0) or (mode == 0 and x == 1) or (mode == 0 and x == 2)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['B']] gold=[['B']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[] gold=[] exact=True kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=3
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== ctrl_02 (controlled)
+  A guard='(x == 1 and c == 0 and d == 0) or (x == 2 and c == 0 and d == 0) or (x == 3 and c == 0 and d == 0) or (x == 4 and c == 0 and d == 0) or (x == 5 and c == 0 and d == 0)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['C', 'D']] gold=[['C', 'D']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[] gold=[] exact=True kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=19
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== ctrl_03 (controlled)
+  A guard='(p == 0 and q == 1 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 1 and x == 3 and c == 0 and d == 0) or (p == 1 and q == 1 and x == 4 and c == 0 and d == 0)' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B absorbers claimed=[['B'], ['E'], ['C', 'D']] gold=[['B'], ['E'], ['C', 'D']] P=1.00 R=1.00 exact=True
+  B coexisting claimed=[['B', 'E']] gold=[['B', 'E']] exact=True kind_acc=1.00 evidence_acc=1.00
+  C verdict=valid_witnesses_found valid=2 invalid=0 exposed=6
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== real_formatdef (real)
+  A guard='True' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B not applicable: No safely controllable operation exists in this real task; causal attribution is recorded as unconfirmed.
+  C verdict=correctly_none_exists valid=0 invalid=0 exposed=0
+  D global=masked gold=masked agree=True per_test=1.00 named_ops_all_valid=True
+== real_setdiff (real)
+  A guard='True' status=BOUNDED sound=True complete=True exact=True false_accept=0 false_reject=0
+  B not applicable: No safely controllable operation exists in this real task; causal attribution is recorded as unconfirmed.
+  C verdict=correctly_none_exists valid=0 invalid=0 exposed=0
+  D global=not_covered gold=not_covered agree=True per_test=1.00 named_ops_all_valid=True
+summary: {"controlled": {"tasks": 3, "guard_exact": 3, "guard_sound": 3, "guard_complete": 3, "masking_sets_exact": 3, "witness_correct": 3, "test_gap_global_agree": 3, "test_gap_per_test_accuracy_mean": 1.0}, "real": {"tasks": 2, "guard_exact": 2, "guard_sound": 2, "guard_complete": 2, "masking_sets_exact": 0, "witness_correct": 2, "test_gap_global_agree": 2, "test_gap_per_test_accuracy_mean": 1.0}, "note": "Controlled and real tasks are reported separately; the aggregate must not be presented as real-project generalization."}
+execute ctrl_01 case_0000 args={'mode': 0, 'x': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_01 case_0001 args={'mode': 0, 'x': 1} plus=['return', ['int', 1]] minus=['return', ['int', 1]] equal=True
+execute ctrl_01 case_0002 args={'mode': 0, 'x': 2} plus=['return', ['int', 2]] minus=['return', ['int', 2]] equal=True
+execute ctrl_01 case_0003 args={'mode': 1, 'x': 0} plus=['return', ['int', 1]] minus=['return', ['int', 0]] equal=False
+execute ctrl_01 case_0004 args={'mode': 1, 'x': 1} plus=['return', ['int', 2]] minus=['return', ['int', 1]] equal=False
+execute ctrl_01 case_0005 args={'mode': 1, 'x': 2} plus=['return', ['int', 3]] minus=['return', ['int', 2]] equal=False
+execute ctrl_02 case_0000 args={'x': 1, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_02 case_0001 args={'x': 1, 'c': 0, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0002 args={'x': 1, 'c': 1, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0003 args={'x': 1, 'c': 1, 'd': 1} plus=['return', ['int', 7]] minus=['return', ['int', 1]] equal=False
+execute ctrl_02 case_0004 args={'x': 2, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_02 case_0005 args={'x': 2, 'c': 0, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0006 args={'x': 2, 'c': 1, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0007 args={'x': 2, 'c': 1, 'd': 1} plus=['return', ['int', 8]] minus=['return', ['int', 2]] equal=False
+execute ctrl_02 case_0008 args={'x': 3, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_02 case_0009 args={'x': 3, 'c': 0, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0010 args={'x': 3, 'c': 1, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0011 args={'x': 3, 'c': 1, 'd': 1} plus=['return', ['int', 9]] minus=['return', ['int', 3]] equal=False
+execute ctrl_02 case_0012 args={'x': 4, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_02 case_0013 args={'x': 4, 'c': 0, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0014 args={'x': 4, 'c': 1, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0015 args={'x': 4, 'c': 1, 'd': 1} plus=['return', ['int', 10]] minus=['return', ['int', 4]] equal=False
+execute ctrl_02 case_0016 args={'x': 5, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_02 case_0017 args={'x': 5, 'c': 0, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0018 args={'x': 5, 'c': 1, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0019 args={'x': 5, 'c': 1, 'd': 1} plus=['return', ['int', 11]] minus=['return', ['int', 5]] equal=False
+execute ctrl_02 case_0020 args={'x': 6, 'c': 0, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0021 args={'x': 6, 'c': 0, 'd': 1} plus=['return', ['int', 12]] minus=['return', ['int', 6]] equal=False
+execute ctrl_02 case_0022 args={'x': 6, 'c': 1, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_02 case_0023 args={'x': 6, 'c': 1, 'd': 1} plus=['return', ['int', 12]] minus=['return', ['int', 6]] equal=False
+execute ctrl_03 case_0000 args={'p': 0, 'q': 1, 'x': 3, 'c': 1, 'd': 1} plus=['return', ['int', 3]] minus=['return', ['int', 3]] equal=True
+execute ctrl_03 case_0001 args={'p': 0, 'q': 1, 'x': 4, 'c': 1, 'd': 1} plus=['return', ['int', 4]] minus=['return', ['int', 4]] equal=True
+execute ctrl_03 case_0002 args={'p': 0, 'q': 1, 'x': 5, 'c': 1, 'd': 1} plus=['return', ['int', 5]] minus=['return', ['int', 5]] equal=True
+execute ctrl_03 case_0003 args={'p': 0, 'q': 1, 'x': 6, 'c': 1, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 6]] equal=True
+execute ctrl_03 case_0004 args={'p': 1, 'q': 0, 'x': 3, 'c': 1, 'd': 1} plus=['return', ['int', 3]] minus=['return', ['int', 3]] equal=True
+execute ctrl_03 case_0005 args={'p': 1, 'q': 0, 'x': 4, 'c': 1, 'd': 1} plus=['return', ['int', 4]] minus=['return', ['int', 4]] equal=True
+execute ctrl_03 case_0006 args={'p': 1, 'q': 0, 'x': 5, 'c': 1, 'd': 1} plus=['return', ['int', 5]] minus=['return', ['int', 5]] equal=True
+execute ctrl_03 case_0007 args={'p': 1, 'q': 0, 'x': 6, 'c': 1, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 6]] equal=True
+execute ctrl_03 case_0008 args={'p': 0, 'q': 0, 'x': 3, 'c': 1, 'd': 1} plus=['return', ['int', 3]] minus=['return', ['int', 3]] equal=True
+execute ctrl_03 case_0009 args={'p': 0, 'q': 0, 'x': 4, 'c': 1, 'd': 1} plus=['return', ['int', 4]] minus=['return', ['int', 4]] equal=True
+execute ctrl_03 case_0010 args={'p': 0, 'q': 0, 'x': 5, 'c': 1, 'd': 1} plus=['return', ['int', 5]] minus=['return', ['int', 5]] equal=True
+execute ctrl_03 case_0011 args={'p': 0, 'q': 0, 'x': 6, 'c': 1, 'd': 1} plus=['return', ['int', 6]] minus=['return', ['int', 6]] equal=True
+execute ctrl_03 case_0012 args={'p': 1, 'q': 1, 'x': 3, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_03 case_0013 args={'p': 1, 'q': 1, 'x': 4, 'c': 0, 'd': 0} plus=['return', ['int', 0]] minus=['return', ['int', 0]] equal=True
+execute ctrl_03 case_0014 args={'p': 1, 'q': 1, 'x': 5, 'c': 0, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_03 case_0015 args={'p': 1, 'q': 1, 'x': 6, 'c': 0, 'd': 0} plus=['return', ['int', 7]] minus=['return', ['int', 0]] equal=False
+execute ctrl_03 case_0016 args={'p': 1, 'q': 1, 'x': 3, 'c': 1, 'd': 1} plus=['return', ['int', 7]] minus=['return', ['int', 3]] equal=False
+execute ctrl_03 case_0017 args={'p': 1, 'q': 1, 'x': 4, 'c': 1, 'd': 1} plus=['return', ['int', 8]] minus=['return', ['int', 4]] equal=False
+execute ctrl_03 case_0018 args={'p': 1, 'q': 1, 'x': 5, 'c': 1, 'd': 1} plus=['return', ['int', 9]] minus=['return', ['int', 5]] equal=False
+execute ctrl_03 case_0019 args={'p': 1, 'q': 1, 'x': 6, 'c': 1, 'd': 1} plus=['return', ['int', 10]] minus=['return', ['int', 6]] equal=False
+execute real_formatdef function1 args={'func': <function _function1 at 0x0000023D09499940>} plus=['return', ['str', '_function1()']] minus=['return', ['str', '_function1()']] equal=True
+execute real_formatdef function2 args={'func': <function _function2 at 0x0000023D09499BC0>} plus=['return', ['str', '_function2(arg1)']] minus=['return', ['str', '_function2(arg1)']] equal=True
+execute real_formatdef function3 args={'func': <function _function3 at 0x0000023D09499C60>} plus=['return', ['str', "_function3(arg1, arg2='qwe')"]] minus=['return', ['str', "_function3(arg1, arg2='qwe')"]] equal=True
+execute real_formatdef function4 args={'func': <function _function4 at 0x0000023D09499D00>} plus=['return', ['str', '_function4(arg1, *args, **kwargs)']] minus=['return', ['str', '_function4(arg1, *args, **kwargs)']] equal=True
+execute real_formatdef function5 args={'func': <function _function5 at 0x0000023D09499DA0>} plus=['return', ['str', '_function5(a, b=2, *, c=3)']] minus=['return', ['str', '_function5(a, b=2, *, c=3)']] equal=True
+execute real_formatdef function6 args={'func': <function _function6 at 0x0000023D09499E40>} plus=['return', ['str', '_function6(*args, **kwargs)']] minus=['return', ['str', '_function6(*args, **kwargs)']] equal=True
+execute real_formatdef function7 args={'func': <function _function7 at 0x0000023D09499EE0>} plus=['return', ['str', "_function7(x: 'int', y: 'str' = 'z') -> 'bool'"]] minus=['return', ['str', "_function7(x: 'int', y: 'str' = 'z') -> 'bool'"]] equal=True
+execute real_formatdef function8 args={'func': <function _function8 at 0x0000023D09499F80>} plus=['return', ['str', '_function8()']] minus=['return', ['str', '_function8()']] equal=True
+execute real_setdiff empty_empty args={'declared': [], 'provided': {}} plus=['return', ['seq', []]] minus=['return', ['seq', []]] equal=True
+execute real_setdiff ab_a args={'declared': ['a', 'b'], 'provided': {'a': 1}} plus=['return', ['seq', [['str', 'b']]]] minus=['return', ['seq', [['str', 'b']]]] equal=True
+execute real_setdiff ab_ab args={'declared': ['a', 'b'], 'provided': {'a': 1, 'b': 2}} plus=['return', ['seq', []]] minus=['return', ['seq', []]] equal=True
+execute real_setdiff a_extra args={'declared': ['a'], 'provided': {'a': 1, 'b': 2}} plus=['return', ['seq', []]] minus=['return', ['seq', []]] equal=True
+execute real_setdiff abc_none args={'declared': ['a', 'b', 'c'], 'provided': {}} plus=['return', ['seq', [['str', 'a'], ['str', 'b'], ['str', 'c']]]] minus=['return', ['seq', [['str', 'a'], ['str', 'b'], ['str', 'c']]]] equal=True
+execute real_setdiff a_empty args={'declared': ['a'], 'provided': {}} plus=['return', ['seq', [['str', 'a']]]] minus=['return', ['seq', [['str', 'a']]]] equal=True

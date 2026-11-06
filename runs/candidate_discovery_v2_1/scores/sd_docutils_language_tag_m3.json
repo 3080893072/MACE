@@ -1,0 +1,386 @@
+{
+  "task_id": "sd_docutils_language_tag_m3",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_two_separators",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "confirmed": [
+        [
+          "docutils/utils/__init__.py:706-706",
+          "docutils/utils/__init__.py:709-709",
+          "docutils/utils/__init__.py:712-712"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Operations 706, 709, 712, and 715 collectively ensure the tag is normalized, making the deletion of 704 unobservable.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Operation 706 ensures the tag is in lowercase, which is also handled by subsequent operations 709, 712, and 715.",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:709-709"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Operation 709 replaces the first occurrence of '-' with '_', which is part of the normalization process also influenced by 706, 712, and 715.",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Operation 712 replaces the second occurrence of '-' with '_', which is part of the normalization process also influenced by 706, 709, and 715.",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Operation 715 handles the special case of singletons in the tag, which is part of the normalization process also influenced by 706, 709, and 712.",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "source": "qwen_combo_3",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_combo_3",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:712-712"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:706-706",
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_combo_3",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:709-709"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/__init__.py:709-709",
+            "docutils/utils/__init__.py:712-712",
+            "docutils/utils/__init__.py:715-715"
+          ],
+          "source": "qwen_combo_3",
+          "disabled_operations": [
+            "docutils/utils/__init__.py:706-706"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 1,
+    "c0_probes": 2,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 0.667,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "docutils/utils/__init__.py:715-715",
+        "docutils/utils/__init__.py:716-716",
+        "docutils/utils/__init__.py:724-724"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 3
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "docutils/utils/__init__.py:715-715",
+        "docutils/utils/__init__.py:716-716",
+        "docutils/utils/__init__.py:717-717",
+        "docutils/utils/__init__.py:719-719",
+        "docutils/utils/__init__.py:722-722",
+        "docutils/utils/__init__.py:723-723",
+        "docutils/utils/__init__.py:724-724"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 7
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "docutils/utils/__init__.py:715-715"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "docutils/utils/__init__.py:715-715"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    }
+  }
+}

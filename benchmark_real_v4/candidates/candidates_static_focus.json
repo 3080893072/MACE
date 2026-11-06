@@ -1,0 +1,1181 @@
+{
+  "protocol": "benchmark_real_v4",
+  "projects": {
+    "click-8.4.1": {
+      "project": "click",
+      "version": "8.4.1",
+      "root": "<local-path>",
+      "scan_files": [
+        "src/click/_compat.py",
+        "src/click/_termui_impl.py",
+        "src/click/_textwrap.py",
+        "src/click/_utils.py",
+        "src/click/core.py",
+        "src/click/decorators.py",
+        "src/click/exceptions.py",
+        "src/click/formatting.py",
+        "src/click/globals.py",
+        "src/click/parser.py",
+        "src/click/shell_completion.py",
+        "src/click/termui.py",
+        "src/click/testing.py",
+        "src/click/types.py",
+        "src/click/utils.py"
+      ],
+      "source_hash": "d90956eeee114442b3257e83722d2dc43d5863d98a06f5eef87d11b9878a9fa6",
+      "python": "<local-path>",
+      "pytest": "7.4.0",
+      "suite_note": "click 8.4.1 released tests/ suite, 1562 passed, 94 skipped, 1 xfailed in the isolated venv."
+    },
+    "itsdangerous-2.0.1": {
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "root": "<local-path>",
+      "scan_files": [
+        "src/itsdangerous/encoding.py",
+        "src/itsdangerous/jws.py",
+        "src/itsdangerous/serializer.py",
+        "src/itsdangerous/signer.py",
+        "src/itsdangerous/timed.py",
+        "src/itsdangerous/url_safe.py"
+      ],
+      "source_hash": "8e52aaa06bf517b14e549b1abe23a58c5b79c4856db7c0ab9b418c40bbef28e6",
+      "python": "<local-path>",
+      "pytest": "7.4.0",
+      "suite_note": "itsdangerous 2.0.1 released tests/ suite, 421 tests, green in the isolated venv."
+    },
+    "packaging-23.1": {
+      "project": "packaging",
+      "version": "23.1",
+      "root": "<local-path>",
+      "scan_files": [
+        "src/packaging/_manylinux.py",
+        "src/packaging/_musllinux.py",
+        "src/packaging/_parser.py",
+        "src/packaging/markers.py",
+        "src/packaging/requirements.py",
+        "src/packaging/specifiers.py",
+        "src/packaging/tags.py",
+        "src/packaging/utils.py",
+        "src/packaging/version.py"
+      ],
+      "source_hash": "5127a6998670b61dd6a7b560af6680027fd893ba0765accb854e86aab178aa34",
+      "python": "<local-path>",
+      "pytest": "7.4.0",
+      "suite_note": "packaging 23.1 released tests/ suite, 26430 passed and 1 skipped in the isolated venv."
+    },
+    "pyparsing-3.0.9": {
+      "project": "pyparsing",
+      "version": "3.0.9",
+      "root": "<local-path>",
+      "scan_files": [
+        "pyparsing/__init__.py",
+        "pyparsing/core.py",
+        "pyparsing/exceptions.py",
+        "pyparsing/helpers.py",
+        "pyparsing/results.py",
+        "pyparsing/unicode.py",
+        "pyparsing/util.py"
+      ],
+      "source_hash": "03c9af8046661dbf2e3c7287645b801c6492a62e3de4cb787f8c79df25bc885c",
+      "python": "<local-path>",
+      "pytest": "7.4.0",
+      "suite_note": "pyparsing 3.0.9 released tests/ suite.  test_diagram.py is excluded because the optional railroad dependency is absent; the six testEmptyExpressionsAreHandledProperly variants on this Python (all import pyparsing.diagram -> jinja2) are deselected.  Applicable suite: 1470 passed."
+    },
+    "six-1.16.0": {
+      "project": "six",
+      "version": "1.16.0",
+      "root": "<local-path>",
+      "scan_files": [
+        "six.py"
+      ],
+      "source_hash": "2c85fde67d875b33ec0ef2f36f4d1773a9b2e2cbd6de5edf6d735c062bd61c72",
+      "python": "<local-path>",
+      "pytest": "7.4.0",
+      "suite_note": "six 1.16.0 test_six.py.  test_getoutput (interpreter repr changed on this Python) and test_move_items[dbm_ndbm] (optional dbm backend absent) are deselected as environment-dependent.  Applicable suite: 198 passed, 1 skipped."
+    }
+  },
+  "candidates": [
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/jws.py:77:payload",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/jws.py",
+      "function": "load_payload",
+      "variable": "payload",
+      "target_A": {
+        "line": 77,
+        "kind": "Assign",
+        "code": "payload = want_bytes(payload)"
+      },
+      "later_assignments": [
+        {
+          "line": 111,
+          "kind": "Assign",
+          "code": "payload = super().load_payload(json_payload, serializer=serializer)",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        79,
+        82
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "91e02f1d132278b0484113ecbcc5385bc0903dc682a8353951cf299627f2e4a5"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/serializer.py:148:is_text",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/serializer.py",
+      "function": "load_payload",
+      "variable": "is_text",
+      "target_A": {
+        "line": 148,
+        "kind": "Assign",
+        "code": "is_text = self.is_text_serializer"
+      },
+      "later_assignments": [
+        {
+          "line": 150,
+          "kind": "Assign",
+          "code": "is_text = is_text_serializer(serializer)",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "cd2e99ceda280bfeea17074ed78d0d9c8e4c56fa8a24415b59bb0e71738efff6"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/serializer.py:192:kwargs",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/serializer.py",
+      "function": "iter_unsigners",
+      "variable": "kwargs",
+      "target_A": {
+        "line": 192,
+        "kind": "Assign",
+        "code": "kwargs = fallback"
+      },
+      "later_assignments": [
+        {
+          "line": 197,
+          "kind": "Assign",
+          "code": "kwargs = self.signer_kwargs",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": true,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "cd2e99ceda280bfeea17074ed78d0d9c8e4c56fa8a24415b59bb0e71738efff6"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/serializer.py:228:last_exception",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/serializer.py",
+      "function": "loads",
+      "variable": "last_exception",
+      "target_A": {
+        "line": 228,
+        "kind": "Assign",
+        "code": "last_exception = None"
+      },
+      "later_assignments": [
+        {
+          "line": 234,
+          "kind": "Assign",
+          "code": "last_exception = err",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "cd2e99ceda280bfeea17074ed78d0d9c8e4c56fa8a24415b59bb0e71738efff6"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/signer.py:145:salt",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/signer.py",
+      "function": "__init__",
+      "variable": "salt",
+      "target_A": {
+        "line": 145,
+        "kind": "Assign",
+        "code": "salt = want_bytes(salt)"
+      },
+      "later_assignments": [
+        {
+          "line": 147,
+          "kind": "Assign",
+          "code": "salt = b\"itsdangerous.Signer\"",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4141f4897d229fe393a6d3005ca539cd633098e0979f57ec0ecb9b5e219d14de"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/signer.py:187:secret_key",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/signer.py",
+      "function": "derive_key",
+      "variable": "secret_key",
+      "target_A": {
+        "line": 187,
+        "kind": "Assign",
+        "code": "secret_key = self.secret_keys[-1]"
+      },
+      "later_assignments": [
+        {
+          "line": 189,
+          "kind": "Assign",
+          "code": "secret_key = want_bytes(secret_key)",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4141f4897d229fe393a6d3005ca539cd633098e0979f57ec0ecb9b5e219d14de"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/timed.py:51:value",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/timed.py",
+      "function": "sign",
+      "variable": "value",
+      "target_A": {
+        "line": 51,
+        "kind": "Assign",
+        "code": "value = want_bytes(value)"
+      },
+      "later_assignments": [
+        {
+          "line": 54,
+          "kind": "Assign",
+          "code": "value = value + sep + timestamp",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "bdbf81679ed6c87775861f606d769ee2a66128da99202b837e52c835cb29f626"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/timed.py:95:result",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/timed.py",
+      "function": "unsign",
+      "variable": "result",
+      "target_A": {
+        "line": 95,
+        "kind": "Assign",
+        "code": "result = super().unsign(signed_value)"
+      },
+      "later_assignments": [
+        {
+          "line": 99,
+          "kind": "Assign",
+          "code": "result = e.payload or b\"\"",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": true,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "bdbf81679ed6c87775861f606d769ee2a66128da99202b837e52c835cb29f626"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/timed.py:96:sig_error",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/timed.py",
+      "function": "unsign",
+      "variable": "sig_error",
+      "target_A": {
+        "line": 96,
+        "kind": "Assign",
+        "code": "sig_error = None"
+      },
+      "later_assignments": [
+        {
+          "line": 98,
+          "kind": "Assign",
+          "code": "sig_error = e",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": true,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "bdbf81679ed6c87775861f606d769ee2a66128da99202b837e52c835cb29f626"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/timed.py:115:ts_int",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/timed.py",
+      "function": "unsign",
+      "variable": "ts_int",
+      "target_A": {
+        "line": 115,
+        "kind": "AnnAssign",
+        "code": "ts_int: _t_opt_int = None"
+      },
+      "later_assignments": [
+        {
+          "line": 119,
+          "kind": "Assign",
+          "code": "ts_int = bytes_to_int(base64_decode(ts_bytes))",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "bdbf81679ed6c87775861f606d769ee2a66128da99202b837e52c835cb29f626"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/timed.py:116:ts_dt",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/timed.py",
+      "function": "unsign",
+      "variable": "ts_dt",
+      "target_A": {
+        "line": 116,
+        "kind": "AnnAssign",
+        "code": "ts_dt: _t.Optional[datetime] = None"
+      },
+      "later_assignments": [
+        {
+          "line": 127,
+          "kind": "Assign",
+          "code": "ts_dt = self.timestamp_to_datetime(ts_int)",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "bdbf81679ed6c87775861f606d769ee2a66128da99202b837e52c835cb29f626"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/timed.py:199:last_exception",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/timed.py",
+      "function": "loads",
+      "variable": "last_exception",
+      "target_A": {
+        "line": 199,
+        "kind": "Assign",
+        "code": "last_exception = None"
+      },
+      "later_assignments": [
+        {
+          "line": 217,
+          "kind": "Assign",
+          "code": "last_exception = err",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "bdbf81679ed6c87775861f606d769ee2a66128da99202b837e52c835cb29f626"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/url_safe.py:27:decompress",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/url_safe.py",
+      "function": "load_payload",
+      "variable": "decompress",
+      "target_A": {
+        "line": 27,
+        "kind": "Assign",
+        "code": "decompress = False"
+      },
+      "later_assignments": [
+        {
+          "line": 31,
+          "kind": "Assign",
+          "code": "decompress = True",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "58b22272776c5efcd2d9e757ed71fc6e3a3d9eeae013e6eb828f75e42b0047d8"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/url_safe.py:34:json",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/url_safe.py",
+      "function": "load_payload",
+      "variable": "json",
+      "target_A": {
+        "line": 34,
+        "kind": "Assign",
+        "code": "json = base64_decode(payload)"
+      },
+      "later_assignments": [
+        {
+          "line": 43,
+          "kind": "Assign",
+          "code": "json = zlib.decompress(json)",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": true,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "58b22272776c5efcd2d9e757ed71fc6e3a3d9eeae013e6eb828f75e42b0047d8"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/url_safe.py:53:json",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/url_safe.py",
+      "function": "dump_payload",
+      "variable": "json",
+      "target_A": {
+        "line": 53,
+        "kind": "Assign",
+        "code": "json = super().dump_payload(obj)"
+      },
+      "later_assignments": [
+        {
+          "line": 58,
+          "kind": "Assign",
+          "code": "json = compressed",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        55,
+        57
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "58b22272776c5efcd2d9e757ed71fc6e3a3d9eeae013e6eb828f75e42b0047d8"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/url_safe.py:54:is_compressed",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/url_safe.py",
+      "function": "dump_payload",
+      "variable": "is_compressed",
+      "target_A": {
+        "line": 54,
+        "kind": "Assign",
+        "code": "is_compressed = False"
+      },
+      "later_assignments": [
+        {
+          "line": 59,
+          "kind": "Assign",
+          "code": "is_compressed = True",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "58b22272776c5efcd2d9e757ed71fc6e3a3d9eeae013e6eb828f75e42b0047d8"
+    },
+    {
+      "candidate_id": "itsdangerous-2.0.1:src/itsdangerous/url_safe.py:61:base64d",
+      "project_id": "itsdangerous-2.0.1",
+      "project": "itsdangerous",
+      "version": "2.0.1",
+      "file": "src/itsdangerous/url_safe.py",
+      "function": "dump_payload",
+      "variable": "base64d",
+      "target_A": {
+        "line": 61,
+        "kind": "Assign",
+        "code": "base64d = base64_encode(json)"
+      },
+      "later_assignments": [
+        {
+          "line": 64,
+          "kind": "Assign",
+          "code": "base64d = b\".\" + base64d",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "58b22272776c5efcd2d9e757ed71fc6e3a3d9eeae013e6eb828f75e42b0047d8"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:154:new_attr",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "__init__",
+      "variable": "new_attr",
+      "target_A": {
+        "line": 154,
+        "kind": "Assign",
+        "code": "new_attr = name"
+      },
+      "later_assignments": [
+        {
+          "line": 156,
+          "kind": "Assign",
+          "code": "new_attr = old_attr",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:211:mod",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "load_module",
+      "variable": "mod",
+      "target_A": {
+        "line": 211,
+        "kind": "Assign",
+        "code": "mod = self.__get_module(fullname)"
+      },
+      "later_assignments": [
+        {
+          "line": 213,
+          "kind": "Assign",
+          "code": "mod = mod._resolve()",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [
+        212
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": true,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:716:value",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "reraise",
+      "variable": "value",
+      "target_A": {
+        "line": 716,
+        "kind": "Assign",
+        "code": "value = tp()"
+      },
+      "later_assignments": [
+        {
+          "line": 721,
+          "kind": "Assign",
+          "code": "value = None",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        717,
+        718,
+        719
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": true,
+        "in_if": true,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:731:_locs_",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "exec_",
+      "variable": "_locs_",
+      "target_A": {
+        "line": 731,
+        "kind": "Assign",
+        "code": "_locs_ = frame.f_locals"
+      },
+      "later_assignments": [
+        {
+          "line": 734,
+          "kind": "Assign",
+          "code": "_locs_ = _globs_",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        733
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:767:data",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "write",
+      "variable": "data",
+      "target_A": {
+        "line": 767,
+        "kind": "Assign",
+        "code": "data = str(data)"
+      },
+      "later_assignments": [
+        {
+          "line": 775,
+          "kind": "Assign",
+          "code": "data = data.encode(fp.encoding, errors)",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [
+        770
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": true,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:772:errors",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "write",
+      "variable": "errors",
+      "target_A": {
+        "line": 772,
+        "kind": "Assign",
+        "code": "errors = getattr(fp, \"errors\", None)"
+      },
+      "later_assignments": [
+        {
+          "line": 774,
+          "kind": "Assign",
+          "code": "errors = \"strict\"",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        773
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:777:want_unicode",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "want_unicode",
+      "target_A": {
+        "line": 777,
+        "kind": "Assign",
+        "code": "want_unicode = False"
+      },
+      "later_assignments": [
+        {
+          "line": 781,
+          "kind": "Assign",
+          "code": "want_unicode = True",
+          "reads_A": false
+        },
+        {
+          "line": 787,
+          "kind": "Assign",
+          "code": "want_unicode = True",
+          "reads_A": false
+        },
+        {
+          "line": 795,
+          "kind": "Assign",
+          "code": "want_unicode = True",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:778:sep",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "sep",
+      "target_A": {
+        "line": 778,
+        "kind": "Assign",
+        "code": "sep = kwargs.pop(\"sep\", None)"
+      },
+      "later_assignments": [
+        {
+          "line": 804,
+          "kind": "Assign",
+          "code": "sep = space",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        779,
+        780,
+        782,
+        803
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:781:want_unicode",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "want_unicode",
+      "target_A": {
+        "line": 781,
+        "kind": "Assign",
+        "code": "want_unicode = True"
+      },
+      "later_assignments": [
+        {
+          "line": 787,
+          "kind": "Assign",
+          "code": "want_unicode = True",
+          "reads_A": false
+        },
+        {
+          "line": 795,
+          "kind": "Assign",
+          "code": "want_unicode = True",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:784:end",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "end",
+      "target_A": {
+        "line": 784,
+        "kind": "Assign",
+        "code": "end = kwargs.pop(\"end\", None)"
+      },
+      "later_assignments": [
+        {
+          "line": 806,
+          "kind": "Assign",
+          "code": "end = newline",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        785,
+        786,
+        788,
+        805
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:787:want_unicode",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "want_unicode",
+      "target_A": {
+        "line": 787,
+        "kind": "Assign",
+        "code": "want_unicode = True"
+      },
+      "later_assignments": [
+        {
+          "line": 795,
+          "kind": "Assign",
+          "code": "want_unicode = True",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        792
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:798:newline",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "newline",
+      "target_A": {
+        "line": 798,
+        "kind": "Assign",
+        "code": "newline = unicode(\"\\n\")"
+      },
+      "later_assignments": [
+        {
+          "line": 801,
+          "kind": "Assign",
+          "code": "newline = \"\\n\"",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:799:space",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "print_",
+      "variable": "space",
+      "target_A": {
+        "line": 799,
+        "kind": "Assign",
+        "code": "space = unicode(\" \")"
+      },
+      "later_assignments": [
+        {
+          "line": 802,
+          "kind": "Assign",
+          "code": "space = \" \"",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": false,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:867:resolved_bases",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "__new__",
+      "variable": "resolved_bases",
+      "target_A": {
+        "line": 867,
+        "kind": "Assign",
+        "code": "resolved_bases = types.resolve_bases(bases)"
+      },
+      "later_assignments": [
+        {
+          "line": 871,
+          "kind": "Assign",
+          "code": "resolved_bases = bases",
+          "reads_A": false
+        }
+      ],
+      "read_between_A_and_first_later": [
+        868
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": true,
+        "read_before_later_write": true,
+        "later_write_reads_A": false,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "candidate_id": "six-1.16.0:six.py:884:slots",
+      "project_id": "six-1.16.0",
+      "project": "six",
+      "version": "1.16.0",
+      "file": "six.py",
+      "function": "wrapper",
+      "variable": "slots",
+      "target_A": {
+        "line": 884,
+        "kind": "Assign",
+        "code": "slots = orig_vars.get('__slots__')"
+      },
+      "later_assignments": [
+        {
+          "line": 887,
+          "kind": "Assign",
+          "code": "slots = [slots]",
+          "reads_A": true
+        }
+      ],
+      "read_between_A_and_first_later": [
+        885,
+        886
+      ],
+      "static_shape": {
+        "in_loop": false,
+        "in_try": false,
+        "in_if": false,
+        "read_before_later_write": true,
+        "later_write_reads_A": true,
+        "later_write_is_plain_assign": true
+      },
+      "source_sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    }
+  ],
+  "counts": {
+    "six-1.16.0": 15,
+    "itsdangerous-2.0.1": 17
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "sd_docutils_stupefy_emdash_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 827,
+    "A_code": "    text = text.replace(smart.emdash, \"--\")"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 827,
+      "indent": 4,
+      "role": "First em-dash leg: rewrites one em dash.",
+      "lines": [
+        "text = text.replace(smart.emdash, \"--\", 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 827,
+      "indent": 4,
+      "role": "Second em-dash leg: rewrites one further em dash.",
+      "lines": [
+        "text = text.replace(smart.emdash, \"--\", 1)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_stupefy_emdash_m2.py",
+  "inputs": {
+    "mask_two_emdashes": "text containing two em dashes",
+    "expose_three_emdashes": "text containing three em dashes: one survives",
+    "control_plain": "text with no special dash"
+  },
+  "rationale": "stupefyEntities() maps every em dash to '--'. Each leg converts at most one occurrence, so two legs are jointly required for a two-dash string; a three-dash string keeps one em dash and exposes the bounded repair."
+}

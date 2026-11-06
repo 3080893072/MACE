@@ -1,0 +1,132 @@
+{
+  "task_id": "werkzeug_bind_server_name_lower",
+  "project_id": "werkzeug-2.2.3",
+  "target_operation": {
+    "file": "src/werkzeug/routing/map.py",
+    "line": 307,
+    "code": "server_name = server_name.lower()",
+    "function": "Map.bind_to_environ",
+    "note": "normalizes an explicitly supplied server name before subdomain comparison"
+  },
+  "candidate_universe": [
+    {
+      "id": "bind_relower",
+      "file": "src/werkzeug/routing/map.py",
+      "line": 219,
+      "code": "server_name = server_name.lower()",
+      "kind": "assignment",
+      "role": "downstream re-derivation of the same normalization in Map.bind"
+    }
+  ],
+  "probe": "probe_werkzeug_bind_server_name.py",
+  "inputs": {
+    "expose_subdomain_path": {
+      "role": "exposing",
+      "payload": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "executable": {
+        "EMPTY": true,
+        "bind_relower": true
+      },
+      "masked_strict": {
+        "EMPTY": false,
+        "bind_relower": false
+      },
+      "exposed": {
+        "EMPTY": true,
+        "bind_relower": true
+      },
+      "msms": [],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "bind_relower": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        },
+        "bind_relower": {
+          "outcome": "return",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "<invalid>"
+        }
+      }
+    },
+    "mask_subdomain_supplied": {
+      "role": "masking",
+      "payload": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "executable": {
+        "EMPTY": true,
+        "bind_relower": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "bind_relower": false
+      },
+      "exposed": {
+        "EMPTY": false,
+        "bind_relower": true
+      },
+      "msms": [
+        [
+          "bind_relower"
+        ]
+      ],
+      "mmbs": [
+        [
+          "bind_relower"
+        ]
+      ],
+      "plus_observations": {
+        "EMPTY": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        },
+        "bind_relower": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        },
+        "bind_relower": {
+          "outcome": "return",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        }
+      }
+    }
+  },
+  "variants": {
+    "plus": {
+      "EMPTY": "<local-path>",
+      "bind_relower": "<local-path>"
+    },
+    "minus": {
+      "EMPTY": "<local-path>",
+      "bind_relower": "<local-path>"
+    }
+  }
+}

@@ -1,0 +1,1567 @@
+{
+  "task_id": "ctrl_02",
+  "kind": "pilot",
+  "prompt_initial": "You are analysing a proposed deletion in a Python function.  Use\nonly the public information below.  A Python exception is an observation.  The\nbest evidence level is BOUNDED: execution on the declared finite domain, never\na proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Executable operations already found by AST + Graph\n- id=op_L4_C4_if  lines=4-5  kind=if  executable=true  `if c == 0:`\n- id=op_L6_C4_if  lines=6-7  kind=if  executable=true  `if d == 0:`\n\nAn executable operation is a statement the existing intervention can replace\nwith `pass`.  The list above is executable as a unit.  A bare `if`/`elif`/\n`for`/`while`/`try` line that is **not** in this list is control context: you\nmay quote it in `source_evidence`, but do not put it in an operation set.  If\nyou cite a line inside a listed multi-line block, cite the listed block, not\nits body.  You may propose a new **assignment** operation that is not listed;\ngive a real file, line and source text, and it must map to a real AST\nassignment.  A new control statement is rejected.\n\n## What to return\nTwo kinds of minimal candidate sets:\n\n- **MSMS candidates**: a minimal non-empty set S of executable operations such\n  that, if every other operation is deleted, deleting A is unobservable.  This\n  is the set that is kept.\n- **MMBS candidates**: a minimal non-empty set D of executable operations such\n  that deleting exactly D makes deleting A observable (unmasks it).  This is\n  the set that is disabled.\n\nFor each candidate give the condition on the arguments under which it holds.\nUse only argument names, int/bool constants, comparisons, arithmetic, `and`,\n`or`, `not`.  Use `True` if it holds for every legal input.  Do not use `is`,\nattribute access, function calls, or `None`.\n\nReturn one JSON object:\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or True>\",\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\",\n      \"hypotheses\": [\"<what still needs verification>\"]\n    }\n  ],\n  \"mmbs_candidates\": [ ... same fields ... ],\n  \"notes\": \"<optional>\"\n}\n\nReturn at most 8 candidates in each list.  Return one JSON\nobject and no prose outside it.\n",
+  "prompt_sha256": "d278a8785dd7a3edc2d17537320a4c174aef6f0d5f63cfc7e91aa2aa1ab82e02",
+  "initial": {
+    "request": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and text. Never put a control statement in a deletable operation set."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function.  Use\nonly the public information below.  A Python exception is an observation.  The\nbest evidence level is BOUNDED: execution on the declared finite domain, never\na proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Executable operations already found by AST + Graph\n- id=op_L4_C4_if  lines=4-5  kind=if  executable=true  `if c == 0:`\n- id=op_L6_C4_if  lines=6-7  kind=if  executable=true  `if d == 0:`\n\nAn executable operation is a statement the existing intervention can replace\nwith `pass`.  The list above is executable as a unit.  A bare `if`/`elif`/\n`for`/`while`/`try` line that is **not** in this list is control context: you\nmay quote it in `source_evidence`, but do not put it in an operation set.  If\nyou cite a line inside a listed multi-line block, cite the listed block, not\nits body.  You may propose a new **assignment** operation that is not listed;\ngive a real file, line and source text, and it must map to a real AST\nassignment.  A new control statement is rejected.\n\n## What to return\nTwo kinds of minimal candidate sets:\n\n- **MSMS candidates**: a minimal non-empty set S of executable operations such\n  that, if every other operation is deleted, deleting A is unobservable.  This\n  is the set that is kept.\n- **MMBS candidates**: a minimal non-empty set D of executable operations such\n  that deleting exactly D makes deleting A observable (unmasks it).  This is\n  the set that is disabled.\n\nFor each candidate give the condition on the arguments under which it holds.\nUse only argument names, int/bool constants, comparisons, arithmetic, `and`,\n`or`, `not`.  Use `True` if it holds for every legal input.  Do not use `is`,\nattribute access, function calls, or `None`.\n\nReturn one JSON object:\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or True>\",\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\",\n      \"hypotheses\": [\"<what still needs verification>\"]\n    }\n  ],\n  \"mmbs_candidates\": [ ... same fields ... ],\n  \"notes\": \"<optional>\"\n}\n\nReturn at most 8 candidates in each list.  Return one JSON\nobject and no prose outside it.\n"
+      }
+    ],
+    "model": {
+      "raw_response": "{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"}\n      ],\n      \"condition\": \"c == 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6\",\n      \"rationale\": \"If c == 0, the operation v = v // 6 * 6 will reset v to a multiple of 6, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operation v = v // 6 * 6 effectively nullifies the addition of 6 when c == 0.\"]\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"d == 0\",\n      \"source_evidence\": \"6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If d == 0, the operation v = v // 7 * 7 will reset v to a multiple of 7, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operation v = v // 7 * 7 effectively nullifies the addition of 6 when d == 0.\"]\n    }\n  ],\n  \"mmbs_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"c != 0 and d != 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.\",\n      \"hypotheses\": [\"The addition of 6 in TARGET_A is not nullified when neither c nor d is 0.\"]\n    }\n  ],\n  \"notes\": \"The analysis assumes that the operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 and d == 0, respectively.\"\n}",
+      "stats": {
+        "prompt_tokens": 1376,
+        "completion_tokens": 554,
+        "total_duration_ns": 37207256913,
+        "load_duration_ns": 8706356394,
+        "prompt_eval_duration_ns": 735217000,
+        "eval_duration_ns": 27655964000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 38.266,
+        "attempt": 0
+      },
+      "model": "qwen2.5-coder:32b",
+      "wall_seconds": 38.266,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and text. Never put a control statement in a deletable operation set."
+        },
+        {
+          "role": "user",
+          "content": "You are analysing a proposed deletion in a Python function.  Use\nonly the public information below.  A Python exception is an observation.  The\nbest evidence level is BOUNDED: execution on the declared finite domain, never\na proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Executable operations already found by AST + Graph\n- id=op_L4_C4_if  lines=4-5  kind=if  executable=true  `if c == 0:`\n- id=op_L6_C4_if  lines=6-7  kind=if  executable=true  `if d == 0:`\n\nAn executable operation is a statement the existing intervention can replace\nwith `pass`.  The list above is executable as a unit.  A bare `if`/`elif`/\n`for`/`while`/`try` line that is **not** in this list is control context: you\nmay quote it in `source_evidence`, but do not put it in an operation set.  If\nyou cite a line inside a listed multi-line block, cite the listed block, not\nits body.  You may propose a new **assignment** operation that is not listed;\ngive a real file, line and source text, and it must map to a real AST\nassignment.  A new control statement is rejected.\n\n## What to return\nTwo kinds of minimal candidate sets:\n\n- **MSMS candidates**: a minimal non-empty set S of executable operations such\n  that, if every other operation is deleted, deleting A is unobservable.  This\n  is the set that is kept.\n- **MMBS candidates**: a minimal non-empty set D of executable operations such\n  that deleting exactly D makes deleting A observable (unmasks it).  This is\n  the set that is disabled.\n\nFor each candidate give the condition on the arguments under which it holds.\nUse only argument names, int/bool constants, comparisons, arithmetic, `and`,\n`or`, `not`.  Use `True` if it holds for every legal input.  Do not use `is`,\nattribute access, function calls, or `None`.\n\nReturn one JSON object:\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or True>\",\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\",\n      \"hypotheses\": [\"<what still needs verification>\"]\n    }\n  ],\n  \"mmbs_candidates\": [ ... same fields ... ],\n  \"notes\": \"<optional>\"\n}\n\nReturn at most 8 candidates in each list.  Return one JSON\nobject and no prose outside it.\n"
+        }
+      ],
+      "error": null
+    },
+    "parsed": {
+      "format": "structured",
+      "msms": [
+        {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            }
+          ],
+          "condition": "c == 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6",
+          "rationale": "If c == 0, the operation v = v // 6 * 6 will reset v to a multiple of 6, making the addition of 6 in TARGET_A unobservable.",
+          "hypotheses": [
+            "The operation v = v // 6 * 6 effectively nullifies the addition of 6 when c == 0."
+          ]
+        },
+        {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "d == 0",
+          "source_evidence": "6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If d == 0, the operation v = v // 7 * 7 will reset v to a multiple of 7, making the addition of 6 in TARGET_A unobservable.",
+          "hypotheses": [
+            "The operation v = v // 7 * 7 effectively nullifies the addition of 6 when d == 0."
+          ]
+        }
+      ],
+      "mmbs": [
+        {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "c != 0 and d != 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+          "hypotheses": [
+            "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+          ]
+        }
+      ],
+      "notes": "The analysis assumes that the operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 and d == 0, respectively.",
+      "error": null
+    },
+    "candidates": [
+      {
+        "role": "msms",
+        "status": "mapped",
+        "ops": [
+          {
+            "id": "op_L4_C4_if",
+            "key": "op_L4_C4_if",
+            "file": "<program>",
+            "first_line": 4,
+            "last_line": 5,
+            "line": 4,
+            "end_line": 5,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if c == 0:\n        v = v // 6 * 6",
+            "text": "if c == 0:\n        v = v // 6 * 6",
+            "in_graph": true
+          }
+        ],
+        "control_context": [],
+        "unexecutable": [],
+        "duplicates": 0,
+        "condition": "c == 0",
+        "source_evidence": "4-5: if c == 0: v = v // 6 * 6",
+        "rationale": "If c == 0, the operation v = v // 6 * 6 will reset v to a multiple of 6, making the addition of 6 in TARGET_A unobservable.",
+        "hypotheses": [
+          "The operation v = v // 6 * 6 effectively nullifies the addition of 6 when c == 0."
+        ],
+        "raw": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            }
+          ],
+          "condition": "c == 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6",
+          "rationale": "If c == 0, the operation v = v // 6 * 6 will reset v to a multiple of 6, making the addition of 6 in TARGET_A unobservable.",
+          "hypotheses": [
+            "The operation v = v // 6 * 6 effectively nullifies the addition of 6 when c == 0."
+          ]
+        },
+        "verification": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": false,
+            "disabling_set_exposes": true
+          },
+          "operations": [
+            "C"
+          ],
+          "kind": "independent",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "reason": "the declared set enabled alone does not mask A",
+          "attempts": 5,
+          "names": [
+            "C"
+          ]
+        }
+      },
+      {
+        "role": "msms",
+        "status": "mapped",
+        "ops": [
+          {
+            "id": "op_L6_C4_if",
+            "key": "op_L6_C4_if",
+            "file": "<program>",
+            "first_line": 6,
+            "last_line": 7,
+            "line": 6,
+            "end_line": 7,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if d == 0:\n        v = v // 7 * 7",
+            "text": "if d == 0:\n        v = v // 7 * 7",
+            "in_graph": true
+          }
+        ],
+        "control_context": [],
+        "unexecutable": [],
+        "duplicates": 0,
+        "condition": "d == 0",
+        "source_evidence": "6-7: if d == 0: v = v // 7 * 7",
+        "rationale": "If d == 0, the operation v = v // 7 * 7 will reset v to a multiple of 7, making the addition of 6 in TARGET_A unobservable.",
+        "hypotheses": [
+          "The operation v = v // 7 * 7 effectively nullifies the addition of 6 when d == 0."
+        ],
+        "raw": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "d == 0",
+          "source_evidence": "6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If d == 0, the operation v = v // 7 * 7 will reset v to a multiple of 7, making the addition of 6 in TARGET_A unobservable.",
+          "hypotheses": [
+            "The operation v = v // 7 * 7 effectively nullifies the addition of 6 when d == 0."
+          ]
+        },
+        "verification": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": false,
+            "disabling_set_exposes": true
+          },
+          "operations": [
+            "D"
+          ],
+          "kind": "independent",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "reason": "the declared set enabled alone does not mask A",
+          "attempts": 5,
+          "names": [
+            "D"
+          ]
+        }
+      },
+      {
+        "role": "mmbs",
+        "status": "mapped",
+        "ops": [
+          {
+            "id": "op_L4_C4_if",
+            "key": "op_L4_C4_if",
+            "file": "<program>",
+            "first_line": 4,
+            "last_line": 5,
+            "line": 4,
+            "end_line": 5,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if c == 0:\n        v = v // 6 * 6",
+            "text": "if c == 0:\n        v = v // 6 * 6",
+            "in_graph": true
+          },
+          {
+            "id": "op_L6_C4_if",
+            "key": "op_L6_C4_if",
+            "file": "<program>",
+            "first_line": 6,
+            "last_line": 7,
+            "line": 6,
+            "end_line": 7,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if d == 0:\n        v = v // 7 * 7",
+            "text": "if d == 0:\n        v = v // 7 * 7",
+            "in_graph": true
+          }
+        ],
+        "control_context": [],
+        "unexecutable": [],
+        "duplicates": 0,
+        "condition": "c != 0 and d != 0",
+        "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+        "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+        "hypotheses": [
+          "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+        ],
+        "raw": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "c != 0 and d != 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+          "hypotheses": [
+            "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+          ]
+        },
+        "verification": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_expose": {
+              "C": false,
+              "D": false
+            }
+          },
+          "operations": [
+            "C",
+            "D"
+          ],
+          "kind": "coexisting",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "reason": "a proper subset already exposes A",
+          "attempts": 5,
+          "names": [
+            "C",
+            "D"
+          ]
+        }
+      }
+    ],
+    "arm": null,
+    "feedback": [
+      {
+        "role": "msms",
+        "operations": [
+          "op_L4_C4_if"
+        ],
+        "status": "FALSE",
+        "reason": "the declared set enabled alone does not mask A",
+        "control_context": [],
+        "mapping_errors": []
+      },
+      {
+        "role": "msms",
+        "operations": [
+          "op_L6_C4_if"
+        ],
+        "status": "FALSE",
+        "reason": "the declared set enabled alone does not mask A",
+        "control_context": [],
+        "mapping_errors": []
+      },
+      {
+        "role": "mmbs",
+        "operations": [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ],
+        "status": "FALSE",
+        "reason": "a proper subset already exposes A",
+        "control_context": [],
+        "mapping_errors": []
+      }
+    ]
+  },
+  "correction": {
+    "request": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and text. Never put a control statement in a deletable operation set."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function.  Use\nonly the public information below.  A Python exception is an observation.  The\nbest evidence level is BOUNDED: execution on the declared finite domain, never\na proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Executable operations already found by AST + Graph\n- id=op_L4_C4_if  lines=4-5  kind=if  executable=true  `if c == 0:`\n- id=op_L6_C4_if  lines=6-7  kind=if  executable=true  `if d == 0:`\n\nAn executable operation is a statement the existing intervention can replace\nwith `pass`.  The list above is executable as a unit.  A bare `if`/`elif`/\n`for`/`while`/`try` line that is **not** in this list is control context: you\nmay quote it in `source_evidence`, but do not put it in an operation set.  If\nyou cite a line inside a listed multi-line block, cite the listed block, not\nits body.  You may propose a new **assignment** operation that is not listed;\ngive a real file, line and source text, and it must map to a real AST\nassignment.  A new control statement is rejected.\n\n## What to return\nTwo kinds of minimal candidate sets:\n\n- **MSMS candidates**: a minimal non-empty set S of executable operations such\n  that, if every other operation is deleted, deleting A is unobservable.  This\n  is the set that is kept.\n- **MMBS candidates**: a minimal non-empty set D of executable operations such\n  that deleting exactly D makes deleting A observable (unmasks it).  This is\n  the set that is disabled.\n\nFor each candidate give the condition on the arguments under which it holds.\nUse only argument names, int/bool constants, comparisons, arithmetic, `and`,\n`or`, `not`.  Use `True` if it holds for every legal input.  Do not use `is`,\nattribute access, function calls, or `None`.\n\nReturn one JSON object:\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or True>\",\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\",\n      \"hypotheses\": [\"<what still needs verification>\"]\n    }\n  ],\n  \"mmbs_candidates\": [ ... same fields ... ],\n  \"notes\": \"<optional>\"\n}\n\nReturn at most 8 candidates in each list.  Return one JSON\nobject and no prose outside it.\n\n\n## Your previous answer\n```json\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"}\n      ],\n      \"condition\": \"c == 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6\",\n      \"rationale\": \"If c == 0, the operation v = v // 6 * 6 will reset v to a multiple of 6, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operation v = v // 6 * 6 effectively nullifies the addition of 6 when c == 0.\"]\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"d == 0\",\n      \"source_evidence\": \"6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If d == 0, the operation v = v // 7 * 7 will reset v to a multiple of 7, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operation v = v // 7 * 7 effectively nullifies the addition of 6 when d == 0.\"]\n    }\n  ],\n  \"mmbs_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"c != 0 and d != 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.\",\n      \"hypotheses\": [\"The addition of 6 in TARGET_A is not nullified when neither c nor d is 0.\"]\n    }\n  ],\n  \"notes\": \"The analysis assumes that the operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 and d == 0, respectively.\"\n}\n```\n\n## Causal verification feedback\nThe verifier executed your candidate sets on the frozen legal inputs.  It did\nnot reveal a reference answer; it only reports what happened to your own\ncandidates.  A `false_accept` input satisfies your declared condition but the\ndeclared relation does not hold there.  A `false_reject` input satisfies the\nrelation but your condition is false there.  `control_context` entries were\nremoved from the deletable set because they are not executable operations.\n```json\n[\n  {\n    \"role\": \"msms\",\n    \"operations\": [\n      \"op_L4_C4_if\"\n    ],\n    \"status\": \"FALSE\",\n    \"reason\": \"the declared set enabled alone does not mask A\",\n    \"control_context\": [],\n    \"mapping_errors\": []\n  },\n  {\n    \"role\": \"msms\",\n    \"operations\": [\n      \"op_L6_C4_if\"\n    ],\n    \"status\": \"FALSE\",\n    \"reason\": \"the declared set enabled alone does not mask A\",\n    \"control_context\": [],\n    \"mapping_errors\": []\n  },\n  {\n    \"role\": \"mmbs\",\n    \"operations\": [\n      \"op_L4_C4_if\",\n      \"op_L6_C4_if\"\n    ],\n    \"status\": \"FALSE\",\n    \"reason\": \"a proper subset already exposes A\",\n    \"control_context\": [],\n    \"mapping_errors\": []\n  }\n]\n```\n\n## Revision\nReturn the full corrected answer in the same JSON schema.  Keep candidates\nthat already passed unchanged.  Fix the failed conditions or operation sets\nusing the counterexamples.  Do not add new tasks.  This is the only revision.\nReturn at most 8 candidates in each list.\n"
+      }
+    ],
+    "model": {
+      "raw_response": "{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"c == 0 or d == 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If either c or d is 0, the subsequent operations will reset v to a multiple of 6 or 7, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0.\"]\n    }\n  ],\n  \"mmbs_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"c != 0 and d != 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.\",\n      \"hypotheses\": [\"The addition of 6 in TARGET_A is not nullified when neither c nor d is 0.\"]\n    }\n  ],\n  \"notes\": \"The analysis assumes that the operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0, respectively.\"\n}",
+      "stats": {
+        "prompt_tokens": 2300,
+        "completion_tokens": 468,
+        "total_duration_ns": 24381880918,
+        "load_duration_ns": 54742360,
+        "prompt_eval_duration_ns": 703722000,
+        "eval_duration_ns": 23415906000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 25.531,
+        "attempt": 0
+      },
+      "model": "qwen2.5-coder:32b",
+      "wall_seconds": 25.532,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and text. Never put a control statement in a deletable operation set."
+        },
+        {
+          "role": "user",
+          "content": "You are analysing a proposed deletion in a Python function.  Use\nonly the public information below.  A Python exception is an observation.  The\nbest evidence level is BOUNDED: execution on the declared finite domain, never\na proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Executable operations already found by AST + Graph\n- id=op_L4_C4_if  lines=4-5  kind=if  executable=true  `if c == 0:`\n- id=op_L6_C4_if  lines=6-7  kind=if  executable=true  `if d == 0:`\n\nAn executable operation is a statement the existing intervention can replace\nwith `pass`.  The list above is executable as a unit.  A bare `if`/`elif`/\n`for`/`while`/`try` line that is **not** in this list is control context: you\nmay quote it in `source_evidence`, but do not put it in an operation set.  If\nyou cite a line inside a listed multi-line block, cite the listed block, not\nits body.  You may propose a new **assignment** operation that is not listed;\ngive a real file, line and source text, and it must map to a real AST\nassignment.  A new control statement is rejected.\n\n## What to return\nTwo kinds of minimal candidate sets:\n\n- **MSMS candidates**: a minimal non-empty set S of executable operations such\n  that, if every other operation is deleted, deleting A is unobservable.  This\n  is the set that is kept.\n- **MMBS candidates**: a minimal non-empty set D of executable operations such\n  that deleting exactly D makes deleting A observable (unmasks it).  This is\n  the set that is disabled.\n\nFor each candidate give the condition on the arguments under which it holds.\nUse only argument names, int/bool constants, comparisons, arithmetic, `and`,\n`or`, `not`.  Use `True` if it holds for every legal input.  Do not use `is`,\nattribute access, function calls, or `None`.\n\nReturn one JSON object:\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or True>\",\n      \"source_evidence\": \"<line numbers and why>\",\n      \"rationale\": \"<one sentence>\",\n      \"hypotheses\": [\"<what still needs verification>\"]\n    }\n  ],\n  \"mmbs_candidates\": [ ... same fields ... ],\n  \"notes\": \"<optional>\"\n}\n\nReturn at most 8 candidates in each list.  Return one JSON\nobject and no prose outside it.\n\n\n## Your previous answer\n```json\n{\n  \"msms_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"}\n      ],\n      \"condition\": \"c == 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6\",\n      \"rationale\": \"If c == 0, the operation v = v // 6 * 6 will reset v to a multiple of 6, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operation v = v // 6 * 6 effectively nullifies the addition of 6 when c == 0.\"]\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"d == 0\",\n      \"source_evidence\": \"6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If d == 0, the operation v = v // 7 * 7 will reset v to a multiple of 7, making the addition of 6 in TARGET_A unobservable.\",\n      \"hypotheses\": [\"The operation v = v // 7 * 7 effectively nullifies the addition of 6 when d == 0.\"]\n    }\n  ],\n  \"mmbs_candidates\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if d == 0:\"}\n      ],\n      \"condition\": \"c != 0 and d != 0\",\n      \"source_evidence\": \"4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7\",\n      \"rationale\": \"If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.\",\n      \"hypotheses\": [\"The addition of 6 in TARGET_A is not nullified when neither c nor d is 0.\"]\n    }\n  ],\n  \"notes\": \"The analysis assumes that the operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 and d == 0, respectively.\"\n}\n```\n\n## Causal verification feedback\nThe verifier executed your candidate sets on the frozen legal inputs.  It did\nnot reveal a reference answer; it only reports what happened to your own\ncandidates.  A `false_accept` input satisfies your declared condition but the\ndeclared relation does not hold there.  A `false_reject` input satisfies the\nrelation but your condition is false there.  `control_context` entries were\nremoved from the deletable set because they are not executable operations.\n```json\n[\n  {\n    \"role\": \"msms\",\n    \"operations\": [\n      \"op_L4_C4_if\"\n    ],\n    \"status\": \"FALSE\",\n    \"reason\": \"the declared set enabled alone does not mask A\",\n    \"control_context\": [],\n    \"mapping_errors\": []\n  },\n  {\n    \"role\": \"msms\",\n    \"operations\": [\n      \"op_L6_C4_if\"\n    ],\n    \"status\": \"FALSE\",\n    \"reason\": \"the declared set enabled alone does not mask A\",\n    \"control_context\": [],\n    \"mapping_errors\": []\n  },\n  {\n    \"role\": \"mmbs\",\n    \"operations\": [\n      \"op_L4_C4_if\",\n      \"op_L6_C4_if\"\n    ],\n    \"status\": \"FALSE\",\n    \"reason\": \"a proper subset already exposes A\",\n    \"control_context\": [],\n    \"mapping_errors\": []\n  }\n]\n```\n\n## Revision\nReturn the full corrected answer in the same JSON schema.  Keep candidates\nthat already passed unchanged.  Fix the failed conditions or operation sets\nusing the counterexamples.  Do not add new tasks.  This is the only revision.\nReturn at most 8 candidates in each list.\n"
+        }
+      ],
+      "error": null
+    },
+    "parsed": {
+      "format": "structured",
+      "msms": [
+        {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "c == 0 or d == 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If either c or d is 0, the subsequent operations will reset v to a multiple of 6 or 7, making the addition of 6 in TARGET_A unobservable.",
+          "hypotheses": [
+            "The operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0."
+          ]
+        }
+      ],
+      "mmbs": [
+        {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "c != 0 and d != 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+          "hypotheses": [
+            "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+          ]
+        }
+      ],
+      "notes": "The analysis assumes that the operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0, respectively.",
+      "error": null
+    },
+    "candidates": [
+      {
+        "role": "msms",
+        "status": "mapped",
+        "ops": [
+          {
+            "id": "op_L4_C4_if",
+            "key": "op_L4_C4_if",
+            "file": "<program>",
+            "first_line": 4,
+            "last_line": 5,
+            "line": 4,
+            "end_line": 5,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if c == 0:\n        v = v // 6 * 6",
+            "text": "if c == 0:\n        v = v // 6 * 6",
+            "in_graph": true
+          },
+          {
+            "id": "op_L6_C4_if",
+            "key": "op_L6_C4_if",
+            "file": "<program>",
+            "first_line": 6,
+            "last_line": 7,
+            "line": 6,
+            "end_line": 7,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if d == 0:\n        v = v // 7 * 7",
+            "text": "if d == 0:\n        v = v // 7 * 7",
+            "in_graph": true
+          }
+        ],
+        "control_context": [],
+        "unexecutable": [],
+        "duplicates": 0,
+        "condition": "c == 0 or d == 0",
+        "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+        "rationale": "If either c or d is 0, the subsequent operations will reset v to a multiple of 6 or 7, making the addition of 6 in TARGET_A unobservable.",
+        "hypotheses": [
+          "The operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0."
+        ],
+        "raw": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "c == 0 or d == 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If either c or d is 0, the subsequent operations will reset v to a multiple of 6 or 7, making the addition of 6 in TARGET_A unobservable.",
+          "hypotheses": [
+            "The operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0."
+          ]
+        },
+        "verification": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_mask": {
+              "C": true,
+              "D": true
+            }
+          },
+          "operations": [
+            "C",
+            "D"
+          ],
+          "kind": "cooperative",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "condition": {
+            "status": "VALID",
+            "exact": false,
+            "sound": false,
+            "complete": true,
+            "false_accept": [
+              "case_0001",
+              "case_0002",
+              "case_0005",
+              "case_0006",
+              "case_0009",
+              "case_0010",
+              "case_0013",
+              "case_0014",
+              "case_0017",
+              "case_0018",
+              "case_0020",
+              "case_0021",
+              "case_0022"
+            ],
+            "false_reject": [],
+            "witness_value": true
+          },
+          "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+          "attempts": 5,
+          "names": [
+            "C",
+            "D"
+          ]
+        },
+        "verification_graph": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "only_set_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_mask": {
+              "C": true,
+              "D": true
+            }
+          },
+          "operations": [
+            "C",
+            "D"
+          ],
+          "kind": "cooperative",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "condition": {
+            "status": "VALID",
+            "exact": false,
+            "sound": false,
+            "complete": true,
+            "false_accept": [
+              "case_0001",
+              "case_0002",
+              "case_0005",
+              "case_0006",
+              "case_0009",
+              "case_0010",
+              "case_0013",
+              "case_0014",
+              "case_0017",
+              "case_0018",
+              "case_0020",
+              "case_0021",
+              "case_0022"
+            ],
+            "false_reject": [],
+            "witness_value": true
+          },
+          "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+          "attempts": 5,
+          "names": [
+            "C",
+            "D"
+          ]
+        }
+      },
+      {
+        "role": "mmbs",
+        "status": "mapped",
+        "ops": [
+          {
+            "id": "op_L4_C4_if",
+            "key": "op_L4_C4_if",
+            "file": "<program>",
+            "first_line": 4,
+            "last_line": 5,
+            "line": 4,
+            "end_line": 5,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if c == 0:\n        v = v // 6 * 6",
+            "text": "if c == 0:\n        v = v // 6 * 6",
+            "in_graph": true
+          },
+          {
+            "id": "op_L6_C4_if",
+            "key": "op_L6_C4_if",
+            "file": "<program>",
+            "first_line": 6,
+            "last_line": 7,
+            "line": 6,
+            "end_line": 7,
+            "col": 4,
+            "end_col": 22,
+            "kind": "if",
+            "node_type": "If",
+            "code": "if d == 0:\n        v = v // 7 * 7",
+            "text": "if d == 0:\n        v = v // 7 * 7",
+            "in_graph": true
+          }
+        ],
+        "control_context": [],
+        "unexecutable": [],
+        "duplicates": 0,
+        "condition": "c != 0 and d != 0",
+        "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+        "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+        "hypotheses": [
+          "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+        ],
+        "raw": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 4,
+              "text": "if c == 0:"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "if d == 0:"
+            }
+          ],
+          "condition": "c != 0 and d != 0",
+          "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+          "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+          "hypotheses": [
+            "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+          ]
+        },
+        "verification": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_expose": {
+              "C": false,
+              "D": false
+            }
+          },
+          "operations": [
+            "C",
+            "D"
+          ],
+          "kind": "coexisting",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "reason": "a proper subset already exposes A",
+          "attempts": 5,
+          "names": [
+            "C",
+            "D"
+          ]
+        },
+        "verification_graph": {
+          "status": "FALSE",
+          "checks": {
+            "a_has_local_effect": true,
+            "original_masks": true,
+            "disabling_set_exposes": true,
+            "proper_subsets_do_not_expose": {
+              "C": false,
+              "D": false
+            }
+          },
+          "operations": [
+            "C",
+            "D"
+          ],
+          "kind": "coexisting",
+          "case_id": "case_0000",
+          "input": {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          "reason": "a proper subset already exposes A",
+          "attempts": 5,
+          "names": [
+            "C",
+            "D"
+          ]
+        }
+      }
+    ],
+    "feedback": [
+      {
+        "role": "msms",
+        "operations": [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ],
+        "status": "FALSE",
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+        "control_context": [],
+        "mapping_errors": [],
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0001",
+            "case_0002",
+            "case_0005",
+            "case_0006",
+            "case_0009",
+            "case_0010",
+            "case_0013",
+            "case_0014",
+            "case_0017",
+            "case_0018",
+            "case_0020",
+            "case_0021",
+            "case_0022"
+          ],
+          "false_reject": [],
+          "failed_inputs": [
+            {
+              "case_id": "case_0001",
+              "kind": "false_accept",
+              "args": {
+                "x": 1,
+                "c": 0,
+                "d": 1
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0002",
+              "kind": "false_accept",
+              "args": {
+                "x": 1,
+                "c": 1,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0005",
+              "kind": "false_accept",
+              "args": {
+                "x": 2,
+                "c": 0,
+                "d": 1
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0006",
+              "kind": "false_accept",
+              "args": {
+                "x": 2,
+                "c": 1,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0009",
+              "kind": "false_accept",
+              "args": {
+                "x": 3,
+                "c": 0,
+                "d": 1
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0010",
+              "kind": "false_accept",
+              "args": {
+                "x": 3,
+                "c": 1,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0013",
+              "kind": "false_accept",
+              "args": {
+                "x": 4,
+                "c": 0,
+                "d": 1
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0014",
+              "kind": "false_accept",
+              "args": {
+                "x": 4,
+                "c": 1,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0017",
+              "kind": "false_accept",
+              "args": {
+                "x": 5,
+                "c": 0,
+                "d": 1
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0018",
+              "kind": "false_accept",
+              "args": {
+                "x": 5,
+                "c": 1,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0020",
+              "kind": "false_accept",
+              "args": {
+                "x": 6,
+                "c": 0,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0021",
+              "kind": "false_accept",
+              "args": {
+                "x": 6,
+                "c": 0,
+                "d": 1
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            },
+            {
+              "case_id": "case_0022",
+              "kind": "false_accept",
+              "args": {
+                "x": 6,
+                "c": 1,
+                "d": 0
+              },
+              "declared_condition_value": true,
+              "actual_relation_holds": false
+            }
+          ]
+        }
+      },
+      {
+        "role": "mmbs",
+        "operations": [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ],
+        "status": "FALSE",
+        "reason": "a proper subset already exposes A",
+        "control_context": [],
+        "mapping_errors": []
+      }
+    ]
+  },
+  "candidates_final": [
+    {
+      "role": "msms",
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "op_L4_C4_if",
+          "key": "op_L4_C4_if",
+          "file": "<program>",
+          "first_line": 4,
+          "last_line": 5,
+          "line": 4,
+          "end_line": 5,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if c == 0:\n        v = v // 6 * 6",
+          "text": "if c == 0:\n        v = v // 6 * 6",
+          "in_graph": true
+        },
+        {
+          "id": "op_L6_C4_if",
+          "key": "op_L6_C4_if",
+          "file": "<program>",
+          "first_line": 6,
+          "last_line": 7,
+          "line": 6,
+          "end_line": 7,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if d == 0:\n        v = v // 7 * 7",
+          "text": "if d == 0:\n        v = v // 7 * 7",
+          "in_graph": true
+        }
+      ],
+      "control_context": [],
+      "unexecutable": [],
+      "duplicates": 0,
+      "condition": "c == 0 or d == 0",
+      "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+      "rationale": "If either c or d is 0, the subsequent operations will reset v to a multiple of 6 or 7, making the addition of 6 in TARGET_A unobservable.",
+      "hypotheses": [
+        "The operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0."
+      ],
+      "raw": {
+        "operations": [
+          {
+            "file": "<program>",
+            "line": 4,
+            "text": "if c == 0:"
+          },
+          {
+            "file": "<program>",
+            "line": 6,
+            "text": "if d == 0:"
+          }
+        ],
+        "condition": "c == 0 or d == 0",
+        "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+        "rationale": "If either c or d is 0, the subsequent operations will reset v to a multiple of 6 or 7, making the addition of 6 in TARGET_A unobservable.",
+        "hypotheses": [
+          "The operations v = v // 6 * 6 and v = v // 7 * 7 effectively nullify the addition of 6 when c == 0 or d == 0."
+        ]
+      },
+      "verification": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_mask": {
+            "C": true,
+            "D": true
+          }
+        },
+        "operations": [
+          "C",
+          "D"
+        ],
+        "kind": "cooperative",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0001",
+            "case_0002",
+            "case_0005",
+            "case_0006",
+            "case_0009",
+            "case_0010",
+            "case_0013",
+            "case_0014",
+            "case_0017",
+            "case_0018",
+            "case_0020",
+            "case_0021",
+            "case_0022"
+          ],
+          "false_reject": [],
+          "witness_value": true
+        },
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+        "attempts": 5,
+        "names": [
+          "C",
+          "D"
+        ]
+      },
+      "verification_graph": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_mask": {
+            "C": true,
+            "D": true
+          }
+        },
+        "operations": [
+          "C",
+          "D"
+        ],
+        "kind": "cooperative",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0001",
+            "case_0002",
+            "case_0005",
+            "case_0006",
+            "case_0009",
+            "case_0010",
+            "case_0013",
+            "case_0014",
+            "case_0017",
+            "case_0018",
+            "case_0020",
+            "case_0021",
+            "case_0022"
+          ],
+          "false_reject": [],
+          "witness_value": true
+        },
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+        "attempts": 5,
+        "names": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "role": "mmbs",
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "op_L4_C4_if",
+          "key": "op_L4_C4_if",
+          "file": "<program>",
+          "first_line": 4,
+          "last_line": 5,
+          "line": 4,
+          "end_line": 5,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if c == 0:\n        v = v // 6 * 6",
+          "text": "if c == 0:\n        v = v // 6 * 6",
+          "in_graph": true
+        },
+        {
+          "id": "op_L6_C4_if",
+          "key": "op_L6_C4_if",
+          "file": "<program>",
+          "first_line": 6,
+          "last_line": 7,
+          "line": 6,
+          "end_line": 7,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if d == 0:\n        v = v // 7 * 7",
+          "text": "if d == 0:\n        v = v // 7 * 7",
+          "in_graph": true
+        }
+      ],
+      "control_context": [],
+      "unexecutable": [],
+      "duplicates": 0,
+      "condition": "c != 0 and d != 0",
+      "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+      "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+      "hypotheses": [
+        "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+      ],
+      "raw": {
+        "operations": [
+          {
+            "file": "<program>",
+            "line": 4,
+            "text": "if c == 0:"
+          },
+          {
+            "file": "<program>",
+            "line": 6,
+            "text": "if d == 0:"
+          }
+        ],
+        "condition": "c != 0 and d != 0",
+        "source_evidence": "4-5: if c == 0: v = v // 6 * 6; 6-7: if d == 0: v = v // 7 * 7",
+        "rationale": "If neither c nor d is 0, the addition of 6 in TARGET_A is not reset by subsequent operations, making it observable.",
+        "hypotheses": [
+          "The addition of 6 in TARGET_A is not nullified when neither c nor d is 0."
+        ]
+      },
+      "verification": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_expose": {
+            "C": false,
+            "D": false
+          }
+        },
+        "operations": [
+          "C",
+          "D"
+        ],
+        "kind": "coexisting",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "reason": "a proper subset already exposes A",
+        "attempts": 5,
+        "names": [
+          "C",
+          "D"
+        ]
+      },
+      "verification_graph": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_expose": {
+            "C": false,
+            "D": false
+          }
+        },
+        "operations": [
+          "C",
+          "D"
+        ],
+        "kind": "coexisting",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "reason": "a proper subset already exposes A",
+        "attempts": 5,
+        "names": [
+          "C",
+          "D"
+        ]
+      }
+    }
+  ],
+  "universes": {
+    "U_graph": [
+      "op_L4_C4_if",
+      "op_L6_C4_if"
+    ],
+    "U_qwen": [],
+    "U_union": [
+      "op_L4_C4_if",
+      "op_L6_C4_if"
+    ],
+    "control_context": [],
+    "rejected": []
+  },
+  "arms": {
+    "D_graph": {
+      "universe_size": 2,
+      "inputs_searched": 5,
+      "evaluations": 20,
+      "complete_inputs": 5,
+      "first_msms_values": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "first_msms_mean": 4.0,
+      "first_mmbs_values": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "first_mmbs_mean": 3.0,
+      "msms_relations": [
+        [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ]
+      ],
+      "mmbs_relations": [
+        [
+          "op_L4_C4_if"
+        ],
+        [
+          "op_L6_C4_if"
+        ]
+      ],
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "duplicate_probes": 0,
+      "reused_evidence": 10,
+      "hypothesis_witness": {
+        "msms": 5,
+        "mmbs": 5
+      },
+      "hypothesis_probed": {
+        "msms": 5,
+        "mmbs": 5
+      },
+      "probe_executions": 240,
+      "universe": [
+        "op_L4_C4_if",
+        "op_L6_C4_if"
+      ]
+    },
+    "D_union": {
+      "universe_size": 2,
+      "inputs_searched": 5,
+      "evaluations": 20,
+      "complete_inputs": 5,
+      "first_msms_values": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "first_msms_mean": 4.0,
+      "first_mmbs_values": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "first_mmbs_mean": 3.0,
+      "msms_relations": [
+        [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ]
+      ],
+      "mmbs_relations": [
+        [
+          "op_L4_C4_if"
+        ],
+        [
+          "op_L6_C4_if"
+        ]
+      ],
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "duplicate_probes": 0,
+      "reused_evidence": 10,
+      "hypothesis_witness": {
+        "msms": 5,
+        "mmbs": 5
+      },
+      "hypothesis_probed": {
+        "msms": 5,
+        "mmbs": 5
+      },
+      "probe_executions": 240,
+      "universe": [
+        "op_L4_C4_if",
+        "op_L6_C4_if"
+      ]
+    }
+  },
+  "baselines": {
+    "source": "<local-path>",
+    "A_graph": {
+      "universe_size": 2,
+      "inputs_searched": 5,
+      "evaluations": 20,
+      "complete_inputs": 5,
+      "first_msms_values": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "first_msms_mean": 3.0,
+      "first_mmbs_values": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "first_mmbs_mean": 2.0,
+      "msms_relations": [
+        [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ]
+      ],
+      "mmbs_relations": [
+        [
+          "op_L4_C4_if"
+        ],
+        [
+          "op_L6_C4_if"
+        ]
+      ],
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "duplicate_probes": 0,
+      "reused_evidence": 15,
+      "hypothesis_witness": {
+        "msms": 0,
+        "mmbs": 0
+      },
+      "hypothesis_probed": {
+        "msms": 0,
+        "mmbs": 0
+      },
+      "probe_executions": 240,
+      "universe": [
+        "op_L4_C4_if",
+        "op_L6_C4_if"
+      ]
+    },
+    "B_old_qwen": {
+      "universe_size": 2,
+      "inputs_searched": 5,
+      "evaluations": 20,
+      "complete_inputs": 5,
+      "first_msms_values": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "first_msms_mean": 3.0,
+      "first_mmbs_values": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "first_mmbs_mean": 2.0,
+      "msms_relations": [
+        [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ]
+      ],
+      "mmbs_relations": [
+        [
+          "op_L4_C4_if"
+        ],
+        [
+          "op_L6_C4_if"
+        ]
+      ],
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "duplicate_probes": 0,
+      "reused_evidence": 25,
+      "hypothesis_witness": {
+        "msms": 0,
+        "mmbs": 10
+      },
+      "hypothesis_probed": {
+        "msms": 10,
+        "mmbs": 10
+      },
+      "probe_executions": 240,
+      "universe": [
+        "op_L4_C4_if",
+        "op_L6_C4_if"
+      ]
+    },
+    "C_semantic": {
+      "universe_size": 2,
+      "inputs_searched": 5,
+      "evaluations": 20,
+      "complete_inputs": 5,
+      "first_msms_values": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "first_msms_mean": 3.0,
+      "first_mmbs_values": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "first_mmbs_mean": 2.0,
+      "msms_relations": [
+        [
+          "op_L4_C4_if",
+          "op_L6_C4_if"
+        ]
+      ],
+      "mmbs_relations": [
+        [
+          "op_L4_C4_if"
+        ],
+        [
+          "op_L6_C4_if"
+        ]
+      ],
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "duplicate_probes": 0,
+      "reused_evidence": 0,
+      "hypothesis_witness": {
+        "msms": 5,
+        "mmbs": 15
+      },
+      "hypothesis_probed": {
+        "msms": 15,
+        "mmbs": 15
+      },
+      "probe_executions": 240,
+      "universe": [
+        "op_L4_C4_if",
+        "op_L6_C4_if"
+      ]
+    },
+    "direct_qwen": {
+      "call_error": null,
+      "raw_relations": 3,
+      "mapped_relations": 3,
+      "rejected_relations": 0,
+      "parse_error": null,
+      "verified_relations": 0,
+      "true_relations": 1,
+      "covered_true_relations": 0,
+      "exact_task": false,
+      "statuses": [
+        "FALSE",
+        "FALSE",
+        "FALSE"
+      ]
+    }
+  },
+  "metrics": {
+    "initial_candidates": 3,
+    "final_candidates": 2,
+    "initial_verified": 0,
+    "final_verified": 0,
+    "initial_bad": 3,
+    "final_bad": 2,
+    "correction_used": true,
+    "fixed_after_feedback": 0,
+    "still_bad": 2
+  }
+}

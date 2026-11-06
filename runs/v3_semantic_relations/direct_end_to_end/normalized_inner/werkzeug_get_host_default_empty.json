@@ -1,0 +1,741 @@
+{
+  "task_id": "werkzeug_get_host_default_empty",
+  "kind": "real_v3",
+  "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_get_host_default_empty\n\n## Files\n`src/werkzeug/sansio/utils.py`\n\n## Program with source line numbers\n```text\n  56 | def get_host(\n  57 |     scheme: str,\n  58 |     host_header: t.Optional[str],\n  59 |     server: t.Optional[t.Tuple[str, t.Optional[int]]] = None,\n  60 |     trusted_hosts: t.Optional[t.Iterable[str]] = None,\n  61 | ) -> str:\n  62 |     \"\"\"Return the host for the given parameters.\n  63 | \n  64 |     This first checks the ``host_header``. If it's not present, then\n  65 |     ``server`` is used. The host will only contain the port if it is\n  66 |     different than the standard port for the protocol.\n  67 | \n  68 |     Optionally, verify that the host is trusted using\n  69 |     :func:`host_is_trusted` and raise a\n  70 |     :exc:`~werkzeug.exceptions.SecurityError` if it is not.\n  71 | \n  72 |     :param scheme: The protocol the request used, like ``\"https\"``.\n  73 |     :param host_header: The ``Host`` header value.\n  74 |     :param server: Address of the server. ``(host, port)``, or\n  75 |         ``(path, None)`` for unix sockets.\n  76 |     :param trusted_hosts: A list of trusted host names.\n  77 | \n  78 |     :return: Host, with port if necessary.\n  79 |     :raise ~werkzeug.exceptions.SecurityError: If the host is not\n  80 |         trusted.\n  81 |     \"\"\"\n  82 |     host = \"\"\n  83 | \n  84 |     if host_header is not None:\n  85 |         host = host_header\n  86 |     elif server is not None:\n  87 |         host = server[0]\n  88 | \n  89 |         if server[1] is not None:\n  90 |             host = f\"{host}:{server[1]}\"\n  91 | \n  92 |     if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n  93 |         host = host[:-3]\n  94 |     elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n  95 |         host = host[:-4]\n  96 | \n  97 |     if trusted_hosts is not None:\n  98 |         if not host_is_trusted(host, trusted_hosts):\n  99 |             raise SecurityError(f\"Host {host!r} is not trusted.\")\n 100 | \n 101 |     return host\n```\n\n## Target A\nLine 82: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"host_header\": {\"description\": \"Host header value, or null when absent.\", \"max_length\": 1024, \"required\": false, \"type\": \"string|null\"}, \"scheme\": {\"description\": \"URL scheme; defaults to http.\", \"enum\": [\"http\", \"https\", \"ws\", \"wss\"], \"required\": false, \"type\": \"string\"}, \"server\": {\"description\": \"Server address [host, port], or null.\", \"items\": [\"string\", \"integer|null\"], \"required\": false, \"type\": \"array|null\"}}\nFrozen legal cases: [{\"scheme\": \"http\", \"host_header\": null, \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"example.com\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": null, \"server\": [\"example.com\", 8080]}, {\"scheme\": \"https\", \"host_header\": \"example.com:443\", \"server\": [\"example.com\", 443]}, {\"scheme\": \"ws\", \"host_header\": \"Example.COM:80\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"spam\", \"server\": [\"spam\", 80]}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; scheme must be one of http, https, ws, wss.; host_header must be a string or null.; server must be null or a two-element array [string, integer|null]; port must be 0..65535.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"host\": \"string\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+  "prompt_sha256": "0ee7228363d4e02a64c7b937a8c2253e9271a81a53afe319d92c002978e81902",
+  "model_output": {
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 84, \"text\": \"if host_header is not None:\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 85, \"text\": \"    host = host_header\"}\n      ],\n      \"condition\": \"host_header is not None\",\n      \"rationale\": \"If host_header is not None, the value of host is set from host_header, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 86, \"text\": \"elif server is not None:\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 87, \"text\": \"    host = server[0]\"}\n      ],\n      \"condition\": \"host_header is None and server is not None\",\n      \"rationale\": \"If host_header is None and server is not None, the value of host is set from server[0], making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 89, \"text\": \"if server[1] is not None:\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 90, \"text\": \"    host = f\\\"{host}:{server[1]}\\\"\"}\n      ],\n      \"condition\": \"host_header is None and server is not None and server[1] is not None\",\n      \"rationale\": \"If host_header is None, server is not None, and server[1] is not None, the value of host is updated to include the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 92, \"text\": \"if scheme in {\\\"http\\\", \\\"ws\\\"} and host.endswith(\\\":80\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 93, \"text\": \"    host = host[:-3]\"}\n      ],\n      \"condition\": \"host_header is not None and host.endswith(\\\":80\\\") and scheme in {\\\"http\\\", \\\"ws\\\"}\",\n      \"rationale\": \"If host_header is not None, host ends with \\\":80\\\", and scheme is either \\\"http\\\" or \\\"ws\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 92, \"text\": \"if scheme in {\\\"http\\\", \\\"ws\\\"} and host.endswith(\\\":80\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 93, \"text\": \"    host = host[:-3]\"}\n      ],\n      \"condition\": \"host_header is None and server is not None and server[1] == 80 and scheme in {\\\"http\\\", \\\"ws\\\"}\",\n      \"rationale\": \"If host_header is None, server is not None, server[1] is 80, and scheme is either \\\"http\\\" or \\\"ws\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 94, \"text\": \"elif scheme in {\\\"https\\\", \\\"wss\\\"} and host.endswith(\\\":443\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 95, \"text\": \"    host = host[:-4]\"}\n      ],\n      \"condition\": \"host_header is not None and host.endswith(\\\":443\\\") and scheme in {\\\"https\\\", \\\"wss\\\"}\",\n      \"rationale\": \"If host_header is not None, host ends with \\\":443\\\", and scheme is either \\\"https\\\" or \\\"wss\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 94, \"text\": \"elif scheme in {\\\"https\\\", \\\"wss\\\"} and host.endswith(\\\":443\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 95, \"text\": \"    host = host[:-4]\"}\n      ],\n      \"condition\": \"host_header is None and server is not None and server[1] == 443 and scheme in {\\\"https\\\", \\\"wss\\\"}\",\n      \"rationale\": \"If host_header is None, server is not None, server[1] is 443, and scheme is either \\\"https\\\" or \\\"wss\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 98, \"text\": \"if not host_is_trusted(host, trusted_hosts):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 99, \"text\": \"    raise SecurityError(f\\\"Host {host!r} is not trusted.\\\")\"}\n      ],\n      \"condition\": \"trusted_hosts is not None and not host_is_trusted(host, trusted_hosts)\",\n      \"rationale\": \"If trusted_hosts is not None and the host is not trusted, a SecurityError is raised, making the initial assignment of host to an empty string unobservable.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 1421,
+      "completion_tokens": 1320,
+      "total_duration_ns": 68726481936,
+      "load_duration_ns": 2662770,
+      "prompt_eval_duration_ns": 681261000,
+      "eval_duration_ns": 66023579000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 69.482,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b",
+    "wall_seconds": 69.485,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_get_host_default_empty\n\n## Files\n`src/werkzeug/sansio/utils.py`\n\n## Program with source line numbers\n```text\n  56 | def get_host(\n  57 |     scheme: str,\n  58 |     host_header: t.Optional[str],\n  59 |     server: t.Optional[t.Tuple[str, t.Optional[int]]] = None,\n  60 |     trusted_hosts: t.Optional[t.Iterable[str]] = None,\n  61 | ) -> str:\n  62 |     \"\"\"Return the host for the given parameters.\n  63 | \n  64 |     This first checks the ``host_header``. If it's not present, then\n  65 |     ``server`` is used. The host will only contain the port if it is\n  66 |     different than the standard port for the protocol.\n  67 | \n  68 |     Optionally, verify that the host is trusted using\n  69 |     :func:`host_is_trusted` and raise a\n  70 |     :exc:`~werkzeug.exceptions.SecurityError` if it is not.\n  71 | \n  72 |     :param scheme: The protocol the request used, like ``\"https\"``.\n  73 |     :param host_header: The ``Host`` header value.\n  74 |     :param server: Address of the server. ``(host, port)``, or\n  75 |         ``(path, None)`` for unix sockets.\n  76 |     :param trusted_hosts: A list of trusted host names.\n  77 | \n  78 |     :return: Host, with port if necessary.\n  79 |     :raise ~werkzeug.exceptions.SecurityError: If the host is not\n  80 |         trusted.\n  81 |     \"\"\"\n  82 |     host = \"\"\n  83 | \n  84 |     if host_header is not None:\n  85 |         host = host_header\n  86 |     elif server is not None:\n  87 |         host = server[0]\n  88 | \n  89 |         if server[1] is not None:\n  90 |             host = f\"{host}:{server[1]}\"\n  91 | \n  92 |     if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n  93 |         host = host[:-3]\n  94 |     elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n  95 |         host = host[:-4]\n  96 | \n  97 |     if trusted_hosts is not None:\n  98 |         if not host_is_trusted(host, trusted_hosts):\n  99 |             raise SecurityError(f\"Host {host!r} is not trusted.\")\n 100 | \n 101 |     return host\n```\n\n## Target A\nLine 82: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"host_header\": {\"description\": \"Host header value, or null when absent.\", \"max_length\": 1024, \"required\": false, \"type\": \"string|null\"}, \"scheme\": {\"description\": \"URL scheme; defaults to http.\", \"enum\": [\"http\", \"https\", \"ws\", \"wss\"], \"required\": false, \"type\": \"string\"}, \"server\": {\"description\": \"Server address [host, port], or null.\", \"items\": [\"string\", \"integer|null\"], \"required\": false, \"type\": \"array|null\"}}\nFrozen legal cases: [{\"scheme\": \"http\", \"host_header\": null, \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"example.com\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": null, \"server\": [\"example.com\", 8080]}, {\"scheme\": \"https\", \"host_header\": \"example.com:443\", \"server\": [\"example.com\", 443]}, {\"scheme\": \"ws\", \"host_header\": \"Example.COM:80\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"spam\", \"server\": [\"spam\", 80]}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; scheme must be one of http, https, ws, wss.; host_header must be a string or null.; server must be null or a two-element array [string, integer|null]; port must be 0..65535.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"host\": \"string\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+      }
+    ]
+  },
+  "relations": [
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:84-90",
+          "key": "src/werkzeug/sansio/utils.py:84-90",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 84,
+          "last_line": 90,
+          "line": 84,
+          "end_line": 90,
+          "col": 4,
+          "end_col": 40,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if host_header is not None:\n        host = host_header\n    elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+          "text": "if host_header is not None:\n        host = host_header\n    elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+          "node_key": [
+            "If",
+            84,
+            4,
+            90,
+            40
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:85-85",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 85,
+          "last_line": 85,
+          "kind": "assignment",
+          "code": "        host = host_header"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 84,
+            "text": "if host_header is not None:"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85,
+            "text": "    host = host_header"
+          }
+        ],
+        "condition": "host_header is not None",
+        "rationale": "If host_header is not None, the value of host is set from host_header, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:85-85",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 85,
+          "last_line": 85,
+          "kind": "assignment",
+          "code": "        host = host_header"
+        }
+      ],
+      "verification": {
+        "status": "SET_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:85-85"
+        ],
+        "new_ops": [],
+        "msms_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}"
+        ],
+        "mmbs_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}"
+        ],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:86-90",
+          "key": "src/werkzeug/sansio/utils.py:86-90",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 86,
+          "last_line": 90,
+          "line": 86,
+          "end_line": 90,
+          "col": 4,
+          "end_col": 40,
+          "kind": "if",
+          "node_type": "If",
+          "code": "elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+          "text": "elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+          "node_key": [
+            "If",
+            86,
+            4,
+            90,
+            40
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:87-87",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 87,
+          "last_line": 87,
+          "kind": "assignment",
+          "code": "        host = server[0]"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 86,
+            "text": "elif server is not None:"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87,
+            "text": "    host = server[0]"
+          }
+        ],
+        "condition": "host_header is None and server is not None",
+        "rationale": "If host_header is None and server is not None, the value of host is set from server[0], making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:87-87",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 87,
+          "last_line": 87,
+          "kind": "assignment",
+          "code": "        host = server[0]"
+        }
+      ],
+      "verification": {
+        "status": "SET_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:87-87"
+        ],
+        "new_ops": [],
+        "msms_inputs": [
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "mmbs_inputs": [
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:89-90",
+          "key": "src/werkzeug/sansio/utils.py:89-90",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 89,
+          "last_line": 90,
+          "line": 89,
+          "end_line": 90,
+          "col": 8,
+          "end_col": 40,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+          "text": "if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+          "node_key": [
+            "If",
+            89,
+            8,
+            90,
+            40
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:90-90",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 90,
+          "last_line": 90,
+          "kind": "assignment",
+          "code": "            host = f\"{host}:{server[1]}\""
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 89,
+            "text": "if server[1] is not None:"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 90,
+            "text": "    host = f\"{host}:{server[1]}\""
+          }
+        ],
+        "condition": "host_header is None and server is not None and server[1] is not None",
+        "rationale": "If host_header is None, server is not None, and server[1] is not None, the value of host is updated to include the port, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:90-90",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 90,
+          "last_line": 90,
+          "kind": "assignment",
+          "code": "            host = f\"{host}:{server[1]}\""
+        }
+      ],
+      "verification": {
+        "status": "NOT_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:90-90"
+        ],
+        "new_ops": [],
+        "msms_inputs": [],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:92-95",
+          "key": "src/werkzeug/sansio/utils.py:92-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 92,
+          "last_line": 95,
+          "line": 92,
+          "end_line": 95,
+          "col": 4,
+          "end_col": 24,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "node_key": [
+            "If",
+            92,
+            4,
+            95,
+            24
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:93-93",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 93,
+          "last_line": 93,
+          "kind": "assignment",
+          "code": "        host = host[:-3]"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 92,
+            "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 93,
+            "text": "    host = host[:-3]"
+          }
+        ],
+        "condition": "host_header is not None and host.endswith(\":80\") and scheme in {\"http\", \"ws\"}",
+        "rationale": "If host_header is not None, host ends with \":80\", and scheme is either \"http\" or \"ws\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:93-93",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 93,
+          "last_line": 93,
+          "kind": "assignment",
+          "code": "        host = host[:-3]"
+        }
+      ],
+      "verification": {
+        "status": "NOT_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:93-93"
+        ],
+        "new_ops": [],
+        "msms_inputs": [],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:92-95",
+          "key": "src/werkzeug/sansio/utils.py:92-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 92,
+          "last_line": 95,
+          "line": 92,
+          "end_line": 95,
+          "col": 4,
+          "end_col": 24,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "node_key": [
+            "If",
+            92,
+            4,
+            95,
+            24
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:93-93",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 93,
+          "last_line": 93,
+          "kind": "assignment",
+          "code": "        host = host[:-3]"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 92,
+            "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 93,
+            "text": "    host = host[:-3]"
+          }
+        ],
+        "condition": "host_header is None and server is not None and server[1] == 80 and scheme in {\"http\", \"ws\"}",
+        "rationale": "If host_header is None, server is not None, server[1] is 80, and scheme is either \"http\" or \"ws\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:93-93",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 93,
+          "last_line": 93,
+          "kind": "assignment",
+          "code": "        host = host[:-3]"
+        }
+      ],
+      "verification": {
+        "status": "NOT_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:93-93"
+        ],
+        "new_ops": [],
+        "msms_inputs": [],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:94-95",
+          "key": "src/werkzeug/sansio/utils.py:94-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 94,
+          "last_line": 95,
+          "line": 94,
+          "end_line": 95,
+          "col": 4,
+          "end_col": 24,
+          "kind": "if",
+          "node_type": "If",
+          "code": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "node_key": [
+            "If",
+            94,
+            4,
+            95,
+            24
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:95-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 95,
+          "last_line": 95,
+          "kind": "assignment",
+          "code": "        host = host[:-4]"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 94,
+            "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 95,
+            "text": "    host = host[:-4]"
+          }
+        ],
+        "condition": "host_header is not None and host.endswith(\":443\") and scheme in {\"https\", \"wss\"}",
+        "rationale": "If host_header is not None, host ends with \":443\", and scheme is either \"https\" or \"wss\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:95-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 95,
+          "last_line": 95,
+          "kind": "assignment",
+          "code": "        host = host[:-4]"
+        }
+      ],
+      "verification": {
+        "status": "NOT_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:95-95"
+        ],
+        "new_ops": [],
+        "msms_inputs": [],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:94-95",
+          "key": "src/werkzeug/sansio/utils.py:94-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 94,
+          "last_line": 95,
+          "line": 94,
+          "end_line": 95,
+          "col": 4,
+          "end_col": 24,
+          "kind": "if",
+          "node_type": "If",
+          "code": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+          "node_key": [
+            "If",
+            94,
+            4,
+            95,
+            24
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:95-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 95,
+          "last_line": 95,
+          "kind": "assignment",
+          "code": "        host = host[:-4]"
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 94,
+            "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 95,
+            "text": "    host = host[:-4]"
+          }
+        ],
+        "condition": "host_header is None and server is not None and server[1] == 443 and scheme in {\"https\", \"wss\"}",
+        "rationale": "If host_header is None, server is not None, server[1] is 443, and scheme is either \"https\" or \"wss\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:95-95",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 95,
+          "last_line": 95,
+          "kind": "assignment",
+          "code": "        host = host[:-4]"
+        }
+      ],
+      "verification": {
+        "status": "NOT_CONFIRMED",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:95-95"
+        ],
+        "new_ops": [],
+        "msms_inputs": [],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:98-99",
+          "key": "src/werkzeug/sansio/utils.py:98-99",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 98,
+          "last_line": 99,
+          "line": 98,
+          "end_line": 99,
+          "col": 8,
+          "end_col": 65,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if not host_is_trusted(host, trusted_hosts):\n            raise SecurityError(f\"Host {host!r} is not trusted.\")",
+          "text": "if not host_is_trusted(host, trusted_hosts):\n            raise SecurityError(f\"Host {host!r} is not trusted.\")",
+          "node_key": [
+            "If",
+            98,
+            8,
+            99,
+            65
+          ]
+        },
+        {
+          "id": "src/werkzeug/sansio/utils.py:99-99",
+          "key": "src/werkzeug/sansio/utils.py:99-99",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 99,
+          "last_line": 99,
+          "line": 99,
+          "end_line": 99,
+          "col": 12,
+          "end_col": 65,
+          "kind": "raise",
+          "node_type": "Raise",
+          "code": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+          "text": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+          "node_key": [
+            "Raise",
+            99,
+            12,
+            99,
+            65
+          ]
+        }
+      ],
+      "duplicates": 0,
+      "in_graph": false,
+      "relation": {
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 98,
+            "text": "if not host_is_trusted(host, trusted_hosts):"
+          },
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 99,
+            "text": "    raise SecurityError(f\"Host {host!r} is not trusted.\")"
+          }
+        ],
+        "condition": "trusted_hosts is not None and not host_is_trusted(host, trusted_hosts)",
+        "rationale": "If trusted_hosts is not None and the host is not trusted, a SecurityError is raised, making the initial assignment of host to an empty string unobservable."
+      },
+      "normalized_ops": [
+        {
+          "id": "src/werkzeug/sansio/utils.py:99-99",
+          "key": "src/werkzeug/sansio/utils.py:99-99",
+          "file": "src/werkzeug/sansio/utils.py",
+          "first_line": 99,
+          "last_line": 99,
+          "line": 99,
+          "end_line": 99,
+          "col": 12,
+          "end_col": 65,
+          "kind": "raise",
+          "node_type": "Raise",
+          "code": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+          "text": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+          "node_key": [
+            "Raise",
+            99,
+            12,
+            99,
+            65
+          ]
+        }
+      ],
+      "verification": {
+        "status": "NEW_OP",
+        "ids": [
+          "src/werkzeug/sansio/utils.py:99-99"
+        ],
+        "new_ops": [
+          "src/werkzeug/sansio/utils.py:99-99"
+        ],
+        "msms_inputs": [],
+        "mmbs_inputs": [],
+        "incomplete_inputs": [
+          "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+          "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+          "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+          "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+          "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+          "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+        ],
+        "condition": "NOT_EVALUATED"
+      }
+    }
+  ],
+  "summary": {
+    "call_error": null,
+    "raw_relations": 8,
+    "mapped_relations": 8,
+    "rejected_relations": 0,
+    "parse_error": null,
+    "normalization": "inner",
+    "set_confirmed_relations": 2,
+    "not_confirmed_relations": 5,
+    "new_op_relations": 1,
+    "condition": "NOT_EVALUATED"
+  }
+}

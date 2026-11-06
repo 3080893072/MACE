@@ -1,0 +1,62 @@
+{
+  "task_id": "werkzeug_bind_server_name_lower",
+  "project_id": "werkzeug-2.2.3",
+  "source_version": "Werkzeug 2.2.3",
+  "difficulty": "medium",
+  "mechanism": "direct re-derivation (Map.bind lowercases the same value again; masking holds only when the subdomain comparison is skipped)",
+  "target_operation": {
+    "file": "src/werkzeug/routing/map.py",
+    "line": 307,
+    "code": "server_name = server_name.lower()",
+    "function": "Map.bind_to_environ",
+    "note": "normalizes an explicitly supplied server name before subdomain comparison"
+  },
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected",
+  "candidate_universe": [
+    {
+      "id": "bind_relower",
+      "file": "src/werkzeug/routing/map.py",
+      "line": 219,
+      "code": "server_name = server_name.lower()",
+      "kind": "assignment",
+      "role": "downstream re-derivation of the same normalization in Map.bind"
+    }
+  ],
+  "universe_notes": [
+    "U is the only later normalization of the value passed from bind_to_environ to Map.bind.",
+    "When subdomain is None, A's value is consumed by the subdomain comparison before Map.bind runs, so the downstream lowercasing cannot mask A; that is the exposing input.",
+    "When subdomain is supplied, the comparison block is skipped and the downstream lowercasing becomes the only consumer, which is the masking input.  This is a control prerequisite, not a candidate operation.",
+    "Completeness outside the declared U is not claimed."
+  ],
+  "probe": "probe_werkzeug_bind_server_name.py",
+  "inputs": [
+    {
+      "id": "expose_subdomain_path",
+      "role": "exposing",
+      "payload": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "note": "A feeds the subdomain comparison. P+ computes an empty subdomain; P- warns and falls back to '<invalid>'."
+    },
+    {
+      "id": "mask_subdomain_supplied",
+      "role": "masking",
+      "payload": {
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "note": "The comparison block is skipped by the supplied subdomain. Map.bind lowercases again, so both variants agree; disabling that re-derivation exposes the deleted A."
+    }
+  ],
+  "scope": {
+    "inputs_executed": 2,
+    "operations_in_universe": 1,
+    "not_claimed": [
+      "All WSGI environments and host configurations",
+      "host_matching maps",
+      "Operations outside the declared U"
+    ]
+  }
+}

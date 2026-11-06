@@ -1,0 +1,519 @@
+[
+  {
+    "run": "alt_masking",
+    "run_file": "oracle_seed42.json",
+    "fixture": "alt_masking",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 903,
+    "completion_tokens": 49,
+    "wall_seconds": 3.205,
+    "rounds": 1,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 2,
+      "relations_good": 2,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "O0": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "mode == 0 or mode == 1"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "((mode == 0 or mode == 1))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 2,
+      "relations_on_reference_lines": 2,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        5,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "dead_flag",
+    "run_file": "oracle_seed42.json",
+    "fixture": "dead_flag",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 850,
+    "completion_tokens": 57,
+    "wall_seconds": 3.509,
+    "rounds": 1,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 3,
+      "relations_good": 3,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "True"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "(((True)) and ((True)))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 3,
+      "relations_on_reference_lines": 3,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "dedup_channel",
+    "run_file": "oracle_seed42.json",
+    "fixture": "dedup_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 991,
+    "completion_tokens": 42,
+    "wall_seconds": 3.96,
+    "rounds": 1,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 3,
+      "relations_good": 3,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "BOUNDED",
+        "O0": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "count(xs, xs[0] + 1) > 0"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "((count(xs, xs[0] + 1) > 0))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 3,
+      "relations_on_reference_lines": 3,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        14,
+        16
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "dict_slot",
+    "run_file": "oracle_seed42.json",
+    "fixture": "dict_slot",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 910,
+    "completion_tokens": 36,
+    "wall_seconds": 3.251,
+    "rounds": 1,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 3,
+      "relations_good": 3,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "mode"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "(((mode)) and ((True)))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 3,
+      "relations_on_reference_lines": 3,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "modulo_absorb",
+    "run_file": "oracle_seed42.json",
+    "fixture": "modulo_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 2218,
+    "completion_tokens": 126,
+    "wall_seconds": 10.114,
+    "rounds": 2,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 2,
+      "relations_good": 2,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "O0": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "fn_0(xs) % 10 == 9 or (not cap and fn_0(xs) == 0)"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "((cap and fn_0(xs) % 10 != 9))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": false,
+    "attribution": {
+      "relations_cited": 2,
+      "relations_on_reference_lines": 2,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        9,
+        11,
+        12
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "overwrite_channel",
+    "run_file": "oracle_seed42.json",
+    "fixture": "overwrite_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 1094,
+    "completion_tokens": 51,
+    "wall_seconds": 3.408,
+    "rounds": 1,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 4,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "keep or fn_0(xs) == 0"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "(fn_0(xs) == 0) or (((keep or fn_0(xs) == 0)) and ((keep or fn_0(xs) == 0)))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": true,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 4,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "parity_snap",
+    "run_file": "oracle_seed42.json",
+    "fixture": "parity_snap",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 2025,
+    "completion_tokens": 90,
+    "wall_seconds": 6.28,
+    "rounds": 2,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 2,
+      "relations_good": 2,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "O0": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": true,
+      "exact": false,
+      "expr": "sum(xs) % 2 == 0 or not even"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "((even and sum(xs) % 2 == 0))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": false,
+    "attribution": {
+      "relations_cited": 2,
+      "relations_on_reference_lines": 2,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "sort_channel",
+    "run_file": "oracle_seed42.json",
+    "fixture": "sort_channel",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 2930,
+    "completion_tokens": 222,
+    "wall_seconds": 22.481,
+    "rounds": 2,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 4,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "(pre and use_left and xs[0] == min(xs)) or (pre and use_right and xs[-1] == max(xs)) or (not pre and use_left) or (not pre and use_right)"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "(pre) or (((use_left or xs[0] == min(xs))) and ((use_right or xs[-1] == max(xs))))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": false,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 4,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        31,
+        33,
+        34
+      ]
+    },
+    "diagnostic_only": true
+  },
+  {
+    "run": "swap_channels",
+    "run_file": "oracle_seed42.json",
+    "fixture": "swap_channels",
+    "model": "qwen2.5-coder:32b",
+    "mode": "oracle",
+    "tokens": 2209,
+    "completion_tokens": 76,
+    "wall_seconds": 5.365,
+    "rounds": 2,
+    "cell": "C",
+    "contract_source": "reviewed",
+    "contract": {
+      "relations_total": 4,
+      "relations_good": 4,
+      "verified": true,
+      "statuses": {
+        "T1": "BOUNDED",
+        "O0": "BOUNDED",
+        "O1": "BOUNDED",
+        "O2": "BOUNDED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": false,
+      "exact": false,
+      "expr": "not show_gap"
+    },
+    "guard_derived": {
+      "status": "BOUNDED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": true,
+      "exact": true,
+      "expr": "(((True)) and ((True)) and ((not show_gap or n == k)))"
+    },
+    "derived_compose_status": "COMPOSED",
+    "equivalent_to_reference_guard": false,
+    "attribution": {
+      "relations_cited": 4,
+      "relations_on_reference_lines": 4,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        5,
+        7,
+        8
+      ]
+    },
+    "diagnostic_only": true
+  }
+]

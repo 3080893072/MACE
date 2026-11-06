@@ -1,0 +1,41 @@
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "template": "test_template.html",
+        "context": {}
+      }
+    },
+    {
+      "type": "MSMS",
+      "input": {
+        "template": "test_template.html",
+        "context": {}
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 132,
+          "code": "code = bucket.code"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "input": {
+        "template": "test_template.html",
+        "context": {}
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 132,
+          "code": "code = bucket.code"
+        }
+      ]
+    }
+  ],
+  "submission_id": "baseline-A"
+}

@@ -1,0 +1,63 @@
+{
+  "candidate_id": "humanize-4.9.0:src/humanize/number.py:149:name:value",
+  "project": "humanize",
+  "version": "4.9.0",
+  "split": "DEV",
+  "file": "src/humanize/number.py",
+  "function": "intcomma",
+  "mechanism": "name",
+  "target_A": {
+    "line": 149,
+    "end_line": 149,
+    "kind": "Assign",
+    "code": "value = value.replace(thousands_sep, \"\").replace(decimal_sep, \".\")"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": true,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_i18n.py::test_intcomma",
+    "tests/test_number.py::test_intcomma[test_args10-1,000,000]",
+    "tests/test_number.py::test_intcomma[test_args11-1,234,567.1234567]",
+    "tests/test_number.py::test_intcomma[test_args12-1,234,567]",
+    "tests/test_number.py::test_intcomma[test_args13-1,234,567.1]",
+    "tests/test_number.py::test_intcomma[test_args14-1,234,567.1234567000]",
+    "tests/test_number.py::test_intcomma[test_args15-1,234,567.0]",
+    "tests/test_number.py::test_intcomma[test_args32-NaN]",
+    "tests/test_number.py::test_intcomma[test_args33--Inf]",
+    "tests/test_number.py::test_intcomma[test_args6-100]",
+    "tests/test_number.py::test_intcomma[test_args7-1,000]",
+    "tests/test_number.py::test_intcomma[test_args8-10,123]",
+    "tests/test_number.py::test_intcomma[test_args9-10,311]"
+  ],
+  "original_hit_test_count": 13,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            value = value.replace(thousands_sep, \"\").replace(decimal_sep, \".\")",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.61,
+    "failed_nodeids": [
+      "tests.test_i18n::test_intcomma"
+    ],
+    "stdout_tail": "\u001b[31mF\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[31m                                                            [100%]\u001b[0m\n================================== FAILURES ===================================\n\u001b[31m\u001b[1m________________________________ test_intcomma ________________________________\u001b[0m\n\n    def test_intcomma() -> None:\n        number = 10_000_000\n    \n        assert humanize.intcomma(number) == \"10,000,000\"\n    \n        try:\n            humanize.i18n.activate(\"de_DE\")\n            assert humanize.intcomma(number) == \"10.000.000\"\n            assert humanize.intcomma(1_234_567.8901) == \"1.234.567,8901\"\n            assert humanize.intcomma(1_234_567.89) == \"1.234.567,89\"\n>           assert humanize.intcomma(\"1234567,89\") == \"1.234.567,89\"\n\u001b[1m\u001b[31mE           AssertionError: assert '1234567,89' == '1.234.567,89'\u001b[0m\n\u001b[1m\u001b[31mE             - 1.234.567,89\u001b[0m\n\u001b[1m\u001b[31mE             ?  -   -\u001b[0m\n\u001b[1m\u001b[31mE             + 1234567,89\u001b[0m\n\n\u001b[1m\u001b[31mtests\\test_i18n.py\u001b[0m:51: AssertionError\n- generated xml file: <local-path> -\n\u001b[36m\u001b[1m=========================== short test summary info ===========================\u001b[0m\n\u001b[31mFAILED\u001b[0m tests/test_i18n.py::\u001b[1mtest_intcomma\u001b[0m - AssertionError: assert '1234567,89' == '1.234.567,89'\n\u001b[31m\u001b[31m\u001b[1m1 failed\u001b[0m, \u001b[32m12 passed\u001b[0m\u001b[31m in 0.25s\u001b[0m\u001b[0m\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

@@ -1,0 +1,19 @@
+--- a/networkx/readwrite/adjlist.py
++++ b/networkx/readwrite/adjlist.py
+@@ -199,12 +199,16 @@
+         p = line.find(comments)
+         if p >= 0:
+             line = line[:p]
+         if not len(line):
+             continue
+         vlist = line.strip().split(delimiter)
++        # SD:U:U1:begin
++        if "\t" not in line:
++            vlist = line.strip(" ").split(delimiter)
++        # SD:U:U1:end
+         u = vlist.pop(0)
+         # convert types
+         if nodetype is not None:
+             try:
+                 u = nodetype(u)
+             except BaseException as err:

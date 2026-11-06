@@ -1,0 +1,51 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/test_jacobi.py:567:name:gen",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/test_jacobi.py",
+  "function": "test_multithreading",
+  "mechanism": "name",
+  "target_A": {
+    "line": 567,
+    "end_line": 567,
+    "kind": "Assign",
+    "code": "gen = generator_112r2"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_jacobi.py::TestJacobi::test_multithreading"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        gen = generator_112r2",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.05,
+    "failed_nodeids": [
+      "src.ecdsa.test_jacobi.TestJacobi::test_multithreading"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n_______________________ TestJacobi.test_multithreading ________________________\n\nself = <ecdsa.test_jacobi.TestJacobi testMethod=test_multithreading>\n\n    @settings(**NO_OLD_SETTINGS)\n>   @given(st.integers(min_value=1, max_value=10))\n\nsrc\\ecdsa\\test_jacobi.py:561: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <ecdsa.test_jacobi.TestJacobi testMethod=test_multithreading>\nthread_num = 1\n\n    @settings(**NO_OLD_SETTINGS)\n    @given(st.integers(min_value=1, max_value=10))\n    def test_multithreading(self, thread_num):\n        # ensure that generator's precomputation table is filled\n        generator_112r2 * 2\n    \n        # create a fresh point that doesn't have a filled precomputation table\n        pass  # P-: target A deleted\n>       gen = PointJacobi(gen.curve(), gen.x(), gen.y(), 1, gen.order(), True)\nE       UnboundLocalError: cannot access local variable 'gen' where it is not associated with a value\nE       Failing test case: test_multithreading(\nE           self=<ecdsa.test_jacobi.TestJacobi testMethod=test_multithreading>,\nE           thread_num=1,  # or any other generated value\nE       )\n\nsrc\\ecdsa\\test_jacobi.py:568: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_multithreading - UnboundLoc...\n1 failed in 0.68s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

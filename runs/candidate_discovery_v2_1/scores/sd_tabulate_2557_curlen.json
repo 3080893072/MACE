@@ -1,0 +1,199 @@
+{
+  "task_id": "sd_tabulate_2557_curlen",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_two_lines",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "tabulate/__init__.py:2560-2560"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "tabulate/__init__.py:2560-2560"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "self.max_lines == 2",
+          "rationale": "Keeping the operation at 2560 can mask the effect of deleting A when the maximum number of lines is 2.",
+          "disabled_operations": [
+            "tabulate/__init__.py:2588-2588"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "tabulate/__init__.py:2560-2560",
+            "tabulate/__init__.py:2588-2588"
+          ],
+          "source": "qwen_graph_pair",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "tabulate/__init__.py:2560-2560"
+          ],
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "tabulate/__init__.py:2588-2588"
+          ],
+          "source": "graph_combo_1",
+          "disabled_operations": [
+            "tabulate/__init__.py:2560-2560"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 1,
+    "c0_false": 0,
+    "c0_probes": 8,
+    "direct_exact": 0,
+    "old_full_exact": 1,
+    "masking_inputs": 3
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "tabulate/__init__.py:2588-2588"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "tabulate/__init__.py:2588-2588",
+        "tabulate/__init__.py:2553-2553",
+        "tabulate/__init__.py:2552-2552",
+        "tabulate/__init__.py:2521-2521",
+        "tabulate/__init__.py:2543-2543"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "tabulate/__init__.py:999-999",
+        "tabulate/__init__.py:1001-1001",
+        "tabulate/__init__.py:2418-2418",
+        "tabulate/__init__.py:2420-2420",
+        "tabulate/__init__.py:2422-2422",
+        "tabulate/__init__.py:2430-2430",
+        "tabulate/__init__.py:2431-2433",
+        "tabulate/__init__.py:2436-2436",
+        "tabulate/__init__.py:2440-2440",
+        "tabulate/__init__.py:2442-2442",
+        "tabulate/__init__.py:2447-2447",
+        "tabulate/__init__.py:2449-2449",
+        "tabulate/__init__.py:2461-2461",
+        "tabulate/__init__.py:2463-2463",
+        "tabulate/__init__.py:2470-2470",
+        "tabulate/__init__.py:2471-2471",
+        "tabulate/__init__.py:2473-2473",
+        "tabulate/__init__.py:2474-2474",
+        "tabulate/__init__.py:2475-2475",
+        "tabulate/__init__.py:2481-2481",
+        "tabulate/__init__.py:2501-2501",
+        "tabulate/__init__.py:2503-2503",
+        "tabulate/__init__.py:2506-2506",
+        "tabulate/__init__.py:2508-2508",
+        "tabulate/__init__.py:2510-2510",
+        "tabulate/__init__.py:2514-2514",
+        "tabulate/__init__.py:2520-2520",
+        "tabulate/__init__.py:2521-2521",
+        "tabulate/__init__.py:2525-2525",
+        "tabulate/__init__.py:2527-2527",
+        "tabulate/__init__.py:2530-2530",
+        "tabulate/__init__.py:2535-2535",
+        "tabulate/__init__.py:2538-2538",
+        "tabulate/__init__.py:2542-2542",
+        "tabulate/__init__.py:2543-2543",
+        "tabulate/__init__.py:2552-2552",
+        "tabulate/__init__.py:2553-2553",
+        "tabulate/__init__.py:2562-2562",
+        "tabulate/__init__.py:2578-2578",
+        "tabulate/__init__.py:2585-2585",
+        "tabulate/__init__.py:2586-2586",
+        "tabulate/__init__.py:2588-2588",
+        "tabulate/__init__.py:2589-2589",
+        "tabulate/__init__.py:2592-2592",
+        "tabulate/__init__.py:2597-2597",
+        "tabulate/__init__.py:2599-2599",
+        "tabulate/__init__.py:2602-2602"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 47
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "tabulate/__init__.py:2588-2588"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    }
+  }
+}

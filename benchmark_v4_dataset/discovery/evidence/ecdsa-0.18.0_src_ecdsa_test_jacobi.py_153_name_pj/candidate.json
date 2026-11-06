@@ -1,0 +1,51 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/test_jacobi.py:153:name:pj",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/test_jacobi.py",
+  "function": "test_zero_point_multiply_by_one",
+  "mechanism": "name",
+  "target_A": {
+    "line": 153,
+    "end_line": 153,
+    "kind": "Assign",
+    "code": "pj = PointJacobi(curve_256, 0, 0, 1)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_jacobi.py::TestJacobi::test_zero_point_multiply_by_one"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        pj = PointJacobi(curve_256, 0, 0, 1)",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 0.94,
+    "failed_nodeids": [
+      "src.ecdsa.test_jacobi.TestJacobi::test_zero_point_multiply_by_one"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n_________________ TestJacobi.test_zero_point_multiply_by_one __________________\n\nself = <ecdsa.test_jacobi.TestJacobi testMethod=test_zero_point_multiply_by_one>\n\n    def test_zero_point_multiply_by_one(self):\n        pass  # P-: target A deleted\n    \n>       pj = pj * 1\nE       UnboundLocalError: cannot access local variable 'pj' where it is not associated with a value\n\nsrc\\ecdsa\\test_jacobi.py:155: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_zero_point_multiply_by_one\n1 failed in 0.58s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

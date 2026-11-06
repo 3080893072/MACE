@@ -1,0 +1,289 @@
+{
+  "rows": [
+    {
+      "run": "dead_flag",
+      "fixture": "dead_flag",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ALL_VERIFIED",
+      "rounds": 1,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "BOUNDED",
+        "observer": "BOUNDED",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "BOUNDED",
+        "observer": "BOUNDED",
+        "guard": "BOUNDED"
+      },
+      "first_bad": "none",
+      "first_bad_round1": "none",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "True"
+      },
+      "qwen_guard": null,
+      "witness_found": false,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "flag_post == True",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "BOUNDED",
+          "expr": "True",
+          "condition": "True",
+          "role": "supporting",
+          "reason": null
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "len(xs)",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "O1": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "len(xs) + 1",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 1250,
+      "completion_tokens": 308,
+      "wall_seconds": 17.8
+    },
+    {
+      "run": "dict_slot",
+      "fixture": "dict_slot",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 3,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "REFUTED",
+        "guard": "BOUNDED"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "REFUTED",
+        "guard": "REFUTED"
+      },
+      "first_bad": "upstream",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "BOUNDED",
+        "sound": true,
+        "complete": true,
+        "exact": true,
+        "unsound_rows": 0,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "mode"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "d_post[0] == 5",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "mode",
+          "condition": "mode",
+          "role": "fixed_point",
+          "reason": "the condition holds on 40 input(s) where A still changes the local state, so it is not a fixed point"
+        },
+        "U2": {
+          "kind": "upstream",
+          "status": "BOUNDED",
+          "expr": "not mode",
+          "condition": "not mode",
+          "role": "supporting",
+          "reason": null
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "REFUTED",
+          "expr": "d[0] if mode else 0",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "O1": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "d[1] + len(d) + sum(xs)",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 11796,
+      "completion_tokens": 933,
+      "wall_seconds": 51.8
+    },
+    {
+      "run": "parity_snap",
+      "fixture": "parity_snap",
+      "model": "qwen2.5-coder:32b",
+      "mode": "mace",
+      "guard_source": "qwen",
+      "diagnostic_only": false,
+      "status": "ROUNDS_EXHAUSTED",
+      "rounds": 3,
+      "parse_errors": 0,
+      "stages_final": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "REFUTED",
+        "guard": "REFUTED"
+      },
+      "stages_round1": {
+        "target_effect": "BOUNDED",
+        "upstream": "REFUTED",
+        "observer": "INVALID",
+        "guard": "BOUNDED"
+      },
+      "first_bad": "upstream",
+      "first_bad_round1": "upstream",
+      "invalid_relations": [],
+      "invalid_kinds": [],
+      "guard": {
+        "parsed": true,
+        "typecheck_ok": true,
+        "status": "REFUTED",
+        "sound": false,
+        "complete": false,
+        "exact": false,
+        "unsound_rows": 85,
+        "incomplete_rows": 0,
+        "invalid_kind": "",
+        "expr": "even and sum(xs) % 2 == 0 or not even"
+      },
+      "qwen_guard": null,
+      "witness_found": true,
+      "relations": {
+        "T1": {
+          "kind": "target_effect",
+          "status": "BOUNDED",
+          "expr": "total_post == total + 1",
+          "condition": "True",
+          "role": null,
+          "reason": null
+        },
+        "U1": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "sum(xs) % 2 == 0",
+          "condition": "even",
+          "role": "fixed_point",
+          "reason": null
+        },
+        "U2": {
+          "kind": "upstream",
+          "status": "REFUTED",
+          "expr": "sum(xs) % 2 == 1",
+          "condition": "even",
+          "role": "supporting",
+          "reason": null
+        },
+        "U3": {
+          "kind": "upstream",
+          "status": "BOUNDED",
+          "expr": "True",
+          "condition": "not even",
+          "role": "supporting",
+          "reason": null
+        },
+        "O0": {
+          "kind": "observer",
+          "status": "BOUNDED",
+          "expr": "total if not even else total - total % 2",
+          "condition": "even and sum(xs) % 2 == 0",
+          "role": null,
+          "reason": null
+        },
+        "O1": {
+          "kind": "observer",
+          "status": "REFUTED",
+          "expr": "total if not even else total - total % 2",
+          "condition": "even and sum(xs) % 2 == 1",
+          "role": null,
+          "reason": null
+        },
+        "O2": {
+          "kind": "observer",
+          "status": "REFUTED",
+          "expr": "total + 1",
+          "condition": "not even",
+          "role": null,
+          "reason": null
+        },
+        "O3": {
+          "kind": "observer",
+          "status": "REFUTED",
+          "expr": "total + 1",
+          "condition": "even and sum(xs) % 2 == 0",
+          "role": null,
+          "reason": null
+        }
+      },
+      "prompt_tokens": 13270,
+      "completion_tokens": 1600,
+      "wall_seconds": 86.4
+    }
+  ],
+  "proportions": {
+    "cells": 3,
+    "guard_typecheck_fail": 0,
+    "guard_typecheck_fail_post": 0,
+    "guard_typecheck_fail_local": 0,
+    "guard_typecheck_fail_other": 0,
+    "guard_typecheck_ok": 3,
+    "guard_correct_among_typed": 2,
+    "semantic_bad_among_typed": 1,
+    "invalid_relation_ids": []
+  }
+}

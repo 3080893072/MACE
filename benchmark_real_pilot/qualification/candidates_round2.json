@@ -1,0 +1,234 @@
+{
+  "round": "real-source qualification and mechanism-diversity search",
+  "date": "2026-11-02",
+  "scope": "new candidates only; the three existing task results are not modified",
+  "static_scan": {
+    "input_functions": 224,
+    "criterion": "at least three assignments to the same local name",
+    "output": "benchmark_real_pilot/qualification/out/static_multi_assign_scan.json",
+    "note": "The scan is a candidate generator, not a masking detector. Only the functions below were manually reviewed in this round."
+  },
+  "candidates": [
+    {
+      "candidate_id": "werkzeug_is_resource_modified",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "source_location": {
+        "upstream_file": "src/werkzeug/sansio/http.py",
+        "upstream_function": "is_resource_modified",
+        "upstream_function_lines": "17-94",
+        "upstream_sha256": "9379d11017d4fabf1f5c27d24ca41e9f2b36e6af5bcd43af758f8e546aeaced0",
+        "local_file": "benchmark_real_pilot/qualification/candidates/werkzeug_is_resource_modified.py",
+        "local_sha256": "fb9b101ecf9dd81aaaa764c1731277dcaf5dfd6e1c9f65bd9676fa64101f5d8e",
+        "extraction_body_equal_ignoring_docstring": true
+      },
+      "target_A": {
+        "local_line": 43,
+        "upstream_line": 49,
+        "code": "unmodified = False",
+        "variable": "unmodified"
+      },
+      "candidate_operations": [
+        {
+          "name": "B",
+          "local_line": 65,
+          "upstream_line": 71,
+          "code": "unmodified = True",
+          "guard": "modified_since and last_modified and last_modified <= modified_since"
+        },
+        {
+          "name": "C",
+          "local_line": 72,
+          "upstream_line": 78,
+          "code": "unmodified = parse_etags(if_range.etag).contains(etag)",
+          "guard": "if_range is not None and if_range.etag is not None"
+        },
+        {
+          "name": "D",
+          "local_line": 79,
+          "upstream_line": 85,
+          "code": "unmodified = if_none_match.contains_weak(etag)",
+          "guard": "if_none_match"
+        },
+        {
+          "name": "E",
+          "local_line": 86,
+          "upstream_line": 92,
+          "code": "unmodified = not if_match.is_strong(etag)",
+          "guard": "if_match"
+        }
+      ],
+      "mechanism": {
+        "kind": "coexisting_conditional_state_assignments",
+        "different_from_direct_overwrite": true,
+        "description": "B and C are conditional assignments on different branches. Each assignment alone keeps the local bound and preserves the returned boolean on mask_b_c. Disabling either one alone still masks the deletion of A; only disabling both exposes A through an UnboundLocalError. This is the 'multiple independent masking operations coexisting' case, not one B directly overwriting A.",
+        "verified_claim": {
+          "kind": "coexisting",
+          "ops": ["B", "C"],
+          "witness": "mask_b_c",
+          "scope": "single_witness",
+          "status": "VERIFIED",
+          "minimal": true
+        }
+      },
+      "plus_minus_observations": [
+        {
+          "witness": "mask_b_c",
+          "arguments": {
+            "http_range": "bytes=0-1",
+            "http_if_range": "\"abc\"",
+            "http_if_modified_since": "Sun, 01 Jan 2023 00:00:00 GMT",
+            "etag": "\"abc\"",
+            "last_modified": "Sat, 31 Dec 2022 00:00:00 GMT",
+            "ignore_if_range": false
+          },
+          "P_plus": "return False",
+          "P_minus": "return False",
+          "status": "MASKED",
+          "target_A_hit": true
+        },
+        {
+          "witness": "expose_none",
+          "arguments": {},
+          "P_plus": "return True",
+          "P_minus": "UnboundLocalError: cannot access local variable 'unmodified' where it is not associated with a value",
+          "status": "EXPOSED",
+          "target_A_hit": true
+        }
+      ],
+      "legal_masking_witness": {
+        "witness": "mask_b_c",
+        "P_plus": "return False",
+        "P_minus": "return False",
+        "note": "P+ and P- both return False; A is executed on this witness."
+      },
+      "legal_exposing_witness": {
+        "witness": "expose_none",
+        "P_plus": "return True",
+        "P_minus": "UnboundLocalError: cannot access local variable 'unmodified' where it is not associated with a value"
+      },
+      "minimal_operation_intervention_evidence": {
+        "disable_B_only_on_mask_b_c": {
+          "P_plus": "return False",
+          "P_minus": "return False",
+          "status": "MASKED"
+        },
+        "disable_C_only_on_mask_b_c": {
+          "P_plus": "return False",
+          "P_minus": "return False",
+          "status": "MASKED"
+        },
+        "disable_B_and_C_on_mask_b_c": {
+          "P_plus": "return True",
+          "P_minus": "UnboundLocalError: cannot access local variable 'unmodified' where it is not associated with a value",
+          "status": "EXPOSED"
+        },
+        "only_B_C_enabled_on_mask_b_c": {
+          "status": "MASKED",
+          "note": "Verifier v2 checks only_claim_masks=true."
+        },
+        "proper_subset_checks": {
+          "B_disabled": "MASKED",
+          "C_disabled": "MASKED"
+        },
+        "minimal": true
+      },
+      "other_independent_relations_on_other_witnesses": [
+        {
+          "ops": ["B"],
+          "witness": "mask_b_only",
+          "status": "VERIFIED",
+          "note": "This witness does not exercise C; it is independent, not coexisting."
+        },
+        {
+          "ops": ["C"],
+          "witness": "mask_c_only",
+          "status": "VERIFIED",
+          "note": "This witness does not exercise B; it is independent, not coexisting."
+        },
+        {
+          "ops": ["D"],
+          "witness": "mask_d_only",
+          "status": "VERIFIED"
+        },
+        {
+          "ops": ["E"],
+          "witness": "mask_e_only",
+          "status": "VERIFIED"
+        }
+      ],
+      "upstream_test_evidence": {
+        "tested_against": "Werkzeug 2.2.3 sdist, isolated copy, Python 3.11.7, pytest 7.2.0 from requirements/tests.txt",
+        "P_plus_targeted": {
+          "command": "pytest tests/test_http.py::TestHTTPUtility::test_is_resource_modified tests/test_http.py::TestHTTPUtility::test_is_resource_modified_for_range_requests -q",
+          "result": "2 passed",
+          "log": "out/werkzeug-2.2.3_plus_is_resource_modified_targeted.log"
+        },
+        "P_minus_targeted": {
+          "command": "same two tests after replacing upstream line 49 with pass",
+          "result": "2 failed, both UnboundLocalError at src/werkzeug/sansio/http.py:94",
+          "log": "out/werkzeug-2.2.3_minus_is_resource_modified_targeted.log"
+        },
+        "P_minus_applicable_suite": {
+          "command": "pytest tests -q -m 'not dev_server' after the same deletion",
+          "result": "34 failed, 782 passed, 24 deselected",
+          "log": "out/werkzeug-2.2.3_minus_is_resource_modified_full.log",
+          "note": "Broader upstream coverage catches the deletion beyond the two direct tests."
+        },
+        "P_plus_applicable_suite": {
+          "result": "816 passed, 24 deselected",
+          "reference": "out/upstream_runs.json"
+        },
+        "environment_limitation": "The full Werkzeug suite without the dev_server marker has 15 failures and 8 errors from connection-refused on this Windows host; those are recorded in out/upstream_runs_full_suite.json and are not attributed to the candidate."
+      },
+      "benchmark_task_decision": "rejected",
+      "reason": "The mechanism is genuine and independently checkable, but upstream tests execute the function and catch the deletion. It cannot serve as a benchmark task whose deletion is not caught by the original suite.",
+      "limitations": [
+        "The coexisting claim is verified on one named witness only; it is not a proof over all inputs.",
+        "The extracted function depends on installed Werkzeug 2.2.3 helper modules; only the function body is compared, not the whole module.",
+        "The relation uses conditional branches that can co-occur on this witness; it is not evidence that B and C always coexist.",
+        "No claim is made about other relations on other inputs."
+      ],
+      "evidence_files": [
+        "out/verifier_v2_is_resource_modified.json",
+        "out/werkzeug-2.2.3_plus_is_resource_modified_targeted.log",
+        "out/werkzeug-2.2.3_minus_is_resource_modified_targeted.log",
+        "out/werkzeug-2.2.3_minus_is_resource_modified_full.log"
+      ]
+    }
+  ],
+  "screened_out": [
+    {
+      "candidate_id": "jinja2_parser_parse_primary",
+      "project": "Jinja2",
+      "version": "3.1.3",
+      "source_location": "src/jinja2/parser.py:646-678",
+      "variable": "node",
+      "why_not_reviewed_further": "The assignments are in mutually exclusive branches and there is no single initial A that is later overwritten. Deleting one branch assignment raises UnboundLocalError on that branch. This is not the A-plus-downstream-masking shape, and no independent or cooperative relation was claimed."
+    },
+    {
+      "candidate_id": "werkzeug_routing_parse_rule",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "source_location": "src/werkzeug/routing/rules.py:585-665",
+      "variable": "content",
+      "why_not_reviewed_further": "The initial content is read and extended by later operations (for example line 602 and line 607); deletion changes the value on ordinary paths and is not masked by a single downstream overwrite. It fails the pre-screen rule that A must not be read before the candidate masking operation."
+    },
+    {
+      "candidate_id": "click_core_get_help_extra",
+      "project": "click",
+      "version": "8.4.1",
+      "source_location": "src/click/core.py:3185-3234",
+      "variable": "default_string",
+      "why_not_reviewed_further": "All assignments are in mutually exclusive branches and there is no dominating initial assignment. There is no downstream operation that overwrites the same local after an initial value. The function also requires a large Click context to execute, so it was not promoted to a full candidate."
+    }
+  ],
+  "summary": {
+    "new_candidates_fully_verified": 1,
+    "new_candidates_rejected_as_benchmark_tasks": 1,
+    "new_mechanisms_verified": 1,
+    "new_mechanism_kind": "coexisting {B,C}",
+    "cooperative_found": false,
+    "note": "No acceptance count was targeted. The one verified new mechanism is rejected as a task because the upstream suite catches it."
+  }
+}

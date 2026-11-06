@@ -1,0 +1,116 @@
+{
+  "task_id": "sd_isort_format_strip_m4",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "isort/format.py",
+    "line": 21,
+    "function": "format_simplified",
+    "code": "    import_line = import_line.strip()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "isort/format.py",
+      "line": 23,
+      "code": "if \"\\n\" not in import_line:",
+      "role": "Whitespace-only cleanup: strips spaces/tabs for single-line input.",
+      "patch_anchor_line": 21,
+      "block_span": [
+        22,
+        25
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "isort/format.py",
+      "line": 27,
+      "code": "if \"\\t\" not in import_line:",
+      "role": "Newline-tolerant cleanup: strips spaces/newlines when no tab is present.",
+      "patch_anchor_line": 21,
+      "block_span": [
+        26,
+        29
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_padded": {
+      "role": "masking",
+      "description": "import line padded by spaces: either cleanup path suffices",
+      "p_plus": {
+        "out": "a.b"
+      },
+      "p_minus": {
+        "out": "a.b"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": false
+    },
+    "expose_tab_newline": {
+      "role": "exposing",
+      "description": "line with both a tab and a newline: neither guard fires",
+      "p_plus": {
+        "out": "a.b"
+      },
+      "p_minus": {
+        "out": "\ta.b\n"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain": {
+      "role": "control",
+      "description": "already clean import line",
+      "p_plus": {
+        "out": "a.b"
+      },
+      "p_minus": {
+        "out": "a.b"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+",
+      "[U2]": "equal to P+",
+      "[U1,U2]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_isort_format_strip_m4/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

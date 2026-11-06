@@ -1,0 +1,61 @@
+{
+  "task_id": "sd_pygments_bbcode64_color",
+  "project": "Pygments",
+  "version": "2.17.2",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "Two disjoint singleton repairs reproduce A's effect on mask_color: U1 re-applies the prepend, U2 reconstructs the closing sequence from ndef at store time.  Undeclared combination (colour + underline) exposes the deletion.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "pygments/formatters/bbcode.py",
+    "line": 64,
+    "function": "_make_styles",
+    "code": "                end = '[/color]' + end",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "_make_styles"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": "_make_styles"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "pygments.highlight(code, lexer, BBCodeFormatter(style=...))",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_color",
+      "role": "masking",
+      "description": "colour-only token style"
+    },
+    {
+      "id": "expose_color_underline",
+      "role": "exposing",
+      "description": "colour + underline token style (both repair paths are guarded off)"
+    },
+    {
+      "id": "control_bold",
+      "role": "control",
+      "description": "bold-only style; A is not executed"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {
+    "tests": [],
+    "passed": null,
+    "summary": "no original test covers this path"
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

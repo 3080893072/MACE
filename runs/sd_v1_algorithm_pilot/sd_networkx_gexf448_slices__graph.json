@@ -1,0 +1,376 @@
+{
+  "case_id": "sd_networkx_gexf448_slices",
+  "method": "graph",
+  "mechanism": "M8_OBJECT_SHARED_STATE",
+  "project": "networkx",
+  "universe": [
+    {
+      "id": "networkx/readwrite/gexf.py:451-451",
+      "file": "networkx/readwrite/gexf.py",
+      "first_line": 451,
+      "last_line": 451,
+      "kind": "assign",
+      "code": "                    edge_data = self.add_slices(edge_element, edge_data)",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/gexf.py:448-448",
+          "to": "networkx/readwrite/gexf.py:451-451",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:edge_data",
+          "guard": ""
+        }
+      ],
+      "graph_function": "add_edges"
+    },
+    {
+      "id": "networkx/readwrite/gexf.py:454-454",
+      "file": "networkx/readwrite/gexf.py",
+      "first_line": 454,
+      "last_line": 454,
+      "kind": "assign",
+      "code": "                edge_data = self.add_spells(edge_element, edge_data)",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/gexf.py:448-448",
+          "to": "networkx/readwrite/gexf.py:454-454",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:edge_data",
+          "guard": ""
+        }
+      ],
+      "graph_function": "add_edges"
+    },
+    {
+      "id": "networkx/readwrite/gexf.py:455-455",
+      "file": "networkx/readwrite/gexf.py",
+      "first_line": 455,
+      "last_line": 455,
+      "kind": "assign",
+      "code": "            edge_data = self.add_viz(edge_element, edge_data)",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/gexf.py:448-448",
+          "to": "networkx/readwrite/gexf.py:455-455",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:edge_data",
+          "guard": ""
+        }
+      ],
+      "graph_function": "add_edges"
+    },
+    {
+      "id": "networkx/readwrite/gexf.py:456-456",
+      "file": "networkx/readwrite/gexf.py",
+      "first_line": 456,
+      "last_line": 456,
+      "kind": "assign",
+      "code": "            edge_data = self.add_attributes(\"edge\", edge_element, edge_data, default)",
+      "graph_score": 1.85,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/gexf.py:448-448",
+          "to": "networkx/readwrite/gexf.py:456-456",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:edge_data",
+          "guard": ""
+        }
+      ],
+      "graph_function": "add_edges"
+    },
+    {
+      "id": "networkx/readwrite/gexf.py:380-380",
+      "file": "networkx/readwrite/gexf.py",
+      "first_line": 380,
+      "last_line": 380,
+      "kind": "assign",
+      "code": "                node_data = self.add_slices(node_element, node_data)",
+      "graph_score": 1.114754,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/gexf.py:448-448",
+          "to": "networkx/readwrite/gexf.py:380-380",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:add_slices",
+          "guard": ""
+        }
+      ],
+      "graph_function": "add_nodes"
+    },
+    {
+      "id": "networkx/readwrite/gexf.py:393-393",
+      "file": "networkx/readwrite/gexf.py",
+      "first_line": 393,
+      "last_line": 393,
+      "kind": "assign",
+      "code": "                    edge_data = data.copy()",
+      "graph_score": 1.064754,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/gexf.py:448-448",
+          "to": "networkx/readwrite/gexf.py:393-393",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:add_slices",
+          "guard": ""
+        }
+      ],
+      "graph_function": "edge_key_data"
+    }
+  ],
+  "discovery": {
+    "method": "graph",
+    "rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic",
+    "stats": {
+      "nodes": 263,
+      "edges": 7103,
+      "edge_kinds": {
+        "alias": 5458,
+        "call": 566,
+        "control": 441,
+        "data": 638
+      },
+      "edge_confidence": {
+        "MAY": 6007,
+        "MUST": 994,
+        "UNKNOWN": 102
+      },
+      "deletable": 185,
+      "unresolved_calls": [
+        "UNKNOWN:Element",
+        "UNKNOWN:NetworkXError",
+        "UNKNOWN:SubElement",
+        "UNKNOWN:TypeError",
+        "UNKNOWN:add",
+        "UNKNOWN:add_parents",
+        "UNKNOWN:append",
+        "UNKNOWN:construct_types",
+        "UNKNOWN:copy",
+        "UNKNOWN:count",
+        "UNKNOWN:get",
+        "UNKNOWN:insert",
+        "UNKNOWN:lower",
+        "UNKNOWN:pop",
+        "UNKNOWN:register_namespace",
+        "UNKNOWN:set_version",
+        "UNKNOWN:strftime",
+        "UNKNOWN:update"
+      ]
+    },
+    "eligible": 185,
+    "selected": 6,
+    "truncated": true,
+    "u_covered": [
+      "U1"
+    ],
+    "u_total": [
+      "U1"
+    ],
+    "u_recall": 1.0,
+    "u_exact": true
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_undirected_slices",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "networkx/readwrite/gexf.py:451-451"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "networkx/readwrite/gexf.py:451-451"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 14,
+        "first_msms": {
+          "set": [
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "evaluations": 4,
+          "elapsed_seconds": 0.001
+        },
+        "first_mmbs": {
+          "set": [
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": 0.001
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "expose_directed_slices",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in3",
+      "input_key": "control_undirected_no_slices",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "networkx/readwrite/gexf.py:380-380"
+        ],
+        [
+          "networkx/readwrite/gexf.py:393-393"
+        ],
+        [
+          "networkx/readwrite/gexf.py:451-451"
+        ],
+        [
+          "networkx/readwrite/gexf.py:454-454"
+        ],
+        [
+          "networkx/readwrite/gexf.py:455-455"
+        ],
+        [
+          "networkx/readwrite/gexf.py:456-456"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 14,
+        "first_msms": {
+          "set": [
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "evaluations": 7,
+          "elapsed_seconds": 0.002
+        },
+        "first_mmbs": null
+      }
+    },
+    {
+      "public_id": "in4",
+      "input_key": "control_directed_no_slices",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "networkx/readwrite/gexf.py:380-380"
+        ],
+        [
+          "networkx/readwrite/gexf.py:393-393"
+        ],
+        [
+          "networkx/readwrite/gexf.py:451-451"
+        ],
+        [
+          "networkx/readwrite/gexf.py:454-454"
+        ],
+        [
+          "networkx/readwrite/gexf.py:455-455"
+        ],
+        [
+          "networkx/readwrite/gexf.py:456-456"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 14,
+        "first_msms": {
+          "set": [
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "evaluations": 7,
+          "elapsed_seconds": 0.002
+        },
+        "first_mmbs": null
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 1,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 1
+  },
+  "detail": [
+    {
+      "input": "mask_undirected_slices",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "networkx/readwrite/gexf.py:451-451"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": true,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "networkx/readwrite/gexf.py:451-451"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 13.32,
+    "probe_executions_algorithm": 128,
+    "probe_executions_scoring": 0,
+    "variant_builds": 128,
+    "subsets_evaluated": 192
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "case_id": "x_sd_jsonschema_pointer_m4",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "split": "HELDOUT",
+  "base": {
+    "slug": "jsonschema-4.20.0",
+    "file": "jsonschema/validators.py",
+    "A_line": 1145,
+    "A_code": "            part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 1145,
+      "indent": 12,
+      "role": "Unescapes when the segment has no '#' marker.",
+      "lines": [
+        "if \"#\" not in part:",
+        "    part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 1145,
+      "indent": 12,
+      "role": "Unescapes when the segment has no '?' marker.",
+      "lines": [
+        "if \"?\" not in part:",
+        "    part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 1145,
+      "indent": 12,
+      "role": "Removes NUL bytes from a pointer segment; none are declared.",
+      "lines": [
+        "if \"\\x00\" in part:",
+        "    part = part.replace(\"\\x00\", \"\")"
+      ]
+    },
+    {
+      "id": "U4",
+      "after_line": 1145,
+      "indent": 12,
+      "role": "Decodes percent escapes; the declared segments contain no percent sign.",
+      "lines": [
+        "if \"%\" in part:",
+        "    part = part.replace(\"%25\", \"%\")"
+      ]
+    },
+    {
+      "id": "U5",
+      "after_line": 1145,
+      "indent": 12,
+      "role": "Normalises backslashes; the declared segments contain none.",
+      "lines": [
+        "if \"\\\\\" in part:",
+        "    part = part.replace(\"\\\\\", \"/\")"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived_v2_1/challenge_ext/probes/x_sd_jsonschema_pointer_m4.py",
+  "inputs": {
+    "mask_plain_segment": "escaped slash in a segment without markers",
+    "expose_marker_segment": "escaped slash in a segment with both markers",
+    "control_no_escape": "segment without escape sequences"
+  },
+  "rationale": "A unescapes the JSON-pointer escape sequences in every path segment. The patch offers two alternative unescape paths, one for segments without a '#' marker and one for segments without a '?' marker: a plain escaped segment is repaired by either path (two singleton minimal sets), while a segment carrying both markers is skipped by both and fails to resolve.",
+  "challenge": {
+    "kind": "candidate_distractor_extension",
+    "base_case": "sd_jsonschema_pointer_m4",
+    "added_candidate_ids": [
+      "U3",
+      "U4",
+      "U5"
+    ],
+    "note": "Only the candidate universe grows. A, the original U blocks and the declared inputs are unchanged, so every correct relation is unchanged; the added candidates are irrelevant on every declared input."
+  }
+}

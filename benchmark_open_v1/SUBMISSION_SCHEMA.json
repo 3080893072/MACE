@@ -1,0 +1,59 @@
+{
+  "schema_version": "mace-open-discovery-v1",
+  "task_id": "<string>",
+  "note": "A submission is scored relation by relation. It is not an overall accuracy score. The examples below use placeholders, not hidden labels.",
+  "limits": {
+    "max_relations": 5,
+    "max_counterexamples_per_relation": 1
+  },
+  "fields": {
+    "relations": [
+      {
+        "operations": [
+          {
+            "line": "<int: 1-based source line of the downstream statement>",
+            "text": "<string: the source line, optional but recommended>"
+          }
+        ],
+        "kind": "independent | cooperative | coexisting",
+        "input": "<object: argument name -> value; must be in the declared legal domain>",
+        "condition": "<string: restricted boolean expression over argument names; see condition_language>",
+        "explanation": "<string: one sentence explaining why this operation set changes the masking relation>",
+        "counterexample": {
+          "note": "null, or an object with key input: a legal input where deleting A changes the observable",
+          "input": "<object: legal input where deleting A changes the observable>"
+        }
+      }
+    ],
+    "guard": {
+      "expr": "<string: restricted boolean expression over argument names; true when A is masked>",
+      "status": "BOUNDED | UNKNOWN | INVALID"
+    },
+    "test_gap": [
+      {
+        "test": "<string: existing test name>",
+        "verdict": "unexercised | masked | would_be_caught | assertion_gap | test_broken | not_covered"
+      }
+    ],
+    "evidence": "<string: executable observations or source positions the method wants scored>"
+  },
+  "condition_language": {
+    "allowed_names": "the entry function's argument names",
+    "allowed_constants": "int and bool",
+    "allowed_operators": ["and", "or", "not", "==", "!=", "<", "<=", ">", ">=", "+", "-", "*", "//", "%"],
+    "forbidden": "function calls, attribute access, names not in the argument list, string constants",
+    "semantics": {
+      "independent": "condition is true on inputs where the single declared operation, enabled alone, makes P+ and P- observationally equal",
+      "cooperative": "condition is true on inputs where the declared operation set, enabled alone, makes P+ and P- observationally equal, and no proper non-empty subset does",
+      "coexisting": "condition is true on inputs where disabling the declared operation set makes P+ and P- observationally different, and no proper non-empty subset of it does"
+    }
+  },
+  "rules": {
+    "only_verified_relations_are_correct": true,
+    "unknown_or_unsupported_is_not_wrong": true,
+    "bounded_execution_is_not_proof": true,
+    "human_written_summary_is_not_an_algorithm_score": true,
+    "do_not_report_operation_labels_from_a_private_oracle": true,
+    "positions_are_source_lines_not_hidden_operation_names": true
+  }
+}

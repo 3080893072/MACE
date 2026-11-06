@@ -1,0 +1,136 @@
+{
+  "task_id": "sd_docutils_ellipsis_m3",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "docutils/utils/smartquotes.py",
+    "line": 810,
+    "function": "educateEllipses",
+    "code": "    text = text.replace(r'...', smartchars.ellipsis)",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "docutils/utils/smartquotes.py",
+      "line": 812,
+      "code": "text = text.replace(r'...', smartchars.ellipsis, 1)",
+      "role": "First ellipsis leg: one occurrence.",
+      "patch_anchor_line": 810,
+      "block_span": [
+        811,
+        813
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "docutils/utils/smartquotes.py",
+      "line": 815,
+      "code": "text = text.replace(r'...', smartchars.ellipsis, 1)",
+      "role": "Second ellipsis leg: one further occurrence.",
+      "patch_anchor_line": 810,
+      "block_span": [
+        814,
+        816
+      ]
+    },
+    {
+      "id": "U3",
+      "file": "docutils/utils/smartquotes.py",
+      "line": 818,
+      "code": "text = text.replace(r'...', smartchars.ellipsis, 1)",
+      "role": "Third ellipsis leg: one further occurrence.",
+      "patch_anchor_line": 810,
+      "block_span": [
+        817,
+        819
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_three_ellipses": {
+      "role": "masking",
+      "description": "text with three '...' occurrences",
+      "p_plus": {
+        "out": "a��b��c��d"
+      },
+      "p_minus": {
+        "out": "a��b��c��d"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_four_ellipses": {
+      "role": "exposing",
+      "description": "text with four '...' occurrences: one survives",
+      "p_plus": {
+        "out": "a��b��c��d��e"
+      },
+      "p_minus": {
+        "out": "a��b��c��d...e"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain": {
+      "role": "control",
+      "description": "text with no ellipsis",
+      "p_plus": {
+        "out": "plain text"
+      },
+      "p_minus": {
+        "out": "plain text"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2,U3]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "differs from P+",
+      "[U2]": "differs from P+",
+      "[U3]": "differs from P+",
+      "[U1,U2]": "differs from P+",
+      "[U1,U3]": "differs from P+",
+      "[U2,U3]": "differs from P+",
+      "[U1,U2,U3]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_docutils_ellipsis_m3/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

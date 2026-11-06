@@ -1,0 +1,30 @@
+{
+  "case_id": "sd_attrs_asdict_loop_m7",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M7_LOOP_STATE",
+  "split": "DEV",
+  "base": {
+    "slug": "attrs-23.2.0",
+    "file": "src/attr/_funcs.py",
+    "A_line": 118,
+    "A_code": "                rv[a.name] = v"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 118,
+      "indent": 16,
+      "role": "Per-attribute copy limited to attributes other than 'y'.",
+      "lines": [
+        "if a.name != \"y\":",
+        "    rv[a.name] = v"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_attrs_asdict_loop_m7.py",
+  "inputs": {
+    "mask_single_attr": "object whose only attribute is not 'y'",
+    "expose_two_attrs": "object with a second attribute named 'y' that U skips"
+  },
+  "rationale": "asdict() copies each attribute inside the per-attribute loop. The patch restores the copy for every attribute except one named 'y', so an object with only the repaired attribute is masked, while an object that also has 'y' loses that key and exposes the bounded loop-state repair."
+}

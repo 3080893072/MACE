@@ -1,0 +1,30 @@
+{
+  "case_id": "sd_tabulate_1052_strip_right",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "base": {
+    "slug": "tabulate-0.9.0",
+    "file": "tabulate/__init__.py",
+    "A_line": 1052,
+    "A_code": "            strings = [s.strip() for s in strings]"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 1052,
+      "indent": 12,
+      "role": "Space-only recomputation of the stripped column; equivalent to A for space-padded cells and a no-op for tab-padded cells.",
+      "lines": [
+        "strings = [s.strip(\" \") for s in strings]"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_tabulate_1052.py",
+  "inputs": {
+    "mask_spaces": "right-aligned column with leading/trailing spaces",
+    "expose_tabs": "right-aligned column padded with tabs",
+    "control_plain": "no surrounding whitespace",
+    "control_center": "space-padded but center-aligned (A's branch not taken)"
+  },
+  "rationale": "The adaptation restores right-alignment whitespace normalisation for space-padded cells only; tab normalisation remains A's responsibility.  Masking is claimed only on mask_spaces; expose_tabs is the legal exposing witness."
+}

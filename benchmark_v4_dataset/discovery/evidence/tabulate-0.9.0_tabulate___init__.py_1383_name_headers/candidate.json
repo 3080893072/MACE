@@ -1,0 +1,51 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1383:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1383,
+    "end_line": 1383,
+    "kind": "Assign",
+    "code": "headers = []"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_regression.py::test_empty_table_with_keys_as_header"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            headers = []",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.48,
+    "failed_nodeids": [
+      "test.test_regression::test_empty_table_with_keys_as_header"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n____________________ test_empty_table_with_keys_as_header _____________________\n\n    def test_empty_table_with_keys_as_header():\n        \"Regression: headers='keys' on an empty table (issue #81)\"\n        result = tabulate([], headers=\"keys\")\n        expected = \"\"\n>       assert_equal(result, expected)\n\ntest\\test_regression.py:393: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = 'k    e    y    s\\n---  ---  ---  ---', result = ''\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\nk    e    y    s\n---  ---  ---  ---\n\nGot:\n\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_regression.py::test_empty_table_with_keys_as_header - Assert...\n1 failed in 0.11s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

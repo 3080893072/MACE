@@ -1,0 +1,480 @@
+{
+  "verifier_version": "intervention-verifier-1.0",
+  "task_id": "werkzeug_get_host_default_empty",
+  "universe": [
+    {
+      "id": "src/werkzeug/sansio/utils.py:85-85",
+      "file": "src/werkzeug/sansio/utils.py",
+      "first_line": 85,
+      "last_line": 85,
+      "kind": "assignment",
+      "code": "        host = host_header"
+    },
+    {
+      "id": "src/werkzeug/sansio/utils.py:87-87",
+      "file": "src/werkzeug/sansio/utils.py",
+      "first_line": 87,
+      "last_line": 87,
+      "kind": "assignment",
+      "code": "        host = server[0]"
+    }
+  ],
+  "universe_problems": [],
+  "verdicts": [
+    {
+      "verdict": "VERIFIED",
+      "reason": "P+ and P- differ on the submitted input",
+      "observations": {
+        "plus": {
+          "host": "",
+          "outcome": "return"
+        },
+        "minus": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        }
+      },
+      "index": 0,
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "https",
+            "host_header": "example.com:443",
+            "server": [
+              "example.com",
+              443
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "ws",
+            "host_header": "Example.COM:80",
+            "server": null
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "http",
+            "host_header": "spam",
+            "server": [
+              "spam",
+              80
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 1,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "wss",
+            "host_header": null,
+            "server": [
+              "unix/socket",
+              null
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 2,
+      "type": "MSMS"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "https",
+            "host_header": "example.com:443",
+            "server": [
+              "example.com",
+              443
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "ws",
+            "host_header": "Example.COM:80",
+            "server": null
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "http",
+            "host_header": "spam",
+            "server": [
+              "spam",
+              80
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 3,
+      "type": "MMBS"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "set matches an enumerated minimal relation over the proposal's operation universe on every submitted input",
+      "inputs": [
+        {
+          "input": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "masked_at_empty": true
+        },
+        {
+          "input": {
+            "scheme": "wss",
+            "host_header": null,
+            "server": [
+              "unix/socket",
+              null
+            ]
+          },
+          "matched": true,
+          "computed_minimal_sets": [
+            [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ]
+          ],
+          "masked_at_empty": true
+        }
+      ],
+      "scope": "only the operations the proposal named were enumerated; a missing operation can weaken or invalidate the relation against the hidden universe",
+      "index": 4,
+      "type": "MMBS"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "minimal breaking set on input, not breaking on control",
+      "index": 5,
+      "type": "PREREQUISITE_BREAKING"
+    },
+    {
+      "verdict": "VERIFIED",
+      "reason": "minimal breaking set on input, not breaking on control",
+      "index": 6,
+      "type": "PREREQUISITE_BREAKING"
+    }
+  ],
+  "verified_submission": {
+    "task_id": "werkzeug_get_host_default_empty",
+    "submission_id": "baseline-C",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "scheme": "http",
+          "host_header": null,
+          "server": null
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          {
+            "scheme": "https",
+            "host_header": "example.com:443",
+            "server": [
+              "example.com",
+              443
+            ]
+          },
+          {
+            "scheme": "ws",
+            "host_header": "Example.COM:80",
+            "server": null
+          },
+          {
+            "scheme": "http",
+            "host_header": "spam",
+            "server": [
+              "spam",
+              80
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85,
+            "code": "        host = host_header"
+          }
+        ]
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          {
+            "scheme": "wss",
+            "host_header": null,
+            "server": [
+              "unix/socket",
+              null
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87,
+            "code": "        host = server[0]"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          {
+            "scheme": "https",
+            "host_header": "example.com:443",
+            "server": [
+              "example.com",
+              443
+            ]
+          },
+          {
+            "scheme": "ws",
+            "host_header": "Example.COM:80",
+            "server": null
+          },
+          {
+            "scheme": "http",
+            "host_header": "spam",
+            "server": [
+              "spam",
+              80
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85,
+            "code": "        host = host_header"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          {
+            "scheme": "wss",
+            "host_header": null,
+            "server": [
+              "unix/socket",
+              null
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87,
+            "code": "        host = server[0]"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "scheme": "http",
+          "host_header": "example.com",
+          "server": null
+        },
+        "control_input": {
+          "scheme": "http",
+          "host_header": null,
+          "server": null
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85,
+            "code": "        host = host_header"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "scheme": "http",
+          "host_header": null,
+          "server": [
+            "example.com",
+            8080
+          ]
+        },
+        "control_input": {
+          "scheme": "http",
+          "host_header": null,
+          "server": null
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87,
+            "code": "        host = server[0]"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "counts": {
+    "total": 7,
+    "verified": 7,
+    "refuted": 0,
+    "unknown": 0
+  },
+  "probe_executions": 56
+}

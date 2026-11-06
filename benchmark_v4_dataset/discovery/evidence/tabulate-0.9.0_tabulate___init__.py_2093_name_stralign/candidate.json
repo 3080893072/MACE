@@ -1,0 +1,62 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:2093:name:stralign",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "tabulate",
+  "mechanism": "name",
+  "target_A": {
+    "line": 2093,
+    "end_line": 2093,
+    "kind": "Assign",
+    "code": "stralign = \"center\" if stralign == _DEFAULT_ALIGN else stralign"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_output.py::test_pretty",
+    "test/test_output.py::test_pretty_headerless",
+    "test/test_output.py::test_pretty_multiline",
+    "test/test_output.py::test_pretty_multiline_headerless",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells",
+    "test/test_output.py::test_pretty_multiline_with_empty_cells_headerless",
+    "test/test_output.py::test_pretty_multiline_with_links"
+  ],
+  "original_hit_test_count": 7,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        stralign = \"center\" if stralign == _DEFAULT_ALIGN else stralign",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.6,
+    "failed_nodeids": [
+      "test.test_output::test_pretty",
+      "test.test_output::test_pretty_headerless",
+      "test.test_output::test_pretty_multiline",
+      "test.test_output::test_pretty_multiline_headerless",
+      "test.test_output::test_pretty_multiline_with_empty_cells",
+      "test.test_output::test_pretty_multiline_with_links"
+    ],
+    "stdout_tail": "\u001b\\eggs\u001b]8;;\u001b\\ |    & eggs |\n+-----------+-----------+\n| 2         | foo       |\n|           | bar       |\n+-----------+-----------+\n\n___________________ test_pretty_multiline_with_empty_cells ____________________\n\n    def test_pretty_multiline_with_empty_cells():\n        \"Output: pretty with multiline cells and empty cells with headers\"\n        table = [\n            [\"hdr\", \"data\", \"fold\"],\n            [\"1\", \"\", \"\"],\n            [\"2\", \"very long data\", \"fold\\nthis\"],\n        ]\n        expected = \"\\n\".join(\n            [\n                \"+-----+----------------+------+\",\n                \"| hdr |      data      | fold |\",\n                \"+-----+----------------+------+\",\n                \"|  1  |                |      |\",\n                \"|  2  | very long data | fold |\",\n                \"|     |                | this |\",\n                \"+-----+----------------+------+\",\n            ]\n        )\n        result = tabulate(table, headers=\"firstrow\", tablefmt=\"pretty\")\n>       assert_equal(expected, result)\n\ntest\\test_output.py:2156: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = '+-----+----------------+------+\\n| hdr |      data      | fold |\\n+-----+----------------+------+\\n|  1  |                |      |\\n|  2  | very long data | fold |\\n|     |                | this |\\n+-----+----------------+------+'\nresult = '+-----+----------------+------+\\n| hdr |           data | fold |\\n+-----+----------------+------+\\n| 1   |                |      |\\n| 2   | very long data | fold |\\n|     |                | this |\\n+-----+----------------+------+'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n+-----+----------------+------+\n| hdr |      data      | fold |\n+-----+----------------+------+\n|  1  |                |      |\n|  2  | very long data | fold |\n|     |                | this |\n+-----+----------------+------+\n\nGot:\n+-----+----------------+------+\n| hdr |           data | fold |\n+-----+----------------+------+\n| 1   |                |      |\n| 2   | very long data | fold |\n|     |                | this |\n+-----+----------------+------+\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_output.py::test_pretty - AssertionError\nFAILED test/test_output.py::test_pretty_headerless - AssertionError\nFAILED test/test_output.py::test_pretty_multiline_headerless - AssertionError\nFAILED test/test_output.py::test_pretty_multiline - AssertionError\nFAILED test/test_output.py::test_pretty_multiline_with_links - AssertionError\nFAILED test/test_output.py::test_pretty_multiline_with_empty_cells - Assertio...\n6 failed, 1 passed in 0.25s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

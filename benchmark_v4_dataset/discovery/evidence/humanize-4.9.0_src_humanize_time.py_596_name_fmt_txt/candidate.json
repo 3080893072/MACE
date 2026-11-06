@@ -1,0 +1,75 @@
+{
+  "candidate_id": "humanize-4.9.0:src/humanize/time.py:596:name:fmt_txt",
+  "project": "humanize",
+  "version": "4.9.0",
+  "split": "DEV",
+  "file": "src/humanize/time.py",
+  "function": "precisedelta",
+  "mechanism": "name",
+  "target_A": {
+    "line": 596,
+    "end_line": 596,
+    "kind": "Assign",
+    "code": "fmt_txt = fmt_txt.replace(\"%d\", format)"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_time.py::test_precisedelta_custom_format[val0-milliseconds-%0.4f-1.0010 milliseconds]",
+    "tests/test_time.py::test_precisedelta_custom_format[val1-milliseconds-%0.4f-2.0020 milliseconds]",
+    "tests/test_time.py::test_precisedelta_custom_format[val2-milliseconds-%0.2f-2.00 milliseconds]",
+    "tests/test_time.py::test_precisedelta_custom_format[val3-seconds-%0.2f-1.23 seconds]",
+    "tests/test_time.py::test_precisedelta_custom_format[val4-seconds-%0.2f-4 hours and 3.20 seconds]",
+    "tests/test_time.py::test_precisedelta_custom_format[val6-hours-%0.2f-5 days and 4.50 hours]",
+    "tests/test_time.py::test_precisedelta_custom_format[val7-days-%0.2f-5.19 days]",
+    "tests/test_time.py::test_precisedelta_custom_format[val8-months-%0.2f-3.93 months]",
+    "tests/test_time.py::test_precisedelta_custom_format[val9-years-%0.1f-0.5 years]",
+    "tests/test_time.py::test_precisedelta_suppress_units[val10-microseconds-suppress10-240.50 minutes]",
+    "tests/test_time.py::test_precisedelta_suppress_units[val2-microseconds-suppress2-1.20 milliseconds]",
+    "tests/test_time.py::test_precisedelta_suppress_units[val5-microseconds-suppress5-1.20 seconds]",
+    "tests/test_time.py::test_precisedelta_suppress_units[val6-microseconds-suppress6-4 hours, 30 seconds and 0.20 milliseconds]"
+  ],
+  "original_hit_test_count": 13,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                fmt_txt = fmt_txt.replace(\"%d\", format)",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.73,
+    "failed_nodeids": [
+      "tests.test_time::test_precisedelta_custom_format[val0-milliseconds-%0.4f-1.0010 milliseconds]",
+      "tests.test_time::test_precisedelta_custom_format[val1-milliseconds-%0.4f-2.0020 milliseconds]",
+      "tests.test_time::test_precisedelta_custom_format[val2-milliseconds-%0.2f-2.00 milliseconds]",
+      "tests.test_time::test_precisedelta_custom_format[val3-seconds-%0.2f-1.23 seconds]",
+      "tests.test_time::test_precisedelta_custom_format[val4-seconds-%0.2f-4 hours and 3.20 seconds]",
+      "tests.test_time::test_precisedelta_custom_format[val6-hours-%0.2f-5 days and 4.50 hours]",
+      "tests.test_time::test_precisedelta_custom_format[val7-days-%0.2f-5.19 days]",
+      "tests.test_time::test_precisedelta_custom_format[val8-months-%0.2f-3.93 months]",
+      "tests.test_time::test_precisedelta_custom_format[val9-years-%0.1f-0.5 years]",
+      "tests.test_time::test_precisedelta_suppress_units[val10-microseconds-suppress10-240.50 minutes]",
+      "tests.test_time::test_precisedelta_suppress_units[val2-microseconds-suppress2-1.20 milliseconds]",
+      "tests.test_time::test_precisedelta_suppress_units[val5-microseconds-suppress5-1.20 seconds]",
+      "tests.test_time::test_precisedelta_suppress_units[val6-microseconds-suppress6-4 hours, 30 seconds and 0.20 milliseconds]"
+    ],
+    "stdout_tail": "suppress: list[str], expected: str\n    ) -> None:\n>       assert (\n            humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected\n        )\n\u001b[1m\u001b[31mE       AssertionError: assert '240 minutes' == '240.50 minutes'\u001b[0m\n\u001b[1m\u001b[31mE         - 240.50 minutes\u001b[0m\n\u001b[1m\u001b[31mE         ?    ---\u001b[0m\n\u001b[1m\u001b[31mE         + 240 minutes\u001b[0m\n\n\u001b[1m\u001b[31mtests\\test_time.py\u001b[0m:689: AssertionError\n- generated xml file: <local-path> -\n\u001b[36m\u001b[1m=========================== short test summary info ===========================\u001b[0m\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val0-milliseconds-%0.4f-1.0010 milliseconds]\u001b[0m - AssertionError: assert '1 milliseconds' == '1.0010 milliseconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val1-milliseconds-%0.4f-2.0020 milliseconds]\u001b[0m - AssertionError: assert '2 milliseconds' == '2.0020 milliseconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val2-milliseconds-%0.2f-2.00 milliseconds]\u001b[0m - AssertionError: assert '2 milliseconds' == '2.00 milliseconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val3-seconds-%0.2f-1.23 seconds]\u001b[0m - AssertionError: assert '1 seconds' == '1.23 seconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val4-seconds-%0.2f-4 hours and 3.20 seconds]\u001b[0m - AssertionError: assert '4 hours and 3 seconds' == '4 hours and 3.20 seconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val6-hours-%0.2f-5 days and 4.50 hours]\u001b[0m - AssertionError: assert '5 days and 4 hours' == '5 days and 4.50 hours'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val7-days-%0.2f-5.19 days]\u001b[0m - AssertionError: assert '5 days' == '5.19 days'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val8-months-%0.2f-3.93 months]\u001b[0m - AssertionError: assert '3 months' == '3.93 months'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_custom_format[val9-years-%0.1f-0.5 years]\u001b[0m - AssertionError: assert '0 years' == '0.5 years'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_suppress_units[val2-microseconds-suppress2-1.20 milliseconds]\u001b[0m - AssertionError: assert '1 milliseconds' == '1.20 milliseconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_suppress_units[val5-microseconds-suppress5-1.20 seconds]\u001b[0m - AssertionError: assert '1 seconds' == '1.20 seconds'\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_suppress_units[val6-microseconds-suppress6-4 hours, 30 seconds and 0.20 milliseconds]\u001b[0m - AssertionError: assert '4 hours, 30 ... milliseconds' == '4 hours, 30 ... m...\n\u001b[31mFAILED\u001b[0m tests/test_time.py::\u001b[1mtest_precisedelta_suppress_units[val10-microseconds-suppress10-240.50 minutes]\u001b[0m - AssertionError: assert '240 minutes' == '240.50 minutes'\n\u001b[31m\u001b[31m\u001b[1m13 failed\u001b[0m\u001b[31m in 0.37s\u001b[0m\u001b[0m\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

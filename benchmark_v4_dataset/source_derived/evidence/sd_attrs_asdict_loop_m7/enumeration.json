@@ -1,0 +1,148 @@
+{
+  "case_id": "sd_attrs_asdict_loop_m7",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M7_LOOP_STATE",
+  "slug": "attrs-23.2.0",
+  "file": "src/attr/_funcs.py",
+  "A_line": 118,
+  "A_code": "                rv[a.name] = v",
+  "original_sha256": "5414d414a2e496c9aac72b37a964932bf01cf59e2cd260095b0816f6703b2e59",
+  "patched_sha256": "c68736b0de922ab67b913d67e3e09d63a7ba63449abd5257449f807f46408cb0",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 118,
+      "role": "Per-attribute copy limited to attributes other than 'y'.",
+      "lines": [
+        "if a.name != \"y\":",
+        "    rv[a.name] = v"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 118,
+      "end": 121
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_single_attr": {
+        "out": {
+          "x": 1
+        }
+      },
+      "expose_two_attrs": {
+        "out": {
+          "x": 1,
+          "y": 2
+        }
+      }
+    },
+    "P_MINUS": {
+      "mask_single_attr": {
+        "out": {
+          "x": 1
+        }
+      },
+      "expose_two_attrs": {
+        "out": {
+          "x": 1
+        }
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_single_attr": {
+        "out": {}
+      },
+      "expose_two_attrs": {
+        "out": {}
+      }
+    },
+    "KEEP_U1": {
+      "mask_single_attr": {
+        "out": {
+          "x": 1
+        }
+      },
+      "expose_two_attrs": {
+        "out": {
+          "x": 1
+        }
+      }
+    }
+  },
+  "per_input": {
+    "mask_single_attr": {
+      "plus": {
+        "out": {
+          "x": 1
+        }
+      },
+      "p_minus": {
+        "out": {
+          "x": 1
+        }
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": {}
+        },
+        "KEEP_U1": {
+          "out": {
+            "x": 1
+          }
+        }
+      }
+    },
+    "expose_two_attrs": {
+      "plus": {
+        "out": {
+          "x": 1,
+          "y": 2
+        }
+      },
+      "p_minus": {
+        "out": {
+          "x": 1
+        }
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": {}
+        },
+        "KEEP_U1": {
+          "out": {
+            "x": 1
+          }
+        }
+      }
+    }
+  }
+}

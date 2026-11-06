@@ -1,0 +1,75 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/ellipticcurve.py:1213:name:result",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/ellipticcurve.py",
+  "function": "__mul__",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1213,
+    "end_line": 1213,
+    "kind": "Assign",
+    "code": "result = self"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_ecdsa.py::TestPublicKey::test_inequality_different_curves",
+    "src/ecdsa/test_ellipticcurve.py::TestPoint::test_multiply",
+    "src/ecdsa/test_ellipticcurve.py::TestPoint::test_p192",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 1]",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 2]",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 3]",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 4]",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 5]",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 6]",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 8]",
+    "src/ecdsa/test_ellipticcurve.py::test_p192_mult_tests",
+    "src/ecdsa/test_jacobi.py::TestJacobi::test_multiplications",
+    "src/ecdsa/test_keys.py::test_SigningKey_with_custom_curve_old_point"
+  ],
+  "original_hit_test_count": 13,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        result = self",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.61,
+    "failed_nodeids": [
+      "src.ecdsa.test_ecdsa.TestPublicKey::test_inequality_different_curves",
+      "src.ecdsa.test_ellipticcurve.TestPoint::test_multiply",
+      "src.ecdsa.test_ellipticcurve.TestPoint::test_p192",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 1]",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 2]",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 3]",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 4]",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 5]",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 6]",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 8]",
+      "src.ecdsa.test_ellipticcurve::test_p192_mult_tests",
+      "src.ecdsa.test_jacobi.TestJacobi::test_multiplications",
+      "src.ecdsa.test_keys::test_SigningKey_with_custom_curve_old_point"
+    ],
+    "stdout_tail": "tor.curve(),\n            generator.x(),\n            generator.y(),\n            generator.order(),\n        )\n    \n        curve = Curve(\n            \"BRAINPOOLP160r1\",\n            generator.curve(),\n            generator,\n            (1, 3, 36, 3, 3, 2, 8, 1, 1, 1),\n        )\n    \n>       sk = SigningKey.from_secret_exponent(12, curve)\n\nsrc\\ecdsa\\test_keys.py:931: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\ecdsa\\keys.py:861: in from_secret_exponent\n    pubkey_point = curve.generator * secexp\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <ecdsa.ellipticcurve.Point object at 0x000002766BF37DD0>, other = 12\n\n    def __mul__(self, other):\n        \"\"\"Multiply a point by an integer.\"\"\"\n    \n        def leftmost_bit(x):\n            assert x > 0\n            result = 1\n            while result <= x:\n                result = 2 * result\n            return result // 2\n    \n        e = other\n        if e == 0 or (self.__order and e % self.__order == 0):\n            return INFINITY\n        if self == INFINITY:\n            return INFINITY\n        if e < 0:\n            return (-self) * (-e)\n    \n        # From X9.62 D.3.2:\n    \n        e3 = 3 * e\n        negative_self = Point(self.__curve, self.__x, -self.__y, self.__order)\n        i = leftmost_bit(e3) // 2\n        pass  # P-: target A deleted\n        # print_(\"Multiplying %s by %d (e3 = %d):\" % (self, other, e3))\n        while i > 1:\n>           result = result.double()\nE           UnboundLocalError: cannot access local variable 'result' where it is not associated with a value\n\nsrc\\ecdsa\\ellipticcurve.py:1216: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_ecdsa.py::TestPublicKey::test_inequality_different_curves\nFAILED src/ecdsa/test_ellipticcurve.py::test_p192_mult_tests - ExceptionGroup...\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 1]\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 2]\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 3]\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 4]\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 5]\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 6]\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 8]\nFAILED src/ecdsa/test_ellipticcurve.py::TestPoint::test_multiply - UnboundLoc...\nFAILED src/ecdsa/test_ellipticcurve.py::TestPoint::test_p192 - UnboundLocalEr...\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_multiplications - UnboundLo...\nFAILED src/ecdsa/test_keys.py::test_SigningKey_with_custom_curve_old_point - ...\n13 failed in 1.26s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

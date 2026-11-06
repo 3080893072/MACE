@@ -1,0 +1,81 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "jinja2_bytecode_cache_read",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137,
+          "code": "            code = environment.compile(source, name, filename)"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137,
+          "code": "            code = environment.compile(source, name, filename)"
+        }
+      ]
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "control_input": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137,
+          "code": "            code = environment.compile(source, name, filename)"
+        }
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control"
+    }
+  ]
+}

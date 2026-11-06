@@ -1,0 +1,116 @@
+{
+  "protocol_version": "2",
+  "frozen_at_utc": "2026-11-02T01:20:00+00:00",
+  "purpose": "Record the three existing real-source cases by research use without changing any task, test, result, or historical log.",
+  "source_artifacts": {
+    "task_manifest": "benchmark_real_pilot/protocol_v2/task_manifest.json",
+    "task_selection": "benchmark_real_pilot/protocol_v2/task_selection.json",
+    "project_suite_cache": "benchmark_real_pilot/protocol_v2/project_suite_cache.json",
+    "task_runs": "benchmark_real_pilot/protocol_v2/task_runs/",
+    "results": "benchmark_real_pilot/results/results.json",
+    "qualification": "benchmark_real_pilot/qualification/out/three_task_qualification.json",
+    "protocol_doc": "docs/benchmark_test_protocol_v2.md"
+  },
+  "classes": {
+    "TEST_SURVIVING_DELETION": [
+      {
+        "task_id": "real_click_truncate_visible",
+        "project": "click 8.4.1",
+        "symbol": "_truncate_visible",
+        "target_A": "line 23, cut = 0",
+        "t_task": {
+          "count": 1,
+          "p_plus": "1 passed",
+          "p_minus": "1 passed",
+          "all_selected_tests_hit_A": true
+        },
+        "t_project": {
+          "scope": "click default released suite; 30000 stress tests deselected by click's own pytest.ini",
+          "p_plus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+          "p_minus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+          "fully_executed": true
+        },
+        "qualification_labels": {
+          "TASK_TESTS_SURVIVE": true,
+          "PROJECT_SUITE_SURVIVES": true,
+          "PROJECT_SUITE_DETECTS": false,
+          "PROJECT_SUITE_NOT_FULLY_RUN": false,
+          "ENVIRONMENT_BLOCKED": false
+        },
+        "evidence_limits": [
+          "One original test is the complete trace-hit set.",
+          "The masking relation is binding-coverage style, exposed as UnboundLocalError, not a defined-to-defined value change.",
+          "Survival is a project-suite result, not an extrapolation from T_task."
+        ]
+      }
+    ],
+    "VERIFIED_MASKING_ONLY": [
+      {
+        "task_id": "real_werkzeug_headerset_update",
+        "project": "Werkzeug 2.2.3",
+        "symbol": "HeaderSet.update",
+        "target_A": "line 2266, inserted_any = False",
+        "t_task": {
+          "count": 3,
+          "p_plus": "3 passed",
+          "p_minus": "1 failed, 2 passed",
+          "all_selected_tests_hit_A": true
+        },
+        "t_project": {
+          "scope": "Werkzeug tests -m 'not dev_server'; 24 dev-server tests protocol-deselected",
+          "p_plus": "816 passed, 24 deselected",
+          "p_minus": "1 failed, 815 passed, 24 deselected",
+          "fully_executed": true
+        },
+        "qualification_labels": {
+          "TASK_TESTS_SURVIVE": false,
+          "PROJECT_SUITE_SURVIVES": false,
+          "PROJECT_SUITE_DETECTS": true,
+          "PROJECT_SUITE_NOT_FULLY_RUN": false,
+          "ENVIRONMENT_BLOCKED": false
+        },
+        "why_not_first_class": "The project suite detects the deletion, so this case does not satisfy TEST_SURVIVING_DELETION.",
+        "evidence_limits": [
+          "The masking relation itself is execution-verified on the extracted task.",
+          "The project test test_set_header fails under P-, so the case is a detected deletion, not a test blind spot."
+        ]
+      },
+      {
+        "task_id": "real_werkzeug_url_unparse",
+        "project": "Werkzeug 2.2.3",
+        "symbol": "url_unparse",
+        "target_A": "line 605, url = s(\"\")",
+        "t_task": {
+          "count": 18,
+          "p_plus": "18 passed",
+          "p_minus": "6 failed, 12 passed",
+          "all_selected_tests_hit_A": true
+        },
+        "t_project": {
+          "scope": "Werkzeug tests -m 'not dev_server'; 24 dev-server tests protocol-deselected",
+          "p_plus": "816 passed, 24 deselected",
+          "p_minus": "24 deselected, 1 error; collection aborted, 0 tests run",
+          "fully_executed": false
+        },
+        "qualification_labels": {
+          "TASK_TESTS_SURVIVE": false,
+          "PROJECT_SUITE_SURVIVES": false,
+          "PROJECT_SUITE_DETECTS": true,
+          "PROJECT_SUITE_NOT_FULLY_RUN": true,
+          "ENVIRONMENT_BLOCKED": false
+        },
+        "why_not_first_class": "The project suite is interrupted during collection by the deletion, and PROJECT_SUITE_NOT_FULLY_RUN is true; it is not a surviving-deletion case.",
+        "evidence_limits": [
+          "The masking relation itself is execution-verified on the extracted task.",
+          "The P- project run is a collection error, not a completed suite run; no partial-suite pass is claimed."
+        ]
+      }
+    ]
+  },
+  "not_claimed": [
+    "VERIFIED_MASKING_ONLY is not a weaker name for TEST_SURVIVING_DELETION.",
+    "No new real task was created in this freeze.",
+    "No historical qualification conclusion was changed.",
+    "The 18 url_unparse tests are not 18 independent mechanism witnesses."
+  ]
+}

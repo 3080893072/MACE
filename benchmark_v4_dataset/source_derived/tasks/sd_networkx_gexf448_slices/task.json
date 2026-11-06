@@ -1,0 +1,62 @@
+{
+  "task_id": "sd_networkx_gexf448_slices",
+  "project": "networkx",
+  "version": "3.2.1",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M8_OBJECT_SHARED_STATE",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "A mutates the shared edge_element by appending a slices child.  U1 inspects that object state and re-applies the mutation only when the child is absent.  The repair is declared for undirected graphs; the directed case exposes the deletion (the unconsumed slices entry then breaks attribute serialisation).",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "networkx/readwrite/gexf.py",
+    "line": 448,
+    "function": "edge_key_data",
+    "code": "                edge_data = self.add_slices(edge_element, edge_data)",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "networkx.write_gexf(G, path, version=...)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_undirected_slices",
+      "role": "masking",
+      "description": "undirected edge carrying slices data"
+    },
+    {
+      "id": "expose_directed_slices",
+      "role": "exposing",
+      "description": "directed edge carrying slices data (repair not declared)"
+    },
+    {
+      "id": "control_undirected_no_slices",
+      "role": "control",
+      "description": "undirected edge without slices data; A is a no-op"
+    },
+    {
+      "id": "control_directed_no_slices",
+      "role": "control",
+      "description": "directed edge without slices data"
+    }
+  ],
+  "original_tests": [
+    "networkx/readwrite/tests/test_gexf.py"
+  ],
+  "original_test_suite": {
+    "tests": [
+      "networkx/readwrite/tests/test_gexf.py"
+    ],
+    "returncode": 0,
+    "summary": "20 passed, 1 skipped in 0.09s",
+    "passed": true
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

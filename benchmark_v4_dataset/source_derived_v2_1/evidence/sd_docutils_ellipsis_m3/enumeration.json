@@ -1,0 +1,436 @@
+{
+  "case_id": "sd_docutils_ellipsis_m3",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/utils/smartquotes.py",
+  "A_line": 810,
+  "A_code": "    text = text.replace(r'...', smartchars.ellipsis)",
+  "original_sha256": "c3a7bbcb5f0abcaac04e6b3a3fcb40b4e69b77c4a7fa884fd06f961b30edd1d7",
+  "patched_sha256": "f28cb1c41451951682bea05b3a873a9b67037951bc2370dcba0a4021c0795c06",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 810,
+      "role": "First ellipsis leg: one occurrence.",
+      "lines": [
+        "text = text.replace(r'...', smartchars.ellipsis, 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 810,
+      "role": "Second ellipsis leg: one further occurrence.",
+      "lines": [
+        "text = text.replace(r'...', smartchars.ellipsis, 1)"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 810,
+      "role": "Third ellipsis leg: one further occurrence.",
+      "lines": [
+        "text = text.replace(r'...', smartchars.ellipsis, 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 810,
+      "end": 812
+    },
+    "U2": {
+      "begin": 813,
+      "end": 815
+    },
+    "U3": {
+      "begin": 816,
+      "end": 818
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_three_ellipses": {
+        "out": "a��b��c��d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b��c��d��e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "P_MINUS": {
+      "mask_three_ellipses": {
+        "out": "a��b��c��d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b��c��d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_three_ellipses": {
+        "out": "a...b...c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a...b...c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1": {
+      "mask_three_ellipses": {
+        "out": "a��b...c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b...c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U2": {
+      "mask_three_ellipses": {
+        "out": "a��b...c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b...c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U3": {
+      "mask_three_ellipses": {
+        "out": "a��b...c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b...c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_three_ellipses": {
+        "out": "a��b��c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b��c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1_U3": {
+      "mask_three_ellipses": {
+        "out": "a��b��c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b��c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U2_U3": {
+      "mask_three_ellipses": {
+        "out": "a��b��c...d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b��c...d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    },
+    "KEEP_U1_U2_U3": {
+      "mask_three_ellipses": {
+        "out": "a��b��c��d"
+      },
+      "expose_four_ellipses": {
+        "out": "a��b��c��d...e"
+      },
+      "control_plain": {
+        "out": "plain text"
+      }
+    }
+  },
+  "per_input": {
+    "mask_three_ellipses": {
+      "plus": {
+        "out": "a��b��c��d"
+      },
+      "p_minus": {
+        "out": "a��b��c��d"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a...b...c...d"
+        },
+        "KEEP_U1": {
+          "out": "a��b...c...d"
+        },
+        "KEEP_U2": {
+          "out": "a��b...c...d"
+        },
+        "KEEP_U3": {
+          "out": "a��b...c...d"
+        },
+        "KEEP_U1_U2": {
+          "out": "a��b��c...d"
+        },
+        "KEEP_U1_U3": {
+          "out": "a��b��c...d"
+        },
+        "KEEP_U2_U3": {
+          "out": "a��b��c...d"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": "a��b��c��d"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "u_necessary": true
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_four_ellipses": {
+      "plus": {
+        "out": "a��b��c��d��e"
+      },
+      "p_minus": {
+        "out": "a��b��c��d...e"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a...b...c...d...e"
+        },
+        "KEEP_U1": {
+          "out": "a��b...c...d...e"
+        },
+        "KEEP_U2": {
+          "out": "a��b...c...d...e"
+        },
+        "KEEP_U3": {
+          "out": "a��b...c...d...e"
+        },
+        "KEEP_U1_U2": {
+          "out": "a��b��c...d...e"
+        },
+        "KEEP_U1_U3": {
+          "out": "a��b��c...d...e"
+        },
+        "KEEP_U2_U3": {
+          "out": "a��b��c...d...e"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": "a��b��c��d...e"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [],
+        "mmbs": [],
+        "u_necessary": true
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_plain": {
+      "plus": {
+        "out": "plain text"
+      },
+      "p_minus": {
+        "out": "plain text"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U1",
+          "U3"
+        ],
+        [
+          "U2",
+          "U3"
+        ],
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "plain text"
+        },
+        "KEEP_U1": {
+          "out": "plain text"
+        },
+        "KEEP_U2": {
+          "out": "plain text"
+        },
+        "KEEP_U3": {
+          "out": "plain text"
+        },
+        "KEEP_U1_U2": {
+          "out": "plain text"
+        },
+        "KEEP_U1_U3": {
+          "out": "plain text"
+        },
+        "KEEP_U2_U3": {
+          "out": "plain text"
+        },
+        "KEEP_U1_U2_U3": {
+          "out": "plain text"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "changed_inputs": [
+      {
+        "input": "mask_three_ellipses",
+        "mmbs": {
+          "legacy_v2": [
+            [
+              "U1",
+              "U2",
+              "U3"
+            ]
+          ],
+          "v2_1": [
+            [
+              "U1"
+            ],
+            [
+              "U2"
+            ],
+            [
+              "U3"
+            ]
+          ]
+        }
+      },
+      {
+        "input": "control_plain",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      }
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 2,
+    "mmbs_COMPUTED": 1,
+    "mmbs_NONE": 1,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 1,
+    "msms_NONE": 2
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "candidate_id": "parsimonious-0.10.0:parsimonious/grammar.py:280:name:cur",
+  "project": "parsimonious",
+  "version": "0.10.0",
+  "split": "DEV",
+  "file": "parsimonious/grammar.py",
+  "function": "resolve_refs",
+  "mechanism": "name",
+  "target_A": {
+    "line": 280,
+    "end_line": 280,
+    "kind": "Assign",
+    "code": "cur = self"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "parsimonious/tests/test_expressions.py::ErrorReportingTests::test_inner_rule_succeeding",
+    "parsimonious/tests/test_expressions.py::ErrorReportingTests::test_line_and_column",
+    "parsimonious/tests/test_expressions.py::ErrorReportingTests::test_rewinding",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_callability_custom_rules",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_circular_toplevel_reference",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_comments",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_complex_custom_rules",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_equal",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_infinite_loop",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_lazy_custom_rules",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_lazy_default_rule",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_match",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_multi_line",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_resolve_refs_completeness",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_resolve_refs_order",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_right_recursive",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_simple_custom_rules",
+    "parsimonious/tests/test_grammar.py::GrammarTests::test_unicode",
+    "parsimonious/tests/test_grammar.py::RuleVisitorTests::test_undefined_rule",
+    "parsimonious/tests/test_grammar.py::TokenGrammarTests::test_parse_success",
+    "parsimonious/tests/test_grammar.py::test_binary_grammar",
+    "parsimonious/tests/test_grammar.py::test_left_associative",
+    "parsimonious/tests/test_nodes.py::SimpleTests::test_visitor",
+    "parsimonious/tests/test_nodes.py::SpecialCasesTests::test_generic_visit_NotImplementedError_named_node"
+  ],
+  "original_hit_test_count": 24,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        cur = self",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 3,
+    "timed_out": null,
+    "seconds": 0.76,
+    "failed_nodeids": [
+      "::parsimonious.tests.test_expressions",
+      "::parsimonious.tests.test_grammar",
+      "::parsimonious.tests.test_nodes",
+      "pytest::internal"
+    ],
+    "stdout_tail": "_caller.py\", line 197, in __call__\nINTERNALERROR>     return self._hookexec(\nINTERNALERROR>            ^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 183, in _hookexec\nINTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 195, in _multicall\nINTERNALERROR>     raise exception\nINTERNALERROR>   File \"<local-path>\", line 167, in _multicall\nINTERNALERROR>     teardown.throw(exception)\nINTERNALERROR>   File \"<local-path>\", line 64, in run_old_style_hookwrapper\nINTERNALERROR>     return result.get_result()\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 103, in get_result\nINTERNALERROR>     raise exc.with_traceback(tb)\nINTERNALERROR>   File \"<local-path>\", line 49, in run_old_style_hookwrapper\nINTERNALERROR>     res = yield\nINTERNALERROR>           ^^^^^\nINTERNALERROR>   File \"<local-path>\", line 167, in _multicall\nINTERNALERROR>     teardown.throw(exception)\nINTERNALERROR>   File \"<local-path>\", line 64, in run_old_style_hookwrapper\nINTERNALERROR>     return result.get_result()\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 103, in get_result\nINTERNALERROR>     raise exc.with_traceback(tb)\nINTERNALERROR>   File \"<local-path>\", line 49, in run_old_style_hookwrapper\nINTERNALERROR>     res = yield\nINTERNALERROR>           ^^^^^\nINTERNALERROR>   File \"<local-path>\", line 147, in _multicall\nINTERNALERROR>     res = hook_impl.function(*args)\nINTERNALERROR>           ^^^^^^^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 30, in pytest_collection_modifyitems\nINTERNALERROR>     raise RuntimeError(\nINTERNALERROR> RuntimeError: 24 selected tests were not collected; first: ['parsimonious/tests/test_expressions.py::ErrorReportingTests::test_inner_rule_succeeding', 'parsimonious/tests/test_expressions.py::ErrorReportingTests::test_line_and_column', 'parsimonious/tests/test_expressions.py::ErrorReportingTests::test_rewinding']\n\n3 errors in 0.38s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

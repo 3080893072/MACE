@@ -1,0 +1,871 @@
+{
+  "fixture": "parity_snap",
+  "mode": "fixed",
+  "provider": "ollama",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen2.5-coder:32b",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 3,
+  "status": "ROUNDS_EXHAUSTED",
+  "final_guard": "sum(xs) == total - 1",
+  "final_bundle": null,
+  "final_report": {
+    "guard_ok": false,
+    "evidence_level": "BOUNDED",
+    "domain_size": 170,
+    "usable_rows": 170,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "even": "bool",
+      "total": "int"
+    },
+    "relations": [],
+    "guard": {
+      "id": "G",
+      "expr": "sum(xs) == total - 1",
+      "source_lines": [],
+      "status": "INVALID",
+      "reason": "unknown variable: total. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects",
+      "unsound": 0,
+      "incomplete": 0,
+      "counterexamples": []
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "reason": "no upstream relation with role='fixed_point' was verified"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 43,
+      "active_exposed": 127
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [],
+          "even": false
+        },
+        "out_plus": 1,
+        "out_minus": 0,
+        "snap_plus": {
+          "xs": [],
+          "even": false,
+          "total": 1
+        },
+        "snap_minus": {
+          "xs": [],
+          "even": false,
+          "total": 0
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            -1
+          ],
+          "even": false
+        },
+        "out_plus": 0,
+        "out_minus": -1,
+        "snap_plus": {
+          "xs": [
+            -1
+          ],
+          "even": false,
+          "total": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1
+          ],
+          "even": false,
+          "total": -1
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            -1
+          ],
+          "even": true
+        },
+        "out_plus": 0,
+        "out_minus": -2,
+        "snap_plus": {
+          "xs": [
+            -1
+          ],
+          "even": true,
+          "total": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1
+          ],
+          "even": true,
+          "total": -1
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 2,
+            "contexts_with_flip": 1,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "xs",
+              "args": {
+                "even": true
+              },
+              "masked": {
+                "value": [],
+                "out_plus": 0,
+                "out_minus": 0
+              },
+              "exposed": {
+                "value": [
+                  -1
+                ],
+                "out_plus": 0,
+                "out_minus": -2
+              }
+            }
+          },
+          "even": {
+            "contexts": 85,
+            "contexts_with_flip": 43,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "even",
+              "args": {
+                "xs": []
+              },
+              "masked": {
+                "value": true,
+                "out_plus": 0,
+                "out_minus": 0
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": 1,
+                "out_minus": 0
+              }
+            }
+          }
+        },
+        "causally_relevant": [
+          "xs",
+          "even"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [],
+            "status": "INVALID"
+          }
+        ],
+        "edges": [],
+        "unsupported": [],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 3,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 706,
+        "completion_tokens": 50,
+        "total_duration_ns": 2855756494,
+        "load_duration_ns": 2161476,
+        "prompt_eval_duration_ns": 196436000,
+        "eval_duration_ns": 2423493000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 2.857,
+        "attempt": 0
+      },
+      "raw_response": "{\"selected_relations\": [\"SumPreserved\"], \"mask_guard\": \"sum(xs) == sum(xs)_post\", \"explanation\": \"The deletion of A does not change the sum of xs, thus the final total remains the same.\"}",
+      "guard": "sum(xs) == sum(xs)_post",
+      "report": null,
+      "error": "G.expr is not a parsable expression: invalid syntax",
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, even):\n002:     total = sum(xs)\n003:     total = total + 1  # TARGET_A\n004:     if even:\n005:         total = total - total % 2\n006:     return total\n\nInput domain: xs: list[int] with length 0..3, values in {-1, 0, 1, 2}; even: bool (every combination is enumerated; 170 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  even: bool\n  xs: list[int]\n\nDeclared function types:\n(no user-defined functions)\n\nA fixed menu of semantic relations is available:\n  - SortedInput: xs == sorted(xs)\n  - MinAtHead: xs[0] == min(xs)\n  - MaxAtTail: xs[-1] == max(xs)\n  - AllEqual: all elements equal\n  - PermutationOnly: A only permutes the list\n  - DistinctCountPreserved: distinct(xs) unchanged by A\n  - SumPreserved: sum(xs) unchanged by A\n  - IdentityOnPre: the pre-condition makes A a no-op\n\nSelect the relations that explain when deleting A leaves the returned value\nunchanged, and build the guard from the selected relations only. Reply as JSON:\n{\"selected_relations\": [\"<menu items>\"], \"mask_guard\": \"<bool expr>\",\n  \"explanation\": \"<short>\"}\n\nGuards may only use the variables and syntax below. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 1047,
+        "completion_tokens": 48,
+        "total_duration_ns": 2598199876,
+        "load_duration_ns": 2240504,
+        "prompt_eval_duration_ns": 223553000,
+        "eval_duration_ns": 2323654000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 2.6,
+        "attempt": 0
+      },
+      "raw_response": "{\"selected_relations\": [\"SumPreserved\"], \"mask_guard\": \"sum(xs) == sum(xs)\", \"explanation\": \"The deletion of A does not change the sum of xs, thus the final total remains the same.\"}",
+      "guard": "sum(xs) == sum(xs)",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 170,
+        "usable_rows": 170,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "even": "bool",
+          "total": "int"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "sum(xs) == sum(xs)",
+          "source_lines": [],
+          "status": "REFUTED",
+          "checked": 170,
+          "unsound": 127,
+          "incomplete": 0,
+          "shape": null,
+          "parts": [
+            "sum(xs) == sum(xs)"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              127
+            ],
+            "rejects_wrong": [
+              0
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "even": false
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "even": false,
+                "total": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "even": false,
+                "total": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "sum(xs) == sum(xs)"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": false
+              },
+              "out_plus": 0,
+              "out_minus": -1,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": -1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "sum(xs) == sum(xs)"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": -2,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": -1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "sum(xs) == sum(xs)"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "even",
+              "masked": {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 43,
+          "active_exposed": 127
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "even": true
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": 0,
+                    "out_minus": -2
+                  }
+                }
+              },
+              "even": {
+                "contexts": 85,
+                "contexts_with_flip": 43,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "even",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "even"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, even):\n002:     total = sum(xs)\n003:     total = total + 1  # TARGET_A\n004:     if even:\n005:         total = total - total % 2\n006:     return total\n\nInput domain: xs: list[int] with length 0..3, values in {-1, 0, 1, 2}; even: bool (every combination is enumerated; 170 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  even: bool\n  xs: list[int]\n\nDeclared function types:\n(no user-defined functions)\n\nA fixed menu of semantic relations is available:\n  - SortedInput: xs == sorted(xs)\n  - MinAtHead: xs[0] == min(xs)\n  - MaxAtTail: xs[-1] == max(xs)\n  - AllEqual: all elements equal\n  - PermutationOnly: A only permutes the list\n  - DistinctCountPreserved: distinct(xs) unchanged by A\n  - SumPreserved: sum(xs) unchanged by A\n  - IdentityOnPre: the pre-condition makes A a no-op\n\nSelect the relations that explain when deleting A leaves the returned value\nunchanged, and build the guard from the selected relations only. Reply as JSON:\n{\"selected_relations\": [\"<menu items>\"], \"mask_guard\": \"<bool expr>\",\n  \"explanation\": \"<short>\"}\n\nGuards may only use the variables and syntax below. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"selected_relations\": [\"SumPreserved\"], \"mask_guard\": \"sum(xs) == sum(xs)_post\", \"explanation\": \"The deletion of A does not change the sum of xs, thus the final total remains the same.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your previous response could not be used: G.expr is not a parsable expression: invalid syntax\nReturn valid JSON with a non-empty 'mask_guard' string.\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "stats": {
+        "prompt_tokens": 1290,
+        "completion_tokens": 59,
+        "total_duration_ns": 3091972186,
+        "load_duration_ns": 2251826,
+        "prompt_eval_duration_ns": 158698000,
+        "eval_duration_ns": 2899734000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 3.094,
+        "attempt": 0
+      },
+      "raw_response": "{\"selected_relations\": [\"SumPreserved\"], \"mask_guard\": \"sum(xs) == total - 1\", \"explanation\": \"The deletion of A reduces the total by 1, so the sum of xs should be equal to total - 1 before A is executed.\"}",
+      "guard": "sum(xs) == total - 1",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 170,
+        "usable_rows": 170,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "even": "bool",
+          "total": "int"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "sum(xs) == total - 1",
+          "source_lines": [],
+          "status": "INVALID",
+          "reason": "unknown variable: total. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects",
+          "unsound": 0,
+          "incomplete": 0,
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 43,
+          "active_exposed": 127
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "even": true
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": 0,
+                    "out_minus": -2
+                  }
+                }
+              },
+              "even": {
+                "contexts": 85,
+                "contexts_with_flip": 43,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "even",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "even"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "INVALID"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, even):\n002:     total = sum(xs)\n003:     total = total + 1  # TARGET_A\n004:     if even:\n005:         total = total - total % 2\n006:     return total\n\nInput domain: xs: list[int] with length 0..3, values in {-1, 0, 1, 2}; even: bool (every combination is enumerated; 170 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  even: bool\n  xs: list[int]\n\nDeclared function types:\n(no user-defined functions)\n\nA fixed menu of semantic relations is available:\n  - SortedInput: xs == sorted(xs)\n  - MinAtHead: xs[0] == min(xs)\n  - MaxAtTail: xs[-1] == max(xs)\n  - AllEqual: all elements equal\n  - PermutationOnly: A only permutes the list\n  - DistinctCountPreserved: distinct(xs) unchanged by A\n  - SumPreserved: sum(xs) unchanged by A\n  - IdentityOnPre: the pre-condition makes A a no-op\n\nSelect the relations that explain when deleting A leaves the returned value\nunchanged, and build the guard from the selected relations only. Reply as JSON:\n{\"selected_relations\": [\"<menu items>\"], \"mask_guard\": \"<bool expr>\",\n  \"explanation\": \"<short>\"}\n\nGuards may only use the variables and syntax below. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"selected_relations\": [\"SumPreserved\"], \"mask_guard\": \"sum(xs) == sum(xs)_post\", \"explanation\": \"The deletion of A does not change the sum of xs, thus the final total remains the same.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your previous response could not be used: G.expr is not a parsable expression: invalid syntax\nReturn valid JSON with a non-empty 'mask_guard' string.\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"selected_relations\": [\"SumPreserved\"], \"mask_guard\": \"sum(xs) == sum(xs)\", \"explanation\": \"The deletion of A does not change the sum of xs, thus the final total remains the same.\"}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: sum(xs) == sum(xs)\nThe bounded checker ran 170 paired executions.\nUNSOUND in 127 cases: the guard accepts an input where the two versions differ. First counterexample: {\"args\": {\"xs\": [], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"sum(xs) == sum(xs)\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 3,
+    "prompt_tokens": 3043,
+    "completion_tokens": 157,
+    "decode_seconds": 8.551,
+    "wall_seconds": 10.002
+  },
+  "domain": {
+    "size": 170,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-10-30T10:53:02.517880+00:00"
+}

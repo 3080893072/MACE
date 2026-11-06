@@ -1,0 +1,283 @@
+{
+  "candidate": "click_choice_normalize_choice",
+  "candidate_sha256": "378c270ebced609affd235ad646293b73cdb2c4f308a376e8255d4a1c536340e",
+  "cases": {
+    "expose_case_sensitive": {
+      "base": "EXPOSED",
+      "discover": {
+        "coexisting": [],
+        "cooperative": [],
+        "illegal_or_undecidable": [],
+        "independent": [],
+        "scope": "single_witness",
+        "witness": "expose_case_sensitive"
+      },
+      "minus": [
+        "return",
+        [
+          "str",
+          "ABC"
+        ]
+      ],
+      "plus": [
+        "return",
+        [
+          "str",
+          "abc"
+        ]
+      ],
+      "target_hit": true
+    },
+    "expose_mapping": {
+      "base": "EXPOSED",
+      "discover": {
+        "coexisting": [],
+        "cooperative": [],
+        "illegal_or_undecidable": [],
+        "independent": [],
+        "scope": "single_witness",
+        "witness": "expose_mapping"
+      },
+      "minus": [
+        "return",
+        [
+          "str",
+          "a-b"
+        ]
+      ],
+      "plus": [
+        "return",
+        [
+          "str",
+          "a_b"
+        ]
+      ],
+      "target_hit": true
+    },
+    "mask_already": {
+      "base": "MASKED",
+      "discover": {
+        "coexisting": [],
+        "cooperative": [],
+        "illegal_or_undecidable": [],
+        "independent": [],
+        "scope": "single_witness",
+        "witness": "mask_already"
+      },
+      "minus": [
+        "return",
+        [
+          "str",
+          "abc"
+        ]
+      ],
+      "plus": [
+        "return",
+        [
+          "str",
+          "abc"
+        ]
+      ],
+      "target_hit": true
+    },
+    "mask_ascii": {
+      "base": "MASKED",
+      "discover": {
+        "coexisting": [],
+        "cooperative": [],
+        "illegal_or_undecidable": [],
+        "independent": [
+          {
+            "checks": {
+              "claim_disabled_exposes": true,
+              "claim_disabled_status": "EXPOSED",
+              "minimal": true,
+              "only_claim_masks": true,
+              "only_claim_status": "MASKED",
+              "proper_subset_checks": {}
+            },
+            "kind": "independent",
+            "minimal": true,
+            "note": "This result is checked only on the named witness.  It is not a proof over all inputs.",
+            "ops": [
+              "B"
+            ],
+            "scope": "single_witness",
+            "status": "VERIFIED",
+            "valid": true,
+            "witness": "mask_ascii"
+          }
+        ],
+        "scope": "single_witness",
+        "witness": "mask_ascii"
+      },
+      "minus": [
+        "return",
+        [
+          "str",
+          "abc"
+        ]
+      ],
+      "plus": [
+        "return",
+        [
+          "str",
+          "abc"
+        ]
+      ],
+      "target_hit": true
+    }
+  },
+  "extraction_method_body_equal_ignoring_docstring": true,
+  "intervention_matrix": {
+    "<none>": {
+      "expose_case_sensitive": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "ABC"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "status": "EXPOSED"
+      },
+      "expose_mapping": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "a-b"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "a_b"
+          ]
+        ],
+        "status": "EXPOSED"
+      },
+      "mask_already": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "status": "MASKED"
+      },
+      "mask_ascii": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "status": "MASKED"
+      }
+    },
+    "B": {
+      "expose_case_sensitive": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "ABC"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "status": "EXPOSED"
+      },
+      "expose_mapping": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "A-B"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "A_B"
+          ]
+        ],
+        "status": "EXPOSED"
+      },
+      "mask_already": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "status": "MASKED"
+      },
+      "mask_ascii": {
+        "minus": [
+          "return",
+          [
+            "str",
+            "ABC"
+          ]
+        ],
+        "plus": [
+          "return",
+          [
+            "str",
+            "abc"
+          ]
+        ],
+        "status": "EXPOSED"
+      }
+    }
+  },
+  "operation_lines_local": {
+    "B": 23
+  },
+  "project": "click",
+  "scope": "single_witness",
+  "target_line_local": 20,
+  "upstream_file": "src/click/types.py",
+  "upstream_sha256": "522544c74ca842dad63b6c07db6360304e0b7c3c4c3508bc8f5aad26ea58229c",
+  "version": "8.4.1"
+}

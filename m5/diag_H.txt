@@ -1,0 +1,23 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| dead_flag | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 1248 | 5.0 |
+| dead_flag | fixed | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 695 | 3.1 |
+| dead_flag | generic | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 796 | 9.5 |
+| dead_flag | mace | qwen | none | BOUNDED | BOUNDED | BOUNDED | BOUNDED | BOUNDED | 0/0 | 1250 | 16.5 |
+| dict_slot | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 598 | 2.9 |
+| dict_slot | fixed | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 732 | 3.9 |
+| dict_slot | generic | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 953 | 14.7 |
+| dict_slot | mace | qwen | upstream | BOUNDED | REFUTED | REFUTED | BOUNDED | BOUNDED | 0/0 | 11821 | 52.6 |
+| parity_snap | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 43/43 | 2271 | 10.7 |
+| parity_snap | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 2865 | 10.1 |
+| parity_snap | generic | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 2887 | 21.0 |
+| parity_snap | mace | qwen | upstream | BOUNDED | INVALID | INVALID | INVALID | INVALID | 0/0 | 8411 | 81.2 |
+
+First bad stage over all cases: guard 3, none 7, upstream 2
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| direct | qwen | 3 | 2 | 0 | 0 | 0 | 0 | 0 | 1 | 4117 | 18.6 |
+| fixed | qwen | 3 | 2 | 0 | 1 | 0 | 1 | 0 | 0 | 4292 | 17.1 |
+| generic | qwen | 3 | 2 | 0 | 1 | 0 | 1 | 0 | 0 | 4636 | 45.2 |
+| mace | qwen | 3 | 2 | 1 | 1 | 1 | 0 | 0 | 0 | 21482 | 150.3 |

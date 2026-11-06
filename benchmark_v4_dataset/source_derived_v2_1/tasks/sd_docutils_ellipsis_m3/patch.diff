@@ -1,0 +1,24 @@
+--- a/docutils/utils/smartquotes.py
++++ b/docutils/utils/smartquotes.py
+@@ -805,12 +805,21 @@
+ 
+     Example input:  Huh...?
+     Example output: Huh&#8230;?
+     """
+ 
+     text = text.replace(r'...', smartchars.ellipsis)
++    # SD:U:U1:begin
++    text = text.replace(r'...', smartchars.ellipsis, 1)
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    text = text.replace(r'...', smartchars.ellipsis, 1)
++    # SD:U:U2:end
++    # SD:U:U3:begin
++    text = text.replace(r'...', smartchars.ellipsis, 1)
++    # SD:U:U3:end
+     text = text.replace(r'. . .', smartchars.ellipsis)
+     return text
+ 
+ 
+ def stupefyEntities(text, language='en'):
+     """

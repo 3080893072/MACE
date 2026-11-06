@@ -1,0 +1,19 @@
+--- a/docutils/frontend.py
++++ b/docutils/frontend.py
+@@ -267,12 +267,16 @@
+         except ValueError:
+             raise ValueError('Invalid value "%s".'
+                              ' Format is "<language>:<quotes>".'
+                              % item.encode('ascii', 'backslashreplace'))
+         # parse colon separated string list:
+         quotes = quotes.strip()
++        # SD:U:U1:begin
++        if "\t" not in quotes:
++            quotes = quotes.strip(" ")
++        # SD:U:U1:end
+         multichar_quotes = quotes.split(':')
+         if len(multichar_quotes) == 4:
+             quotes = multichar_quotes
+         elif len(quotes) != 4:
+             raise ValueError('Invalid value "%s". Please specify 4 quotes\n'
+                              '    (primary open/close; secondary open/close).'

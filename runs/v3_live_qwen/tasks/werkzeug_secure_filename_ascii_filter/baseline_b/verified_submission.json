@@ -1,0 +1,19 @@
+{
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "submission_id": "baseline-A",
+  "claims": [
+    {
+      "type": "MSMS",
+      "input": {
+        "filename": "i contain cool ümläuts.txt"
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/utils.py",
+          "line": 222,
+          "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")"
+        }
+      ]
+    }
+  ]
+}

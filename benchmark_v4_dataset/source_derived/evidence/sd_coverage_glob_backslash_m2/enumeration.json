@@ -1,0 +1,227 @@
+{
+  "case_id": "sd_coverage_glob_backslash_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "slug": "coverage-7.4.0",
+  "file": "coverage/files.py",
+  "A_line": 332,
+  "A_code": "    pattern = pattern.replace(\"\\\\\", \"/\")",
+  "original_sha256": "d2ca82f84f3e64dc90b1b1028901e27f80927d774e03b7bc09881d04f0540b96",
+  "patched_sha256": "b7cc5874fca4421492b705da51cde22a02f663b97e55280d78b2fef4c566c1c9",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 332,
+      "role": "First backslash leg.",
+      "lines": [
+        "pattern = pattern.replace(\"\\\\\", \"/\", 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 332,
+      "role": "Second backslash leg.",
+      "lines": [
+        "pattern = pattern.replace(\"\\\\\", \"/\", 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 332,
+      "end": 334
+    },
+    "U2": {
+      "begin": 335,
+      "end": 337
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_two_backslashes": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "expose_three_backslashes": {
+        "out": "src[/\\\\]a[/\\\\]b[/\\\\]c\\.py"
+      },
+      "control_posix": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      }
+    },
+    "P_MINUS": {
+      "mask_two_backslashes": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "expose_three_backslashes": {
+        "out": "src[/\\\\]a[/\\\\]b\\\\c\\.py"
+      },
+      "control_posix": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_two_backslashes": {
+        "out": "(.*[/\\\\])?src\\\\a\\\\b\\.py"
+      },
+      "expose_three_backslashes": {
+        "out": "(.*[/\\\\])?src\\\\a\\\\b\\\\c\\.py"
+      },
+      "control_posix": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      }
+    },
+    "KEEP_U1": {
+      "mask_two_backslashes": {
+        "out": "src[/\\\\]a\\\\b\\.py"
+      },
+      "expose_three_backslashes": {
+        "out": "src[/\\\\]a\\\\b\\\\c\\.py"
+      },
+      "control_posix": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      }
+    },
+    "KEEP_U2": {
+      "mask_two_backslashes": {
+        "out": "src[/\\\\]a\\\\b\\.py"
+      },
+      "expose_three_backslashes": {
+        "out": "src[/\\\\]a\\\\b\\\\c\\.py"
+      },
+      "control_posix": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_two_backslashes": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "expose_three_backslashes": {
+        "out": "src[/\\\\]a[/\\\\]b\\\\c\\.py"
+      },
+      "control_posix": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      }
+    }
+  },
+  "per_input": {
+    "mask_two_backslashes": {
+      "plus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "(.*[/\\\\])?src\\\\a\\\\b\\.py"
+        },
+        "KEEP_U1": {
+          "out": "src[/\\\\]a\\\\b\\.py"
+        },
+        "KEEP_U2": {
+          "out": "src[/\\\\]a\\\\b\\.py"
+        },
+        "KEEP_U1_U2": {
+          "out": "src[/\\\\]a[/\\\\]b\\.py"
+        }
+      }
+    },
+    "expose_three_backslashes": {
+      "plus": {
+        "out": "src[/\\\\]a[/\\\\]b[/\\\\]c\\.py"
+      },
+      "p_minus": {
+        "out": "src[/\\\\]a[/\\\\]b\\\\c\\.py"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "(.*[/\\\\])?src\\\\a\\\\b\\\\c\\.py"
+        },
+        "KEEP_U1": {
+          "out": "src[/\\\\]a\\\\b\\\\c\\.py"
+        },
+        "KEEP_U2": {
+          "out": "src[/\\\\]a\\\\b\\\\c\\.py"
+        },
+        "KEEP_U1_U2": {
+          "out": "src[/\\\\]a[/\\\\]b\\\\c\\.py"
+        }
+      }
+    },
+    "control_posix": {
+      "plus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus": {
+        "out": "src[/\\\\]a[/\\\\]b\\.py"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "src[/\\\\]a[/\\\\]b\\.py"
+        },
+        "KEEP_U1": {
+          "out": "src[/\\\\]a[/\\\\]b\\.py"
+        },
+        "KEEP_U2": {
+          "out": "src[/\\\\]a[/\\\\]b\\.py"
+        },
+        "KEEP_U1_U2": {
+          "out": "src[/\\\\]a[/\\\\]b\\.py"
+        }
+      }
+    }
+  }
+}

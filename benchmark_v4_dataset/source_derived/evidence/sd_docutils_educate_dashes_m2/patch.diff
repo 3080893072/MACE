@@ -1,0 +1,21 @@
+--- a/docutils/utils/smartquotes.py
++++ b/docutils/utils/smartquotes.py
+@@ -758,12 +758,18 @@
+     Parameter:  String (unicode or bytes).
+     Returns:    The `text`, with each instance of "--" translated to
+                 an em-dash character.
+     """
+ 
+     text = text.replace(r'---', smartchars.endash)  # en (yes, backwards)
++    # SD:U:U1:begin
++    text = text.replace(r'---', smartchars.endash, 1)
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    text = text.replace(r'---', smartchars.endash, 1)
++    # SD:U:U2:end
+     text = text.replace(r'--', smartchars.emdash)   # em (yes, backwards)
+     return text
+ 
+ 
+ def educateDashesOldSchool(text):
+     """

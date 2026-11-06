@@ -1,0 +1,117 @@
+{
+  "task_id": "sd_pygments_bbcode64_color",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "pygments/formatters/bbcode.py",
+    "line": 64,
+    "function": "_make_styles",
+    "code": "                end = '[/color]' + end",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "pygments/formatters/bbcode.py",
+      "line": 66,
+      "code": "if ndef['color'] and not ndef['underline'] and not end.startswith('[/color]'):",
+      "role": "Alternative path 1: incremental prepend of the closing colour tag at the colour step.",
+      "patch_anchor_line": 64,
+      "block_span": [
+        65,
+        68
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "pygments/formatters/bbcode.py",
+      "line": 82,
+      "code": "if ndef['color'] and not ndef['underline']:",
+      "role": "Alternative path 2: rebuild the whole closing-tag sequence from ndef when the style entry is stored.",
+      "patch_anchor_line": 76,
+      "block_span": [
+        81,
+        90
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_color": {
+      "role": "masking",
+      "description": "colour-only token style",
+      "p_plus": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000]abc[/color] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": false
+    },
+    "expose_color_underline": {
+      "role": "exposing",
+      "description": "colour + underline token style (both repair paths are guarded off)",
+      "p_plus": {
+        "out": "[color=#ff0000][u]abc[/u][/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000][u]abc[/u] = 1\n"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_bold": {
+      "role": "control",
+      "description": "bold-only style; A is not executed",
+      "p_plus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+",
+      "[U2]": "equal to P+",
+      "[U1,U2]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_pygments_bbcode64_color/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

@@ -1,0 +1,428 @@
+[
+  {
+    "run": "clamp_absorb",
+    "run_file": "direct_seed42.json",
+    "fixture": "clamp_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 2218,
+    "completion_tokens": 186,
+    "wall_seconds": 12.089,
+    "rounds": 3,
+    "cell": "direct",
+    "contract_source": "none",
+    "contract": {
+      "relations_total": 0,
+      "relations_good": 0,
+      "verified": false,
+      "statuses": {}
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)"
+    },
+    "guard_derived": {
+      "status": "ABSENT",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": null,
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 0,
+      "relations_on_reference_lines": 0,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        2,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "clamp_absorb",
+    "run_file": "fixed_seed42.json",
+    "fixture": "clamp_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 2969,
+    "completion_tokens": 130,
+    "wall_seconds": 9.712,
+    "rounds": 3,
+    "cell": "fixed",
+    "contract_source": "none",
+    "contract": {
+      "relations_total": 0,
+      "relations_good": 0,
+      "verified": false,
+      "statuses": {}
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": true,
+      "exact": false,
+      "expr": "cap or sum(xs) < 10"
+    },
+    "guard_derived": {
+      "status": "ABSENT",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": null,
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 0,
+      "relations_on_reference_lines": 0,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        2,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "clamp_absorb",
+    "run_file": "generic_seed42.json",
+    "fixture": "clamp_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 2866,
+    "completion_tokens": 403,
+    "wall_seconds": 23.236,
+    "rounds": 3,
+    "cell": "generic",
+    "contract_source": "none",
+    "contract": {
+      "relations_total": 0,
+      "relations_good": 0,
+      "verified": false,
+      "statuses": {}
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": true,
+      "exact": false,
+      "expr": "sum(xs) + 1 >= 10 if cap else True"
+    },
+    "guard_derived": {
+      "status": "ABSENT",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": null,
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 0,
+      "relations_on_reference_lines": 0,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        2,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "clamp_absorb",
+    "run_file": "mace_seed42.json",
+    "fixture": "clamp_absorb",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 13778,
+    "completion_tokens": 1613,
+    "wall_seconds": 89.208,
+    "rounds": 3,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 7,
+      "relations_good": 1,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "INVALID",
+        "U2": "INVALID",
+        "U3": "REFUTED",
+        "O0": "INVALID",
+        "O1": "INVALID",
+        "O2": "INVALID"
+      }
+    },
+    "guard_qwen": {
+      "status": "INVALID",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "total_post <= 10 or not cap"
+    },
+    "guard_derived": {
+      "status": "UNKNOWN",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": "UNKNOWN",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 7,
+      "relations_on_reference_lines": 7,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        2,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "toggle_pair",
+    "run_file": "direct_seed42.json",
+    "fixture": "toggle_pair",
+    "model": "qwen2.5-coder:32b",
+    "mode": "direct",
+    "tokens": 2462,
+    "completion_tokens": 117,
+    "wall_seconds": 9.595,
+    "rounds": 3,
+    "cell": "direct",
+    "contract_source": "none",
+    "contract": {
+      "relations_total": 0,
+      "relations_good": 0,
+      "verified": false,
+      "statuses": {}
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "not flag"
+    },
+    "guard_derived": {
+      "status": "ABSENT",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": null,
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 0,
+      "relations_on_reference_lines": 0,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "toggle_pair",
+    "run_file": "fixed_seed42.json",
+    "fixture": "toggle_pair",
+    "model": "qwen2.5-coder:32b",
+    "mode": "fixed",
+    "tokens": 2857,
+    "completion_tokens": 73,
+    "wall_seconds": 6.321,
+    "rounds": 3,
+    "cell": "fixed",
+    "contract_source": "none",
+    "contract": {
+      "relations_total": 0,
+      "relations_good": 0,
+      "verified": false,
+      "statuses": {}
+    },
+    "guard_qwen": {
+      "status": "INVALID",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "flag or a == 0"
+    },
+    "guard_derived": {
+      "status": "ABSENT",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": null,
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 0,
+      "relations_on_reference_lines": 0,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "toggle_pair",
+    "run_file": "generic_seed42.json",
+    "fixture": "toggle_pair",
+    "model": "qwen2.5-coder:32b",
+    "mode": "generic",
+    "tokens": 3131,
+    "completion_tokens": 382,
+    "wall_seconds": 20.547,
+    "rounds": 3,
+    "cell": "generic",
+    "contract_source": "none",
+    "contract": {
+      "relations_total": 0,
+      "relations_good": 0,
+      "verified": false,
+      "statuses": {}
+    },
+    "guard_qwen": {
+      "status": "INVALID",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": "flag or a == 0"
+    },
+    "guard_derived": {
+      "status": "ABSENT",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": null,
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 0,
+      "relations_on_reference_lines": 0,
+      "guard_on_reference_lines": false,
+      "reference_lines": [
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    "diagnostic_only": false
+  },
+  {
+    "run": "toggle_pair",
+    "run_file": "mace_seed42.json",
+    "fixture": "toggle_pair",
+    "model": "qwen2.5-coder:32b",
+    "mode": "mace",
+    "tokens": 14724,
+    "completion_tokens": 1302,
+    "wall_seconds": 71.677,
+    "rounds": 3,
+    "cell": "A",
+    "contract_source": "qwen",
+    "contract": {
+      "relations_total": 5,
+      "relations_good": 1,
+      "verified": false,
+      "statuses": {
+        "T1": "BOUNDED",
+        "U1": "REFUTED",
+        "U2": "REFUTED",
+        "O0": "REFUTED",
+        "O1": "REFUTED"
+      }
+    },
+    "guard_qwen": {
+      "status": "REFUTED",
+      "parse_ok": true,
+      "typecheck_ok": true,
+      "sound": true,
+      "complete": false,
+      "exact": false,
+      "expr": "flag"
+    },
+    "guard_derived": {
+      "status": "UNKNOWN",
+      "parse_ok": false,
+      "typecheck_ok": false,
+      "sound": false,
+      "complete": false,
+      "exact": false,
+      "expr": null
+    },
+    "derived_compose_status": "UNKNOWN",
+    "equivalent_to_reference_guard": null,
+    "attribution": {
+      "relations_cited": 5,
+      "relations_on_reference_lines": 5,
+      "guard_on_reference_lines": true,
+      "reference_lines": [
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    "diagnostic_only": false
+  }
+]

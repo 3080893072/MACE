@@ -1,0 +1,149 @@
+{
+  "candidate_id": "click-8.4.1:src/click/core.py:3428:value",
+  "conditions": {
+    "1_real_source_and_A": {
+      "A": {
+        "code": "value = False",
+        "kind": "Assign",
+        "line": 3428
+      },
+      "ok": true,
+      "source_sha256": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+    },
+    "2_declared_tests_pass_under_P_minus": {
+      "designed_source": "<local-path>",
+      "ok": true,
+      "returncode": 0,
+      "suite": {
+        "outcomes": {
+          "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_callback_uses_param_name": "passed",
+          "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_constant_callback": "passed",
+          "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_second_constant": "passed"
+        }
+      },
+      "test_set": "DESIGNED"
+    },
+    "3_local_effect_on_test_input": {
+      "examples": [
+        "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_constant_callback",
+        "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_callback_uses_param_name",
+        "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_second_constant"
+      ],
+      "masked_tests": 3,
+      "ok": true
+    },
+    "4_masking_established": {
+      "mmbs": [
+        [
+          [
+            "L3431"
+          ]
+        ],
+        [
+          [
+            "L3431"
+          ]
+        ],
+        [
+          [
+            "L3431"
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            "L3431"
+          ]
+        ],
+        [
+          [
+            "L3431"
+          ]
+        ],
+        [
+          [
+            "L3431"
+          ]
+        ]
+      ],
+      "ok": true
+    },
+    "5_legal_exposing_counterexample": {
+      "exposing_payloads": [
+        1,
+        2
+      ],
+      "ok": true,
+      "payloads": [
+        {
+          "callback": "echo"
+        },
+        {
+          "callback": "none"
+        }
+      ]
+    },
+    "6_verified_msms_mmbs_and_scope": {
+      "mmbs": [
+        [
+          [
+            "L3431"
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            "L3431"
+          ]
+        ]
+      ],
+      "ok": true,
+      "scope": "declared probe inputs only; no claim over other inputs"
+    }
+  },
+  "declared_test_set": "DESIGNED",
+  "declared_tests": [
+    "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_constant_callback",
+    "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_callback_uses_param_name",
+    "tests/test_v4_designed_click-8_4_1_src_click_core_py_3428_value.py::test_unset_second_constant"
+  ],
+  "designed_source": "<local-path>",
+  "file": "src/click/core.py",
+  "function": "process_value",
+  "mechanism": "name-overwrite",
+  "project": "click",
+  "promoted": true,
+  "qualification": {
+    "MASKED_EFFECT": 3
+  },
+  "universe": [
+    {
+      "code": "value = self.callback(ctx, self, value)",
+      "file": "src/click/core.py",
+      "first_line": 3431,
+      "id": "L3431",
+      "key_index": null,
+      "key_kind": "name",
+      "key_obj": "",
+      "kind": "Assign",
+      "last_line": 3431,
+      "line": 3431
+    }
+  ],
+  "version": "8.4.1",
+  "witness_summary": {
+    "exposing": [
+      1,
+      2
+    ],
+    "legal_exposing_payload": true,
+    "masked": [
+      0
+    ],
+    "payloads": 3,
+    "verified_mmbs": true,
+    "verified_msms": true
+  }
+}

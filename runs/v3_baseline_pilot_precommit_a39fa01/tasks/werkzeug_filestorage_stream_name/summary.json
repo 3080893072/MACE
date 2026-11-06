@@ -1,0 +1,523 @@
+{
+  "task_id": "werkzeug_filestorage_stream_name",
+  "story": "ASSERTION_GAP_STORY",
+  "baselines": {
+    "A_direct_qwen": {
+      "run_label": "NOT_RUN",
+      "reason": "real Qwen service unavailable: ollama_binary=None, endpoint_reachable=False, model_present=False, dashscope_key_present=False"
+    },
+    "B_qwen_verifier": {
+      "run_label": "NOT_RUN",
+      "reason": "real Qwen service unavailable: ollama_binary=None, endpoint_reachable=False, model_present=False, dashscope_key_present=False"
+    },
+    "C_ast_intervention": {
+      "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+      "universe": [
+        {
+          "id": "src/werkzeug/datastructures.py:2924-2924",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2924,
+          "last_line": 2924,
+          "kind": "assignment",
+          "code": "                filename = None"
+        },
+        {
+          "id": "src/werkzeug/datastructures.py:2921-2921",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2921,
+          "last_line": 2921,
+          "kind": "assignment",
+          "code": "                filename = os.fsdecode(filename)"
+        },
+        {
+          "id": "src/werkzeug/datastructures.py:2926-2926",
+          "file": "src/werkzeug/datastructures.py",
+          "first_line": 2926,
+          "last_line": 2926,
+          "kind": "assignment",
+          "code": "            filename = os.fsdecode(filename)"
+        }
+      ],
+      "pruning": {
+        "universe": [
+          {
+            "id": "src/werkzeug/datastructures.py:2924-2924",
+            "file": "src/werkzeug/datastructures.py",
+            "first_line": 2924,
+            "last_line": 2924,
+            "kind": "assignment",
+            "code": "                filename = None"
+          },
+          {
+            "id": "src/werkzeug/datastructures.py:2921-2921",
+            "file": "src/werkzeug/datastructures.py",
+            "first_line": 2921,
+            "last_line": 2921,
+            "kind": "assignment",
+            "code": "                filename = os.fsdecode(filename)"
+          },
+          {
+            "id": "src/werkzeug/datastructures.py:2926-2926",
+            "file": "src/werkzeug/datastructures.py",
+            "first_line": 2926,
+            "last_line": 2926,
+            "kind": "assignment",
+            "code": "            filename = os.fsdecode(filename)"
+          }
+        ],
+        "ranking": [
+          {
+            "id": "src/werkzeug/datastructures.py:2924-2924",
+            "changed_cells": 4,
+            "cells": 12,
+            "span": 1
+          },
+          {
+            "id": "src/werkzeug/datastructures.py:2921-2921",
+            "changed_cells": 1,
+            "cells": 12,
+            "span": 1
+          },
+          {
+            "id": "src/werkzeug/datastructures.py:2926-2926",
+            "changed_cells": 1,
+            "cells": 12,
+            "span": 1
+          }
+        ],
+        "considered": 3,
+        "dropped_no_effect": 0,
+        "dropped_duplicate_effect": 0,
+        "truncated": 0
+      },
+      "per_input": [
+        {
+          "input": {
+            "stream": "tempfile"
+          },
+          "a_executes": true,
+          "active_ops": [],
+          "masked_empty": false,
+          "exposed_empty": true,
+          "msms_ids": [],
+          "mmbs_ids": [],
+          "observations_empty": {
+            "plus": {
+              "filename": "<home>\\AppData\\Local\\Temp\\tmpc_o5r3zi",
+              "filename_type": "str",
+              "outcome": "return"
+            },
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            }
+          }
+        },
+        {
+          "input": {
+            "stream": "stderr"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            },
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            }
+          }
+        },
+        {
+          "input": {
+            "stream": "none",
+            "data": "abc"
+          },
+          "a_executes": true,
+          "active_ops": [],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_ids": [],
+          "observations_empty": {
+            "plus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            },
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            }
+          }
+        },
+        {
+          "input": {
+            "stream": "named",
+            "data": "abc",
+            "name": "x.txt"
+          },
+          "a_executes": true,
+          "active_ops": [],
+          "masked_empty": false,
+          "exposed_empty": true,
+          "msms_ids": [],
+          "mmbs_ids": [],
+          "observations_empty": {
+            "plus": {
+              "filename": "x.txt",
+              "filename_type": "str",
+              "outcome": "return"
+            },
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            }
+          }
+        },
+        {
+          "input": {
+            "stream": "named",
+            "data": "abc",
+            "name": "<stderr>"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            },
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            }
+          }
+        },
+        {
+          "input": {
+            "stream": "named",
+            "data": "abc",
+            "name": "<stdin>"
+          },
+          "a_executes": true,
+          "active_ops": [
+            "src/werkzeug/datastructures.py:2924-2924"
+          ],
+          "masked_empty": true,
+          "exposed_empty": false,
+          "msms_ids": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2924-2924"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ]
+          ],
+          "mmbs_ids": [
+            [
+              "src/werkzeug/datastructures.py:2921-2921",
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            [
+              "src/werkzeug/datastructures.py:2924-2924"
+            ]
+          ],
+          "observations_empty": {
+            "plus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            },
+            "minus": {
+              "filename": null,
+              "filename_type": "NoneType",
+              "outcome": "return"
+            }
+          }
+        }
+      ],
+      "submission": {
+        "submission_id": "baseline-C",
+        "task_id": "werkzeug_filestorage_stream_name",
+        "claims": [
+          {
+            "type": "EXPOSING_COUNTEREXAMPLE",
+            "input": {
+              "stream": "tempfile"
+            }
+          },
+          {
+            "type": "MSMS",
+            "input": {
+              "stream": "stderr"
+            },
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "code": "                filename = None"
+              }
+            ]
+          },
+          {
+            "type": "MMBS",
+            "inputs": [
+              {
+                "stream": "stderr"
+              },
+              {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stderr>"
+              },
+              {
+                "stream": "named",
+                "data": "abc",
+                "name": "<stdin>"
+              }
+            ],
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "code": "                filename = None"
+              }
+            ]
+          },
+          {
+            "type": "PREREQUISITE_BREAKING",
+            "input": {
+              "stream": "stderr"
+            },
+            "control_input": {
+              "stream": "tempfile"
+            },
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "code": "                filename = None"
+              }
+            ],
+            "prerequisite": "masking holds on input; the same set does not break on control"
+          }
+        ]
+      },
+      "unknowns": [
+        "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"stream\":\"none\"}",
+        "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"name\":\"<stderr>\",\"stream\":\"named\"}",
+        "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"name\":\"<stdin>\",\"stream\":\"named\"}"
+      ],
+      "score": {
+        "protocol": "mace_benchmark_v3_scoring",
+        "scorer_version": "mace-benchmark-v3-scorer-1.0",
+        "task_id": "werkzeug_filestorage_stream_name",
+        "submission_id": "baseline-C",
+        "status_counts": {
+          "WITNESS_VERIFIED": 3,
+          "FINITE_DOMAIN_EXACT": 1,
+          "PROVEN": 0,
+          "FALSE": 0,
+          "INVALID": 0,
+          "UNVERIFIED": 0,
+          "UNSUPPORTED": 0,
+          "DUPLICATE": 0
+        },
+        "score": {
+          "credited_relations": 4,
+          "claim_credit": 4,
+          "domain_exact_relations": 1,
+          "witness_verified_relations": 3,
+          "deduplicated": 0
+        },
+        "claims": [
+          {
+            "index": 0,
+            "type": "EXPOSING_COUNTEREXAMPLE",
+            "status": "WITNESS_VERIFIED",
+            "reason": "Both sides executed and produced different observations.",
+            "scope": "one submitted input; no claim over other legal inputs",
+            "relation_key": "EXPOSING",
+            "observations": {
+              "plus": {
+                "filename": "<home>\\AppData\\Local\\Temp\\tmpagmvypmi",
+                "filename_type": "str",
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "filename_type": "NoneType",
+                "outcome": "return"
+              }
+            },
+            "credit": 1
+          },
+          {
+            "index": 1,
+            "type": "MSMS",
+            "status": "WITNESS_VERIFIED",
+            "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+            "scope": "1 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+            "relation_key": "MSMS:src/werkzeug/datastructures.py:2924",
+            "operations": [
+              "src/werkzeug/datastructures.py:2924"
+            ],
+            "per_input": [
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ]
+              }
+            ],
+            "credit": 1
+          },
+          {
+            "index": 2,
+            "type": "MMBS",
+            "status": "FINITE_DOMAIN_EXACT",
+            "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+            "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+            "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+            "operations": [
+              "src/werkzeug/datastructures.py:2924"
+            ],
+            "per_input": [
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ]
+              },
+              {
+                "verified": true,
+                "reason": "set matches an enumerated minimal relation",
+                "computed_minimal_sets": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ]
+              }
+            ],
+            "credit": 1
+          },
+          {
+            "index": 3,
+            "type": "PREREQUISITE_BREAKING",
+            "status": "WITNESS_VERIFIED",
+            "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+            "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+            "relation_key": "PREREQUISITE:src/werkzeug/datastructures.py:2924",
+            "operations": [
+              "src/werkzeug/datastructures.py:2924"
+            ],
+            "prerequisite": "masking holds on input; the same set does not break on control",
+            "details": {
+              "condition_masked_EMPTY": true,
+              "condition_msms": [
+                [
+                  "src/werkzeug/datastructures.py:2924"
+                ]
+              ],
+              "condition_mmbs": [
+                [
+                  "src/werkzeug/datastructures.py:2924"
+                ]
+              ],
+              "control_masked_EMPTY": false,
+              "control_mmbs": []
+            },
+            "credit": 1
+          }
+        ],
+        "scope_notes": [
+          "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+          "A single witness is never promoted to a claim over the whole legal input domain.",
+          "Operations outside U are reported UNVERIFIED, not FALSE."
+        ]
+      },
+      "model_calls": 0,
+      "probe_executions": 80,
+      "variant_builds": 16,
+      "wall_seconds": 30.078
+    },
+    "legacy_full_mace": {
+      "run_label": "UNSUPPORTED_INTERFACE",
+      "reason": "The historical Full MACE run loop emits code-level guards and does not expose an operation-level MSMS/MMBS submission interface. It is recorded as unsupported, not as zero."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "case_id": "sd_humanize_filesize_gnu_m5",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M5_CONDITIONAL_BRANCH",
+  "split": "DEV",
+  "base": {
+    "slug": "humanize-4.9.0",
+    "file": "src/humanize/filesize.py",
+    "A_line": 56,
+    "A_code": "        suffix = suffixes[\"gnu\"]"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 56,
+      "indent": 8,
+      "role": "Non-negative gnu branch: restores the GNU suffix selection.",
+      "lines": [
+        "if gnu and value >= 0:",
+        "    suffix = suffixes[\"gnu\"]"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_humanize_filesize_gnu_m5.py",
+  "inputs": {
+    "mask_gnu_positive": "gnu=True with a positive value: repaired branch",
+    "expose_gnu_negative": "gnu=True with a negative value: suffix stays unbound",
+    "control_decimal": "gnu=False: A's branch is not taken"
+  },
+  "rationale": "naturalsize() selects suffixes['gnu'] whenever gnu=True. The patch restores that branch only for non-negative values; a negative gnu request leaves the local suffix unbound (UnboundLocalError), which is the exposing witness."
+}

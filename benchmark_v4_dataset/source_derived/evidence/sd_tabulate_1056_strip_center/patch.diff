@@ -1,0 +1,19 @@
+--- a/tabulate/__init__.py
++++ b/tabulate/__init__.py
+@@ -1051,12 +1051,16 @@
+         if not PRESERVE_WHITESPACE:
+             strings = [s.strip() for s in strings]
+         padfn = _padleft
+     elif alignment == "center":
+         if not PRESERVE_WHITESPACE:
+             strings = [s.strip() for s in strings]
++            # SD:U:U1:begin
++            if all(s.strip().isdigit() for s in strings):
++                strings = [s.strip() for s in strings]
++            # SD:U:U1:end
+         padfn = _padboth
+     elif alignment == "decimal":
+         if has_invisible:
+             decimals = [_afterpoint(_strip_ansi(s)) for s in strings]
+         else:
+             decimals = [_afterpoint(s) for s in strings]

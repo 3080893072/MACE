@@ -1,0 +1,227 @@
+{
+  "case_id": "sd_docutils_educate_dashes_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "slug": "docutils-0.20.1",
+  "file": "docutils/utils/smartquotes.py",
+  "A_line": 763,
+  "A_code": "    text = text.replace(r'---', smartchars.endash)  # en (yes, backwards)",
+  "original_sha256": "c3a7bbcb5f0abcaac04e6b3a3fcb40b4e69b77c4a7fa884fd06f961b30edd1d7",
+  "patched_sha256": "ee62db97a412acda481192064d8854c59aa992c8291292cd3509a55401504dca",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 763,
+      "role": "First triple-dash leg.",
+      "lines": [
+        "text = text.replace(r'---', smartchars.endash, 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 763,
+      "role": "Second triple-dash leg.",
+      "lines": [
+        "text = text.replace(r'---', smartchars.endash, 1)"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 763,
+      "end": 765
+    },
+    "U2": {
+      "begin": 766,
+      "end": 768
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_two_triple": {
+        "out": "a�Cb�Cc"
+      },
+      "expose_three_triple": {
+        "out": "a�Cb�Cc�Cd"
+      },
+      "control_plain": {
+        "out": "a-b"
+      }
+    },
+    "P_MINUS": {
+      "mask_two_triple": {
+        "out": "a�Cb�Cc"
+      },
+      "expose_three_triple": {
+        "out": "a�Cb�Cc��-d"
+      },
+      "control_plain": {
+        "out": "a-b"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_two_triple": {
+        "out": "a��-b��-c"
+      },
+      "expose_three_triple": {
+        "out": "a��-b��-c��-d"
+      },
+      "control_plain": {
+        "out": "a-b"
+      }
+    },
+    "KEEP_U1": {
+      "mask_two_triple": {
+        "out": "a�Cb��-c"
+      },
+      "expose_three_triple": {
+        "out": "a�Cb��-c��-d"
+      },
+      "control_plain": {
+        "out": "a-b"
+      }
+    },
+    "KEEP_U2": {
+      "mask_two_triple": {
+        "out": "a�Cb��-c"
+      },
+      "expose_three_triple": {
+        "out": "a�Cb��-c��-d"
+      },
+      "control_plain": {
+        "out": "a-b"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_two_triple": {
+        "out": "a�Cb�Cc"
+      },
+      "expose_three_triple": {
+        "out": "a�Cb�Cc��-d"
+      },
+      "control_plain": {
+        "out": "a-b"
+      }
+    }
+  },
+  "per_input": {
+    "mask_two_triple": {
+      "plus": {
+        "out": "a�Cb�Cc"
+      },
+      "p_minus": {
+        "out": "a�Cb�Cc"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a��-b��-c"
+        },
+        "KEEP_U1": {
+          "out": "a�Cb��-c"
+        },
+        "KEEP_U2": {
+          "out": "a�Cb��-c"
+        },
+        "KEEP_U1_U2": {
+          "out": "a�Cb�Cc"
+        }
+      }
+    },
+    "expose_three_triple": {
+      "plus": {
+        "out": "a�Cb�Cc�Cd"
+      },
+      "p_minus": {
+        "out": "a�Cb�Cc��-d"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a��-b��-c��-d"
+        },
+        "KEEP_U1": {
+          "out": "a�Cb��-c��-d"
+        },
+        "KEEP_U2": {
+          "out": "a�Cb��-c��-d"
+        },
+        "KEEP_U1_U2": {
+          "out": "a�Cb�Cc��-d"
+        }
+      }
+    },
+    "control_plain": {
+      "plus": {
+        "out": "a-b"
+      },
+      "p_minus": {
+        "out": "a-b"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "a-b"
+        },
+        "KEEP_U1": {
+          "out": "a-b"
+        },
+        "KEEP_U2": {
+          "out": "a-b"
+        },
+        "KEEP_U1_U2": {
+          "out": "a-b"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "case_id": "sd_jsonschema_1145_pointer",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "base": {
+    "slug": "jsonschema-4.20.0",
+    "file": "jsonschema/validators.py",
+    "A_line": 1145,
+    "A_code": "            part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 1145,
+      "indent": 12,
+      "role": "Single-operation recomputation that restores the ~0 unescape but deliberately not the ~1 unescape.",
+      "lines": [
+        "part = part.replace(\"~0\", \"~\")"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_jsonschema_1145.py",
+  "inputs": {
+    "mask_tilde0": "JSON pointer segment containing ~0",
+    "mask_nested_tilde0": "nested pointer segment containing ~0",
+    "expose_tilde1": "JSON pointer segment containing ~1",
+    "control_plain": "pointer segment with no escape"
+  },
+  "rationale": "A performs both RFC 6901 unescapes.  U1 reproduces only the ~0 half, which is a declared partial adaptation.  ~0 pointers are masked; a ~1 pointer is the legal exposing witness."
+}

@@ -1,0 +1,12 @@
+pilot build: every label below is produced by execution
+python: 3.11.7
+root: <local-path>
+ctrl_01: domain=6 masked=3 exposed=3 masked_with_local_effect=3 absorbers=[['B']] coexisting=[]
+  self-check guard agrees on all cases: True
+ctrl_02: domain=24 masked=5 exposed=19 masked_with_local_effect=5 absorbers=[['C', 'D']] coexisting=[]
+  self-check guard agrees on all cases: True
+ctrl_03: domain=20 masked=14 exposed=6 masked_with_local_effect=14 absorbers=[['B'], ['E'], ['C', 'D']] coexisting=[['B', 'E']]
+  self-check guard agrees on all cases: True
+real_formatdef: domain=8 masked=8 exposed=0 masked_with_local_effect=8 test_verdict=masked masking_status=unconfirmed
+real_setdiff: domain=6 masked=6 exposed=0 masked_with_local_effect=0 test_verdict=not_covered masking_status=no_masking_relation
+wrote tasks.json, oracle.json, attribution.json

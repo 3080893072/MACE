@@ -1,0 +1,30 @@
+--- a/docutils/utils/smartquotes.py
++++ b/docutils/utils/smartquotes.py
+@@ -730,12 +730,27 @@
+     Example input:  ``Isn't this fun?''
+     Example output: “Isn't this fun?“;
+     """
+     smart = smartchars(language)
+ 
+     text = text.replace(r'``', smart.opquote)
++    # SD:U:U1:begin
++    text = text.replace(r'``', smart.opquote, 1)
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    if "\x00" in text:
++        text = text.replace("\x00", "")
++    # SD:U:U2:end
++    # SD:U:U3:begin
++    if "\r" in text:
++        text = text.replace("\r", "")
++    # SD:U:U3:end
++    # SD:U:U4:begin
++    if "&nbsp;" in text:
++        text = text.replace("&nbsp;", " ")
++    # SD:U:U4:end
+     text = text.replace(r"''", smart.cpquote)
+     return text
+ 
+ 
+ def educateSingleBackticks(text, language='en'):
+     """

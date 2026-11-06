@@ -1,0 +1,145 @@
+{
+  "case_id": "sd_pygments_bbcode64_nc",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M10_NEGATIVE_CONTROL",
+  "slug": "pygments-2.17.2",
+  "file": "pygments/formatters/bbcode.py",
+  "A_line": 64,
+  "A_code": "                end = '[/color]' + end",
+  "original_sha256": "ef370d727a0d8fe742c8996b1e79adab4576a3c6460f5e0de5a9c5578150e4f1",
+  "patched_sha256": "8643bed67ac4a7c0fd01808b8507a0c1fc773d66348b0101c2fc2d3adf46e43d",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 64,
+      "role": "Adds a background-colour close tag instead of a colour close tag.",
+      "lines": [
+        "if '[color' in start and '[/color]' not in end:",
+        "    end = '[/bgcolor]' + end"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 64,
+      "end": 67
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "nc_one_token": {
+        "out": "[color=#ff0000]a[/color] = 1\n"
+      },
+      "nc_two_tokens": {
+        "out": "[color=#ff0000]a[/color] = 1\n[color=#ff0000]b[/color] = 2\n"
+      },
+      "nc_other_colour": {
+        "out": "[color=#00ff00]c[/color] = 3\n"
+      }
+    },
+    "P_MINUS": {
+      "nc_one_token": {
+        "out": "[color=#ff0000]a[/bgcolor] = 1\n"
+      },
+      "nc_two_tokens": {
+        "out": "[color=#ff0000]a[/bgcolor] = 1\n[color=#ff0000]b[/bgcolor] = 2\n"
+      },
+      "nc_other_colour": {
+        "out": "[color=#00ff00]c[/bgcolor] = 3\n"
+      }
+    },
+    "KEEP_EMPTY": {
+      "nc_one_token": {
+        "out": "[color=#ff0000]a = 1\n"
+      },
+      "nc_two_tokens": {
+        "out": "[color=#ff0000]a = 1\n[color=#ff0000]b = 2\n"
+      },
+      "nc_other_colour": {
+        "out": "[color=#00ff00]c = 3\n"
+      }
+    },
+    "KEEP_U1": {
+      "nc_one_token": {
+        "out": "[color=#ff0000]a[/bgcolor] = 1\n"
+      },
+      "nc_two_tokens": {
+        "out": "[color=#ff0000]a[/bgcolor] = 1\n[color=#ff0000]b[/bgcolor] = 2\n"
+      },
+      "nc_other_colour": {
+        "out": "[color=#00ff00]c[/bgcolor] = 3\n"
+      }
+    }
+  },
+  "per_input": {
+    "nc_one_token": {
+      "plus": {
+        "out": "[color=#ff0000]a[/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000]a[/bgcolor] = 1\n"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[color=#ff0000]a = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[color=#ff0000]a[/bgcolor] = 1\n"
+        }
+      }
+    },
+    "nc_two_tokens": {
+      "plus": {
+        "out": "[color=#ff0000]a[/color] = 1\n[color=#ff0000]b[/color] = 2\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000]a[/bgcolor] = 1\n[color=#ff0000]b[/bgcolor] = 2\n"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[color=#ff0000]a = 1\n[color=#ff0000]b = 2\n"
+        },
+        "KEEP_U1": {
+          "out": "[color=#ff0000]a[/bgcolor] = 1\n[color=#ff0000]b[/bgcolor] = 2\n"
+        }
+      }
+    },
+    "nc_other_colour": {
+      "plus": {
+        "out": "[color=#00ff00]c[/color] = 3\n"
+      },
+      "p_minus": {
+        "out": "[color=#00ff00]c[/bgcolor] = 3\n"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[color=#00ff00]c = 3\n"
+        },
+        "KEEP_U1": {
+          "out": "[color=#00ff00]c[/bgcolor] = 3\n"
+        }
+      }
+    }
+  }
+}

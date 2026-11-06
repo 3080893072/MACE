@@ -1,0 +1,3030 @@
+{
+  "fixture": "alt_masking",
+  "mode": "mace",
+  "provider": "FIXED_PROPOSAL_REPLAY",
+  "guard_source": "qwen",
+  "evidence_gate": false,
+  "diagnostic_only": false,
+  "model": "fixed-m5-proposals",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 1,
+  "status": "GUARD_VERIFIED",
+  "final_guard": "mode == 0 or mode == 1",
+  "final_bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "v_post == v + 1",
+        "condition": "True",
+        "source_lines": [
+          4,
+          2
+        ],
+        "rationale": "Line 4 increments v by 1, so v_post is v plus 1."
+      }
+    ],
+    "upstream": [
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "mode == 0 or mode == 1",
+        "condition": "True",
+        "source_lines": [
+          6,
+          8,
+          9
+        ],
+        "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+        "role": "supporting"
+      },
+      {
+        "id": "U2",
+        "kind": "upstream",
+        "expr": "mode == 2",
+        "condition": "True",
+        "source_lines": [
+          11
+        ],
+        "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+        "role": "fixed_point"
+      },
+      {
+        "id": "U3",
+        "kind": "upstream",
+        "expr": "mode == 3",
+        "condition": "True",
+        "source_lines": [
+          11
+        ],
+        "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+        "role": "fixed_point"
+      }
+    ],
+    "observers": [
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "0 if mode == 0 or mode == 1 else v_post",
+        "condition": "mode == 0 or mode == 1",
+        "source_lines": [
+          6,
+          8,
+          9,
+          11
+        ],
+        "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+        "channel": 0
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "kind": "mask_guard",
+      "expr": "mode == 0 or mode == 1",
+      "condition": "True",
+      "source_lines": [
+        6,
+        8,
+        9,
+        11
+      ],
+      "rationale": ""
+    },
+    "uncertainty": "The effect of A on the output is directly observed when mode is 2 or 3, so the guard only covers the cases where A's effect is irrelevant."
+  },
+  "final_report": {
+    "guard_ok": true,
+    "evidence_level": "BOUNDED",
+    "domain_size": 160,
+    "usable_rows": 160,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "mode": "int",
+      "v": "int"
+    },
+    "relations": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "v_post == v + 1",
+        "condition": "True",
+        "source_lines": [
+          4,
+          2
+        ],
+        "rationale": "Line 4 increments v by 1, so v_post is v plus 1.",
+        "status": "BOUNDED",
+        "checked": 160,
+        "condition_false": 0,
+        "failures": 0,
+        "counterexamples": []
+      },
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "mode == 0 or mode == 1",
+        "condition": "True",
+        "source_lines": [
+          6,
+          8,
+          9
+        ],
+        "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+        "role": "supporting",
+        "status": "REFUTED",
+        "checked": 160,
+        "condition_false": 0,
+        "failures": 80,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "mode": 2
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 2,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 2,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 3
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 3,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 3,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "mode": 2
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "mode": 2,
+              "v": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "mode": 2,
+              "v": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "U2",
+        "kind": "upstream",
+        "expr": "mode == 2",
+        "condition": "True",
+        "source_lines": [
+          11
+        ],
+        "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+        "role": "fixed_point",
+        "status": "REFUTED",
+        "checked": 160,
+        "condition_false": 0,
+        "failures": 120,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "mode": 0
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 0,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 0,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 1
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 1,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 1,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 3
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 3,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 3,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "U3",
+        "kind": "upstream",
+        "expr": "mode == 3",
+        "condition": "True",
+        "source_lines": [
+          11
+        ],
+        "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+        "role": "fixed_point",
+        "status": "REFUTED",
+        "checked": 160,
+        "condition_false": 0,
+        "failures": 120,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "mode": 0
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 0,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 0,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 1
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 1,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 1,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 2
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 2,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 2,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "0 if mode == 0 or mode == 1 else v_post",
+        "condition": "mode == 0 or mode == 1",
+        "source_lines": [
+          6,
+          8,
+          9,
+          11
+        ],
+        "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+        "channel": 0,
+        "status": "INVALID",
+        "reason": "unknown variable: v_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+        "checked": 0,
+        "faithful_failures": 0,
+        "faithful_minus_failures": 0,
+        "invariance_checked": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "counterexamples": []
+      }
+    ],
+    "guard": {
+      "id": "G",
+      "expr": "mode == 0 or mode == 1",
+      "source_lines": [
+        6,
+        8,
+        9,
+        11
+      ],
+      "status": "BOUNDED",
+      "checked": 160,
+      "unsound": 0,
+      "incomplete": 0,
+      "evaluation_errors": 0,
+      "exact": true,
+      "shape": "or",
+      "parts": [
+        "mode == 0",
+        "mode == 1"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          0,
+          0
+        ],
+        "rejects_wrong": [
+          0,
+          0
+        ]
+      },
+      "counterexamples": []
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no verified observer for channels [0]"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "checked": 0,
+        "failures": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "mode": 0
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 0,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 0,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 1
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 1,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 1,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 3
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 3,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 3,
+              "v": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ],
+        "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2', 'U3'])"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0
+        ],
+        "missing_reasons": [
+          "no sufficient condition with a non-vacuous witness"
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "semantics": "sufficient_only",
+        "sufficient_conditions": [],
+        "necessary_conditions": [],
+        "exact_equivalence": "not_established",
+        "complete": false,
+        "guard_complete": false,
+        "unverified_relations": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 80,
+      "active_exposed": 80
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [],
+          "mode": 2
+        },
+        "out_plus": 1,
+        "out_minus": 0,
+        "snap_plus": {
+          "xs": [],
+          "mode": 2,
+          "v": 1
+        },
+        "snap_minus": {
+          "xs": [],
+          "mode": 2,
+          "v": 0
+        }
+      },
+      {
+        "args": {
+          "xs": [],
+          "mode": 3
+        },
+        "out_plus": 1,
+        "out_minus": 0,
+        "snap_plus": {
+          "xs": [],
+          "mode": 3,
+          "v": 1
+        },
+        "snap_minus": {
+          "xs": [],
+          "mode": 3,
+          "v": 0
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            -1
+          ],
+          "mode": 2
+        },
+        "out_plus": 0,
+        "out_minus": -1,
+        "snap_plus": {
+          "xs": [
+            -1
+          ],
+          "mode": 2,
+          "v": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1
+          ],
+          "mode": 2,
+          "v": -1
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 4,
+            "contexts_with_flip": 0,
+            "causally_relevant": false,
+            "example": null
+          },
+          "mode": {
+            "contexts": 40,
+            "contexts_with_flip": 40,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "mode",
+              "args": {
+                "xs": []
+              },
+              "masked": {
+                "value": 0,
+                "out_plus": 0,
+                "out_minus": 0
+              },
+              "exposed": {
+                "value": 2,
+                "out_plus": 1,
+                "out_minus": 0
+              }
+            }
+          }
+        },
+        "causally_relevant": [
+          "mode"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "source_lines": [
+              4,
+              2
+            ]
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "source_lines": [
+              6,
+              8,
+              9
+            ],
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "source_lines": [
+              11
+            ],
+            "role": "fixed_point"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "source_lines": [
+              11
+            ],
+            "role": "fixed_point"
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "source_lines": [
+              6,
+              8,
+              9,
+              11
+            ],
+            "channel": 0
+          },
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [
+              6,
+              8,
+              9,
+              11
+            ],
+            "status": "BOUNDED"
+          }
+        ],
+        "edges": [
+          {
+            "from": "O0",
+            "to": "G",
+            "op": "and"
+          }
+        ],
+        "unsupported": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 4,
+    "source_sha256": null,
+    "candidate_source": "qwen",
+    "candidate_round": 1
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"v_post == v + 1\",\n     \"source_lines\": [4, 2],\n     \"rationale\": \"Line 4 increments v by 1, so v_post is v plus 1.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"mode == 0 or mode == 1\",\n     \"condition\": \"True\",\n     \"role\": \"supporting\",\n     \"source_lines\": [6, 8, 9],\n     \"rationale\": \"When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"mode == 2\",\n     \"condition\": \"True\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [11],\n     \"rationale\": \"When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.\"},\n    {\"id\": \"U3\",\n     \"expr\": \"mode == 3\",\n     \"condition\": \"True\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [11],\n     \"rationale\": \"When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"0 if mode == 0 or mode == 1 else v_post\",\n     \"condition\": \"mode == 0 or mode == 1\",\n     \"source_lines\": [6, 8, 9, 11],\n     \"rationale\": \"When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"mode == 0 or mode == 1\",\n                 \"source_lines\": [6, 8, 9, 11]},\n  \"uncertainty\": \"The effect of A on the output is directly observed when mode is 2 or 3, so the guard only covers the cases where A's effect is irrelevant.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "v_post == v + 1",
+            "condition": "True",
+            "source_lines": [
+              4,
+              2
+            ],
+            "rationale": "Line 4 increments v by 1, so v_post is v plus 1."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "mode == 0 or mode == 1",
+            "condition": "True",
+            "source_lines": [
+              6,
+              8,
+              9
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "mode == 2",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "mode == 3",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "0 if mode == 0 or mode == 1 else v_post",
+            "condition": "mode == 0 or mode == 1",
+            "source_lines": [
+              6,
+              8,
+              9,
+              11
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "mode == 0 or mode == 1",
+          "condition": "True",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The effect of A on the output is directly observed when mode is 2 or 3, so the guard only covers the cases where A's effect is irrelevant."
+      },
+      "patch_notes": [],
+      "report": {
+        "guard_ok": true,
+        "evidence_level": "BOUNDED",
+        "domain_size": 160,
+        "usable_rows": 160,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "mode": "int",
+          "v": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "v_post == v + 1",
+            "condition": "True",
+            "source_lines": [
+              4,
+              2
+            ],
+            "rationale": "Line 4 increments v by 1, so v_post is v plus 1.",
+            "status": "BOUNDED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "mode == 0 or mode == 1",
+            "condition": "True",
+            "source_lines": [
+              6,
+              8,
+              9
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+            "role": "supporting",
+            "status": "REFUTED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 80,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 2
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 3
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "mode": 2
+                },
+                "out_plus": 0,
+                "out_minus": -1,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "mode": 2,
+                  "v": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "mode": 2,
+                  "v": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "mode == 2",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 120,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 1
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 3
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "mode == 3",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 120,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 1
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 2
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "0 if mode == 0 or mode == 1 else v_post",
+            "condition": "mode == 0 or mode == 1",
+            "source_lines": [
+              6,
+              8,
+              9,
+              11
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+            "channel": 0,
+            "status": "INVALID",
+            "reason": "unknown variable: v_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+            "checked": 0,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 0,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": []
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "mode == 0 or mode == 1",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ],
+          "status": "BOUNDED",
+          "checked": 160,
+          "unsound": 0,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": true,
+          "shape": "or",
+          "parts": [
+            "mode == 0",
+            "mode == 1"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0,
+              0
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no verified observer for channels [0]"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 1
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 3
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2', 'U3'])"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "missing_reasons": [
+              "no sufficient condition with a non-vacuous witness"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 80,
+          "active_exposed": 80
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "mode": 2
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 2,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 2,
+              "v": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 3
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 3,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 3,
+              "v": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "mode": 2
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "mode": 2,
+              "v": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "mode": 2,
+              "v": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 4,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              },
+              "mode": {
+                "contexts": 40,
+                "contexts_with_flip": 40,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "mode",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": 0,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": 2,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "mode"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  6,
+                  8,
+                  9
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  11
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "U3",
+                "kind": "upstream",
+                "source_lines": [
+                  11
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  6,
+                  8,
+                  9,
+                  11
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  6,
+                  8,
+                  9,
+                  11
+                ],
+                "status": "BOUNDED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2",
+              "U3"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 4,
+        "source_sha256": null,
+        "candidate_source": "qwen",
+        "candidate_round": 1
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 4 holds the single marked target A.\n\n001: def program(xs, mode):\n002:     v = xs[0] if len(xs) > 0 else 0\n003: \n004:     v = v + 1  # TARGET_A\n005: \n006:     if mode == 0:\n007:         out = v * 0\n008:     elif mode == 1:\n009:         out = v - v\n010:     else:\n011:         out = v\n012:     return out\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1}; mode: int in {0, 1, 2, 3} (every combination is enumerated; 160 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  mode: int\n  v: int\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        }
+      ],
+      "candidate_round": {
+        "round": 1,
+        "domain_size": 160,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "mode == 0 or mode == 1",
+        "qwen_status": "BOUNDED",
+        "qwen_classification": "EXACT",
+        "false_accepts": 0,
+        "false_rejects": 0,
+        "evaluation_errors": 0,
+        "invalid_relations": [
+          "O0"
+        ],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "U3",
+          "O0"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "mode == 0 or mode == 1",
+        "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it",
+        "all_relations_pass": false
+      }
+    }
+  ],
+  "usage": {
+    "calls": 1,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "decode_seconds": 0.0,
+    "wall_seconds": 0.381
+  },
+  "domain": {
+    "size": 160,
+    "exhaustive": true
+  },
+  "core_logic": "full",
+  "candidate_rounds": [
+    {
+      "round": 1,
+      "domain_size": 160,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "mode == 0 or mode == 1",
+      "qwen_status": "BOUNDED",
+      "qwen_classification": "EXACT",
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "evaluation_errors": 0,
+      "invalid_relations": [
+        "O0"
+      ],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "U3",
+        "O0"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "mode == 0 or mode == 1",
+      "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it",
+      "all_relations_pass": false
+    }
+  ],
+  "candidate_history": [
+    {
+      "expr": "mode == 0 or mode == 1",
+      "source": "qwen",
+      "round": 1,
+      "guard": {
+        "id": "G",
+        "expr": "mode == 0 or mode == 1",
+        "source_lines": [],
+        "status": "BOUNDED",
+        "checked": 160,
+        "unsound": 0,
+        "incomplete": 0,
+        "evaluation_errors": 0,
+        "exact": true,
+        "shape": "or",
+        "parts": [
+          "mode == 0",
+          "mode == 1"
+        ],
+        "blame": {
+          "accepts_wrong": [
+            0,
+            0
+          ],
+          "rejects_wrong": [
+            0,
+            0
+          ]
+        },
+        "counterexamples": []
+      },
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "v_post == v + 1",
+            "condition": "True",
+            "source_lines": [
+              4,
+              2
+            ],
+            "rationale": "Line 4 increments v by 1, so v_post is v plus 1."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "mode == 0 or mode == 1",
+            "condition": "True",
+            "source_lines": [
+              6,
+              8,
+              9
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "mode == 2",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "mode == 3",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "0 if mode == 0 or mode == 1 else v_post",
+            "condition": "mode == 0 or mode == 1",
+            "source_lines": [
+              6,
+              8,
+              9,
+              11
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "mode == 0 or mode == 1",
+          "condition": "True",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The effect of A on the output is directly observed when mode is 2 or 3, so the guard only covers the cases where A's effect is irrelevant."
+      },
+      "report": {
+        "guard_ok": true,
+        "evidence_level": "BOUNDED",
+        "domain_size": 160,
+        "usable_rows": 160,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "mode": "int",
+          "v": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "v_post == v + 1",
+            "condition": "True",
+            "source_lines": [
+              4,
+              2
+            ],
+            "rationale": "Line 4 increments v by 1, so v_post is v plus 1.",
+            "status": "BOUNDED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "mode == 0 or mode == 1",
+            "condition": "True",
+            "source_lines": [
+              6,
+              8,
+              9
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+            "role": "supporting",
+            "status": "REFUTED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 80,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 2
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 3
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "mode": 2
+                },
+                "out_plus": 0,
+                "out_minus": -1,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "mode": 2,
+                  "v": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "mode": 2,
+                  "v": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "mode == 2",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 120,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 1
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 3
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "mode == 3",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 160,
+            "condition_false": 0,
+            "failures": 120,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 1
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 2
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 2,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "0 if mode == 0 or mode == 1 else v_post",
+            "condition": "mode == 0 or mode == 1",
+            "source_lines": [
+              6,
+              8,
+              9,
+              11
+            ],
+            "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+            "channel": 0,
+            "status": "INVALID",
+            "reason": "unknown variable: v_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+            "checked": 0,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 0,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": []
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "mode == 0 or mode == 1",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ],
+          "status": "BOUNDED",
+          "checked": 160,
+          "unsound": 0,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": true,
+          "shape": "or",
+          "parts": [
+            "mode == 0",
+            "mode == 1"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0,
+              0
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no verified observer for channels [0]"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 0
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 0,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 1
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 1,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "mode": 3
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "mode": 3,
+                  "v": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2', 'U3'])"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "missing_reasons": [
+              "no sufficient condition with a non-vacuous witness"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 80,
+          "active_exposed": 80
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "mode": 2
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 2,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 2,
+              "v": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [],
+              "mode": 3
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "mode": 3,
+              "v": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": 3,
+              "v": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "mode": 2
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "mode": 2,
+              "v": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "mode": 2,
+              "v": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 4,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              },
+              "mode": {
+                "contexts": 40,
+                "contexts_with_flip": 40,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "mode",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": 0,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": 2,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "mode"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  6,
+                  8,
+                  9
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  11
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "U3",
+                "kind": "upstream",
+                "source_lines": [
+                  11
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  6,
+                  8,
+                  9,
+                  11
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  6,
+                  8,
+                  9,
+                  11
+                ],
+                "status": "BOUNDED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2",
+              "U3"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 4,
+        "source_sha256": null
+      },
+      "classification": "EXACT",
+      "exact": true,
+      "sound": true,
+      "errors": [
+        0,
+        0,
+        0
+      ],
+      "selected": true,
+      "decision": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it"
+    }
+  ],
+  "candidate_selection": {
+    "expr": "mode == 0 or mode == 1",
+    "source": "qwen",
+    "round": 1,
+    "guard": {
+      "id": "G",
+      "expr": "mode == 0 or mode == 1",
+      "source_lines": [],
+      "status": "BOUNDED",
+      "checked": 160,
+      "unsound": 0,
+      "incomplete": 0,
+      "evaluation_errors": 0,
+      "exact": true,
+      "shape": "or",
+      "parts": [
+        "mode == 0",
+        "mode == 1"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          0,
+          0
+        ],
+        "rejects_wrong": [
+          0,
+          0
+        ]
+      },
+      "counterexamples": []
+    },
+    "bundle": {
+      "target_effects": [
+        {
+          "id": "T1",
+          "kind": "target_effect",
+          "expr": "v_post == v + 1",
+          "condition": "True",
+          "source_lines": [
+            4,
+            2
+          ],
+          "rationale": "Line 4 increments v by 1, so v_post is v plus 1."
+        }
+      ],
+      "upstream": [
+        {
+          "id": "U1",
+          "kind": "upstream",
+          "expr": "mode == 0 or mode == 1",
+          "condition": "True",
+          "source_lines": [
+            6,
+            8,
+            9
+          ],
+          "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+          "role": "supporting"
+        },
+        {
+          "id": "U2",
+          "kind": "upstream",
+          "expr": "mode == 2",
+          "condition": "True",
+          "source_lines": [
+            11
+          ],
+          "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+          "role": "fixed_point"
+        },
+        {
+          "id": "U3",
+          "kind": "upstream",
+          "expr": "mode == 3",
+          "condition": "True",
+          "source_lines": [
+            11
+          ],
+          "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+          "role": "fixed_point"
+        }
+      ],
+      "observers": [
+        {
+          "id": "O0",
+          "kind": "observer",
+          "expr": "0 if mode == 0 or mode == 1 else v_post",
+          "condition": "mode == 0 or mode == 1",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ],
+          "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+          "channel": 0
+        }
+      ],
+      "mask_guard": {
+        "id": "G",
+        "kind": "mask_guard",
+        "expr": "mode == 0 or mode == 1",
+        "condition": "True",
+        "source_lines": [
+          6,
+          8,
+          9,
+          11
+        ],
+        "rationale": ""
+      },
+      "uncertainty": "The effect of A on the output is directly observed when mode is 2 or 3, so the guard only covers the cases where A's effect is irrelevant."
+    },
+    "report": {
+      "guard_ok": true,
+      "evidence_level": "BOUNDED",
+      "domain_size": 160,
+      "usable_rows": 160,
+      "execution_errors": 0,
+      "post_sorts": {
+        "xs": "list[int]",
+        "mode": "int",
+        "v": "int"
+      },
+      "relations": [
+        {
+          "id": "T1",
+          "kind": "target_effect",
+          "expr": "v_post == v + 1",
+          "condition": "True",
+          "source_lines": [
+            4,
+            2
+          ],
+          "rationale": "Line 4 increments v by 1, so v_post is v plus 1.",
+          "status": "BOUNDED",
+          "checked": 160,
+          "condition_false": 0,
+          "failures": 0,
+          "counterexamples": []
+        },
+        {
+          "id": "U1",
+          "kind": "upstream",
+          "expr": "mode == 0 or mode == 1",
+          "condition": "True",
+          "source_lines": [
+            6,
+            8,
+            9
+          ],
+          "rationale": "When mode is 0 or 1, the output is 0 regardless of v's value, making A's effect irrelevant.",
+          "role": "supporting",
+          "status": "REFUTED",
+          "checked": 160,
+          "condition_false": 0,
+          "failures": 80,
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "mode": 2
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 2,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 2,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 3
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 3,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 3,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "mode": 2
+              },
+              "out_plus": 0,
+              "out_minus": -1,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "mode": 2,
+                "v": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "mode": 2,
+                "v": -1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            }
+          ]
+        },
+        {
+          "id": "U2",
+          "kind": "upstream",
+          "expr": "mode == 2",
+          "condition": "True",
+          "source_lines": [
+            11
+          ],
+          "rationale": "When mode is 2, the output is v, so A's effect is directly observed and cannot be a no-op.",
+          "role": "fixed_point",
+          "status": "REFUTED",
+          "checked": 160,
+          "condition_false": 0,
+          "failures": 120,
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "mode": 0
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 0,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 0,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 1
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 1,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 1,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 3
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 3,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 3,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            }
+          ]
+        },
+        {
+          "id": "U3",
+          "kind": "upstream",
+          "expr": "mode == 3",
+          "condition": "True",
+          "source_lines": [
+            11
+          ],
+          "rationale": "When mode is 3, the output is v, so A's effect is directly observed and cannot be a no-op.",
+          "role": "fixed_point",
+          "status": "REFUTED",
+          "checked": 160,
+          "condition_false": 0,
+          "failures": 120,
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "mode": 0
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 0,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 0,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 1
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 1,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 1,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 2
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 2,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 2,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            }
+          ]
+        },
+        {
+          "id": "O0",
+          "kind": "observer",
+          "expr": "0 if mode == 0 or mode == 1 else v_post",
+          "condition": "mode == 0 or mode == 1",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ],
+          "rationale": "When mode is 0 or 1, the output is 0, so A's effect is irrelevant. Otherwise, the output is v_post.",
+          "channel": 0,
+          "status": "INVALID",
+          "reason": "unknown variable: v_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+          "checked": 0,
+          "faithful_failures": 0,
+          "faithful_minus_failures": 0,
+          "invariance_checked": 0,
+          "invariance_failures": 0,
+          "evaluation_errors": 0,
+          "counterexamples": []
+        }
+      ],
+      "guard": {
+        "id": "G",
+        "expr": "mode == 0 or mode == 1",
+        "source_lines": [
+          6,
+          8,
+          9,
+          11
+        ],
+        "status": "BOUNDED",
+        "checked": 160,
+        "unsound": 0,
+        "incomplete": 0,
+        "evaluation_errors": 0,
+        "exact": true,
+        "shape": "or",
+        "parts": [
+          "mode == 0",
+          "mode == 1"
+        ],
+        "blame": {
+          "accepts_wrong": [
+            0,
+            0
+          ],
+          "rejects_wrong": [
+            0,
+            0
+          ]
+        },
+        "counterexamples": []
+      },
+      "observer_soundness": {
+        "status": "UNKNOWN",
+        "reason": "no verified observer for channels [0]"
+      },
+      "composition": {
+        "upstream_fixed_point": {
+          "status": "UNKNOWN",
+          "checked": 0,
+          "failures": 0,
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "mode": 0
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 0,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 0,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 1
+              },
+              "out_plus": 0,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 1,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 1,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            },
+            {
+              "args": {
+                "xs": [],
+                "mode": 3
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "mode": 3,
+                "v": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "mode": 3,
+                "v": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "expr_value": false
+            }
+          ],
+          "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2', 'U3'])"
+        },
+        "derived_guard": {
+          "reason": "no verified relation can contribute to the guard",
+          "expr": null,
+          "partial_expr": null,
+          "channels_covered": [],
+          "missing_channels": [
+            0
+          ],
+          "missing_reasons": [
+            "no sufficient condition with a non-vacuous witness"
+          ],
+          "fixed_point_relations": [],
+          "observer_relations": [],
+          "parts": [],
+          "semantics": "sufficient_only",
+          "sufficient_conditions": [],
+          "necessary_conditions": [],
+          "exact_equivalence": "not_established",
+          "complete": false,
+          "guard_complete": false,
+          "unverified_relations": [],
+          "compose_status": "UNKNOWN",
+          "status": "UNKNOWN"
+        }
+      },
+      "behaviour": {
+        "local_inactive": 0,
+        "active_masked": 80,
+        "active_exposed": 80
+      },
+      "witnesses": [
+        {
+          "args": {
+            "xs": [],
+            "mode": 2
+          },
+          "out_plus": 1,
+          "out_minus": 0,
+          "snap_plus": {
+            "xs": [],
+            "mode": 2,
+            "v": 1
+          },
+          "snap_minus": {
+            "xs": [],
+            "mode": 2,
+            "v": 0
+          }
+        },
+        {
+          "args": {
+            "xs": [],
+            "mode": 3
+          },
+          "out_plus": 1,
+          "out_minus": 0,
+          "snap_plus": {
+            "xs": [],
+            "mode": 3,
+            "v": 1
+          },
+          "snap_minus": {
+            "xs": [],
+            "mode": 3,
+            "v": 0
+          }
+        },
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "mode": 2
+          },
+          "out_plus": 0,
+          "out_minus": -1,
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "mode": 2,
+            "v": 0
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "mode": 2,
+            "v": -1
+          }
+        }
+      ],
+      "attribution": {
+        "contrast": {
+          "status": "TESTED",
+          "arguments": {
+            "xs": {
+              "contexts": 4,
+              "contexts_with_flip": 0,
+              "causally_relevant": false,
+              "example": null
+            },
+            "mode": {
+              "contexts": 40,
+              "contexts_with_flip": 40,
+              "causally_relevant": true,
+              "example": {
+                "same_args_except": "mode",
+                "args": {
+                  "xs": []
+                },
+                "masked": {
+                  "value": 0,
+                  "out_plus": 0,
+                  "out_minus": 0
+                },
+                "exposed": {
+                  "value": 2,
+                  "out_plus": 1,
+                  "out_minus": 0
+                }
+              }
+            }
+          },
+          "causally_relevant": [
+            "mode"
+          ]
+        },
+        "proof_dag": {
+          "nodes": [
+            {
+              "id": "T1",
+              "kind": "target_effect",
+              "source_lines": [
+                4,
+                2
+              ]
+            },
+            {
+              "id": "U1",
+              "kind": "upstream",
+              "source_lines": [
+                6,
+                8,
+                9
+              ],
+              "role": "supporting"
+            },
+            {
+              "id": "U2",
+              "kind": "upstream",
+              "source_lines": [
+                11
+              ],
+              "role": "fixed_point"
+            },
+            {
+              "id": "U3",
+              "kind": "upstream",
+              "source_lines": [
+                11
+              ],
+              "role": "fixed_point"
+            },
+            {
+              "id": "O0",
+              "kind": "observer",
+              "source_lines": [
+                6,
+                8,
+                9,
+                11
+              ],
+              "channel": 0
+            },
+            {
+              "id": "G",
+              "kind": "mask_guard",
+              "source_lines": [
+                6,
+                8,
+                9,
+                11
+              ],
+              "status": "BOUNDED"
+            }
+          ],
+          "edges": [
+            {
+              "from": "O0",
+              "to": "G",
+              "op": "and"
+            }
+          ],
+          "unsupported": [
+            "U1",
+            "U2",
+            "U3"
+          ],
+          "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+        }
+      },
+      "all_relations_pass": false,
+      "status": "OK",
+      "target_line": 4,
+      "source_sha256": null
+    },
+    "classification": "EXACT",
+    "exact": true,
+    "sound": true,
+    "errors": [
+      0,
+      0,
+      0
+    ],
+    "selected": true,
+    "decision": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it",
+    "selection_reason": "exact bounded guard kept; source=qwen, round=1; later candidates were not allowed to overwrite it"
+  },
+  "generated_utc": "2026-11-03T02:01:21.431881+00:00"
+}

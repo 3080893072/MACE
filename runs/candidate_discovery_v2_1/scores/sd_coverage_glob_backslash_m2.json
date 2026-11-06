@@ -1,0 +1,175 @@
+{
+  "task_id": "sd_coverage_glob_backslash_m2",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_two_backslashes",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "confirmed": [
+        [
+          "coverage/files.py:334-334",
+          "coverage/files.py:337-337"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "coverage/files.py:334-334",
+            "coverage/files.py:337-337"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operations 334 and 337 both replace backslashes with slashes, making the effect of operation 332 redundant.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "coverage/files.py:334-334"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operation 334 replaces backslashes with slashes, and operation 337 does the same, making the effect of operation 332 redundant.",
+          "disabled_operations": [
+            "coverage/files.py:337-337"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "coverage/files.py:337-337"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operation 337 replaces backslashes with slashes, and operation 334 does the same, making the effect of operation 332 redundant.",
+          "disabled_operations": [
+            "coverage/files.py:334-334"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 1,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 0.5,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "coverage/files.py:340-340",
+        "coverage/files.py:351-351",
+        "coverage/files.py:341-341",
+        "coverage/files.py:348-348"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 4
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "coverage/files.py:241-241",
+        "coverage/files.py:246-246",
+        "coverage/files.py:249-249",
+        "coverage/files.py:250-250",
+        "coverage/files.py:269-269",
+        "coverage/files.py:274-274",
+        "coverage/files.py:277-277",
+        "coverage/files.py:279-279",
+        "coverage/files.py:298-298",
+        "coverage/files.py:340-340",
+        "coverage/files.py:341-341",
+        "coverage/files.py:342-342",
+        "coverage/files.py:347-347",
+        "coverage/files.py:348-348",
+        "coverage/files.py:349-349",
+        "coverage/files.py:351-351"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 16
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

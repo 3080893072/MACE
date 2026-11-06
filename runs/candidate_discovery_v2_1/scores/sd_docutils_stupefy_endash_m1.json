@@ -1,0 +1,125 @@
+{
+  "task_id": "sd_docutils_stupefy_endash_m1",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_one_endash",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "docutils/utils/smartquotes.py:828-828"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:828-828"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Keeping operation 828 while deleting operation 826 results in the same output as when both operations are present, indicating that operation 828 masks the effect of operation 826.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 1,
+    "c0_false": 0,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "docutils/utils/smartquotes.py:830-830",
+        "docutils/utils/smartquotes.py:831-831",
+        "docutils/utils/smartquotes.py:832-832",
+        "docutils/utils/smartquotes.py:833-833",
+        "docutils/utils/smartquotes.py:834-834"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "docutils/utils/smartquotes.py:824-824",
+        "docutils/utils/smartquotes.py:830-830",
+        "docutils/utils/smartquotes.py:831-831",
+        "docutils/utils/smartquotes.py:832-832",
+        "docutils/utils/smartquotes.py:833-833",
+        "docutils/utils/smartquotes.py:834-834",
+        "docutils/utils/smartquotes.py:835-835",
+        "docutils/utils/smartquotes.py:837-837"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 8
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

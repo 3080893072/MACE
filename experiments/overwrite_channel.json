@@ -1,0 +1,37 @@
+{
+  "id": "overwrite_channel",
+  "source": "fixtures/overwrite_channel.py",
+  "entry": "program",
+  "channels": 2,
+  "domain": {
+    "kind": "exhaustive",
+    "args": [
+      {
+        "name": "xs",
+        "sort": "list[int]",
+        "length": [
+          0,
+          3
+        ],
+        "values": [
+          -1,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "keep",
+        "sort": "bool"
+      }
+    ]
+  },
+  "functions": {
+    "fn_0": {
+      "params": [
+        "list[int]"
+      ],
+      "ret": "int"
+    }
+  },
+  "notes": "A is a downstream overwrite in one branch; when keep is false it survives only if the upstream sum already was 0."
+}

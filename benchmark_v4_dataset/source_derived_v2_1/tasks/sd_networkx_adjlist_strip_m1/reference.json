@@ -1,0 +1,136 @@
+{
+  "task_id": "sd_networkx_adjlist_strip_m1",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "networkx/readwrite/adjlist.py",
+    "line": 204,
+    "function": "parse_adjlist",
+    "code": "        vlist = line.strip().split(delimiter)",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "networkx/readwrite/adjlist.py",
+      "line": 206,
+      "code": "if \"\\t\" not in line:",
+      "role": "Space-only trim: restores A for space-padded adjacency lines.",
+      "patch_anchor_line": 204,
+      "block_span": [
+        205,
+        208
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_space_padding": {
+      "role": "masking",
+      "description": "adjacency line padded with spaces",
+      "p_plus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_tab_padding": {
+      "role": "exposing",
+      "description": "adjacency line padded with a tab: the node name keeps it",
+      "p_plus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus": {
+        "error": "UnboundLocalError: cannot access local variable 'vlist' where it is not associated with a value"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain": {
+      "role": "control",
+      "description": "adjacency line without padding",
+      "p_plus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus": {
+        "nodes": [
+          "a",
+          "b"
+        ],
+        "edges": [
+          "('a', 'b')"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_networkx_adjlist_strip_m1/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

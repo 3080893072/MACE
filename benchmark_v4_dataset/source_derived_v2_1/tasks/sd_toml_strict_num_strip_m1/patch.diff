@@ -1,0 +1,19 @@
+--- a/toml/decoder.py
++++ b/toml/decoder.py
+@@ -86,12 +86,16 @@
+         else:
+             return unicode(retstr) + self.comment
+ 
+ 
+ def _strictly_valid_num(n):
+     n = n.strip()
++    # SD:U:U1:begin
++    if "\t" not in n:
++        n = n.strip(" ")
++    # SD:U:U1:end
+     if not n:
+         return False
+     if n[0] == '_':
+         return False
+     if n[-1] == '_':
+         return False

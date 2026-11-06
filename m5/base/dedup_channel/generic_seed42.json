@@ -1,0 +1,1155 @@
+{
+  "fixture": "dedup_channel",
+  "mode": "generic",
+  "provider": "ollama",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen2.5-coder:32b",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 3,
+  "status": "ROUNDS_EXHAUSTED",
+  "final_guard": "len(distinct(xs)) == len(xs) and not pre",
+  "final_bundle": null,
+  "final_report": {
+    "guard_ok": false,
+    "evidence_level": "BOUNDED",
+    "domain_size": 240,
+    "usable_rows": 240,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "pre": "bool"
+    },
+    "relations": [],
+    "guard": {
+      "id": "G",
+      "expr": "len(distinct(xs)) == len(xs) and not pre",
+      "source_lines": [],
+      "status": "INVALID",
+      "reason": "len: argument sort int, expected one of ['dict[int,int]', 'list[int]']",
+      "unsound": 0,
+      "incomplete": 0,
+      "counterexamples": []
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "reason": "no upstream relation with role='fixed_point' was verified"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 100,
+      "active_exposed": 140
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [
+            0
+          ],
+          "pre": false
+        },
+        "out_plus": 2,
+        "out_minus": 1,
+        "snap_plus": {
+          "xs": [
+            0,
+            1
+          ],
+          "pre": false
+        },
+        "snap_minus": {
+          "xs": [
+            0
+          ],
+          "pre": false
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            0
+          ],
+          "pre": true
+        },
+        "out_plus": 2,
+        "out_minus": 1,
+        "snap_plus": {
+          "xs": [
+            0,
+            1
+          ],
+          "pre": true
+        },
+        "snap_minus": {
+          "xs": [
+            0
+          ],
+          "pre": true
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            1
+          ],
+          "pre": false
+        },
+        "out_plus": 2,
+        "out_minus": 1,
+        "snap_plus": {
+          "xs": [
+            1,
+            2
+          ],
+          "pre": false
+        },
+        "snap_minus": {
+          "xs": [
+            1
+          ],
+          "pre": false
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 2,
+            "contexts_with_flip": 2,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "xs",
+              "args": {
+                "pre": false
+              },
+              "masked": {
+                "value": [
+                  0,
+                  1
+                ],
+                "out_plus": 2,
+                "out_minus": 2
+              },
+              "exposed": {
+                "value": [
+                  0
+                ],
+                "out_plus": 2,
+                "out_minus": 1
+              }
+            }
+          },
+          "pre": {
+            "contexts": 120,
+            "contexts_with_flip": 0,
+            "causally_relevant": false,
+            "example": null
+          }
+        },
+        "causally_relevant": [
+          "xs"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [],
+            "status": "INVALID"
+          }
+        ],
+        "edges": [],
+        "unsupported": [],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 13,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 861,
+        "completion_tokens": 74,
+        "total_duration_ns": 4098522064,
+        "load_duration_ns": 2035076,
+        "prompt_eval_duration_ns": 201936000,
+        "eval_duration_ns": 3716206000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 4.1,
+        "attempt": 0
+      },
+      "raw_response": "{\n  \"mask_guard\": \"len(xs) == 1\",\n  \"explanation\": \"Deleting A does not change the output if xs has only one element, as appending an element to a single-element list and then removing duplicates will still result in a list of length 1.\",\n  \"used_summaries\": [\"fn_0\", \"program\"]\n}",
+      "guard": "len(xs) == 1",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 240,
+        "usable_rows": 240,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "pre": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "len(xs) == 1",
+          "source_lines": [],
+          "status": "REFUTED",
+          "checked": 240,
+          "unsound": 6,
+          "incomplete": 100,
+          "shape": null,
+          "parts": [
+            "len(xs) == 1"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              6
+            ],
+            "rejects_wrong": [
+              100
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [
+                  0
+                ],
+                "pre": false
+              },
+              "out_plus": 2,
+              "out_minus": 1,
+              "snap_plus": {
+                "xs": [
+                  0,
+                  1
+                ],
+                "pre": false
+              },
+              "snap_minus": {
+                "xs": [
+                  0
+                ],
+                "pre": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "len(xs) == 1"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  0
+                ],
+                "pre": true
+              },
+              "out_plus": 2,
+              "out_minus": 1,
+              "snap_plus": {
+                "xs": [
+                  0,
+                  1
+                ],
+                "pre": true
+              },
+              "snap_minus": {
+                "xs": [
+                  0
+                ],
+                "pre": true
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "len(xs) == 1"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  1
+                ],
+                "pre": false
+              },
+              "out_plus": 2,
+              "out_minus": 1,
+              "snap_plus": {
+                "xs": [
+                  1,
+                  2
+                ],
+                "pre": false
+              },
+              "snap_minus": {
+                "xs": [
+                  1
+                ],
+                "pre": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true
+              ],
+              "part_text": [
+                "len(xs) == 1"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    1
+                  ],
+                  "pre": false
+                },
+                "out_plus": 2,
+                "out_minus": 2,
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "pre": false
+                },
+                "out_plus": 2,
+                "out_minus": 1,
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 100,
+          "active_exposed": 140
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "pre": false
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                0,
+                1
+              ],
+              "pre": false
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "pre": false
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "pre": true
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                0,
+                1
+              ],
+              "pre": true
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "pre": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "pre": false
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                1,
+                2
+              ],
+              "pre": false
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "pre": false
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 2,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "pre": false
+                  },
+                  "masked": {
+                    "value": [
+                      0,
+                      1
+                    ],
+                    "out_plus": 2,
+                    "out_minus": 2
+                  },
+                  "exposed": {
+                    "value": [
+                      0
+                    ],
+                    "out_plus": 2,
+                    "out_minus": 1
+                  }
+                }
+              },
+              "pre": {
+                "contexts": 120,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": [
+              "xs"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 13,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 13 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     out = []\n003:     for x in xs:\n004:         if x not in out:\n005:             out.append(x)\n006:     return out\n007: \n008: \n009: def program(xs, pre):\n010:     if pre:\n011:         xs = fn_0(xs)\n012: \n013:     xs = xs + [xs[0] + 1]  # TARGET_A\n014: \n015:     return len(fn_0(xs))\n\nInput domain: xs: list[int] with length 1..4, values in {0, 1, 2}; pre: bool (every combination is enumerated; 240 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  pre: bool\n  xs: list[int]\n\nDeclared function types:\n  fn_0(list[int]) -> list[int]\n\nGeneric function summaries produced without knowledge of this task:\n{\"functions\": [{\"name\": \"fn_0\", \"computes\": \"Removes duplicates from the input list.\", \"input\": \"A list of elements (xs).\", \"output\": \"A list of unique elements from the input list.\", \"loop_invariants\": \"The output list (out) contains only unique elements encountered so far in the iteration over xs.\", \"depends_on\": \"The elements of the input list xs.\"}, {\"name\": \"program\", \"computes\": \"Computes the length of a list after appending a new element and optionally removing duplicates.\", \"input\": \"A list of elements (xs) and a boolean flag (pre).\", \"output\": \"The length of the list after processing.\", \"loop_invariants\": \"None, as there are no loops in this function. However, fn_0 is called which has its own loop invariants.\", \"depends_on\": \"The elements of the input list xs and the boolean flag pre.\"}]}\n\nUsing these summaries, infer the condition under which deleting A leaves the\nreturned value unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\", \"used_summaries\": [\"...\"]}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 1250,
+        "completion_tokens": 81,
+        "total_duration_ns": 4175228627,
+        "load_duration_ns": 2140899,
+        "prompt_eval_duration_ns": 153341000,
+        "eval_duration_ns": 3994266000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 4.177,
+        "attempt": 0
+      },
+      "raw_response": "{\n  \"mask_guard\": \"len(xs) == 1 and not pre\",\n  \"explanation\": \"Deleting A does not change the output if xs has only one element and pre is False, as appending an element to a single-element list and then removing duplicates will still result in a list of length 1.\",\n  \"used_summaries\": [\"fn_0\", \"program\"]\n}",
+      "guard": "len(xs) == 1 and not pre",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 240,
+        "usable_rows": 240,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "pre": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "len(xs) == 1 and not pre",
+          "source_lines": [],
+          "status": "REFUTED",
+          "checked": 240,
+          "unsound": 3,
+          "incomplete": 100,
+          "shape": "and",
+          "parts": [
+            "len(xs) == 1",
+            "not pre"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              3,
+              3
+            ],
+            "rejects_wrong": [
+              100,
+              50
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [
+                  0
+                ],
+                "pre": false
+              },
+              "out_plus": 2,
+              "out_minus": 1,
+              "snap_plus": {
+                "xs": [
+                  0,
+                  1
+                ],
+                "pre": false
+              },
+              "snap_minus": {
+                "xs": [
+                  0
+                ],
+                "pre": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true,
+                true
+              ],
+              "part_text": [
+                "len(xs) == 1",
+                "not pre"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  1
+                ],
+                "pre": false
+              },
+              "out_plus": 2,
+              "out_minus": 1,
+              "snap_plus": {
+                "xs": [
+                  1,
+                  2
+                ],
+                "pre": false
+              },
+              "snap_minus": {
+                "xs": [
+                  1
+                ],
+                "pre": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true,
+                true
+              ],
+              "part_text": [
+                "len(xs) == 1",
+                "not pre"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  2
+                ],
+                "pre": false
+              },
+              "out_plus": 2,
+              "out_minus": 1,
+              "snap_plus": {
+                "xs": [
+                  2,
+                  3
+                ],
+                "pre": false
+              },
+              "snap_minus": {
+                "xs": [
+                  2
+                ],
+                "pre": false
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true,
+                true
+              ],
+              "part_text": [
+                "len(xs) == 1",
+                "not pre"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [
+                    0,
+                    1
+                  ],
+                  "pre": false
+                },
+                "out_plus": 2,
+                "out_minus": 2,
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "pre": false
+                },
+                "out_plus": 2,
+                "out_minus": 1,
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 100,
+          "active_exposed": 140
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "pre": false
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                0,
+                1
+              ],
+              "pre": false
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "pre": false
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "pre": true
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                0,
+                1
+              ],
+              "pre": true
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "pre": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "pre": false
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                1,
+                2
+              ],
+              "pre": false
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "pre": false
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 2,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "pre": false
+                  },
+                  "masked": {
+                    "value": [
+                      0,
+                      1
+                    ],
+                    "out_plus": 2,
+                    "out_minus": 2
+                  },
+                  "exposed": {
+                    "value": [
+                      0
+                    ],
+                    "out_plus": 2,
+                    "out_minus": 1
+                  }
+                }
+              },
+              "pre": {
+                "contexts": 120,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": [
+              "xs"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 13,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 13 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     out = []\n003:     for x in xs:\n004:         if x not in out:\n005:             out.append(x)\n006:     return out\n007: \n008: \n009: def program(xs, pre):\n010:     if pre:\n011:         xs = fn_0(xs)\n012: \n013:     xs = xs + [xs[0] + 1]  # TARGET_A\n014: \n015:     return len(fn_0(xs))\n\nInput domain: xs: list[int] with length 1..4, values in {0, 1, 2}; pre: bool (every combination is enumerated; 240 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  pre: bool\n  xs: list[int]\n\nDeclared function types:\n  fn_0(list[int]) -> list[int]\n\nGeneric function summaries produced without knowledge of this task:\n{\"functions\": [{\"name\": \"fn_0\", \"computes\": \"Removes duplicates from the input list.\", \"input\": \"A list of elements (xs).\", \"output\": \"A list of unique elements from the input list.\", \"loop_invariants\": \"The output list (out) contains only unique elements encountered so far in the iteration over xs.\", \"depends_on\": \"The elements of the input list xs.\"}, {\"name\": \"program\", \"computes\": \"Computes the length of a list after appending a new element and optionally removing duplicates.\", \"input\": \"A list of elements (xs) and a boolean flag (pre).\", \"output\": \"The length of the list after processing.\", \"loop_invariants\": \"None, as there are no loops in this function. However, fn_0 is called which has its own loop invariants.\", \"depends_on\": \"The elements of the input list xs and the boolean flag pre.\"}]}\n\nUsing these summaries, infer the condition under which deleting A leaves the\nreturned value unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\", \"used_summaries\": [\"...\"]}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"mask_guard\": \"len(xs) == 1\",\n  \"explanation\": \"Deleting A does not change the output if xs has only one element, as appending an element to a single-element list and then removing duplicates will still result in a list of length 1.\",\n  \"used_summaries\": [\"fn_0\", \"program\"]\n}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: len(xs) == 1\nThe bounded checker ran 240 paired executions.\nUNSOUND in 6 cases: the guard accepts an input where the two versions differ. First counterexample: {\"args\": {\"xs\": [0], \"pre\": false}, \"out_plus\": 2, \"out_minus\": 1, \"snap_plus\": {\"xs\": [0, 1], \"pre\": false}, \"snap_minus\": {\"xs\": [0], \"pre\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"len(xs) == 1\"]}\nINCOMPLETE in 100 cases: outputs are equal but the guard rejects the input. First counterexample: {\"args\": {\"xs\": [0], \"pre\": false}, \"out_plus\": 2, \"out_minus\": 1, \"snap_plus\": {\"xs\": [0, 1], \"pre\": false}, \"snap_minus\": {\"xs\": [0], \"pre\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"len(xs) == 1\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "stats": {
+        "prompt_tokens": 1661,
+        "completion_tokens": 85,
+        "total_duration_ns": 4513285811,
+        "load_duration_ns": 87108347,
+        "prompt_eval_duration_ns": 140146000,
+        "eval_duration_ns": 4181538999,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 4.515,
+        "attempt": 0
+      },
+      "raw_response": "{\n  \"mask_guard\": \"len(distinct(xs)) == len(xs) and not pre\",\n  \"explanation\": \"Deleting A does not change the output if xs has all unique elements and pre is False, as appending an element to a list with unique elements and then removing duplicates will still result in a list of the same length.\",\n  \"used_summaries\": [\"fn_0\", \"program\"]\n}",
+      "guard": "len(distinct(xs)) == len(xs) and not pre",
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 240,
+        "usable_rows": 240,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "pre": "bool"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "len(distinct(xs)) == len(xs) and not pre",
+          "source_lines": [],
+          "status": "INVALID",
+          "reason": "len: argument sort int, expected one of ['dict[int,int]', 'list[int]']",
+          "unsound": 0,
+          "incomplete": 0,
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 100,
+          "active_exposed": 140
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "pre": false
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                0,
+                1
+              ],
+              "pre": false
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "pre": false
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "pre": true
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                0,
+                1
+              ],
+              "pre": true
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "pre": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "pre": false
+            },
+            "out_plus": 2,
+            "out_minus": 1,
+            "snap_plus": {
+              "xs": [
+                1,
+                2
+              ],
+              "pre": false
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "pre": false
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 2,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "pre": false
+                  },
+                  "masked": {
+                    "value": [
+                      0,
+                      1
+                    ],
+                    "out_plus": 2,
+                    "out_minus": 2
+                  },
+                  "exposed": {
+                    "value": [
+                      0
+                    ],
+                    "out_plus": 2,
+                    "out_minus": 1
+                  }
+                }
+              },
+              "pre": {
+                "contexts": 120,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              }
+            },
+            "causally_relevant": [
+              "xs"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "INVALID"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 13,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 13 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     out = []\n003:     for x in xs:\n004:         if x not in out:\n005:             out.append(x)\n006:     return out\n007: \n008: \n009: def program(xs, pre):\n010:     if pre:\n011:         xs = fn_0(xs)\n012: \n013:     xs = xs + [xs[0] + 1]  # TARGET_A\n014: \n015:     return len(fn_0(xs))\n\nInput domain: xs: list[int] with length 1..4, values in {0, 1, 2}; pre: bool (every combination is enumerated; 240 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  pre: bool\n  xs: list[int]\n\nDeclared function types:\n  fn_0(list[int]) -> list[int]\n\nGeneric function summaries produced without knowledge of this task:\n{\"functions\": [{\"name\": \"fn_0\", \"computes\": \"Removes duplicates from the input list.\", \"input\": \"A list of elements (xs).\", \"output\": \"A list of unique elements from the input list.\", \"loop_invariants\": \"The output list (out) contains only unique elements encountered so far in the iteration over xs.\", \"depends_on\": \"The elements of the input list xs.\"}, {\"name\": \"program\", \"computes\": \"Computes the length of a list after appending a new element and optionally removing duplicates.\", \"input\": \"A list of elements (xs) and a boolean flag (pre).\", \"output\": \"The length of the list after processing.\", \"loop_invariants\": \"None, as there are no loops in this function. However, fn_0 is called which has its own loop invariants.\", \"depends_on\": \"The elements of the input list xs and the boolean flag pre.\"}]}\n\nUsing these summaries, infer the condition under which deleting A leaves the\nreturned value unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\", \"used_summaries\": [\"...\"]}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"mask_guard\": \"len(xs) == 1\",\n  \"explanation\": \"Deleting A does not change the output if xs has only one element, as appending an element to a single-element list and then removing duplicates will still result in a list of length 1.\",\n  \"used_summaries\": [\"fn_0\", \"program\"]\n}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: len(xs) == 1\nThe bounded checker ran 240 paired executions.\nUNSOUND in 6 cases: the guard accepts an input where the two versions differ. First counterexample: {\"args\": {\"xs\": [0], \"pre\": false}, \"out_plus\": 2, \"out_minus\": 1, \"snap_plus\": {\"xs\": [0, 1], \"pre\": false}, \"snap_minus\": {\"xs\": [0], \"pre\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"len(xs) == 1\"]}\nINCOMPLETE in 100 cases: outputs are equal but the guard rejects the input. First counterexample: {\"args\": {\"xs\": [0], \"pre\": false}, \"out_plus\": 2, \"out_minus\": 1, \"snap_plus\": {\"xs\": [0, 1], \"pre\": false}, \"snap_minus\": {\"xs\": [0], \"pre\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true], \"part_text\": [\"len(xs) == 1\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"mask_guard\": \"len(xs) == 1 and not pre\",\n  \"explanation\": \"Deleting A does not change the output if xs has only one element and pre is False, as appending an element to a single-element list and then removing duplicates will still result in a list of length 1.\",\n  \"used_summaries\": [\"fn_0\", \"program\"]\n}"
+        },
+        {
+          "role": "user",
+          "content": "Your guard was: len(xs) == 1 and not pre\nThe bounded checker ran 240 paired executions.\nUNSOUND in 3 cases: the guard accepts an input where the two versions differ. First counterexample: {\"args\": {\"xs\": [0], \"pre\": false}, \"out_plus\": 2, \"out_minus\": 1, \"snap_plus\": {\"xs\": [0, 1], \"pre\": false}, \"snap_minus\": {\"xs\": [0], \"pre\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true, true], \"part_text\": [\"len(xs) == 1\", \"not pre\"]}\nINCOMPLETE in 100 cases: outputs are equal but the guard rejects the input. First counterexample: {\"args\": {\"xs\": [0], \"pre\": false}, \"out_plus\": 2, \"out_minus\": 1, \"snap_plus\": {\"xs\": [0, 1], \"pre\": false}, \"snap_minus\": {\"xs\": [0], \"pre\": false}, \"diagnostic\": {\"A_changed_local_state\": true}, \"kind\": \"unsound\", \"predicted\": true, \"parts\": [true, true], \"part_text\": [\"len(xs) == 1\", \"not pre\"]}\nRevise the guard. Do not enumerate operations to delete; reason from the source. The checker only tested a finite domain. Reply with JSON containing 'mask_guard'."
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 4,
+    "prompt_tokens": 3992,
+    "completion_tokens": 464,
+    "decode_seconds": 24.944,
+    "wall_seconds": 26.411
+  },
+  "domain": {
+    "size": 240,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-10-30T10:50:05.730294+00:00"
+}

@@ -1,0 +1,81 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/sql.py:128:name:parent",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/sql.py",
+  "function": "within",
+  "mechanism": "name",
+  "target_A": {
+    "line": 128,
+    "end_line": 128,
+    "kind": "Assign",
+    "code": "parent = self.parent"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_format.py::TestFormatReindent::test_identifier_and_functions",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_comment_first",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_with_functions",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_with_wrap_after",
+    "tests/test_format.py::TestFormatReindent::test_insert_values",
+    "tests/test_format.py::TestFormatReindent::test_keywordfunctions",
+    "tests/test_format.py::TestFormatReindent::test_long_identifier_list_with_functions",
+    "tests/test_format.py::TestFormatReindent::test_nested_identifier_list",
+    "tests/test_format.py::test_format_column_ordering",
+    "tests/test_format.py::test_having_produces_newline",
+    "tests/test_parse.py::test_parse_within",
+    "tests/test_regressions.py::test_issue207_runaway_format",
+    "tests/test_regressions.py::test_issue40",
+    "tests/test_regressions.py::test_issue90",
+    "tests/test_regressions.py::test_null_with_as"
+  ],
+  "original_hit_test_count": 16,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        parent = self.parent",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.96,
+    "failed_nodeids": [
+      "tests.test_format.TestFormatReindent::test_identifier_and_functions",
+      "tests.test_format.TestFormatReindent::test_identifier_list",
+      "tests.test_format.TestFormatReindent::test_identifier_list_comment_first",
+      "tests.test_format.TestFormatReindent::test_identifier_list_with_functions",
+      "tests.test_format.TestFormatReindent::test_identifier_list_with_wrap_after",
+      "tests.test_format.TestFormatReindent::test_insert_values",
+      "tests.test_format.TestFormatReindent::test_keywordfunctions",
+      "tests.test_format.TestFormatReindent::test_long_identifier_list_with_functions",
+      "tests.test_format.TestFormatReindent::test_nested_identifier_list",
+      "tests.test_format::test_format_column_ordering",
+      "tests.test_format::test_having_produces_newline",
+      "tests.test_parse::test_parse_within",
+      "tests.test_regressions::test_issue207_runaway_format",
+      "tests.test_regressions::test_issue40",
+      "tests.test_regressions::test_issue90",
+      "tests.test_regressions::test_null_with_as"
+    ],
+    "stdout_tail": " encoding))\nsqlparse\\engine\\filter_stack.py:39: in run\n    filter_.process(stmt)\nsqlparse\\filters\\reindent.py:235: in process\n    self._process(stmt)\nsqlparse\\filters\\reindent.py:101: in _process\n    func(tlist)\nsqlparse\\filters\\reindent.py:231: in _process_default\n    self._process(sgroup)\nsqlparse\\filters\\reindent.py:101: in _process\n    func(tlist)\nsqlparse\\filters\\reindent.py:231: in _process_default\n    self._process(sgroup)\nsqlparse\\filters\\reindent.py:101: in _process\n    func(tlist)\nsqlparse\\filters\\reindent.py:122: in _process_parenthesis\n    self._process_default(tlist, not is_dml_dll)\nsqlparse\\filters\\reindent.py:231: in _process_default\n    self._process(sgroup)\nsqlparse\\filters\\reindent.py:101: in _process\n    func(tlist)\nsqlparse\\filters\\reindent.py:137: in _process_identifierlist\n    if not tlist.within(sql.Function) and not tlist.within(sql.Values):\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <IdentifierList '1 as o...' at 0x21D459D13D0>\ngroup_cls = <class 'sqlparse.sql.Function'>\n\n    def within(self, group_cls):\n        \"\"\"Returns ``True`` if this token is within *group_cls*.\n    \n        Use this method for example to check if an identifier is within\n        a function: ``t.within(sql.Function)``.\n        \"\"\"\n        pass  # P-: target A deleted\n>       while parent:\nE       UnboundLocalError: cannot access local variable 'parent' where it is not associated with a value\n\nsqlparse\\sql.py:129: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_list - Unbou...\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_list_with_wrap_after\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_list_comment_first\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_list_with_functions\nFAILED tests/test_format.py::TestFormatReindent::test_long_identifier_list_with_functions\nFAILED tests/test_format.py::TestFormatReindent::test_nested_identifier_list\nFAILED tests/test_format.py::TestFormatReindent::test_keywordfunctions - Unbo...\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_and_functions\nFAILED tests/test_format.py::TestFormatReindent::test_insert_values - Unbound...\nFAILED tests/test_format.py::test_format_column_ordering - UnboundLocalError:...\nFAILED tests/test_format.py::test_having_produces_newline - UnboundLocalError...\nFAILED tests/test_parse.py::test_parse_within - UnboundLocalError: cannot acc...\nFAILED tests/test_regressions.py::test_issue40 - UnboundLocalError: cannot ac...\nFAILED tests/test_regressions.py::test_issue90 - UnboundLocalError: cannot ac...\nFAILED tests/test_regressions.py::test_null_with_as - UnboundLocalError: cann...\nFAILED tests/test_regressions.py::test_issue207_runaway_format - UnboundLocal...\n16 failed in 0.60s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

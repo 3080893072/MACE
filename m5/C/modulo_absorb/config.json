@@ -1,0 +1,96 @@
+{
+  "fixture": {
+    "id": "modulo_absorb",
+    "source": "fixtures/modulo_absorb.py",
+    "entry": "program",
+    "channels": 1,
+    "domain": {
+      "kind": "exhaustive",
+      "args": [
+        {
+          "name": "xs",
+          "sort": "list[int]",
+          "length": [
+            0,
+            3
+          ],
+          "values": [
+            -1,
+            0,
+            1,
+            3,
+            9,
+            10
+          ]
+        },
+        {
+          "name": "cap",
+          "sort": "bool"
+        }
+      ]
+    },
+    "functions": {
+      "fn_0": {
+        "params": [
+          "list[int]"
+        ],
+        "ret": "int"
+      }
+    },
+    "notes": "Rounding to a multiple of ten absorbs a +1 unless the total ends in 9; only when cap is set."
+  },
+  "fixture_path": "modulo_absorb.json",
+  "model_info": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "32.8B",
+      "quantization_level": "Q4_K_M"
+    },
+    "parameters": ""
+  },
+  "runtime": {
+    "ps": {
+      "models": [
+        {
+          "name": "qwen2.5-coder:32b",
+          "model": "qwen2.5-coder:32b",
+          "size": 21775106702,
+          "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen2",
+            "families": [
+              "qwen2"
+            ],
+            "parameter_size": "32.8B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2319-02-09T10:43:28.498206198+08:00",
+          "size_vram": 21775106702,
+          "context_length": 8192,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "seed": 42,
+  "rounds": 2,
+  "modes": [
+    "oracle"
+  ],
+  "num_ctx": 8192,
+  "temperature": 0.0,
+  "domain_size": 518,
+  "domain_exhaustive": true,
+  "started_utc": "2026-10-30T02:56:11.906755+00:00",
+  "oracle_contract": "/root/mace/experiments/hidden/modulo_absorb_reference.json",
+  "diagnostic_only": true
+}

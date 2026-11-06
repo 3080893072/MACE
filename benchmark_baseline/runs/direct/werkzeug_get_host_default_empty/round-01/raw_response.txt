@@ -1,0 +1,175 @@
+```json
+{
+  "task_id": "werkzeug_get_host_default_empty",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "scheme": "http",
+        "host_header": "example.com",
+        "server": ["localhost", 8080]
+      }
+    }
+  ],
+  "test_gap": {
+    "summary": "The deletion of `host = ""` exposes the vulnerability where an empty host can bypass trust checks.",
+    "tests": [
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[all]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[for]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[host]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore 0]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore empty]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore len < trusted]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ignore untrusted]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ipv6 - port, host with port]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ipv6 host]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[ipv6 port, host without port]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[multiple for]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[port, host with port]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[port, host without port]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[port, name]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[prefix < for]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[prefix]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/middleware/test_proxy_fix.py::test_proxy_fix[proto]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-None-server10-spam:8080]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-None-server11-unix/socket]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-None-server9-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-spam-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-spam-server12-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-spam:80-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[http-spam:8080-None-spam:8080]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[https-spam-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[https-spam:443-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[ws-spam-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[ws-spam:80-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[wss-spam-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/sansio/test_utils.py::test_get_host[wss-spam:443-None-spam]",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "tests/test_debug.py::TestDebugHelpers::test_exc_divider_found_on_chained_exception",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_formparser.py::TestMultiPart::test_basic",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_formparser.py::TestMultiPart::test_ie7_unc_path",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_internal.py::test_wrapper_internals",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_routing.py::test_basic_routing",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_routing.py::test_dispatch",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_routing.py::test_environ_defaults",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_routing.py::test_environ_nonascii_pathinfo",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_routing.py::test_external_building_with_port_bind_to_environ",
+        "verdict": "masked"
+      },
+      {
+        "name": "tests/test_routing.py::test_external_building_with_port_bind_to_environ_wrong_servername",
+

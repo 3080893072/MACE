@@ -1,0 +1,202 @@
+{
+  "contracts": {
+    "jinja2_bytecode_cache_read": {
+      "fields": {
+        "cached_source": {
+          "description": "Optional source compiled by Environment.compile and handed back by the caller's BytecodeCache.  Omit for the ordinary same-source cache path.",
+          "max_length": 10000,
+          "required": false,
+          "type": "string|null"
+        },
+        "context": {
+          "description": "Render context; keys are strings.",
+          "required": false,
+          "type": "object"
+        },
+        "template": {
+          "description": "Template source compiled by the environment.",
+          "max_length": 10000,
+          "required": true,
+          "type": "string"
+        }
+      },
+      "legal_constraints": [
+        "The payload is a JSON object with only the fields listed above.",
+        "template must be a string that Jinja2 3.1.3 can compile.",
+        "cached_source, when present, must be a string or null and must be compilable by Jinja2 3.1.3.",
+        "context, when present, must be a JSON object with string keys."
+      ],
+      "observation": {
+        "raise": {
+          "cache_dumps": "integer",
+          "cache_loads": "integer",
+          "message": "string",
+          "outcome": "raise",
+          "type": "exception class name"
+        },
+        "return": {
+          "cache_dumps": "integer",
+          "cache_loads": "integer",
+          "outcome": "return",
+          "value": "rendered template string"
+        }
+      }
+    },
+    "werkzeug_bind_server_name_lower": {
+      "fields": {
+        "host": {
+          "description": "WSGI SERVER_NAME and HTTP_HOST value.",
+          "max_length": 1024,
+          "required": false,
+          "type": "string"
+        },
+        "server_name": {
+          "description": "Optional explicit server_name argument.",
+          "max_length": 1024,
+          "required": false,
+          "type": "string|null"
+        },
+        "subdomain": {
+          "description": "Optional explicit subdomain argument.",
+          "max_length": 1024,
+          "required": false,
+          "type": "string|null"
+        }
+      },
+      "legal_constraints": [
+        "The payload is a JSON object with only the fields listed above.",
+        "host, server_name and subdomain must be strings or null; host defaults to example.com when omitted.",
+        "Strings longer than the published limit are rejected."
+      ],
+      "observation": {
+        "raise": {
+          "message": "string",
+          "outcome": "raise",
+          "type": "exception class name"
+        },
+        "return": {
+          "outcome": "return",
+          "server_name": "string",
+          "subdomain": "string"
+        }
+      }
+    },
+    "werkzeug_filestorage_stream_name": {
+      "fields": {
+        "data": {
+          "description": "Bytes encoded as UTF-8 for none/named streams.",
+          "required": false,
+          "type": "string"
+        },
+        "name": {
+          "description": "Required when stream is 'named'.",
+          "required": false,
+          "type": "string"
+        },
+        "stream": {
+          "description": "Kind of stream object passed to FileStorage.",
+          "enum": [
+            "tempfile",
+            "stderr",
+            "none",
+            "named"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "legal_constraints": [
+        "The payload is a JSON object with only the fields listed above.",
+        "stream must be one of tempfile, stderr, none, named.",
+        "data, when present, must be a string.",
+        "name is required for stream='named' and must be a string."
+      ],
+      "observation": {
+        "raise": {
+          "message": "string",
+          "outcome": "raise",
+          "type": "exception class name"
+        },
+        "return": {
+          "filename": "string|null",
+          "filename_type": "Python type name",
+          "outcome": "return"
+        }
+      }
+    },
+    "werkzeug_get_host_default_empty": {
+      "fields": {
+        "host_header": {
+          "description": "Host header value, or null when absent.",
+          "max_length": 1024,
+          "required": false,
+          "type": "string|null"
+        },
+        "scheme": {
+          "description": "URL scheme; defaults to http.",
+          "enum": [
+            "http",
+            "https",
+            "ws",
+            "wss"
+          ],
+          "required": false,
+          "type": "string"
+        },
+        "server": {
+          "description": "Server address [host, port], or null.",
+          "items": [
+            "string",
+            "integer|null"
+          ],
+          "required": false,
+          "type": "array|null"
+        }
+      },
+      "legal_constraints": [
+        "The payload is a JSON object with only the fields listed above.",
+        "scheme must be one of http, https, ws, wss.",
+        "host_header must be a string or null.",
+        "server must be null or a two-element array [string, integer|null]; port must be 0..65535."
+      ],
+      "observation": {
+        "raise": {
+          "message": "string",
+          "outcome": "raise",
+          "type": "exception class name"
+        },
+        "return": {
+          "host": "string",
+          "outcome": "return"
+        }
+      }
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "fields": {
+        "filename": {
+          "description": "Filename supplied by the caller.",
+          "max_length": 4096,
+          "required": true,
+          "type": "string"
+        }
+      },
+      "legal_constraints": [
+        "The payload is a JSON object with only the field filename.",
+        "filename must be a string of at most the published length."
+      ],
+      "observation": {
+        "raise": {
+          "message": "string",
+          "outcome": "raise",
+          "type": "exception class name"
+        },
+        "return": {
+          "filename": "string",
+          "outcome": "return"
+        }
+      }
+    }
+  },
+  "label": "DEVELOPMENT/PILOT",
+  "schema": "mace_benchmark_v3_input_contracts"
+}

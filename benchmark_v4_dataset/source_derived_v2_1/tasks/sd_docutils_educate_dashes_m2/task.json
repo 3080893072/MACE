@@ -1,0 +1,57 @@
+{
+  "task_id": "sd_docutils_educate_dashes_m2",
+  "project": "docutils",
+  "version": "0.20.1",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "educateDashes() converts every '---' to an en dash (and then every '--' to an em dash). Two legs each convert one triple dash, so both are needed for a two-occurrence string; a third occurrence survives the repair.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "docutils/utils/smartquotes.py",
+    "line": 763,
+    "function": "educateDashes",
+    "code": "    text = text.replace(r'---', smartchars.endash)  # en (yes, backwards)",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "educateDashes"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "docutils.utils.smartquotes.educateDashes(text)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_two_triple",
+      "role": "masking",
+      "description": "text with two '---' occurrences"
+    },
+    {
+      "id": "expose_three_triple",
+      "role": "exposing",
+      "description": "text with three '---' occurrences: one survives"
+    },
+    {
+      "id": "control_plain",
+      "role": "control",
+      "description": "text with a single '-'"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

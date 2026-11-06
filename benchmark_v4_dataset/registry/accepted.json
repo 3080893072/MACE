@@ -1,0 +1,43 @@
+{
+  "schema": "mace_v4_accepted/1",
+  "as_of": "2026-11-04",
+  "accepted_count": 1,
+  "note": "Only tasks that passed AC1-AC12 with an independent acceptance report are listed. Candidate counts are not tasks.",
+  "tasks": [
+    {
+      "task_id": "tabulate_numparses_header_wrap",
+      "project": "tabulate",
+      "version": "0.9.0",
+      "split": "DEV",
+      "story": "FULL_MASKING_STORY",
+      "target_operation": {
+        "file": "tabulate/__init__.py",
+        "line": 2074,
+        "code": "numparses = _expand_numparse(disable_numparse, num_cols)"
+      },
+      "candidate_universe_size": 2,
+      "msms": [
+        [
+          "L2060"
+        ]
+      ],
+      "mmbs": [
+        [
+          "L2060"
+        ]
+      ],
+      "cooperative": false,
+      "original_tests": [
+        "test/test_output.py::test_plain_maxheadercolwidths_autowraps"
+      ],
+      "acceptance": "tasks/tabulate_numparses_header_wrap/acceptance/acceptance_report.json",
+      "acceptance_all_pass": true,
+      "evidence": "tasks/tabulate_numparses_header_wrap/",
+      "declared_inputs": [
+        "mask_both_widths",
+        "expose_no_maxcolwidths",
+        "control_no_maxheader"
+      ]
+    }
+  ]
+}

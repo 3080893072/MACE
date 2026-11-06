@@ -1,0 +1,347 @@
+{
+  "task_id": "werkzeug_parse_options_header_continuation_state",
+  "project_id": "werkzeug-2.2.3",
+  "project": "Werkzeug",
+  "version": "2.2.3",
+  "target_operation": {
+    "file": "src/werkzeug/http.py",
+    "line": 440,
+    "code": "continued_encoding = None",
+    "function": "parse_options_header",
+    "note": "resets the carried RFC 2231 continuation encoding when a non-continuation piece is parsed"
+  },
+  "candidate_universe": [
+    {
+      "id": "write_state",
+      "file": "src/werkzeug/http.py",
+      "line": 444,
+      "code": "continued_encoding = encoding",
+      "kind": "assignment",
+      "role": "later write of the same loop-carried state; overwrites the reset before the next read"
+    }
+  ],
+  "probe": "probe_werkzeug_parse_options_header.py",
+  "scope": {
+    "declared_inputs": [
+      "expose_reset",
+      "mask_state_overwrite"
+    ],
+    "candidate_universe_size": 1,
+    "all_subsets_enumerated": true,
+    "exposing_inputs": [
+      "expose_reset"
+    ],
+    "masking_inputs": [
+      "mask_state_overwrite"
+    ],
+    "claim": "Exact over the declared finite inputs and declared candidate universe U.  Not a claim over the whole legal input domain or over operations outside U."
+  },
+  "inputs": {
+    "expose_reset": {
+      "role": "exposing",
+      "payload": {
+        "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*1*=%E6%96%87"
+      },
+      "executable": {
+        "EMPTY": true,
+        "write_state": true
+      },
+      "masked_strict": {
+        "EMPTY": false,
+        "write_state": true
+      },
+      "exposed": {
+        "EMPTY": true,
+        "write_state": false
+      },
+      "msms": [],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "%E6%96%87"
+          },
+          "outcome": "return"
+        },
+        "write_state": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "%E6%96%87"
+          },
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "文"
+          },
+          "outcome": "return"
+        },
+        "write_state": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "%E6%96%87"
+          },
+          "outcome": "return"
+        }
+      }
+    },
+    "mask_state_overwrite": {
+      "role": "masking",
+      "payload": {
+        "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*0*=utf-8''%E6%96%87; size*1*=%E5%AD%97"
+      },
+      "executable": {
+        "EMPTY": true,
+        "write_state": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "write_state": true
+      },
+      "exposed": {
+        "EMPTY": false,
+        "write_state": false
+      },
+      "msms": [
+        [
+          "write_state"
+        ]
+      ],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "文字"
+          },
+          "outcome": "return"
+        },
+        "write_state": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "文%E5%AD%97"
+          },
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "文字"
+          },
+          "outcome": "return"
+        },
+        "write_state": {
+          "mimetype": "attachment",
+          "options": {
+            "filename": "中",
+            "foo": "bar",
+            "size": "文%E5%AD%97"
+          },
+          "outcome": "return"
+        }
+      }
+    }
+  },
+  "runs": {
+    "plus": {
+      "expose_reset": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*1*=%E6%96%87"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "%E6%96%87"
+            },
+            "outcome": "return"
+          }
+        },
+        "write_state": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*1*=%E6%96%87"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "%E6%96%87"
+            },
+            "outcome": "return"
+          }
+        }
+      },
+      "mask_state_overwrite": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*0*=utf-8''%E6%96%87; size*1*=%E5%AD%97"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "文字"
+            },
+            "outcome": "return"
+          }
+        },
+        "write_state": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*0*=utf-8''%E6%96%87; size*1*=%E5%AD%97"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "文%E5%AD%97"
+            },
+            "outcome": "return"
+          }
+        }
+      }
+    },
+    "minus": {
+      "expose_reset": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*1*=%E6%96%87"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "文"
+            },
+            "outcome": "return"
+          }
+        },
+        "write_state": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*1*=%E6%96%87"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "%E6%96%87"
+            },
+            "outcome": "return"
+          }
+        }
+      },
+      "mask_state_overwrite": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*0*=utf-8''%E6%96%87; size*1*=%E5%AD%97"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "文字"
+            },
+            "outcome": "return"
+          }
+        },
+        "write_state": {
+          "probe": "probe_werkzeug_parse_options_header.py",
+          "payload": {
+            "value": "attachment; filename*0*=utf-8''%E4%B8%AD; foo=bar; size*0*=utf-8''%E6%96%87; size*1*=%E5%AD%97"
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "mimetype": "attachment",
+            "options": {
+              "filename": "中",
+              "foo": "bar",
+              "size": "文%E5%AD%97"
+            },
+            "outcome": "return"
+          }
+        }
+      }
+    }
+  }
+}

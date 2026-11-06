@@ -1,0 +1,30 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "total_post == total + 1",
+        "source_lines": [2, 3],
+        "rationale": "A adds one to the running total."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "total - total % 2 if even else total",
+        "condition": "even and sum(xs) % 2 == 0",
+        "source_lines": [4, 5, 6],
+        "rationale": "Rounding down to an even number maps s+1 back to s when s is even."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "even and sum(xs) % 2 == 0",
+      "source_lines": [3, 4, 5]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "candidate_id": "humanize-4.9.0:src/humanize/number.py:164:name:orig",
+  "project": "humanize",
+  "version": "4.9.0",
+  "split": "DEV",
+  "file": "src/humanize/number.py",
+  "function": "intcomma",
+  "mechanism": "name",
+  "target_A": {
+    "line": 164,
+    "end_line": 164,
+    "kind": "Assign",
+    "code": "orig = \"{0:.{1}f}\".format(value, ndigits)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_number.py::test_intcomma[test_args12-1,234,567]",
+    "tests/test_number.py::test_intcomma[test_args13-1,234,567.1]",
+    "tests/test_number.py::test_intcomma[test_args14-1,234,567.1234567000]",
+    "tests/test_number.py::test_intcomma[test_args15-1,234,567.0]",
+    "tests/test_number.py::test_intcomma[test_args19-14,308.4]",
+    "tests/test_number.py::test_intcomma[test_args20-14,308.40]",
+    "tests/test_number.py::test_intcomma[test_args21-14,308.400]",
+    "tests/test_number.py::test_intcomma[test_args24-1,235]",
+    "tests/test_number.py::test_intcomma[test_args25-1,234.5]",
+    "tests/test_number.py::test_intcomma[test_args26-1,234.55]",
+    "tests/test_number.py::test_intcomma[test_args27-1,234.545]",
+    "tests/test_number.py::test_intcomma[test_args28-1,234.5454545000]"
+  ],
+  "original_hit_test_count": 12,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        orig = \"{0:.{1}f}\".format(value, ndigits)",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.59,
+    "failed_nodeids": [
+      "tests.test_number::test_intcomma[test_args12-1,234,567]",
+      "tests.test_number::test_intcomma[test_args13-1,234,567.1]",
+      "tests.test_number::test_intcomma[test_args14-1,234,567.1234567000]",
+      "tests.test_number::test_intcomma[test_args15-1,234,567.0]",
+      "tests.test_number::test_intcomma[test_args19-14,308.4]",
+      "tests.test_number::test_intcomma[test_args20-14,308.40]",
+      "tests.test_number::test_intcomma[test_args21-14,308.400]",
+      "tests.test_number::test_intcomma[test_args24-1,235]",
+      "tests.test_number::test_intcomma[test_args25-1,234.5]",
+      "tests.test_number::test_intcomma[test_args26-1,234.55]",
+      "tests.test_number::test_intcomma[test_args27-1,234.545]",
+      "tests.test_number::test_intcomma[test_args28-1,234.5454545000]"
+    ],
+    "stdout_tail": "at(value)):\n                    return _format_not_finite(float(value))\n                if \".\" in value:\n                    value = float(value)\n                else:\n                    value = int(value)\n            else:\n                if not math.isfinite(float(value)):\n                    return _format_not_finite(float(value))\n                float(value)\n        except (TypeError, ValueError):\n            return str(value)\n    \n        if ndigits is not None:\n            pass  # P-: target A deleted\n        else:\n            orig = str(value)\n>       orig = orig.replace(\".\", decimal_sep)\n\u001b[1m\u001b[31mE       UnboundLocalError: cannot access local variable 'orig' where it is not associated with a value\u001b[0m\n\n\u001b[1m\u001b[31msrc\\humanize\\number.py\u001b[0m:167: UnboundLocalError\n- generated xml file: <local-path> -\n\u001b[36m\u001b[1m=========================== short test summary info ===========================\u001b[0m\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args12-1,234,567]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args13-1,234,567.1]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args14-1,234,567.1234567000]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args15-1,234,567.0]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args19-14,308.4]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args20-14,308.40]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args21-14,308.400]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args24-1,235]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args25-1,234.5]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args26-1,234.55]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args27-1,234.545]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_intcomma[test_args28-1,234.5454545000]\u001b[0m - UnboundLocalError: cannot access local variable 'orig' where it is not asso...\n\u001b[31m\u001b[31m\u001b[1m12 failed\u001b[0m\u001b[31m in 0.24s\u001b[0m\u001b[0m\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

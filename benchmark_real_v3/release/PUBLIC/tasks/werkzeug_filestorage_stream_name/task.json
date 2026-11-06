@@ -1,0 +1,94 @@
+{
+  "analysis_scope": "The public package contains the target source file only.  The hidden candidate universe is not disclosed.  Operations outside it cannot be attributed by the scorer and are reported UNVERIFIED.",
+  "difficulty": "easy-medium",
+  "frozen_t_task": [
+    "tests/test_datastructures.py::TestFileStorage::test_bytes_proper_sentinel[data0]",
+    "tests/test_datastructures.py::TestFileStorage::test_bytes_proper_sentinel[data1]",
+    "tests/test_datastructures.py::TestFileStorage::test_mimetype_always_lowercase",
+    "tests/test_datastructures.py::TestFileStorage::test_proxy_can_access_stream_attrs[BytesIO]",
+    "tests/test_datastructures.py::TestFileStorage::test_proxy_can_access_stream_attrs[SpooledTemporaryFile]",
+    "tests/test_datastructures.py::TestFileStorage::test_save_to_bytes_io",
+    "tests/test_datastructures.py::TestFileStorage::test_save_to_file",
+    "tests/test_datastructures.py::TestFileStorage::test_save_to_pathlib_dst",
+    "tests/test_test.py::test_environ_builder_data",
+    "tests/test_test.py::test_file_closing"
+  ],
+  "frozen_t_task_count": 10,
+  "label": "DEVELOPMENT/PILOT",
+  "legal_input_contract": {
+    "fields": {
+      "data": {
+        "description": "Bytes encoded as UTF-8 for none/named streams.",
+        "required": false,
+        "type": "string"
+      },
+      "name": {
+        "description": "Required when stream is 'named'.",
+        "required": false,
+        "type": "string"
+      },
+      "stream": {
+        "description": "Kind of stream object passed to FileStorage.",
+        "enum": [
+          "tempfile",
+          "stderr",
+          "none",
+          "named"
+        ],
+        "required": true,
+        "type": "string"
+      }
+    },
+    "legal_constraints": [
+      "The payload is a JSON object with only the fields listed above.",
+      "stream must be one of tempfile, stderr, none, named.",
+      "data, when present, must be a string.",
+      "name is required for stream='named' and must be a string."
+    ],
+    "observation": {
+      "raise": {
+        "message": "string",
+        "outcome": "raise",
+        "type": "exception class name"
+      },
+      "return": {
+        "filename": "string|null",
+        "filename_type": "Python type name",
+        "outcome": "return"
+      }
+    }
+  },
+  "not_claimed": [
+    "All stream types",
+    "All filename encodings",
+    "Operations outside the declared U"
+  ],
+  "observation_contract": {
+    "raise": {
+      "message": "string",
+      "outcome": "raise",
+      "type": "exception class name"
+    },
+    "return": {
+      "filename": "string|null",
+      "filename_type": "Python type name",
+      "outcome": "return"
+    }
+  },
+  "project": "Werkzeug 2.2.3",
+  "project_id": "werkzeug-2.2.3",
+  "project_source_tree_sha256": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+  "schema": "mace_benchmark_v3_public_task",
+  "source_file": "src/werkzeug/datastructures.py",
+  "source_path": "source/src/werkzeug/datastructures.py",
+  "source_sha256": "bf65987ecd6b6f53ae4205f22eb8a91d017082876b7d33427793f97fc9f7b9e0",
+  "submission_format": "submission_format.md",
+  "target_operation": {
+    "code": "filename = getattr(stream, \"name\", None)",
+    "file": "src/werkzeug/datastructures.py",
+    "function": "FileStorage.__init__",
+    "line": 2918
+  },
+  "task_id": "werkzeug_filestorage_stream_name",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected"
+}

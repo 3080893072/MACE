@@ -1,0 +1,38 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "d_post[0] == 5 and d[0] == 0",
+        "source_lines": [2, 3],
+        "rationale": "A sets slot 0 of the dictionary to five."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "7 if mode else d[0]",
+        "condition": "mode",
+        "source_lines": [4, 5, 6],
+        "rationale": "When mode holds the branch overwrites slot 0, so A is invisible there."
+      },
+      {
+        "id": "O1",
+        "channel": 1,
+        "expr": "d[1] + len(d) + sum(xs)",
+        "condition": "True",
+        "source_lines": [6],
+        "rationale": "Channel 1 never reads slot 0."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "mode",
+      "source_lines": [3, 4, 5]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

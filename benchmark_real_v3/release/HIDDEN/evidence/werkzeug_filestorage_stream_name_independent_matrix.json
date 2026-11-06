@@ -1,0 +1,130 @@
+{
+  "task_id": "werkzeug_filestorage_stream_name",
+  "project_id": "werkzeug-2.2.3",
+  "target_operation": {
+    "file": "src/werkzeug/datastructures.py",
+    "line": 2918,
+    "code": "filename = getattr(stream, \"name\", None)",
+    "function": "FileStorage.__init__",
+    "note": "fallback that derives the upload filename from the stream when the caller passes none"
+  },
+  "candidate_universe": [
+    {
+      "id": "special_name_reset",
+      "file": "src/werkzeug/datastructures.py",
+      "line": 2924,
+      "code": "filename = None",
+      "kind": "assignment",
+      "role": "conditional overwrite that erases names such as '<stderr>'"
+    }
+  ],
+  "probe": "probe_werkzeug_filestorage.py",
+  "inputs": {
+    "expose_regular_stream": {
+      "role": "exposing",
+      "payload": {
+        "stream": "tempfile"
+      },
+      "executable": {
+        "EMPTY": true,
+        "special_name_reset": true
+      },
+      "masked_strict": {
+        "EMPTY": false,
+        "special_name_reset": false
+      },
+      "exposed": {
+        "EMPTY": true,
+        "special_name_reset": true
+      },
+      "msms": [],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "filename": "<home>\\AppData\\Local\\Temp\\tmpc4rezvar",
+          "filename_type": "str",
+          "outcome": "return"
+        },
+        "special_name_reset": {
+          "filename": "<home>\\AppData\\Local\\Temp\\tmp75o4w1gn",
+          "filename_type": "str",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "special_name_reset": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      }
+    },
+    "mask_special_stream": {
+      "role": "masking",
+      "payload": {
+        "stream": "stderr"
+      },
+      "executable": {
+        "EMPTY": true,
+        "special_name_reset": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "special_name_reset": false
+      },
+      "exposed": {
+        "EMPTY": false,
+        "special_name_reset": true
+      },
+      "msms": [
+        [
+          "special_name_reset"
+        ]
+      ],
+      "mmbs": [
+        [
+          "special_name_reset"
+        ]
+      ],
+      "plus_observations": {
+        "EMPTY": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "special_name_reset": {
+          "filename": "<stderr>",
+          "filename_type": "str",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        },
+        "special_name_reset": {
+          "filename": null,
+          "filename_type": "NoneType",
+          "outcome": "return"
+        }
+      }
+    }
+  },
+  "variants": {
+    "plus": {
+      "EMPTY": "<local-path>",
+      "special_name_reset": "<local-path>"
+    },
+    "minus": {
+      "EMPTY": "<local-path>",
+      "special_name_reset": "<local-path>"
+    }
+  }
+}

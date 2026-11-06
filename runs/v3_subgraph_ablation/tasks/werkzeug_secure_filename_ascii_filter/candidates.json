@@ -1,0 +1,117 @@
+{
+  "selection": {
+    "ops": [
+      {
+        "id": "src/werkzeug/utils.py:239-239",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 239,
+        "last_line": 239,
+        "kind": "assign",
+        "code": "        filename = f\"_{filename}\"",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:239-239",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:241-241",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 241,
+        "last_line": 241,
+        "kind": "return",
+        "code": "    return filename",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:241-241",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "def-use:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:221-221",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 221,
+        "last_line": 221,
+        "kind": "assign",
+        "code": "    filename = unicodedata.normalize(\"NFKD\", filename)",
+        "graph_score": 1.3,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:221-221",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:226-226",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 226,
+        "last_line": 226,
+        "kind": "assign",
+        "code": "            filename = filename.replace(sep, \" \")",
+        "graph_score": 1.3,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:226-226",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:227-229",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 227,
+        "last_line": 229,
+        "kind": "assign",
+        "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )",
+        "graph_score": 1.25,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:227-229",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      }
+    ],
+    "eligible": 5,
+    "selected": 5,
+    "truncated": false,
+    "omitted": []
+  },
+  "graph_scores": {
+    "src/werkzeug/utils.py:239-239": 1.35,
+    "src/werkzeug/utils.py:241-241": 1.35,
+    "src/werkzeug/utils.py:221-221": 1.3,
+    "src/werkzeug/utils.py:226-226": 1.3,
+    "src/werkzeug/utils.py:227-229": 1.25
+  }
+}

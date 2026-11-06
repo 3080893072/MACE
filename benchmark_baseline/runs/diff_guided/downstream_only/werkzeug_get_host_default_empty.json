@@ -1,0 +1,1188 @@
+{
+  "candidate_operations": [
+    {
+      "end_line": 85,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 85,
+      "variable": "host"
+    },
+    {
+      "end_line": 87,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 87,
+      "variable": "host"
+    },
+    {
+      "end_line": 90,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 90,
+      "variable": "host"
+    },
+    {
+      "end_line": 93,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 93,
+      "variable": "host"
+    },
+    {
+      "end_line": 95,
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 95,
+      "variable": "host"
+    }
+  ],
+  "claims": [
+    {
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": null
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    }
+  ],
+  "inputs_evaluated": [
+    {
+      "a_executes": true,
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com:8080",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com:8080",
+        "outcome": "return"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": null
+      },
+      "kind": "exposing",
+      "minus": {
+        "message": "cannot access local variable 'host' where it is not associated with a value",
+        "outcome": "raise",
+        "type": "UnboundLocalError"
+      },
+      "plus": {
+        "host": "",
+        "outcome": "return"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "host_header": null,
+        "scheme": "https",
+        "server": [
+          "example.com",
+          443
+        ]
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    },
+    {
+      "a_executes": true,
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": [
+          "other.com",
+          80
+        ]
+      },
+      "kind": "masked",
+      "minus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "plus": {
+        "host": "example.com",
+        "outcome": "return"
+      },
+      "trace_errors": [
+        {
+          "message": "0",
+          "type": "SystemExit"
+        }
+      ]
+    }
+  ],
+  "masked_rows_used": 3,
+  "method": "downstream_only",
+  "rows": [
+    {
+      "base_masked": true,
+      "candidate_universe": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        },
+        {
+          "end_line": 87,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        },
+        {
+          "end_line": 90,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 90
+        },
+        {
+          "end_line": 93,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 93
+        },
+        {
+          "end_line": 95,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 95
+        }
+      ],
+      "claims": [
+        {
+          "input": {
+            "host_header": "example.com",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host_header": "example.com",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "evidence": {
+        "85": {
+          "absorb": true,
+          "after_a_minus": false,
+          "after_a_plus": true,
+          "control_divergence": false,
+          "difference_carrying": true,
+          "downstream": true,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "post_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "pre_minus": "UNBOUND",
+          "pre_plus": "3ba0d15ee33a80bf7264527fba8779501a5f9a07",
+          "score": 3
+        },
+        "87": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "90": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "93": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "95": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        }
+      },
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null
+      },
+      "submitted": {
+        "end_line": 85,
+        "file": "src/werkzeug/sansio/utils.py",
+        "line": 85
+      },
+      "validation": [
+        {
+          "delete_exposed": true,
+          "evidence": {
+            "absorb": true,
+            "after_a_minus": false,
+            "after_a_plus": true,
+            "control_divergence": false,
+            "difference_carrying": true,
+            "downstream": true,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": true,
+            "in_plus": true,
+            "post_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "post_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "pre_minus": "UNBOUND",
+            "pre_plus": "3ba0d15ee33a80bf7264527fba8779501a5f9a07",
+            "score": 3
+          },
+          "keep_only_masked": true,
+          "operation": {
+            "end_line": 85,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85
+          },
+          "passes_singleton": true
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 87,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 90,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 90
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 93,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 93
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 95,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 95
+          },
+          "passes_singleton": false
+        }
+      ]
+    },
+    {
+      "base_masked": true,
+      "candidate_universe": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        },
+        {
+          "end_line": 87,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        },
+        {
+          "end_line": 90,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 90
+        },
+        {
+          "end_line": 93,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 93
+        },
+        {
+          "end_line": 95,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 95
+        }
+      ],
+      "claims": [
+        {
+          "input": {
+            "host_header": null,
+            "scheme": "http",
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 87
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host_header": null,
+            "scheme": "http",
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 87
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "evidence": {
+        "85": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "87": {
+          "absorb": true,
+          "after_a_minus": false,
+          "after_a_plus": true,
+          "control_divergence": false,
+          "difference_carrying": true,
+          "downstream": true,
+          "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "post_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "pre_minus": "UNBOUND",
+          "pre_plus": "3ba0d15ee33a80bf7264527fba8779501a5f9a07",
+          "score": 3
+        },
+        "90": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": true,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": true,
+          "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "post_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "pre_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "pre_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "score": 1
+        },
+        "93": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "95": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        }
+      },
+      "input": {
+        "host_header": null,
+        "scheme": "http",
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "submitted": {
+        "end_line": 87,
+        "file": "src/werkzeug/sansio/utils.py",
+        "line": 87
+      },
+      "validation": [
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 85,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": true,
+          "evidence": {
+            "absorb": true,
+            "after_a_minus": false,
+            "after_a_plus": true,
+            "control_divergence": false,
+            "difference_carrying": true,
+            "downstream": true,
+            "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "in_minus": true,
+            "in_plus": true,
+            "post_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "post_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "pre_minus": "UNBOUND",
+            "pre_plus": "3ba0d15ee33a80bf7264527fba8779501a5f9a07",
+            "score": 3
+          },
+          "keep_only_masked": true,
+          "operation": {
+            "end_line": 87,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87
+          },
+          "passes_singleton": true
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": true,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": true,
+            "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "in_minus": true,
+            "in_plus": true,
+            "post_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "post_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "pre_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "pre_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 90,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 90
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 93,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 93
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "final_plus": "c79cb032927bff86d6bf4993f4cfa18569093521",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 95,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 95
+          },
+          "passes_singleton": false
+        }
+      ]
+    },
+    {
+      "base_masked": true,
+      "candidate_universe": [
+        {
+          "end_line": 85,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85
+        },
+        {
+          "end_line": 87,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87
+        },
+        {
+          "end_line": 90,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 90
+        },
+        {
+          "end_line": 93,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 93
+        },
+        {
+          "end_line": 95,
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 95
+        }
+      ],
+      "claims": [
+        {
+          "input": {
+            "host_header": "example.com:80",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MSMS"
+        },
+        {
+          "input": {
+            "host_header": "example.com:80",
+            "scheme": "http",
+            "server": null
+          },
+          "operations": [
+            {
+              "file": "src/werkzeug/sansio/utils.py",
+              "line": 85
+            }
+          ],
+          "type": "MMBS"
+        }
+      ],
+      "evidence": {
+        "85": {
+          "absorb": true,
+          "after_a_minus": false,
+          "after_a_plus": true,
+          "control_divergence": false,
+          "difference_carrying": true,
+          "downstream": true,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+          "post_plus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+          "pre_minus": "UNBOUND",
+          "pre_plus": "3ba0d15ee33a80bf7264527fba8779501a5f9a07",
+          "score": 3
+        },
+        "87": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "90": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        },
+        "93": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": true,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": true,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": true,
+          "in_plus": true,
+          "post_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "post_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "pre_minus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+          "pre_plus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+          "score": 1
+        },
+        "95": {
+          "absorb": false,
+          "after_a_minus": false,
+          "after_a_plus": false,
+          "control_divergence": false,
+          "difference_carrying": false,
+          "downstream": false,
+          "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+          "in_minus": false,
+          "in_plus": false,
+          "post_minus": null,
+          "post_plus": null,
+          "pre_minus": "NOT_EXECUTED",
+          "pre_plus": "NOT_EXECUTED",
+          "score": 1
+        }
+      },
+      "input": {
+        "host_header": "example.com:80",
+        "scheme": "http",
+        "server": null
+      },
+      "submitted": {
+        "end_line": 85,
+        "file": "src/werkzeug/sansio/utils.py",
+        "line": 85
+      },
+      "validation": [
+        {
+          "delete_exposed": true,
+          "evidence": {
+            "absorb": true,
+            "after_a_minus": false,
+            "after_a_plus": true,
+            "control_divergence": false,
+            "difference_carrying": true,
+            "downstream": true,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": true,
+            "in_plus": true,
+            "post_minus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+            "post_plus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+            "pre_minus": "UNBOUND",
+            "pre_plus": "3ba0d15ee33a80bf7264527fba8779501a5f9a07",
+            "score": 3
+          },
+          "keep_only_masked": true,
+          "operation": {
+            "end_line": 85,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 85
+          },
+          "passes_singleton": true
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 87,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 87
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 90,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 90
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": true,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": true,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": true,
+            "in_plus": true,
+            "post_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "post_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "pre_minus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+            "pre_plus": "9cb6ef4effca6235e6c98c14a263d5dd9c0e8a36",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 93,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 93
+          },
+          "passes_singleton": false
+        },
+        {
+          "delete_exposed": false,
+          "evidence": {
+            "absorb": false,
+            "after_a_minus": false,
+            "after_a_plus": false,
+            "control_divergence": false,
+            "difference_carrying": false,
+            "downstream": false,
+            "final_minus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "final_plus": "6dbad0de2145a084eb4b0c54ab781d8f7b5090fc",
+            "in_minus": false,
+            "in_plus": false,
+            "post_minus": null,
+            "post_plus": null,
+            "pre_minus": "NOT_EXECUTED",
+            "pre_plus": "NOT_EXECUTED",
+            "score": 1
+          },
+          "keep_only_masked": false,
+          "operation": {
+            "end_line": 95,
+            "file": "src/werkzeug/sansio/utils.py",
+            "line": 95
+          },
+          "passes_singleton": false
+        }
+      ]
+    }
+  ],
+  "target": {
+    "code": "host = \"\"",
+    "file": "src/werkzeug/sansio/utils.py",
+    "function": "get_host",
+    "line": 82
+  },
+  "task_id": "werkzeug_get_host_default_empty",
+  "unresolved": [],
+  "variant_builds": 22
+}

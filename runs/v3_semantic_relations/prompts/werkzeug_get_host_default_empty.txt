@@ -1,0 +1,118 @@
+You are analysing a proposed deletion in a Python function. Use only
+the public information below. A Python exception is an observation. The best
+evidence level is BOUNDED: execution on the declared finite domain, never a proof.
+
+## Task
+werkzeug_get_host_default_empty
+
+## Files
+`src/werkzeug/sansio/utils.py`
+
+## Program with source line numbers
+```text
+  56 | def get_host(
+  57 |     scheme: str,
+  58 |     host_header: t.Optional[str],
+  59 |     server: t.Optional[t.Tuple[str, t.Optional[int]]] = None,
+  60 |     trusted_hosts: t.Optional[t.Iterable[str]] = None,
+  61 | ) -> str:
+  62 |     """Return the host for the given parameters.
+  63 | 
+  64 |     This first checks the ``host_header``. If it's not present, then
+  65 |     ``server`` is used. The host will only contain the port if it is
+  66 |     different than the standard port for the protocol.
+  67 | 
+  68 |     Optionally, verify that the host is trusted using
+  69 |     :func:`host_is_trusted` and raise a
+  70 |     :exc:`~werkzeug.exceptions.SecurityError` if it is not.
+  71 | 
+  72 |     :param scheme: The protocol the request used, like ``"https"``.
+  73 |     :param host_header: The ``Host`` header value.
+  74 |     :param server: Address of the server. ``(host, port)``, or
+  75 |         ``(path, None)`` for unix sockets.
+  76 |     :param trusted_hosts: A list of trusted host names.
+  77 | 
+  78 |     :return: Host, with port if necessary.
+  79 |     :raise ~werkzeug.exceptions.SecurityError: If the host is not
+  80 |         trusted.
+  81 |     """
+  82 |     host = ""
+  83 | 
+  84 |     if host_header is not None:
+  85 |         host = host_header
+  86 |     elif server is not None:
+  87 |         host = server[0]
+  88 | 
+  89 |         if server[1] is not None:
+  90 |             host = f"{host}:{server[1]}"
+  91 | 
+  92 |     if scheme in {"http", "ws"} and host.endswith(":80"):
+  93 |         host = host[:-3]
+  94 |     elif scheme in {"https", "wss"} and host.endswith(":443"):
+  95 |         host = host[:-4]
+  96 | 
+  97 |     if trusted_hosts is not None:
+  98 |         if not host_is_trusted(host, trusted_hosts):
+  99 |             raise SecurityError(f"Host {host!r} is not trusted.")
+ 100 | 
+ 101 |     return host
+```
+
+## Target A
+Line 82: ``
+Deletion rule: replace exactly this line with `pass` at the same indentation.
+
+## Legal inputs
+Arguments: {"host_header": {"description": "Host header value, or null when absent.", "max_length": 1024, "required": false, "type": "string|null"}, "scheme": {"description": "URL scheme; defaults to http.", "enum": ["http", "https", "ws", "wss"], "required": false, "type": "string"}, "server": {"description": "Server address [host, port], or null.", "items": ["string", "integer|null"], "required": false, "type": "array|null"}}
+Frozen legal cases: [{"scheme": "http", "host_header": null, "server": null}, {"scheme": "http", "host_header": "example.com", "server": null}, {"scheme": "http", "host_header": null, "server": ["example.com", 8080]}, {"scheme": "https", "host_header": "example.com:443", "server": ["example.com", 443]}, {"scheme": "ws", "host_header": "Example.COM:80", "server": null}, {"scheme": "http", "host_header": "spam", "server": ["spam", 80]}]
+Legal constraints: The payload is a JSON object with only the fields listed above.; scheme must be one of http, https, ws, wss.; host_header must be a string or null.; server must be null or a two-element array [string, integer|null]; port must be 0..65535.
+
+## Observable
+{"raise": {"message": "string", "outcome": "raise", "type": "exception class name"}, "return": {"host": "string", "outcome": "return"}}
+
+## Operations already proposed by the static graph
+- id=src/werkzeug/sansio/utils.py:85-85  line=85  kind=assignment  `        host = host_header `
+- id=src/werkzeug/sansio/utils.py:87-87  line=87  kind=assignment  `        host = server[0] `
+- id=src/werkzeug/sansio/utils.py:90-90  line=90  kind=assignment  `            host = f"{host}:{server[1]}" `
+- id=src/werkzeug/sansio/utils.py:93-93  line=93  kind=assignment  `        host = host[:-3] `
+- id=src/werkzeug/sansio/utils.py:95-95  line=95  kind=assignment  `        host = host[:-4] `
+
+You may propose operations that are NOT in this list. Every operation you
+report must be a real, complete statement in the file above: give its exact
+1-based starting line and its source text. Do not invent lines.
+
+## What to analyse
+1. Operations that may **independently mask A**: one operation alone is enough
+   to make the deletion unobservable.
+2. Operations that may **cooperatively mask A**: two or more operations are
+   jointly sufficient, and no proper non-empty subset is.
+3. **Alternative / fallback masking paths**: different sets of operations that
+   each mask A, so more than one path has to fail before A is exposed.
+4. The **input conditions** under which each relation holds. Use only the
+   argument names, int/bool constants, comparisons, arithmetic, `and`, `or`,
+   `not`. If the relation holds for every legal input, write `true`.
+5. Source locations, and whether the relation is **data-dependent** (it reads
+   or overwrites the value A writes) or **control-dependent** (it changes
+   whether A's statement executes).
+
+## Required JSON
+{
+  "relations": [
+    {
+      "kind": "independent | cooperative | fallback | coexisting",
+      "operations": [
+        {"file": "<path from Files>", "line": <int>, "text": "<source text>"}
+      ],
+      "condition": "<restricted boolean expression or null>",
+      "data_dependence": true,
+      "control_dependence": false,
+      "source_evidence": "<line numbers and why>",
+      "rationale": "<one sentence>"
+    }
+  ],
+  "notes": "<optional>"
+}
+
+`coexisting` means: disabling the named operations together exposes A, while
+no proper non-empty subset does. Return at most 12 different
+relations. Return one JSON object and no prose outside it.

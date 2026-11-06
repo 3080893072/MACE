@@ -1,0 +1,395 @@
+{
+  "case_id": "sd_pygments_bbcode70_italic",
+  "method": "graph",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "project": "Pygments",
+  "universe": [
+    {
+      "id": "pygments/formatters/bbcode.py:61-61",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 61,
+      "last_line": 61,
+      "kind": "assign",
+      "code": "            start = end = ''",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/bbcode.py:70-70",
+          "to": "pygments/formatters/bbcode.py:61-61",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/bbcode.py:64-64",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 64,
+      "last_line": 64,
+      "kind": "assign",
+      "code": "                end = '[/color]' + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/bbcode.py:70-70",
+          "to": "pygments/formatters/bbcode.py:64-64",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/bbcode.py:67-67",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 67,
+      "last_line": 67,
+      "kind": "assign",
+      "code": "                end = '[/b]' + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/bbcode.py:70-70",
+          "to": "pygments/formatters/bbcode.py:67-67",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/bbcode.py:76-76",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 76,
+      "last_line": 76,
+      "kind": "assign",
+      "code": "                    end = '[/i]' + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/bbcode.py:70-70",
+          "to": "pygments/formatters/bbcode.py:76-76",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/bbcode.py:80-80",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 80,
+      "last_line": 80,
+      "kind": "assign",
+      "code": "                end = '[/u]' + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/bbcode.py:70-70",
+          "to": "pygments/formatters/bbcode.py:80-80",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/bbcode.py:83-83",
+      "file": "pygments/formatters/bbcode.py",
+      "first_line": 83,
+      "last_line": 83,
+      "kind": "assign",
+      "code": "            self.styles[ttype] = start, end",
+      "graph_score": 1.1,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/bbcode.py:70-70",
+          "to": "pygments/formatters/bbcode.py:83-83",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    }
+  ],
+  "discovery": {
+    "method": "graph",
+    "rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic",
+    "stats": {
+      "nodes": 23,
+      "edges": 156,
+      "edge_kinds": {
+        "alias": 61,
+        "call": 24,
+        "control": 29,
+        "data": 42
+      },
+      "edge_confidence": {
+        "MAY": 83,
+        "MUST": 71,
+        "UNKNOWN": 2
+      },
+      "deletable": 16,
+      "unresolved_calls": [
+        "UNKNOWN:get_bool_opt"
+      ]
+    },
+    "eligible": 16,
+    "selected": 6,
+    "truncated": true,
+    "u_covered": [
+      "U2"
+    ],
+    "u_total": [
+      "U1",
+      "U2"
+    ],
+    "u_recall": 0.5,
+    "u_exact": false
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_italic",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/bbcode.py:61-61",
+          "pygments/formatters/bbcode.py:76-76",
+          "pygments/formatters/bbcode.py:83-83"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 12,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/bbcode.py:61-61",
+            "pygments/formatters/bbcode.py:76-76",
+            "pygments/formatters/bbcode.py:83-83"
+          ],
+          "evaluations": 52,
+          "elapsed_seconds": 0.016
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": 0.002
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "expose_italic_color",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in3",
+      "input_key": "control_bold",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/bbcode.py:61-61",
+          "pygments/formatters/bbcode.py:83-83"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 11,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/bbcode.py:61-61",
+            "pygments/formatters/bbcode.py:83-83"
+          ],
+          "evaluations": 44,
+          "elapsed_seconds": 0.015
+        },
+        "first_mmbs": null
+      }
+    },
+    {
+      "public_id": "in4",
+      "input_key": "mask_italic_codetag",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/bbcode.py:61-61",
+          "pygments/formatters/bbcode.py:76-76",
+          "pygments/formatters/bbcode.py:83-83"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 12,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/bbcode.py:61-61",
+            "pygments/formatters/bbcode.py:76-76",
+            "pygments/formatters/bbcode.py:83-83"
+          ],
+          "evaluations": 52,
+          "elapsed_seconds": 0.015
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/bbcode.py:76-76"
+          ],
+          "evaluations": 6,
+          "elapsed_seconds": 0.002
+        }
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 0,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 2,
+    "false_relations": 6,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 2,
+    "coop_exact": false
+  },
+  "detail": [
+    {
+      "input": "mask_italic",
+      "hidden_msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/bbcode.py:61-61",
+          "pygments/formatters/bbcode.py:76-76",
+          "pygments/formatters/bbcode.py:83-83"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U2"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/bbcode.py:61-61",
+        "pygments/formatters/bbcode.py:83-83"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ]
+    },
+    {
+      "input": "mask_italic_codetag",
+      "hidden_msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/bbcode.py:61-61",
+          "pygments/formatters/bbcode.py:76-76",
+          "pygments/formatters/bbcode.py:83-83"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U2"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/bbcode.py:61-61",
+        "pygments/formatters/bbcode.py:83-83"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/bbcode.py:76-76"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 3.04,
+    "probe_executions_algorithm": 128,
+    "probe_executions_scoring": 0,
+    "variant_builds": 128,
+    "subsets_evaluated": 192
+  }
+}

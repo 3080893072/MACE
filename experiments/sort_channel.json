@@ -1,0 +1,21 @@
+{
+  "id": "sort_channel",
+  "source": "fixtures/sort_channel.py",
+  "entry": "program",
+  "channels": 2,
+  "domain": {
+    "kind": "exhaustive",
+    "args": [
+      {"name": "xs", "sort": "list[int]", "length": [1, 5], "values": [-1, 0, 1, 2]},
+      {"name": "pre", "sort": "bool"},
+      {"name": "use_left", "sort": "bool"},
+      {"name": "use_right", "sort": "bool"}
+    ]
+  },
+  "functions": {
+    "fn_0": {"params": ["list[int]"], "ret": "list[int]"},
+    "fn_1": {"params": ["list[int]"], "ret": "int"},
+    "fn_2": {"params": ["list[int]"], "ret": "int"}
+  },
+  "notes": "Insertion sort upstream, target sorts the list, two output channels read an extremum under a flag. Reference masking sites are NOT part of this file."
+}

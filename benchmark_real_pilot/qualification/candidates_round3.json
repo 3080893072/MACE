@@ -1,0 +1,222 @@
+{
+  "round": 3,
+  "date": "2026-11-02",
+  "scope": "targeted semantic search in already downloaded real source; no Qwen or Full MACE run; no M1-M6 changes",
+  "pre_fixed_screening_rules": [
+    "SR1: A must be a real statement with a legal input on which P+ and P- both return normally; an UnboundLocalError on every attempted input is not a defined-to-defined witness.",
+    "SR2: A must assign a value that is read before any later overwrite or return. A binding that is overwritten before any read is not a concrete value-change candidate.",
+    "SR3: A masking witness requires P+ and P- to return the same observation on an input where A executed; an exposing witness requires both to return normally and differ.",
+    "SR4: A relation candidate B (or an operation set) must be checked by independent statement-line interventions; claims are single-witness unless a finite-domain check is explicitly supplied.",
+    "SR5: Candidates are selected from source semantics, never from MACE/Qwen scores, hidden labels, or a target acceptance count.",
+    "SR6: Every checked or rejected candidate is recorded with its reason."
+  ],
+  "search_inputs": {
+    "source_projects": ["Werkzeug 2.2.3", "click 8.4.1", "Jinja2 3.1.3", "packaging 23.1"],
+    "static_scan_functions": 224,
+    "read_before_second_assignment_candidates": 56,
+    "note": "Code line count was not used as a filter. The 224-function scan is only a candidate generator; final promotion required a named witness and an executable intervention matrix."
+  },
+  "accepted": [
+    {
+      "candidate_id": "click_choice_normalize_choice",
+      "project": "click",
+      "version": "8.4.1",
+      "file": "src/click/types.py",
+      "symbol": "Choice.normalize_choice",
+      "target_A": {"upstream_line": 333, "local_line": 20, "code": "normed_value = ctx.token_normalize_func(normed_value)"},
+      "operation_B": {"upstream_line": 336, "local_line": 23, "code": "normed_value = normed_value.casefold()"},
+      "mechanism": "The normalizer's value change is preserved for non-case transformations but is re-derived by a later unconditional casefold for ASCII case-only normalization.",
+      "defined_to_defined": true,
+      "mask_witness": {
+        "case_id": "mask_ascii",
+        "P_plus": "return 'abc'",
+        "P_minus": "return 'abc'",
+        "target_A_hit": true
+      },
+      "exposing_witness": {
+        "case_id": "expose_mapping",
+        "P_plus": "return 'a_b'",
+        "P_minus": "return 'a-b'",
+        "target_A_hit": true
+      },
+      "relation": {"kind": "independent", "ops": ["B"], "status": "VERIFIED", "minimal": true, "scope": "single_witness"},
+      "upstream_qualification": {
+        "P_plus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "P_minus": "1562 passed, 94 skipped, 30000 deselected, 1 xfailed",
+        "hit_test": "tests/test_normalization.py::test_choice_normalization",
+        "hit_count": 23
+      },
+      "class": "A_TEST_SURVIVING_DELETION",
+      "reason_for_acceptance": "It is the first candidate in this search satisfying all of: concrete value change; P+/P- normal returns on mask and expose witnesses; an independently verified operation; and original-test survival."
+    }
+  ],
+  "rejected_after_execution": [
+    {
+      "candidate_id": "click_wrap_text_indent_reset",
+      "project": "click",
+      "version": "8.4.1",
+      "file": "src/click/formatting.py",
+      "symbol": "wrap_text",
+      "target_A": {"upstream_line": 90, "code": "indent = None"},
+      "candidate_operation_B": {"upstream_line": 95, "code": "indent = orig_len - term_len(line)"},
+      "observations": {
+        "mask_equal_indent": {"P_plus": "'a\\n\\nb'", "P_minus": "'a\\n\\nb'", "target_A_hit": true},
+        "expose_changed_indent": {"P_plus": "'  a\\n\\nb'", "P_minus": "'  a\\n\\n  b'", "target_A_hit": true}
+      },
+      "rejection_reason": "Defined-to-defined masking exists, but there is no masking operation relation: with B disabled, P+ and P- remain identical on the mask witness. The equality is caused by the stale indent happening to equal the recomputed indent, not by an operation that can be disabled to expose A."
+    },
+    {
+      "candidate_id": "jinja2_urlize_leading_delimiter",
+      "project": "Jinja2",
+      "version": "3.1.3",
+      "file": "src/jinja2/utils.py",
+      "symbol": "urlize",
+      "target_A": {"upstream_line": 282, "code": "middle = middle[match.end() :]"},
+      "observations": {
+        "mask_A_not_executed": {"P_plus": "'abc'", "P_minus": "'abc'", "target_A_hit": false},
+        "expose_parenthesized_text": {"P_plus": "'(abc)'", "P_minus": "'((abc)'", "target_A_hit": true},
+        "expose_parenthesized_url": {"P_plus": "'(<a href=\"http://example.com\">http://example.com</a>)'", "P_minus": "'((http://example.com)'", "target_A_hit": true}
+      },
+      "rejection_reason": "Every tested input where A executes is exposed; the only masked input found is one where A is not executed. No mask witness with a real A value change was found."
+    },
+    {
+      "candidate_id": "packaging_parse_letter_version",
+      "project": "packaging",
+      "version": "23.1",
+      "file": "src/packaging/version.py",
+      "symbol": "_parse_letter_version",
+      "target_A": {"upstream_line": 464, "code": "letter = letter.lower()"},
+      "candidate_operation_B": {"upstream_line": 470, "code": "letter = 'post'"},
+      "observations": {
+        "mask_no_value_change": {"P_plus": "('a', 1)", "P_minus": "('a', 1)", "target_A_hit": true},
+        "expose_uppercase": {"P_plus": "('a', 1)", "P_minus": "('ALPHA', 1)", "target_A_hit": true}
+      },
+      "rejection_reason": "The masked case is one where lower() is a no-op, so there is no concrete value change to mask. The uppercase case is exposed and B is in a different branch that is not executed."
+    },
+    {
+      "candidate_id": "werkzeug_find_common_roots",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "file": "src/werkzeug/_reloader.py",
+      "symbol": "_find_common_roots",
+      "target_A": {"upstream_line": 148, "code": "node = node.setdefault(chunk, {})"},
+      "candidate_operation_B": {"upstream_line": 150, "code": "node.clear()"},
+      "observations": {
+        "P_plus": "normal return, e.g. {'a'}",
+        "P_minus": "TypeError: join() missing 1 required positional argument: 'path' on every tested input"
+      },
+      "rejection_reason": "Fails SR1: P- does not return normally on the attempted inputs, so it is not a defined-to-defined value-change case."
+    }
+  ],
+  "rejected_by_static_shape": [
+    {
+      "candidate_id": "packaging_manylinux_platform_tags",
+      "project": "packaging",
+      "version": "23.1",
+      "file": "src/packaging/_manylinux.py",
+      "symbol": "platform_tags",
+      "target_A": {"line": 210, "code": "too_old_glibc2 = _GLibCVersion(2, 16)"},
+      "candidate_operation_B": {"line": 213, "code": "too_old_glibc2 = _GLibCVersion(2, 4)"},
+      "rejection_reason": "A is overwritten before it is read on x86; on other architectures deletion leaves it unbound. This is a binding difference, not a concrete value change read downstream."
+    },
+    {
+      "candidate_id": "werkzeug_clean_status",
+      "file": "src/werkzeug/sansio/response.py",
+      "symbol": "_clean_status",
+      "target_A": {"line": 168, "code": "status = _to_str(value, self.charset)"},
+      "rejection_reason": "Deleting A leaves status unbound at the next statement for every input; not defined-to-defined."
+    },
+    {
+      "candidate_id": "jinja2_do_xmlattr",
+      "file": "src/jinja2/filters.py",
+      "symbol": "do_xmlattr",
+      "target_A": {"line": 295, "code": "rv = ' '.join(items)"},
+      "rejection_reason": "Deleting A leaves rv unbound at the autospace/return read; no downstream operation masks it."
+    },
+    {
+      "candidate_id": "jinja2_make_attrgetter",
+      "file": "src/jinja2/filters.py",
+      "symbol": "make_attrgetter",
+      "target_A": {"line": 70, "code": "item = environment.getitem(item, part)"},
+      "rejection_reason": "The assignment is inside a closure loop; the first iteration would be unbound after deletion, and no stable operation set masks the later iterations."
+    },
+    {
+      "candidate_id": "packaging_interpreter_version",
+      "file": "src/packaging/tags.py",
+      "symbol": "interpreter_version",
+      "target_A": {"line": 514, "code": "version = _get_config_var('py_version_nodot', warn=warn)"},
+      "rejection_reason": "Deleting A leaves version unbound at the immediately following truthiness read; not defined-to-defined."
+    },
+    {
+      "candidate_id": "packaging_mac_platforms",
+      "file": "src/packaging/tags.py",
+      "symbol": "mac_platforms",
+      "target_A": {"line": 423, "code": "compat_version = 10, minor_version"},
+      "rejection_reason": "The assignment is in a loop and is also repeated in later loops; first-iteration deletion is unbound and no single downstream operation masks it across the loop."
+    },
+    {
+      "candidate_id": "werkzeug_process_traceback_hidden",
+      "file": "src/werkzeug/debug/tbtools.py",
+      "symbol": "_process_traceback",
+      "target_A": {"line": 150, "code": "hidden = False"},
+      "rejection_reason": "Deleting A can leave hidden unbound at the first visible-frame read; the loop assignments are conditional, so there is no defined-to-defined witness for a first frame that does not set it."
+    },
+    {
+      "candidate_id": "click_open_url_unquote",
+      "file": "src/click/_termui_impl.py",
+      "symbol": "open_url",
+      "target_A": {"line": 763, "code": "url = unquote(url[7:])"},
+      "rejection_reason": "A is inside the nested _unquote_file helper and changes its return value directly; platform branches are mutually exclusive and no downstream operation masks it."
+    },
+    {
+      "candidate_id": "werkzeug_unquote_etag_strip",
+      "file": "src/werkzeug/http.py",
+      "symbol": "unquote_etag",
+      "target_A": {"line": 883, "code": "etag = etag.strip()"},
+      "rejection_reason": "A's value is read immediately by the W/ and quote checks; deletion changes the returned value and there is no verifier-checked masking witness."
+    },
+    {
+      "candidate_id": "werkzeug_parse_converter_args",
+      "file": "src/werkzeug/routing/rules.py",
+      "symbol": "parse_converter_args",
+      "target_A": {"line": 115, "code": "value = item.group('stringval')"},
+      "candidate_operation_B": {"line": 117, "code": "value = item.group('value')"},
+      "rejection_reason": "On the branch where B executes, A only supplies None and is overwritten before any concrete use; on the other branch deletion leaves value unbound. This is a binding overwrite, not a value-change mask."
+    },
+    {
+      "candidate_id": "click_echo_strip_ansi",
+      "file": "src/click/utils.py",
+      "symbol": "echo",
+      "target_A": {"line": 326, "code": "out = strip_ansi(out)"},
+      "candidate_operation_B": {"line": 331, "code": "out = strip_ansi(out)"},
+      "rejection_reason": "A and B are in mutually exclusive if/elif branches; there is no operation set that is active in both versions on a single witness, so no independent/cooperative/coexisting relation can be formed."
+    },
+    {
+      "candidate_id": "click_version_option_package_name",
+      "file": "src/click/decorators.py",
+      "symbol": "version_option",
+      "target_A": {"line": 476, "code": "package_name = f_globals.get('__name__')"},
+      "candidate_operation_B": {"line": 479, "code": "package_name = f_globals.get('__package__')"},
+      "rejection_reason": "The only downstream reassignment is conditional on the value A produced; deleting A leaves the parameter None and no downstream operation recomputes the package name. No mask witness was found."
+    },
+    {
+      "candidate_id": "click_resolve_context_args",
+      "file": "src/click/shell_completion.py",
+      "symbol": "_resolve_context",
+      "target_A": {"line": 591, "code": "args = ctx._protected_args + ctx.args"},
+      "candidate_operation_B": {"line": 607, "code": "args = ctx._protected_args + ctx.args"},
+      "rejection_reason": "Static shape is a loop-carried recomputation; no executable witness was built because it requires the full Click context hierarchy, and no evidence supports a masking relation. Not promoted."
+    }
+  ],
+  "summary": {
+    "accepted": 1,
+    "rejected_after_execution": 4,
+    "rejected_by_static_shape": 13,
+    "defined_to_defined_value_change_accepted": 1,
+    "new_relation_kinds": ["independent"],
+    "cooperative_found": false,
+    "coexisting_found_this_round": false,
+    "prior_round_rejections": "candidates_round2.json (Jinja2 parse_primary, Werkzeug _parse_rule, click get_help_extra)",
+    "note": "The accepted case is independent, not cooperative/coexisting. No acceptance count was targeted; rejected candidates outnumber the accepted case."
+  }
+}

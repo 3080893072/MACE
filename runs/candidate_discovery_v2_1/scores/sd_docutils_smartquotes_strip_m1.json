@@ -1,0 +1,171 @@
+{
+  "task_id": "sd_docutils_smartquotes_strip_m1",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "present": 1,
+    "false_relations": 1,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_space_padding",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "docutils/frontend.py:275-275",
+          "docutils/frontend.py:277-277"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "docutils/frontend.py:275-275"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Operation 275-275 strips whitespace from quotes, which can mask the effect of operation 272-272.",
+          "disabled_operations": [
+            "docutils/frontend.py:277-277"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/frontend.py:277-277"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "control_flow",
+          "masking_condition": "true",
+          "rationale": "Operation 277-277 splits quotes by ':', which can mask the effect of operation 272-272 if the quotes are already stripped.",
+          "disabled_operations": [
+            "docutils/frontend.py:275-275"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/frontend.py:275-275",
+            "docutils/frontend.py:277-277"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [
+          "docutils/frontend.py:277-277"
+        ],
+        "msms_exact": false,
+        "hidden_msms_present": true,
+        "false_relations": 1,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 1,
+    "c0_false": 0,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "docutils/frontend.py:279-279",
+        "docutils/frontend.py:261-261",
+        "docutils/frontend.py:277-277",
+        "docutils/frontend.py:284-284",
+        "docutils/frontend.py:285-285"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "docutils/frontend.py:206-206",
+        "docutils/frontend.py:209-209",
+        "docutils/frontend.py:210-210",
+        "docutils/frontend.py:211-211",
+        "docutils/frontend.py:212-212",
+        "docutils/frontend.py:255-256",
+        "docutils/frontend.py:258-258",
+        "docutils/frontend.py:261-261",
+        "docutils/frontend.py:265-265",
+        "docutils/frontend.py:268-270",
+        "docutils/frontend.py:277-277",
+        "docutils/frontend.py:279-279",
+        "docutils/frontend.py:281-283",
+        "docutils/frontend.py:284-284",
+        "docutils/frontend.py:285-285"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 15
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "docutils/frontend.py:277-277"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "docutils/frontend.py:277-277"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    }
+  }
+}

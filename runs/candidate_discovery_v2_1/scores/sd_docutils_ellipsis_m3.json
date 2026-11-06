@@ -1,0 +1,234 @@
+{
+  "task_id": "sd_docutils_ellipsis_m3",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_three_ellipses",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "confirmed": [
+        [
+          "docutils/utils/smartquotes.py:812-812",
+          "docutils/utils/smartquotes.py:815-815",
+          "docutils/utils/smartquotes.py:818-818"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:812-812",
+            "docutils/utils/smartquotes.py:815-815",
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operations 812, 815, and 818 together replace '...' with an ellipsis, masking the effect of deleting operation 810.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:812-812"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operation 812 replaces '...' with an ellipsis, which can mask the effect of deleting operation 810 if subsequent operations also replace '...'.",
+          "disabled_operations": [
+            "docutils/utils/smartquotes.py:815-815",
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:815-815"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operation 815 replaces '...' with an ellipsis, which can mask the effect of deleting operation 810 if subsequent operations also replace '...'.",
+          "disabled_operations": [
+            "docutils/utils/smartquotes.py:812-812",
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "source": "qwen_singleton",
+          "relation_type": "cooperative_leg",
+          "masking_condition": "true",
+          "rationale": "Operation 818 replaces '...' with an ellipsis, which can mask the effect of deleting operation 810 if subsequent operations also replace '...'.",
+          "disabled_operations": [
+            "docutils/utils/smartquotes.py:812-812",
+            "docutils/utils/smartquotes.py:815-815"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:812-812",
+            "docutils/utils/smartquotes.py:815-815"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:812-812",
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/smartquotes.py:815-815"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/utils/smartquotes.py:815-815",
+            "docutils/utils/smartquotes.py:818-818"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "docutils/utils/smartquotes.py:812-812"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 1,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 0.333,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "docutils/utils/smartquotes.py:820-820",
+        "docutils/utils/smartquotes.py:821-821",
+        "docutils/utils/smartquotes.py:594-594"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 3
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [
+        "docutils/utils/smartquotes.py:820-820",
+        "docutils/utils/smartquotes.py:821-821"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 2
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

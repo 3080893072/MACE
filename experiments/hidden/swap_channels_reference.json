@@ -1,0 +1,59 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "a_post == b and b_post == a",
+        "source_lines": [
+          5
+        ],
+        "rationale": "A swaps the two local variables."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "a + b",
+        "condition": "True",
+        "source_lines": [
+          7
+        ],
+        "rationale": "The sum is symmetric under the swap."
+      },
+      {
+        "id": "O1",
+        "channel": 1,
+        "expr": "a * b",
+        "condition": "True",
+        "source_lines": [
+          8
+        ],
+        "rationale": "The product is symmetric under the swap."
+      },
+      {
+        "id": "O2",
+        "channel": 2,
+        "expr": "(a - b) if show_gap else 0",
+        "condition": "not show_gap or n == k",
+        "source_lines": [
+          7,
+          8
+        ],
+        "rationale": "The difference changes sign unless it is gated off."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "not show_gap or n == k",
+      "source_lines": [
+        5,
+        7,
+        8
+      ]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

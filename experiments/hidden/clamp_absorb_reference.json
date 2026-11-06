@@ -1,0 +1,30 @@
+{
+  "note": "Reference contract for CPU self-checks and scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "total_post == total + 1",
+        "source_lines": [2, 4],
+        "rationale": "A adds one to the running total."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "(total if total < 10 else 10) if cap else total",
+        "condition": "cap and sum(xs) >= 10",
+        "source_lines": [6, 7, 8],
+        "rationale": "At or above the ceiling the clamp returns 10 in both versions."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "cap and sum(xs) >= 10",
+      "source_lines": [4, 6, 7]
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

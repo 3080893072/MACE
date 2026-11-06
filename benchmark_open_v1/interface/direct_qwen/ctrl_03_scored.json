@@ -1,0 +1,166 @@
+{
+  "schema_version": "mace-open-discovery-raw-v1",
+  "task_id": "ctrl_03",
+  "method": "direct_qwen",
+  "provider": "transformers-local",
+  "model_info": {
+    "provider": "transformers-local",
+    "model": "qwen15b",
+    "path": "D:/tmp/qwen15b",
+    "dtype": "torch.bfloat16",
+    "device": "cuda:0",
+    "parameters": 1543714304,
+    "max_position_embeddings": 32768
+  },
+  "generation": {
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "do_sample": false
+  },
+  "prompt_sha256": "70060a7a9c02615c97f4dc7cced084975819a79a83c606b1436147eac49921e9",
+  "started_at_utc": "2026-11-01T11:28:17+00:00",
+  "finished_at_utc": "2026-11-01T11:28:26+00:00",
+  "wall_seconds": 8.599,
+  "stats": {
+    "prompt_tokens": 1833,
+    "completion_tokens": 252,
+    "total_tokens": 2085,
+    "wall_seconds": 8.599,
+    "model": "qwen15b",
+    "provider": "transformers-local",
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "device": "cuda:0"
+  },
+  "parse_status": "ANSWERED",
+  "parse_error": null,
+  "answer": {
+    "task_id": "ctrl_03",
+    "relations": [
+      {
+        "operations": [
+          {
+            "line": 8,
+            "text": "if d == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "d": 0
+        },
+        "condition": "p != 0 and q != 0",
+        "explanation": "Disabling the 'if d == 0' block makes the local effect of 'v = v + 4' unobservable.",
+        "counterexample": null
+      },
+      {
+        "operations": [
+          {
+            "line": 9,
+            "text": "if c == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "c": 0
+        },
+        "condition": "p != 0 and q != 0",
+        "explanation": "Disabling the 'if c == 0' block makes the local effect of 'v = v + 4' unobservable.",
+        "counterexample": null
+      }
+    ],
+    "guard": {
+      "expr": "True",
+      "status": "BOUNDED"
+    },
+    "test_gap": [],
+    "evidence": null
+  },
+  "verification": {
+    "status": "UNVERIFIED",
+    "relation_results": [
+      {
+        "status": "UNVERIFIED",
+        "checks": {},
+        "operations": [
+          "D"
+        ],
+        "kind": "independent",
+        "reason": "input is not one of the frozen legal cases"
+      },
+      {
+        "status": "DUPLICATE",
+        "checks": {},
+        "operations": [
+          "D"
+        ],
+        "kind": "independent",
+        "reason": "input is not one of the frozen legal cases",
+        "duplicate_of": 0
+      }
+    ],
+    "counts": {
+      "submitted": 1,
+      "verified": 0,
+      "incomplete": 0,
+      "false": 0,
+      "unverified": 1,
+      "format_error": 0,
+      "duplicates_ignored": 1
+    }
+  },
+  "guard": {
+    "status": "BOUNDED",
+    "exact": false,
+    "sound": false,
+    "complete": true,
+    "false_accept": [
+      "case_0014",
+      "case_0015",
+      "case_0016",
+      "case_0017",
+      "case_0018",
+      "case_0019"
+    ],
+    "false_reject": [],
+    "errors": []
+  },
+  "test_gap": {
+    "status": "BOUNDED",
+    "rows": [
+      {
+        "test": "t_b_only",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      },
+      {
+        "test": "t_e_only",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      },
+      {
+        "test": "t_coop",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      },
+      {
+        "test": "t_both_overwrite",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      }
+    ],
+    "exact": false,
+    "covered": 0,
+    "total": 4
+  },
+  "counterexample": {
+    "status": "ABSENT"
+  },
+  "verification_executions": 40,
+  "raw_path": "benchmark_open_v1\\interface\\direct_qwen\\ctrl_03_raw.json"
+}

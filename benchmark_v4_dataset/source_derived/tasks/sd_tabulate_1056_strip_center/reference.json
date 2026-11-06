@@ -1,0 +1,116 @@
+{
+  "task_id": "sd_tabulate_1056_strip_center",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 1056,
+    "function": "_align_column_choose_padfn",
+    "code": "            strings = [s.strip() for s in strings]",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "tabulate/__init__.py",
+      "line": 1058,
+      "code": "if all(s.strip().isdigit() for s in strings):",
+      "role": "Conditional recomputation that restores the strip only for numeric-looking cell groups.",
+      "patch_anchor_line": 1056,
+      "block_span": [
+        1057,
+        1060
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_numeric": {
+      "role": "masking",
+      "description": "center-aligned numeric cells padded with spaces",
+      "p_plus": {
+        "out": "12\n7"
+      },
+      "p_minus": {
+        "out": "12\n7"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_alpha": {
+      "role": "exposing",
+      "description": "center-aligned alphabetic cells padded with spaces",
+      "p_plus": {
+        "out": "ab\nc"
+      },
+      "p_minus": {
+        "out": "  ab\n  c"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_right_numeric": {
+      "role": "control",
+      "description": "numeric cells but right-aligned (A's branch not taken)",
+      "p_plus": {
+        "out": "12\n 7"
+      },
+      "p_minus": {
+        "out": "12\n 7"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    },
+    "control_no_space": {
+      "role": "control",
+      "description": "center-aligned numeric cells with no surrounding whitespace",
+      "p_plus": {
+        "out": "12\n7"
+      },
+      "p_minus": {
+        "out": "12\n7"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_tabulate_1056_strip_center/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

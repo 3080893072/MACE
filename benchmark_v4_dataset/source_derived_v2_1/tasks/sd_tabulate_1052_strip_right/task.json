@@ -1,0 +1,71 @@
+{
+  "task_id": "sd_tabulate_1052_strip_right",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M1_SINGLE_OPERATION",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "The adaptation restores right-alignment whitespace normalisation for space-padded cells only; tab normalisation remains A's responsibility.  Masking is claimed only on mask_spaces; expose_tabs is the legal exposing witness.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 1052,
+    "function": "_align_column_choose_padfn",
+    "code": "            strings = [s.strip() for s in strings]",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "_align_column_choose_padfn"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": "_align_column_choose_padfn"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "tabulate.tabulate(data, tablefmt=..., colalign=...)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_spaces",
+      "role": "masking",
+      "description": "right-aligned column with leading/trailing spaces"
+    },
+    {
+      "id": "expose_tabs",
+      "role": "exposing",
+      "description": "right-aligned column padded with tabs"
+    },
+    {
+      "id": "control_plain",
+      "role": "control",
+      "description": "no surrounding whitespace"
+    },
+    {
+      "id": "control_center",
+      "role": "control",
+      "description": "space-padded but center-aligned (A's branch not taken)"
+    }
+  ],
+  "original_tests": [
+    "test/test_output.py"
+  ],
+  "original_test_suite": {
+    "tests": [
+      "test/test_output.py"
+    ],
+    "returncode": 0,
+    "summary": "158 passed, 19 skipped in 0.20s",
+    "passed": true
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

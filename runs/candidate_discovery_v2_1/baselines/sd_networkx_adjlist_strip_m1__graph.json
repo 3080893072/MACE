@@ -1,0 +1,127 @@
+{
+  "case_id": "sd_networkx_adjlist_strip_m1",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "networkx/readwrite/adjlist.py:207-207",
+      "file": "networkx/readwrite/adjlist.py",
+      "first_line": 207,
+      "last_line": 207,
+      "kind": "assign",
+      "code": "            vlist = line.strip(\" \").split(delimiter)",
+      "graph_score": 1.75,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/adjlist.py:204-204",
+          "to": "networkx/readwrite/adjlist.py:207-207",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:vlist",
+          "guard": ""
+        }
+      ],
+      "graph_function": "parse_adjlist"
+    },
+    {
+      "id": "networkx/readwrite/adjlist.py:221-221",
+      "file": "networkx/readwrite/adjlist.py",
+      "first_line": 221,
+      "last_line": 221,
+      "kind": "assign",
+      "code": "                vlist = list(map(nodetype, vlist))",
+      "graph_score": 1.25,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/adjlist.py:204-204",
+          "to": "networkx/readwrite/adjlist.py:221-221",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:vlist",
+          "guard": ""
+        }
+      ],
+      "graph_function": "parse_adjlist"
+    },
+    {
+      "id": "networkx/readwrite/adjlist.py:201-201",
+      "file": "networkx/readwrite/adjlist.py",
+      "first_line": 201,
+      "last_line": 201,
+      "kind": "assign",
+      "code": "            line = line[:p]",
+      "graph_score": 1.1,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/adjlist.py:204-204",
+          "to": "networkx/readwrite/adjlist.py:201-201",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:line",
+          "guard": ""
+        }
+      ],
+      "graph_function": "parse_adjlist"
+    },
+    {
+      "id": "networkx/readwrite/adjlist.py:209-209",
+      "file": "networkx/readwrite/adjlist.py",
+      "first_line": 209,
+      "last_line": 209,
+      "kind": "assign",
+      "code": "        u = vlist.pop(0)",
+      "graph_score": 1.05,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/adjlist.py:204-204",
+          "to": "networkx/readwrite/adjlist.py:209-209",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:vlist",
+          "guard": ""
+        }
+      ],
+      "graph_function": "parse_adjlist"
+    },
+    {
+      "id": "networkx/readwrite/adjlist.py:226-226",
+      "file": "networkx/readwrite/adjlist.py",
+      "first_line": 226,
+      "last_line": 226,
+      "kind": "expr",
+      "code": "        G.add_edges_from([(u, v) for v in vlist])",
+      "graph_score": 1.05,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/adjlist.py:204-204",
+          "to": "networkx/readwrite/adjlist.py:226-226",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:vlist",
+          "guard": ""
+        }
+      ],
+      "graph_function": "parse_adjlist"
+    },
+    {
+      "id": "networkx/readwrite/adjlist.py:223-225",
+      "file": "networkx/readwrite/adjlist.py",
+      "first_line": 223,
+      "last_line": 225,
+      "kind": "raise",
+      "code": "                raise TypeError(\n                    f\"Failed to convert nodes ({','.join(vlist)}) to type {nodetype}\"\n                ) from err",
+      "graph_score": 1.0,
+      "graph_path": [
+        {
+          "from": "networkx/readwrite/adjlist.py:204-204",
+          "to": "networkx/readwrite/adjlist.py:223-225",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:vlist",
+          "guard": ""
+        }
+      ],
+      "graph_function": "parse_adjlist"
+    }
+  ],
+  "source": "computed_v2_1"
+}

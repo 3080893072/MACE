@@ -1,0 +1,351 @@
+{
+  "task_id": "sd_isort_format_strip_m4",
+  "split": "DEV",
+  "mechanism": "M4_ALTERNATIVE_PATHS",
+  "model": "qwen2.5-coder:32b",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900
+  },
+  "public_source_sha256": "d256c7a3df634997251418b9a37571f37ac8f9ec576ae813ae4d2dcb365170d0",
+  "prompt_sha256": "49c1b7c4106047691f6c5f97e2949b82c6e5707b7c67e18541901277b0299499",
+  "prompt_chars": 8514,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_isort_format_strip_m4\n\n## File\n`isort/format.py`\n\n## Program with source line numbers\n```text\n   1 | import re\n   2 | import sys\n   3 | from datetime import datetime\n   4 | from difflib import unified_diff\n   5 | from pathlib import Path\n   6 | from typing import Optional, TextIO\n   7 | \n   8 | try:\n   9 |     import colorama\n  10 | except ImportError:\n  11 |     colorama_unavailable = True\n  12 | else:\n  13 |     colorama_unavailable = False\n  14 | \n  15 | \n  16 | ADDED_LINE_PATTERN = re.compile(r\"\\+[^+]\")\n  17 | REMOVED_LINE_PATTERN = re.compile(r\"-[^-]\")\n  18 | \n  19 | \n  20 | def format_simplified(import_line: str) -> str:\n  21 |     import_line = import_line.strip()\n  22 | \n  23 |     if \"\\n\" not in import_line:\n  24 |         import_line = import_line.strip(\" \\t\")\n  25 | \n  26 | \n  27 |     if \"\\t\" not in import_line:\n  28 |         import_line = import_line.strip(\" \\n\")\n  29 | \n  30 |     if import_line.startswith(\"from \"):\n  31 |         import_line = import_line.replace(\"from \", \"\")\n  32 |         import_line = import_line.replace(\" import \", \".\")\n  33 |     elif import_line.startswith(\"import \"):\n  34 |         import_line = import_line.replace(\"import \", \"\")\n  35 | \n  36 |     return import_line\n  37 | \n  38 | \n  39 | def format_natural(import_line: str) -> str:\n  40 |     import_line = import_line.strip()\n  41 |     if not import_line.startswith(\"from \") and not import_line.startswith(\"import \"):\n  42 |         if \".\" not in import_line:\n  43 |             return f\"import {import_line}\"\n  44 |         parts = import_line.split(\".\")\n  45 |         end = parts.pop(-1)\n  46 |         return f\"from {'.'.join(parts)} import {end}\"\n  47 | \n  48 |     return import_line\n  49 | \n  50 | \n  51 | def show_unified_diff(\n  52 |     *,\n  53 |     file_input: str,\n  54 |     file_output: str,\n  55 |     file_path: Optional[Path],\n  56 |     output: Optional[TextIO] = None,\n  57 |     color_output: bool = False,\n  58 | ) -> None:\n  59 |     \"\"\"Shows a unified_diff for the provided input and output against the provided file path.\n  60 | \n  61 |     - **file_input**: A string that represents the contents of a file before changes.\n  62 |     - **file_output**: A string that represents the contents of a file after changes.\n  63 |     - **file_path**: A Path object that represents the file path of the file being changed.\n  64 |     - **output**: A stream to output the diff to. If non is provided uses sys.stdout.\n  65 |     - **color_output**: Use color in output if True.\n  66 |     \"\"\"\n  67 |     printer = create_terminal_printer(color_output, output)\n  68 |     file_name = \"\" if file_path is None else str(file_path)\n  69 |     file_mtime = str(\n  70 |         datetime.now() if file_path is None else datetime.fromtimestamp(file_path.stat().st_mtime)\n  71 |     )\n  72 |     unified_diff_lines = unified_diff(\n  73 |         file_input.splitlines(keepends=True),\n  74 |         file_output.splitlines(keepends=True),\n  75 |         fromfile=file_name + \":before\",\n  76 |         tofile=file_name + \":after\",\n  77 |         fromfiledate=file_mtime,\n  78 |         tofiledate=str(datetime.now()),\n  79 |     )\n  80 |     for line in unified_diff_lines:\n  81 |         printer.diff_line(line)\n  82 | \n  83 | \n  84 | def ask_whether_to_apply_changes_to_file(file_path: str) -> bool:\n  85 |     answer = None\n  86 |     while answer not in (\"yes\", \"y\", \"no\", \"n\", \"quit\", \"q\"):\n  87 |         answer = input(f\"Apply suggested changes to '{file_path}' [y/n/q]? \")  # nosec\n  88 |         answer = answer.lower()\n  89 |         if answer in (\"no\", \"n\"):\n  90 |             return False\n  91 |         if answer in (\"quit\", \"q\"):\n  92 |             sys.exit(1)\n  93 |     return True\n  94 | \n  95 | \n  96 | def remove_whitespace(content: str, line_separator: str = \"\\n\") -> str:\n  97 |     content = content.replace(line_separator, \"\").replace(\" \", \"\").replace(\"\\x0c\", \"\")\n  98 |     return content\n  99 | \n 100 | \n 101 | class BasicPrinter:\n 102 |     ERROR = \"ERROR\"\n 103 |     SUCCESS = \"SUCCESS\"\n 104 | \n 105 |     def __init__(self, error: str, success: str, output: Optional[TextIO] = None):\n 106 |         self.output = output or sys.stdout\n 107 |         self.success_message = success\n 108 |         self.error_message = error\n 109 | \n 110 |     def success(self, message: str) -> None:\n 111 |         print(self.success_message.format(success=self.SUCCESS, message=message), file=self.output)\n 112 | \n 113 |     def error(self, message: str) -> None:\n 114 |         print(self.error_message.format(error=self.ERROR, message=message), file=sys.stderr)\n 115 | \n 116 |     def diff_line(self, line: str) -> None:\n 117 |         self.output.write(line)\n 118 | \n 119 | \n 120 | class ColoramaPrinter(BasicPrinter):\n 121 |     def __init__(self, error: str, success: str, output: Optional[TextIO]):\n 122 |         super().__init__(error, success, output=output)\n 123 | \n 124 |         # Note: this constants are instance variables instead ofs class variables\n 125 |         # because they refer to colorama which might not be installed.\n 126 |         self.ERROR = self.style_text(\"ERROR\", colorama.Fore.RED)\n 127 |         self.SUCCESS = self.style_text(\"SUCCESS\", colorama.Fore.GREEN)\n 128 |         self.ADDED_LINE = colorama.Fore.GREEN\n 129 |         self.REMOVED_LINE = colorama.Fore.RED\n 130 | \n 131 |     @staticmethod\n 132 |     def style_text(text: str, style: Optional[str] = None) -> str:\n 133 |         if style is None:\n 134 |             return text\n 135 |         return style + text + str(colorama.Style.RESET_ALL)\n 136 | \n 137 |     def diff_line(self, line: str) -> None:\n 138 |         style = None\n 139 |         if re.match(ADDED_LINE_PATTERN, line):\n 140 |             style = self.ADDED_LINE\n 141 |         elif re.match(REMOVED_LINE_PATTERN, line):\n 142 |             style = self.REMOVED_LINE\n 143 |         self.output.write(self.style_text(line, style))\n 144 | \n 145 | \n 146 | def create_terminal_printer(\n 147 |     color: bool, output: Optional[TextIO] = None, error: str = \"\", success: str = \"\"\n 148 | ) -> BasicPrinter:\n 149 |     if color and colorama_unavailable:\n 150 |         no_colorama_message = (\n 151 |             \"\\n\"\n 152 |             \"Sorry, but to use --color (color_output) the colorama python package is required.\\n\\n\"\n 153 |             \"Reference: https://pypi.org/project/colorama/\\n\\n\"\n 154 |             \"You can either install it separately on your system or as the colors extra \"\n 155 |             \"for isort. Ex: \\n\\n\"\n 156 |             \"$ pip install isort[colors]\\n\"\n 157 |         )\n 158 |         print(no_colorama_message, file=sys.stderr)\n 159 |         sys.exit(1)\n 160 | \n 161 |     if not colorama_unavailable:\n 162 |         colorama.init(strip=False)\n 163 |     return (\n 164 |         ColoramaPrinter(error, success, output) if color else BasicPrinter(error, success, output)\n 165 |     )\n```\n\n## Target A\nLine 21: `import_line = import_line.strip()`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"isort/format.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"isort/format.py\", \"line\": 23, \"text\": \"if \\\"\\\\n\\\" not in import_line:\"},\n        {\"file\": \"isort/format.py\", \"line\": 24, \"text\": \"    import_line = import_line.strip(\\\" \\\\t\\\")\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting these lines makes the deletion of line 21 unobservable because the subsequent strip operation on line 24 will handle any leading or trailing whitespace.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"isort/format.py\", \"line\": 27, \"text\": \"if \\\"\\\\t\\\" not in import_line:\"},\n        {\"file\": \"isort/format.py\", \"line\": 28, \"text\": \"    import_line = import_line.strip(\\\" \\\\n\\\")\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting these lines makes the deletion of line 21 unobservable because the subsequent strip operation on line 28 will handle any leading or trailing whitespace.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"isort/format.py\", \"line\": 30, \"text\": \"if import_line.startswith(\\\"from \\\"):\"},\n        {\"file\": \"isort/format.py\", \"line\": 31, \"text\": \"    import_line = import_line.replace(\\\"from \\\", \\\"\\\")\"},\n        {\"file\": \"isort/format.py\", \"line\": 32, \"text\": \"    import_line = import_line.replace(\\\" import \\\", \\\".\\\")\"}\n      ],\n      \"condition\": \"import_line.startswith(\\\"from \\\")\",\n      \"rationale\": \"Deleting these lines makes the deletion of line 21 unobservable because the subsequent operations on line 31 and 32 will handle the leading 'from ' and ' import ' substrings.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"isort/format.py\", \"line\": 33, \"text\": \"elif import_line.startswith(\\\"import \\\"):\"},\n        {\"file\": \"isort/format.py\", \"line\": 34, \"text\": \"    import_line = import_line.replace(\\\"import \\\", \\\"\\\")\"}\n      ],\n      \"condition\": \"import_line.startswith(\\\"import \\\")\",\n      \"rationale\": \"Deleting these lines makes the deletion of line 21 unobservable because the subsequent operation on line 34 will handle the leading 'import ' substring.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 2599,
+      "completion_tokens": 547,
+      "total_duration_ns": 30902504146,
+      "load_duration_ns": 2101299,
+      "prompt_eval_duration_ns": 1076525000,
+      "eval_duration_ns": 27298378000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 31.332,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b"
+  },
+  "prompt_tokens": 2599,
+  "completion_tokens": 547,
+  "runtime_s": 31.332,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "isort/format.py:23-24",
+        "isort/format.py:24-24"
+      ],
+      "ops": [
+        {
+          "id": "isort/format.py:23-24",
+          "key": "isort/format.py:23-24",
+          "file": "isort/format.py",
+          "first_line": 23,
+          "last_line": 24,
+          "line": 23,
+          "end_line": 24,
+          "col": 4,
+          "end_col": 46,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if \"\\n\" not in import_line:\n        import_line = import_line.strip(\" \\t\")",
+          "text": "if \"\\n\" not in import_line:\n        import_line = import_line.strip(\" \\t\")",
+          "node_key": [
+            "If",
+            23,
+            4,
+            24,
+            46
+          ]
+        },
+        {
+          "id": "isort/format.py:24-24",
+          "key": "isort/format.py:24-24",
+          "file": "isort/format.py",
+          "first_line": 24,
+          "last_line": 24,
+          "line": 24,
+          "end_line": 24,
+          "col": 8,
+          "end_col": 46,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "import_line = import_line.strip(\" \\t\")",
+          "text": "import_line = import_line.strip(\" \\t\")",
+          "node_key": [
+            "Assign",
+            24,
+            8,
+            24,
+            46
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "Deleting these lines makes the deletion of line 21 unobservable because the subsequent strip operation on line 24 will handle any leading or trailing whitespace."
+    },
+    {
+      "ids": [
+        "isort/format.py:27-28",
+        "isort/format.py:28-28"
+      ],
+      "ops": [
+        {
+          "id": "isort/format.py:27-28",
+          "key": "isort/format.py:27-28",
+          "file": "isort/format.py",
+          "first_line": 27,
+          "last_line": 28,
+          "line": 27,
+          "end_line": 28,
+          "col": 4,
+          "end_col": 46,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if \"\\t\" not in import_line:\n        import_line = import_line.strip(\" \\n\")",
+          "text": "if \"\\t\" not in import_line:\n        import_line = import_line.strip(\" \\n\")",
+          "node_key": [
+            "If",
+            27,
+            4,
+            28,
+            46
+          ]
+        },
+        {
+          "id": "isort/format.py:28-28",
+          "key": "isort/format.py:28-28",
+          "file": "isort/format.py",
+          "first_line": 28,
+          "last_line": 28,
+          "line": 28,
+          "end_line": 28,
+          "col": 8,
+          "end_col": 46,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "import_line = import_line.strip(\" \\n\")",
+          "text": "import_line = import_line.strip(\" \\n\")",
+          "node_key": [
+            "Assign",
+            28,
+            8,
+            28,
+            46
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "Deleting these lines makes the deletion of line 21 unobservable because the subsequent strip operation on line 28 will handle any leading or trailing whitespace."
+    },
+    {
+      "ids": [
+        "isort/format.py:30-34",
+        "isort/format.py:31-31",
+        "isort/format.py:32-32"
+      ],
+      "ops": [
+        {
+          "id": "isort/format.py:30-34",
+          "key": "isort/format.py:30-34",
+          "file": "isort/format.py",
+          "first_line": 30,
+          "last_line": 34,
+          "line": 30,
+          "end_line": 34,
+          "col": 4,
+          "end_col": 56,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if import_line.startswith(\"from \"):\n        import_line = import_line.replace(\"from \", \"\")\n        import_line = import_line.replace(\" import \", \".\")\n    elif import_line.startswith(\"import \"):\n        import_line = import_line.replace(\"import \", \"\")",
+          "text": "if import_line.startswith(\"from \"):\n        import_line = import_line.replace(\"from \", \"\")\n        import_line = import_line.replace(\" import \", \".\")\n    elif import_line.startswith(\"import \"):\n        import_line = import_line.replace(\"import \", \"\")",
+          "node_key": [
+            "If",
+            30,
+            4,
+            34,
+            56
+          ]
+        },
+        {
+          "id": "isort/format.py:31-31",
+          "key": "isort/format.py:31-31",
+          "file": "isort/format.py",
+          "first_line": 31,
+          "last_line": 31,
+          "line": 31,
+          "end_line": 31,
+          "col": 8,
+          "end_col": 54,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "import_line = import_line.replace(\"from \", \"\")",
+          "text": "import_line = import_line.replace(\"from \", \"\")",
+          "node_key": [
+            "Assign",
+            31,
+            8,
+            31,
+            54
+          ]
+        },
+        {
+          "id": "isort/format.py:32-32",
+          "key": "isort/format.py:32-32",
+          "file": "isort/format.py",
+          "first_line": 32,
+          "last_line": 32,
+          "line": 32,
+          "end_line": 32,
+          "col": 8,
+          "end_col": 58,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "import_line = import_line.replace(\" import \", \".\")",
+          "text": "import_line = import_line.replace(\" import \", \".\")",
+          "node_key": [
+            "Assign",
+            32,
+            8,
+            32,
+            58
+          ]
+        }
+      ],
+      "condition": "import_line.startswith(\"from \")",
+      "rationale": "Deleting these lines makes the deletion of line 21 unobservable because the subsequent operations on line 31 and 32 will handle the leading 'from ' and ' import ' substrings."
+    },
+    {
+      "ids": [
+        "isort/format.py:33-34",
+        "isort/format.py:34-34"
+      ],
+      "ops": [
+        {
+          "id": "isort/format.py:33-34",
+          "key": "isort/format.py:33-34",
+          "file": "isort/format.py",
+          "first_line": 33,
+          "last_line": 34,
+          "line": 33,
+          "end_line": 34,
+          "col": 4,
+          "end_col": 56,
+          "kind": "if",
+          "node_type": "If",
+          "code": "elif import_line.startswith(\"import \"):\n        import_line = import_line.replace(\"import \", \"\")",
+          "text": "elif import_line.startswith(\"import \"):\n        import_line = import_line.replace(\"import \", \"\")",
+          "node_key": [
+            "If",
+            33,
+            4,
+            34,
+            56
+          ]
+        },
+        {
+          "id": "isort/format.py:34-34",
+          "key": "isort/format.py:34-34",
+          "file": "isort/format.py",
+          "first_line": 34,
+          "last_line": 34,
+          "line": 34,
+          "end_line": 34,
+          "col": 8,
+          "end_col": 56,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "import_line = import_line.replace(\"import \", \"\")",
+          "text": "import_line = import_line.replace(\"import \", \"\")",
+          "node_key": [
+            "Assign",
+            34,
+            8,
+            34,
+            56
+          ]
+        }
+      ],
+      "condition": "import_line.startswith(\"import \")",
+      "rationale": "Deleting these lines makes the deletion of line 21 unobservable because the subsequent operation on line 34 will handle the leading 'import ' substring."
+    }
+  ],
+  "rejected": [],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.6667,
+    "recall": 1.0,
+    "false_relations": 6,
+    "unmatched_sets": 2,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_padded",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [],
+          [
+            "U1"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "stray_ops": [
+          "isort/format.py:30-34",
+          "isort/format.py:31-31",
+          "isort/format.py:32-32",
+          "isort/format.py:33-34",
+          "isort/format.py:34-34"
+        ],
+        "msms_exact": false,
+        "precision": 0.6667,
+        "recall": 1.0,
+        "false_relations": 6,
+        "unmatched_sets": 2
+      }
+    }
+  ],
+  "status": "OK"
+}

@@ -1,0 +1,89 @@
+{
+  "case_id": "sd_docutils_make_id_nonid_m2",
+  "independent": true,
+  "shares_construction_code": false,
+  "checks": {
+    "AC1_sdist_matches_discovery": true,
+    "AC1_evidence_matches_source": true,
+    "AC1_A_line_text": true,
+    "patch_preserves_A": true,
+    "patch_only_inserts": true,
+    "U_blocks_outside_A": true,
+    "P_minus_only_deletes_A": true,
+    "patch_diff_does_not_remove_A": true,
+    "patch_diff_insert_count": true,
+    "enumeration_agrees": true,
+    "roles_declared": true,
+    "masking_inputs_satisfied": true,
+    "exposing_inputs_satisfied": true,
+    "control_inputs_satisfied": true,
+    "u_necessary_in_minimal_sets": true
+  },
+  "all_checks_pass": true,
+  "hashes": {
+    "sdist": "eb9710e1fa99375d4954b83711484c2a51a446149b3882e0d080715345a2bea0",
+    "discovery": "eb9710e1fa99375d4954b83711484c2a51a446149b3882e0d080715345a2bea0",
+    "evidence": "eb9710e1fa99375d4954b83711484c2a51a446149b3882e0d080715345a2bea0"
+  },
+  "A": {
+    "file": "docutils/nodes.py",
+    "line": 2239,
+    "code": "    id = _non_id_chars.sub('-', ' '.join(id.split()))",
+    "patched_index": 2239
+  },
+  "U": [
+    "U1",
+    "U2"
+  ],
+  "per_input": {
+    "mask_two_runs": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false
+    },
+    "expose_three_runs": {
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "empty_kept_masks": false
+    },
+    "control_no_runs": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "empty_kept_masks": true
+    }
+  },
+  "notes": {
+    "source_sha256": "eb9710e1fa99375d4954b83711484c2a51a446149b3882e0d080715345a2bea0",
+    "inserted_lines": 6
+  }
+}

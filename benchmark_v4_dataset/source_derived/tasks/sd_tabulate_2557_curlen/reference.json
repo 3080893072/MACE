@@ -1,0 +1,144 @@
+{
+  "task_id": "sd_tabulate_2557_curlen",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 2557,
+    "function": "_wrap_chunks",
+    "code": "                cur_len -= self._len(cur_line[-1])",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "tabulate/__init__.py",
+      "line": 2559,
+      "code": "if self.max_lines == 2:",
+      "role": "Recomputes the loop-carried line accumulator from the remaining chunks instead of applying the decrement.",
+      "patch_anchor_line": 2557,
+      "block_span": [
+        2558,
+        2561
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_two_lines": {
+      "role": "masking",
+      "description": "two-line truncation where the last line ends in a dropped whitespace chunk",
+      "p_plus": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_three_lines": {
+      "role": "exposing",
+      "description": "three-line truncation with the same dropped-chunk shape",
+      "p_plus": {
+        "lines": [
+          "one two",
+          "three four",
+          "five [...]"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "one two",
+          "three four",
+          "[...]"
+        ]
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_line_fits": {
+      "role": "control",
+      "description": "the candidate line fits even without the decrement",
+      "p_plus": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    },
+    "control_no_max_lines": {
+      "role": "control",
+      "description": "max_lines is None; cur_len is not consulted",
+      "p_plus": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_tabulate_2557_curlen/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

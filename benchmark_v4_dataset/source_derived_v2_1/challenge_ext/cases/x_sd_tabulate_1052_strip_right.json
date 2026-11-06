@@ -1,0 +1,67 @@
+{
+  "case_id": "x_sd_tabulate_1052_strip_right",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "base": {
+    "slug": "tabulate-0.9.0",
+    "file": "tabulate/__init__.py",
+    "A_line": 1052,
+    "A_code": "            strings = [s.strip() for s in strings]"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 1052,
+      "indent": 12,
+      "role": "Space-only recomputation of the stripped column; equivalent to A for space-padded cells and a no-op for tab-padded cells.",
+      "lines": [
+        "strings = [s.strip(\" \") for s in strings]"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 1052,
+      "indent": 12,
+      "role": "Removes NUL characters; none of the declared inputs contain one.",
+      "lines": [
+        "strings = [s.replace(\"\\x00\", \"\") for s in strings]"
+      ]
+    },
+    {
+      "id": "U3",
+      "after_line": 1052,
+      "indent": 12,
+      "role": "Decodes one HTML entity; no declared input carries it.",
+      "lines": [
+        "strings = [s.replace(\"&nbsp;\", \" \") for s in strings]"
+      ]
+    },
+    {
+      "id": "U4",
+      "after_line": 1052,
+      "indent": 12,
+      "role": "Drops a sentinel control character that never appears.",
+      "lines": [
+        "strings = [s for s in strings if s != \"\\x01\"]"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived_v2_1/challenge_ext/probes/x_sd_tabulate_1052_strip_right.py",
+  "inputs": {
+    "mask_spaces": "right-aligned column with leading/trailing spaces",
+    "expose_tabs": "right-aligned column padded with tabs",
+    "control_plain": "no surrounding whitespace",
+    "control_center": "space-padded but center-aligned (A's branch not taken)"
+  },
+  "rationale": "The adaptation restores right-alignment whitespace normalisation for space-padded cells only; tab normalisation remains A's responsibility.  Masking is claimed only on mask_spaces; expose_tabs is the legal exposing witness.",
+  "challenge": {
+    "kind": "candidate_distractor_extension",
+    "base_case": "sd_tabulate_1052_strip_right",
+    "added_candidate_ids": [
+      "U2",
+      "U3",
+      "U4"
+    ],
+    "note": "Only the candidate universe grows. A, the original U blocks and the declared inputs are unchanged, so every correct relation is unchanged; the added candidates are irrelevant on every declared input."
+  }
+}

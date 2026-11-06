@@ -1,0 +1,39 @@
+{
+  "case_id": "sd_docutils_educate_dashes_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/utils/smartquotes.py",
+    "A_line": 763,
+    "A_code": "    text = text.replace(r'---', smartchars.endash)  # en (yes, backwards)"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 763,
+      "indent": 4,
+      "role": "First triple-dash leg.",
+      "lines": [
+        "text = text.replace(r'---', smartchars.endash, 1)"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 763,
+      "indent": 4,
+      "role": "Second triple-dash leg.",
+      "lines": [
+        "text = text.replace(r'---', smartchars.endash, 1)"
+      ]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_educate_dashes_m2.py",
+  "inputs": {
+    "mask_two_triple": "text with two '---' occurrences",
+    "expose_three_triple": "text with three '---' occurrences: one survives",
+    "control_plain": "text with a single '-'"
+  },
+  "rationale": "educateDashes() converts every '---' to an en dash (and then every '--' to an em dash). Two legs each convert one triple dash, so both are needed for a two-occurrence string; a third occurrence survives the repair."
+}

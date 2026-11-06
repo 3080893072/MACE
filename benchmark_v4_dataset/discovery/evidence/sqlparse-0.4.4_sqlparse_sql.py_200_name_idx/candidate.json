@@ -1,0 +1,51 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/sql.py:200:name:idx",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/sql.py",
+  "function": "get_token_at_offset",
+  "mechanism": "name",
+  "target_A": {
+    "line": 200,
+    "end_line": 200,
+    "kind": "Assign",
+    "code": "idx = 0"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_parse.py::test_get_token_at_offset"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        idx = 0",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.54,
+    "failed_nodeids": [
+      "tests.test_parse::test_get_token_at_offset"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n__________________________ test_get_token_at_offset ___________________________\n\n    def test_get_token_at_offset():\n        p = sqlparse.parse('select * from dual')[0]\n        #                   0123456789\n>       assert p.get_token_at_offset(0) == p.tokens[0]\n\ntests\\test_parse.py:317: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <Statement 'select...' at 0x202FF2363D0>, offset = 0\n\n    def get_token_at_offset(self, offset):\n        \"\"\"Returns the token that is on position offset.\"\"\"\n        pass  # P-: target A deleted\n        for token in self.flatten():\n>           end = idx + len(token.value)\nE           UnboundLocalError: cannot access local variable 'idx' where it is not associated with a value\n\nsqlparse\\sql.py:202: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_parse.py::test_get_token_at_offset - UnboundLocalError: can...\n1 failed in 0.18s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

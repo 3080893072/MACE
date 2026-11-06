@@ -1,0 +1,252 @@
+{
+  "case_id": "sd_pygments_latex297_italic",
+  "method": "c_fixed",
+  "mechanism": "M6_CROSS_FUNCTION_STATE",
+  "project": "Pygments",
+  "universe": [
+    {
+      "id": "pygments/formatters/latex.py:320-320",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 320,
+      "last_line": 320,
+      "kind": "assignment",
+      "code": "            cmndef = cmndef.replace('$$', cp)"
+    },
+    {
+      "id": "pygments/formatters/latex.py:307-308",
+      "file": "pygments/formatters/latex.py",
+      "first_line": 307,
+      "last_line": 308,
+      "kind": "assignment",
+      "code": "                cmndef += (r'\\def\\$$@tc##1{\\textcolor[rgb]{%s}{##1}}' %\n                           rgbcolor(ndef['color']))"
+    }
+  ],
+  "discovery": {
+    "method": "c_fixed",
+    "rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate",
+    "candidate_ops": 8,
+    "kept": 2,
+    "considered": 8,
+    "dropped_no_effect": 6,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0,
+    "u_covered": [],
+    "u_total": [
+      "U1"
+    ],
+    "u_recall": 0.0,
+    "u_exact": false
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_inline_italic",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 6,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/latex.py:320-320"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": 0.0
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/latex.py:320-320"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": 0.0
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "mask_inline_italic_color",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 6,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/latex.py:320-320"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": 0.0
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/latex.py:320-320"
+          ],
+          "evaluations": 3,
+          "elapsed_seconds": 0.0
+        }
+      }
+    },
+    {
+      "public_id": "in3",
+      "input_key": "expose_full_italic",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in4",
+      "input_key": "control_inline_bold",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/latex.py:307-308"
+        ],
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 4,
+        "subsets_total": 4,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 6,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/latex.py:320-320"
+          ],
+          "evaluations": 2,
+          "elapsed_seconds": 0.0
+        },
+        "first_mmbs": null
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 0,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 2,
+    "false_relations": 4,
+    "unmatched_sets": 2,
+    "mmbs_emitted_sets": 2
+  },
+  "detail": [
+    {
+      "input": "mask_inline_italic",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "got_msms_blocks": [
+        []
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/latex.py:320-320"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ]
+    },
+    {
+      "input": "mask_inline_italic_color",
+      "hidden_msms": [
+        [
+          "U1"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ],
+      "got_msms_blocks": [
+        []
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/latex.py:320-320"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/latex.py:320-320"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 2.13,
+    "probe_executions_algorithm": 20,
+    "probe_executions_scoring": 0,
+    "variant_builds": 20,
+    "subsets_evaluated": 12
+  }
+}

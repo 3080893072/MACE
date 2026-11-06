@@ -1,0 +1,21 @@
+--- a/coverage/files.py
++++ b/coverage/files.py
+@@ -327,12 +327,18 @@
+ ]]
+ 
+ def _glob_to_regex(pattern: str) -> str:
+     """Convert a file-path glob pattern into a regex."""
+     # Turn all backslashes into slashes to simplify the tokenizer.
+     pattern = pattern.replace("\\", "/")
++    # SD:U:U1:begin
++    pattern = pattern.replace("\\", "/", 1)
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    pattern = pattern.replace("\\", "/", 1)
++    # SD:U:U2:end
+     if "/" not in pattern:
+         pattern = "**/" + pattern
+     path_rx = []
+     pos = 0
+     while pos < len(pattern):
+         for rx, sub in G2RX_TOKENS:                     # pragma: always breaks

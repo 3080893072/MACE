@@ -1,0 +1,127 @@
+{
+  "case_id": "sd_docutils_make_id_lower",
+  "method": "graph",
+  "universe": [
+    {
+      "id": "docutils/nodes.py:2234-2234",
+      "file": "docutils/nodes.py",
+      "first_line": 2234,
+      "last_line": 2234,
+      "kind": "assign",
+      "code": "        id = string.lower()",
+      "graph_score": 1.8,
+      "graph_path": [
+        {
+          "from": "docutils/nodes.py:2231-2231",
+          "to": "docutils/nodes.py:2234-2234",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:id",
+          "guard": ""
+        }
+      ],
+      "graph_function": "make_id"
+    },
+    {
+      "id": "docutils/nodes.py:2236-2236",
+      "file": "docutils/nodes.py",
+      "first_line": 2236,
+      "last_line": 2236,
+      "kind": "assign",
+      "code": "    id = id.translate(_non_id_translate_digraphs)",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "docutils/nodes.py:2231-2231",
+          "to": "docutils/nodes.py:2236-2236",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:id",
+          "guard": ""
+        }
+      ],
+      "graph_function": "make_id"
+    },
+    {
+      "id": "docutils/nodes.py:2237-2237",
+      "file": "docutils/nodes.py",
+      "first_line": 2237,
+      "last_line": 2237,
+      "kind": "assign",
+      "code": "    id = id.translate(_non_id_translate)",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "docutils/nodes.py:2231-2231",
+          "to": "docutils/nodes.py:2237-2237",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:id",
+          "guard": ""
+        }
+      ],
+      "graph_function": "make_id"
+    },
+    {
+      "id": "docutils/nodes.py:2244-2244",
+      "file": "docutils/nodes.py",
+      "first_line": 2244,
+      "last_line": 2244,
+      "kind": "assign",
+      "code": "    id = _non_id_at_ends.sub('', id)",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "docutils/nodes.py:2231-2231",
+          "to": "docutils/nodes.py:2244-2244",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:id",
+          "guard": ""
+        }
+      ],
+      "graph_function": "make_id"
+    },
+    {
+      "id": "docutils/nodes.py:2245-2245",
+      "file": "docutils/nodes.py",
+      "first_line": 2245,
+      "last_line": 2245,
+      "kind": "return",
+      "code": "    return str(id)",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "docutils/nodes.py:2231-2231",
+          "to": "docutils/nodes.py:2245-2245",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:id",
+          "guard": ""
+        }
+      ],
+      "graph_function": "make_id"
+    },
+    {
+      "id": "docutils/nodes.py:2240-2241",
+      "file": "docutils/nodes.py",
+      "first_line": 2240,
+      "last_line": 2241,
+      "kind": "assign",
+      "code": "    id = unicodedata.normalize(\n            'NFKD', id).encode('ascii', 'ignore').decode('ascii')",
+      "graph_score": 1.25,
+      "graph_path": [
+        {
+          "from": "docutils/nodes.py:2231-2231",
+          "to": "docutils/nodes.py:2240-2241",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:id",
+          "guard": ""
+        }
+      ],
+      "graph_function": "make_id"
+    }
+  ],
+  "source": "computed_v2_1"
+}

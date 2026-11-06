@@ -1,0 +1,176 @@
+{
+  "task_id": "sd_networkx_adjlist_strip_m1",
+  "scoring": {
+    "masking_inputs": 2,
+    "exact": 2,
+    "present": 2,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_space_padding",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "networkx/readwrite/adjlist.py:207-207"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "networkx/readwrite/adjlist.py:207-207"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "true",
+          "rationale": "Keeping the alternative path operation ensures that `vlist` is assigned, thus masking the deletion of the target operation.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    },
+    {
+      "input": "control_plain",
+      "public_id": "in3",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "networkx/readwrite/adjlist.py:207-207"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "networkx/readwrite/adjlist.py:207-207"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "true",
+          "rationale": "Keeping the alternative path operation ensures that `vlist` is assigned, thus masking the deletion of the target operation.",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 2,
+    "c0_false": 0,
+    "c0_probes": 0,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/adjlist.py:221-221",
+        "networkx/readwrite/adjlist.py:201-201",
+        "networkx/readwrite/adjlist.py:209-209",
+        "networkx/readwrite/adjlist.py:226-226",
+        "networkx/readwrite/adjlist.py:223-225"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/adjlist.py:197-197",
+        "networkx/readwrite/adjlist.py:199-199",
+        "networkx/readwrite/adjlist.py:201-201",
+        "networkx/readwrite/adjlist.py:209-209",
+        "networkx/readwrite/adjlist.py:213-213",
+        "networkx/readwrite/adjlist.py:215-217",
+        "networkx/readwrite/adjlist.py:218-218",
+        "networkx/readwrite/adjlist.py:221-221",
+        "networkx/readwrite/adjlist.py:223-225",
+        "networkx/readwrite/adjlist.py:226-226",
+        "networkx/readwrite/adjlist.py:227-227"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 11
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

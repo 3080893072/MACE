@@ -1,0 +1,51 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1455:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1455,
+    "end_line": 1455,
+    "kind": "Assign",
+    "code": "headers = list(map(str, range(len(rows[0]))))"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_list_of_lists_keys"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            headers = list(map(str, range(len(rows[0]))))",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.43,
+    "failed_nodeids": [
+      "test.test_input::test_list_of_lists_keys"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n___________________________ test_list_of_lists_keys ___________________________\n\n    def test_list_of_lists_keys():\n        \"Input: a list of lists with column indices as headers.\"\n        ll = [[\"a\", \"one\", 1], [\"b\", \"two\", None]]\n        expected = \"\\n\".join(\n            [\"0    1      2\", \"---  ---  ---\", \"a    one    1\", \"b    two\"]\n        )\n        result = tabulate(ll, headers=\"keys\")\n>       assert_equal(expected, result)\n\ntest\\test_input.py:90: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = '0    1      2\\n---  ---  ---\\na    one    1\\nb    two'\nresult = 'k    e      y\\n---  ---  ---\\na    one    1\\nb    two'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n0    1      2\n---  ---  ---\na    one    1\nb    two\n\nGot:\nk    e      y\n---  ---  ---\na    one    1\nb    two\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_list_of_lists_keys - AssertionError\n1 failed in 0.10s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

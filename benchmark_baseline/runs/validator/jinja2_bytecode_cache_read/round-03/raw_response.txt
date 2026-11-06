@@ -1,0 +1,25 @@
+```json
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "src/jinja2/loaders.py": [
+          123,
+          132
+        ]
+      }
+    }
+  ],
+  "test_gap": {
+    "summary": "The deletion of line 132 in src/jinja2/loaders.py causes an assertion failure in the test suite.",
+    "tests": [
+      {
+        "name": "tests/test_bytecode_cache.py::TestBytecodeCache::test_simple",
+        "verdict": "assertion_gap"
+      }
+    ]
+  }
+}
+```

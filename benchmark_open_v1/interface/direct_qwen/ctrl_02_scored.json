@@ -1,0 +1,192 @@
+{
+  "schema_version": "mace-open-discovery-raw-v1",
+  "task_id": "ctrl_02",
+  "method": "direct_qwen",
+  "provider": "transformers-local",
+  "model_info": {
+    "provider": "transformers-local",
+    "model": "qwen15b",
+    "path": "D:/tmp/qwen15b",
+    "dtype": "torch.bfloat16",
+    "device": "cuda:0",
+    "parameters": 1543714304,
+    "max_position_embeddings": 32768
+  },
+  "generation": {
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "do_sample": false
+  },
+  "prompt_sha256": "5f1632f1d9a770b3208e59c31ea182e815446d8be15e21151d979a212353aad5",
+  "started_at_utc": "2026-11-01T11:27:40+00:00",
+  "finished_at_utc": "2026-11-01T11:27:47+00:00",
+  "wall_seconds": 6.599,
+  "stats": {
+    "prompt_tokens": 1415,
+    "completion_tokens": 240,
+    "total_tokens": 1655,
+    "wall_seconds": 6.599,
+    "model": "qwen15b",
+    "provider": "transformers-local",
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "device": "cuda:0"
+  },
+  "parse_status": "ANSWERED",
+  "parse_error": null,
+  "answer": {
+    "task_id": "ctrl_02",
+    "relations": [
+      {
+        "operations": [
+          {
+            "line": 4,
+            "text": "if c == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "condition": "True",
+        "explanation": "Disabling the 'if c == 0' block makes the return value unchanged.",
+        "counterexample": null
+      },
+      {
+        "operations": [
+          {
+            "line": 6,
+            "text": "if d == 0:"
+          }
+        ],
+        "kind": "independent",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "condition": "True",
+        "explanation": "Disabling the 'if d == 0' block makes the return value unchanged.",
+        "counterexample": null
+      }
+    ],
+    "guard": {
+      "expr": "True",
+      "status": "BOUNDED"
+    },
+    "test_gap": [],
+    "evidence": null
+  },
+  "verification": {
+    "status": "SEMANTIC_ERROR",
+    "relation_results": [
+      {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": false,
+          "disabling_set_exposes": true
+        },
+        "operations": [
+          "C"
+        ],
+        "kind": "independent",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "reason": "the declared set enabled alone does not mask A"
+      },
+      {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": false,
+          "disabling_set_exposes": true
+        },
+        "operations": [
+          "D"
+        ],
+        "kind": "independent",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "reason": "the declared set enabled alone does not mask A"
+      }
+    ],
+    "counts": {
+      "submitted": 2,
+      "verified": 0,
+      "incomplete": 0,
+      "false": 2,
+      "unverified": 0,
+      "format_error": 0,
+      "duplicates_ignored": 0
+    }
+  },
+  "guard": {
+    "status": "BOUNDED",
+    "exact": false,
+    "sound": false,
+    "complete": true,
+    "false_accept": [
+      "case_0001",
+      "case_0002",
+      "case_0003",
+      "case_0005",
+      "case_0006",
+      "case_0007",
+      "case_0009",
+      "case_0010",
+      "case_0011",
+      "case_0013",
+      "case_0014",
+      "case_0015",
+      "case_0017",
+      "case_0018",
+      "case_0019",
+      "case_0020",
+      "case_0021",
+      "case_0022",
+      "case_0023"
+    ],
+    "false_reject": [],
+    "errors": []
+  },
+  "test_gap": {
+    "status": "BOUNDED",
+    "rows": [
+      {
+        "test": "t_rounds_x3",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      },
+      {
+        "test": "t_rounds_x5",
+        "expected": "masked",
+        "got": null,
+        "status": "uncovered"
+      }
+    ],
+    "exact": false,
+    "covered": 0,
+    "total": 2
+  },
+  "counterexample": {
+    "status": "ABSENT"
+  },
+  "verification_executions": 144,
+  "raw_path": "benchmark_open_v1\\interface\\direct_qwen\\ctrl_02_raw.json"
+}

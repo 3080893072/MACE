@@ -1,0 +1,54 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/filters/reindent.py:91:augassign:tidx",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/filters/reindent.py",
+  "function": "_split_statements",
+  "mechanism": "augassign",
+  "target_A": {
+    "line": 91,
+    "end_line": 91,
+    "kind": "AugAssign",
+    "code": "tidx -= 1"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": false,
+    "mechanism": "augassign"
+  },
+  "original_hit_tests": [
+    "tests/test_cli.py::test_valid_args",
+    "tests/test_format.py::TestFormatReindent::test_keywords",
+    "tests/test_regressions.py::test_except_formatting"
+  ],
+  "original_hit_test_count": 3,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                tidx -= 1",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.54,
+    "failed_nodeids": [
+      "tests.test_format.TestFormatReindent::test_keywords",
+      "tests.test_regressions::test_except_formatting"
+    ],
+    "stdout_tail": ".FF                                                                      [100%]\n================================== FAILURES ===================================\n______________________ TestFormatReindent.test_keywords _______________________\n\nself = <tests.test_format.TestFormatReindent object at 0x000001D507567D10>\n\n    def test_keywords(self):\n        f = lambda sql: sqlparse.format(sql, reindent=True)\n        s = 'select * from foo union select * from bar;'\n>       assert f(s) == '\\n'.join([\n            'select *',\n            'from foo',\n            'union',\n            'select *',\n            'from bar;'])\nE       AssertionError: assert 'select *\\nfr... *\\nfrom bar;' == 'select *\\nfr... *\\nfrom bar;'\nE           select *\nE           from foo\nE         - union\nE         - select *\nE         + unionselect\nE         +  *\nE           from bar;\n\ntests\\test_format.py:368: AssertionError\n___________________________ test_except_formatting ____________________________\n\n    def test_except_formatting():\n        sql = 'SELECT 1 FROM foo WHERE 2 = 3 EXCEPT SELECT 2 FROM bar WHERE 1 = 2'\n        formatted = sqlparse.format(sql, reindent=True)\n        tformatted = '\\n'.join([\n            'SELECT 1',\n            'FROM foo',\n            'WHERE 2 = 3',\n            'EXCEPT',\n            'SELECT 2',\n            'FROM bar',\n            'WHERE 1 = 2'])\n>       assert formatted == tformatted\nE       AssertionError: assert 'SELECT 1\\nFR...\\nWHERE 1 = 2' == 'SELECT 1\\nFR...\\nWHERE 1 = 2'\nE           SELECT 1\nE           FROM foo\nE           WHERE 2 = 3\nE         - EXCEPT\nE         - SELECT 2\nE         + EXCEPTSELECT\nE         +  2\nE           FROM bar\nE           WHERE 1 = 2\n\ntests\\test_regressions.py:221: AssertionError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_format.py::TestFormatReindent::test_keywords - AssertionErr...\nFAILED tests/test_regressions.py::test_except_formatting - AssertionError: as...\n2 failed, 1 passed in 0.20s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

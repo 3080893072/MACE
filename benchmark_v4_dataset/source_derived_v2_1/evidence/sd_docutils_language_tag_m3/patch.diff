@@ -1,0 +1,24 @@
+--- a/docutils/utils/__init__.py
++++ b/docutils/utils/__init__.py
+@@ -699,12 +699,21 @@
+     >>> normalize_language_tag('de-CH-x_altquot')
+     ['de-ch-x-altquot', 'de-ch', 'de-x-altquot', 'de']
+ 
+     """
+     # normalize:
+     tag = tag.lower().replace('-', '_')
++    # SD:U:U1:begin
++    tag = tag.lower()
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    tag = tag.replace('-', '_', 1)
++    # SD:U:U2:end
++    # SD:U:U3:begin
++    tag = tag.replace('-', '_', 1)
++    # SD:U:U3:end
+     # split (except singletons, which mark the following tag as non-standard):
+     tag = re.sub(r'_([a-zA-Z0-9])_', r'_\1-', tag)
+     subtags = [subtag for subtag in tag.split('_')]
+     base_tag = (subtags.pop(0),)
+     # find all combinations of subtags
+     taglist = []

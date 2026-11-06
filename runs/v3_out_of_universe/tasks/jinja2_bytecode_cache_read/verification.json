@@ -1,0 +1,1290 @@
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "local_universe_size": 6,
+  "c_universe_size": 1,
+  "graph_universe_extra": [
+    "src/jinja2/loaders.py:119-119",
+    "src/jinja2/loaders.py:131-131",
+    "src/jinja2/loaders.py:143-143",
+    "src/jinja2/loaders.py:144-144",
+    "src/jinja2/loaders.py:146-148"
+  ],
+  "unverified_claims": 2,
+  "rows": [
+    {
+      "relation_key": "MSMS:src/jinja2/loaders.py:119",
+      "type": "MSMS",
+      "scorer_status": "UNVERIFIED",
+      "verdict": "ACCEPTED_LOCAL_UNIVERSE",
+      "outcome_scope": "exact over the submitted finite inputs and the public graph candidate universe; not over HIDDEN U and not over the whole legal input domain",
+      "modes_with_claim": [
+        "Graph-candidates",
+        "Graph-full"
+      ],
+      "operations": [
+        {
+          "operation": {
+            "file": "src/jinja2/loaders.py",
+            "line": 119,
+            "code": "        code = None"
+          },
+          "op_id": "src/jinja2/loaders.py:119-119",
+          "in_c_universe": false,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "        code = None"
+          }
+        },
+        {
+          "operation": {
+            "file": "src/jinja2/loaders.py",
+            "line": 131,
+            "code": "            bucket = bcc.get_bucket(environment, name, filename, source)"
+          },
+          "op_id": "src/jinja2/loaders.py:131-131",
+          "in_c_universe": false,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "            bucket = bcc.get_bucket(environment, name, filename, source)"
+          }
+        },
+        {
+          "operation": {
+            "file": "src/jinja2/loaders.py",
+            "line": 137,
+            "code": "            code = environment.compile(source, name, filename)"
+          },
+          "op_id": "src/jinja2/loaders.py:137-137",
+          "in_c_universe": true,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "            code = environment.compile(source, name, filename)"
+          }
+        },
+        {
+          "operation": {
+            "file": "src/jinja2/loaders.py",
+            "line": 146,
+            "end_line": 148,
+            "code": "        return environment.template_class.from_code(\n            environment, code, globals, uptodate\n        )"
+          },
+          "op_id": "src/jinja2/loaders.py:146-148",
+          "in_c_universe": false,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "        return environment.template_class.from_code("
+          }
+        }
+      ],
+      "per_input": [
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            "complement": [
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              }
+            },
+            "proper_subsets": [
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true,
+            "src/jinja2/loaders.py:131-131": true,
+            "src/jinja2/loaders.py:137-137": true,
+            "src/jinja2/loaders.py:146-148": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            "complement": [
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "2"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "2"
+              }
+            },
+            "proper_subsets": [
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{{ 1+1 }}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true,
+            "src/jinja2/loaders.py:131-131": true,
+            "src/jinja2/loaders.py:137-137": true,
+            "src/jinja2/loaders.py:146-148": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            "complement": [
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "12"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "12"
+              }
+            },
+            "proper_subsets": [
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true,
+            "src/jinja2/loaders.py:131-131": true,
+            "src/jinja2/loaders.py:137-137": true,
+            "src/jinja2/loaders.py:146-148": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/jinja2/loaders.py:119-119",
+              "src/jinja2/loaders.py:131-131",
+              "src/jinja2/loaders.py:137-137",
+              "src/jinja2/loaders.py:146-148"
+            ],
+            "complement": [
+              "src/jinja2/loaders.py:143-143",
+              "src/jinja2/loaders.py:144-144"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              }
+            },
+            "proper_subsets": [
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              },
+              {
+                "kept": [
+                  "src/jinja2/loaders.py:131-131",
+                  "src/jinja2/loaders.py:137-137",
+                  "src/jinja2/loaders.py:146-148"
+                ],
+                "disabled": [
+                  "src/jinja2/loaders.py:119-119",
+                  "src/jinja2/loaders.py:143-143",
+                  "src/jinja2/loaders.py:144-144"
+                ],
+                "masked": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 6*7 }}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true,
+            "src/jinja2/loaders.py:131-131": true,
+            "src/jinja2/loaders.py:137-137": true,
+            "src/jinja2/loaders.py:146-148": true
+          }
+        }
+      ],
+      "probes_used": 168
+    },
+    {
+      "relation_key": "MMBS:src/jinja2/loaders.py:119",
+      "type": "MMBS",
+      "scorer_status": "UNVERIFIED",
+      "verdict": "ACCEPTED_LOCAL_UNIVERSE",
+      "outcome_scope": "exact over the submitted finite inputs and the public graph candidate universe; not over HIDDEN U and not over the whole legal input domain",
+      "modes_with_claim": [
+        "Graph-candidates",
+        "Graph-full"
+      ],
+      "operations": [
+        {
+          "operation": {
+            "file": "src/jinja2/loaders.py",
+            "line": 119,
+            "code": "        code = None"
+          },
+          "op_id": "src/jinja2/loaders.py:119-119",
+          "in_c_universe": false,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "        code = None"
+          }
+        }
+      ],
+      "per_input": [
+        {
+          "verdict": "ACCEPTED",
+          "reason": "exposed and minimal over U",
+          "evidence": {
+            "disabled": [
+              "src/jinja2/loaders.py:119-119"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": false,
+              "exposed": true,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "message": "cannot access local variable 'code' where it is not associated with a value",
+                "outcome": "raise",
+                "type": "UnboundLocalError"
+              }
+            },
+            "proper_subsets": [
+              {
+                "disabled": [],
+                "exposed": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{{ 6*7 }}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "exposed and minimal over U",
+          "evidence": {
+            "disabled": [
+              "src/jinja2/loaders.py:119-119"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": false,
+              "exposed": true,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "2"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "message": "cannot access local variable 'code' where it is not associated with a value",
+                "outcome": "raise",
+                "type": "UnboundLocalError"
+              }
+            },
+            "proper_subsets": [
+              {
+                "disabled": [],
+                "exposed": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{{ 1+1 }}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "exposed and minimal over U",
+          "evidence": {
+            "disabled": [
+              "src/jinja2/loaders.py:119-119"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": false,
+              "exposed": true,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "12"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "message": "cannot access local variable 'code' where it is not associated with a value",
+                "outcome": "raise",
+                "type": "UnboundLocalError"
+              }
+            },
+            "proper_subsets": [
+              {
+                "disabled": [],
+                "exposed": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "exposed and minimal over U",
+          "evidence": {
+            "disabled": [
+              "src/jinja2/loaders.py:119-119"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": false,
+              "exposed": true,
+              "plus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "outcome": "return",
+                "value": "42"
+              },
+              "minus": {
+                "cache_dumps": 0,
+                "cache_loads": 1,
+                "message": "cannot access local variable 'code' where it is not associated with a value",
+                "outcome": "raise",
+                "type": "UnboundLocalError"
+              }
+            },
+            "proper_subsets": [
+              {
+                "disabled": [],
+                "exposed": false,
+                "status": "OK"
+              }
+            ]
+          },
+          "input": {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 6*7 }}"
+          },
+          "active_ops": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148"
+          ],
+          "members_individually_active": {
+            "src/jinja2/loaders.py:119-119": true
+          }
+        }
+      ],
+      "probes_used": 168
+    }
+  ],
+  "probe_executions": 168,
+  "variant_builds": 42
+}

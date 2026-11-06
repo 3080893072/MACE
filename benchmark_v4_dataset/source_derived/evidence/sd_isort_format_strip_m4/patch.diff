@@ -1,0 +1,23 @@
+--- a/isort/format.py
++++ b/isort/format.py
+@@ -16,12 +16,20 @@
+ ADDED_LINE_PATTERN = re.compile(r"\+[^+]")
+ REMOVED_LINE_PATTERN = re.compile(r"-[^-]")
+ 
+ 
+ def format_simplified(import_line: str) -> str:
+     import_line = import_line.strip()
++    # SD:U:U1:begin
++    if "\n" not in import_line:
++        import_line = import_line.strip(" \t")
++    # SD:U:U1:end
++    # SD:U:U2:begin
++    if "\t" not in import_line:
++        import_line = import_line.strip(" \n")
++    # SD:U:U2:end
+     if import_line.startswith("from "):
+         import_line = import_line.replace("from ", "")
+         import_line = import_line.replace(" import ", ".")
+     elif import_line.startswith("import "):
+         import_line = import_line.replace("import ", "")
+ 

@@ -1,0 +1,98 @@
+{
+  "task_id": "sd_toml_strict_num_strip_m1",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "toml/decoder.py",
+    "line": 91,
+    "function": "_strictly_valid_num",
+    "code": "    n = n.strip()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "toml/decoder.py",
+      "line": 93,
+      "code": "if \"\\t\" not in n:",
+      "role": "Space-only trimming before the numeric grammar check.",
+      "patch_anchor_line": 91,
+      "block_span": [
+        92,
+        95
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_space_padded_leading_zero": {
+      "role": "masking",
+      "description": "space-padded integer with a leading zero (rejected after trimming)",
+      "p_plus": {
+        "out": false
+      },
+      "p_minus": {
+        "out": false
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_tab_padded_leading_zero": {
+      "role": "exposing",
+      "description": "tab-padded integer: A trims the tabs and rejects it, the space-only repair accepts it",
+      "p_plus": {
+        "out": false
+      },
+      "p_minus": {
+        "out": true
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_plain_integer": {
+      "role": "control",
+      "description": "plain integer literal",
+      "p_plus": {
+        "out": true
+      },
+      "p_minus": {
+        "out": true
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_toml_strict_num_strip_m1/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

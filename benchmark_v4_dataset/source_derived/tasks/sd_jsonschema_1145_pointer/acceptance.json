@@ -1,0 +1,94 @@
+{
+  "case_id": "sd_jsonschema_1145_pointer",
+  "independent": true,
+  "shares_construction_code": false,
+  "checks": {
+    "AC1_sdist_matches_discovery": true,
+    "AC1_evidence_matches_source": true,
+    "AC1_A_line_text": true,
+    "patch_preserves_A": true,
+    "patch_only_inserts": true,
+    "U_blocks_outside_A": true,
+    "P_minus_only_deletes_A": true,
+    "patch_diff_does_not_remove_A": true,
+    "patch_diff_insert_count": true,
+    "enumeration_agrees": true,
+    "roles_declared": true,
+    "masking_inputs_satisfied": true,
+    "exposing_inputs_satisfied": true,
+    "control_inputs_satisfied": true,
+    "u_necessary_in_minimal_sets": true
+  },
+  "all_checks_pass": true,
+  "hashes": {
+    "sdist": "2d5eba00920efbe9653c0af3a63fcc38324da5d7317a9d6ae33cf18f8408c7a5",
+    "discovery": "2d5eba00920efbe9653c0af3a63fcc38324da5d7317a9d6ae33cf18f8408c7a5",
+    "evidence": "2d5eba00920efbe9653c0af3a63fcc38324da5d7317a9d6ae33cf18f8408c7a5"
+  },
+  "A": {
+    "file": "jsonschema/validators.py",
+    "line": 1145,
+    "code": "            part = part.replace(\"~1\", \"/\").replace(\"~0\", \"~\")",
+    "patched_index": 1145
+  },
+  "U": [
+    "U1"
+  ],
+  "per_input": {
+    "mask_tilde0": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false
+    },
+    "mask_nested_tilde0": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false
+    },
+    "expose_tilde1": {
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "empty_kept_masks": false
+    },
+    "control_plain": {
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "empty_kept_masks": true
+    }
+  },
+  "notes": {
+    "source_sha256": "2d5eba00920efbe9653c0af3a63fcc38324da5d7317a9d6ae33cf18f8408c7a5",
+    "inserted_lines": 3
+  }
+}

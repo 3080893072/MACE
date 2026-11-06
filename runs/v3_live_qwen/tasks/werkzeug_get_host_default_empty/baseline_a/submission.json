@@ -1,0 +1,53 @@
+{
+  "task_id": "werkzeug_get_host_default_empty",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null,
+        "trusted_hosts": [
+          "example.com"
+        ]
+      }
+    },
+    {
+      "type": "MSMS",
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null,
+        "trusted_hosts": [
+          "example.com"
+        ]
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 82,
+          "code": "host = \"\""
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "input": {
+        "host_header": "example.com",
+        "scheme": "http",
+        "server": null,
+        "trusted_hosts": [
+          "example.com"
+        ]
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 82,
+          "code": "host = \"\""
+        }
+      ]
+    }
+  ],
+  "submission_id": "baseline-A"
+}

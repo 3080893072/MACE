@@ -1,0 +1,459 @@
+{
+  "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+  "baseline": "C_ast_intervention",
+  "baseline_version": "C-ast-intervention-1.0",
+  "task_id": "jinja2_bytecode_cache_read",
+  "discovery": {
+    "target_variables": [
+      "bucket",
+      "code"
+    ],
+    "target_lhs_variables": [
+      "code"
+    ],
+    "reachable_functions": [
+      "load",
+      "get_source",
+      "get_source",
+      "get_source",
+      "get_source",
+      "get_source",
+      "get_source",
+      "get_source",
+      "split_template_path",
+      "get_loader"
+    ],
+    "candidate_ops": [
+      {
+        "id": "src/jinja2/loaders.py:137-137",
+        "file": "src/jinja2/loaders.py",
+        "first_line": 137,
+        "last_line": 137,
+        "kind": "assignment",
+        "code": "            code = environment.compile(source, name, filename)"
+      }
+    ],
+    "discovery_rule": "same-file call-reachable functions; assignment to the same plain variable A writes; after A in A's own function; if-blocks containing such an assignment and no other candidate"
+  },
+  "pruning": {
+    "universe": [
+      {
+        "id": "src/jinja2/loaders.py:137-137",
+        "file": "src/jinja2/loaders.py",
+        "first_line": 137,
+        "last_line": 137,
+        "kind": "assignment",
+        "code": "            code = environment.compile(source, name, filename)"
+      }
+    ],
+    "ranking": [
+      {
+        "id": "src/jinja2/loaders.py:137-137",
+        "changed_cells": 6,
+        "cells": 12,
+        "span": 1
+      }
+    ],
+    "considered": 1,
+    "dropped_no_effect": 0,
+    "dropped_duplicate_effect": 0,
+    "truncated": 0
+  },
+  "universe": [
+    {
+      "id": "src/jinja2/loaders.py:137-137",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 137,
+      "last_line": 137,
+      "kind": "assignment",
+      "code": "            code = environment.compile(source, name, filename)"
+    }
+  ],
+  "inputs": [
+    {
+      "template": "{{ 6*7 }}"
+    },
+    {
+      "template": "{{ 6*7 }}",
+      "cached_source": "{{ 1+1 }}"
+    },
+    {
+      "template": "hello {{ name }}",
+      "cached_source": "{{ 1+1 }}",
+      "context": {
+        "name": "x"
+      }
+    },
+    {
+      "template": "{{ 1+1 }}"
+    },
+    {
+      "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+    },
+    {
+      "template": "{{ 6*7 }}",
+      "cached_source": "{{ 6*7 }}"
+    }
+  ],
+  "per_input": [
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        },
+        "minus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        }
+      }
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "2"
+        },
+        "minus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        }
+      }
+    },
+    {
+      "input": {
+        "template": "hello {{ name }}",
+        "cached_source": "{{ 1+1 }}",
+        "context": {
+          "name": "x"
+        }
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "2"
+        },
+        "minus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "hello x"
+        }
+      }
+    },
+    {
+      "input": {
+        "template": "{{ 1+1 }}"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "2"
+        },
+        "minus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "2"
+        }
+      }
+    },
+    {
+      "input": {
+        "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "12"
+        },
+        "minus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "12"
+        }
+      }
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 6*7 }}"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/jinja2/loaders.py:137-137"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        },
+        "minus": {
+          "cache_dumps": 0,
+          "cache_loads": 1,
+          "outcome": "return",
+          "value": "42"
+        }
+      }
+    }
+  ],
+  "submission": {
+    "submission_id": "baseline-C",
+    "task_id": "jinja2_bytecode_cache_read",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 1+1 }}"
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "template": "{{ 6*7 }}"
+          },
+          {
+            "template": "{{ 1+1 }}"
+          },
+          {
+            "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+          },
+          {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 6*7 }}"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/jinja2/loaders.py",
+            "line": 137,
+            "code": "            code = environment.compile(source, name, filename)"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "template": "{{ 6*7 }}"
+          },
+          {
+            "template": "{{ 1+1 }}"
+          },
+          {
+            "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+          },
+          {
+            "template": "{{ 6*7 }}",
+            "cached_source": "{{ 6*7 }}"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/jinja2/loaders.py",
+            "line": 137,
+            "code": "            code = environment.compile(source, name, filename)"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "template": "{{ 6*7 }}"
+        },
+        "control_input": {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 1+1 }}"
+        },
+        "operations": [
+          {
+            "file": "src/jinja2/loaders.py",
+            "line": 137,
+            "code": "            code = environment.compile(source, name, filename)"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 1+1 }}"
+        },
+        {
+          "template": "hello {{ name }}",
+          "cached_source": "{{ 1+1 }}",
+          "context": {
+            "name": "x"
+          }
+        }
+      ],
+      "basis": "execution"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MMBS",
+      "operations": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "operations": [
+        "src/jinja2/loaders.py:137-137"
+      ],
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "control_input": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      },
+      "level": "WITNESS_VERIFIED"
+    }
+  ],
+  "unknowns": [],
+  "probe_executions": 24,
+  "variant_builds": 4
+}

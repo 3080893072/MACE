@@ -1,0 +1,381 @@
+{
+  "candidate_operations": [
+    {
+      "end_line": 119,
+      "file": "src/jinja2/loaders.py",
+      "line": 119,
+      "variable": "code"
+    },
+    {
+      "end_line": 137,
+      "file": "src/jinja2/loaders.py",
+      "line": 137,
+      "variable": "code"
+    }
+  ],
+  "claims": [
+    {
+      "input": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "input": {
+        "cached_source": "Hello",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE"
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MMBS"
+    },
+    {
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MSMS"
+    },
+    {
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119
+        }
+      ],
+      "type": "MMBS"
+    }
+  ],
+  "inputs_evaluated": [
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "kind": "masked",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "input": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "kind": "exposing",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "2"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "kind": "masked",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "Hello World"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "Hello World"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "kind": "masked",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "012"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "012"
+      }
+    },
+    {
+      "a_executes": true,
+      "candidates_executed": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "input": {
+        "cached_source": "Hello",
+        "template": "{{ 6*7 }}"
+      },
+      "kind": "exposing",
+      "minus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "42"
+      },
+      "plus": {
+        "cache_dumps": 0,
+        "cache_loads": 1,
+        "outcome": "return",
+        "value": "Hello"
+      }
+    }
+  ],
+  "method": "deterministic_ast_intervention",
+  "subset_analysis": [
+    {
+      "candidates": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "exposed": {
+        "(119, 119)": true,
+        "EMPTY": false
+      },
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "masked": {
+        "(119, 119)": false,
+        "EMPTY": true
+      },
+      "mmbs": [
+        [
+          [
+            119,
+            119
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            119,
+            119
+          ]
+        ]
+      ]
+    },
+    {
+      "candidates": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "exposed": {
+        "(119, 119)": true,
+        "EMPTY": false
+      },
+      "input": {
+        "context": {
+          "name": "World"
+        },
+        "template": "Hello {{ name }}"
+      },
+      "masked": {
+        "(119, 119)": false,
+        "EMPTY": true
+      },
+      "mmbs": [
+        [
+          [
+            119,
+            119
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            119,
+            119
+          ]
+        ]
+      ]
+    },
+    {
+      "candidates": [
+        {
+          "end_line": 119,
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "variable": "code"
+        }
+      ],
+      "exposed": {
+        "(119, 119)": true,
+        "EMPTY": false
+      },
+      "input": {
+        "template": "{% for i in range(3) %}{{ i }}{% endfor %}"
+      },
+      "masked": {
+        "(119, 119)": false,
+        "EMPTY": true
+      },
+      "mmbs": [
+        [
+          [
+            119,
+            119
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            119,
+            119
+          ]
+        ]
+      ]
+    }
+  ],
+  "target": {
+    "code": "code = bucket.code",
+    "file": "src/jinja2/loaders.py",
+    "function": "BaseLoader.load",
+    "line": 132
+  },
+  "task_id": "jinja2_bytecode_cache_read",
+  "test_gap": {
+    "summary": "not attempted: this baseline targets operation relations, not per-test classification",
+    "tests": []
+  },
+  "variant_builds": 4
+}

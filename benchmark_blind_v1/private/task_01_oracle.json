@@ -1,0 +1,2449 @@
+{
+  "schema_version": "mace-benchmark-blind-v1-private",
+  "task_id": "blind_01_parse_header_links",
+  "bindings": {
+    "public_task_sha256": "a20efe0664a8539553c64c122222b2debbef12c1ed55f4fab30f29aeb4472486",
+    "program_source_sha256": "30ec21977962e75df1741ca7d700668fa4d240f5635c3cb320c46eca4a3396aa",
+    "p_minus_source_sha256": "f4b3b2b7822c8265a2a25f87a4936d4107668c650f427ca2abbc3444a2a2fccd",
+    "upstream_function_sha256": "c9193a0df87262a9a6041998cfa34600d32e8152f508e79b862a31ab5482a720"
+  },
+  "execution_semantics": {
+    "entry": "parse_header_links",
+    "capture_line": 16,
+    "observable": "return value or exception, type-aware canonical form",
+    "local_effect": "snapshot of locals immediately after A differs",
+    "intervention": "A subset S of candidate operations is *enabled*; every operation not in S is replaced by its receiver in both P+ and P-, and the observations are compared.  'enabled_none' means all candidate operations are disabled.",
+    "masking_set": "For a case with a local effect, a non-empty inclusion-minimal enabled set S such that P+ and P- agree with exactly S enabled.  Size 1 is independent, size >= 2 is cooperative."
+  },
+  "guard": {
+    "expression": "not (nonempty and all_special)",
+    "features": {
+      "nonempty": "len(value) > 0",
+      "all_special": "all(ch in \" '\"\" for ch in value)"
+    },
+    "status": "BOUNDED",
+    "eval_domain": {
+      "n_cases": 14,
+      "false_accept": [],
+      "false_reject": [],
+      "sound": true,
+      "complete": true,
+      "exact": true
+    },
+    "not_proven": "The expression is checked by execution on a frozen finite domain. This is BOUNDED evidence, never a formal proof over all strings."
+  },
+  "finite_checks": {
+    "exhaustive": {
+      "strings": 177156,
+      "masked": 176793,
+      "exposed": 363,
+      "mismatch": 0,
+      "mismatch_examples": [],
+      "alphabet": " '\"<>;=,abc",
+      "max_length": 5,
+      "evidence_level": "BOUNDED"
+    },
+    "random_sample": {
+      "strings": 20000,
+      "masked": 19895,
+      "exposed": 105,
+      "mismatch": 0,
+      "mismatch_examples": [],
+      "seed": 0,
+      "alphabet": " '\"<>;=,abcXYZ0123/-_",
+      "length_range": [
+        0,
+        30
+      ],
+      "evidence_level": "BOUNDED"
+    }
+  },
+  "counts": {
+    "eval_total": 14,
+    "eval_masked_total": 10,
+    "eval_exposed_total": 4,
+    "masked_local_effect": 6,
+    "exposed_local_effect": 4,
+    "no_local_effect": 4,
+    "masking_sets": {
+      "op_1": 2,
+      "op_2": 0,
+      "op_3": 2,
+      "op_1,op_3": 2
+    },
+    "public_probes_total": 4,
+    "public_probe_masking_types": {
+      "independent": 2,
+      "cooperative": 1,
+      "none": 1,
+      "not_applicable": 0,
+      "mixed": 0,
+      "unexplained": 0
+    },
+    "tests_total": 5,
+    "tests_pass_on_both": 5,
+    "test_gaps": {
+      "unexercised": 4,
+      "masked": 1,
+      "would_be_caught": 0,
+      "assertion_gap": 0,
+      "test_broken": 0
+    }
+  },
+  "public_probe_labels": [
+    {
+      "case_id": "p1",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": " \"<http://p>\" "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://p"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://p>"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://p"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " \"<http://p>\" "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": true,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_1"
+        ]
+      ],
+      "masking_type": "independent"
+    },
+    {
+      "case_id": "p2",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": "<http://p>; rel=y "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "y"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://p"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://p>; rel=y"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "y"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://p"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://p>; rel=y "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_3"
+        ]
+      ],
+      "masking_type": "independent"
+    },
+    {
+      "case_id": "p3",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": " \"<http://p>; rel=y\" "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "y"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://p"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://p>; rel=y"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "y"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://p"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " \"<http://p>; rel=y\" "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_1",
+          "op_3"
+        ]
+      ],
+      "masking_type": "cooperative"
+    },
+    {
+      "case_id": "p4",
+      "bucket": "exposed_local_effect",
+      "args": {
+        "value": "  "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      ""
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "  "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": false,
+      "a_has_local_effect": true,
+      "all_operations_enabled": false,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": false,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": false
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "none"
+    }
+  ],
+  "eval_cases": [
+    {
+      "case_id": "m1",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": " \"<http://a>\" "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " \"<http://a>\" "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": true,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_1"
+        ]
+      ],
+      "masking_type": "independent",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "m2",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": " <http://a>; rel=x"
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>; rel=x"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " <http://a>; rel=x"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": true,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_1"
+        ]
+      ],
+      "masking_type": "independent",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "m3",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": "<http://a>; rel=x "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>; rel=x"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>; rel=x "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_3"
+        ]
+      ],
+      "masking_type": "independent",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "m4",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": "<http://a>;rel=\"x\""
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>;rel=\"x"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>;rel=\"x\""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_3"
+        ]
+      ],
+      "masking_type": "independent",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "m5",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": " \"<http://a>; rel=x\" "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>; rel=x"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " \"<http://a>; rel=x\" "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_1",
+          "op_3"
+        ]
+      ],
+      "masking_type": "cooperative",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "m6",
+      "bucket": "masked_local_effect",
+      "args": {
+        "value": " <http://a> ; rel = x "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a> ; rel = x"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " <http://a> ; rel = x "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [
+        [
+          "op_1",
+          "op_3"
+        ]
+      ],
+      "masking_type": "cooperative",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "e1",
+      "bucket": "exposed_local_effect",
+      "args": {
+        "value": " "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      ""
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": false,
+      "a_has_local_effect": true,
+      "all_operations_enabled": false,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": false,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": false
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "none",
+      "guard_predicted_masked": false,
+      "guard_matches": true
+    },
+    {
+      "case_id": "e2",
+      "bucket": "exposed_local_effect",
+      "args": {
+        "value": "\"\""
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      ""
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "\"\""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": false,
+      "a_has_local_effect": true,
+      "all_operations_enabled": false,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": false,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": false
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "none",
+      "guard_predicted_masked": false,
+      "guard_matches": true
+    },
+    {
+      "case_id": "e3",
+      "bucket": "exposed_local_effect",
+      "args": {
+        "value": "''"
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      ""
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "''"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": false,
+      "a_has_local_effect": true,
+      "all_operations_enabled": false,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": false,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": false
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "none",
+      "guard_predicted_masked": false,
+      "guard_matches": true
+    },
+    {
+      "case_id": "e4",
+      "bucket": "exposed_local_effect",
+      "args": {
+        "value": " \" "
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      ""
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            " \" "
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": false,
+      "a_has_local_effect": true,
+      "all_operations_enabled": false,
+      "intervention_equality": {
+        "enabled_none": false,
+        "enabled_op_1": false,
+        "enabled_op_2": false,
+        "enabled_op_3": false,
+        "enabled_op_1+op_2": false,
+        "enabled_op_1+op_3": false,
+        "enabled_op_2+op_3": false,
+        "enabled_op_1+op_2+op_3": false
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "none",
+      "guard_predicted_masked": false,
+      "guard_matches": true
+    },
+    {
+      "case_id": "n1",
+      "bucket": "no_local_effect",
+      "args": {
+        "value": ""
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            ""
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": true,
+        "enabled_op_1": true,
+        "enabled_op_2": true,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "not_applicable",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "n2",
+      "bucket": "no_local_effect",
+      "args": {
+        "value": "<http://a>"
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": true,
+        "enabled_op_1": true,
+        "enabled_op_2": true,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "not_applicable",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "n3",
+      "bucket": "no_local_effect",
+      "args": {
+        "value": "http://a"
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "http://a"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "http://a"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": true,
+        "enabled_op_1": true,
+        "enabled_op_2": true,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "not_applicable",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    },
+    {
+      "case_id": "n4",
+      "bucket": "no_local_effect",
+      "args": {
+        "value": "<http://a>; rel=x, <http://b>"
+      },
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://b"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>; rel=x, <http://b>"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "x"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://a"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://b"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "snapshot_after_A": {
+          "value": [
+            "str",
+            "<http://a>; rel=x, <http://b>"
+          ],
+          "links": [
+            "seq",
+            []
+          ],
+          "replace_chars": [
+            "str",
+            " '\""
+          ]
+        }
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "all_operations_enabled": true,
+      "intervention_equality": {
+        "enabled_none": true,
+        "enabled_op_1": true,
+        "enabled_op_2": true,
+        "enabled_op_3": true,
+        "enabled_op_1+op_2": true,
+        "enabled_op_1+op_3": true,
+        "enabled_op_2+op_3": true,
+        "enabled_op_1+op_2+op_3": true
+      },
+      "minimal_masking_sets": [],
+      "masking_type": "not_applicable",
+      "guard_predicted_masked": true,
+      "guard_matches": true
+    }
+  ],
+  "test_cases": [
+    {
+      "case_id": "t1",
+      "value": "<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\"",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg",
+          "rel": "front",
+          "type": "image/jpeg"
+        }
+      ],
+      "plus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "front"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "minus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "front"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "gap": "masked"
+    },
+    {
+      "case_id": "t2",
+      "value": "<http:/.../front.jpeg>",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg"
+        }
+      ],
+      "plus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "minus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "gap": "unexercised"
+    },
+    {
+      "case_id": "t3",
+      "value": "<http:/.../front.jpeg>;",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg"
+        }
+      ],
+      "plus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "minus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "gap": "unexercised"
+    },
+    {
+      "case_id": "t4",
+      "value": "<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg",
+          "type": "image/jpeg"
+        },
+        {
+          "url": "http://.../back.jpeg"
+        }
+      ],
+      "plus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://.../back.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "minus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "dict",
+                [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://.../back.jpeg"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "gap": "unexercised"
+    },
+    {
+      "case_id": "t5",
+      "value": "",
+      "expected": [],
+      "plus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ]
+      },
+      "minus": {
+        "passed": true,
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ]
+      },
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "gap": "unexercised"
+    }
+  ],
+  "test_gap_summary": {
+    "all_original_tests_pass_on_p_plus": true,
+    "all_original_tests_pass_on_p_minus": true,
+    "caught": 0,
+    "masked_with_local_effect": 1,
+    "unexercised": 4,
+    "assertion_gap": 0,
+    "test_broken": 0,
+    "interpretation": "All five original tests pass on both versions.  Four never exercise A's local effect ('unexercised').  One (t1) does exercise it, but a downstream strip masks the difference ('masked').  None of them reaches an exposed input."
+  },
+  "operation_analysis": {
+    "op_1": {
+      "appears_in_minimal_sets": 2,
+      "role_in_frozen_domain": "absorbs leading whole-string specials"
+    },
+    "op_2": {
+      "appears_in_minimal_sets": 0,
+      "role_in_frozen_domain": "real normalization operation, but it never absorbs A on the frozen domain; a decoy candidate"
+    },
+    "op_3": {
+      "appears_in_minimal_sets": 2,
+      "role_in_frozen_domain": "absorbs trailing whole-string specials"
+    }
+  },
+  "not_proven_statement": "All labels are derived by execution on a frozen finite domain. They are BOUNDED evidence, not a proof over all Unicode strings. No label was written by a human formula and then copied."
+}

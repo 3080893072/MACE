@@ -1,0 +1,1306 @@
+{
+  "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+  "baseline": "C_ast_intervention",
+  "baseline_version": "C-ast-intervention-1.0",
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "discovery": {
+    "candidate_ops": [
+      {
+        "id": "src/werkzeug/utils.py:239-239",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 239,
+        "last_line": 239,
+        "kind": "assign",
+        "code": "        filename = f\"_{filename}\"",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:239-239",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:241-241",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 241,
+        "last_line": 241,
+        "kind": "return",
+        "code": "    return filename",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:241-241",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "def-use:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:221-221",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 221,
+        "last_line": 221,
+        "kind": "assign",
+        "code": "    filename = unicodedata.normalize(\"NFKD\", filename)",
+        "graph_score": 1.3,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:221-221",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:226-226",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 226,
+        "last_line": 226,
+        "kind": "assign",
+        "code": "            filename = filename.replace(sep, \" \")",
+        "graph_score": 1.3,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:226-226",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:227-229",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 227,
+        "last_line": 229,
+        "kind": "assign",
+        "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )",
+        "graph_score": 1.25,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:227-229",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      }
+    ],
+    "candidate_ids": [
+      "src/werkzeug/utils.py:239-239",
+      "src/werkzeug/utils.py:241-241",
+      "src/werkzeug/utils.py:221-221",
+      "src/werkzeug/utils.py:226-226",
+      "src/werkzeug/utils.py:227-229"
+    ],
+    "discovery_rule": "injected_candidates",
+    "candidate_source": "subgraph"
+  },
+  "pruning": {
+    "universe": [
+      {
+        "id": "src/werkzeug/utils.py:239-239",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 239,
+        "last_line": 239,
+        "kind": "assign",
+        "code": "        filename = f\"_{filename}\"",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:239-239",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:241-241",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 241,
+        "last_line": 241,
+        "kind": "return",
+        "code": "    return filename",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:241-241",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "def-use:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:221-221",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 221,
+        "last_line": 221,
+        "kind": "assign",
+        "code": "    filename = unicodedata.normalize(\"NFKD\", filename)",
+        "graph_score": 1.3,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:221-221",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:226-226",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 226,
+        "last_line": 226,
+        "kind": "assign",
+        "code": "            filename = filename.replace(sep, \" \")",
+        "graph_score": 1.3,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:226-226",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      },
+      {
+        "id": "src/werkzeug/utils.py:227-229",
+        "file": "src/werkzeug/utils.py",
+        "first_line": 227,
+        "last_line": 229,
+        "kind": "assign",
+        "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )",
+        "graph_score": 1.25,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/utils.py:222-222",
+            "to": "src/werkzeug/utils.py:227-229",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:filename",
+            "guard": ""
+          }
+        ],
+        "graph_function": "secure_filename"
+      }
+    ],
+    "kept": 5,
+    "dropped": [],
+    "mode": "injected_candidates"
+  },
+  "universe": [
+    {
+      "id": "src/werkzeug/utils.py:239-239",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 239,
+      "last_line": 239,
+      "kind": "assign",
+      "code": "        filename = f\"_{filename}\"",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/utils.py:222-222",
+          "to": "src/werkzeug/utils.py:239-239",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:filename",
+          "guard": ""
+        }
+      ],
+      "graph_function": "secure_filename"
+    },
+    {
+      "id": "src/werkzeug/utils.py:241-241",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 241,
+      "last_line": 241,
+      "kind": "return",
+      "code": "    return filename",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/utils.py:222-222",
+          "to": "src/werkzeug/utils.py:241-241",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:filename",
+          "guard": ""
+        }
+      ],
+      "graph_function": "secure_filename"
+    },
+    {
+      "id": "src/werkzeug/utils.py:221-221",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 221,
+      "last_line": 221,
+      "kind": "assign",
+      "code": "    filename = unicodedata.normalize(\"NFKD\", filename)",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/utils.py:222-222",
+          "to": "src/werkzeug/utils.py:221-221",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:filename",
+          "guard": ""
+        }
+      ],
+      "graph_function": "secure_filename"
+    },
+    {
+      "id": "src/werkzeug/utils.py:226-226",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 226,
+      "last_line": 226,
+      "kind": "assign",
+      "code": "            filename = filename.replace(sep, \" \")",
+      "graph_score": 1.3,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/utils.py:222-222",
+          "to": "src/werkzeug/utils.py:226-226",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:filename",
+          "guard": ""
+        }
+      ],
+      "graph_function": "secure_filename"
+    },
+    {
+      "id": "src/werkzeug/utils.py:227-229",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 227,
+      "last_line": 229,
+      "kind": "assign",
+      "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )",
+      "graph_score": 1.25,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/utils.py:222-222",
+          "to": "src/werkzeug/utils.py:227-229",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:filename",
+          "guard": ""
+        }
+      ],
+      "graph_function": "secure_filename"
+    }
+  ],
+  "inputs": [
+    {
+      "filename": "a b"
+    },
+    {
+      "filename": "北京.txt"
+    },
+    {
+      "filename": "My cool movie.mov"
+    },
+    {
+      "filename": "../../../etc/passwd"
+    },
+    {
+      "filename": "i contain cool ümläuts.txt"
+    },
+    {
+      "filename": "CON"
+    },
+    {
+      "filename": "a b"
+    },
+    {
+      "filename": ""
+    }
+  ],
+  "per_input": [
+    {
+      "input": {
+        "filename": "a b"
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "ab",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "a_b",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "filename": "北京.txt"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:241-241",
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/utils.py:227-229"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": "txt",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "txt",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 28,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 4,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "My cool movie.mov"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:241-241",
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ],
+        [
+          "src/werkzeug/utils.py:241-241"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "My_cool_movie.mov",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "My_cool_movie.mov",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "../../../etc/passwd"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:241-241",
+        "src/werkzeug/utils.py:226-226",
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ],
+        [
+          "src/werkzeug/utils.py:241-241"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "etc_passwd",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "etc_passwd",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "i contain cool ümläuts.txt"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:241-241",
+        "src/werkzeug/utils.py:221-221",
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/utils.py:227-229"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "filename": "i_contain_cool_umlauts.txt",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "i_contain_cool_umlauts.txt",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 28,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 4,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "CON"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:239-239",
+        "src/werkzeug/utils.py:241-241"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ],
+        [
+          "src/werkzeug/utils.py:241-241"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "_CON",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "_CON",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "a b"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:241-241",
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ],
+        [
+          "src/werkzeug/utils.py:241-241"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "a_b",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "a_b",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": ""
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/utils.py:241-241"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/utils.py:221-221"
+        ],
+        [
+          "src/werkzeug/utils.py:226-226"
+        ],
+        [
+          "src/werkzeug/utils.py:227-229"
+        ],
+        [
+          "src/werkzeug/utils.py:239-239"
+        ],
+        [
+          "src/werkzeug/utils.py:241-241"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "filename": "",
+          "outcome": "return"
+        },
+        "minus": {
+          "filename": "",
+          "outcome": "return"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "submission": {
+    "submission_id": "baseline-C",
+    "task_id": "werkzeug_secure_filename_ascii_filter",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "filename": "a b"
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 221,
+            "code": "    filename = unicodedata.normalize(\"NFKD\", filename)"
+          }
+        ]
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 226,
+            "code": "            filename = filename.replace(sep, \" \")"
+          }
+        ]
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 227,
+            "end_line": 229,
+            "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+          }
+        ]
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 239,
+            "code": "        filename = f\"_{filename}\""
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "filename": "北京.txt"
+          },
+          {
+            "filename": "i contain cool ümläuts.txt"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 227,
+            "end_line": 229,
+            "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+          }
+        ]
+      },
+      {
+        "type": "PREREQUISITE_BREAKING",
+        "input": {
+          "filename": "北京.txt"
+        },
+        "control_input": {
+          "filename": "a b"
+        },
+        "operations": [
+          {
+            "file": "src/werkzeug/utils.py",
+            "line": 227,
+            "end_line": 229,
+            "code": "    filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\n        \"._\"\n    )"
+          }
+        ],
+        "prerequisite": "masking holds on input; the same set does not break on control"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "inputs": [
+        {
+          "filename": "a b"
+        }
+      ],
+      "basis": "execution"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/utils.py:221-221"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/utils.py:226-226"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/utils.py:239-239"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MMBS",
+      "operations": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "inputs": [
+        {
+          "filename": "北京.txt"
+        },
+        {
+          "filename": "i contain cool ümläuts.txt"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "operations": [
+        "src/werkzeug/utils.py:227-229"
+      ],
+      "input": {
+        "filename": "北京.txt"
+      },
+      "control_input": {
+        "filename": "a b"
+      },
+      "level": "WITNESS_VERIFIED"
+    }
+  ],
+  "unknowns": [],
+  "probe_executions": 450,
+  "variant_builds": 64,
+  "discovery_source": "subgraph",
+  "emission_mode": "minimality_only",
+  "filter_stats": {
+    "msms_dropped": 0,
+    "mmbs_dropped": 0,
+    "msms_total": 33,
+    "mmbs_total": 2
+  },
+  "search": {
+    "mode": "exhaustive",
+    "inputs_with_search": 7,
+    "evaluations": 224,
+    "subsets_total": 224,
+    "complete": true,
+    "executor_cache_hits": 0,
+    "unknown_subsets": 0,
+    "invalid_subsets": 0,
+    "msms_unknown": 0,
+    "mmbs_unknown": 0
+  },
+  "graph_meta": {
+    "subgraph_sha256": "981b46910165a4c426cd79bca933f6936ed26e3fb1bb206a19c62123931fe883",
+    "stats": {
+      "nodes": 10,
+      "edges": 103,
+      "edge_kinds": {
+        "alias": 76,
+        "call": 8,
+        "control": 4,
+        "data": 15
+      },
+      "edge_confidence": {
+        "MAY": 76,
+        "MUST": 19,
+        "UNKNOWN": 8
+      },
+      "deletable": 5,
+      "unresolved_calls": [
+        "UNKNOWN:decode",
+        "UNKNOWN:encode",
+        "UNKNOWN:join",
+        "UNKNOWN:normalize",
+        "UNKNOWN:replace",
+        "UNKNOWN:split",
+        "UNKNOWN:strip",
+        "UNKNOWN:sub"
+      ]
+    },
+    "selection": {
+      "eligible": 5,
+      "selected": 5,
+      "truncated": false,
+      "omitted": []
+    },
+    "unknowns": [
+      "unresolved call: UNKNOWN:decode",
+      "unresolved call: UNKNOWN:encode",
+      "unresolved call: UNKNOWN:join",
+      "unresolved call: UNKNOWN:normalize",
+      "unresolved call: UNKNOWN:replace",
+      "unresolved call: UNKNOWN:split",
+      "unresolved call: UNKNOWN:strip",
+      "unresolved call: UNKNOWN:sub"
+    ],
+    "discovery_rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic"
+  },
+  "search_runs": [
+    {
+      "input": {
+        "filename": "北京.txt"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 28,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 4,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "My cool movie.mov"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "../../../etc/passwd"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "i contain cool ümläuts.txt"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "evaluations": 28,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "evaluations": 4,
+          "elapsed_seconds": null
+        },
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "CON"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": "a b"
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    },
+    {
+      "input": {
+        "filename": ""
+      },
+      "mode": "exhaustive",
+      "metrics": {
+        "evaluations": 32,
+        "subsets_total": 32,
+        "complete": true,
+        "evidence_complete": null,
+        "cache_hits": 0,
+        "executor_cache_hits": null,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "evaluations": 27,
+          "elapsed_seconds": null
+        },
+        "first_mmbs": null,
+        "wall_seconds": null,
+        "search_mode": "exhaustive"
+      }
+    }
+  ],
+  "mode": "Graph-candidates",
+  "wall_seconds": 120.33
+}

@@ -1,0 +1,51 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1440:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1440,
+    "end_line": 1440,
+    "kind": "Assign",
+    "code": "headers = [column[0] for column in tabular_data.description]"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_sqlite3_keys"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            headers = [column[0] for column in tabular_data.description]",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.43,
+    "failed_nodeids": [
+      "test.test_input::test_sqlite3_keys"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n______________________________ test_sqlite3_keys ______________________________\n\n    def test_sqlite3_keys():\n        \"Input: an sqlite3 cursor with keys as headers\"\n        try:\n            import sqlite3\n    \n            conn = sqlite3.connect(\":memory:\")\n            cursor = conn.cursor()\n            cursor.execute(\"CREATE TABLE people (name, age, height)\")\n            for values in [(\"Alice\", 23, 169.5), (\"Bob\", 27, 175.0)]:\n                cursor.execute(\"INSERT INTO people VALUES (?, ?, ?)\", values)\n            cursor.execute(\n                'SELECT name \"whom\", age \"how old\", height \"how tall\" FROM people ORDER BY name'\n            )\n            result = tabulate(cursor, headers=\"keys\")\n            expected = \"\"\"\\\n    whom      how old    how tall\n    ------  ---------  ----------\n    Alice          23       169.5\n    Bob            27       175\"\"\"\n>           assert_equal(expected, result)\n\ntest\\test_input.py:345: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = 'whom      how old    how tall\\n------  ---------  ----------\\nAlice          23       169.5\\nBob            27       175'\nresult = 'k        e      y\\n-----  ---  -----\\nAlice   23  169.5\\nBob     27  175'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\nwhom      how old    how tall\n------  ---------  ----------\nAlice          23       169.5\nBob            27       175\n\nGot:\nk        e      y\n-----  ---  -----\nAlice   23  169.5\nBob     27  175\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_sqlite3_keys - AssertionError\n1 failed in 0.10s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

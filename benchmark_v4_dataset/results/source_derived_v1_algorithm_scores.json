@@ -1,0 +1,2187 @@
+{
+  "schema": "mace_source_derived_algorithm_pilot/1",
+  "as_of": "2026-11-04",
+  "dataset": "benchmark_v4_dataset/source_derived, 10 accepted SOURCE_DERIVED_CONTROLLED tasks (V4-DEV)",
+  "protocol": {
+    "algorithm_visible": [
+      "frozen P+ source of the target file",
+      "public target operation A (file, line, code)",
+      "opaque input grid in1..inN (roles not revealed)"
+    ],
+    "hidden_from_algorithm": [
+      "reference.json (U, MSMS, MMBS, roles)",
+      "enumeration.json",
+      "subset execution matrix",
+      "block boundaries and line maps"
+    ],
+    "scoring_view": "scorer-only; hidden data is read after every method has finished",
+    "a_correct": "A is part of the public task, so every method receives the correct A: 10/10 by construction",
+    "u_found": "hidden block is counted as reached when a kept operation's span lies inside it; u_exact requires all hidden blocks reached",
+    "msms_exact": "the family of hidden blocks reached by the emitted minimal kept sets equals the hidden MSMS family on that masking input and no emitted operation falls outside every block",
+    "msms_exact_intervention": "stricter diagnostic: the emitted kept set's minus-side observation vector over all declared inputs equals the hidden set's",
+    "conditions": "no method emits an explicit condition; the per-input gate (P+ = P- and A executes) is part of the frozen intervention protocol, so condition handling is IMPLICIT_PER_INPUT, not derived",
+    "probe_count": "number of probe process launches charged to the algorithm; scoring probes are counted separately (all zero here because one probe run returns every declared input)"
+  },
+  "methods": {
+    "c_fixed": {
+      "name": "A. C-fixed-1.1",
+      "discovery": "ast_discovery.discover + rank_and_prune(max_ops=6)",
+      "search": "search_relations(mode='exhaustive')",
+      "emission": "minimality_only",
+      "isolation": "baseline_c._active_ops (frozen C step)"
+    },
+    "graph": {
+      "name": "B. Graph-only (Graph-full)",
+      "discovery": "subgraph.build + candidate_selection(max_ops=6)",
+      "search": "search_relations(mode='graph', graph_scores)",
+      "emission": "minimality_only",
+      "isolation": "baseline_c._active_ops (frozen C step)"
+    },
+    "c0": {
+      "name": "C. Role-separated C0",
+      "discovery": "ast_discovery.discover + rank_and_prune(max_ops=6)",
+      "search": "search_relations_role_separated(budget=16, no hypotheses)",
+      "emission": "minimality_only",
+      "isolation": "none (offline C0 arm does not run it)"
+    }
+  },
+  "full_mace": {
+    "status": "NOT_RUN",
+    "reason": "scripts/run_full_mace_comparison.call_qwen calls benchmark_v3_baselines.public_io.load_task(task_id), i.e. the driver is bound to the v3 public task ids, probes and fixtures; the SD packages use a different public schema. Running it would require either rewriting the driver interface or rebuilding SD tasks in v3 form, both forbidden this round. No Qwen server is reachable either (local endpoint down; autodl has ollama + qwen2.5-coder weights but no running server), and the GPU is not needed for A/B/C.",
+    "gpu_used": false
+  },
+  "mmbs": {
+    "status": "NOT_SEPARABLE",
+    "reason": "reference.json sets mmbs = minimal_masking_sets on every input of every case (sd_harness.py:289), so the hidden MMBS is not an independent quantity. The algorithms' mmbs_ids are minimal *exposed disabled* sets and are recorded verbatim, not scored."
+  },
+  "per_case": [
+    {
+      "case_id": "sd_jsonschema_1145_pointer",
+      "mechanism": "M1_SINGLE_OPERATION",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_tilde0",
+        "mask_nested_tilde0"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 2,
+          "msms_exact_intervention": 2,
+          "masking_inputs": 2,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 6,
+          "wall_seconds": 2.51,
+          "per_input": [
+            {
+              "input": "mask_tilde0",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ]
+            },
+            {
+              "input": "mask_nested_tilde0",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 45,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 2,
+          "false_relations": 10,
+          "unmatched_sets": 8,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 128,
+          "wall_seconds": 6.4,
+          "per_input": [
+            {
+              "input": "mask_tilde0",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "jsonschema/validators.py:1124-1124"
+                ],
+                [
+                  "jsonschema/validators.py:1136-1136"
+                ],
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ],
+                [
+                  "jsonschema/validators.py:1152-1152"
+                ],
+                [
+                  "jsonschema/validators.py:1162-1162"
+                ]
+              ],
+              "got_msms_blocks": [
+                [],
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [],
+                [],
+                [
+                  "U1"
+                ],
+                [],
+                []
+              ],
+              "stray_ops": [
+                "jsonschema/validators.py:1124-1124",
+                "jsonschema/validators.py:1136-1136",
+                "jsonschema/validators.py:1152-1152",
+                "jsonschema/validators.py:1162-1162"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ]
+            },
+            {
+              "input": "mask_nested_tilde0",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "jsonschema/validators.py:1124-1124"
+                ],
+                [
+                  "jsonschema/validators.py:1136-1136"
+                ],
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ],
+                [
+                  "jsonschema/validators.py:1152-1152"
+                ],
+                [
+                  "jsonschema/validators.py:1162-1162"
+                ]
+              ],
+              "got_msms_blocks": [
+                [],
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [],
+                [],
+                [
+                  "U1"
+                ],
+                [],
+                []
+              ],
+              "stray_ops": [
+                "jsonschema/validators.py:1124-1124",
+                "jsonschema/validators.py:1136-1136",
+                "jsonschema/validators.py:1152-1152",
+                "jsonschema/validators.py:1162-1162"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 2,
+          "msms_exact_intervention": 2,
+          "masking_inputs": 2,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 6,
+          "wall_seconds": 2.48,
+          "per_input": [
+            {
+              "input": "mask_tilde0",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ]
+            },
+            {
+              "input": "mask_nested_tilde0",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "jsonschema/validators.py:1147-1147"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_networkx_gexf448_slices",
+      "mechanism": "M8_OBJECT_SHARED_STATE",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_undirected_slices"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 3,
+          "discovered_candidates": 6,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 22,
+          "wall_seconds": 8.22,
+          "per_input": [
+            {
+              "input": "mask_undirected_slices",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "networkx/readwrite/gexf.py:404-404",
+                  "networkx/readwrite/gexf.py:451-451"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "networkx/readwrite/gexf.py:404-404"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "networkx/readwrite/gexf.py:451-451"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 185,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 128,
+          "wall_seconds": 13.32,
+          "per_input": [
+            {
+              "input": "mask_undirected_slices",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "networkx/readwrite/gexf.py:451-451"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "networkx/readwrite/gexf.py:451-451"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 3,
+          "discovered_candidates": 6,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 22,
+          "wall_seconds": 11.14,
+          "per_input": [
+            {
+              "input": "mask_undirected_slices",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "networkx/readwrite/gexf.py:404-404",
+                  "networkx/readwrite/gexf.py:451-451"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "networkx/readwrite/gexf.py:404-404"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "networkx/readwrite/gexf.py:451-451"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_pygments_bbcode64_color",
+      "mechanism": "M4_ALTERNATIVE_PATHS",
+      "u_blocks": [
+        "U1",
+        "U2"
+      ],
+      "masking_inputs": [
+        "mask_color"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "u_covered": [],
+          "u_total": [
+            "U1",
+            "U2"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 3,
+          "unmatched_sets": 2,
+          "mmbs_emitted_sets": 0,
+          "probe_executions": 12,
+          "wall_seconds": 1.72,
+          "per_input": [
+            {
+              "input": "mask_color",
+              "hidden_msms": [
+                [
+                  "U1"
+                ],
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:71-71"
+                ],
+                [
+                  "pygments/formatters/bbcode.py:77-77"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                [],
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/bbcode.py:71-71",
+                "pygments/formatters/bbcode.py:77-77"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 20,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1",
+            "U2"
+          ],
+          "u_recall": 0.5,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 3,
+          "unmatched_sets": 1,
+          "mmbs_emitted_sets": 0,
+          "probe_executions": 128,
+          "wall_seconds": 2.81,
+          "per_input": [
+            {
+              "input": "mask_color",
+              "hidden_msms": [
+                [
+                  "U1"
+                ],
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:61-61",
+                  "pygments/formatters/bbcode.py:80-80"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/bbcode.py:61-61",
+                "pygments/formatters/bbcode.py:80-80"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "u_covered": [],
+          "u_total": [
+            "U1",
+            "U2"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 3,
+          "unmatched_sets": 2,
+          "mmbs_emitted_sets": 0,
+          "probe_executions": 12,
+          "wall_seconds": 1.87,
+          "per_input": [
+            {
+              "input": "mask_color",
+              "hidden_msms": [
+                [
+                  "U1"
+                ],
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:71-71"
+                ],
+                [
+                  "pygments/formatters/bbcode.py:77-77"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                [],
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/bbcode.py:71-71",
+                "pygments/formatters/bbcode.py:77-77"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_pygments_bbcode70_italic",
+      "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+      "u_blocks": [
+        "U1",
+        "U2"
+      ],
+      "masking_inputs": [
+        "mask_italic",
+        "mask_italic_codetag"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U2"
+          ],
+          "u_total": [
+            "U1",
+            "U2"
+          ],
+          "u_recall": 0.5,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 2,
+          "masking_inputs": 2,
+          "false_relations": 2,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 6,
+          "wall_seconds": 1.41,
+          "per_input": [
+            {
+              "input": "mask_italic",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ]
+            },
+            {
+              "input": "mask_italic_codetag",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 16,
+          "u_covered": [
+            "U2"
+          ],
+          "u_total": [
+            "U1",
+            "U2"
+          ],
+          "u_recall": 0.5,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 2,
+          "false_relations": 6,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 128,
+          "wall_seconds": 3.04,
+          "per_input": [
+            {
+              "input": "mask_italic",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:61-61",
+                  "pygments/formatters/bbcode.py:76-76",
+                  "pygments/formatters/bbcode.py:83-83"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/bbcode.py:61-61",
+                "pygments/formatters/bbcode.py:83-83"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ]
+            },
+            {
+              "input": "mask_italic_codetag",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:61-61",
+                  "pygments/formatters/bbcode.py:76-76",
+                  "pygments/formatters/bbcode.py:83-83"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/bbcode.py:61-61",
+                "pygments/formatters/bbcode.py:83-83"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U2"
+          ],
+          "u_total": [
+            "U1",
+            "U2"
+          ],
+          "u_recall": 0.5,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 2,
+          "masking_inputs": 2,
+          "false_relations": 2,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 6,
+          "wall_seconds": 1.4,
+          "per_input": [
+            {
+              "input": "mask_italic",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ]
+            },
+            {
+              "input": "mask_italic_codetag",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U2"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/bbcode.py:76-76"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_pygments_groff73_italic",
+      "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+      "u_blocks": [
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "masking_inputs": [
+        "mask_italic_mono"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U3"
+          ],
+          "u_total": [
+            "U1",
+            "U2",
+            "U3"
+          ],
+          "u_recall": 0.333,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 1,
+          "masking_inputs": 1,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 6,
+          "wall_seconds": 1.26,
+          "per_input": [
+            {
+              "input": "mask_italic_mono",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2",
+                  "U3"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/groff.py:82-82"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U3"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/groff.py:82-82"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 23,
+          "u_covered": [
+            "U3"
+          ],
+          "u_total": [
+            "U1",
+            "U2",
+            "U3"
+          ],
+          "u_recall": 0.333,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 3,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 128,
+          "wall_seconds": 2.85,
+          "per_input": [
+            {
+              "input": "mask_italic_mono",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2",
+                  "U3"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/groff.py:59-59",
+                  "pygments/formatters/groff.py:64-64",
+                  "pygments/formatters/groff.py:82-82"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U3"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/groff.py:59-59",
+                "pygments/formatters/groff.py:64-64"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/groff.py:82-82"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 1,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U3"
+          ],
+          "u_total": [
+            "U1",
+            "U2",
+            "U3"
+          ],
+          "u_recall": 0.333,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 1,
+          "masking_inputs": 1,
+          "false_relations": 1,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 6,
+          "wall_seconds": 1.24,
+          "per_input": [
+            {
+              "input": "mask_italic_mono",
+              "hidden_msms": [
+                [
+                  "U1",
+                  "U2",
+                  "U3"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/groff.py:82-82"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U3"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/groff.py:82-82"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_pygments_latex297_italic",
+      "mechanism": "M6_CROSS_FUNCTION_STATE",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_inline_italic",
+        "mask_inline_italic_color"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 2,
+          "discovered_candidates": 8,
+          "u_covered": [],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 2,
+          "false_relations": 4,
+          "unmatched_sets": 2,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 20,
+          "wall_seconds": 2.13,
+          "per_input": [
+            {
+              "input": "mask_inline_italic",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/latex.py:320-320"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ]
+            },
+            {
+              "input": "mask_inline_italic_color",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/latex.py:320-320"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 101,
+          "u_covered": [],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 2,
+          "false_relations": 4,
+          "unmatched_sets": 2,
+          "mmbs_emitted_sets": 0,
+          "probe_executions": 128,
+          "wall_seconds": 3.35,
+          "per_input": [
+            {
+              "input": "mask_inline_italic",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/latex.py:293-293"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/latex.py:293-293"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            },
+            {
+              "input": "mask_inline_italic_color",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/latex.py:293-293"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/latex.py:293-293"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 2,
+          "discovered_candidates": 8,
+          "u_covered": [],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 2,
+          "false_relations": 4,
+          "unmatched_sets": 2,
+          "mmbs_emitted_sets": 2,
+          "probe_executions": 20,
+          "wall_seconds": 2.24,
+          "per_input": [
+            {
+              "input": "mask_inline_italic",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/latex.py:320-320"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ]
+            },
+            {
+              "input": "mask_inline_italic_color",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "pygments/formatters/latex.py:320-320"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/formatters/latex.py:320-320"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_pygments_style95_cache",
+      "mechanism": "M9_EXCEPTION_FALLBACK",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_text",
+        "mask_name_other",
+        "mask_operator_inherited"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 0,
+          "discovered_candidates": 0,
+          "u_covered": [],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 3,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 0,
+          "probe_executions": 2,
+          "wall_seconds": 0.44,
+          "per_input": [
+            {
+              "input": "mask_text",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            },
+            {
+              "input": "mask_name_other",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            },
+            {
+              "input": "mask_operator_inherited",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 28,
+          "u_covered": [],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 3,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 3,
+          "probe_executions": 128,
+          "wall_seconds": 2.34,
+          "per_input": [
+            {
+              "input": "mask_text",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/style.py:94-94"
+                ]
+              ]
+            },
+            {
+              "input": "mask_name_other",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/style.py:94-94"
+                ]
+              ]
+            },
+            {
+              "input": "mask_operator_inherited",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "pygments/style.py:94-94"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 0,
+          "discovered_candidates": 0,
+          "u_covered": [],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 0.0,
+          "u_exact": false,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 3,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 0,
+          "probe_executions": 2,
+          "wall_seconds": 0.42,
+          "per_input": [
+            {
+              "input": "mask_text",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            },
+            {
+              "input": "mask_name_other",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            },
+            {
+              "input": "mask_operator_inherited",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [],
+              "got_msms_blocks": [],
+              "got_msms_blocks_identity": [],
+              "stray_ops": [],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_tabulate_1052_strip_right",
+      "mechanism": "M1_SINGLE_OPERATION",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_spaces"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 12,
+          "wall_seconds": 1.63,
+          "per_input": [
+            {
+              "input": "mask_spaces",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:1054-1054"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:1054-1054"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 143,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 128,
+          "wall_seconds": 6.89,
+          "per_input": [
+            {
+              "input": "mask_spaces",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:1054-1054"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:1054-1054"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 2,
+          "discovered_candidates": 4,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 12,
+          "wall_seconds": 1.79,
+          "per_input": [
+            {
+              "input": "mask_spaces",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:1054-1054"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                [
+                  "U1"
+                ]
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:1054-1054"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_tabulate_1056_strip_center",
+      "mechanism": "M5_CONDITIONAL_BRANCH",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_numeric"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 1,
+          "discovered_candidates": 3,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 1,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 8,
+          "wall_seconds": 1.32,
+          "per_input": [
+            {
+              "input": "mask_numeric",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:1059-1059"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:1059-1059"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 143,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 128,
+          "wall_seconds": 7.08,
+          "per_input": [
+            {
+              "input": "mask_numeric",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:1059-1059"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:1059-1059"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 1,
+          "discovered_candidates": 3,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 1,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 8,
+          "wall_seconds": 1.36,
+          "per_input": [
+            {
+              "input": "mask_numeric",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:1059-1059"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": true,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:1059-1059"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "sd_tabulate_2557_curlen",
+      "mechanism": "M7_LOOP_STATE",
+      "u_blocks": [
+        "U1"
+      ],
+      "masking_inputs": [
+        "mask_two_lines"
+      ],
+      "methods": {
+        "c_fixed": {
+          "universe_size": 2,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 8,
+          "wall_seconds": 1.21,
+          "per_input": [
+            {
+              "input": "mask_two_lines",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:2560-2560"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:2560-2560"
+                ]
+              ]
+            }
+          ]
+        },
+        "graph": {
+          "universe_size": 6,
+          "discovered_candidates": 199,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 0,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 2,
+          "unmatched_sets": 1,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 128,
+          "wall_seconds": 10.72,
+          "per_input": [
+            {
+              "input": "mask_two_lines",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:2521-2521"
+                ]
+              ],
+              "got_msms_blocks": [
+                []
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [
+                "tabulate/__init__.py:2521-2521"
+              ],
+              "msms_exact": false,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:2560-2560"
+                ]
+              ]
+            }
+          ]
+        },
+        "c0": {
+          "universe_size": 2,
+          "discovered_candidates": 2,
+          "u_covered": [
+            "U1"
+          ],
+          "u_total": [
+            "U1"
+          ],
+          "u_recall": 1.0,
+          "u_exact": true,
+          "msms_exact": 1,
+          "msms_exact_intervention": 0,
+          "masking_inputs": 1,
+          "false_relations": 0,
+          "unmatched_sets": 0,
+          "mmbs_emitted_sets": 1,
+          "probe_executions": 8,
+          "wall_seconds": 1.33,
+          "per_input": [
+            {
+              "input": "mask_two_lines",
+              "hidden_msms": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_ops": [
+                [
+                  "tabulate/__init__.py:2560-2560"
+                ]
+              ],
+              "got_msms_blocks": [
+                [
+                  "U1"
+                ]
+              ],
+              "got_msms_blocks_identity": [
+                []
+              ],
+              "stray_ops": [],
+              "msms_exact": true,
+              "intervention_equivalent": false,
+              "got_mmbs_disabled_sets": [
+                [
+                  "tabulate/__init__.py:2560-2560"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "totals": {
+    "c_fixed": {
+      "tasks": 10,
+      "masking_inputs": 15,
+      "msms_exact": 5,
+      "msms_exact_intervention": 6,
+      "false_relations": 11,
+      "unmatched_sets": 4,
+      "probe_executions": 102,
+      "wall_seconds": 21.85,
+      "u_exact_tasks": 5,
+      "cooperative_tasks": 2,
+      "cooperative_msms_exact_tasks": 0,
+      "u_recall_mean": 0.583
+    },
+    "graph": {
+      "tasks": 10,
+      "masking_inputs": 15,
+      "msms_exact": 3,
+      "msms_exact_intervention": 0,
+      "false_relations": 28,
+      "unmatched_sets": 12,
+      "probe_executions": 1280,
+      "wall_seconds": 58.8,
+      "u_exact_tasks": 5,
+      "cooperative_tasks": 2,
+      "cooperative_msms_exact_tasks": 0,
+      "u_recall_mean": 0.633
+    },
+    "c0": {
+      "tasks": 10,
+      "masking_inputs": 15,
+      "msms_exact": 5,
+      "msms_exact_intervention": 6,
+      "false_relations": 11,
+      "unmatched_sets": 4,
+      "probe_executions": 102,
+      "wall_seconds": 25.27,
+      "u_exact_tasks": 5,
+      "cooperative_tasks": 2,
+      "cooperative_msms_exact_tasks": 0,
+      "u_recall_mean": 0.583
+    }
+  },
+  "caveats": [
+    "All 10 tasks are RESEARCHER_CONSTRUCTED (track C); a failure here is a statement about the algorithm on constructed masking tasks, not about natural upstream defects.",
+    "MSMS equality is scored on the finite declared input grid and the declared block universe only.",
+    "A statement inside a researcher block counts as reaching that block; exact-span agreement is reported separately as got_msms_blocks_identity.",
+    "Wall time is parallelised (12 probe workers) and is not comparable across machines; probe counts are."
+  ],
+  "artifacts": {
+    "raw": "runs/sd_v1_algorithm_pilot/raw_results.json",
+    "per_case_method": "runs/sd_v1_algorithm_pilot/<case>__<method>.json",
+    "adapter": "benchmark_v4_dataset/tools/sd_algorithm_pilot.py",
+    "run_log": "runs/sd_v1_algorithm_pilot_run.log"
+  }
+}

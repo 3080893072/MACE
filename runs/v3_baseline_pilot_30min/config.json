@@ -1,0 +1,73 @@
+{
+  "experiment": "mace_v3_baseline_pilot",
+  "schema_version": "mace-v3-baseline-claims-1.0",
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "git_commit": "eb8069c5cbc998f6496b5a61f0b60bf7b42cb62c",
+  "git_branch": "baseline/mace-v3-pilot",
+  "model": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "endpoint": "http://127.0.0.1:11434",
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 32768,
+    "num_predict": 4096,
+    "json_mode": true,
+    "timeout_seconds": 900,
+    "retries": 1
+  },
+  "budget": {
+    "max_model_calls_per_task": 3,
+    "max_model_calls_total": 15,
+    "max_completion_tokens_per_task": 12288,
+    "max_probe_executions_per_task": 6000,
+    "max_probe_executions_total": 30000,
+    "max_candidate_ops": 6,
+    "max_inputs": 8,
+    "probe_timeout_seconds": 180,
+    "max_claims_per_task": 40
+  },
+  "b_conditions": [
+    "pure_verification",
+    "feedback_regeneration"
+  ],
+  "task_ids": [
+    "jinja2_bytecode_cache_read",
+    "werkzeug_bind_server_name_lower",
+    "werkzeug_filestorage_stream_name",
+    "werkzeug_get_host_default_empty",
+    "werkzeug_secure_filename_ascii_filter"
+  ],
+  "task_story": {
+    "jinja2_bytecode_cache_read": "NO_LOCAL_EFFECT",
+    "werkzeug_filestorage_stream_name": "ASSERTION_GAP_STORY",
+    "werkzeug_bind_server_name_lower": "NO_LOCAL_EFFECT",
+    "werkzeug_get_host_default_empty": "FULL_MASKING_STORY",
+    "werkzeug_secure_filename_ascii_filter": "FULL_MASKING_STORY"
+  },
+  "task_hashes": {
+    "jinja2_bytecode_cache_read": {
+      "task_json_sha256": "4be5966f7278eeb297c4de8cde31eaa71b661c8a2edeef4f37f629c1c8bfc538",
+      "source_sha256": "6b2030c5fac0d5201f7d0b5ad27c120e6dd30d3e0a62220637f0fd678e41df5d"
+    },
+    "werkzeug_bind_server_name_lower": {
+      "task_json_sha256": "ec1495a433cb36c257d9bd97edb9bc767d0f88fcf35fc6ad6d670b6abc645bff",
+      "source_sha256": "5cde198f3105d527ccc6d768bfcf520c4fb5fd4efc2959e7a1b4df9c7cea6e61"
+    },
+    "werkzeug_filestorage_stream_name": {
+      "task_json_sha256": "eb6addb7779681af29a8df994b960de54230174059a6bbf37995b03f1eaae00c",
+      "source_sha256": "bf65987ecd6b6f53ae4205f22eb8a91d017082876b7d33427793f97fc9f7b9e0"
+    },
+    "werkzeug_get_host_default_empty": {
+      "task_json_sha256": "5a9197c2318fc16f9e18153ad89f94f40445d6e36d0ee41e7dd9e68d6f796be8",
+      "source_sha256": "1236ea747753f8965682351069a592801508469ad7524aec31042a265247a555"
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "task_json_sha256": "5fd15dfb8dbf0596b74fa08ac77f377bd9a43fb655bfa996617954387af90fe8",
+      "source_sha256": "0435f9ffb382315825fa26fce1b0847411b9315bebc5a4a57dd83b0b1878343d"
+    }
+  },
+  "public_root": "<local-path>",
+  "probe_root": "<local-path>",
+  "hidden_data_in_scope": false
+}

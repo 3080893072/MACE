@@ -1,0 +1,18 @@
+--- a/tabulate/__init__.py
++++ b/tabulate/__init__.py
+@@ -1047,12 +1047,15 @@
+ 
+ 
+ def _align_column_choose_padfn(strings, alignment, has_invisible):
+     if alignment == "right":
+         if not PRESERVE_WHITESPACE:
+             strings = [s.strip() for s in strings]
++            # SD:U:U1:begin
++            strings = [s.strip(" ") for s in strings]
++            # SD:U:U1:end
+         padfn = _padleft
+     elif alignment == "center":
+         if not PRESERVE_WHITESPACE:
+             strings = [s.strip() for s in strings]
+         padfn = _padboth
+     elif alignment == "decimal":

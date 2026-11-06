@@ -1,0 +1,29 @@
+```json
+{
+  "task_id": "jinja2_bytecode_cache_read",
+  "claims": [
+    {
+      "operation": {
+        "file": "src/jinja2/loaders.py",
+        "line": 132
+      }
+    },
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "original_source": "src/jinja2/loaders.py:132\n    code = bucket.code",
+        "target_statement": "src/jinja2/loaders.py:132\n    code = bucket.code"
+      }
+    }
+  ],
+  "test_gap": {
+    "summary": "The deletion of the line `code = bucket.code` exposes the fact that the bytecode cache is not being used correctly.",
+    "tests": [
+      {
+        "name": "test_bytecode_cache.py::TestBytecodeCache::test_simple",
+        "verdict": "assertion_gap"
+      }
+    ]
+  }
+}
+```

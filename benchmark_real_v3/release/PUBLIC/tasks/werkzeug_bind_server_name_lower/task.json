@@ -1,0 +1,88 @@
+{
+  "analysis_scope": "The public package contains the target source file only.  The hidden candidate universe is not disclosed.  Operations outside it cannot be attributed by the scorer and are reported UNVERIFIED.",
+  "difficulty": "medium",
+  "frozen_t_task": [
+    "tests/test_routing.py::test_external_building_with_port_bind_to_environ",
+    "tests/test_routing.py::test_external_building_with_port_bind_to_environ_wrong_servername",
+    "tests/test_routing.py::test_http_host_before_server_name",
+    "tests/test_routing.py::test_invalid_subdomain_warning",
+    "tests/test_routing.py::test_server_name_casing",
+    "tests/test_routing.py::test_server_name_interpolation",
+    "tests/test_routing.py::test_server_name_match_default_port[http://localhost-localhost:80]",
+    "tests/test_routing.py::test_server_name_match_default_port[https://localhost-localhost:443]"
+  ],
+  "frozen_t_task_count": 8,
+  "label": "DEVELOPMENT/PILOT",
+  "legal_input_contract": {
+    "fields": {
+      "host": {
+        "description": "WSGI SERVER_NAME and HTTP_HOST value.",
+        "max_length": 1024,
+        "required": false,
+        "type": "string"
+      },
+      "server_name": {
+        "description": "Optional explicit server_name argument.",
+        "max_length": 1024,
+        "required": false,
+        "type": "string|null"
+      },
+      "subdomain": {
+        "description": "Optional explicit subdomain argument.",
+        "max_length": 1024,
+        "required": false,
+        "type": "string|null"
+      }
+    },
+    "legal_constraints": [
+      "The payload is a JSON object with only the fields listed above.",
+      "host, server_name and subdomain must be strings or null; host defaults to example.com when omitted.",
+      "Strings longer than the published limit are rejected."
+    ],
+    "observation": {
+      "raise": {
+        "message": "string",
+        "outcome": "raise",
+        "type": "exception class name"
+      },
+      "return": {
+        "outcome": "return",
+        "server_name": "string",
+        "subdomain": "string"
+      }
+    }
+  },
+  "not_claimed": [
+    "All WSGI environments and host configurations",
+    "host_matching maps",
+    "Operations outside the declared U"
+  ],
+  "observation_contract": {
+    "raise": {
+      "message": "string",
+      "outcome": "raise",
+      "type": "exception class name"
+    },
+    "return": {
+      "outcome": "return",
+      "server_name": "string",
+      "subdomain": "string"
+    }
+  },
+  "project": "Werkzeug 2.2.3",
+  "project_id": "werkzeug-2.2.3",
+  "project_source_tree_sha256": "4d80b206cdf7e3d11784a6e25a939b37674cf7185fb420fd954f8fbeac28ad81",
+  "schema": "mace_benchmark_v3_public_task",
+  "source_file": "src/werkzeug/routing/map.py",
+  "source_path": "source/src/werkzeug/routing/map.py",
+  "source_sha256": "5cde198f3105d527ccc6d768bfcf520c4fb5fd4efc2959e7a1b4df9c7cea6e61",
+  "submission_format": "submission_format.md",
+  "target_operation": {
+    "code": "server_name = server_name.lower()",
+    "file": "src/werkzeug/routing/map.py",
+    "function": "Map.bind_to_environ",
+    "line": 307
+  },
+  "task_id": "werkzeug_bind_server_name_lower",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected"
+}

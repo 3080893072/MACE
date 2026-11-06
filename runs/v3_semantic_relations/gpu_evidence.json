@@ -1,0 +1,55 @@
+{
+  "schema": "mace-four-task-gpu-evidence-v1",
+  "captured_utc": "2026-11-04T01:12:57Z",
+  "ssh_host": "connect.cqa1.seetacloud.com",
+  "ssh_port": 37377,
+  "credential_policy": "password supplied only through environment variables; never stored in this repository",
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 4090 D",
+    "memory_total_mib": 24564,
+    "memory_used_mib": 21205,
+    "utilization_gpu_percent": 0
+  },
+  "ollama": {
+    "version": "0.40.13",
+    "models_dir": "/root/autodl-tmp/ollama_models",
+    "loaded": {
+      "name": "qwen2.5-coder:32b",
+      "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+      "size": "21 GB",
+      "processor": "100% GPU",
+      "context": 8192,
+      "runner": "llamacpp",
+      "generation_tokens_per_second": 20.0
+    }
+  },
+  "aborted_attempt": {
+    "reason": "first batch used num_ctx=32768; the 25 GB runtime exceeded 24 GB VRAM (8%/92% CPU/GPU) and generated at 3.32 tok/s; the batch was stopped before any response was returned or used",
+    "context": 32768,
+    "processor": "8%/92% CPU/GPU",
+    "generation_tokens_per_second": 3.32,
+    "results_used": false
+  },
+  "smoke": {
+    "purpose": "endpoint/model check before task calls",
+    "prompt_tokens": 43,
+    "completion_tokens": 6,
+    "wall_seconds": 10.176,
+    "content": "{\"ok\": true}",
+    "counted_as_task_call": false
+  },
+  "task_calls": {
+    "ctrl_02": {"prompt_tokens": 1265, "completion_tokens": 665, "wall_seconds": 43.368},
+    "ctrl_03": {"prompt_tokens": 1607, "completion_tokens": 1610, "wall_seconds": 82.573},
+    "werkzeug_get_host_default_empty": {"prompt_tokens": 1753, "completion_tokens": 2744, "wall_seconds": 139.059},
+    "werkzeug_filestorage_stream_name": {"prompt_tokens": 1376, "completion_tokens": 1203, "wall_seconds": 62.425}
+  },
+  "totals": {
+    "completed_task_calls": 4,
+    "prompt_tokens": 6001,
+    "completion_tokens": 6222,
+    "total_tokens": 12223,
+    "wall_seconds": 327.425
+  },
+  "note": "The four reported results each come from exactly one completed model call. The aborted 32768-context generation produced no returned or reused response and is disclosed above, not counted as a task result."
+}

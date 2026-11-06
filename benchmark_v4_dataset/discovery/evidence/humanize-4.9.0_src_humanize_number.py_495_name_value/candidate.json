@@ -1,0 +1,55 @@
+{
+  "candidate_id": "humanize-4.9.0:src/humanize/number.py:495:name:value",
+  "project": "humanize",
+  "version": "4.9.0",
+  "split": "DEV",
+  "file": "src/humanize/number.py",
+  "function": "clamp",
+  "mechanism": "name",
+  "target_A": {
+    "line": 495,
+    "end_line": 495,
+    "kind": "Assign",
+    "code": "value = floor"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_number.py::test_clamp[test_args3-<1%]",
+    "tests/test_number.py::test_clamp[test_args5-under 1%]",
+    "tests/test_number.py::test_clamp[test_args7-under 1.0 million]"
+  ],
+  "original_hit_test_count": 3,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        value = floor",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.47,
+    "failed_nodeids": [
+      "tests.test_number::test_clamp[test_args3-<1%]",
+      "tests.test_number::test_clamp[test_args5-under 1%]",
+      "tests.test_number::test_clamp[test_args7-under 1.0 million]"
+    ],
+    "stdout_tail": "m\u001b[31mtests\\test_number.py\u001b[0m:232: AssertionError\n\u001b[31m\u001b[1m_______________________ test_clamp[test_args5-under 1%] _______________________\u001b[0m\n\ntest_args = [0.0001, '{:.0%}', 0.01, None, 'under ', None]\nexpected = 'under 1%'\n\n    @pytest.mark.parametrize(\n        \"test_args, expected\",\n        [\n            ([1], \"1\"),\n            ([None], None),\n            ([0.0001, \"{:.0%}\"], \"0%\"),\n            ([0.0001, \"{:.0%}\", 0.01], \"<1%\"),\n            ([0.9999, \"{:.0%}\", None, 0.99], \">99%\"),\n            ([0.0001, \"{:.0%}\", 0.01, None, \"under \", None], \"under 1%\"),\n            ([0.9999, \"{:.0%}\", None, 0.99, None, \"above \"], \"above 99%\"),\n            ([1, humanize.intword, 1e6, None, \"under \"], \"under 1.0 million\"),\n            ([math.nan], \"NaN\"),\n            ([math.inf], \"+Inf\"),\n            ([-math.inf], \"-Inf\"),\n        ],\n    )\n    def test_clamp(test_args: list[typing.Any], expected: str) -> None:\n>       assert humanize.clamp(*test_args) == expected\n\u001b[1m\u001b[31mE       AssertionError: assert 'under 0%' == 'under 1%'\u001b[0m\n\u001b[1m\u001b[31mE         - under 1%\u001b[0m\n\u001b[1m\u001b[31mE         ?       ^\u001b[0m\n\u001b[1m\u001b[31mE         + under 0%\u001b[0m\n\u001b[1m\u001b[31mE         ?       ^\u001b[0m\n\n\u001b[1m\u001b[31mtests\\test_number.py\u001b[0m:232: AssertionError\n\u001b[31m\u001b[1m__________________ test_clamp[test_args7-under 1.0 million] ___________________\u001b[0m\n\ntest_args = [1, <function intword at 0x000001F8F135D440>, 1000000.0, None, 'under ']\nexpected = 'under 1.0 million'\n\n    @pytest.mark.parametrize(\n        \"test_args, expected\",\n        [\n            ([1], \"1\"),\n            ([None], None),\n            ([0.0001, \"{:.0%}\"], \"0%\"),\n            ([0.0001, \"{:.0%}\", 0.01], \"<1%\"),\n            ([0.9999, \"{:.0%}\", None, 0.99], \">99%\"),\n            ([0.0001, \"{:.0%}\", 0.01, None, \"under \", None], \"under 1%\"),\n            ([0.9999, \"{:.0%}\", None, 0.99, None, \"above \"], \"above 99%\"),\n            ([1, humanize.intword, 1e6, None, \"under \"], \"under 1.0 million\"),\n            ([math.nan], \"NaN\"),\n            ([math.inf], \"+Inf\"),\n            ([-math.inf], \"-Inf\"),\n        ],\n    )\n    def test_clamp(test_args: list[typing.Any], expected: str) -> None:\n>       assert humanize.clamp(*test_args) == expected\n\u001b[1m\u001b[31mE       AssertionError: assert 'under 1' == 'under 1.0 million'\u001b[0m\n\u001b[1m\u001b[31mE         - under 1.0 million\u001b[0m\n\u001b[1m\u001b[31mE         + under 1\u001b[0m\n\n\u001b[1m\u001b[31mtests\\test_number.py\u001b[0m:232: AssertionError\n- generated xml file: <local-path> -\n\u001b[36m\u001b[1m=========================== short test summary info ===========================\u001b[0m\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_clamp[test_args3-<1%]\u001b[0m - AssertionError: assert '<0%' == '<1%'\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_clamp[test_args5-under 1%]\u001b[0m - AssertionError: assert 'under 0%' == 'under 1%'\n\u001b[31mFAILED\u001b[0m tests/test_number.py::\u001b[1mtest_clamp[test_args7-under 1.0 million]\u001b[0m - AssertionError: assert 'under 1' == 'under 1.0 million'\n\u001b[31m\u001b[31m\u001b[1m3 failed\u001b[0m\u001b[31m in 0.12s\u001b[0m\u001b[0m\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

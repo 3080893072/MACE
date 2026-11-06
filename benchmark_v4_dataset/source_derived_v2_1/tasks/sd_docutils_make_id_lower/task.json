@@ -1,0 +1,57 @@
+{
+  "task_id": "sd_docutils_make_id_lower",
+  "project": "docutils",
+  "version": "0.20.1",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M1_SINGLE_OPERATION",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "make_id() lowercases the source string before mapping non-identifier characters. The patch restores the case folding only for all-ASCII input; a non-ASCII string exposes the missing fold because the later character filter deletes the upper-case bytes instead of folding them.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "docutils/nodes.py",
+    "line": 2231,
+    "function": "make_id",
+    "code": "    id = string.lower()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "make_id"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "docutils.nodes.make_id(text)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_ascii_mixed_case",
+      "role": "masking",
+      "description": "ASCII source text with mixed case"
+    },
+    {
+      "id": "expose_non_ascii",
+      "role": "exposing",
+      "description": "non-ASCII source text: A folds it, the ASCII-only repair does not"
+    },
+    {
+      "id": "control_lowercase",
+      "role": "control",
+      "description": "already lowercase ASCII identifier"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

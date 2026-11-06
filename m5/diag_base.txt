@@ -1,0 +1,37 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| alt_masking | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 648 | 5.3 |
+| alt_masking | fixed | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 782 | 4.7 |
+| alt_masking | generic | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 980 | 11.1 |
+| dead_flag | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 1247 | 4.9 |
+| dead_flag | fixed | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 695 | 2.9 |
+| dead_flag | generic | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 796 | 9.5 |
+| dedup_channel | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 1438 | 8.5 |
+| dedup_channel | fixed | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 1920 | 9.1 |
+| dedup_channel | generic | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 3992 | 26.4 |
+| dict_slot | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 598 | 2.8 |
+| dict_slot | fixed | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 732 | 4.0 |
+| dict_slot | generic | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 953 | 14.6 |
+| modulo_absorb | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 47/212 | 2605 | 13.5 |
+| modulo_absorb | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 2948 | 12.0 |
+| modulo_absorb | generic | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 47/212 | 3470 | 26.2 |
+| overwrite_channel | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 2518 | 7.7 |
+| overwrite_channel | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 28/0 | 3337 | 11.6 |
+| overwrite_channel | generic | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 3664 | 26.6 |
+| parity_snap | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 43/43 | 2271 | 11.5 |
+| parity_snap | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 3043 | 10.0 |
+| parity_snap | generic | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 43/43 | 2835 | 18.7 |
+| sort_channel | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 1134/6452 | 3560 | 17.8 |
+| sort_channel | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 0/7046 | 3923 | 17.5 |
+| sort_channel | generic | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 2866/0 | 4940 | 31.5 |
+| swap_channels | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 0/4 | 2681 | 8.6 |
+| swap_channels | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 12/0 | 2865 | 13.5 |
+| swap_channels | generic | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 12/0 | 3067 | 21.3 |
+
+First bad stage over all cases: guard 15, none 12
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| direct | qwen | 9 | 5 | 0 | 0 | 0 | 0 | 0 | 4 | 17566 | 80.6 |
+| fixed | qwen | 9 | 4 | 0 | 2 | 0 | 2 | 0 | 3 | 20245 | 85.3 |
+| generic | qwen | 9 | 3 | 0 | 2 | 1 | 0 | 1 | 4 | 24697 | 185.9 |

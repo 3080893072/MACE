@@ -1,0 +1,233 @@
+{
+  "case_id": "sd_humanize_filesize_gnu_m5",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M5_CONDITIONAL_BRANCH",
+  "slug": "humanize-4.9.0",
+  "file": "src/humanize/filesize.py",
+  "A_line": 56,
+  "A_code": "        suffix = suffixes[\"gnu\"]",
+  "original_sha256": "24b3c05bc07f38bbfdbab017125c58bc33225d0177e9c01e172ff61c39ce107e",
+  "patched_sha256": "39cbd3b1c03c91b1de5018c7e1586dc4c92d28ab666f79c7298454552265e054",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 56,
+      "role": "Non-negative gnu branch: restores the GNU suffix selection.",
+      "lines": [
+        "if gnu and value >= 0:",
+        "    suffix = suffixes[\"gnu\"]"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 56,
+      "end": 59
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_gnu_positive": {
+        "out": "2.0K"
+      },
+      "expose_gnu_negative": {
+        "out": "-4.0K"
+      },
+      "control_decimal": {
+        "out": "2.0 kB"
+      }
+    },
+    "P_MINUS": {
+      "mask_gnu_positive": {
+        "out": "2.0K"
+      },
+      "expose_gnu_negative": {
+        "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+      },
+      "control_decimal": {
+        "out": "2.0 kB"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_gnu_positive": {
+        "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+      },
+      "expose_gnu_negative": {
+        "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+      },
+      "control_decimal": {
+        "out": "2.0 kB"
+      }
+    },
+    "KEEP_U1": {
+      "mask_gnu_positive": {
+        "out": "2.0K"
+      },
+      "expose_gnu_negative": {
+        "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+      },
+      "control_decimal": {
+        "out": "2.0 kB"
+      }
+    }
+  },
+  "per_input": {
+    "mask_gnu_positive": {
+      "plus": {
+        "out": "2.0K"
+      },
+      "p_minus": {
+        "out": "2.0K"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "out": "2.0K"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1"
+          ]
+        ],
+        "u_necessary": true
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_gnu_negative": {
+      "plus": {
+        "out": "-4.0K"
+      },
+      "p_minus": {
+        "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+        },
+        "KEEP_U1": {
+          "error": "UnboundLocalError: cannot access local variable 'suffix' where it is not associated with a value"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [],
+        "mmbs": [],
+        "u_necessary": true
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_decimal": {
+      "plus": {
+        "out": "2.0 kB"
+      },
+      "p_minus": {
+        "out": "2.0 kB"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "2.0 kB"
+        },
+        "KEEP_U1": {
+          "out": "2.0 kB"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "changed_inputs": [
+      {
+        "input": "control_decimal",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      }
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 2,
+    "mmbs_COMPUTED": 1,
+    "mmbs_NONE": 1,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 1,
+    "msms_NONE": 2
+  }
+}

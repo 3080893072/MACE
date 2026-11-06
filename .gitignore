@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# ---------------------------------------------------------------------------
+# Editors / OS
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# Credentials and local configuration
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+configs/local.*.json
+
+# ---------------------------------------------------------------------------
+# Re-generable bulk (never commit; see reproduction/README.md)
+# ---------------------------------------------------------------------------
+# Downloaded upstream sdists and extracted project trees (third-party source)
+benchmark_v4_dataset/discovery/sdists/
+benchmark_v4_dataset/discovery/sources/
+# Bulk screening intermediates
+benchmark_v4_dataset/discovery/stage1/
+benchmark_v4_dataset/discovery/stage2_3/
+# Legacy evidence trees (hundreds of MB; contain historical run logs)
+benchmark_real_v3/evidence/
+benchmark_real_v4/evidence/
+# Screening run with pinned sdists / venvs / work trees
+runs/v3_m1_screening/
+# Blind-prediction workspace (copied upstream sources during generation)
+runs/heldout_v2_1_blind/
+
+# Scratch output produced by local runs
+runs/local_*/
+*.tmp

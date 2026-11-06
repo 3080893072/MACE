@@ -1,0 +1,131 @@
+{
+  "task_id": "sd_networkx_gexf448_slices",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "networkx/readwrite/gexf.py",
+    "line": 448,
+    "function": "edge_key_data",
+    "code": "                edge_data = self.add_slices(edge_element, edge_data)",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "networkx/readwrite/gexf.py",
+      "line": 450,
+      "code": "if not G.is_directed() and not edge_element.findall(\"slices\"):",
+      "role": "Repairs the shared XML edge object: re-applies the slice mutation only when the object does not already carry a slices child.",
+      "patch_anchor_line": 448,
+      "block_span": [
+        449,
+        452
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_undirected_slices": {
+      "role": "masking",
+      "description": "undirected edge carrying slices data",
+      "p_plus": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "p_minus": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_directed_slices": {
+      "role": "exposing",
+      "description": "directed edge carrying slices data (repair not declared)",
+      "p_plus": {
+        "children": [
+          [
+            "slices",
+            {}
+          ]
+        ]
+      },
+      "p_minus": {
+        "error": "ValueError: not enough values to unpack (expected 3, got 2)"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_undirected_no_slices": {
+      "role": "control",
+      "description": "undirected edge without slices data; A is a no-op",
+      "p_plus": {
+        "children": []
+      },
+      "p_minus": {
+        "children": []
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    },
+    "control_directed_no_slices": {
+      "role": "control",
+      "description": "directed edge without slices data",
+      "p_plus": {
+        "children": []
+      },
+      "p_minus": {
+        "children": []
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_networkx_gexf448_slices/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

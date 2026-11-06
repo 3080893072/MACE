@@ -1,0 +1,59 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/sql.py:79:name:raw",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/sql.py",
+  "function": "_get_repr_value",
+  "mechanism": "name",
+  "target_A": {
+    "line": 79,
+    "end_line": 79,
+    "kind": "Assign",
+    "code": "raw = str(self)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_parse.py::test_non_ascii",
+    "tests/test_parse.py::test_pprint",
+    "tests/test_tokenize.py::test_single_quotes",
+    "tests/test_tokenize.py::test_token_repr",
+    "tests/test_tokenize.py::test_tokenlist_repr"
+  ],
+  "original_hit_test_count": 5,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        raw = str(self)",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.58,
+    "failed_nodeids": [
+      "tests.test_parse::test_non_ascii",
+      "tests.test_parse::test_pprint",
+      "tests.test_tokenize::test_single_quotes",
+      "tests.test_tokenize::test_token_repr",
+      "tests.test_tokenize::test_tokenlist_repr"
+    ],
+    "stdout_tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsqlparse\\sql.py:69: in __repr__\n    value = self._get_repr_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <[UnboundLocalError(\"cannot access local variable 'raw' where it is not associated with a value\") raised in repr()] Token object at 0x129189d5cc0>\n\n    def _get_repr_value(self):\n        pass  # P-: target A deleted\n>       if len(raw) > 7:\nE       UnboundLocalError: cannot access local variable 'raw' where it is not associated with a value\n\nsqlparse\\sql.py:80: UnboundLocalError\n_____________________________ test_tokenlist_repr _____________________________\n\n    def test_tokenlist_repr():\n        p = sqlparse.parse('foo, bar, baz')[0]\n        tst = \"<IdentifierList 'foo, b...' at 0x\"\n>       assert repr(p.tokens[0])[:len(tst)] == tst\n\ntests\\test_tokenize.py:93: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsqlparse\\sql.py:69: in __repr__\n    value = self._get_repr_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <[UnboundLocalError(\"cannot access local variable 'raw' where it is not associated with a value\") raised in repr()] IdentifierList object at 0x1291a2f2ad0>\n\n    def _get_repr_value(self):\n        pass  # P-: target A deleted\n>       if len(raw) > 7:\nE       UnboundLocalError: cannot access local variable 'raw' where it is not associated with a value\n\nsqlparse\\sql.py:80: UnboundLocalError\n_____________________________ test_single_quotes ______________________________\n\n    def test_single_quotes():\n        p = sqlparse.parse(\"'test'\")[0]\n        tst = \"<Single \\\"'test'\\\" at 0x\"\n>       assert repr(p.tokens[0])[:len(tst)] == tst\n\ntests\\test_tokenize.py:99: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsqlparse\\sql.py:69: in __repr__\n    value = self._get_repr_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <[UnboundLocalError(\"cannot access local variable 'raw' where it is not associated with a value\") raised in repr()] Token object at 0x129189afe20>\n\n    def _get_repr_value(self):\n        pass  # P-: target A deleted\n>       if len(raw) > 7:\nE       UnboundLocalError: cannot access local variable 'raw' where it is not associated with a value\n\nsqlparse\\sql.py:80: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_parse.py::test_pprint - UnboundLocalError: cannot access lo...\nFAILED tests/test_parse.py::test_non_ascii - UnboundLocalError: cannot access...\nFAILED tests/test_tokenize.py::test_token_repr - UnboundLocalError: cannot ac...\nFAILED tests/test_tokenize.py::test_tokenlist_repr - UnboundLocalError: canno...\nFAILED tests/test_tokenize.py::test_single_quotes - UnboundLocalError: cannot...\n5 failed in 0.24s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

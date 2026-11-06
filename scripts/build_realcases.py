@@ -1,0 +1,372 @@
+"""Build the real-project case catalog for the research feasibility audit.
+
+Each case is an extracted function from an installed open-source package.
+The function is renamed ``program`` and one assignment is marked
+``# TARGET_A``.  P+ is the original; P- replaces A with ``pass``.  The human
+guard is written from the source semantics by hand and is *not* given to any
+synthesizer; it is only used for scoring.
+
+The extraction is verbatim except where the note says otherwise (removed
+decorator, removed unreachable raise, or a domain restriction).  No new model
+calls are involved.
+
+Usage
+-----
+    python scripts/build_realcases.py
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "realcases"
+
+
+CASES = [
+    {
+        "id": "cpython_leapdays",
+        "project": "CPython",
+        "version": "3.11.7",
+        "license": "PSF-2.0",
+        "source_path": "Lib/calendar.py::leapdays",
+        "function": "leapdays",
+        "target": "y1 -= 1",
+        "extraction_note": "Verbatim. Docstring shortened; the y1<=y2 precondition is kept as a comment.",
+        "source": '''def program(y1, y2):
+    # Precondition (from the original docstring): y1 <= y2.
+    y1 -= 1  # TARGET_A
+    y2 -= 1
+    return (y2//4 - y1//4) - (y2//100 - y1//100) + (y2//400 - y1//400)
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "y1", "sort": "int",
+             "values": [-4, 0, 1, 2, 3, 4, 5, 8, 100, 200, 400]},
+            {"name": "y2", "sort": "int", "values": [1, 4, 8, 100, 400]},
+        ]},
+        "human_guard": "(y1 % 4 != 0) or (y1 % 100 == 0 and y1 % 400 != 0)",
+        "human_guard_note": "The decrement matters only when it changes a floor-division "
+                            "boundary: y1 divisible by 4 but not 100, or divisible by 400.",
+    },
+    {
+        "id": "babel_cldr_modulo",
+        "project": "Babel",
+        "version": "2.11.0",
+        "license": "BSD-3-Clause",
+        "source_path": "babel/plural.py::cldr_modulo",
+        "function": "cldr_modulo",
+        "target": "a *= -1",
+        "extraction_note": "Verbatim; docstring removed.",
+        "source": '''def program(a, b):
+    reverse = 0
+    if a < 0:
+        a *= -1  # TARGET_A
+        reverse = 1
+    if b < 0:
+        b *= -1
+    rv = a % b
+    if reverse:
+        rv *= -1
+    return rv
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "a", "sort": "int", "values": list(range(-9, 10))},
+            {"name": "b", "sort": "int", "values": [1, 2, 3, 5, -2]},
+        ]},
+        "human_guard": ("a >= 0 or a % b == 0 or "
+                        "2 * ((-a) % abs(b)) == abs(b)"),
+        "human_guard_note": "If a is non-negative the branch is not taken. For "
+                            "negative a the sign restoration hides a % |b| that is "
+                            "either zero or exactly half of |b|; the half case was "
+                            "found by exhaustive comparison and is not part of the "
+                            "first-guess guard.",
+    },
+    {
+        "id": "fpdf2_int32",
+        "project": "fpdf2",
+        "version": "2.8.7",
+        "license": "LGPL-2.1-only",
+        "source_path": "fpdf/encryption.py::int32",
+        "function": "int32",
+        "target": "n = n & 0xFFFFFFFF",
+        "extraction_note": "Verbatim; docstring kept.",
+        "source": '''def program(n):
+    """convert long to signed 32 bit integer"""
+    n = n & 0xFFFFFFFF  # TARGET_A
+    return (n ^ 0x80000000) - 0x80000000
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "n", "sort": "int", "values": [
+                -4294967297, -4294967296, -2147483648, -1, 0, 1,
+                2147483647, 2147483648, 4294967295, 4294967296, 4294967297]},
+        ]},
+        "human_guard": "0 <= n and n < 4294967296",
+        "human_guard_note": "For an unsigned 32-bit value the mask is the identity; "
+                            "outside that window it changes the intermediate.",
+    },
+    {
+        "id": "fonttools_flagbest_xsame",
+        "project": "fontTools",
+        "version": "4.63.0",
+        "license": "MIT",
+        "source_path": "fontTools/ttLib/tables/_g_l_y_f.py::flagBest",
+        "function": "flagBest",
+        "target": "flag = flag | flagXsame (inside 'if x == 0')",
+        "extraction_note": "Verbatim; module constants inlined. The second "
+                           "'flagXsame' assignment (x > 0 branch) is unchanged.",
+        "source": '''flagOnCurve = 0x01
+flagXShort = 0x02
+flagYShort = 0x04
+flagXsame = 0x10
+flagYsame = 0x20
+
+
+def program(x, y, onCurve):
+    flag = flagOnCurve if onCurve else 0
+    cost = 0
+    if x == 0:
+        flag = flag | flagXsame  # TARGET_A
+    elif -255 <= x <= 255:
+        flag = flag | flagXShort
+        if x > 0:
+            flag = flag | flagXsame
+        cost += 1
+    else:
+        cost += 2
+    if y == 0:
+        flag = flag | flagYsame
+    elif -255 <= y <= 255:
+        flag = flag | flagYShort
+        if y > 0:
+            flag = flag | flagYsame
+        cost += 1
+    else:
+        cost += 2
+    return flag, cost
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "x", "sort": "int", "values": [-256, -255, -1, 0, 1, 255, 256]},
+            {"name": "y", "sort": "int", "values": [-255, -1, 0, 1, 256]},
+            {"name": "onCurve", "sort": "bool"},
+        ]},
+        "human_guard": "x != 0",
+        "human_guard_note": "The X-same bit is only assigned when the x delta is "
+                            "zero; otherwise the branch is not taken.",
+    },
+    {
+        "id": "numba_adjust_indices",
+        "project": "Numba",
+        "version": "0.59.0",
+        "license": "BSD-2-Clause",
+        "source_path": "numba/cpython/unicode.py::_adjust_indices",
+        "function": "_adjust_indices",
+        "target": "end += length",
+        "extraction_note": "Verbatim body; the @register_jitable decorator was removed "
+                           "(it has no runtime semantics in this extraction).",
+        "source": '''def program(length, start, end):
+    if end > length:
+        end = length
+    if end < 0:
+        end += length  # TARGET_A
+        if end < 0:
+            end = 0
+    if start < 0:
+        start += length
+        if start < 0:
+            start = 0
+    return start, end
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "length", "sort": "int", "values": [0, 1, 2, 3]},
+            {"name": "start", "sort": "int", "values": [-3, -2, -1, 0, 1, 2, 3]},
+            {"name": "end", "sort": "int", "values": [-3, -2, -1, 0, 1, 2, 3]},
+        ]},
+        "human_guard": "end >= 0 or end + length <= 0",
+        "human_guard_note": "A negative end is clamped to zero when the shifted value "
+                            "is still negative, so the add is absorbed; a non-negative "
+                            "end never enters the branch.",
+    },
+    {
+        "id": "mpl_norm_angle",
+        "project": "Matplotlib",
+        "version": "3.8.0",
+        "license": "PSF-based",
+        "source_path": "mpl_toolkits/mplot3d/art3d.py::_norm_angle",
+        "function": "_norm_angle",
+        "target": "a = a - 360",
+        "extraction_note": "Verbatim; docstring kept.",
+        "source": '''def program(a):
+    """Return the given angle normalized to -180 < *a* <= 180 degrees."""
+    a = (a + 360) % 360
+    if a > 180:
+        a = a - 360  # TARGET_A
+    return a
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "a", "sort": "int", "values": [
+                -720, -361, -360, -181, -180, -179, -1, 0, 1, 179, 180,
+                181, 359, 360, 361, 540, 541]},
+        ]},
+        "human_guard": "(a + 360) % 360 <= 180",
+        "human_guard_note": "After the first normalization the branch is entered only "
+                            "for the (180, 360) part of the residue class.",
+    },
+    {
+        "id": "scipy_range_prod_mid",
+        "project": "SciPy",
+        "version": "1.11.4",
+        "license": "BSD-3-Clause",
+        "source_path": "scipy/special/_basic.py::_range_prod",
+        "function": "_range_prod",
+        "target": "mid = mid - ((mid - hi) % k)",
+        "extraction_note": "Verbatim; docstring removed. Recursive by construction.",
+        "source": '''def program(lo, hi, k=1):
+    if lo + k < hi:
+        mid = (hi + lo) // 2
+        if k > 1:
+            mid = mid - ((mid - hi) % k)  # TARGET_A
+        return program(lo, mid, k) * program(mid + k, hi, k)
+    elif lo + k == hi:
+        return lo * hi
+    else:
+        return hi
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "lo", "sort": "int", "values": [0, 1, 2, 3]},
+            {"name": "hi", "sort": "int", "values": [2, 3, 4, 5, 6]},
+            {"name": "k", "sort": "int", "values": [1, 2, 3]},
+        ]},
+        "human_guard": ("lo + k >= hi or k <= 1 or "
+                        "((hi + lo) // 2 - hi) % k == 0"),
+        "human_guard_note": "The adjustment is unobservable when the recursive split is "
+                            "not entered, when k == 1, or when mid is already aligned to k.",
+    },
+    {
+        "id": "condaindex_make_seconds",
+        "project": "conda-index",
+        "version": "0.4.0",
+        "license": "BSD-3-Clause",
+        "source_path": "conda_index/index/__init__.py::_make_seconds",
+        "function": "_make_seconds",
+        "target": "timestamp //= 1000",
+        "extraction_note": "Verbatim; comment shortened.",
+        "source": '''def program(timestamp):
+    timestamp = int(timestamp)
+    if timestamp > 253402300799:
+        timestamp //= 1000  # TARGET_A
+    return timestamp
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "timestamp", "sort": "int", "values": [
+                0, 1, 253402300799, 253402300800, 253402300801,
+                1000000000000, 10000000000000]},
+        ]},
+        "human_guard": "timestamp <= 253402300799",
+        "human_guard_note": "Milliseconds are converted only above the 9999-12-31 "
+                            "cutoff; at or below it the branch is not taken.",
+    },
+    {
+        "id": "cpython_median_low",
+        "project": "CPython",
+        "version": "3.11.7",
+        "license": "PSF-2.0",
+        "source_path": "Lib/statistics.py::median_low",
+        "function": "median_low",
+        "target": "data = sorted(data)",
+        "extraction_note": "The unreachable empty-input StatisticsError branch was "
+                           "removed. Domain restricted to length 2..3: the term "
+                           "language has no local bindings and does not short-circuit "
+                           "`and`, so a guard that indexes data[1] cannot be written "
+                           "for length 1 without a partial index. On the declared "
+                           "domain the extraction is semantics-preserving.",
+        "source": '''def program(data):
+    data = sorted(data)  # TARGET_A
+    n = len(data)
+    if n % 2 == 1:
+        return data[n // 2]
+    i = n // 2
+    return data[i - 1]
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "data", "sort": "list[int]", "length": [2, 3],
+             "values": [0, 1, 2]},
+        ]},
+        "human_guard": ("(len(data) == 2 and data[0] == min(data)) or "
+                        "(len(data) == 3 and (count(data, data[1]) >= 2 or "
+                        "(min(data) != data[1] and max(data) != data[1])))"),
+        "human_guard_note": "Sorting is unobservable for two points when the first "
+                            "is already the minimum, and for three points when the "
+                            "middle element is the median: either it is tied with "
+                            "another point, or it is neither the unique minimum nor "
+                            "the unique maximum. All subterms are total on length "
+                            "2..3, which the non-short-circuiting guard language "
+                            "requires.",
+    },
+    {
+        "id": "cpython_punycode_adapt",
+        "project": "CPython",
+        "version": "3.11.7",
+        "license": "PSF-2.0",
+        "source_path": "Lib/encodings/punycode.py::adapt",
+        "function": "adapt",
+        "target": "delta += delta // numchars",
+        "extraction_note": "Verbatim; docstring removed. Domain keeps numchars >= 1.",
+        "source": '''def program(delta, first, numchars):
+    if first:
+        delta //= 700
+    else:
+        delta //= 2
+    delta += delta // numchars  # TARGET_A
+    k = 0
+    while delta > 455:
+        delta //= 35
+        k += 36
+    return k + (36 * delta) // (delta + 38)
+''',
+        "domain": {"kind": "exhaustive", "args": [
+            {"name": "delta", "sort": "int", "values": list(range(0, 41))},
+            {"name": "first", "sort": "bool"},
+            {"name": "numchars", "sort": "int", "values": [1, 2, 3, 5]},
+        ]},
+        "human_guard": ("(36 * (((delta // 700) if first else (delta // 2)) + "
+                        "(((delta // 700) if first else (delta // 2))) // numchars)) "
+                        "// ((((delta // 700) if first else (delta // 2)) + "
+                        "(((delta // 700) if first else (delta // 2))) // numchars) "
+                        "+ 38) == (36 * (((delta // 700) if first else (delta // 2)))) "
+                        "// ((((delta // 700) if first else (delta // 2))) + 38)"),
+        "human_guard_compact": False,
+        "human_guard_note": "The first-guess condition (increment == 0) is sound but "
+                            "incomplete: at delta 10/11/16/17 with first=False the "
+                            "increment is nonzero yet the final saturating formula "
+                            "returns the same value. The exact guard has to restate "
+                            "that formula before and after the increment, so it is "
+                            "verified but not a compact semantic predicate.",
+    },
+]
+
+
+def main() -> int:
+    OUT.mkdir(parents=True, exist_ok=True)
+    program_dir = OUT / "programs"
+    program_dir.mkdir(exist_ok=True)
+    payload = []
+    for case in CASES:
+        item = dict(case)
+        item.setdefault("human_guard_compact", True)
+        path = program_dir / f"{case['id']}.py"
+        path.write_text(case["source"], encoding="utf-8")
+        item["source_file"] = path.relative_to(ROOT).as_posix()
+        payload.append(item)
+    (OUT / "cases.json").write_text(
+        json.dumps({"cases": payload}, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8")
+    keep = {f"{case['id']}.py" for case in CASES}
+    for stale in program_dir.glob("*.py"):
+        if stale.name not in keep:
+            stale.unlink()
+    print(f"wrote {len(payload)} cases to {OUT / 'cases.json'}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

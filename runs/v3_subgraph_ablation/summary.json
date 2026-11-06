@@ -1,0 +1,4614 @@
+{
+  "experiment": "mace_subgraph_search_exp1",
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "git_commit": "e53e58716f5f08d342798747a27e69eef6722000",
+  "git_branch": "research/mace-subgraph-search",
+  "config_sha256": "a3dec6e2cd76fe9ef85e9622068bb2ebf0b268d65dd649317808c93968364853",
+  "modes": [
+    "C-original",
+    "C-fixed",
+    "Graph-candidates",
+    "Graph-full"
+  ],
+  "tasks": {
+    "jinja2_bytecode_cache_read": {
+      "C-original": {
+        "summary": {
+          "mode": "C-original",
+          "universe_size": 1,
+          "universe_ids": [
+            "src/jinja2/loaders.py:137-137"
+          ],
+          "emission_mode": "active_filtered",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 4
+          },
+          "masked_inputs": 4,
+          "evaluations": 8,
+          "subsets_total": 8,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 4,
+          "verified_mmbs": 4,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 1,
+            "mean": 1.0,
+            "max": 1
+          },
+          "first_mmbs_evaluations": {
+            "count": 4,
+            "min": 2,
+            "mean": 2.0,
+            "max": 2
+          },
+          "probe_executions": 24,
+          "variant_builds": 4,
+          "wall_seconds": 5.751,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 4,
+            "evaluations": 8,
+            "subsets_total": 8,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "frozen_submission_identical": true,
+          "frozen_submission_sha256": "09edeffe7ac625a8890f9e0bab6b0451016ac3bc7051937da281e247e63d02bb",
+          "submission_sha256": "09edeffe7ac625a8890f9e0bab6b0451016ac3bc7051937da281e247e63d02bb"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "jinja2_bytecode_cache_read",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "C-fixed": {
+        "summary": {
+          "mode": "C-fixed",
+          "universe_size": 1,
+          "universe_ids": [
+            "src/jinja2/loaders.py:137-137"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 4
+          },
+          "masked_inputs": 4,
+          "evaluations": 8,
+          "subsets_total": 8,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 4,
+          "verified_mmbs": 4,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 1,
+            "mean": 1.0,
+            "max": 1
+          },
+          "first_mmbs_evaluations": {
+            "count": 4,
+            "min": 2,
+            "mean": 2.0,
+            "max": 2
+          },
+          "probe_executions": 24,
+          "variant_builds": 4,
+          "wall_seconds": 5.748,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 4,
+            "evaluations": 8,
+            "subsets_total": 8,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "09edeffe7ac625a8890f9e0bab6b0451016ac3bc7051937da281e247e63d02bb"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "jinja2_bytecode_cache_read",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/jinja2/loaders.py:137"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-candidates": {
+        "summary": {
+          "mode": "Graph-candidates",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:143-143",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:144-144"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 8
+          },
+          "masked_inputs": 4,
+          "evaluations": 256,
+          "subsets_total": 256,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 4,
+          "verified_mmbs": 8,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 63,
+            "mean": 63.0,
+            "max": 63
+          },
+          "first_mmbs_evaluations": {
+            "count": 4,
+            "min": 2,
+            "mean": 2.0,
+            "max": 2
+          },
+          "probe_executions": 516,
+          "variant_builds": 128,
+          "wall_seconds": 103.075,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 4,
+            "evaluations": 256,
+            "subsets_total": 256,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "94233905098db0a17b21c9c95ccc131dc6aa0699e4755ca54eccf92eca43ba6f"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "jinja2_bytecode_cache_read",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 1,
+            "FINITE_DOMAIN_EXACT": 1,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 2,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 2,
+            "claim_credit": 2,
+            "domain_exact_relations": 1,
+            "witness_verified_relations": 1,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/jinja2/loaders.py:119",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MMBS:src/jinja2/loaders.py:119",
+              "credit": 0
+            },
+            {
+              "index": 3,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-full": {
+        "summary": {
+          "mode": "Graph-full",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/jinja2/loaders.py:119-119",
+            "src/jinja2/loaders.py:143-143",
+            "src/jinja2/loaders.py:137-137",
+            "src/jinja2/loaders.py:146-148",
+            "src/jinja2/loaders.py:131-131",
+            "src/jinja2/loaders.py:144-144"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 8
+          },
+          "masked_inputs": 4,
+          "evaluations": 256,
+          "subsets_total": 256,
+          "evidence_complete": true,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 48,
+          "verified_msms": 4,
+          "verified_mmbs": 8,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 62,
+            "mean": 62.0,
+            "max": 62
+          },
+          "first_mmbs_evaluations": {
+            "count": 4,
+            "min": 3,
+            "mean": 3.0,
+            "max": 3
+          },
+          "probe_executions": 516,
+          "variant_builds": 128,
+          "wall_seconds": 104.002,
+          "unknowns": [],
+          "search": {
+            "mode": "graph",
+            "inputs_with_search": 4,
+            "evaluations": 256,
+            "subsets_total": 256,
+            "complete": true,
+            "executor_cache_hits": 48,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "94233905098db0a17b21c9c95ccc131dc6aa0699e4755ca54eccf92eca43ba6f"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "jinja2_bytecode_cache_read",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 1,
+            "FINITE_DOMAIN_EXACT": 1,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 2,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 2,
+            "claim_credit": 2,
+            "domain_exact_relations": 1,
+            "witness_verified_relations": 1,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "2"
+                },
+                "minus": {
+                  "cache_dumps": 0,
+                  "cache_loads": 1,
+                  "outcome": "return",
+                  "value": "42"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/jinja2/loaders.py:119",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MMBS:src/jinja2/loaders.py:119",
+              "credit": 0
+            },
+            {
+              "index": 3,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/jinja2/loaders.py:137",
+              "operations": [
+                "src/jinja2/loaders.py:137"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/jinja2/loaders.py:137"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      }
+    },
+    "werkzeug_bind_server_name_lower": {
+      "C-original": {
+        "summary": {
+          "mode": "C-original",
+          "universe_size": 2,
+          "universe_ids": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:311-311"
+          ],
+          "emission_mode": "active_filtered",
+          "filter_stats": {
+            "msms_dropped": 1,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 3,
+          "evaluations": 12,
+          "subsets_total": 12,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 4,
+          "verified_mmbs": 2,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 3,
+            "min": 2,
+            "mean": 2.667,
+            "max": 3
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 2,
+            "mean": 2.0,
+            "max": 2
+          },
+          "probe_executions": 76,
+          "variant_builds": 12,
+          "wall_seconds": 23.878,
+          "unknowns": [
+            "EXP-1 emission filter dropped verified minimal sets: MSMS 1/4, MMBS 0/2"
+          ],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 3,
+            "evaluations": 12,
+            "subsets_total": 12,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "frozen_submission_identical": true,
+          "frozen_submission_sha256": "1ab7c225b200b303ec5e59cd1d51bc0e5963017a8c49bfcd2068d7bde891ab0e",
+          "submission_sha256": "1ab7c225b200b303ec5e59cd1d51bc0e5963017a8c49bfcd2068d7bde891ab0e"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_bind_server_name_lower",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "<invalid>"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/routing/map.py:219"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/routing/map.py:219"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "C-fixed": {
+        "summary": {
+          "mode": "C-fixed",
+          "universe_size": 2,
+          "universe_ids": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:311-311"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 3,
+          "evaluations": 12,
+          "subsets_total": 12,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 4,
+          "verified_mmbs": 2,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 3,
+            "min": 2,
+            "mean": 2.667,
+            "max": 3
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 2,
+            "mean": 2.0,
+            "max": 2
+          },
+          "probe_executions": 76,
+          "variant_builds": 12,
+          "wall_seconds": 24.059,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 3,
+            "evaluations": 12,
+            "subsets_total": 12,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "1ab7c225b200b303ec5e59cd1d51bc0e5963017a8c49bfcd2068d7bde891ab0e"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_bind_server_name_lower",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "<invalid>"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/routing/map.py:219"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/routing/map.py:219"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-candidates": {
+        "summary": {
+          "mode": "Graph-candidates",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/werkzeug/routing/map.py:305-305",
+            "src/werkzeug/routing/map.py:311-311",
+            "src/werkzeug/routing/map.py:313-313",
+            "src/werkzeug/routing/map.py:344-353",
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:231-231"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 3,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 3,
+          "evaluations": 192,
+          "subsets_total": 192,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 3,
+          "verified_mmbs": 2,
+          "emitted_claims": 3,
+          "first_msms_evaluations": {
+            "count": 3,
+            "min": 58,
+            "mean": 61.333,
+            "max": 63
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 2,
+            "mean": 2.0,
+            "max": 2
+          },
+          "probe_executions": 392,
+          "variant_builds": 128,
+          "wall_seconds": 138.063,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 3,
+            "evaluations": 192,
+            "subsets_total": 192,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "e7e7a015a967d7a6c6027e68a0fba9bc278f3dc4bbb5a5edd0142f900d2910de"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_bind_server_name_lower",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 1,
+            "FINITE_DOMAIN_EXACT": 1,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 1,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 2,
+            "claim_credit": 2,
+            "domain_exact_relations": 1,
+            "witness_verified_relations": 1,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "<invalid>"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/routing/map.py:344-353",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-full": {
+        "summary": {
+          "mode": "Graph-full",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/werkzeug/routing/map.py:305-305",
+            "src/werkzeug/routing/map.py:311-311",
+            "src/werkzeug/routing/map.py:313-313",
+            "src/werkzeug/routing/map.py:344-353",
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:231-231"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 3,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 3,
+          "evaluations": 192,
+          "subsets_total": 192,
+          "evidence_complete": true,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 38,
+          "verified_msms": 3,
+          "verified_mmbs": 2,
+          "emitted_claims": 3,
+          "first_msms_evaluations": {
+            "count": 3,
+            "min": 7,
+            "mean": 23.0,
+            "max": 31
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 8,
+            "mean": 8.0,
+            "max": 8
+          },
+          "probe_executions": 392,
+          "variant_builds": 128,
+          "wall_seconds": 140.018,
+          "unknowns": [],
+          "search": {
+            "mode": "graph",
+            "inputs_with_search": 3,
+            "evaluations": 192,
+            "subsets_total": 192,
+            "complete": true,
+            "executor_cache_hits": 38,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "e7e7a015a967d7a6c6027e68a0fba9bc278f3dc4bbb5a5edd0142f900d2910de"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_bind_server_name_lower",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 1,
+            "FINITE_DOMAIN_EXACT": 1,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 1,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 2,
+            "claim_credit": 2,
+            "domain_exact_relations": 1,
+            "witness_verified_relations": 1,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": ""
+                },
+                "minus": {
+                  "outcome": "return",
+                  "server_name": "example.com",
+                  "subdomain": "<invalid>"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/routing/map.py:344-353",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/routing/map.py:219",
+              "operations": [
+                "src/werkzeug/routing/map.py:219"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/routing/map.py:219"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      }
+    },
+    "werkzeug_filestorage_stream_name": {
+      "C-original": {
+        "summary": {
+          "mode": "C-original",
+          "universe_size": 3,
+          "universe_ids": [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "emission_mode": "active_filtered",
+          "filter_stats": {
+            "msms_dropped": 3,
+            "mmbs_dropped": 0,
+            "msms_total": 6,
+            "mmbs_total": 3
+          },
+          "masked_inputs": 4,
+          "evaluations": 32,
+          "subsets_total": 32,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 6,
+          "verified_mmbs": 3,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 5,
+            "mean": 5.75,
+            "max": 6
+          },
+          "first_mmbs_evaluations": {
+            "count": 3,
+            "min": 3,
+            "mean": 3.0,
+            "max": 3
+          },
+          "probe_executions": 80,
+          "variant_builds": 16,
+          "wall_seconds": 23.741,
+          "unknowns": [
+            "masked input with no causally active minimal sufficient set: {\"data\":\"abc\",\"stream\":\"none\"}",
+            "EXP-1 emission filter dropped verified minimal sets: MSMS 3/6, MMBS 0/3"
+          ],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 4,
+            "evaluations": 32,
+            "subsets_total": 32,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "frozen_submission_identical": false,
+          "frozen_submission_sha256": "960b5e6488ed63193a975eb4a2f2455aa7b18a6fcf84f4450f63f1f3f65d6790",
+          "submission_sha256": "12c87d95b547f0bb64f0be4ecab97d484479c9f604d21d81023a1de20597f233"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_filestorage_stream_name",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "<home>\\AppData\\Local\\Temp\\tmpwejudfc3",
+                  "filename_type": "str",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": null,
+                  "filename_type": "NoneType",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "C-fixed": {
+        "summary": {
+          "mode": "C-fixed",
+          "universe_size": 3,
+          "universe_ids": [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2926-2926"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 6,
+            "mmbs_total": 3
+          },
+          "masked_inputs": 4,
+          "evaluations": 32,
+          "subsets_total": 32,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 6,
+          "verified_mmbs": 3,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 5,
+            "mean": 5.75,
+            "max": 6
+          },
+          "first_mmbs_evaluations": {
+            "count": 3,
+            "min": 3,
+            "mean": 3.0,
+            "max": 3
+          },
+          "probe_executions": 80,
+          "variant_builds": 16,
+          "wall_seconds": 24.166,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 4,
+            "evaluations": 32,
+            "subsets_total": 32,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "12c87d95b547f0bb64f0be4ecab97d484479c9f604d21d81023a1de20597f233"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_filestorage_stream_name",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "<home>\\AppData\\Local\\Temp\\tmpls9_61ka",
+                  "filename_type": "str",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": null,
+                  "filename_type": "NoneType",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/datastructures.py:2924"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-candidates": {
+        "summary": {
+          "mode": "Graph-candidates",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2926-2926",
+            "src/werkzeug/datastructures.py:2928-2928",
+            "src/werkzeug/datastructures.py:2912-2912",
+            "src/werkzeug/datastructures.py:2911-2911"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 3
+          },
+          "masked_inputs": 4,
+          "evaluations": 256,
+          "subsets_total": 256,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 4,
+          "verified_mmbs": 3,
+          "emitted_claims": 3,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 58,
+            "mean": 59.5,
+            "max": 60
+          },
+          "first_mmbs_evaluations": {
+            "count": 3,
+            "min": 5,
+            "mean": 5.0,
+            "max": 5
+          },
+          "probe_executions": 516,
+          "variant_builds": 128,
+          "wall_seconds": 154.296,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 4,
+            "evaluations": 256,
+            "subsets_total": 256,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "53d45e0d0cb32ffac5e48b697d7586f684eb709dc712f9c6f496bb3aedf4a778"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_filestorage_stream_name",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 1,
+            "FINITE_DOMAIN_EXACT": 1,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 1,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 2,
+            "claim_credit": 2,
+            "domain_exact_relations": 1,
+            "witness_verified_relations": 1,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "<home>\\AppData\\Local\\Temp\\tmplqcaupt_",
+                  "filename_type": "str",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": null,
+                  "filename_type": "NoneType",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/datastructures.py:2928",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-full": {
+        "summary": {
+          "mode": "Graph-full",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/werkzeug/datastructures.py:2924-2924",
+            "src/werkzeug/datastructures.py:2921-2921",
+            "src/werkzeug/datastructures.py:2926-2926",
+            "src/werkzeug/datastructures.py:2928-2928",
+            "src/werkzeug/datastructures.py:2912-2912",
+            "src/werkzeug/datastructures.py:2911-2911"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 4,
+            "mmbs_total": 3
+          },
+          "masked_inputs": 4,
+          "evaluations": 256,
+          "subsets_total": 256,
+          "evidence_complete": true,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 49,
+          "verified_msms": 4,
+          "verified_mmbs": 3,
+          "emitted_claims": 3,
+          "first_msms_evaluations": {
+            "count": 4,
+            "min": 10,
+            "mean": 19.0,
+            "max": 22
+          },
+          "first_mmbs_evaluations": {
+            "count": 3,
+            "min": 3,
+            "mean": 3.0,
+            "max": 3
+          },
+          "probe_executions": 516,
+          "variant_builds": 128,
+          "wall_seconds": 162.888,
+          "unknowns": [],
+          "search": {
+            "mode": "graph",
+            "inputs_with_search": 4,
+            "evaluations": 256,
+            "subsets_total": 256,
+            "complete": true,
+            "executor_cache_hits": 49,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "53d45e0d0cb32ffac5e48b697d7586f684eb709dc712f9c6f496bb3aedf4a778"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_filestorage_stream_name",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 1,
+            "FINITE_DOMAIN_EXACT": 1,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 1,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 2,
+            "claim_credit": 2,
+            "domain_exact_relations": 1,
+            "witness_verified_relations": 1,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "<home>\\AppData\\Local\\Temp\\tmpzpxhhtgw",
+                  "filename_type": "str",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": null,
+                  "filename_type": "NoneType",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/datastructures.py:2928",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "3 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/datastructures.py:2924",
+              "operations": [
+                "src/werkzeug/datastructures.py:2924"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/datastructures.py:2924"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      }
+    },
+    "werkzeug_get_host_default_empty": {
+      "C-original": {
+        "summary": {
+          "mode": "C-original",
+          "universe_size": 5,
+          "universe_ids": [
+            "src/werkzeug/sansio/utils.py:85-85",
+            "src/werkzeug/sansio/utils.py:87-87",
+            "src/werkzeug/sansio/utils.py:90-90",
+            "src/werkzeug/sansio/utils.py:93-93",
+            "src/werkzeug/sansio/utils.py:95-95"
+          ],
+          "emission_mode": "active_filtered",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 6,
+            "mmbs_total": 6
+          },
+          "masked_inputs": 6,
+          "evaluations": 192,
+          "subsets_total": 192,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 6,
+          "verified_mmbs": 6,
+          "emitted_claims": 7,
+          "first_msms_evaluations": {
+            "count": 6,
+            "min": 30,
+            "mean": 30.667,
+            "max": 31
+          },
+          "first_mmbs_evaluations": {
+            "count": 6,
+            "min": 2,
+            "mean": 2.333,
+            "max": 3
+          },
+          "probe_executions": 396,
+          "variant_builds": 64,
+          "wall_seconds": 111.664,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 6,
+            "evaluations": 192,
+            "subsets_total": 192,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "frozen_submission_identical": true,
+          "frozen_submission_sha256": "da3a464b2f79643f4af3fb4951237c668360a80a87cee08ce0cb7692659e36c7",
+          "submission_sha256": "da3a464b2f79643f4af3fb4951237c668360a80a87cee08ce0cb7692659e36c7"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_get_host_default_empty",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 3,
+            "FINITE_DOMAIN_EXACT": 4,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 7,
+            "claim_credit": 7,
+            "domain_exact_relations": 4,
+            "witness_verified_relations": 3,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "host": "",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "message": "cannot access local variable 'host' where it is not associated with a value",
+                  "outcome": "raise",
+                  "type": "UnboundLocalError"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 4,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 5,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            },
+            {
+              "index": 6,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "C-fixed": {
+        "summary": {
+          "mode": "C-fixed",
+          "universe_size": 5,
+          "universe_ids": [
+            "src/werkzeug/sansio/utils.py:85-85",
+            "src/werkzeug/sansio/utils.py:87-87",
+            "src/werkzeug/sansio/utils.py:90-90",
+            "src/werkzeug/sansio/utils.py:93-93",
+            "src/werkzeug/sansio/utils.py:95-95"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 6,
+            "mmbs_total": 6
+          },
+          "masked_inputs": 6,
+          "evaluations": 192,
+          "subsets_total": 192,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 6,
+          "verified_mmbs": 6,
+          "emitted_claims": 7,
+          "first_msms_evaluations": {
+            "count": 6,
+            "min": 30,
+            "mean": 30.667,
+            "max": 31
+          },
+          "first_mmbs_evaluations": {
+            "count": 6,
+            "min": 2,
+            "mean": 2.333,
+            "max": 3
+          },
+          "probe_executions": 396,
+          "variant_builds": 64,
+          "wall_seconds": 109.662,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 6,
+            "evaluations": 192,
+            "subsets_total": 192,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "da3a464b2f79643f4af3fb4951237c668360a80a87cee08ce0cb7692659e36c7"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_get_host_default_empty",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 3,
+            "FINITE_DOMAIN_EXACT": 4,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 7,
+            "claim_credit": 7,
+            "domain_exact_relations": 4,
+            "witness_verified_relations": 3,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "host": "",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "message": "cannot access local variable 'host' where it is not associated with a value",
+                  "outcome": "raise",
+                  "type": "UnboundLocalError"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 4,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 5,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            },
+            {
+              "index": 6,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-candidates": {
+        "summary": {
+          "mode": "Graph-candidates",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/werkzeug/sansio/utils.py:85-85",
+            "src/werkzeug/sansio/utils.py:87-87",
+            "src/werkzeug/sansio/utils.py:90-90",
+            "src/werkzeug/sansio/utils.py:93-93",
+            "src/werkzeug/sansio/utils.py:95-95",
+            "src/werkzeug/sansio/utils.py:101-101"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 6,
+            "mmbs_total": 6
+          },
+          "masked_inputs": 6,
+          "evaluations": 384,
+          "subsets_total": 384,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 6,
+          "verified_mmbs": 6,
+          "emitted_claims": 7,
+          "first_msms_evaluations": {
+            "count": 6,
+            "min": 61,
+            "mean": 61.667,
+            "max": 62
+          },
+          "first_mmbs_evaluations": {
+            "count": 6,
+            "min": 3,
+            "mean": 3.333,
+            "max": 4
+          },
+          "probe_executions": 770,
+          "variant_builds": 128,
+          "wall_seconds": 208.307,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 6,
+            "evaluations": 384,
+            "subsets_total": 384,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "da3a464b2f79643f4af3fb4951237c668360a80a87cee08ce0cb7692659e36c7"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_get_host_default_empty",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 3,
+            "FINITE_DOMAIN_EXACT": 4,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 7,
+            "claim_credit": 7,
+            "domain_exact_relations": 4,
+            "witness_verified_relations": 3,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "host": "",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "message": "cannot access local variable 'host' where it is not associated with a value",
+                  "outcome": "raise",
+                  "type": "UnboundLocalError"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 4,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 5,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            },
+            {
+              "index": 6,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-full": {
+        "summary": {
+          "mode": "Graph-full",
+          "universe_size": 6,
+          "universe_ids": [
+            "src/werkzeug/sansio/utils.py:85-85",
+            "src/werkzeug/sansio/utils.py:87-87",
+            "src/werkzeug/sansio/utils.py:90-90",
+            "src/werkzeug/sansio/utils.py:93-93",
+            "src/werkzeug/sansio/utils.py:95-95",
+            "src/werkzeug/sansio/utils.py:101-101"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 6,
+            "mmbs_total": 6
+          },
+          "masked_inputs": 6,
+          "evaluations": 384,
+          "subsets_total": 384,
+          "evidence_complete": true,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 69,
+          "verified_msms": 6,
+          "verified_mmbs": 6,
+          "emitted_claims": 7,
+          "first_msms_evaluations": {
+            "count": 6,
+            "min": 5,
+            "mean": 5.333,
+            "max": 6
+          },
+          "first_mmbs_evaluations": {
+            "count": 6,
+            "min": 4,
+            "mean": 4.333,
+            "max": 5
+          },
+          "probe_executions": 770,
+          "variant_builds": 128,
+          "wall_seconds": 209.863,
+          "unknowns": [],
+          "search": {
+            "mode": "graph",
+            "inputs_with_search": 6,
+            "evaluations": 384,
+            "subsets_total": 384,
+            "complete": true,
+            "executor_cache_hits": 69,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "da3a464b2f79643f4af3fb4951237c668360a80a87cee08ce0cb7692659e36c7"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_get_host_default_empty",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 3,
+            "FINITE_DOMAIN_EXACT": 4,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 7,
+            "claim_credit": 7,
+            "domain_exact_relations": 4,
+            "witness_verified_relations": 3,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "host": "",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "message": "cannot access local variable 'host' where it is not associated with a value",
+                  "outcome": "raise",
+                  "type": "UnboundLocalError"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "4 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:85"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 4,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/sansio/utils.py:87"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 5,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:85",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:85"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:85"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            },
+            {
+              "index": 6,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/sansio/utils.py:87",
+              "operations": [
+                "src/werkzeug/sansio/utils.py:87"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/sansio/utils.py:87"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      }
+    },
+    "werkzeug_secure_filename_ascii_filter": {
+      "C-original": {
+        "summary": {
+          "mode": "C-original",
+          "universe_size": 3,
+          "universe_ids": [
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:226-226",
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "emission_mode": "active_filtered",
+          "filter_stats": {
+            "msms_dropped": 10,
+            "mmbs_dropped": 0,
+            "msms_total": 17,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 7,
+          "evaluations": 56,
+          "subsets_total": 56,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 17,
+          "verified_mmbs": 2,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 7,
+            "min": 5,
+            "mean": 5.286,
+            "max": 6
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 3,
+            "mean": 3.0,
+            "max": 3
+          },
+          "probe_executions": 120,
+          "variant_builds": 16,
+          "wall_seconds": 33.41,
+          "unknowns": [
+            "masked input with no causally active minimal sufficient set: {\"filename\":\"\"}",
+            "EXP-1 emission filter dropped verified minimal sets: MSMS 10/17, MMBS 0/2"
+          ],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 7,
+            "evaluations": 56,
+            "subsets_total": 56,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "frozen_submission_identical": true,
+          "frozen_submission_sha256": "e4fc7ea1beba899ecd4efb35b14811c10e3fc5e7d5f00bffd194ccd80323c9c0",
+          "submission_sha256": "e4fc7ea1beba899ecd4efb35b14811c10e3fc5e7d5f00bffd194ccd80323c9c0"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_secure_filename_ascii_filter",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "ab",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": "a_b",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "C-fixed": {
+        "summary": {
+          "mode": "C-fixed",
+          "universe_size": 3,
+          "universe_ids": [
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:226-226",
+            "src/werkzeug/utils.py:239-239"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 17,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 7,
+          "evaluations": 56,
+          "subsets_total": 56,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 17,
+          "verified_mmbs": 2,
+          "emitted_claims": 4,
+          "first_msms_evaluations": {
+            "count": 7,
+            "min": 5,
+            "mean": 5.286,
+            "max": 6
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 3,
+            "mean": 3.0,
+            "max": 3
+          },
+          "probe_executions": 120,
+          "variant_builds": 16,
+          "wall_seconds": 33.652,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 7,
+            "evaluations": 56,
+            "subsets_total": 56,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "e4fc7ea1beba899ecd4efb35b14811c10e3fc5e7d5f00bffd194ccd80323c9c0"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_secure_filename_ascii_filter",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 0,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "ab",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": "a_b",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 2,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 3,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-candidates": {
+        "summary": {
+          "mode": "Graph-candidates",
+          "universe_size": 5,
+          "universe_ids": [
+            "src/werkzeug/utils.py:239-239",
+            "src/werkzeug/utils.py:241-241",
+            "src/werkzeug/utils.py:221-221",
+            "src/werkzeug/utils.py:226-226",
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 33,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 7,
+          "evaluations": 224,
+          "subsets_total": 224,
+          "evidence_complete": false,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 0,
+          "verified_msms": 33,
+          "verified_mmbs": 2,
+          "emitted_claims": 7,
+          "first_msms_evaluations": {
+            "count": 7,
+            "min": 27,
+            "mean": 27.286,
+            "max": 28
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 4,
+            "mean": 4.0,
+            "max": 4
+          },
+          "probe_executions": 450,
+          "variant_builds": 64,
+          "wall_seconds": 120.33,
+          "unknowns": [],
+          "search": {
+            "mode": "exhaustive",
+            "inputs_with_search": 7,
+            "evaluations": 224,
+            "subsets_total": 224,
+            "complete": true,
+            "executor_cache_hits": 0,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "1a13a56ce8ead201b8591f066c3ce44c5cca9d6efdf9dbe66cf69ea701479430"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_secure_filename_ascii_filter",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 3,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "ab",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": "a_b",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/utils.py:221",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/utils.py:226",
+              "credit": 0
+            },
+            {
+              "index": 3,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 4,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/utils.py:239",
+              "credit": 0
+            },
+            {
+              "index": 5,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 6,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      },
+      "Graph-full": {
+        "summary": {
+          "mode": "Graph-full",
+          "universe_size": 5,
+          "universe_ids": [
+            "src/werkzeug/utils.py:239-239",
+            "src/werkzeug/utils.py:241-241",
+            "src/werkzeug/utils.py:221-221",
+            "src/werkzeug/utils.py:226-226",
+            "src/werkzeug/utils.py:227-229"
+          ],
+          "emission_mode": "minimality_only",
+          "filter_stats": {
+            "msms_dropped": 0,
+            "mmbs_dropped": 0,
+            "msms_total": 33,
+            "mmbs_total": 2
+          },
+          "masked_inputs": 7,
+          "evaluations": 224,
+          "subsets_total": 224,
+          "evidence_complete": true,
+          "unknown_subsets": 0,
+          "invalid_subsets": 0,
+          "msms_unknown": 0,
+          "mmbs_unknown": 0,
+          "executor_cache_hits": 69,
+          "verified_msms": 33,
+          "verified_mmbs": 2,
+          "emitted_claims": 7,
+          "first_msms_evaluations": {
+            "count": 7,
+            "min": 7,
+            "mean": 7.286,
+            "max": 8
+          },
+          "first_mmbs_evaluations": {
+            "count": 2,
+            "min": 11,
+            "mean": 11.0,
+            "max": 11
+          },
+          "probe_executions": 450,
+          "variant_builds": 64,
+          "wall_seconds": 121.37,
+          "unknowns": [],
+          "search": {
+            "mode": "graph",
+            "inputs_with_search": 7,
+            "evaluations": 224,
+            "subsets_total": 224,
+            "complete": true,
+            "executor_cache_hits": 69,
+            "unknown_subsets": 0,
+            "invalid_subsets": 0,
+            "msms_unknown": 0,
+            "mmbs_unknown": 0
+          },
+          "submission_sha256": "1a13a56ce8ead201b8591f066c3ce44c5cca9d6efdf9dbe66cf69ea701479430"
+        },
+        "score": {
+          "protocol": "mace_benchmark_v3_scoring",
+          "scorer_version": "mace-benchmark-v3-scorer-1.0",
+          "task_id": "werkzeug_secure_filename_ascii_filter",
+          "submission_id": "baseline-C",
+          "status_counts": {
+            "WITNESS_VERIFIED": 2,
+            "FINITE_DOMAIN_EXACT": 2,
+            "PROVEN": 0,
+            "FALSE": 0,
+            "INVALID": 0,
+            "UNVERIFIED": 3,
+            "UNSUPPORTED": 0,
+            "DUPLICATE": 0
+          },
+          "score": {
+            "credited_relations": 4,
+            "claim_credit": 4,
+            "domain_exact_relations": 2,
+            "witness_verified_relations": 2,
+            "deduplicated": 0
+          },
+          "claims": [
+            {
+              "index": 0,
+              "type": "EXPOSING_COUNTEREXAMPLE",
+              "status": "WITNESS_VERIFIED",
+              "reason": "Both sides executed and produced different observations.",
+              "scope": "one submitted input; no claim over other legal inputs",
+              "relation_key": "EXPOSING",
+              "observations": {
+                "plus": {
+                  "filename": "ab",
+                  "outcome": "return"
+                },
+                "minus": {
+                  "filename": "a_b",
+                  "outcome": "return"
+                }
+              },
+              "credit": 1
+            },
+            {
+              "index": 1,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/utils.py:221",
+              "credit": 0
+            },
+            {
+              "index": 2,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/utils.py:226",
+              "credit": 0
+            },
+            {
+              "index": 3,
+              "type": "MSMS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal sufficient set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MSMS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 4,
+              "type": "MSMS",
+              "status": "UNVERIFIED",
+              "reason": "operation is outside the declared candidate universe; the scorer cannot perform that exact intervention",
+              "scope": "outside the declared candidate universe",
+              "relation_key": "MSMS:src/werkzeug/utils.py:239",
+              "credit": 0
+            },
+            {
+              "index": 5,
+              "type": "MMBS",
+              "status": "FINITE_DOMAIN_EXACT",
+              "reason": "Every submitted finite input matches the enumerated minimal breaking set, and all subsets of the declared candidate universe were checked.",
+              "scope": "2 submitted finite input(s) and all subsets of U; not the whole legal input domain",
+              "relation_key": "MMBS:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "per_input": [
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                },
+                {
+                  "verified": true,
+                  "reason": "set matches an enumerated minimal relation",
+                  "computed_minimal_sets": [
+                    [
+                      "src/werkzeug/utils.py:227-229"
+                    ]
+                  ]
+                }
+              ],
+              "credit": 1
+            },
+            {
+              "index": 6,
+              "type": "PREREQUISITE_BREAKING",
+              "status": "WITNESS_VERIFIED",
+              "reason": "The set is a minimal breaking set on the condition input and does not break on the control input.",
+              "scope": "two submitted point witnesses; this is a conditional witness check, not a domain-wide implication",
+              "relation_key": "PREREQUISITE:src/werkzeug/utils.py:227-229",
+              "operations": [
+                "src/werkzeug/utils.py:227-229"
+              ],
+              "prerequisite": "masking holds on input; the same set does not break on control",
+              "details": {
+                "condition_masked_EMPTY": true,
+                "condition_msms": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "condition_mmbs": [
+                  [
+                    "src/werkzeug/utils.py:227-229"
+                  ]
+                ],
+                "control_masked_EMPTY": false,
+                "control_mmbs": []
+              },
+              "credit": 1
+            }
+          ],
+          "scope_notes": [
+            "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+            "A single witness is never promoted to a claim over the whole legal input domain.",
+            "Operations outside U are reported UNVERIFIED, not FALSE."
+          ]
+        }
+      }
+    }
+  },
+  "totals": {
+    "C-original": {
+      "probe_executions": 696,
+      "variant_builds": 112,
+      "evaluations": 300,
+      "subsets_total": 300,
+      "verified_msms": 37,
+      "verified_mmbs": 17,
+      "emitted_claims": 23,
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "msms_unknown": 0,
+      "mmbs_unknown": 0,
+      "executor_cache_hits": 0,
+      "credited_relations": 23,
+      "wall_seconds": 198.444
+    },
+    "C-fixed": {
+      "probe_executions": 696,
+      "variant_builds": 112,
+      "evaluations": 300,
+      "subsets_total": 300,
+      "verified_msms": 37,
+      "verified_mmbs": 17,
+      "emitted_claims": 23,
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "msms_unknown": 0,
+      "mmbs_unknown": 0,
+      "executor_cache_hits": 0,
+      "credited_relations": 23,
+      "wall_seconds": 197.287
+    },
+    "Graph-candidates": {
+      "probe_executions": 2644,
+      "variant_builds": 576,
+      "evaluations": 1312,
+      "subsets_total": 1312,
+      "verified_msms": 50,
+      "verified_mmbs": 21,
+      "emitted_claims": 24,
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "msms_unknown": 0,
+      "mmbs_unknown": 0,
+      "executor_cache_hits": 0,
+      "credited_relations": 17,
+      "wall_seconds": 724.071
+    },
+    "Graph-full": {
+      "probe_executions": 2644,
+      "variant_builds": 576,
+      "evaluations": 1312,
+      "subsets_total": 1312,
+      "verified_msms": 50,
+      "verified_mmbs": 21,
+      "emitted_claims": 24,
+      "unknown_subsets": 0,
+      "invalid_subsets": 0,
+      "msms_unknown": 0,
+      "mmbs_unknown": 0,
+      "executor_cache_hits": 273,
+      "credited_relations": 17,
+      "wall_seconds": 738.141
+    }
+  },
+  "scoring_phase": "after_all_runs",
+  "hidden_data_used_to_modify_logic": false,
+  "dev_tuned_warning": "All five tasks are DEV-TUNED.  Credited relations are not held-out generalization accuracy."
+}

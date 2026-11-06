@@ -1,0 +1,35 @@
+{
+  "case_id": "sd_docutils_make_id_nonid_m2",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "split": "DEV",
+  "base": {
+    "slug": "docutils-0.20.1",
+    "file": "docutils/nodes.py",
+    "A_line": 2239,
+    "A_code": "    id = _non_id_chars.sub('-', ' '.join(id.split()))"
+  },
+  "patch": [
+    {
+      "id": "U1",
+      "after_line": 2239,
+      "indent": 4,
+      "role": "Comma leg: rewrites the comma run of non-identifier characters.",
+      "lines": ["id = id.replace(',', '-')"]
+    },
+    {
+      "id": "U2",
+      "after_line": 2239,
+      "indent": 4,
+      "role": "Exclamation leg: rewrites the '!' run of non-identifier characters.",
+      "lines": ["id = id.replace('!', '-')"]
+    }
+  ],
+  "probe": "benchmark_v4_dataset/source_derived/probes/sd_docutils_make_id_nonid_m2.py",
+  "inputs": {
+    "mask_two_runs": "identifier with exactly two runs of non-identifier characters",
+    "expose_three_runs": "identifier with three runs: the bounded rewrite leaves one behind",
+    "control_no_runs": "identifier with no non-identifier characters"
+  },
+  "rationale": "A rewrites every run of non-identifier characters to a single hyphen. The patch covers exactly the comma and '!' runs (one leg each), so an identifier containing only those two runs is fully masked, while an identifier with a third run keeps it raw and is the exposing witness."
+}

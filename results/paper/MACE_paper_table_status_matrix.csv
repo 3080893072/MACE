@@ -1,0 +1,61 @@
+表格,方法/指标,论文旧状态,实际状态,已有实测值,分母,证据文件,是否可直接填论文
+7,C0 · causal verifier,Yes,A｜确证：确定性探针，无模型,Yes,—,results/MACE_v2_1_frozen_config.json,无需改动
+7,C0 · evidence status,Scored on 21 tasks,A｜确证,21 tasks；27 输入（v2.1 口径 25）,21 tasks,results/MACE_v2_1_dev_final.json,无需改动（分母见 Table 8 行）
+7,Full MACE · causal verifier,Yes,A｜确证,Yes,—,results/MACE_v2_1_frozen_config.json,无需改动
+7,Full MACE · evidence status,Scored on 21 tasks,A｜确证,21 tasks；27 输入（v2.1 口径 25）,21 tasks,results/MACE_v2_1_dev_final.json,无需改动（分母见 Table 8 行）
+7,Direct Qwen 32B · causal verifier,No,A｜确证,No（direct 协议无 verifier）,—,results/MACE_direct_vs_full.json,无需改动
+7,Direct Qwen 32B · evidence status,No matched score,B｜已测但仅部分队列,10 tasks / 15 inputs 已评分；其中仅 6 tasks / 10 inputs 属最终 21 题队列,10 tasks / 15 inputs,results/MACE_direct_vs_full.json,是（须注明子集，不能写成 21 题）
+7,Direct GLM · causal verifier,No,A｜确证,No（direct 协议无 verifier）,—,results/MACE_direct_GLM_v2_1_config.json,无需改动
+7,Direct GLM · evidence status,Not deployed / run,A｜已测（DEV），HELDOUT 冻结,DEV 25 tasks / 30 inputs 已评分；HELDOUT 25/25 预测冻结、未评分,25 tasks / 30 inputs,results/MACE_direct_GLM_v2_1_dev.json; results/MACE_direct_GLM_v2_1_heldout_predictions.json,是
+8,C0 · exact,14/27 (51.9%),A｜可重算（按 v2.1 角色剔除 2 个 control）,13/25 = 52.0%（as-run 14/27；差额 1 = sd_networkx_adjlist_strip_m1 的 control_plain，旧口径计为 masking 且判 exact）,25 masking inputs / 21 tasks,results/MACE_v2_1_dev_final.json; runs/candidate_discovery_v2_1/scores/<cid>.json,是（须同步改分母、摘要与 Table 9）
+8,C0 · false relations,9,A｜确证（剔 control 后不变）,9,25 masking inputs,results/MACE_v2_1_dev_final.json,无需改动（数值不变；分母由表头改）
+8,C0 · unmapped,not logged,E｜未记录,not logged（C0 未保存逐输入结果，无法补）,—,results/MACE_v2_1_dev_final.json,否（未记录，无法恢复）
+8,Full MACE · exact,19/27 (70.4%),A｜可重算（按 v2.1 角色剔除 2 个 control）,18/25 = 72.0%（as-run 19/27；差额 1 = control_plain 判 exact）,25 masking inputs / 21 tasks,results/MACE_v2_1_dev_final.json; runs/candidate_discovery_v2_1/scores/<cid>.json,是（须同步改分母、摘要与 Table 9）
+8,Full MACE · false relations,5,A｜确证（剔 control 后不变）,5,25 masking inputs,results/MACE_v2_1_dev_final.json,无需改动（数值不变；分母由表头改）
+8,Full MACE · unmapped,2,A｜确证（剔 control 后不变）,2,25 masking inputs,results/MACE_v2_1_dev_final.json,无需改动（数值不变；分母由表头改）
+8,Direct Qwen · exact,not run,C｜已测；题集/协议不同,3/15 = 20.0%（10 题队列，非 21 题队列）,15 inputs / 10 tasks,results/MACE_direct_vs_full.json,否（口径不可比）
+8,Direct Qwen · false relations,not run,C｜已测；题集/协议不同,60,15 inputs / 10 tasks,results/MACE_direct_vs_full.json,否（口径不可比）
+8,Direct Qwen · unmatched,not run,C｜已测；题集/协议不同,42,15 inputs / 10 tasks,results/MACE_direct_vs_full.json,否（口径不可比）
+8,Direct GLM · exact,not run,C｜已测；题集/协议不同,9/30 = 30.0%（25 题队列）；同 21 题队列为 5/25,30 inputs / 25 tasks,results/MACE_direct_GLM_v2_1_dev.json,否（口径不可比）
+8,Direct GLM · false relations,not run,C｜已测；题集/协议不同,53（同 21 题队列 51）,30 inputs / 25 tasks,results/MACE_direct_GLM_v2_1_dev.json,否（口径不可比）
+8,Direct GLM · unmatched,not run,C｜已测；题集/协议不同,12（同 21 题队列 11）,30 inputs / 25 tasks,results/MACE_direct_GLM_v2_1_dev.json,否（口径不可比）
+13,C0 · probes,pending,A｜已汇总,72（主跑 70 + closure 2）,21 tasks,runs/candidate_discovery_v2_1/results.json; runs/candidate_discovery_v2_1_closure/results.json,是
+13,C0 · wall time,pending,E｜从未记录,NOT_RECORDED（C0 执行链无 wall 计时字段，无法离线恢复）,—,runs/candidate_discovery_v2_1/results.json; runs/candidate_discovery_v2_1_closure/results.json,否（需补测；无法离线恢复）
+13,C0 · tokens,N/A,F｜协议不适用,N/A（无模型调用）,—,results/MACE_v2_1_frozen_config.json,无需改动（论文已是 N/A）
+13,Full MACE · probes,pending,A｜已汇总,276,21 tasks,results/MACE_v2_1_dev_final.json,是
+13,Full MACE · wall time,pending,A｜已汇总,747.53 s（模型生成 + 候选扩展 + 探针 + 沙箱）,21 tasks,results/MACE_v2_1_dev_final.json,是（须与 Direct 生成时间分栏说明）
+13,Full MACE · tokens,pending,A｜已汇总,"157,227（145,939 prompt + 11,288 completion）",21 tasks,results/MACE_v2_1_dev_final.json,是
+13,Direct Qwen · probes,not run,F｜协议不适用,N/A（direct 无探针）,—,results/MACE_direct_vs_full.json,是（写 N/A）
+13,Direct Qwen · wall time,not run,B｜已测但仅部分队列,596.46 s（10 题 / 15 输入）,10 tasks,results/MACE_direct_vs_full.json,是（须注明 10 题，非 21 题）
+13,Direct Qwen · tokens,not run,B｜已测但仅部分队列,"45,442（34,340 prompt + 11,102 completion）",10 tasks,results/MACE_direct_vs_full.json,是（须注明 10 题）
+13,Direct GLM · probes,not run,F｜协议不适用,N/A（direct 无探针）,—,results/MACE_direct_GLM_v2_1_config.json,是（写 N/A）
+13,Direct GLM · wall time,not run,A｜已测（DEV 25 题）,347.342 s（DEV）；HELDOUT 325.066 s,25 tasks,results/MACE_direct_GLM_v2_1_config.json,是（标注本地 4090D 生成时间）
+13,Direct GLM · tokens,not run,A｜已测（DEV 25 题）,"113,593 DEV（98,370+15,223）；HELDOUT 116,402（102,377+14,025）",25 tasks,results/MACE_direct_GLM_v2_1_config.json,是
+14,C0 · N,25,A｜已确定,25 tasks,25 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动
+14,C0 · MSMS exact,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,C0 · MMBS exact,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,C0 · false relations,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,C0 · time,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Full MACE · N,25,A｜已确定,25 tasks,25 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动
+14,Full MACE · MSMS exact,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Full MACE · MMBS exact,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Full MACE · false relations,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Full MACE · time,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Direct Qwen · N,25,A｜已确定,25 tasks,25 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动
+14,Direct Qwen · MSMS exact,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Direct Qwen · MMBS exact,TBD,F｜协议不适用,N/A（direct 协议不请求 MMBS）,—,results/MACE_direct_vs_full.json,是（写 N/A）
+14,Direct Qwen · false relations,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Direct Qwen · time,TBD,E｜未运行（无 HELDOUT 预测）,NOT_RUN,—,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（只能写 NOT_RUN）
+14,Direct GLM · N,25,A｜已确定,25 tasks / 20 masking inputs,20 masking inputs,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动
+14,Direct GLM · MSMS exact,TBD,D｜预测已冻结、未评分,TBD（25/25 预测冻结，sha b1815476…2597f）,20 masking inputs,results/MACE_direct_GLM_v2_1_heldout_predictions.json,否（须解封）
+14,Direct GLM · MMBS exact,TBD,F｜协议不适用,N/A（direct 协议不请求 MMBS）,—,results/MACE_direct_GLM_v2_1_heldout_predictions.json,是（写 N/A）
+14,Direct GLM · false relations,TBD,D｜预测已冻结、未评分,TBD（未解封）,20 masking inputs,results/MACE_direct_GLM_v2_1_heldout_predictions.json,否（须解封）
+14,Direct GLM · time,TBD,A｜已测（生成时间）,325.066 s（25 题）,25 tasks,results/MACE_direct_GLM_v2_1_config.json,是（仅生成时间，非因果验证）
+15,All formal held-out · Tasks,25,A｜确证（seal 固定）,25,25 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动（可加 masking 分母 20）
+15,All formal held-out · MSMS exact,TBD,D｜预测已冻结、未评分,TBD（GLM 覆盖 25/25；C0/Full/Qwen 未运行）,20 masking inputs,results/MACE_direct_GLM_v2_1_heldout_predictions.json; benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（须解封）
+15,Project-disjoint · Tasks,19,A｜确证（seal 固定）,19,19 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动（可加 masking 分母 17）
+15,Project-disjoint · MSMS exact,TBD,D｜预测已冻结、未评分,TBD（GLM 覆盖 19/19；C0/Full/Qwen 未运行）,17 masking inputs,results/MACE_direct_GLM_v2_1_heldout_predictions.json; benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（须解封）
+15,Template-disjoint · Tasks,16,A｜确证（seal 固定）,16,16 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动（可加 masking 分母 16）
+15,Template-disjoint · MSMS exact,TBD,D｜预测已冻结、未评分,TBD（GLM 覆盖 16/16；C0/Full/Qwen 未运行）,16 masking inputs,results/MACE_direct_GLM_v2_1_heldout_predictions.json; benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（须解封）
+15,Project + template disjoint · Tasks,14,A｜确证（seal 固定）,14,14 tasks,benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,无需改动（可加 masking 分母 14）
+15,Project + template disjoint · MSMS exact,TBD,D｜预测已冻结、未评分,TBD（GLM 覆盖 14/14；C0/Full/Qwen 未运行）,14 masking inputs,results/MACE_direct_GLM_v2_1_heldout_predictions.json; benchmark_v4_dataset/source_derived_v2_1/heldout/seal/heldout_v2_1_seal.json,否（须解封）

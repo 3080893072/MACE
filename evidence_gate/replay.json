@@ -1,0 +1,2761 @@
+{
+  "fixtures": [
+    "alt_masking",
+    "dedup_channel",
+    "modulo_absorb",
+    "overwrite_channel",
+    "sort_channel",
+    "swap_channels",
+    "dead_flag",
+    "dict_slot",
+    "parity_snap",
+    "clamp_absorb",
+    "toggle_pair"
+  ],
+  "sets": {
+    "dev6": [
+      "alt_masking",
+      "dedup_channel",
+      "modulo_absorb",
+      "overwrite_channel",
+      "sort_channel",
+      "swap_channels"
+    ],
+    "held1": [
+      "dead_flag",
+      "dict_slot",
+      "parity_snap"
+    ],
+    "held2": [
+      "clamp_absorb",
+      "toggle_pair"
+    ]
+  },
+  "rows": [
+    {
+      "fixture": "alt_masking",
+      "set": "dev6",
+      "channels": 1,
+      "domain_size": 160,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "mode == 0 or mode == 1",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08259420000104001,
+          "eval_executions": 320,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "mace": {
+          "guard": "mode == 0 or mode == 1",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08305599999584956,
+          "eval_executions": 320,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": "((mode == 0 or mode == 1))",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08537970000179484,
+          "eval_executions": 320,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "gated": {
+          "guard": "((mode == 0 or mode == 1))",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08363629999803379,
+          "eval_executions": 320,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 13280,
+      "mace_wall_seconds": 72.7,
+      "direct_tokens": 701,
+      "verification_calls": 3,
+      "verification_executions": 960,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 2,
+        "REFUTED": 3,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "COMPOSED",
+      "gated_compose_status": "COMPOSED",
+      "composed_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "mode == 0 or mode == 1",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ]
+        }
+      ],
+      "gated_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "mode == 0 or mode == 1",
+          "source_lines": [
+            6,
+            8,
+            9,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "fixture": "dedup_channel",
+      "set": "dev6",
+      "channels": 1,
+      "domain_size": 240,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "distinct(xs) == distinct(xs + [xs[0] + 1])",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.09309880000364501,
+          "eval_executions": 480,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "mace": {
+          "guard": "len(xs) == 0 or (pre and distinct(xs) and len(fn_0(xs)) == len(fn_0(xs + [xs[0] + 1])))",
+          "check": {
+            "status": "INVALID",
+            "typed": false,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": false,
+            "error": "expected bool, got int"
+          },
+          "wall_seconds": 0.08867209999880288,
+          "eval_executions": 480,
+          "outcome": "invalid",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": "((len(xs) == 0))",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 100,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.09054319999995641,
+          "eval_executions": 480,
+          "outcome": "incomplete",
+          "sound": true,
+          "exact": false,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 100
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 1.8999999156221747e-06,
+          "eval_executions": 480,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 12087,
+      "mace_wall_seconds": 69.231,
+      "direct_tokens": 1573,
+      "verification_calls": 3,
+      "verification_executions": 1440,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 1,
+        "REFUTED": 2,
+        "UNVERIFIED": 3
+      },
+      "compose_status": "COMPOSED",
+      "gated_compose_status": "UNKNOWN",
+      "composed_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "len(xs) == 0",
+          "source_lines": [
+            15
+          ]
+        }
+      ],
+      "gated_parts": []
+    },
+    {
+      "fixture": "modulo_absorb",
+      "set": "dev6",
+      "channels": 1,
+      "domain_size": 518,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "cap and (fn_0(xs) + 1) % 10 == 0",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 47,
+            "incomplete": 212,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.10083279999525985,
+          "eval_executions": 1036,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 47,
+          "incomplete": 212
+        },
+        "mace": {
+          "guard": "cap and (fn_0(xs) - fn_0(xs) % 10) == fn_0(xs) + 1 if not cap else fn_0(xs)",
+          "check": {
+            "status": "INVALID",
+            "typed": false,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": false,
+            "error": "conditional branches differ: bool vs int"
+          },
+          "wall_seconds": 0.09277260000089882,
+          "eval_executions": 1036,
+          "outcome": "invalid",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 1.1000010999850929e-06,
+          "eval_executions": 1036,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 4.999965312890708e-07,
+          "eval_executions": 1036,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 13931,
+      "mace_wall_seconds": 66.653,
+      "direct_tokens": 2793,
+      "verification_calls": 3,
+      "verification_executions": 3108,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 2,
+        "REFUTED": 3,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "UNKNOWN",
+      "gated_compose_status": "UNKNOWN",
+      "composed_parts": [],
+      "gated_parts": []
+    },
+    {
+      "fixture": "overwrite_channel",
+      "set": "dev6",
+      "channels": 2,
+      "domain_size": 80,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "fn_0(xs) == 0 if not keep else True",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08028080000076443,
+          "eval_executions": 160,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "mace": {
+          "guard": "keep or not keep",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 28,
+            "incomplete": 0,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.08026010000321548,
+          "eval_executions": 160,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 28,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 8.00006091594696e-07,
+          "eval_executions": 160,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 4.999965312890708e-07,
+          "eval_executions": 160,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 15024,
+      "mace_wall_seconds": 66.874,
+      "direct_tokens": 2634,
+      "verification_calls": 3,
+      "verification_executions": 480,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 1,
+        "REFUTED": 4,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "UNKNOWN",
+      "gated_compose_status": "UNKNOWN",
+      "composed_parts": [],
+      "gated_parts": []
+    },
+    {
+      "fixture": "sort_channel",
+      "set": "dev6",
+      "channels": 2,
+      "domain_size": 10912,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "use_left == False and use_right == False",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 1134,
+            "incomplete": 6452,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.4680501999973785,
+          "eval_executions": 21824,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 1134,
+          "incomplete": 6452
+        },
+        "mace": {
+          "guard": "xs == sorted(xs)",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 7046,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.500705200000084,
+          "eval_executions": 21824,
+          "outcome": "incomplete",
+          "sound": true,
+          "exact": false,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 7046
+        },
+        "compose": {
+          "guard": "(((xs == sorted(xs))) and ((xs == sorted(xs))))",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 7046,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.5746393999943393,
+          "eval_executions": 21824,
+          "outcome": "incomplete",
+          "sound": true,
+          "exact": false,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 7046
+        },
+        "gated": {
+          "guard": "(((xs == sorted(xs))) and ((xs == sorted(xs))))",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 7046,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.5587352000002284,
+          "eval_executions": 21824,
+          "outcome": "incomplete",
+          "sound": true,
+          "exact": false,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 7046
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 11886,
+      "mace_wall_seconds": 50.318,
+      "direct_tokens": 3720,
+      "verification_calls": 3,
+      "verification_executions": 65472,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 3,
+        "REFUTED": 1,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "COMPOSED",
+      "gated_compose_status": "COMPOSED",
+      "composed_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "xs == sorted(xs)",
+          "source_lines": [
+            33
+          ]
+        },
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "xs == sorted(xs)",
+          "source_lines": [
+            34
+          ]
+        }
+      ],
+      "gated_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "xs == sorted(xs)",
+          "source_lines": [
+            33
+          ]
+        },
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "xs == sorted(xs)",
+          "source_lines": [
+            34
+          ]
+        }
+      ]
+    },
+    {
+      "fixture": "swap_channels",
+      "set": "dev6",
+      "channels": 3,
+      "domain_size": 32,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "not show_gap",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 4,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.08017180000024382,
+          "eval_executions": 64,
+          "outcome": "incomplete",
+          "sound": true,
+          "exact": false,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 4
+        },
+        "mace": {
+          "guard": "True",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 12,
+            "incomplete": 0,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.08167530000355328,
+          "eval_executions": 64,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 12,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 7.999988156370819e-07,
+          "eval_executions": 64,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 4.999965312890708e-07,
+          "eval_executions": 64,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 14299,
+      "mace_wall_seconds": 61.913,
+      "direct_tokens": 2801,
+      "verification_calls": 3,
+      "verification_executions": 192,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 3,
+        "REFUTED": 2,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "INCOMPLETE",
+      "gated_compose_status": "INCOMPLETE",
+      "composed_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "True",
+          "source_lines": [
+            7,
+            8
+          ]
+        },
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "True",
+          "source_lines": [
+            7,
+            8
+          ]
+        }
+      ],
+      "gated_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "True",
+          "source_lines": [
+            7,
+            8
+          ]
+        },
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "True",
+          "source_lines": [
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "fixture": "dead_flag",
+      "set": "held1",
+      "channels": 2,
+      "domain_size": 40,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "True",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08326410000154283,
+          "eval_executions": 80,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "mace": {
+          "guard": "True",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08289529999456136,
+          "eval_executions": 80,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": "(((True)) and ((True)))",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08161079999990761,
+          "eval_executions": 80,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "gated": {
+          "guard": "(((True)) and ((True)))",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.07802139999694191,
+          "eval_executions": 80,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        }
+      },
+      "mace_status": "ALL_VERIFIED",
+      "rounds_used": 1,
+      "mace_tokens": 1558,
+      "mace_wall_seconds": 17.796,
+      "direct_tokens": 1319,
+      "verification_calls": 1,
+      "verification_executions": 80,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 4,
+        "REFUTED": 0,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "COMPOSED",
+      "gated_compose_status": "COMPOSED",
+      "composed_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "True",
+          "source_lines": [
+            5
+          ]
+        },
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "True",
+          "source_lines": [
+            6
+          ]
+        }
+      ],
+      "gated_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "True",
+          "source_lines": [
+            5
+          ]
+        },
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "True",
+          "source_lines": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "fixture": "dict_slot",
+      "set": "held1",
+      "channels": 2,
+      "domain_size": 80,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "mode",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.07989470000029542,
+          "eval_executions": 160,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "mace": {
+          "guard": "mode",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.07989599999564234,
+          "eval_executions": 160,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 7.999988156370819e-07,
+          "eval_executions": 160,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 4.999965312890708e-07,
+          "eval_executions": 160,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 12729,
+      "mace_wall_seconds": 51.765,
+      "direct_tokens": 642,
+      "verification_calls": 3,
+      "verification_executions": 480,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 3,
+        "REFUTED": 2,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "INCOMPLETE",
+      "gated_compose_status": "INCOMPLETE",
+      "composed_parts": [
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "True",
+          "source_lines": [
+            6
+          ]
+        }
+      ],
+      "gated_parts": [
+        {
+          "relation": "O1",
+          "op": "and",
+          "channel": 1,
+          "text": "True",
+          "source_lines": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "fixture": "parity_snap",
+      "set": "held1",
+      "channels": 1,
+      "domain_size": 170,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "sum(xs) % 2 == 0 and not even",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 43,
+            "incomplete": 43,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.08932939999795053,
+          "eval_executions": 340,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 43,
+          "incomplete": 43
+        },
+        "mace": {
+          "guard": "even and sum(xs) % 2 == 0 or not even",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 85,
+            "incomplete": 0,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.08240740000474034,
+          "eval_executions": 340,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 85,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": "((even and sum(xs) % 2 == 0))",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.0813687999980175,
+          "eval_executions": 340,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "gated": {
+          "guard": "((even and sum(xs) % 2 == 0))",
+          "check": {
+            "status": "BOUNDED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": true,
+            "error": null
+          },
+          "wall_seconds": 0.08068920000368962,
+          "eval_executions": 340,
+          "outcome": "exact",
+          "sound": true,
+          "exact": true,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 14870,
+      "mace_wall_seconds": 86.375,
+      "direct_tokens": 2460,
+      "verification_calls": 3,
+      "verification_executions": 1020,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 3,
+        "REFUTED": 5,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "COMPOSED",
+      "gated_compose_status": "COMPOSED",
+      "composed_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "even and sum(xs) % 2 == 0",
+          "source_lines": [
+            5,
+            6
+          ]
+        }
+      ],
+      "gated_parts": [
+        {
+          "relation": "O0",
+          "op": "and",
+          "channel": 0,
+          "text": "even and sum(xs) % 2 == 0",
+          "source_lines": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "fixture": "clamp_absorb",
+      "set": "held2",
+      "channels": 1,
+      "domain_size": 170,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 74,
+            "incomplete": 11,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.08237730000109877,
+          "eval_executions": 340,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 74,
+          "incomplete": 11
+        },
+        "mace": {
+          "guard": "total_post <= 10 or not cap",
+          "check": {
+            "status": "INVALID",
+            "typed": false,
+            "unsound": 0,
+            "incomplete": 0,
+            "exact": false,
+            "error": "unknown variable: total_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects"
+          },
+          "wall_seconds": 0.07700409999961266,
+          "eval_executions": 340,
+          "outcome": "invalid",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": 0,
+          "incomplete": 0
+        },
+        "compose": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 7.00005330145359e-07,
+          "eval_executions": 340,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 5.00003807246685e-07,
+          "eval_executions": 340,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 15391,
+      "mace_wall_seconds": 89.208,
+      "direct_tokens": 2404,
+      "verification_calls": 3,
+      "verification_executions": 1020,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 1,
+        "REFUTED": 1,
+        "UNVERIFIED": 5
+      },
+      "compose_status": "UNKNOWN",
+      "gated_compose_status": "UNKNOWN",
+      "composed_parts": [],
+      "gated_parts": []
+    },
+    {
+      "fixture": "toggle_pair",
+      "set": "held2",
+      "channels": 2,
+      "domain_size": 18,
+      "domain_exhaustive": true,
+      "methods": {
+        "direct": {
+          "guard": "not flag",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 6,
+            "incomplete": 9,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.07727259999956004,
+          "eval_executions": 36,
+          "outcome": "unsound",
+          "sound": false,
+          "exact": false,
+          "typed": true,
+          "unsound": 6,
+          "incomplete": 9
+        },
+        "mace": {
+          "guard": "flag",
+          "check": {
+            "status": "REFUTED",
+            "typed": true,
+            "unsound": 0,
+            "incomplete": 3,
+            "exact": false,
+            "error": null
+          },
+          "wall_seconds": 0.07617949999985285,
+          "eval_executions": 36,
+          "outcome": "incomplete",
+          "sound": true,
+          "exact": false,
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 3
+        },
+        "compose": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 7.999988156370819e-07,
+          "eval_executions": 36,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        },
+        "gated": {
+          "guard": null,
+          "check": {
+            "status": "ABSENT",
+            "typed": false,
+            "unsound": null,
+            "incomplete": null,
+            "exact": false,
+            "error": "no guard"
+          },
+          "wall_seconds": 3.9999576983973384e-07,
+          "eval_executions": 36,
+          "outcome": "unknown",
+          "sound": false,
+          "exact": false,
+          "typed": false,
+          "unsound": null,
+          "incomplete": null
+        }
+      },
+      "mace_status": "ROUNDS_EXHAUSTED",
+      "rounds_used": 3,
+      "mace_tokens": 16026,
+      "mace_wall_seconds": 71.677,
+      "direct_tokens": 2579,
+      "verification_calls": 3,
+      "verification_executions": 108,
+      "gate_counts": {
+        "WITNESS_VERIFIED": 1,
+        "REFUTED": 4,
+        "UNVERIFIED": 0
+      },
+      "compose_status": "UNKNOWN",
+      "gated_compose_status": "UNKNOWN",
+      "composed_parts": [],
+      "gated_parts": []
+    }
+  ],
+  "relation_audit": [
+    {
+      "fixture": "alt_masking",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "160 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 160,
+        "witnesses": 160,
+        "refutations": 0,
+        "condition_true": 160,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "alt_masking",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 160,
+        "witnesses": 80,
+        "refutations": 80,
+        "condition_true": 160,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "alt_masking",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 160,
+        "witnesses": 40,
+        "refutations": 120,
+        "condition_true": 160,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "alt_masking",
+      "id": "U3",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 160,
+        "witnesses": 40,
+        "refutations": 120,
+        "condition_true": 160,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "alt_masking",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "80 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 160,
+        "witnesses": 80,
+        "refutations": 0,
+        "condition_true": 80,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dedup_channel",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "240 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 240,
+        "witnesses": 240,
+        "refutations": 0,
+        "condition_true": 240,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dedup_channel",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 240,
+        "witnesses": 0,
+        "refutations": 240,
+        "condition_true": 240,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dedup_channel",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dedup_channel",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "no domain input both satisfied the condition and produced a supporting observation",
+      "evidence": {
+        "checked": 240,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dedup_channel",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 240,
+        "witnesses": 240,
+        "refutations": 140,
+        "condition_true": 240,
+        "faithfulness_failures": 140,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dedup_channel",
+      "id": "O2",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "modulo_absorb",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "518 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 518,
+        "witnesses": 518,
+        "refutations": 0,
+        "condition_true": 518,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "modulo_absorb",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "259 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 259,
+        "witnesses": 259,
+        "refutations": 0,
+        "condition_true": 259,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "modulo_absorb",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 259,
+        "witnesses": 259,
+        "refutations": 0,
+        "condition_true": 259,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": 259,
+        "fixed_point_failures": 259
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "modulo_absorb",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 518,
+        "witnesses": 259,
+        "refutations": 376,
+        "condition_true": 259,
+        "faithfulness_failures": 376,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "modulo_absorb",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 518,
+        "witnesses": 259,
+        "refutations": 691,
+        "condition_true": 259,
+        "faithfulness_failures": 691,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "overwrite_channel",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "80 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 80,
+        "refutations": 0,
+        "condition_true": 80,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "overwrite_channel",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 40,
+        "refutations": 40,
+        "condition_true": 80,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "overwrite_channel",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 40,
+        "refutations": 40,
+        "condition_true": 80,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "overwrite_channel",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 52,
+        "refutations": 84,
+        "condition_true": 80,
+        "faithfulness_failures": 56,
+        "invariance_failures": 28,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "overwrite_channel",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 1,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 52,
+        "refutations": 84,
+        "condition_true": 80,
+        "faithfulness_failures": 56,
+        "invariance_failures": 28,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "sort_channel",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "10912 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 10912,
+        "witnesses": 10912,
+        "refutations": 0,
+        "condition_true": 10912,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "sort_channel",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 10912,
+        "witnesses": 10912,
+        "refutations": 0,
+        "condition_true": 10912,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": 10912,
+        "fixed_point_failures": 4956
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "sort_channel",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "1000 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 10912,
+        "witnesses": 1000,
+        "refutations": 0,
+        "condition_true": 1000,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "sort_channel",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 1,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "1000 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 10912,
+        "witnesses": 1000,
+        "refutations": 0,
+        "condition_true": 1000,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "swap_channels",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "32 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 32,
+        "witnesses": 32,
+        "refutations": 0,
+        "condition_true": 32,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "swap_channels",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 32,
+        "witnesses": 32,
+        "refutations": 0,
+        "condition_true": 32,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": 32,
+        "fixed_point_failures": 24
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "swap_channels",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "32 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 32,
+        "witnesses": 32,
+        "refutations": 0,
+        "condition_true": 32,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "swap_channels",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 1,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "32 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 32,
+        "witnesses": 32,
+        "refutations": 0,
+        "condition_true": 32,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "swap_channels",
+      "id": "O2",
+      "kind": "observer",
+      "role": null,
+      "channel": 2,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 32,
+        "witnesses": 20,
+        "refutations": 12,
+        "condition_true": 32,
+        "faithfulness_failures": 0,
+        "invariance_failures": 12,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dead_flag",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "40 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 40,
+        "witnesses": 40,
+        "refutations": 0,
+        "condition_true": 40,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dead_flag",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "40 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 40,
+        "witnesses": 40,
+        "refutations": 0,
+        "condition_true": 40,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dead_flag",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "40 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 40,
+        "witnesses": 40,
+        "refutations": 0,
+        "condition_true": 40,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dead_flag",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 1,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "40 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 40,
+        "witnesses": 40,
+        "refutations": 0,
+        "condition_true": 40,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dict_slot",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "80 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 80,
+        "refutations": 0,
+        "condition_true": 80,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dict_slot",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 40,
+        "witnesses": 40,
+        "refutations": 0,
+        "condition_true": 40,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": 40,
+        "fixed_point_failures": 40
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dict_slot",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "40 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 40,
+        "witnesses": 40,
+        "refutations": 0,
+        "condition_true": 40,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "dict_slot",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 40,
+        "refutations": 160,
+        "condition_true": 80,
+        "faithfulness_failures": 120,
+        "invariance_failures": 40,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "dict_slot",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 1,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "80 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 80,
+        "witnesses": 80,
+        "refutations": 0,
+        "condition_true": 80,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "170 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 170,
+        "refutations": 0,
+        "condition_true": 170,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 85,
+        "witnesses": 43,
+        "refutations": 42,
+        "condition_true": 85,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 85,
+        "witnesses": 42,
+        "refutations": 43,
+        "condition_true": 85,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "U3",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "85 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 85,
+        "witnesses": 85,
+        "refutations": 0,
+        "condition_true": 85,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "43 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 43,
+        "refutations": 0,
+        "condition_true": 43,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": true,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 0,
+        "refutations": 42,
+        "condition_true": 42,
+        "faithfulness_failures": 0,
+        "invariance_failures": 42,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "O2",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 0,
+        "refutations": 425,
+        "condition_true": 85,
+        "faithfulness_failures": 340,
+        "invariance_failures": 85,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "parity_snap",
+      "id": "O3",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 0,
+        "refutations": 383,
+        "condition_true": 43,
+        "faithfulness_failures": 340,
+        "invariance_failures": 43,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "170 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 170,
+        "refutations": 0,
+        "condition_true": 170,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "U3",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 170,
+        "witnesses": 85,
+        "refutations": 85,
+        "condition_true": 170,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "clamp_absorb",
+      "id": "O2",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "INVALID",
+      "evidence_status": "UNVERIFIED",
+      "gate_reason": "the relation could not be typed or evaluated on the domain",
+      "evidence": {
+        "checked": 0,
+        "witnesses": 0,
+        "refutations": 0,
+        "condition_true": 0,
+        "faithfulness_failures": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "toggle_pair",
+      "id": "T1",
+      "kind": "target_effect",
+      "role": null,
+      "channel": null,
+      "verifier_status": "BOUNDED",
+      "evidence_status": "WITNESS_VERIFIED",
+      "gate_reason": "18 supporting witness(es), 0 counterexamples on the declared domain",
+      "evidence": {
+        "checked": 18,
+        "witnesses": 18,
+        "refutations": 0,
+        "condition_true": 18,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": true,
+      "accepted_by_gate": true
+    },
+    {
+      "fixture": "toggle_pair",
+      "id": "U1",
+      "kind": "upstream",
+      "role": "fixed_point",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 18,
+        "witnesses": 9,
+        "refutations": 9,
+        "condition_true": 18,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "toggle_pair",
+      "id": "U2",
+      "kind": "upstream",
+      "role": "supporting",
+      "channel": null,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 18,
+        "witnesses": 9,
+        "refutations": 9,
+        "condition_true": 18,
+        "faithfulness_failures": null,
+        "invariance_failures": null,
+        "evaluation_errors": null,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "toggle_pair",
+      "id": "O0",
+      "kind": "observer",
+      "role": null,
+      "channel": 0,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 18,
+        "witnesses": 18,
+        "refutations": 6,
+        "condition_true": 18,
+        "faithfulness_failures": 6,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    },
+    {
+      "fixture": "toggle_pair",
+      "id": "O1",
+      "kind": "observer",
+      "role": null,
+      "channel": 1,
+      "verifier_status": "REFUTED",
+      "evidence_status": "REFUTED",
+      "gate_reason": "at least one checked input produced a counterexample",
+      "evidence": {
+        "checked": 18,
+        "witnesses": 18,
+        "refutations": 6,
+        "condition_true": 18,
+        "faithfulness_failures": 6,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "fixed_point_checked": null,
+        "fixed_point_failures": null
+      },
+      "used_by_ungated_composer": false,
+      "accepted_by_verifier": false,
+      "accepted_by_gate": false
+    }
+  ]
+}

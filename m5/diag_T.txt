@@ -1,0 +1,17 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| alt_masking | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 648 | 4.7 |
+| dead_flag | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 1248 | 5.0 |
+| dedup_channel | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 1438 | 9.8 |
+| dict_slot | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 598 | 2.9 |
+| modulo_absorb | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 47/200 | 33670 | 67.8 |
+| overwrite_channel | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 28/28 | 29087 | 52.2 |
+| parity_snap | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 85/0 | 25957 | 57.2 |
+| sort_channel | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 2866/2268 | 40670 | 112.3 |
+| swap_channels | direct | qwen | none | ABSENT | ABSENT | ABSENT | BOUNDED | BOUNDED | 0/0 | 3693 | 11.6 |
+
+First bad stage over all cases: guard 4, none 5
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| direct | qwen | 9 | 5 | 0 | 0 | 0 | 0 | 0 | 4 | 137009 | 323.5 |

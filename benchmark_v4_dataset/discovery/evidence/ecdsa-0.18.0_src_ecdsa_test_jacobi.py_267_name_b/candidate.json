@@ -1,0 +1,51 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/test_jacobi.py:267:name:b",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/test_jacobi.py",
+  "function": "test_add_one_scaled_point",
+  "mechanism": "name",
+  "target_A": {
+    "line": 267,
+    "end_line": 267,
+    "kind": "Assign",
+    "code": "b = PointJacobi.from_affine(j_g * b_mul)"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_jacobi.py::TestJacobi::test_add_one_scaled_point"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "        b = PointJacobi.from_affine(j_g * b_mul)",
+    "replacement": "        pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.51,
+    "failed_nodeids": [
+      "src.ecdsa.test_jacobi.TestJacobi::test_add_one_scaled_point"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n____________________ TestJacobi.test_add_one_scaled_point _____________________\n\nself = <ecdsa.test_jacobi.TestJacobi testMethod=test_add_one_scaled_point>\n\n    @settings(max_examples=10)\n>   @given(\n        st.integers(\n            min_value=1, max_value=int(generator_brainpoolp160r1.order())\n        ),\n        st.integers(\n            min_value=1, max_value=int(generator_brainpoolp160r1.order())\n        ),\n        st.integers(min_value=1, max_value=int(curve_brainpoolp160r1.p() - 1)),\n    )\n\nsrc\\ecdsa\\test_jacobi.py:255: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <ecdsa.test_jacobi.TestJacobi testMethod=test_add_one_scaled_point>\na_mul = 1, b_mul = 1, new_z = 1\n\n    @settings(max_examples=10)\n    @given(\n        st.integers(\n            min_value=1, max_value=int(generator_brainpoolp160r1.order())\n        ),\n        st.integers(\n            min_value=1, max_value=int(generator_brainpoolp160r1.order())\n        ),\n        st.integers(min_value=1, max_value=int(curve_brainpoolp160r1.p() - 1)),\n    )\n    def test_add_one_scaled_point(self, a_mul, b_mul, new_z):\n        j_g = PointJacobi.from_affine(generator_brainpoolp160r1)\n        a = PointJacobi.from_affine(j_g * a_mul)\n        pass  # P-: target A deleted\n    \n        p = curve_brainpoolp160r1.p()\n    \n        assume(inverse_mod(new_z, p))\n    \n        new_zz = new_z * new_z % p\n    \n        b = PointJacobi(\n            curve_brainpoolp160r1,\n>           b.x() * new_zz % p,\n            b.y() * new_zz * new_z % p,\n            new_z,\n        )\nE       UnboundLocalError: cannot access local variable 'b' where it is not associated with a value\nE       Failing test case: test_add_one_scaled_point(\nE           # The test always failed when commented parts were varied together.\nE           self=<ecdsa.test_jacobi.TestJacobi testMethod=test_add_one_scaled_point>,\nE           a_mul=1,  # or any other generated value\nE           b_mul=1,  # or any other generated value\nE           new_z=1,  # or any other generated value\nE       )\n\nsrc\\ecdsa\\test_jacobi.py:277: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_add_one_scaled_point - Unbo...\n1 failed in 1.16s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

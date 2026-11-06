@@ -1,0 +1,281 @@
+{
+  "task_id": "ctrl_02",
+  "kind": "pilot",
+  "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+  "prompt_sha256": "e5d503628edf6b0e55d7cf4279a56e43d3ba2a96410fa76fedb3db0318b189ba",
+  "model_output": {
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 5, \"text\": \"v = v // 6 * 6\"}\n      ],\n      \"condition\": \"c == 0\",\n      \"rationale\": \"When c is 0, the operation on line 5 nullifies the effect of adding 6 on line 3.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"v = v // 7 * 7\"}\n      ],\n      \"condition\": \"d == 0\",\n      \"rationale\": \"When d is 0, the operation on line 6 nullifies the effect of adding 6 on line 3.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 5, \"text\": \"v = v // 6 * 6\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"v = v // 7 * 7\"}\n      ],\n      \"condition\": \"c == 0 and d == 0\",\n      \"rationale\": \"When both c and d are 0, the operations on lines 5 and 6 together nullify the effect of adding 6 on line 3.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 1068,
+      "completion_tokens": 286,
+      "total_duration_ns": 23610114178,
+      "load_duration_ns": 8616825470,
+      "prompt_eval_duration_ns": 620603000,
+      "eval_duration_ns": 14269620000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 24.242,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b",
+    "wall_seconds": 24.243,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+      }
+    ]
+  },
+  "relations": [
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "op_L4_C4_if",
+          "key": "op_L4_C4_if",
+          "file": "<program>",
+          "first_line": 4,
+          "last_line": 5,
+          "line": 4,
+          "end_line": 5,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if c == 0:\n        v = v // 6 * 6",
+          "text": "if c == 0:\n        v = v // 6 * 6"
+        }
+      ],
+      "in_graph": true,
+      "relation": {
+        "operations": [
+          {
+            "file": "<program>",
+            "line": 5,
+            "text": "v = v // 6 * 6"
+          }
+        ],
+        "condition": "c == 0",
+        "rationale": "When c is 0, the operation on line 5 nullifies the effect of adding 6 on line 3."
+      },
+      "verification": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": false,
+          "disabling_set_exposes": true
+        },
+        "operations": [
+          "C"
+        ],
+        "kind": "independent",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "reason": "the declared set enabled alone does not mask A",
+        "relation": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 5,
+              "text": "v = v // 6 * 6"
+            }
+          ],
+          "condition": "c == 0",
+          "rationale": "When c is 0, the operation on line 5 nullifies the effect of adding 6 on line 3."
+        }
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "op_L6_C4_if",
+          "key": "op_L6_C4_if",
+          "file": "<program>",
+          "first_line": 6,
+          "last_line": 7,
+          "line": 6,
+          "end_line": 7,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if d == 0:\n        v = v // 7 * 7",
+          "text": "if d == 0:\n        v = v // 7 * 7"
+        }
+      ],
+      "in_graph": true,
+      "relation": {
+        "operations": [
+          {
+            "file": "<program>",
+            "line": 6,
+            "text": "v = v // 7 * 7"
+          }
+        ],
+        "condition": "d == 0",
+        "rationale": "When d is 0, the operation on line 6 nullifies the effect of adding 6 on line 3."
+      },
+      "verification": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": false,
+          "disabling_set_exposes": true
+        },
+        "operations": [
+          "D"
+        ],
+        "kind": "independent",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "reason": "the declared set enabled alone does not mask A",
+        "relation": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "v = v // 7 * 7"
+            }
+          ],
+          "condition": "d == 0",
+          "rationale": "When d is 0, the operation on line 6 nullifies the effect of adding 6 on line 3."
+        }
+      }
+    },
+    {
+      "status": "mapped",
+      "ops": [
+        {
+          "id": "op_L4_C4_if",
+          "key": "op_L4_C4_if",
+          "file": "<program>",
+          "first_line": 4,
+          "last_line": 5,
+          "line": 4,
+          "end_line": 5,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if c == 0:\n        v = v // 6 * 6",
+          "text": "if c == 0:\n        v = v // 6 * 6"
+        },
+        {
+          "id": "op_L6_C4_if",
+          "key": "op_L6_C4_if",
+          "file": "<program>",
+          "first_line": 6,
+          "last_line": 7,
+          "line": 6,
+          "end_line": 7,
+          "col": 4,
+          "end_col": 22,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if d == 0:\n        v = v // 7 * 7",
+          "text": "if d == 0:\n        v = v // 7 * 7"
+        }
+      ],
+      "in_graph": true,
+      "relation": {
+        "operations": [
+          {
+            "file": "<program>",
+            "line": 5,
+            "text": "v = v // 6 * 6"
+          },
+          {
+            "file": "<program>",
+            "line": 6,
+            "text": "v = v // 7 * 7"
+          }
+        ],
+        "condition": "c == 0 and d == 0",
+        "rationale": "When both c and d are 0, the operations on lines 5 and 6 together nullify the effect of adding 6 on line 3."
+      },
+      "verification": {
+        "status": "FALSE",
+        "checks": {
+          "a_has_local_effect": true,
+          "original_masks": true,
+          "only_set_masks": true,
+          "disabling_set_exposes": true,
+          "proper_subsets_do_not_mask": {
+            "C": true,
+            "D": true
+          }
+        },
+        "operations": [
+          "C",
+          "D"
+        ],
+        "kind": "cooperative",
+        "case_id": "case_0000",
+        "input": {
+          "x": 1,
+          "c": 0,
+          "d": 0
+        },
+        "condition": {
+          "status": "VALID",
+          "exact": false,
+          "sound": false,
+          "complete": true,
+          "false_accept": [
+            "case_0020"
+          ],
+          "false_reject": [],
+          "witness_value": true
+        },
+        "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+        "relation": {
+          "operations": [
+            {
+              "file": "<program>",
+              "line": 5,
+              "text": "v = v // 6 * 6"
+            },
+            {
+              "file": "<program>",
+              "line": 6,
+              "text": "v = v // 7 * 7"
+            }
+          ],
+          "condition": "c == 0 and d == 0",
+          "rationale": "When both c and d are 0, the operations on lines 5 and 6 together nullify the effect of adding 6 on line 3."
+        }
+      }
+    }
+  ],
+  "summary": {
+    "call_error": null,
+    "raw_relations": 3,
+    "mapped_relations": 3,
+    "rejected_relations": 0,
+    "parse_error": null,
+    "verified_relations": 0,
+    "true_relations": 1,
+    "covered_true_relations": 0,
+    "exact_task": false,
+    "statuses": [
+      "FALSE",
+      "FALSE",
+      "FALSE"
+    ]
+  }
+}

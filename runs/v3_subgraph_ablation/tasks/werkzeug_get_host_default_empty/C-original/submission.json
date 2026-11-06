@@ -1,0 +1,191 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "werkzeug_get_host_default_empty",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "scheme": "http",
+        "host_header": null,
+        "server": null
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "scheme": "http",
+          "host_header": "example.com",
+          "server": null
+        },
+        {
+          "scheme": "https",
+          "host_header": "example.com:443",
+          "server": [
+            "example.com",
+            443
+          ]
+        },
+        {
+          "scheme": "ws",
+          "host_header": "Example.COM:80",
+          "server": null
+        },
+        {
+          "scheme": "http",
+          "host_header": "spam",
+          "server": [
+            "spam",
+            80
+          ]
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "code": "        host = host_header"
+        }
+      ]
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "scheme": "http",
+          "host_header": null,
+          "server": [
+            "example.com",
+            8080
+          ]
+        },
+        {
+          "scheme": "wss",
+          "host_header": null,
+          "server": [
+            "unix/socket",
+            null
+          ]
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87,
+          "code": "        host = server[0]"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "scheme": "http",
+          "host_header": "example.com",
+          "server": null
+        },
+        {
+          "scheme": "https",
+          "host_header": "example.com:443",
+          "server": [
+            "example.com",
+            443
+          ]
+        },
+        {
+          "scheme": "ws",
+          "host_header": "Example.COM:80",
+          "server": null
+        },
+        {
+          "scheme": "http",
+          "host_header": "spam",
+          "server": [
+            "spam",
+            80
+          ]
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "code": "        host = host_header"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "scheme": "http",
+          "host_header": null,
+          "server": [
+            "example.com",
+            8080
+          ]
+        },
+        {
+          "scheme": "wss",
+          "host_header": null,
+          "server": [
+            "unix/socket",
+            null
+          ]
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87,
+          "code": "        host = server[0]"
+        }
+      ]
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "input": {
+        "scheme": "http",
+        "host_header": "example.com",
+        "server": null
+      },
+      "control_input": {
+        "scheme": "http",
+        "host_header": null,
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 85,
+          "code": "        host = host_header"
+        }
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control"
+    },
+    {
+      "type": "PREREQUISITE_BREAKING",
+      "input": {
+        "scheme": "http",
+        "host_header": null,
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "control_input": {
+        "scheme": "http",
+        "host_header": null,
+        "server": null
+      },
+      "operations": [
+        {
+          "file": "src/werkzeug/sansio/utils.py",
+          "line": 87,
+          "code": "        host = server[0]"
+        }
+      ],
+      "prerequisite": "masking holds on input; the same set does not break on control"
+    }
+  ]
+}

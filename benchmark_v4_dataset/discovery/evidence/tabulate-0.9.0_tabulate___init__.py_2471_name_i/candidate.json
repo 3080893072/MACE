@@ -1,0 +1,65 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:2471:name:i",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_handle_long_word",
+  "mechanism": "name",
+  "target_A": {
+    "line": 2471,
+    "end_line": 2471,
+    "kind": "Assign",
+    "code": "i = 1"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_internal.py::test_wrap_text_to_colwidths",
+    "test/test_internal.py::test_wrap_text_to_numbers",
+    "test/test_output.py::test_maxcolwidth_honor_disable_parsenum",
+    "test/test_output.py::test_plain_maxheadercolwidths_autowraps",
+    "test/test_textwrapper.py::test_wrap_datetime",
+    "test/test_textwrapper.py::test_wrap_longword_non_wide",
+    "test/test_textwrapper.py::test_wrap_multiword_non_wide",
+    "test/test_textwrapper.py::test_wrap_multiword_non_wide_with_hypens"
+  ],
+  "original_hit_test_count": 8,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            i = 1",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.76,
+    "failed_nodeids": [
+      "test.test_internal::test_wrap_text_to_colwidths",
+      "test.test_internal::test_wrap_text_to_numbers",
+      "test.test_output::test_maxcolwidth_honor_disable_parsenum",
+      "test.test_output::test_plain_maxheadercolwidths_autowraps",
+      "test.test_textwrapper::test_wrap_datetime",
+      "test.test_textwrapper::test_wrap_longword_non_wide",
+      "test.test_textwrapper::test_wrap_multiword_non_wide",
+      "test.test_textwrapper::test_wrap_multiword_non_wide_with_hypens"
+    ],
+    "stdout_tail": "irst Entry\", datetime.datetime(2020, 1, 1, 5, 6, 7)],\n            [\"Second Entry\", datetime.datetime(2021, 2, 2, 0, 0, 0)],\n        ]\n        headers = [\"Title\", \"When\"]\n>       result = tabulate(data, headers=headers, tablefmt=\"grid\", maxcolwidths=[7, 5])\n\ntest\\test_textwrapper.py:168: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntabulate\\__init__.py:2061: in tabulate\n    list_of_lists = _wrap_text_to_colwidths(\ntabulate\\__init__.py:1518: in _wrap_text_to_colwidths\n    wrapped = wrapper.wrap(casted_cell)\nD:\\Anaconda3\\Lib\\textwrap.py:359: in wrap\n    return self._wrap_chunks(chunks)\ntabulate\\__init__.py:2552: in _wrap_chunks\n    self._handle_long_word(chunks, cur_line, cur_len, width)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <tabulate._CustomTextWrap object at 0x000001D0BE5BE190>\nreversed_chunks = ['05:06:07', ' ', '2020-01-01'], cur_line = [], cur_len = 0\nwidth = 5\n\n    def _handle_long_word(self, reversed_chunks, cur_line, cur_len, width):\n        \"\"\"_handle_long_word(chunks : [string],\n                             cur_line : [string],\n                             cur_len : int, width : int)\n        Handle a chunk of text (most likely a word, not whitespace) that\n        is too long to fit in any line.\n        \"\"\"\n        # Figure out when indent is larger than the specified width, and make\n        # sure at least one character is stripped off on every pass\n        if width < 1:\n            space_left = 1\n        else:\n            space_left = width - cur_len\n    \n        # If we're allowed to break long words, then do so: put as much\n        # of the next chunk onto the current line as will fit.\n        if self.break_long_words:\n            # Tabulate Custom: Build the string up piece-by-piece in order to\n            # take each charcter's width into account\n            chunk = reversed_chunks[-1]\n            pass  # P-: target A deleted\n>           while self._len(chunk[:i]) <= space_left:\nE           UnboundLocalError: cannot access local variable 'i' where it is not associated with a value\n\ntabulate\\__init__.py:2472: UnboundLocalError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_internal.py::test_wrap_text_to_colwidths - UnboundLocalError...\nFAILED test/test_internal.py::test_wrap_text_to_numbers - UnboundLocalError: ...\nFAILED test/test_output.py::test_maxcolwidth_honor_disable_parsenum - Unbound...\nFAILED test/test_output.py::test_plain_maxheadercolwidths_autowraps - Unbound...\nFAILED test/test_textwrapper.py::test_wrap_multiword_non_wide - UnboundLocalE...\nFAILED test/test_textwrapper.py::test_wrap_multiword_non_wide_with_hypens - U...\nFAILED test/test_textwrapper.py::test_wrap_longword_non_wide - UnboundLocalEr...\nFAILED test/test_textwrapper.py::test_wrap_datetime - UnboundLocalError: cann...\n8 failed in 0.42s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

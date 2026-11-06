@@ -1,0 +1,185 @@
+{
+  "candidate_id": "pyparsing-3.0.9:pyparsing/core.py:823:tokens",
+  "conditions": {
+    "1_real_source_and_A": {
+      "A": {
+        "code": "tokens = self.postParse(instring, loc, tokens)",
+        "kind": "Assign",
+        "line": 823
+      },
+      "ok": true,
+      "source_sha256": "bbc1a9b5013f1fac0c925f0e661c5e2b56803c80d75cd83075284e441c01552e"
+    },
+    "2_declared_tests_pass_under_P_minus": {
+      "designed_source": "<local-path>",
+      "ok": true,
+      "returncode": 0,
+      "suite": {
+        "outcomes": {
+          "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_combine_postparse_masked_by_constant_action": "passed",
+          "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_group_postparse_masked_by_constant_action": "passed",
+          "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_suppress_postparse_masked_by_constant_action": "passed"
+        }
+      },
+      "test_set": "DESIGNED"
+    },
+    "3_local_effect_on_test_input": {
+      "examples": [
+        "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_group_postparse_masked_by_constant_action",
+        "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_combine_postparse_masked_by_constant_action",
+        "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_suppress_postparse_masked_by_constant_action"
+      ],
+      "masked_tests": 3,
+      "ok": true
+    },
+    "4_masking_established": {
+      "mmbs": [
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ]
+      ],
+      "ok": true
+    },
+    "5_legal_exposing_counterexample": {
+      "exposing_payloads": [
+        3,
+        4
+      ],
+      "ok": true,
+      "payloads": [
+        {
+          "action": false,
+          "kind": "group"
+        },
+        {
+          "action": false,
+          "kind": "combine"
+        }
+      ]
+    },
+    "6_verified_msms_mmbs_and_scope": {
+      "mmbs": [
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ],
+        [
+          [
+            "L856"
+          ]
+        ]
+      ],
+      "ok": true,
+      "scope": "declared probe inputs only; no claim over other inputs"
+    }
+  },
+  "declared_test_set": "DESIGNED",
+  "declared_tests": [
+    "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_group_postparse_masked_by_constant_action",
+    "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_combine_postparse_masked_by_constant_action",
+    "tests/test_v4_designed_pyparsing-3_0_9_pyparsing_core_py_823_tokens.py::test_suppress_postparse_masked_by_constant_action"
+  ],
+  "designed_source": "<local-path>",
+  "file": "pyparsing/core.py",
+  "function": "_parseNoCache",
+  "mechanism": "name-overwrite",
+  "project": "pyparsing",
+  "promoted": true,
+  "qualification": {
+    "MASKED_EFFECT": 3
+  },
+  "universe": [
+    {
+      "code": "tokens = fn(instring, tokens_start, ret_tokens)",
+      "file": "pyparsing/core.py",
+      "first_line": 833,
+      "id": "L833",
+      "key_index": null,
+      "key_kind": "name",
+      "key_obj": "",
+      "kind": "Assign",
+      "last_line": 833,
+      "line": 833
+    },
+    {
+      "code": "tokens = fn(instring, tokens_start, ret_tokens)",
+      "file": "pyparsing/core.py",
+      "first_line": 856,
+      "id": "L856",
+      "key_index": null,
+      "key_kind": "name",
+      "key_obj": "",
+      "kind": "Assign",
+      "last_line": 856,
+      "line": 856
+    }
+  ],
+  "version": "3.0.9",
+  "witness_summary": {
+    "exposing": [
+      3,
+      4
+    ],
+    "legal_exposing_payload": true,
+    "masked": [
+      0,
+      1,
+      2
+    ],
+    "payloads": 5,
+    "verified_mmbs": true,
+    "verified_msms": true
+  }
+}

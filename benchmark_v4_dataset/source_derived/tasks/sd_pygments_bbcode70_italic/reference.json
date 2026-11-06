@@ -1,0 +1,138 @@
+{
+  "task_id": "sd_pygments_bbcode70_italic",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "pygments/formatters/bbcode.py",
+    "line": 70,
+    "function": "_make_styles",
+    "code": "                end = '[/i]' + end",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "pygments/formatters/bbcode.py",
+      "line": 72,
+      "code": "_sd_i = bool(ndef['italic']) and not ndef['color']",
+      "role": "First cooperation leg: decides whether the local repair applies (italic and no colour).",
+      "patch_anchor_line": 70,
+      "block_span": [
+        71,
+        73
+      ]
+    },
+    {
+      "id": "U2",
+      "file": "pygments/formatters/bbcode.py",
+      "line": 75,
+      "code": "if _sd_i and not end.startswith('[/i]'):",
+      "role": "Second cooperation leg: consumes the U1 flag and prepends the missing closing italic tag.",
+      "patch_anchor_line": 70,
+      "block_span": [
+        74,
+        77
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_italic": {
+      "role": "masking",
+      "description": "italic-only token style, default formatter mode",
+      "p_plus": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "p_minus": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_italic_color": {
+      "role": "exposing",
+      "description": "italic + colour token style (U1 is false, so U2 cannot run)",
+      "p_plus": {
+        "out": "[color=#ff0000][i]abc[/i][/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000][i]abc[/color] = 1\n"
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_bold": {
+      "role": "control",
+      "description": "bold-only style; A is not executed",
+      "p_plus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false
+    },
+    "mask_italic_codetag": {
+      "role": "masking",
+      "description": "italic-only style, codetag mode; A executes and the same repair pair masks it",
+      "p_plus": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      },
+      "p_minus": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1,U2]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "differs from P+",
+      "[U2]": "differs from P+",
+      "[U1,U2]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_pygments_bbcode70_italic/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ]
+}

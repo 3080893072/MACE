@@ -1,0 +1,105 @@
+You are analysing a proposed deletion in a Python function. Use only
+the public information below. A Python exception is an observation. The best
+evidence level is BOUNDED: execution on the declared finite domain, never a proof.
+
+## Task
+werkzeug_filestorage_stream_name
+
+## Files
+`src/werkzeug/datastructures.py`
+
+## Program with source line numbers
+```text
+2902 |     def __init__(
+2903 |         self,
+2904 |         stream=None,
+2905 |         filename=None,
+2906 |         name=None,
+2907 |         content_type=None,
+2908 |         content_length=None,
+2909 |         headers=None,
+2910 |     ):
+2911 |         self.name = name
+2912 |         self.stream = stream or BytesIO()
+2913 | 
+2914 |         # If no filename is provided, attempt to get the filename from
+2915 |         # the stream object. Python names special streams like
+2916 |         # ``<stderr>`` with angular brackets, skip these streams.
+2917 |         if filename is None:
+2918 |             filename = getattr(stream, "name", None)
+2919 | 
+2920 |             if filename is not None:
+2921 |                 filename = os.fsdecode(filename)
+2922 | 
+2923 |             if filename and filename[0] == "<" and filename[-1] == ">":
+2924 |                 filename = None
+2925 |         else:
+2926 |             filename = os.fsdecode(filename)
+2927 | 
+2928 |         self.filename = filename
+2929 | 
+2930 |         if headers is None:
+2931 |             headers = Headers()
+2932 |         self.headers = headers
+2933 |         if content_type is not None:
+2934 |             headers["Content-Type"] = content_type
+2935 |         if content_length is not None:
+2936 |             headers["Content-Length"] = str(content_length)
+```
+
+## Target A
+Line 2918: ``
+Deletion rule: replace exactly this line with `pass` at the same indentation.
+
+## Legal inputs
+Arguments: {"data": {"description": "Bytes encoded as UTF-8 for none/named streams.", "required": false, "type": "string"}, "name": {"description": "Required when stream is 'named'.", "required": false, "type": "string"}, "stream": {"description": "Kind of stream object passed to FileStorage.", "enum": ["tempfile", "stderr", "none", "named"], "required": true, "type": "string"}}
+Frozen legal cases: [{"stream": "tempfile"}, {"stream": "stderr"}, {"stream": "none", "data": "abc"}, {"stream": "named", "data": "abc", "name": "x.txt"}, {"stream": "named", "data": "abc", "name": "<stderr>"}, {"stream": "named", "data": "abc", "name": "<stdin>"}]
+Legal constraints: The payload is a JSON object with only the fields listed above.; stream must be one of tempfile, stderr, none, named.; data, when present, must be a string.; name is required for stream='named' and must be a string.
+
+## Observable
+{"raise": {"message": "string", "outcome": "raise", "type": "exception class name"}, "return": {"filename": "string|null", "filename_type": "Python type name", "outcome": "return"}}
+
+## Operations already proposed by the static graph
+- id=src/werkzeug/datastructures.py:2924-2924  line=2924  kind=assignment  `                filename = None `
+- id=src/werkzeug/datastructures.py:2921-2921  line=2921  kind=assignment  `                filename = os.fsdecode(filename) `
+- id=src/werkzeug/datastructures.py:2926-2926  line=2926  kind=assignment  `            filename = os.fsdecode(filename) `
+
+You may propose operations that are NOT in this list. Every operation you
+report must be a real, complete statement in the file above: give its exact
+1-based starting line and its source text. Do not invent lines.
+
+## What to analyse
+1. Operations that may **independently mask A**: one operation alone is enough
+   to make the deletion unobservable.
+2. Operations that may **cooperatively mask A**: two or more operations are
+   jointly sufficient, and no proper non-empty subset is.
+3. **Alternative / fallback masking paths**: different sets of operations that
+   each mask A, so more than one path has to fail before A is exposed.
+4. The **input conditions** under which each relation holds. Use only the
+   argument names, int/bool constants, comparisons, arithmetic, `and`, `or`,
+   `not`. If the relation holds for every legal input, write `true`.
+5. Source locations, and whether the relation is **data-dependent** (it reads
+   or overwrites the value A writes) or **control-dependent** (it changes
+   whether A's statement executes).
+
+## Required JSON
+{
+  "relations": [
+    {
+      "kind": "independent | cooperative | fallback | coexisting",
+      "operations": [
+        {"file": "<path from Files>", "line": <int>, "text": "<source text>"}
+      ],
+      "condition": "<restricted boolean expression or null>",
+      "data_dependence": true,
+      "control_dependence": false,
+      "source_evidence": "<line numbers and why>",
+      "rationale": "<one sentence>"
+    }
+  ],
+  "notes": "<optional>"
+}
+
+`coexisting` means: disabling the named operations together exposes A, while
+no proper non-empty subset does. Return at most 12 different
+relations. Return one JSON object and no prose outside it.

@@ -1,0 +1,4209 @@
+{
+  "fixture": "parity_snap",
+  "mode": "mace",
+  "provider": "FIXED_PROPOSAL_REPLAY",
+  "guard_source": "qwen",
+  "evidence_gate": false,
+  "diagnostic_only": false,
+  "model": "fixed-m5-proposals",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 3,
+  "status": "ROUNDS_EXHAUSTED",
+  "final_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+  "final_bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "total_post == total + 1",
+        "condition": "True",
+        "source_lines": [
+          3,
+          2
+        ],
+        "rationale": "Line 3 increments the total by 1."
+      }
+    ],
+    "upstream": [
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "sum(xs) % 2 == 0",
+        "condition": "even",
+        "source_lines": [
+          4,
+          5
+        ],
+        "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+        "role": "fixed_point"
+      },
+      {
+        "id": "U2",
+        "kind": "upstream",
+        "expr": "sum(xs) % 2 == 1",
+        "condition": "even",
+        "source_lines": [
+          4,
+          5
+        ],
+        "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+        "role": "supporting"
+      },
+      {
+        "id": "U3",
+        "kind": "upstream",
+        "expr": "True",
+        "condition": "not even",
+        "source_lines": [
+          4
+        ],
+        "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+        "role": "supporting"
+      }
+    ],
+    "observers": [
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "total if not even else total - total % 2",
+        "condition": "even and sum(xs) % 2 == 0",
+        "source_lines": [
+          5,
+          6
+        ],
+        "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+        "channel": 0
+      },
+      {
+        "id": "O1",
+        "kind": "observer",
+        "expr": "total if not even else total - total % 2",
+        "condition": "even and sum(xs) % 2 == 1",
+        "source_lines": [
+          5,
+          6
+        ],
+        "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+        "channel": 0
+      },
+      {
+        "id": "O2",
+        "kind": "observer",
+        "expr": "total if not even else total - total % 2",
+        "condition": "not even and sum(xs) == total",
+        "source_lines": [
+          6
+        ],
+        "rationale": "If even is False and sum(xs) equals total, A's effect is preserved.",
+        "channel": 0
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "kind": "mask_guard",
+      "expr": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+      "condition": "True",
+      "source_lines": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "rationale": ""
+    },
+    "uncertainty": "The mask_guard now accounts for both cases where even is True and sum(xs) is either even or odd, and where even is False."
+  },
+  "final_report": {
+    "guard_ok": false,
+    "evidence_level": "BOUNDED",
+    "domain_size": 170,
+    "usable_rows": 170,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "even": "bool",
+      "total": "int"
+    },
+    "relations": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "total_post == total + 1",
+        "condition": "True",
+        "source_lines": [
+          3,
+          2
+        ],
+        "rationale": "Line 3 increments the total by 1.",
+        "status": "BOUNDED",
+        "checked": 170,
+        "condition_false": 0,
+        "failures": 0,
+        "counterexamples": []
+      },
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "sum(xs) % 2 == 0",
+        "condition": "even",
+        "source_lines": [
+          4,
+          5
+        ],
+        "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+        "role": "fixed_point",
+        "status": "REFUTED",
+        "checked": 85,
+        "condition_false": 85,
+        "failures": 42,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "even": true
+            },
+            "out_plus": 2,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "even": true,
+              "total": 2
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "even": true,
+              "total": 1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "U2",
+        "kind": "upstream",
+        "expr": "sum(xs) % 2 == 1",
+        "condition": "even",
+        "source_lines": [
+          4,
+          5
+        ],
+        "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+        "role": "supporting",
+        "status": "REFUTED",
+        "checked": 85,
+        "condition_false": 85,
+        "failures": 43,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "even": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "even": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                2
+              ],
+              "even": true
+            },
+            "out_plus": 2,
+            "out_minus": 2,
+            "snap_plus": {
+              "xs": [
+                2
+              ],
+              "even": true,
+              "total": 3
+            },
+            "snap_minus": {
+              "xs": [
+                2
+              ],
+              "even": true,
+              "total": 2
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "U3",
+        "kind": "upstream",
+        "expr": "True",
+        "condition": "not even",
+        "source_lines": [
+          4
+        ],
+        "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+        "role": "supporting",
+        "status": "BOUNDED",
+        "checked": 85,
+        "condition_false": 85,
+        "failures": 0,
+        "counterexamples": []
+      },
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "total if not even else total - total % 2",
+        "condition": "even and sum(xs) % 2 == 0",
+        "source_lines": [
+          5,
+          6
+        ],
+        "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+        "channel": 0,
+        "status": "BOUNDED",
+        "checked": 170,
+        "faithful_failures": 0,
+        "faithful_minus_failures": 0,
+        "invariance_checked": 43,
+        "invariance_failures": 0,
+        "evaluation_errors": 0,
+        "counterexamples": []
+      },
+      {
+        "id": "O1",
+        "kind": "observer",
+        "expr": "total if not even else total - total % 2",
+        "condition": "even and sum(xs) % 2 == 1",
+        "source_lines": [
+          5,
+          6
+        ],
+        "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+        "channel": 0,
+        "status": "REFUTED",
+        "checked": 170,
+        "faithful_failures": 0,
+        "faithful_minus_failures": 0,
+        "invariance_checked": 42,
+        "invariance_failures": 42,
+        "evaluation_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed_plus": 0,
+            "observed_minus": -2,
+            "kind": "invariance"
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "even": true
+            },
+            "out_plus": 2,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "even": true,
+              "total": 2
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "even": true,
+              "total": 1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed_plus": 2,
+            "observed_minus": 0,
+            "kind": "invariance"
+          },
+          {
+            "args": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed_plus": 0,
+            "observed_minus": -2,
+            "kind": "invariance"
+          }
+        ]
+      },
+      {
+        "id": "O2",
+        "kind": "observer",
+        "expr": "total if not even else total - total % 2",
+        "condition": "not even and sum(xs) == total",
+        "source_lines": [
+          6
+        ],
+        "rationale": "If even is False and sum(xs) equals total, A's effect is preserved.",
+        "channel": 0,
+        "status": "REFUTED",
+        "checked": 170,
+        "faithful_failures": 0,
+        "faithful_minus_failures": 0,
+        "invariance_checked": 0,
+        "invariance_failures": 0,
+        "evaluation_errors": 170,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "error": "unknown variable at evaluation: total",
+            "kind": "evaluation"
+          },
+          {
+            "args": {
+              "xs": [],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": true,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": true,
+              "total": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "error": "unknown variable at evaluation: total",
+            "kind": "evaluation"
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "error": "unknown variable at evaluation: total",
+            "kind": "evaluation"
+          }
+        ]
+      }
+    ],
+    "guard": {
+      "id": "G",
+      "expr": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+      "source_lines": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "status": "REFUTED",
+      "checked": 170,
+      "unsound": 127,
+      "incomplete": 0,
+      "evaluation_errors": 0,
+      "exact": false,
+      "shape": "or",
+      "parts": [
+        "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+        "not even"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          42,
+          85
+        ],
+        "rejects_wrong": [
+          0,
+          0
+        ]
+      },
+      "counterexamples": [
+        {
+          "args": {
+            "xs": [],
+            "even": false
+          },
+          "out_plus": 1,
+          "out_minus": 0,
+          "snap_plus": {
+            "xs": [],
+            "even": false,
+            "total": 1
+          },
+          "snap_minus": {
+            "xs": [],
+            "even": false,
+            "total": 0
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            false,
+            true
+          ],
+          "part_text": [
+            "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+            "not even"
+          ]
+        },
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "even": false
+          },
+          "out_plus": 0,
+          "out_minus": -1,
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "even": false,
+            "total": 0
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "even": false,
+            "total": -1
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            false,
+            true
+          ],
+          "part_text": [
+            "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+            "not even"
+          ]
+        },
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "even": true
+          },
+          "out_plus": 0,
+          "out_minus": -2,
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "even": true,
+            "total": 0
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "even": true,
+            "total": -1
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            true,
+            false
+          ],
+          "part_text": [
+            "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+            "not even"
+          ]
+        }
+      ],
+      "contrasts": [
+        {
+          "only_differing_argument": "xs",
+          "masked": {
+            "args": {
+              "xs": [],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "guard_says": true
+          }
+        },
+        {
+          "only_differing_argument": "even",
+          "masked": {
+            "args": {
+              "xs": [],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": 0,
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "guard_says": true
+          }
+        }
+      ]
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "BOUNDED",
+        "checked": 0,
+        "failures": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "even": true
+            },
+            "out_plus": 2,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "even": true,
+              "total": 2
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "even": true,
+              "total": 1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1,
+                0
+              ],
+              "even": true,
+              "total": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          }
+        ],
+        "reason": "every fixed-point condition implies A is a no-op on the local state"
+      },
+      "derived_guard": {
+        "reason": "assembled from verified fixed-point and observer conditions",
+        "expr": "((even and sum(xs) % 2 == 0))",
+        "partial_expr": "((even and sum(xs) % 2 == 0))",
+        "channels_covered": [
+          0
+        ],
+        "missing_channels": [],
+        "missing_reasons": [
+          "necessary conditions are not represented in the contract language"
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [
+          "O0"
+        ],
+        "parts": [
+          {
+            "relation": "O0",
+            "op": "and",
+            "channel": 0,
+            "text": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ]
+          }
+        ],
+        "semantics": "sufficient_only",
+        "sufficient_conditions": [
+          {
+            "relation": "O0",
+            "kind": "observer",
+            "channel": 0,
+            "condition": "even and sum(xs) % 2 == 0",
+            "guarantee": "sufficient for channel invariance"
+          }
+        ],
+        "necessary_conditions": [],
+        "exact_equivalence": "not_established",
+        "complete": false,
+        "guard_complete": false,
+        "unverified_relations": [],
+        "compose_status": "COMPOSED",
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "counterexamples": [],
+        "same_as_guard": false,
+        "equivalent_to_declared_guard_on_domain": false
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 43,
+      "active_exposed": 127
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [],
+          "even": false
+        },
+        "out_plus": 1,
+        "out_minus": 0,
+        "snap_plus": {
+          "xs": [],
+          "even": false,
+          "total": 1
+        },
+        "snap_minus": {
+          "xs": [],
+          "even": false,
+          "total": 0
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            -1
+          ],
+          "even": false
+        },
+        "out_plus": 0,
+        "out_minus": -1,
+        "snap_plus": {
+          "xs": [
+            -1
+          ],
+          "even": false,
+          "total": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1
+          ],
+          "even": false,
+          "total": -1
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            -1
+          ],
+          "even": true
+        },
+        "out_plus": 0,
+        "out_minus": -2,
+        "snap_plus": {
+          "xs": [
+            -1
+          ],
+          "even": true,
+          "total": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1
+          ],
+          "even": true,
+          "total": -1
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 2,
+            "contexts_with_flip": 1,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "xs",
+              "args": {
+                "even": true
+              },
+              "masked": {
+                "value": [],
+                "out_plus": 0,
+                "out_minus": 0
+              },
+              "exposed": {
+                "value": [
+                  -1
+                ],
+                "out_plus": 0,
+                "out_minus": -2
+              }
+            }
+          },
+          "even": {
+            "contexts": 85,
+            "contexts_with_flip": 43,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "even",
+              "args": {
+                "xs": []
+              },
+              "masked": {
+                "value": true,
+                "out_plus": 0,
+                "out_minus": 0
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": 1,
+                "out_minus": 0
+              }
+            }
+          }
+        },
+        "causally_relevant": [
+          "xs",
+          "even"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "source_lines": [
+              3,
+              2
+            ]
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "source_lines": [
+              4,
+              5
+            ],
+            "role": "fixed_point"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "source_lines": [
+              4,
+              5
+            ],
+            "role": "supporting"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "source_lines": [
+              4
+            ],
+            "role": "supporting"
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "source_lines": [
+              5,
+              6
+            ],
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "source_lines": [
+              5,
+              6
+            ],
+            "channel": 0
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "source_lines": [
+              6
+            ],
+            "channel": 0
+          },
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "status": "REFUTED"
+          }
+        ],
+        "edges": [
+          {
+            "from": "O0",
+            "to": "G",
+            "op": "and"
+          },
+          {
+            "from": "O1",
+            "to": "G",
+            "op": "and"
+          },
+          {
+            "from": "O2",
+            "to": "G",
+            "op": "and"
+          }
+        ],
+        "unsupported": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 3,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"total_post == total + 1\",\n     \"source_lines\": [3, 2],\n     \"rationale\": \"Line 3 increments the total by 1.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"sum(xs) % 2 == 0\",\n     \"condition\": \"even\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [4, 5],\n     \"rationale\": \"If even is True and sum(xs) is already even, A does not change the final result.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"sum(xs) % 2 == 1\",\n     \"condition\": \"even\",\n     \"role\": \"supporting\",\n     \"source_lines\": [4, 5],\n     \"rationale\": \"If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.\"},\n    {\"id\": \"U3\",\n     \"expr\": \"True\",\n     \"condition\": \"not even\",\n     \"role\": \"supporting\",\n     \"source_lines\": [4],\n     \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"even and sum(xs) % 2 == 0\",\n     \"source_lines\": [5, 6],\n     \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\"},\n    {\"id\": \"O1\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"even and sum(xs) % 2 == 1\",\n     \"source_lines\": [5, 6],\n     \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\"},\n    {\"id\": \"O2\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"not even\",\n     \"source_lines\": [6],\n     \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"even and sum(xs) % 2 == 0\",\n                 \"source_lines\": [3, 4, 5, 6]},\n  \"uncertainty\": \"The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "total_post == total + 1",
+            "condition": "True",
+            "source_lines": [
+              3,
+              2
+            ],
+            "rationale": "Line 3 increments the total by 1."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 0",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is already even, A does not change the final result.",
+            "role": "fixed_point"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 1",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.",
+            "role": "supporting"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "not even",
+            "source_lines": [
+              4
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "role": "supporting"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 1",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "channel": 0
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "not even",
+            "source_lines": [
+              6
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "even and sum(xs) % 2 == 0",
+          "condition": "True",
+          "source_lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible."
+      },
+      "patch_notes": [],
+      "report": {
+        "guard_ok": true,
+        "evidence_level": "BOUNDED",
+        "domain_size": 170,
+        "usable_rows": 170,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "even": "bool",
+          "total": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "total_post == total + 1",
+            "condition": "True",
+            "source_lines": [
+              3,
+              2
+            ],
+            "rationale": "Line 3 increments the total by 1.",
+            "status": "BOUNDED",
+            "checked": 170,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 0",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is already even, A does not change the final result.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 42,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 1",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.",
+            "role": "supporting",
+            "status": "REFUTED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 43,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "even": true,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "even": true,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    2
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 2,
+                "snap_plus": {
+                  "xs": [
+                    2
+                  ],
+                  "even": true,
+                  "total": 3
+                },
+                "snap_minus": {
+                  "xs": [
+                    2
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "not even",
+            "source_lines": [
+              4
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "role": "supporting",
+            "status": "BOUNDED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "channel": 0,
+            "status": "BOUNDED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 43,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 1",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 42,
+            "invariance_failures": 42,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -2,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 2,
+                "observed_minus": 0,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -2,
+                "kind": "invariance"
+              }
+            ]
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "not even",
+            "source_lines": [
+              6
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 85,
+            "invariance_failures": 85,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "even": false,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "even": false,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 1,
+                "observed_minus": 0,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false
+                },
+                "out_plus": 0,
+                "out_minus": -1,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -1,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": false,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": false,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 1,
+                "observed_minus": 0,
+                "kind": "invariance"
+              }
+            ]
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "even and sum(xs) % 2 == 0",
+          "source_lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "status": "BOUNDED",
+          "checked": 170,
+          "unsound": 0,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": true,
+          "shape": "and",
+          "parts": [
+            "even",
+            "sum(xs) % 2 == 0"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0,
+              0
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "BOUNDED",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "every fixed-point condition implies A is a no-op on the local state"
+          },
+          "derived_guard": {
+            "reason": "assembled from verified fixed-point and observer conditions",
+            "expr": "((even and sum(xs) % 2 == 0))",
+            "partial_expr": "((even and sum(xs) % 2 == 0))",
+            "channels_covered": [
+              0
+            ],
+            "missing_channels": [],
+            "missing_reasons": [
+              "necessary conditions are not represented in the contract language"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [
+              "O0"
+            ],
+            "parts": [
+              {
+                "relation": "O0",
+                "op": "and",
+                "channel": 0,
+                "text": "even and sum(xs) % 2 == 0",
+                "source_lines": [
+                  5,
+                  6
+                ]
+              }
+            ],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [
+              {
+                "relation": "O0",
+                "kind": "observer",
+                "channel": 0,
+                "condition": "even and sum(xs) % 2 == 0",
+                "guarantee": "sufficient for channel invariance"
+              }
+            ],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "COMPOSED",
+            "status": "BOUNDED",
+            "unsound": 0,
+            "incomplete": 0,
+            "counterexamples": [],
+            "same_as_guard": true,
+            "equivalent_to_declared_guard_on_domain": true
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 43,
+          "active_exposed": 127
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "even": true
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": 0,
+                    "out_minus": -2
+                  }
+                }
+              },
+              "even": {
+                "contexts": 85,
+                "contexts_with_flip": 43,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "even",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "even"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  4,
+                  5
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  4,
+                  5
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U3",
+                "kind": "upstream",
+                "source_lines": [
+                  4
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  5,
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O1",
+                "kind": "observer",
+                "source_lines": [
+                  5,
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O2",
+                "kind": "observer",
+                "source_lines": [
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "status": "BOUNDED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O1",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O2",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2",
+              "U3"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, even):\n002:     total = sum(xs)\n003:     total = total + 1  # TARGET_A\n004:     if even:\n005:         total = total - total % 2\n006:     return total\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1, 2}; even: bool (every combination is enumerated; 170 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  even: bool\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        }
+      ],
+      "candidate_round": {
+        "round": 1,
+        "domain_size": 170,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "even and sum(xs) % 2 == 0",
+        "qwen_status": "BOUNDED",
+        "qwen_classification": "EXACT",
+        "false_accepts": 0,
+        "false_rejects": 0,
+        "evaluation_errors": 0,
+        "invalid_relations": [],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "O1",
+          "O2"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "even and sum(xs) % 2 == 0",
+        "selection_reason": null,
+        "all_relations_pass": false
+      }
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"revise\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"sum(xs) % 2 == 0\",\n      \"condition\": \"even and total_post % 2 == 0\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If even is True and the post-increment total is even, A does not change the final result.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"sum(xs) % 2 == 1\",\n      \"condition\": \"even and total_post % 2 == 1\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.\"\n    },\n    {\n      \"id\": \"O1\",\n      \"condition\": \"even and total_post % 2 == 1\",\n      \"source_lines\": [5, 6],\n      \"rationale\": \"If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.\"\n    },\n    {\n      \"id\": \"O2\",\n      \"condition\": \"not even\",\n      \"source_lines\": [6],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"\n    }\n  ],\n  \"add_observers\": [],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"expr\": \"even and total_post % 2 == 0 or not even\",\n    \"source_lines\": [3, 4, 5, 6]\n  },\n  \"uncertainty\": \"The mask_guard now accounts for both cases where even is True and the post-increment total is even, and where even is False.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "total_post == total + 1",
+            "condition": "True",
+            "source_lines": [
+              3,
+              2
+            ],
+            "rationale": "Line 3 increments the total by 1."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 0",
+            "condition": "even and total_post % 2 == 0",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and the post-increment total is even, A does not change the final result.",
+            "role": "fixed_point"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 1",
+            "condition": "even and total_post % 2 == 1",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "role": "supporting"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "not even",
+            "source_lines": [
+              4
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "role": "supporting"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and total_post % 2 == 1",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "channel": 0
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "not even",
+            "source_lines": [
+              6
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "even and total_post % 2 == 0 or not even",
+          "condition": "True",
+          "source_lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The mask_guard now accounts for both cases where even is True and the post-increment total is even, and where even is False."
+      },
+      "patch_notes": [
+        "revised U1",
+        "revised U2",
+        "revised O1",
+        "unchanged O2",
+        "replaced mask_guard"
+      ],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 170,
+        "usable_rows": 170,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "even": "bool",
+          "total": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "total_post == total + 1",
+            "condition": "True",
+            "source_lines": [
+              3,
+              2
+            ],
+            "rationale": "Line 3 increments the total by 1.",
+            "status": "BOUNDED",
+            "checked": 170,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 0",
+            "condition": "even and total_post % 2 == 0",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and the post-increment total is even, A does not change the final result.",
+            "role": "fixed_point",
+            "status": "INVALID",
+            "reason": "unknown variable: total_post. upstream relations are evaluated on the entry arguments only; local variables computed before A are not in scope there",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 1",
+            "condition": "even and total_post % 2 == 1",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "role": "supporting",
+            "status": "INVALID",
+            "reason": "unknown variable: total_post. upstream relations are evaluated on the entry arguments only; local variables computed before A are not in scope there",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "not even",
+            "source_lines": [
+              4
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "role": "supporting",
+            "status": "BOUNDED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "channel": 0,
+            "status": "BOUNDED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 43,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and total_post % 2 == 1",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "channel": 0,
+            "status": "INVALID",
+            "reason": "unknown variable: total_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only",
+            "checked": 0,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 0,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "not even",
+            "source_lines": [
+              6
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 85,
+            "invariance_failures": 85,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "even": false,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "even": false,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 1,
+                "observed_minus": 0,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false
+                },
+                "out_plus": 0,
+                "out_minus": -1,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -1,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": false,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": false,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 1,
+                "observed_minus": 0,
+                "kind": "invariance"
+              }
+            ]
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "even and total_post % 2 == 0 or not even",
+          "source_lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "status": "INVALID",
+          "reason": "unknown variable: total_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects",
+          "unsound": 0,
+          "incomplete": 0,
+          "checked": 0,
+          "evaluation_errors": 0,
+          "exact": false,
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "BOUNDED",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [],
+            "reason": "every fixed-point condition implies A is a no-op on the local state"
+          },
+          "derived_guard": {
+            "reason": "assembled from verified fixed-point and observer conditions",
+            "expr": "((even and sum(xs) % 2 == 0))",
+            "partial_expr": "((even and sum(xs) % 2 == 0))",
+            "channels_covered": [
+              0
+            ],
+            "missing_channels": [],
+            "missing_reasons": [
+              "necessary conditions are not represented in the contract language"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [
+              "O0"
+            ],
+            "parts": [
+              {
+                "relation": "O0",
+                "op": "and",
+                "channel": 0,
+                "text": "even and sum(xs) % 2 == 0",
+                "source_lines": [
+                  5,
+                  6
+                ]
+              }
+            ],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [
+              {
+                "relation": "O0",
+                "kind": "observer",
+                "channel": 0,
+                "condition": "even and sum(xs) % 2 == 0",
+                "guarantee": "sufficient for channel invariance"
+              }
+            ],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "COMPOSED",
+            "status": "BOUNDED",
+            "unsound": 0,
+            "incomplete": 0,
+            "counterexamples": [],
+            "same_as_guard": false,
+            "equivalent_to_declared_guard_on_domain": null
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 43,
+          "active_exposed": 127
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "even": true
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": 0,
+                    "out_minus": -2
+                  }
+                }
+              },
+              "even": {
+                "contexts": 85,
+                "contexts_with_flip": 43,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "even",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "even"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  4,
+                  5
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  4,
+                  5
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U3",
+                "kind": "upstream",
+                "source_lines": [
+                  4
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  5,
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O1",
+                "kind": "observer",
+                "source_lines": [
+                  5,
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O2",
+                "kind": "observer",
+                "source_lines": [
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "status": "INVALID"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O1",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O2",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2",
+              "U3"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, even):\n002:     total = sum(xs)\n003:     total = total + 1  # TARGET_A\n004:     if even:\n005:         total = total - total % 2\n006:     return total\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1, 2}; even: bool (every combination is enumerated; 170 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  even: bool\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"total_post == total + 1\",\n     \"source_lines\": [3, 2],\n     \"rationale\": \"Line 3 increments the total by 1.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"sum(xs) % 2 == 0\",\n     \"condition\": \"even\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [4, 5],\n     \"rationale\": \"If even is True and sum(xs) is already even, A does not change the final result.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"sum(xs) % 2 == 1\",\n     \"condition\": \"even\",\n     \"role\": \"supporting\",\n     \"source_lines\": [4, 5],\n     \"rationale\": \"If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.\"},\n    {\"id\": \"U3\",\n     \"expr\": \"True\",\n     \"condition\": \"not even\",\n     \"role\": \"supporting\",\n     \"source_lines\": [4],\n     \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"even and sum(xs) % 2 == 0\",\n     \"source_lines\": [5, 6],\n     \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\"},\n    {\"id\": \"O1\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"even and sum(xs) % 2 == 1\",\n     \"source_lines\": [5, 6],\n     \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\"},\n    {\"id\": \"O2\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"not even\",\n     \"source_lines\": [6],\n     \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"even and sum(xs) % 2 == 0\",\n                 \"source_lines\": [3, 4, 5, 6]},\n  \"uncertainty\": \"The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible.\"\n}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 170 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: sum(xs) % 2 == 0\n  condition:  even\n  diagnosis:  on these inputs the condition was true and A leaves the local state unchanged, but the expression itself evaluates to false; the expression is what is wrong\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [1], \"even\": true}, \"out_plus\": 2, \"out_minus\": 0, \"snap_plus\": {\"xs\": [1], \"even\": true, \"total\": 2}, \"snap_minus\": {\"xs\": [1], \"even\": true, \"total\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1, 0], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1, 0], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1, 0], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\nRELATION U2 (upstream) FAILED.\n  expression: sum(xs) % 2 == 1\n  condition:  even\n  diagnosis:  on these inputs the condition was true but the stated fact is false; the fact or its condition is wrong\n  counterexample: {\"args\": {\"xs\": [], \"even\": true}, \"out_plus\": 0, \"out_minus\": 0, \"snap_plus\": {\"xs\": [], \"even\": true, \"total\": 1}, \"snap_minus\": {\"xs\": [], \"even\": true, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"even\": true}, \"out_plus\": 0, \"out_minus\": 0, \"snap_plus\": {\"xs\": [0], \"even\": true, \"total\": 1}, \"snap_minus\": {\"xs\": [0], \"even\": true, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [2], \"even\": true}, \"out_plus\": 2, \"out_minus\": 2, \"snap_plus\": {\"xs\": [2], \"even\": true, \"total\": 3}, \"snap_minus\": {\"xs\": [2], \"even\": true, \"total\": 2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\nRELATION O1 (observer) FAILED.\n  expression: total if not even else total - total % 2\n  condition:  even and sum(xs) % 2 == 1\n  diagnosis:  on these inputs the condition was true, yet deleting A changed this channel's value, so the condition is too weak\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -2, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [1], \"even\": true}, \"out_plus\": 2, \"out_minus\": 0, \"snap_plus\": {\"xs\": [1], \"even\": true, \"total\": 2}, \"snap_minus\": {\"xs\": [1], \"even\": true, \"total\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 2, \"observed_minus\": 0, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [-1, 0], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1, 0], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1, 0], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -2, \"kind\": \"invariance\"}\nRELATION O2 (observer) FAILED.\n  expression: total if not even else total - total % 2\n  condition:  not even\n  diagnosis:  on these inputs the condition was true, yet deleting A changed this channel's value, so the condition is too weak\n  counterexample: {\"args\": {\"xs\": [], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 1, \"observed_minus\": 0, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": false}, \"out_plus\": 0, \"out_minus\": -1, \"snap_plus\": {\"xs\": [-1], \"even\": false, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": false, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -1, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [0], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [0], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [0], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 1, \"observed_minus\": 0, \"kind\": \"invariance\"}\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"total_post == total + 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        3,\n        2\n      ],\n      \"rationale\": \"Line 3 increments the total by 1.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"sum(xs) % 2 == 0\",\n      \"condition\": \"even\",\n      \"source_lines\": [\n        4,\n        5\n      ],\n      \"rationale\": \"If even is True and sum(xs) is already even, A does not change the final result.\",\n      \"role\": \"fixed_point\"\n    },\n    {\n      \"id\": \"U2\",\n      \"kind\": \"upstream\",\n      \"expr\": \"sum(xs) % 2 == 1\",\n      \"condition\": \"even\",\n      \"source_lines\": [\n        4,\n        5\n      ],\n      \"rationale\": \"If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.\",\n      \"role\": \"supporting\"\n    },\n    {\n      \"id\": \"U3\",\n      \"kind\": \"upstream\",\n      \"expr\": \"True\",\n      \"condition\": \"not even\",\n      \"source_lines\": [\n        4\n      ],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\",\n      \"role\": \"supporting\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"even and sum(xs) % 2 == 0\",\n      \"source_lines\": [\n        5,\n        6\n      ],\n      \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"even and sum(xs) % 2 == 1\",\n      \"source_lines\": [\n        5,\n        6\n      ],\n      \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O2\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"not even\",\n      \"source_lines\": [\n        6\n      ],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\",\n      \"channel\": 0\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"even and sum(xs) % 2 == 0\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      3,\n      4,\n      5,\n      6\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible.\"\n}"
+        }
+      ],
+      "candidate_round": {
+        "round": 2,
+        "domain_size": 170,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "even and total_post % 2 == 0 or not even",
+        "qwen_status": "INVALID",
+        "qwen_classification": "INVALID_CONTRACT",
+        "false_accepts": 0,
+        "false_rejects": 0,
+        "evaluation_errors": 0,
+        "invalid_relations": [
+          "U1",
+          "U2",
+          "O1"
+        ],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "O1",
+          "O2"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "even and total_post % 2 == 0 or not even",
+        "selection_reason": null,
+        "all_relations_pass": false
+      }
+    },
+    {
+      "round": 3,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"revise\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"sum(xs) % 2 == 0\",\n      \"condition\": \"even\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"sum(xs) % 2 == 1\",\n      \"condition\": \"even\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\"\n    },\n    {\n      \"id\": \"O1\",\n      \"condition\": \"even and sum(xs) % 2 == 1\",\n      \"source_lines\": [5, 6],\n      \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\"\n    },\n    {\n      \"id\": \"O2\",\n      \"condition\": \"not even and sum(xs) == total\",\n      \"source_lines\": [6],\n      \"rationale\": \"If even is False and sum(xs) equals total, A's effect is preserved.\"\n    }\n  ],\n  \"add_observers\": [],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"expr\": \"even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even\",\n    \"source_lines\": [3, 4, 5, 6]\n  },\n  \"uncertainty\": \"The mask_guard now accounts for both cases where even is True and sum(xs) is either even or odd, and where even is False.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "total_post == total + 1",
+            "condition": "True",
+            "source_lines": [
+              3,
+              2
+            ],
+            "rationale": "Line 3 increments the total by 1."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 0",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "role": "fixed_point"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 1",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "role": "supporting"
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "not even",
+            "source_lines": [
+              4
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "role": "supporting"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 1",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "channel": 0
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "not even and sum(xs) == total",
+            "source_lines": [
+              6
+            ],
+            "rationale": "If even is False and sum(xs) equals total, A's effect is preserved.",
+            "channel": 0
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+          "condition": "True",
+          "source_lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The mask_guard now accounts for both cases where even is True and sum(xs) is either even or odd, and where even is False."
+      },
+      "patch_notes": [
+        "revised U1",
+        "revised U2",
+        "revised O1",
+        "revised O2",
+        "replaced mask_guard"
+      ],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 170,
+        "usable_rows": 170,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "even": "bool",
+          "total": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "total_post == total + 1",
+            "condition": "True",
+            "source_lines": [
+              3,
+              2
+            ],
+            "rationale": "Line 3 increments the total by 1.",
+            "status": "BOUNDED",
+            "checked": 170,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 0",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 42,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "sum(xs) % 2 == 1",
+            "condition": "even",
+            "source_lines": [
+              4,
+              5
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "role": "supporting",
+            "status": "REFUTED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 43,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "even": true,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "even": true,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    2
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 2,
+                "snap_plus": {
+                  "xs": [
+                    2
+                  ],
+                  "even": true,
+                  "total": 3
+                },
+                "snap_minus": {
+                  "xs": [
+                    2
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U3",
+            "kind": "upstream",
+            "expr": "True",
+            "condition": "not even",
+            "source_lines": [
+              4
+            ],
+            "rationale": "If even is False, the total is not adjusted after A, so A's effect is preserved.",
+            "role": "supporting",
+            "status": "BOUNDED",
+            "checked": 85,
+            "condition_false": 85,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 0",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is even, A does not change the final result.",
+            "channel": 0,
+            "status": "BOUNDED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 43,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "even and sum(xs) % 2 == 1",
+            "source_lines": [
+              5,
+              6
+            ],
+            "rationale": "If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 42,
+            "invariance_failures": 42,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -2,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 2,
+                "observed_minus": 0,
+                "kind": "invariance"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -2,
+                "kind": "invariance"
+              }
+            ]
+          },
+          {
+            "id": "O2",
+            "kind": "observer",
+            "expr": "total if not even else total - total % 2",
+            "condition": "not even and sum(xs) == total",
+            "source_lines": [
+              6
+            ],
+            "rationale": "If even is False and sum(xs) equals total, A's effect is preserved.",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 170,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 0,
+            "invariance_checked": 0,
+            "invariance_failures": 0,
+            "evaluation_errors": 170,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "even": false,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "even": false,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "error": "unknown variable at evaluation: total",
+                "kind": "evaluation"
+              },
+              {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [],
+                  "even": true,
+                  "total": 1
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "even": true,
+                  "total": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "error": "unknown variable at evaluation: total",
+                "kind": "evaluation"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false
+                },
+                "out_plus": 0,
+                "out_minus": -1,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": false,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "error": "unknown variable at evaluation: total",
+                "kind": "evaluation"
+              }
+            ]
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+          "source_lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "status": "REFUTED",
+          "checked": 170,
+          "unsound": 127,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": false,
+          "shape": "or",
+          "parts": [
+            "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+            "not even"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              42,
+              85
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "even": false
+              },
+              "out_plus": 1,
+              "out_minus": 0,
+              "snap_plus": {
+                "xs": [],
+                "even": false,
+                "total": 1
+              },
+              "snap_minus": {
+                "xs": [],
+                "even": false,
+                "total": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                false,
+                true
+              ],
+              "part_text": [
+                "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+                "not even"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": false
+              },
+              "out_plus": 0,
+              "out_minus": -1,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": false,
+                "total": -1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                false,
+                true
+              ],
+              "part_text": [
+                "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+                "not even"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "even": true
+              },
+              "out_plus": 0,
+              "out_minus": -2,
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "even": true,
+                "total": -1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                true,
+                false
+              ],
+              "part_text": [
+                "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1)",
+                "not even"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "even",
+              "masked": {
+                "args": {
+                  "xs": [],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": 0,
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [],
+                  "even": false
+                },
+                "out_plus": 1,
+                "out_minus": 0,
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "BOUNDED",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true
+                },
+                "out_plus": 2,
+                "out_minus": 0,
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 2
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "even": true,
+                  "total": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true
+                },
+                "out_plus": 0,
+                "out_minus": -2,
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    0
+                  ],
+                  "even": true,
+                  "total": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "every fixed-point condition implies A is a no-op on the local state"
+          },
+          "derived_guard": {
+            "reason": "assembled from verified fixed-point and observer conditions",
+            "expr": "((even and sum(xs) % 2 == 0))",
+            "partial_expr": "((even and sum(xs) % 2 == 0))",
+            "channels_covered": [
+              0
+            ],
+            "missing_channels": [],
+            "missing_reasons": [
+              "necessary conditions are not represented in the contract language"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [
+              "O0"
+            ],
+            "parts": [
+              {
+                "relation": "O0",
+                "op": "and",
+                "channel": 0,
+                "text": "even and sum(xs) % 2 == 0",
+                "source_lines": [
+                  5,
+                  6
+                ]
+              }
+            ],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [
+              {
+                "relation": "O0",
+                "kind": "observer",
+                "channel": 0,
+                "condition": "even and sum(xs) % 2 == 0",
+                "guarantee": "sufficient for channel invariance"
+              }
+            ],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "COMPOSED",
+            "status": "BOUNDED",
+            "unsound": 0,
+            "incomplete": 0,
+            "counterexamples": [],
+            "same_as_guard": false,
+            "equivalent_to_declared_guard_on_domain": false
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 43,
+          "active_exposed": 127
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "out_plus": 1,
+            "out_minus": 0,
+            "snap_plus": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            },
+            "snap_minus": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "out_plus": 0,
+            "out_minus": -1,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": true
+            },
+            "out_plus": 0,
+            "out_minus": -2,
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "even": true,
+              "total": -1
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "even": true
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": 0,
+                    "out_minus": -2
+                  }
+                }
+              },
+              "even": {
+                "contexts": 85,
+                "contexts_with_flip": 43,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "even",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": 0,
+                    "out_minus": 0
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": 1,
+                    "out_minus": 0
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "even"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  4,
+                  5
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  4,
+                  5
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U3",
+                "kind": "upstream",
+                "source_lines": [
+                  4
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  5,
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O1",
+                "kind": "observer",
+                "source_lines": [
+                  5,
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O2",
+                "kind": "observer",
+                "source_lines": [
+                  6
+                ],
+                "channel": 0
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O1",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O2",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2",
+              "U3"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, even):\n002:     total = sum(xs)\n003:     total = total + 1  # TARGET_A\n004:     if even:\n005:         total = total - total % 2\n006:     return total\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1, 2}; even: bool (every combination is enumerated; 170 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  even: bool\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n(no user-defined functions)\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 1 value(s), one per channel\n   (0). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"total_post == total + 1\",\n     \"source_lines\": [3, 2],\n     \"rationale\": \"Line 3 increments the total by 1.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"sum(xs) % 2 == 0\",\n     \"condition\": \"even\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [4, 5],\n     \"rationale\": \"If even is True and sum(xs) is already even, A does not change the final result.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"sum(xs) % 2 == 1\",\n     \"condition\": \"even\",\n     \"role\": \"supporting\",\n     \"source_lines\": [4, 5],\n     \"rationale\": \"If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.\"},\n    {\"id\": \"U3\",\n     \"expr\": \"True\",\n     \"condition\": \"not even\",\n     \"role\": \"supporting\",\n     \"source_lines\": [4],\n     \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"even and sum(xs) % 2 == 0\",\n     \"source_lines\": [5, 6],\n     \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\"},\n    {\"id\": \"O1\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"even and sum(xs) % 2 == 1\",\n     \"source_lines\": [5, 6],\n     \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\"},\n    {\"id\": \"O2\", \"channel\": 0,\n     \"expr\": \"total if not even else total - total % 2\",\n     \"condition\": \"not even\",\n     \"source_lines\": [6],\n     \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"even and sum(xs) % 2 == 0\",\n                 \"source_lines\": [3, 4, 5, 6]},\n  \"uncertainty\": \"The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible.\"\n}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 170 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: sum(xs) % 2 == 0\n  condition:  even\n  diagnosis:  on these inputs the condition was true and A leaves the local state unchanged, but the expression itself evaluates to false; the expression is what is wrong\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [1], \"even\": true}, \"out_plus\": 2, \"out_minus\": 0, \"snap_plus\": {\"xs\": [1], \"even\": true, \"total\": 2}, \"snap_minus\": {\"xs\": [1], \"even\": true, \"total\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1, 0], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1, 0], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1, 0], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\nRELATION U2 (upstream) FAILED.\n  expression: sum(xs) % 2 == 1\n  condition:  even\n  diagnosis:  on these inputs the condition was true but the stated fact is false; the fact or its condition is wrong\n  counterexample: {\"args\": {\"xs\": [], \"even\": true}, \"out_plus\": 0, \"out_minus\": 0, \"snap_plus\": {\"xs\": [], \"even\": true, \"total\": 1}, \"snap_minus\": {\"xs\": [], \"even\": true, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"even\": true}, \"out_plus\": 0, \"out_minus\": 0, \"snap_plus\": {\"xs\": [0], \"even\": true, \"total\": 1}, \"snap_minus\": {\"xs\": [0], \"even\": true, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [2], \"even\": true}, \"out_plus\": 2, \"out_minus\": 2, \"snap_plus\": {\"xs\": [2], \"even\": true, \"total\": 3}, \"snap_minus\": {\"xs\": [2], \"even\": true, \"total\": 2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\nRELATION O1 (observer) FAILED.\n  expression: total if not even else total - total % 2\n  condition:  even and sum(xs) % 2 == 1\n  diagnosis:  on these inputs the condition was true, yet deleting A changed this channel's value, so the condition is too weak\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -2, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [1], \"even\": true}, \"out_plus\": 2, \"out_minus\": 0, \"snap_plus\": {\"xs\": [1], \"even\": true, \"total\": 2}, \"snap_minus\": {\"xs\": [1], \"even\": true, \"total\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 2, \"observed_minus\": 0, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [-1, 0], \"even\": true}, \"out_plus\": 0, \"out_minus\": -2, \"snap_plus\": {\"xs\": [-1, 0], \"even\": true, \"total\": 0}, \"snap_minus\": {\"xs\": [-1, 0], \"even\": true, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -2, \"kind\": \"invariance\"}\nRELATION O2 (observer) FAILED.\n  expression: total if not even else total - total % 2\n  condition:  not even\n  diagnosis:  on these inputs the condition was true, yet deleting A changed this channel's value, so the condition is too weak\n  counterexample: {\"args\": {\"xs\": [], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 1, \"observed_minus\": 0, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": false}, \"out_plus\": 0, \"out_minus\": -1, \"snap_plus\": {\"xs\": [-1], \"even\": false, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": false, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -1, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [0], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [0], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [0], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 1, \"observed_minus\": 0, \"kind\": \"invariance\"}\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"total_post == total + 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        3,\n        2\n      ],\n      \"rationale\": \"Line 3 increments the total by 1.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"sum(xs) % 2 == 0\",\n      \"condition\": \"even\",\n      \"source_lines\": [\n        4,\n        5\n      ],\n      \"rationale\": \"If even is True and sum(xs) is already even, A does not change the final result.\",\n      \"role\": \"fixed_point\"\n    },\n    {\n      \"id\": \"U2\",\n      \"kind\": \"upstream\",\n      \"expr\": \"sum(xs) % 2 == 1\",\n      \"condition\": \"even\",\n      \"source_lines\": [\n        4,\n        5\n      ],\n      \"rationale\": \"If even is True and sum(xs) is odd, A changes the total by 1, but the subsequent subtraction of total % 2 will negate this change.\",\n      \"role\": \"supporting\"\n    },\n    {\n      \"id\": \"U3\",\n      \"kind\": \"upstream\",\n      \"expr\": \"True\",\n      \"condition\": \"not even\",\n      \"source_lines\": [\n        4\n      ],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\",\n      \"role\": \"supporting\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"even and sum(xs) % 2 == 0\",\n      \"source_lines\": [\n        5,\n        6\n      ],\n      \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"even and sum(xs) % 2 == 1\",\n      \"source_lines\": [\n        5,\n        6\n      ],\n      \"rationale\": \"If even is True and sum(xs) is odd, A's effect is negated by the subsequent subtraction of total % 2.\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O2\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"not even\",\n      \"source_lines\": [\n        6\n      ],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\",\n      \"channel\": 0\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"even and sum(xs) % 2 == 0\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      3,\n      4,\n      5,\n      6\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"The mask_guard is simplified to the condition where even is True and sum(xs) is even, but the observers cover all cases. Further simplification or combination of observers might be possible.\"\n}"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"revise\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"sum(xs) % 2 == 0\",\n      \"condition\": \"even and total_post % 2 == 0\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If even is True and the post-increment total is even, A does not change the final result.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"sum(xs) % 2 == 1\",\n      \"condition\": \"even and total_post % 2 == 1\",\n      \"source_lines\": [4, 5],\n      \"rationale\": \"If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.\"\n    },\n    {\n      \"id\": \"O1\",\n      \"condition\": \"even and total_post % 2 == 1\",\n      \"source_lines\": [5, 6],\n      \"rationale\": \"If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.\"\n    },\n    {\n      \"id\": \"O2\",\n      \"condition\": \"not even\",\n      \"source_lines\": [6],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\"\n    }\n  ],\n  \"add_observers\": [],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"expr\": \"even and total_post % 2 == 0 or not even\",\n    \"source_lines\": [3, 4, 5, 6]\n  },\n  \"uncertainty\": \"The mask_guard now accounts for both cases where even is True and the post-increment total is even, and where even is False.\"\n}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 170 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: sum(xs) % 2 == 0\n  condition:  even and total_post % 2 == 0\n  checker note: unknown variable: total_post. upstream relations are evaluated on the entry arguments only; local variables computed before A are not in scope there\n  diagnosis:  on these inputs the condition was true and A leaves the local state unchanged, but the expression itself evaluates to false; the expression is what is wrong\nRELATION U2 (upstream) FAILED.\n  expression: sum(xs) % 2 == 1\n  condition:  even and total_post % 2 == 1\n  checker note: unknown variable: total_post. upstream relations are evaluated on the entry arguments only; local variables computed before A are not in scope there\nRELATION O1 (observer) FAILED.\n  expression: total if not even else total - total % 2\n  condition:  even and total_post % 2 == 1\n  checker note: unknown variable: total_post. observers see the entry arguments and the state after A under its plain names; <name>_post belongs to target_effects only\nRELATION O2 (observer) FAILED.\n  expression: total if not even else total - total % 2\n  condition:  not even\n  diagnosis:  on these inputs the condition was true, yet deleting A changed this channel's value, so the condition is too weak\n  counterexample: {\"args\": {\"xs\": [], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 1, \"observed_minus\": 0, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [-1], \"even\": false}, \"out_plus\": 0, \"out_minus\": -1, \"snap_plus\": {\"xs\": [-1], \"even\": false, \"total\": 0}, \"snap_minus\": {\"xs\": [-1], \"even\": false, \"total\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 0, \"observed_minus\": -1, \"kind\": \"invariance\"}\n  counterexample: {\"args\": {\"xs\": [0], \"even\": false}, \"out_plus\": 1, \"out_minus\": 0, \"snap_plus\": {\"xs\": [0], \"even\": false, \"total\": 1}, \"snap_minus\": {\"xs\": [0], \"even\": false, \"total\": 0}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed_plus\": 1, \"observed_minus\": 0, \"kind\": \"invariance\"}\nRELATION G (mask_guard) FAILED.\n  expression: even and total_post % 2 == 0 or not even\n  condition:  None\n  checker note: unknown variable: total_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"total_post == total + 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        3,\n        2\n      ],\n      \"rationale\": \"Line 3 increments the total by 1.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"sum(xs) % 2 == 0\",\n      \"condition\": \"even and total_post % 2 == 0\",\n      \"source_lines\": [\n        4,\n        5\n      ],\n      \"rationale\": \"If even is True and the post-increment total is even, A does not change the final result.\",\n      \"role\": \"fixed_point\"\n    },\n    {\n      \"id\": \"U2\",\n      \"kind\": \"upstream\",\n      \"expr\": \"sum(xs) % 2 == 1\",\n      \"condition\": \"even and total_post % 2 == 1\",\n      \"source_lines\": [\n        4,\n        5\n      ],\n      \"rationale\": \"If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.\",\n      \"role\": \"supporting\"\n    },\n    {\n      \"id\": \"U3\",\n      \"kind\": \"upstream\",\n      \"expr\": \"True\",\n      \"condition\": \"not even\",\n      \"source_lines\": [\n        4\n      ],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\",\n      \"role\": \"supporting\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"even and sum(xs) % 2 == 0\",\n      \"source_lines\": [\n        5,\n        6\n      ],\n      \"rationale\": \"If even is True and sum(xs) is even, A does not change the final result.\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"even and total_post % 2 == 1\",\n      \"source_lines\": [\n        5,\n        6\n      ],\n      \"rationale\": \"If even is True and the post-increment total is odd, A's effect is negated by the subsequent subtraction of total % 2.\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O2\",\n      \"kind\": \"observer\",\n      \"expr\": \"total if not even else total - total % 2\",\n      \"condition\": \"not even\",\n      \"source_lines\": [\n        6\n      ],\n      \"rationale\": \"If even is False, the total is not adjusted after A, so A's effect is preserved.\",\n      \"channel\": 0\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"even and total_post % 2 == 0 or not even\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      3,\n      4,\n      5,\n      6\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"The mask_guard now accounts for both cases where even is True and the post-increment total is even, and where even is False.\"\n}"
+        }
+      ],
+      "candidate_round": {
+        "round": 3,
+        "domain_size": 170,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+        "qwen_status": "REFUTED",
+        "qwen_classification": "FALSE_ACCEPT",
+        "false_accepts": 127,
+        "false_rejects": 0,
+        "evaluation_errors": 0,
+        "invalid_relations": [],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "O1",
+          "O2"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+        "selection_reason": null,
+        "all_relations_pass": false
+      }
+    }
+  ],
+  "usage": {
+    "calls": 3,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "decode_seconds": 0.0,
+    "wall_seconds": 0.379
+  },
+  "domain": {
+    "size": 170,
+    "exhaustive": true
+  },
+  "core_logic": "legacy",
+  "candidate_rounds": [
+    {
+      "round": 1,
+      "domain_size": 170,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "even and sum(xs) % 2 == 0",
+      "qwen_status": "BOUNDED",
+      "qwen_classification": "EXACT",
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "evaluation_errors": 0,
+      "invalid_relations": [],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "O1",
+        "O2"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "even and sum(xs) % 2 == 0",
+      "selection_reason": null,
+      "all_relations_pass": false
+    },
+    {
+      "round": 2,
+      "domain_size": 170,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "even and total_post % 2 == 0 or not even",
+      "qwen_status": "INVALID",
+      "qwen_classification": "INVALID_CONTRACT",
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "evaluation_errors": 0,
+      "invalid_relations": [
+        "U1",
+        "U2",
+        "O1"
+      ],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "O1",
+        "O2"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "even and total_post % 2 == 0 or not even",
+      "selection_reason": null,
+      "all_relations_pass": false
+    },
+    {
+      "round": 3,
+      "domain_size": 170,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+      "qwen_status": "REFUTED",
+      "qwen_classification": "FALSE_ACCEPT",
+      "false_accepts": 127,
+      "false_rejects": 0,
+      "evaluation_errors": 0,
+      "invalid_relations": [],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "O1",
+        "O2"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "even and (sum(xs) % 2 == 0 or sum(xs) % 2 == 1) or not even",
+      "selection_reason": null,
+      "all_relations_pass": false
+    }
+  ],
+  "candidate_history": [],
+  "candidate_selection": null,
+  "generated_utc": "2026-11-03T01:51:39.968310+00:00"
+}

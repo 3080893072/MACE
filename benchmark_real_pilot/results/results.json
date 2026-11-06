@@ -1,0 +1,1170 @@
+{
+  "summary": {
+    "candidates_reviewed": 18,
+    "candidates_accepted": 3,
+    "candidates_rejected": 15,
+    "real_tasks_built": 3,
+    "tasks_with_verified_masking_relation": 3,
+    "relation_counts": {
+      "independent": 3
+    },
+    "upstream_suite_executed": false
+  },
+  "tasks": [
+    {
+      "task_id": "real_werkzeug_url_unparse",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "license": "BSD-3-Clause",
+      "upstream_path": "src/werkzeug/urls.py",
+      "upstream_symbol": "url_unparse",
+      "upstream_lines": "595-623",
+      "local_path": "benchmark_real_pilot/tasks/werkzeug_url_unparse.py",
+      "hypothetical_deletion": true,
+      "target": {
+        "upstream_line": 605,
+        "local_line": 48,
+        "variable": "url"
+      },
+      "operation": {
+        "upstream_line": 614,
+        "local_line": 57,
+        "text": "url = s(\"//\") + (netloc or s(\"\")) + path"
+      },
+      "mask_witness": {
+        "case_id": "mask_netloc",
+        "args": {
+          "components": [
+            "http",
+            "example.com",
+            "a",
+            "q=1",
+            "frag"
+          ]
+        }
+      },
+      "checks": {
+        "mask_ok": true,
+        "disable_operation_exposes": true,
+        "target_has_local_effect": true,
+        "proper_nonempty_subset_masks": false,
+        "relation_minimal": true,
+        "relation": "independent"
+      },
+      "case_matrix": {
+        "mask_netloc": {
+          "role": "mask_witness",
+          "args": {
+            "components": [
+              "http",
+              "example.com",
+              "a",
+              "q=1",
+              "frag"
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "http://example.com/a?q=1#frag"
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              "http://example.com/a?q=1#frag"
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "mask_absolute_path": {
+          "role": "ordinary",
+          "args": {
+            "components": [
+              "http",
+              "",
+              "/a",
+              "",
+              ""
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "http:///a"
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              "http:///a"
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_path_only": {
+          "role": "expose_witness",
+          "args": {
+            "components": [
+              "",
+              "",
+              "/a",
+              "",
+              ""
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "/a"
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_scheme_relative": {
+          "role": "ordinary",
+          "args": {
+            "components": [
+              "http",
+              "",
+              "a",
+              "",
+              ""
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "http:a"
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_empty": {
+          "role": "ordinary",
+          "args": {
+            "components": [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "nonexecuted_mixed_types": {
+          "role": "non_executed",
+          "args": {
+            "components": [
+              "http",
+              "b'example.com'",
+              "a",
+              "",
+              ""
+            ]
+          },
+          "plus_observation": [
+            "raise",
+            "TypeError",
+            "Cannot mix str and bytes arguments (got ('http', b'example.com', 'a', '', ''))"
+          ],
+          "minus_observation": [
+            "raise",
+            "TypeError",
+            "Cannot mix str and bytes arguments (got ('http', b'example.com', 'a', '', ''))"
+          ],
+          "equal": true,
+          "a_executed": false,
+          "target_in_plus_snapshot": false,
+          "target_in_minus_snapshot": false
+        }
+      },
+      "disabled_operation_matrix": {
+        "mask_netloc": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "http:?q=1#frag"
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "mask_absolute_path": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "http:"
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_path_only": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "/a"
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_scheme_relative": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "http:a"
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_empty": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'url' where it is not associated with a value"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "nonexecuted_mixed_types": {
+          "plus_observation": [
+            "raise",
+            "TypeError",
+            "Cannot mix str and bytes arguments (got ('http', b'example.com', 'a', '', ''))"
+          ],
+          "minus_observation": [
+            "raise",
+            "TypeError",
+            "Cannot mix str and bytes arguments (got ('http', b'example.com', 'a', '', ''))"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": true,
+          "both_return": false
+        }
+      },
+      "upstream_test_status": "not_covered",
+      "upstream_test_note": "A static search of the Werkzeug 2.2.3 tests tree found no call to url_unparse or URL.to_url; the function is not exercised by the released test suite.",
+      "upstream_tests_executed": false,
+      "ported_test_results": {
+        "plus": {},
+        "minus": {},
+        "all_pass": false
+      },
+      "ground_truth_status": "PARTIAL_GROUND_TRUTH",
+      "unknowns": [
+        "Only the operation below A that was found by source reading is tested; no exhaustive search for other independent/cooperative/coexisting relations was performed.",
+        "The extracted file is a standalone excerpt, not the whole upstream module; imports and unrelated methods are omitted.",
+        "Upstream pytest was not executed in this round (see report); test evidence consists of ported released assertions and the absence of a direct upstream test where recorded.",
+        "Local line numbers are excerpt line numbers; upstream line numbers are recorded separately."
+      ]
+    },
+    {
+      "task_id": "real_werkzeug_headerset_update",
+      "project": "Werkzeug",
+      "version": "2.2.3",
+      "license": "BSD-3-Clause",
+      "upstream_path": "src/werkzeug/datastructures.py",
+      "upstream_symbol": "HeaderSet.update",
+      "upstream_lines": "2261-2274",
+      "local_path": "benchmark_real_pilot/tasks/werkzeug_headerset_update.py",
+      "hypothetical_deletion": true,
+      "target": {
+        "upstream_line": 2266,
+        "local_line": 62,
+        "variable": "inserted_any"
+      },
+      "operation": {
+        "upstream_line": 2272,
+        "local_line": 68,
+        "text": "inserted_any = True"
+      },
+      "mask_witness": {
+        "case_id": "mask_new_header",
+        "args": {
+          "headers": [
+            "foo"
+          ],
+          "iterable": [
+            "bar"
+          ]
+        }
+      },
+      "checks": {
+        "mask_ok": true,
+        "disable_operation_exposes": true,
+        "target_has_local_effect": true,
+        "proper_nonempty_subset_masks": false,
+        "relation_minimal": true,
+        "relation": "independent"
+      },
+      "case_matrix": {
+        "mask_new_header": {
+          "role": "mask_witness",
+          "args": {
+            "headers": [
+              "foo"
+            ],
+            "iterable": [
+              "bar"
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ],
+                    [
+                      "str",
+                      "bar"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  [
+                    [
+                      "int",
+                      2
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ],
+                    [
+                      "str",
+                      "bar"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  [
+                    [
+                      "int",
+                      2
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "mask_duplicate_then_new": {
+          "role": "ordinary",
+          "args": {
+            "headers": [
+              "foo"
+            ],
+            "iterable": [
+              "foo",
+              "bar"
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ],
+                    [
+                      "str",
+                      "bar"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  [
+                    [
+                      "int",
+                      2
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ],
+                    [
+                      "str",
+                      "bar"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  [
+                    [
+                      "int",
+                      2
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_all_duplicates": {
+          "role": "expose_witness",
+          "args": {
+            "headers": [
+              "foo"
+            ],
+            "iterable": [
+              "foo",
+              "FOO"
+            ]
+          },
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'inserted_any' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_empty": {
+          "role": "ordinary",
+          "args": {
+            "headers": [],
+            "iterable": []
+          },
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  []
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'inserted_any' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_initial_only": {
+          "role": "ordinary",
+          "args": {
+            "headers": [
+              "foo"
+            ],
+            "iterable": []
+          },
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'inserted_any' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        }
+      },
+      "disabled_operation_matrix": {
+        "mask_new_header": {
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ],
+                    [
+                      "str",
+                      "bar"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'inserted_any' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "mask_duplicate_then_new": {
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ],
+                    [
+                      "str",
+                      "bar"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'inserted_any' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_all_duplicates": {
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'inserted_any' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_empty": {
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  []
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'inserted_any' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_initial_only": {
+          "plus_observation": [
+            "return",
+            [
+              "seq",
+              [
+                [
+                  "seq",
+                  [
+                    [
+                      "str",
+                      "foo"
+                    ]
+                  ]
+                ],
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'inserted_any' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        }
+      },
+      "upstream_test_status": "masked",
+      "upstream_test_note": "The released test passes add() only with new headers.  It never calls update([]) or update() with only case-insensitive duplicates, the inputs on which the initializer is live.",
+      "upstream_tests_executed": false,
+      "ported_test_results": {
+        "plus": {
+          "test_basic_interface_add": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "minus": {
+          "test_basic_interface_add": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "all_pass": true
+      },
+      "ground_truth_status": "PARTIAL_GROUND_TRUTH",
+      "unknowns": [
+        "Only the operation below A that was found by source reading is tested; no exhaustive search for other independent/cooperative/coexisting relations was performed.",
+        "The extracted file is a standalone excerpt, not the whole upstream module; imports and unrelated methods are omitted.",
+        "Upstream pytest was not executed in this round (see report); test evidence consists of ported released assertions and the absence of a direct upstream test where recorded.",
+        "Local line numbers are excerpt line numbers; upstream line numbers are recorded separately."
+      ]
+    },
+    {
+      "task_id": "real_click_truncate_visible",
+      "project": "click",
+      "version": "8.4.1",
+      "license": "BSD-3-Clause",
+      "upstream_path": "src/click/_textwrap.py",
+      "upstream_symbol": "_truncate_visible",
+      "upstream_lines": "11-35",
+      "local_path": "benchmark_real_pilot/tasks/click_truncate_visible.py",
+      "hypothetical_deletion": true,
+      "target": {
+        "upstream_line": 23,
+        "local_line": 27,
+        "variable": "cut"
+      },
+      "operation": {
+        "upstream_line": 32,
+        "local_line": 36,
+        "text": "cut = i"
+      },
+      "mask_witness": {
+        "case_id": "mask_plain_long_word",
+        "args": {
+          "text": "abcdefghij",
+          "n": 3
+        }
+      },
+      "checks": {
+        "mask_ok": true,
+        "disable_operation_exposes": true,
+        "target_has_local_effect": true,
+        "proper_nonempty_subset_masks": false,
+        "relation_minimal": true,
+        "relation": "independent"
+      },
+      "case_matrix": {
+        "mask_plain_long_word": {
+          "role": "mask_witness",
+          "args": {
+            "text": "abcdefghij",
+            "n": 3
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "abc"
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              "abc"
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "mask_styled_long_word": {
+          "role": "ordinary",
+          "args": {
+            "text": "\u001b[31mabcdefghij\u001b[0m",
+            "n": 5
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "\u001b[31mabcde"
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              "\u001b[31mabcde"
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "mask_short_text": {
+          "role": "ordinary",
+          "args": {
+            "text": "ab",
+            "n": 5
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              "ab"
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              "ab"
+            ]
+          ],
+          "equal": true,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_empty": {
+          "role": "expose_witness",
+          "args": {
+            "text": "",
+            "n": 3
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'cut' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "expose_ansi_only": {
+          "role": "ordinary",
+          "args": {
+            "text": "\u001b[31m\u001b[0m",
+            "n": 3
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "UnboundLocalError",
+            "cannot access local variable 'cut' where it is not associated with a value"
+          ],
+          "equal": false,
+          "a_executed": true,
+          "target_in_plus_snapshot": true,
+          "target_in_minus_snapshot": false
+        },
+        "nonexecuted_n_zero": {
+          "role": "non_executed",
+          "args": {
+            "text": "abcdefghij",
+            "n": 0
+          },
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "equal": true,
+          "a_executed": false,
+          "target_in_plus_snapshot": false,
+          "target_in_minus_snapshot": false
+        }
+      },
+      "disabled_operation_matrix": {
+        "mask_plain_long_word": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'cut' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "mask_styled_long_word": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'cut' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "mask_short_text": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'cut' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_empty": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'cut' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "expose_ansi_only": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "raise",
+            "NameError",
+            "name 'cut' is not defined"
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": false,
+          "both_return": false
+        },
+        "nonexecuted_n_zero": {
+          "plus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "minus_observation": [
+            "return",
+            [
+              "str",
+              ""
+            ]
+          ],
+          "plus_snapshot": null,
+          "minus_snapshot": null,
+          "equal": true,
+          "both_return": true
+        }
+      },
+      "upstream_test_status": "masked",
+      "upstream_test_note": "The released test covers long words containing visible characters.  It does not cover an empty string or an ANSI-only chunk, where the initializer is live.",
+      "upstream_tests_executed": false,
+      "ported_test_results": {
+        "plus": {
+          "test_styled_long_word_prefix": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "minus": {
+          "test_styled_long_word_prefix": {
+            "passed": true,
+            "error": null
+          }
+        },
+        "all_pass": true
+      },
+      "ground_truth_status": "PARTIAL_GROUND_TRUTH",
+      "unknowns": [
+        "Only the operation below A that was found by source reading is tested; no exhaustive search for other independent/cooperative/coexisting relations was performed.",
+        "The extracted file is a standalone excerpt, not the whole upstream module; imports and unrelated methods are omitted.",
+        "Upstream pytest was not executed in this round (see report); test evidence consists of ported released assertions and the absence of a direct upstream test where recorded.",
+        "Local line numbers are excerpt line numbers; upstream line numbers are recorded separately."
+      ]
+    }
+  ],
+  "upstream_suite_executed": false,
+  "upstream_suite_blocker": "Executing the downloaded PyPI sdists' pytest suite was classified as running external code before the specific project/version was named by the user.  This round therefore does not claim that the whole upstream suite was executed."
+}

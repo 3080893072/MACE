@@ -1,0 +1,17 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| alt_masking | oracle | qwen | none | BOUNDED | ABSENT | BOUNDED | BOUNDED | BOUNDED | 0/0 | 903 | 3.2 |
+| dead_flag | oracle | qwen | none | BOUNDED | ABSENT | BOUNDED | BOUNDED | BOUNDED | 0/0 | 850 | 3.5 |
+| dedup_channel | oracle | qwen | none | BOUNDED | BOUNDED | BOUNDED | BOUNDED | BOUNDED | 0/0 | 991 | 4.0 |
+| dict_slot | oracle | qwen | none | BOUNDED | ABSENT | BOUNDED | BOUNDED | BOUNDED | 0/0 | 910 | 3.3 |
+| modulo_absorb | oracle | qwen | guard | BOUNDED | ABSENT | BOUNDED | REFUTED | REFUTED | 106/212 | 2218 | 10.1 |
+| overwrite_channel | oracle | qwen | none | BOUNDED | BOUNDED | BOUNDED | BOUNDED | BOUNDED | 0/0 | 1094 | 3.4 |
+| parity_snap | oracle | qwen | guard | BOUNDED | ABSENT | BOUNDED | REFUTED | REFUTED | 85/0 | 2025 | 6.3 |
+| sort_channel | oracle | qwen | guard | BOUNDED | BOUNDED | BOUNDED | REFUTED | REFUTED | 1732/3924 | 2930 | 22.5 |
+| swap_channels | oracle | qwen | guard | BOUNDED | ABSENT | BOUNDED | REFUTED | REFUTED | 0/4 | 2209 | 5.4 |
+
+First bad stage over all cases: guard 4, none 5
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| oracle | qwen | 9 | 5 | 3 | 0 | 0 | 0 | 0 | 4 | 14130 | 61.7 |

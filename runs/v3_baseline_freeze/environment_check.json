@@ -1,0 +1,99 @@
+{
+  "checked_utc": "2026-11-03T08:02:45Z",
+  "frozen_model": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "endpoint": "http://127.0.0.1:11434",
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 32768,
+    "num_predict": 4096,
+    "json_mode": true,
+    "timeout_seconds": 900,
+    "retries": 1
+  },
+  "frozen_config_availability": {
+    "checked_utc": "2026-11-03T08:02:47Z",
+    "provider": "ollama",
+    "model": "qwen2.5-coder:32b",
+    "endpoint": "http://127.0.0.1:11434",
+    "ollama_binary": null,
+    "endpoint_reachable": false,
+    "endpoint_error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>",
+    "endpoint_models": null,
+    "model_present": false,
+    "dashscope_key_present": false,
+    "available": false
+  },
+  "endpoint_probes": [
+    {
+      "url": "http://127.0.0.1:11434/api/tags",
+      "reachable": false,
+      "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+    },
+    {
+      "url": "http://127.0.0.1:8000/v1/models",
+      "reachable": false,
+      "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+    },
+    {
+      "url": "http://127.0.0.1:8080/v1/models",
+      "reachable": false,
+      "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+    },
+    {
+      "url": "http://127.0.0.1:1234/v1/models",
+      "reachable": false,
+      "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+    }
+  ],
+  "binaries": {
+    "ollama": null,
+    "qwen": null,
+    "llama-server": null,
+    "vllm": null
+  },
+  "api_keys_present": {
+    "DASHSCOPE_API_KEY": false,
+    "OPENAI_API_KEY": false,
+    "MODELSCOPE_API_KEY": false,
+    "HF_TOKEN": false
+  },
+  "remote_environment": {
+    "autodl_ssh": {
+      "host": "connect.bjb2.seetacloud.com",
+      "port": 35273,
+      "reachable": false,
+      "error": "ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。"
+    },
+    "note": "SSH config points at connect.bjb2.seetacloud.com:35273; connection refused at check time. Starting an autodl instance is a user action and was not performed."
+  },
+  "local_checkpoint": {
+    "path": "D:\\tmp\\qwen15b",
+    "architecture": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 1536,
+    "num_hidden_layers": 28,
+    "dtype": "bfloat16",
+    "weight_bytes": 3087467144,
+    "config_sha256": "88f9a17863c05fb313515d2ff74b1098e0c35579f99068e32beda00618508ae0",
+    "matches_frozen_model": false,
+    "note": "Qwen2.5-Coder 1.5B class checkpoint; the frozen pilot model is qwen2.5-coder:32b served by ollama. Not used: wrong model, wrong serving stack, and local GPU use is out of policy."
+  },
+  "conclusion": {
+    "frozen_model_available": false,
+    "live_run_permitted": false,
+    "reason": "No ollama binary, no reachable OpenAI-compatible endpoint, no API key, no 32B checkpoint found in the searched paths, and the autodl SSH port is closed. A 1.5B checkpoint exists but is not the frozen configuration; running it would be a different experiment."
+  },
+  "check_scope": {
+    "search_paths": [
+      "PATH for ollama/qwen/llama-server/vllm",
+      "127.0.0.1 ports 11434/8000/8080/1234",
+      "environment variables for API keys",
+      "<home>/.cache/huggingface/hub",
+      "D:/tmp/qwen15b"
+    ],
+    "note": "No full-disk search was performed; a 32B checkpoint outside these paths would not have been seen."
+  }
+}

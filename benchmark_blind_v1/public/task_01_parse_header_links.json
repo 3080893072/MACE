@@ -1,0 +1,200 @@
+{
+  "schema_version": "mace-benchmark-blind-v1",
+  "task_id": "blind_01_parse_header_links",
+  "kind": "real_source_hypothetical_deletion",
+  "status": "frozen",
+  "provenance": {
+    "project": "psf/requests",
+    "version": "2.31.0",
+    "tag": "v2.31.0",
+    "tag_object_sha": "0106aced5faa299e6ede89d1230bd6784f2c3660",
+    "commit_sha": "147c8511ddbfa5e8f71bbf5c18ede0c4ceb3bba4",
+    "license": "Apache-2.0",
+    "license_file_sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+    "source_path": "requests/utils.py",
+    "source_file_sha256": "eacc765f7708540f018163a0f28771172fbf95b5831444d4f072387d4e119aac",
+    "function_line_range": [
+      912,
+      946
+    ],
+    "function_sha256": "c9193a0df87262a9a6041998cfa34600d32e8152f508e79b862a31ab5482a720",
+    "test_path": "tests/test_utils.py",
+    "test_file_sha256": "5a98862b9e19412592ff497fd9df5920e6c3ab5852f581c21280bbb6af773fc2",
+    "test_line_range": [
+      644,
+      664
+    ],
+    "test_block_sha256": "bc1dc592ba999659c69065eb51f9a6bf435edf3c98c76180f7e80dd4428791e9",
+    "source_url": "https://github.com/psf/requests/blob/v2.31.0/requests/utils.py#L912-L946",
+    "test_url": "https://github.com/psf/requests/blob/v2.31.0/tests/test_utils.py#L644-L664",
+    "deletion_is_hypothetical": true,
+    "deletion_note": "A is present in upstream requests 2.31.0.  The deletion analysed here is an explicitly constructed hypothetical, not a historical commit and not a claim that upstream ever removed this line."
+  },
+  "program": {
+    "language": "python",
+    "python_version": "3.11.7",
+    "entry": "parse_header_links",
+    "source": "import re\n\n\ndef parse_header_links(value):\n    \"\"\"Return a list of parsed link headers proxies.\n\n    i.e. Link: <http:/.../front.jpeg>; rel=front; type=\"image/jpeg\",<http://.../back.jpeg>; rel=back;type=\"image/jpeg\"\n\n    :rtype: list\n    \"\"\"\n\n    links = []\n\n    replace_chars = \" '\\\"\"\n\n    value = value.strip(replace_chars)  # TARGET_A\n    if not value:\n        return links\n\n    for val in re.split(\", *<\", value):\n        try:\n            url, params = val.split(\";\", 1)\n        except ValueError:\n            url, params = val, \"\"\n\n        link = {\"url\": url.strip(\"<> '\\\"\")}\n\n        for param in params.split(\";\"):\n            try:\n                key, value = param.split(\"=\")\n            except ValueError:\n                break\n\n            link[key.strip(replace_chars)] = value.strip(replace_chars)\n\n        links.append(link)\n\n    return links\n",
+    "source_sha256": "30ec21977962e75df1741ca7d700668fa4d240f5635c3cb320c46eca4a3396aa",
+    "target_A": {
+      "line": 16,
+      "text": "    value = value.strip(replace_chars)  # TARGET_A",
+      "kind": "assignment",
+      "note": "The '# TARGET_A' marker is the only edit to this line."
+    }
+  },
+  "deletion": {
+    "kind": "replace_line_with_pass",
+    "rule": "Replace the entire target line with ``pass`` at the same indentation.  No other edit.",
+    "p_minus_source": "import re\n\n\ndef parse_header_links(value):\n    \"\"\"Return a list of parsed link headers proxies.\n\n    i.e. Link: <http:/.../front.jpeg>; rel=front; type=\"image/jpeg\",<http://.../back.jpeg>; rel=back;type=\"image/jpeg\"\n\n    :rtype: list\n    \"\"\"\n\n    links = []\n\n    replace_chars = \" '\\\"\"\n\n    pass  # P-: A deleted\n    if not value:\n        return links\n\n    for val in re.split(\", *<\", value):\n        try:\n            url, params = val.split(\";\", 1)\n        except ValueError:\n            url, params = val, \"\"\n\n        link = {\"url\": url.strip(\"<> '\\\"\")}\n\n        for param in params.split(\";\"):\n            try:\n                key, value = param.split(\"=\")\n            except ValueError:\n                break\n\n            link[key.strip(replace_chars)] = value.strip(replace_chars)\n\n        links.append(link)\n\n    return links\n",
+    "p_minus_source_sha256": "f4b3b2b7822c8265a2a25f87a4936d4107668c650f427ca2abbc3444a2a2fccd"
+  },
+  "candidate_operations": [
+    {
+      "id": "op_1",
+      "source_position": {
+        "line": 26,
+        "col": 23,
+        "end_col": 42
+      },
+      "expression": "url.strip(\"<> '\\\"\")",
+      "line_text": "        link = {\"url\": url.strip(\"<> '\\\"\")}",
+      "disable_by": "replace the expression at the source position with its receiver ``url``; no other edit"
+    },
+    {
+      "id": "op_2",
+      "source_position": {
+        "line": 34,
+        "col": 17,
+        "end_col": 41
+      },
+      "expression": "key.strip(replace_chars)",
+      "line_text": "            link[key.strip(replace_chars)] = value.strip(replace_chars)",
+      "disable_by": "replace the expression at the source position with its receiver ``key``; no other edit"
+    },
+    {
+      "id": "op_3",
+      "source_position": {
+        "line": 34,
+        "col": 45,
+        "end_col": 71
+      },
+      "expression": "value.strip(replace_chars)",
+      "line_text": "            link[key.strip(replace_chars)] = value.strip(replace_chars)",
+      "disable_by": "replace the expression at the source position with its receiver ``value``; no other edit"
+    }
+  ],
+  "candidate_operation_note": "These are all non-A string-normalization expressions in the function.  Each is an independent, neutral candidate.  Other lines are fixed infrastructure.  The private labels state which combinations actually absorb the deletion on the public probes and on the hidden inputs.",
+  "public_probes": {
+    "note": "Report masking attribution on these probes.  Their true labels are private.  The hidden evaluation set is disjoint from these probes.",
+    "probes": [
+      {
+        "probe_id": "p1",
+        "value": " \"<http://p>\" "
+      },
+      {
+        "probe_id": "p2",
+        "value": "<http://p>; rel=y "
+      },
+      {
+        "probe_id": "p3",
+        "value": " \"<http://p>; rel=y\" "
+      },
+      {
+        "probe_id": "p4",
+        "value": "  "
+      }
+    ]
+  },
+  "input_domain": {
+    "argument": "value",
+    "legal_rule": "value must be a Python str (any Unicode, including the empty string).  Non-str values are outside the legal input domain; the function raises AttributeError on them.",
+    "observable_behavior": "The return value.  A Python exception is also an observation. Equality is type-aware: bool and int are distinct, and dict order is ignored.",
+    "evaluation_domain": "Private finite representative set; it is not part of the public statement and is not the full input domain.",
+    "guard_features": {
+      "names": [
+        "nonempty",
+        "all_special"
+      ],
+      "definitions": {
+        "nonempty": "len(value) > 0",
+        "all_special": "all(ch in \" '\"\" for ch in value)"
+      },
+      "note": "The public guard language is a boolean expression over these derived features (plus int/bool constants, and/or/not, comparisons, arithmetic).  The correct expression is private."
+    },
+    "guard_language": "Python expression AST restricted to names, int/bool constants, and/or/not, comparisons, and arithmetic.  No strings, calls, attributes, or subscripts."
+  },
+  "existing_tests": {
+    "role": "T_original (the programmer's existing tests; background)",
+    "source_kind": "real_upstream_test",
+    "provenance": {
+      "path": "tests/test_utils.py",
+      "line_range": [
+        644,
+        664
+      ],
+      "block_sha256": "bc1dc592ba999659c69065eb51f9a6bf435edf3c98c76180f7e80dd4428791e9",
+      "file_sha256": "5a98862b9e19412592ff497fd9df5920e6c3ab5852f581c21280bbb6af773fc2",
+      "url": "https://github.com/psf/requests/blob/v2.31.0/tests/test_utils.py#L644-L664"
+    },
+    "upstream_source": "@pytest.mark.parametrize(\n    \"value, expected\",\n    (\n        (\n            '<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\"',\n            [{\"url\": \"http:/.../front.jpeg\", \"rel\": \"front\", \"type\": \"image/jpeg\"}],\n        ),\n        (\"<http:/.../front.jpeg>\", [{\"url\": \"http:/.../front.jpeg\"}]),\n        (\"<http:/.../front.jpeg>;\", [{\"url\": \"http:/.../front.jpeg\"}]),\n        (\n            '<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;',\n            [\n                {\"url\": \"http:/.../front.jpeg\", \"type\": \"image/jpeg\"},\n                {\"url\": \"http://.../back.jpeg\"},\n            ],\n        ),\n        (\"\", []),\n    ),\n)\ndef test_parse_header_links(value, expected):\n    assert parse_header_links(value) == expected\n",
+    "adapted_source": "def test_parse_header_links():\n    cases = (\n        ('<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\"', [{'url': 'http:/.../front.jpeg', 'rel': 'front', 'type': 'image/jpeg'}]),\n        ('<http:/.../front.jpeg>', [{'url': 'http:/.../front.jpeg'}]),\n        ('<http:/.../front.jpeg>;', [{'url': 'http:/.../front.jpeg'}]),\n        ('<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;', [{'url': 'http:/.../front.jpeg', 'type': 'image/jpeg'}, {'url': 'http://.../back.jpeg'}]),\n        ('', []),\n    )\n    for value, expected in cases:\n        assert parse_header_links(value) == expected\n",
+    "adaptation_note": "The only adaptation is replacing pytest's parametrization with an explicit loop over the same five (value, expected) pairs so the standalone engine can execute it.  No pair, assertion, or expected value was changed.",
+    "cases": [
+      {
+        "case_id": "t1",
+        "value": "<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\"",
+        "expected": [
+          {
+            "url": "http:/.../front.jpeg",
+            "rel": "front",
+            "type": "image/jpeg"
+          }
+        ]
+      },
+      {
+        "case_id": "t2",
+        "value": "<http:/.../front.jpeg>",
+        "expected": [
+          {
+            "url": "http:/.../front.jpeg"
+          }
+        ]
+      },
+      {
+        "case_id": "t3",
+        "value": "<http:/.../front.jpeg>;",
+        "expected": [
+          {
+            "url": "http:/.../front.jpeg"
+          }
+        ]
+      },
+      {
+        "case_id": "t4",
+        "value": "<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;",
+        "expected": [
+          {
+            "url": "http:/.../front.jpeg",
+            "type": "image/jpeg"
+          },
+          {
+            "url": "http://.../back.jpeg"
+          }
+        ]
+      },
+      {
+        "case_id": "t5",
+        "value": "",
+        "expected": []
+      }
+    ]
+  },
+  "why_suspected_redundant": "Later code strips the same leading/trailing characters from URLs and parameter keys/values, so the initial whole-string strip looks redundant to a maintainer.",
+  "hidden_data_notice": "The correct Guard, probe/evaluation labels, hidden evaluation inputs, and per-input observations are only in ../private/ and must not be given to a method under evaluation.  The probe inputs themselves are public.",
+  "evidence_policy": {
+    "finite_domain_is_bounded": true,
+    "never_mark_finite_enumeration_as_proven": true,
+    "unsupported_is_not_analyzed": true
+  }
+}

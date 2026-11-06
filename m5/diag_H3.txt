@@ -1,0 +1,19 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| clamp_absorb | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 74/11 | 2218 | 12.1 |
+| clamp_absorb | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 148/0 | 2969 | 9.7 |
+| clamp_absorb | generic | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 88/0 | 2866 | 23.2 |
+| clamp_absorb | mace | qwen | upstream | BOUNDED | INVALID | INVALID | INVALID | INVALID | 0/0 | 13778 | 89.2 |
+| toggle_pair | direct | qwen | guard | ABSENT | ABSENT | ABSENT | REFUTED | REFUTED | 6/9 | 2462 | 9.6 |
+| toggle_pair | fixed | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 2857 | 6.3 |
+| toggle_pair | generic | qwen | guard | ABSENT | ABSENT | ABSENT | INVALID | INVALID | 0/0 | 3131 | 20.5 |
+| toggle_pair | mace | qwen | upstream | BOUNDED | REFUTED | REFUTED | REFUTED | REFUTED | 0/3 | 14724 | 71.7 |
+
+First bad stage over all cases: guard 6, upstream 2
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| direct | qwen | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 4680 | 21.7 |
+| fixed | qwen | 2 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 5826 | 16.0 |
+| generic | qwen | 2 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 5997 | 43.7 |
+| mace | qwen | 2 | 0 | 0 | 1 | 1 | 0 | 0 | 1 | 28502 | 160.9 |

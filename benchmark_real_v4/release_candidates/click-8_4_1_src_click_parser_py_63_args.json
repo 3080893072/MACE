@@ -1,0 +1,149 @@
+{
+  "candidate_id": "click-8.4.1:src/click/parser.py:63:args",
+  "conditions": {
+    "1_real_source_and_A": {
+      "A": {
+        "code": "args = deque(args)",
+        "kind": "Assign",
+        "line": 63
+      },
+      "ok": true,
+      "source_sha256": "a09f9f53fde6bf1ba022e36d1da0804d9e7a9601261d18208c9892a84818ae30"
+    },
+    "2_declared_tests_pass_under_P_minus": {
+      "designed_source": "<local-path>",
+      "ok": true,
+      "returncode": 0,
+      "suite": {
+        "outcomes": {
+          "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_no_values": "passed",
+          "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_single_value": "passed",
+          "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_two_values": "passed"
+        }
+      },
+      "test_set": "DESIGNED"
+    },
+    "3_local_effect_on_test_input": {
+      "examples": [
+        "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_two_values",
+        "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_single_value"
+      ],
+      "masked_tests": 2,
+      "ok": true
+    },
+    "4_masking_established": {
+      "mmbs": [
+        [
+          [
+            "L105"
+          ]
+        ],
+        [
+          [
+            "L105"
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            "L105"
+          ]
+        ],
+        [
+          [
+            "L105"
+          ]
+        ]
+      ],
+      "ok": true
+    },
+    "5_legal_exposing_counterexample": {
+      "exposing_payloads": [
+        3
+      ],
+      "ok": true,
+      "payloads": [
+        {
+          "mode": "single",
+          "values": [
+            "alpha"
+          ]
+        }
+      ]
+    },
+    "6_verified_msms_mmbs_and_scope": {
+      "mmbs": [
+        [
+          [
+            "L105"
+          ]
+        ],
+        [
+          [
+            "L105"
+          ]
+        ]
+      ],
+      "msms": [
+        [
+          [
+            "L105"
+          ]
+        ],
+        [
+          [
+            "L105"
+          ]
+        ]
+      ],
+      "ok": true,
+      "scope": "declared probe inputs only; no claim over other inputs"
+    }
+  },
+  "declared_test_set": "DESIGNED",
+  "declared_tests": [
+    "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_two_values",
+    "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_single_value",
+    "tests/test_v4_designed_click-8_4_1_src_click_parser_py_63_args.py::test_variadic_no_values"
+  ],
+  "designed_source": "<local-path>",
+  "file": "src/click/parser.py",
+  "function": "_unpack_args",
+  "mechanism": "name-overwrite",
+  "project": "click",
+  "promoted": true,
+  "qualification": {
+    "INCONCLUSIVE": 1,
+    "MASKED_EFFECT": 2
+  },
+  "universe": [
+    {
+      "code": "args = []",
+      "file": "src/click/parser.py",
+      "first_line": 105,
+      "id": "L105",
+      "key_index": null,
+      "key_kind": "name",
+      "key_obj": "",
+      "kind": "Assign",
+      "last_line": 105,
+      "line": 105
+    }
+  ],
+  "version": "8.4.1",
+  "witness_summary": {
+    "exposing": [
+      3
+    ],
+    "legal_exposing_payload": true,
+    "masked": [
+      0,
+      1,
+      2
+    ],
+    "payloads": 4,
+    "verified_mmbs": true,
+    "verified_msms": true
+  }
+}

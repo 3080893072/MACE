@@ -1,0 +1,4623 @@
+{
+  "generated_utc": "2026-11-02T01:28:47.688883+00:00",
+  "scope": "development fixtures only; not a new benchmark score",
+  "candidate_limit": 12,
+  "tasks": {
+    "ctrl_01": {
+      "contract": {
+        "path": "<local-path>",
+        "available": true,
+        "status": "ROUNDS_EXHAUSTED",
+        "reason": "parsed",
+        "line_refs": {
+          "3": [
+            "T1:target_effects",
+            "U2:upstream",
+            "O9:observers"
+          ],
+          "4": [
+            "T1:target_effects",
+            "U1:upstream",
+            "O0:observers",
+            "O9:observers"
+          ]
+        },
+        "cited_lines": [
+          3,
+          4
+        ],
+        "relation_statuses": {
+          "O0": "INVALID",
+          "O9": "INVALID",
+          "T1": "BOUNDED",
+          "U1": "REFUTED",
+          "U2": "BOUNDED"
+        },
+        "relation_counts": {
+          "mask_guard": 1,
+          "observers": 2,
+          "target_effects": 1,
+          "upstream": 2
+        },
+        "uncertainty": "",
+        "semantic_fields_used": [
+          "target_effects",
+          "upstream",
+          "observers",
+          "mask_guard"
+        ],
+        "confirmation": "not_by_contract; execution_verifier_only"
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "ctrl_01",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L4_C4_if",
+              "kind": "if",
+              "line": 4,
+              "end_line": 5,
+              "text": "if mode == 0:\n        v = x",
+              "reads": [
+                "mode",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "mode"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                4
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if mode == 0:\n        v = x",
+                  "reads": [
+                    "mode",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "mode"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "mode": 0,
+                  "x": 0
+                }
+              },
+              "condition": "(mode < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "mode": 0,
+                  "x": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        1
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        0
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 4,
+            "case_executions": 24,
+            "variants": 2,
+            "wall_seconds": 0.003,
+            "subsets": 2,
+            "candidates": 1
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 1,
+            "selected_candidate_count": 1,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0"
+            ],
+            "cases": 6,
+            "subsets": 2,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 24,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0028,
+        "program_executions": 48
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "ctrl_01",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast_with_mace_contracts",
+          "candidates": [
+            {
+              "key": "op_L4_C4_if",
+              "kind": "if",
+              "line": 4,
+              "end_line": 5,
+              "text": "if mode == 0:\n        v = x",
+              "reads": [
+                "mode",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [
+                "O0:observers",
+                "O9:observers",
+                "T1:target_effects",
+                "U1:upstream"
+              ],
+              "control_reads": [
+                "mode"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                4
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if mode == 0:\n        v = x",
+                  "reads": [
+                    "mode",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [
+                    "O0:observers",
+                    "O9:observers",
+                    "T1:target_effects",
+                    "U1:upstream"
+                  ],
+                  "control_reads": [
+                    "mode"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "mode": 0,
+                  "x": 0
+                }
+              },
+              "condition": "(mode < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "mode": 0,
+                  "x": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        1
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        0
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 4,
+            "case_executions": 24,
+            "variants": 2,
+            "wall_seconds": 0.003,
+            "subsets": 2,
+            "candidates": 1
+          },
+          "unsupported": [],
+          "contract": {
+            "path": "<local-path>",
+            "available": true,
+            "status": "ROUNDS_EXHAUSTED",
+            "reason": "parsed",
+            "line_refs": {
+              "3": [
+                "T1:target_effects",
+                "U2:upstream",
+                "O9:observers"
+              ],
+              "4": [
+                "T1:target_effects",
+                "U1:upstream",
+                "O0:observers",
+                "O9:observers"
+              ]
+            },
+            "cited_lines": [
+              4
+            ],
+            "relation_statuses": {
+              "O0": "INVALID",
+              "O9": "INVALID",
+              "T1": "BOUNDED",
+              "U1": "REFUTED",
+              "U2": "BOUNDED"
+            },
+            "relation_counts": {
+              "mask_guard": 1,
+              "observers": 2,
+              "target_effects": 1,
+              "upstream": 2
+            },
+            "uncertainty": "",
+            "semantic_fields_used": [
+              "target_effects",
+              "upstream",
+              "observers",
+              "mask_guard"
+            ],
+            "confirmation": "not_by_contract; execution_verifier_only",
+            "mapped_lines": [
+              4
+            ],
+            "unmapped_lines": [],
+            "added_keys": [],
+            "added_lines": [],
+            "candidate_limit": 1,
+            "baseline_count": 1,
+            "selected_count": 1,
+            "lines": {
+              "4": [
+                "T1:target_effects",
+                "U1:upstream",
+                "O0:observers",
+                "O9:observers"
+              ]
+            },
+            "candidate_limit_matched_to_baseline": true,
+            "added_verified_relations": 0
+          },
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 1,
+            "selected_candidate_count": 1,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0"
+            ],
+            "cases": 6,
+            "subsets": 2,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 24,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0026,
+        "program_executions": 48
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [
+          [
+            "independent",
+            [
+              4
+            ]
+          ]
+        ],
+        "b_verified_relation_keys": [
+          [
+            "independent",
+            [
+              4
+            ]
+          ]
+        ],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    },
+    "ctrl_02": {
+      "contract": {
+        "path": "<local-path>",
+        "available": true,
+        "status": "ROUNDS_EXHAUSTED",
+        "reason": "parsed",
+        "line_refs": {
+          "3": [
+            "T1:target_effects"
+          ],
+          "4": [
+            "T1:target_effects",
+            "U1:upstream",
+            "O0:observers",
+            "O9:observers"
+          ],
+          "5": [
+            "U1:upstream",
+            "O0:observers",
+            "O9:observers"
+          ]
+        },
+        "cited_lines": [
+          3,
+          4,
+          5
+        ],
+        "relation_statuses": {
+          "O0": "INVALID",
+          "O9": "INVALID",
+          "T1": "REFUTED",
+          "U1": "REFUTED"
+        },
+        "relation_counts": {
+          "mask_guard": 1,
+          "observers": 2,
+          "target_effects": 1,
+          "upstream": 1
+        },
+        "uncertainty": "",
+        "semantic_fields_used": [
+          "target_effects",
+          "upstream",
+          "observers",
+          "mask_guard"
+        ],
+        "confirmation": "not_by_contract; execution_verifier_only"
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "ctrl_02",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L4_C4_if",
+              "kind": "if",
+              "line": 4,
+              "end_line": 5,
+              "text": "if c == 0:\n        v = v // 6 * 6",
+              "reads": [
+                "c",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "c"
+              ]
+            },
+            {
+              "key": "op_L6_C4_if",
+              "kind": "if",
+              "line": 6,
+              "end_line": 7,
+              "text": "if d == 0:\n        v = v // 7 * 7",
+              "reads": [
+                "d",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "d"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "cooperative",
+              "source_lines": [
+                4,
+                6
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if c == 0:\n        v = v // 6 * 6",
+                  "reads": [
+                    "c",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "c"
+                  ]
+                },
+                {
+                  "key": "op_L6_C4_if",
+                  "kind": "if",
+                  "line": 6,
+                  "end_line": 7,
+                  "text": "if d == 0:\n        v = v // 7 * 7",
+                  "reads": [
+                    "d",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "d"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 0
+                }
+              },
+              "condition": "((c < 1) and ((d < 1) and (x < 6)))",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {
+                  "op_L4_C4_if": true,
+                  "op_L6_C4_if": true
+                }
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        1
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {
+                    "op_L4_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L6_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    },
+                    "op_L6_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L4_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    }
+                  }
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 8,
+            "case_executions": 192,
+            "variants": 6,
+            "wall_seconds": 0.017,
+            "subsets": 4,
+            "candidates": 2
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 2,
+            "selected_candidate_count": 2,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0",
+              "op_1"
+            ],
+            "cases": 24,
+            "subsets": 4,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "cooperative",
+              "ops": [
+                "op_0",
+                "op_1"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {
+                  "op_0": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  },
+                  "op_1": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  }
+                },
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 192,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0174,
+        "program_executions": 384
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "ctrl_02",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast_with_mace_contracts",
+          "candidates": [
+            {
+              "key": "op_L4_C4_if",
+              "kind": "if",
+              "line": 4,
+              "end_line": 5,
+              "text": "if c == 0:\n        v = v // 6 * 6",
+              "reads": [
+                "c",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [
+                "O0:observers",
+                "O9:observers",
+                "T1:target_effects",
+                "U1:upstream"
+              ],
+              "control_reads": [
+                "c"
+              ]
+            },
+            {
+              "key": "op_L6_C4_if",
+              "kind": "if",
+              "line": 6,
+              "end_line": 7,
+              "text": "if d == 0:\n        v = v // 7 * 7",
+              "reads": [
+                "d",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "d"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "cooperative",
+              "source_lines": [
+                4,
+                6
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if c == 0:\n        v = v // 6 * 6",
+                  "reads": [
+                    "c",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [
+                    "O0:observers",
+                    "O9:observers",
+                    "T1:target_effects",
+                    "U1:upstream"
+                  ],
+                  "control_reads": [
+                    "c"
+                  ]
+                },
+                {
+                  "key": "op_L6_C4_if",
+                  "kind": "if",
+                  "line": 6,
+                  "end_line": 7,
+                  "text": "if d == 0:\n        v = v // 7 * 7",
+                  "reads": [
+                    "d",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "d"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 0
+                }
+              },
+              "condition": "((c < 1) and ((d < 1) and (x < 6)))",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {
+                  "op_L4_C4_if": true,
+                  "op_L6_C4_if": true
+                }
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "x": 1,
+                  "c": 0,
+                  "d": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        1
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {
+                    "op_L4_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L6_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    },
+                    "op_L6_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L4_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    }
+                  }
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 8,
+            "case_executions": 192,
+            "variants": 6,
+            "wall_seconds": 0.019,
+            "subsets": 4,
+            "candidates": 2
+          },
+          "unsupported": [],
+          "contract": {
+            "path": "<local-path>",
+            "available": true,
+            "status": "ROUNDS_EXHAUSTED",
+            "reason": "parsed",
+            "line_refs": {
+              "3": [
+                "T1:target_effects"
+              ],
+              "4": [
+                "T1:target_effects",
+                "U1:upstream",
+                "O0:observers",
+                "O9:observers"
+              ],
+              "5": [
+                "U1:upstream",
+                "O0:observers",
+                "O9:observers"
+              ]
+            },
+            "cited_lines": [
+              4,
+              5
+            ],
+            "relation_statuses": {
+              "O0": "INVALID",
+              "O9": "INVALID",
+              "T1": "REFUTED",
+              "U1": "REFUTED"
+            },
+            "relation_counts": {
+              "mask_guard": 1,
+              "observers": 2,
+              "target_effects": 1,
+              "upstream": 1
+            },
+            "uncertainty": "",
+            "semantic_fields_used": [
+              "target_effects",
+              "upstream",
+              "observers",
+              "mask_guard"
+            ],
+            "confirmation": "not_by_contract; execution_verifier_only",
+            "mapped_lines": [
+              4,
+              5
+            ],
+            "unmapped_lines": [],
+            "added_keys": [],
+            "added_lines": [],
+            "candidate_limit": 2,
+            "baseline_count": 2,
+            "selected_count": 2,
+            "lines": {
+              "4": [
+                "T1:target_effects",
+                "U1:upstream",
+                "O0:observers",
+                "O9:observers"
+              ],
+              "5": [
+                "U1:upstream",
+                "O0:observers",
+                "O9:observers"
+              ]
+            },
+            "candidate_limit_matched_to_baseline": true,
+            "added_verified_relations": 0
+          },
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 2,
+            "selected_candidate_count": 2,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0",
+              "op_1"
+            ],
+            "cases": 24,
+            "subsets": 4,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "cooperative",
+              "ops": [
+                "op_0",
+                "op_1"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {
+                  "op_0": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  },
+                  "op_1": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  }
+                },
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 192,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0186,
+        "program_executions": 384
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [
+          [
+            "cooperative",
+            [
+              4,
+              6
+            ]
+          ]
+        ],
+        "b_verified_relation_keys": [
+          [
+            "cooperative",
+            [
+              4,
+              6
+            ]
+          ]
+        ],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    },
+    "ctrl_03": {
+      "contract": {
+        "path": "<local-path>",
+        "available": true,
+        "status": "ROUNDS_EXHAUSTED",
+        "reason": "parsed",
+        "line_refs": {
+          "3": [
+            "T1:target_effects",
+            "U1:upstream",
+            "O0:observers",
+            "G:mask_guard"
+          ]
+        },
+        "cited_lines": [
+          3
+        ],
+        "relation_statuses": {
+          "O0": "INVALID",
+          "T1": "REFUTED",
+          "U1": "REFUTED"
+        },
+        "relation_counts": {
+          "mask_guard": 1,
+          "observers": 1,
+          "target_effects": 1,
+          "upstream": 1
+        },
+        "uncertainty": "",
+        "semantic_fields_used": [
+          "target_effects",
+          "upstream",
+          "observers",
+          "mask_guard"
+        ],
+        "confirmation": "not_by_contract; execution_verifier_only"
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "ctrl_03",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L4_C4_if",
+              "kind": "if",
+              "line": 4,
+              "end_line": 5,
+              "text": "if p == 0:\n        v = x",
+              "reads": [
+                "p",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "p"
+              ]
+            },
+            {
+              "key": "op_L6_C4_if",
+              "kind": "if",
+              "line": 6,
+              "end_line": 7,
+              "text": "if q == 0:\n        v = x",
+              "reads": [
+                "q",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "q"
+              ]
+            },
+            {
+              "key": "op_L8_C4_if",
+              "kind": "if",
+              "line": 8,
+              "end_line": 9,
+              "text": "if d == 0:\n        v = v // 3 * 3",
+              "reads": [
+                "d",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "d"
+              ]
+            },
+            {
+              "key": "op_L10_C4_if",
+              "kind": "if",
+              "line": 10,
+              "end_line": 11,
+              "text": "if c == 0:\n        v = v // 7 * 7",
+              "reads": [
+                "c",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "c"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                4
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if p == 0:\n        v = x",
+                  "reads": [
+                    "p",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "p"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                }
+              },
+              "condition": "(p < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L6_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            },
+            {
+              "kind": "independent",
+              "source_lines": [
+                6
+              ],
+              "operations": [
+                {
+                  "key": "op_L6_C4_if",
+                  "kind": "if",
+                  "line": 6,
+                  "end_line": 7,
+                  "text": "if q == 0:\n        v = x",
+                  "reads": [
+                    "q",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "q"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0004",
+                "input": {
+                  "p": 1,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                }
+              },
+              "condition": "(q < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0004",
+                "witness_input": {
+                  "p": 1,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L4_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L6_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            },
+            {
+              "kind": "cooperative",
+              "source_lines": [
+                8,
+                10
+              ],
+              "operations": [
+                {
+                  "key": "op_L8_C4_if",
+                  "kind": "if",
+                  "line": 8,
+                  "end_line": 9,
+                  "text": "if d == 0:\n        v = v // 3 * 3",
+                  "reads": [
+                    "d",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "d"
+                  ]
+                },
+                {
+                  "key": "op_L10_C4_if",
+                  "kind": "if",
+                  "line": 10,
+                  "end_line": 11,
+                  "text": "if c == 0:\n        v = v // 7 * 7",
+                  "reads": [
+                    "c",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "c"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0012",
+                "input": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 0,
+                  "d": 0
+                }
+              },
+              "condition": "((c < 1) and (x < 5))",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {
+                  "op_L10_C4_if": true,
+                  "op_L8_C4_if": true
+                }
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0012",
+                "witness_input": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 0,
+                  "d": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {
+                    "op_L10_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if",
+                        "op_L8_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    },
+                    "op_L8_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L10_C4_if",
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    }
+                  }
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            },
+            {
+              "kind": "coexisting",
+              "source_lines": [
+                4,
+                6
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if p == 0:\n        v = x",
+                  "reads": [
+                    "p",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "p"
+                  ]
+                },
+                {
+                  "key": "op_L6_C4_if",
+                  "kind": "if",
+                  "line": 6,
+                  "end_line": 7,
+                  "text": "if q == 0:\n        v = x",
+                  "reads": [
+                    "q",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "q"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0008",
+                "input": {
+                  "p": 0,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                }
+              },
+              "condition": "((not (c < 1)) or (not (x < 5)))",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_expose": {
+                  "op_L4_C4_if": true,
+                  "op_L6_C4_if": true
+                }
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0008",
+                "witness_input": {
+                  "p": 0,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_expose",
+                  "holds_on_witness": true,
+                  "results": {
+                    "op_L4_C4_if": {
+                      "exposes": true,
+                      "disabled_keys": [
+                        "op_L4_C4_if"
+                      ]
+                    },
+                    "op_L6_C4_if": {
+                      "exposes": true,
+                      "disabled_keys": [
+                        "op_L6_C4_if"
+                      ]
+                    }
+                  }
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 32,
+            "case_executions": 640,
+            "variants": 30,
+            "wall_seconds": 0.067,
+            "subsets": 16,
+            "candidates": 4
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 4,
+            "selected_candidate_count": 4,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0",
+              "op_1",
+              "op_2",
+              "op_3"
+            ],
+            "cases": 20,
+            "subsets": 16,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            },
+            {
+              "kind": "independent",
+              "ops": [
+                "op_1"
+              ],
+              "witness": "case_0004",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            },
+            {
+              "kind": "cooperative",
+              "ops": [
+                "op_2",
+                "op_3"
+              ],
+              "witness": "case_0012",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {
+                  "op_2": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  },
+                  "op_3": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  }
+                },
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            },
+            {
+              "kind": "coexisting",
+              "ops": [
+                "op_0",
+                "op_1"
+              ],
+              "witness": "case_0008",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {
+                  "op_0": {
+                    "claim_disabled_status": "MASKED",
+                    "claim_disabled_masks": true
+                  },
+                  "op_1": {
+                    "claim_disabled_status": "MASKED",
+                    "claim_disabled_masks": true
+                  }
+                },
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 640,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0668,
+        "program_executions": 1280
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "ctrl_03",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast_with_mace_contracts",
+          "candidates": [
+            {
+              "key": "op_L4_C4_if",
+              "kind": "if",
+              "line": 4,
+              "end_line": 5,
+              "text": "if p == 0:\n        v = x",
+              "reads": [
+                "p",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "p"
+              ]
+            },
+            {
+              "key": "op_L6_C4_if",
+              "kind": "if",
+              "line": 6,
+              "end_line": 7,
+              "text": "if q == 0:\n        v = x",
+              "reads": [
+                "q",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "q"
+              ]
+            },
+            {
+              "key": "op_L8_C4_if",
+              "kind": "if",
+              "line": 8,
+              "end_line": 9,
+              "text": "if d == 0:\n        v = v // 3 * 3",
+              "reads": [
+                "d",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "d"
+              ]
+            },
+            {
+              "key": "op_L10_C4_if",
+              "kind": "if",
+              "line": 10,
+              "end_line": 11,
+              "text": "if c == 0:\n        v = v // 7 * 7",
+              "reads": [
+                "c",
+                "v"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "c"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                4
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if p == 0:\n        v = x",
+                  "reads": [
+                    "p",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "p"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                }
+              },
+              "condition": "(p < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "p": 0,
+                  "q": 1,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L6_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            },
+            {
+              "kind": "independent",
+              "source_lines": [
+                6
+              ],
+              "operations": [
+                {
+                  "key": "op_L6_C4_if",
+                  "kind": "if",
+                  "line": 6,
+                  "end_line": 7,
+                  "text": "if q == 0:\n        v = x",
+                  "reads": [
+                    "q",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "q"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0004",
+                "input": {
+                  "p": 1,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                }
+              },
+              "condition": "(q < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0004",
+                "witness_input": {
+                  "p": 1,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L4_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L6_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            },
+            {
+              "kind": "cooperative",
+              "source_lines": [
+                8,
+                10
+              ],
+              "operations": [
+                {
+                  "key": "op_L8_C4_if",
+                  "kind": "if",
+                  "line": 8,
+                  "end_line": 9,
+                  "text": "if d == 0:\n        v = v // 3 * 3",
+                  "reads": [
+                    "d",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "d"
+                  ]
+                },
+                {
+                  "key": "op_L10_C4_if",
+                  "kind": "if",
+                  "line": 10,
+                  "end_line": 11,
+                  "text": "if c == 0:\n        v = v // 7 * 7",
+                  "reads": [
+                    "c",
+                    "v"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "c"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0012",
+                "input": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 0,
+                  "d": 0
+                }
+              },
+              "condition": "((c < 1) and (x < 5))",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {
+                  "op_L10_C4_if": true,
+                  "op_L8_C4_if": true
+                }
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0012",
+                "witness_input": {
+                  "p": 1,
+                  "q": 1,
+                  "x": 3,
+                  "c": 0,
+                  "d": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {
+                    "op_L10_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L4_C4_if",
+                        "op_L6_C4_if",
+                        "op_L8_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    },
+                    "op_L8_C4_if": {
+                      "masks": false,
+                      "disabled_keys": [
+                        "op_L10_C4_if",
+                        "op_L4_C4_if",
+                        "op_L6_C4_if"
+                      ],
+                      "kept_prerequisites": []
+                    }
+                  }
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            },
+            {
+              "kind": "coexisting",
+              "source_lines": [
+                4,
+                6
+              ],
+              "operations": [
+                {
+                  "key": "op_L4_C4_if",
+                  "kind": "if",
+                  "line": 4,
+                  "end_line": 5,
+                  "text": "if p == 0:\n        v = x",
+                  "reads": [
+                    "p",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "p"
+                  ]
+                },
+                {
+                  "key": "op_L6_C4_if",
+                  "kind": "if",
+                  "line": 6,
+                  "end_line": 7,
+                  "text": "if q == 0:\n        v = x",
+                  "reads": [
+                    "q",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "q"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0008",
+                "input": {
+                  "p": 0,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                }
+              },
+              "condition": "((not (c < 1)) or (not (x < 5)))",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_expose": {
+                  "op_L4_C4_if": true,
+                  "op_L6_C4_if": true
+                }
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0008",
+                "witness_input": {
+                  "p": 0,
+                  "q": 0,
+                  "x": 3,
+                  "c": 1,
+                  "d": 1
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    3
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L10_C4_if",
+                      "op_L8_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L4_C4_if",
+                      "op_L6_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        7
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        3
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_expose",
+                  "holds_on_witness": true,
+                  "results": {
+                    "op_L4_C4_if": {
+                      "exposes": true,
+                      "disabled_keys": [
+                        "op_L4_C4_if"
+                      ]
+                    },
+                    "op_L6_C4_if": {
+                      "exposes": true,
+                      "disabled_keys": [
+                        "op_L6_C4_if"
+                      ]
+                    }
+                  }
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 32,
+            "case_executions": 640,
+            "variants": 30,
+            "wall_seconds": 0.065,
+            "subsets": 16,
+            "candidates": 4
+          },
+          "unsupported": [],
+          "contract": {
+            "path": "<local-path>",
+            "available": true,
+            "status": "ROUNDS_EXHAUSTED",
+            "reason": "parsed",
+            "line_refs": {
+              "3": [
+                "T1:target_effects",
+                "U1:upstream",
+                "O0:observers",
+                "G:mask_guard"
+              ]
+            },
+            "cited_lines": [],
+            "relation_statuses": {
+              "O0": "INVALID",
+              "T1": "REFUTED",
+              "U1": "REFUTED"
+            },
+            "relation_counts": {
+              "mask_guard": 1,
+              "observers": 1,
+              "target_effects": 1,
+              "upstream": 1
+            },
+            "uncertainty": "",
+            "semantic_fields_used": [
+              "target_effects",
+              "upstream",
+              "observers",
+              "mask_guard"
+            ],
+            "confirmation": "not_by_contract; execution_verifier_only",
+            "mapped_lines": [],
+            "unmapped_lines": [],
+            "added_keys": [],
+            "added_lines": [],
+            "candidate_limit": 4,
+            "baseline_count": 4,
+            "selected_count": 4,
+            "lines": {},
+            "candidate_limit_matched_to_baseline": true,
+            "added_verified_relations": 0
+          },
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 4,
+            "selected_candidate_count": 4,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0",
+              "op_1",
+              "op_2",
+              "op_3"
+            ],
+            "cases": 20,
+            "subsets": 16,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            },
+            {
+              "kind": "independent",
+              "ops": [
+                "op_1"
+              ],
+              "witness": "case_0004",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            },
+            {
+              "kind": "cooperative",
+              "ops": [
+                "op_2",
+                "op_3"
+              ],
+              "witness": "case_0012",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {
+                  "op_2": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  },
+                  "op_3": {
+                    "only_claim_status": "EXPOSED",
+                    "only_claim_masks": false
+                  }
+                },
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            },
+            {
+              "kind": "coexisting",
+              "ops": [
+                "op_0",
+                "op_1"
+              ],
+              "witness": "case_0008",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {
+                  "op_0": {
+                    "claim_disabled_status": "MASKED",
+                    "claim_disabled_masks": true
+                  },
+                  "op_1": {
+                    "claim_disabled_status": "MASKED",
+                    "claim_disabled_masks": true
+                  }
+                },
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 640,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0653,
+        "program_executions": 1280
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [
+          [
+            "coexisting",
+            [
+              4,
+              6
+            ]
+          ],
+          [
+            "cooperative",
+            [
+              8,
+              10
+            ]
+          ],
+          [
+            "independent",
+            [
+              4
+            ]
+          ],
+          [
+            "independent",
+            [
+              6
+            ]
+          ]
+        ],
+        "b_verified_relation_keys": [
+          [
+            "coexisting",
+            [
+              4,
+              6
+            ]
+          ],
+          [
+            "cooperative",
+            [
+              8,
+              10
+            ]
+          ],
+          [
+            "independent",
+            [
+              4
+            ]
+          ],
+          [
+            "independent",
+            [
+              6
+            ]
+          ]
+        ],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    },
+    "control_state_C_changes_state_B_controlled": {
+      "contract": {
+        "available": false,
+        "reason": "no contract path",
+        "lines": []
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "control_state_C_changes_state_B_controlled",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L4_C4_assign",
+              "kind": "assign",
+              "line": 4,
+              "end_line": 4,
+              "text": "flag = c == 0",
+              "reads": [
+                "c"
+              ],
+              "writes": [
+                "flag"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L5_C4_if",
+              "kind": "if",
+              "line": 5,
+              "end_line": 6,
+              "text": "if flag:\n        v = x",
+              "reads": [
+                "flag",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "flag"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                5
+              ],
+              "operations": [
+                {
+                  "key": "op_L5_C4_if",
+                  "kind": "if",
+                  "line": 5,
+                  "end_line": 6,
+                  "text": "if flag:\n        v = x",
+                  "reads": [
+                    "flag",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "flag"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "x": 0,
+                  "c": 0
+                }
+              },
+              "condition": "(c < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "x": 0,
+                  "c": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [],
+                    "kept_prerequisites": [
+                      "op_L4_C4_assign"
+                    ],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L5_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        1
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        0
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 8,
+            "case_executions": 48,
+            "variants": 6,
+            "wall_seconds": 0.005,
+            "subsets": 4,
+            "candidates": 2
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 2,
+            "selected_candidate_count": 2,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0"
+            ],
+            "cases": 6,
+            "subsets": 2,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 24,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0045,
+        "program_executions": 72
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "control_state_C_changes_state_B_controlled",
+          "status": "OK",
+          "reason": "all discovered relations have exact conditions on the finite domain",
+          "target_line": 3,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L4_C4_assign",
+              "kind": "assign",
+              "line": 4,
+              "end_line": 4,
+              "text": "flag = c == 0",
+              "reads": [
+                "c"
+              ],
+              "writes": [
+                "flag"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L5_C4_if",
+              "kind": "if",
+              "line": 5,
+              "end_line": 6,
+              "text": "if flag:\n        v = x",
+              "reads": [
+                "flag",
+                "x"
+              ],
+              "writes": [
+                "v"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "flag"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                5
+              ],
+              "operations": [
+                {
+                  "key": "op_L5_C4_if",
+                  "kind": "if",
+                  "line": 5,
+                  "end_line": 6,
+                  "text": "if flag:\n        v = x",
+                  "reads": [
+                    "flag",
+                    "x"
+                  ],
+                  "writes": [
+                    "v"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "control_dependency"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": [
+                    "flag"
+                  ]
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "x": 0,
+                  "c": 0
+                }
+              },
+              "condition": "(c < 1)",
+              "condition_check": {
+                "status": "VALID",
+                "sound": true,
+                "complete": true,
+                "exact": true,
+                "false_accept": [],
+                "false_reject": [],
+                "witness_value": true
+              },
+              "condition_status": "EXACT",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "x": 0,
+                  "c": 0
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "int",
+                    0
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [],
+                    "kept_prerequisites": [
+                      "op_L4_C4_assign"
+                    ],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L5_C4_if"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        1
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "return",
+                      "value": [
+                        "int",
+                        0
+                      ]
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "VERIFIED",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 8,
+            "case_executions": 48,
+            "variants": 6,
+            "wall_seconds": 0.004,
+            "subsets": 4,
+            "candidates": 2
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 2,
+            "selected_candidate_count": 2,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0"
+            ],
+            "cases": 6,
+            "subsets": 2,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 24,
+          "all_verified": true
+        },
+        "wall_seconds": 0.0042,
+        "program_executions": 72
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [
+          [
+            "independent",
+            [
+              5
+            ]
+          ]
+        ],
+        "b_verified_relation_keys": [
+          [
+            "independent",
+            [
+              5
+            ]
+          ]
+        ],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    }
+  },
+  "real_source_attempts": {
+    "real_werkzeug_url_unparse": {
+      "contract": {
+        "available": false,
+        "reason": "no contract path",
+        "lines": []
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "real_werkzeug_url_unparse",
+          "status": "PARTIAL",
+          "reason": "some relations lack an exact condition or a valid witness",
+          "target_line": 48,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L55_C8_if",
+              "kind": "if",
+              "line": 55,
+              "end_line": 56,
+              "text": "if path and path[:1] != s(\"/\"):\n            path = s(\"/\") + path",
+              "reads": [
+                "path",
+                "s"
+              ],
+              "writes": [
+                "path"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency",
+                "nested_control_body"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "path",
+                "s"
+              ]
+            },
+            {
+              "key": "op_L57_C8_assign",
+              "kind": "assign",
+              "line": 57,
+              "end_line": 57,
+              "text": "url = s(\"//\") + (netloc or s(\"\")) + path",
+              "reads": [
+                "netloc",
+                "path",
+                "s"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write",
+                "nested_control_body"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L58_C4_if",
+              "kind": "if",
+              "line": 58,
+              "end_line": 59,
+              "text": "elif path:\n        url += path",
+              "reads": [
+                "path",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency",
+                "nested_control_body"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "path"
+              ]
+            },
+            {
+              "key": "op_L60_C4_if",
+              "kind": "if",
+              "line": 60,
+              "end_line": 61,
+              "text": "if scheme:\n        url = scheme + s(\":\") + url",
+              "reads": [
+                "s",
+                "scheme",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "scheme"
+              ]
+            },
+            {
+              "key": "op_L62_C4_if",
+              "kind": "if",
+              "line": 62,
+              "end_line": 63,
+              "text": "if query:\n        url = url + s(\"?\") + query",
+              "reads": [
+                "query",
+                "s",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "query"
+              ]
+            },
+            {
+              "key": "op_L64_C4_if",
+              "kind": "if",
+              "line": 64,
+              "end_line": 65,
+              "text": "if fragment:\n        url = url + s(\"#\") + fragment",
+              "reads": [
+                "fragment",
+                "s",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "fragment"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                57
+              ],
+              "operations": [
+                {
+                  "key": "op_L57_C8_assign",
+                  "kind": "assign",
+                  "line": 57,
+                  "end_line": 57,
+                  "text": "url = s(\"//\") + (netloc or s(\"\")) + path",
+                  "reads": [
+                    "netloc",
+                    "path",
+                    "s"
+                  ],
+                  "writes": [
+                    "url"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "overwrite_write",
+                    "nested_control_body"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": []
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "components": [
+                    "http",
+                    "example.com",
+                    "a",
+                    "q=1",
+                    "frag"
+                  ]
+                }
+              },
+              "condition": null,
+              "condition_check": {
+                "status": "ABSENT",
+                "sound": false,
+                "complete": false,
+                "exact": false,
+                "false_accept": [],
+                "false_reject": []
+              },
+              "condition_status": "UNKNOWN",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "components": [
+                    "http",
+                    "example.com",
+                    "a",
+                    "q=1",
+                    "frag"
+                  ]
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "str",
+                    "http://example.com/a?q=1#frag"
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "str",
+                    "http://example.com/a?q=1#frag"
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L55_C8_if",
+                      "op_L58_C4_if",
+                      "op_L60_C4_if",
+                      "op_L62_C4_if",
+                      "op_L64_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L57_C8_assign"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "str",
+                        "http:?q=1#frag"
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "raise",
+                      "exception": "UnboundLocalError",
+                      "message": "cannot access local variable 'url' where it is not associated with a value"
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "WITNESS_ONLY",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 128,
+            "case_executions": 768,
+            "variants": 126,
+            "wall_seconds": 0.201,
+            "subsets": 64,
+            "candidates": 6
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 6,
+            "selected_candidate_count": 6,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0"
+            ],
+            "cases": 6,
+            "subsets": 2,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 24,
+          "all_verified": true
+        },
+        "wall_seconds": 0.2013,
+        "program_executions": 792
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "real_werkzeug_url_unparse",
+          "status": "PARTIAL",
+          "reason": "some relations lack an exact condition or a valid witness",
+          "target_line": 48,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L55_C8_if",
+              "kind": "if",
+              "line": 55,
+              "end_line": 56,
+              "text": "if path and path[:1] != s(\"/\"):\n            path = s(\"/\") + path",
+              "reads": [
+                "path",
+                "s"
+              ],
+              "writes": [
+                "path"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency",
+                "nested_control_body"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "path",
+                "s"
+              ]
+            },
+            {
+              "key": "op_L57_C8_assign",
+              "kind": "assign",
+              "line": 57,
+              "end_line": 57,
+              "text": "url = s(\"//\") + (netloc or s(\"\")) + path",
+              "reads": [
+                "netloc",
+                "path",
+                "s"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write",
+                "nested_control_body"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L58_C4_if",
+              "kind": "if",
+              "line": 58,
+              "end_line": 59,
+              "text": "elif path:\n        url += path",
+              "reads": [
+                "path",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency",
+                "nested_control_body"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "path"
+              ]
+            },
+            {
+              "key": "op_L60_C4_if",
+              "kind": "if",
+              "line": 60,
+              "end_line": 61,
+              "text": "if scheme:\n        url = scheme + s(\":\") + url",
+              "reads": [
+                "s",
+                "scheme",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "scheme"
+              ]
+            },
+            {
+              "key": "op_L62_C4_if",
+              "kind": "if",
+              "line": 62,
+              "end_line": 63,
+              "text": "if query:\n        url = url + s(\"?\") + query",
+              "reads": [
+                "query",
+                "s",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "query"
+              ]
+            },
+            {
+              "key": "op_L64_C4_if",
+              "kind": "if",
+              "line": 64,
+              "end_line": 65,
+              "text": "if fragment:\n        url = url + s(\"#\") + fragment",
+              "reads": [
+                "fragment",
+                "s",
+                "url"
+              ],
+              "writes": [
+                "url"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "control_dependency"
+              ],
+              "contract_refs": [],
+              "control_reads": [
+                "fragment"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "kind": "independent",
+              "source_lines": [
+                57
+              ],
+              "operations": [
+                {
+                  "key": "op_L57_C8_assign",
+                  "kind": "assign",
+                  "line": 57,
+                  "end_line": 57,
+                  "text": "url = s(\"//\") + (netloc or s(\"\")) + path",
+                  "reads": [
+                    "netloc",
+                    "path",
+                    "s"
+                  ],
+                  "writes": [
+                    "url"
+                  ],
+                  "provenance": [
+                    "expanded_ast",
+                    "overwrite_write",
+                    "nested_control_body"
+                  ],
+                  "contract_refs": [],
+                  "control_reads": []
+                }
+              ],
+              "witness": {
+                "case_id": "case_0000",
+                "input": {
+                  "components": [
+                    "http",
+                    "example.com",
+                    "a",
+                    "q=1",
+                    "frag"
+                  ]
+                }
+              },
+              "condition": null,
+              "condition_check": {
+                "status": "ABSENT",
+                "sound": false,
+                "complete": false,
+                "exact": false,
+                "false_accept": [],
+                "false_reject": []
+              },
+              "condition_status": "UNKNOWN",
+              "checks": {
+                "a_has_local_effect": true,
+                "original_masks": true,
+                "only_set_masks": true,
+                "disabling_set_exposes": true,
+                "proper_subsets_do_not_mask": {}
+              },
+              "evidence": {
+                "scope": "witness_case_only; finite legal domain used for condition checks",
+                "witness_case": "case_0000",
+                "witness_input": {
+                  "components": [
+                    "http",
+                    "example.com",
+                    "a",
+                    "q=1",
+                    "frag"
+                  ]
+                },
+                "witness_legal_under_p_plus": true,
+                "p_plus": {
+                  "outcome": "return",
+                  "value": [
+                    "str",
+                    "http://example.com/a?q=1#frag"
+                  ]
+                },
+                "p_minus": {
+                  "outcome": "return",
+                  "value": [
+                    "str",
+                    "http://example.com/a?q=1#frag"
+                  ]
+                },
+                "p_plus_snapshot_at_target": true,
+                "p_minus_snapshot_at_target": true,
+                "deletion_without_intervention": {
+                  "masked": true,
+                  "a_has_local_effect": true
+                },
+                "intervention": {
+                  "disable_other_masking_candidates": {
+                    "disabled_keys": [
+                      "op_L55_C8_if",
+                      "op_L58_C4_if",
+                      "op_L60_C4_if",
+                      "op_L62_C4_if",
+                      "op_L64_C4_if"
+                    ],
+                    "kept_prerequisites": [],
+                    "masked": true
+                  },
+                  "disable_claimed_set": {
+                    "disabled_keys": [
+                      "op_L57_C8_assign"
+                    ],
+                    "exposes": true,
+                    "p_plus": {
+                      "outcome": "return",
+                      "value": [
+                        "str",
+                        "http:?q=1#frag"
+                      ]
+                    },
+                    "p_minus": {
+                      "outcome": "raise",
+                      "exception": "UnboundLocalError",
+                      "message": "cannot access local variable 'url' where it is not associated with a value"
+                    }
+                  }
+                },
+                "minimality": {
+                  "criterion": "proper_nonempty_subsets_do_not_mask",
+                  "holds_on_witness": true,
+                  "results": {}
+                }
+              },
+              "status": "WITNESS_ONLY",
+              "evidence_scope": "single_witness_plus_finite_domain_condition"
+            }
+          ],
+          "stats": {
+            "compilations": 128,
+            "case_executions": 768,
+            "variants": 126,
+            "wall_seconds": 0.2,
+            "subsets": 64,
+            "candidates": 6
+          },
+          "unsupported": [],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 6,
+            "selected_candidate_count": 6,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": {
+            "ops": [
+              "op_0"
+            ],
+            "cases": 6,
+            "subsets": 2,
+            "errors": {}
+          },
+          "relations": [
+            {
+              "kind": "independent",
+              "ops": [
+                "op_0"
+              ],
+              "witness": "case_0000",
+              "scope": "single_witness",
+              "valid": true,
+              "status": "VERIFIED",
+              "minimal": true,
+              "checks": {
+                "only_claim_status": "MASKED",
+                "claim_disabled_status": "EXPOSED",
+                "only_claim_masks": true,
+                "claim_disabled_exposes": true,
+                "proper_subset_checks": {},
+                "minimal": true
+              },
+              "note": "This result is checked only on the named witness.  It is not a proof over all inputs."
+            }
+          ],
+          "program_executions": 24,
+          "all_verified": true
+        },
+        "wall_seconds": 0.2005,
+        "program_executions": 792
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [],
+        "b_verified_relation_keys": [],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    },
+    "real_werkzeug_headerset_update": {
+      "contract": {
+        "available": false,
+        "reason": "no contract path",
+        "lines": []
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "real_werkzeug_headerset_update",
+          "status": "UNSUPPORTED",
+          "reason": "no relation among supported candidates; unsupported constructs were not searched: cross-function method effect at line 131: HeaderSet.update() body was not searched; unsupported constructs were not searched: cross-function method effect at line 131: HeaderSet.update() body was not searched",
+          "target_line": 62,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L129_C4_assign",
+              "kind": "assign",
+              "line": 129,
+              "end_line": 129,
+              "text": "calls = []",
+              "reads": [],
+              "writes": [
+                "calls"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L130_C4_assign",
+              "kind": "assign",
+              "line": 130,
+              "end_line": 130,
+              "text": "hs = HeaderSet(headers, on_update=lambda value: calls.append(len(value)))",
+              "reads": [
+                "HeaderSet",
+                "calls",
+                "headers",
+                "len",
+                "value"
+              ],
+              "writes": [
+                "hs"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L131_C4_expr",
+              "kind": "expr",
+              "line": 131,
+              "end_line": 131,
+              "text": "hs.update(iterable)",
+              "reads": [
+                "hs",
+                "iterable"
+              ],
+              "writes": [
+                "hs"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "indirect_state"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            }
+          ],
+          "relations": [],
+          "stats": {
+            "compilations": 16,
+            "case_executions": 80,
+            "variants": 14,
+            "wall_seconds": 0.042,
+            "subsets": 8,
+            "candidates": 3
+          },
+          "unsupported": [
+            "cross-function method effect at line 131: HeaderSet.update() body was not searched"
+          ],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 3,
+            "selected_candidate_count": 3,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": null,
+          "relations": [],
+          "program_executions": 0
+        },
+        "wall_seconds": 0.0419,
+        "program_executions": 80
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "real_werkzeug_headerset_update",
+          "status": "UNSUPPORTED",
+          "reason": "no relation among supported candidates; unsupported constructs were not searched: cross-function method effect at line 131: HeaderSet.update() body was not searched; unsupported constructs were not searched: cross-function method effect at line 131: HeaderSet.update() body was not searched",
+          "target_line": 62,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L129_C4_assign",
+              "kind": "assign",
+              "line": 129,
+              "end_line": 129,
+              "text": "calls = []",
+              "reads": [],
+              "writes": [
+                "calls"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L130_C4_assign",
+              "kind": "assign",
+              "line": 130,
+              "end_line": 130,
+              "text": "hs = HeaderSet(headers, on_update=lambda value: calls.append(len(value)))",
+              "reads": [
+                "HeaderSet",
+                "calls",
+                "headers",
+                "len",
+                "value"
+              ],
+              "writes": [
+                "hs"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            },
+            {
+              "key": "op_L131_C4_expr",
+              "kind": "expr",
+              "line": 131,
+              "end_line": 131,
+              "text": "hs.update(iterable)",
+              "reads": [
+                "hs",
+                "iterable"
+              ],
+              "writes": [
+                "hs"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "indirect_state"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            }
+          ],
+          "relations": [],
+          "stats": {
+            "compilations": 16,
+            "case_executions": 80,
+            "variants": 14,
+            "wall_seconds": 0.048,
+            "subsets": 8,
+            "candidates": 3
+          },
+          "unsupported": [
+            "cross-function method effect at line 131: HeaderSet.update() body was not searched"
+          ],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 3,
+            "selected_candidate_count": 3,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": null,
+          "relations": [],
+          "program_executions": 0
+        },
+        "wall_seconds": 0.0484,
+        "program_executions": 80
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [],
+        "b_verified_relation_keys": [],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    },
+    "real_click_truncate_visible": {
+      "contract": {
+        "available": false,
+        "reason": "no contract path",
+        "lines": []
+      },
+      "arm_A_no_contract": {
+        "discovery": {
+          "task_id": "real_click_truncate_visible",
+          "status": "UNSUPPORTED",
+          "reason": "no relation among supported candidates; unsupported constructs were not searched: statement at line 29 is outside the supported subset: While; unsupported constructs were not searched: statement at line 29 is outside the supported subset: While",
+          "target_line": 27,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L28_C4_assign",
+              "kind": "assign",
+              "line": 28,
+              "end_line": 28,
+              "text": "end = len(text)",
+              "reads": [
+                "len",
+                "text"
+              ],
+              "writes": [
+                "end"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            }
+          ],
+          "relations": [],
+          "stats": {
+            "compilations": 4,
+            "case_executions": 24,
+            "variants": 2,
+            "wall_seconds": 0.003,
+            "subsets": 2,
+            "candidates": 1
+          },
+          "unsupported": [
+            "statement at line 29 is outside the supported subset: While"
+          ],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 1,
+            "selected_candidate_count": 1,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": null,
+          "relations": [],
+          "program_executions": 0
+        },
+        "wall_seconds": 0.0034,
+        "program_executions": 24
+      },
+      "arm_B_contract_assisted": {
+        "discovery": {
+          "task_id": "real_click_truncate_visible",
+          "status": "UNSUPPORTED",
+          "reason": "no relation among supported candidates; unsupported constructs were not searched: statement at line 29 is outside the supported subset: While; unsupported constructs were not searched: statement at line 29 is outside the supported subset: While",
+          "target_line": 27,
+          "candidate_source": "expanded_ast",
+          "candidates": [
+            {
+              "key": "op_L28_C4_assign",
+              "kind": "assign",
+              "line": 28,
+              "end_line": 28,
+              "text": "end = len(text)",
+              "reads": [
+                "len",
+                "text"
+              ],
+              "writes": [
+                "end"
+              ],
+              "provenance": [
+                "expanded_ast",
+                "overwrite_write"
+              ],
+              "contract_refs": [],
+              "control_reads": []
+            }
+          ],
+          "relations": [],
+          "stats": {
+            "compilations": 4,
+            "case_executions": 24,
+            "variants": 2,
+            "wall_seconds": 0.003,
+            "subsets": 2,
+            "candidates": 1
+          },
+          "unsupported": [
+            "statement at line 29 is outside the supported subset: While"
+          ],
+          "contract": {},
+          "budget": {
+            "candidate_limit": 12,
+            "baseline_candidate_count": 1,
+            "selected_candidate_count": 1,
+            "candidate_count_matched": true
+          }
+        },
+        "independent_verifier": {
+          "matrix": null,
+          "relations": [],
+          "program_executions": 0
+        },
+        "wall_seconds": 0.0032,
+        "program_executions": 24
+      },
+      "comparison": {
+        "same_candidate_count": true,
+        "same_subset_execution_budget": true,
+        "a_verified_relation_keys": [],
+        "b_verified_relation_keys": [],
+        "new_verified_relations_from_contract": [],
+        "contract_only_candidates_used_by_verified_relation": [],
+        "contract_semantic_gain": false,
+        "note": "A contract line is only a candidate proposal; all relations are confirmed by benchmark verifier v2."
+      }
+    }
+  },
+  "summary": {
+    "development_tasks": 4,
+    "real_source_attempts": 3,
+    "b_verified_relations": 7,
+    "real_verified_or_witness_relations": [
+      {
+        "task_id": "real_werkzeug_url_unparse",
+        "kind": "independent",
+        "lines": [
+          57
+        ],
+        "status": "WITNESS_ONLY",
+        "condition_status": "UNKNOWN"
+      }
+    ],
+    "contract_gain_tasks": [],
+    "contract_gain_observed": false,
+    "model_calls": 0,
+    "model_tokens": 0,
+    "program_executions": 5360,
+    "wall_seconds": 0.6809,
+    "stories": {
+      "independent": true,
+      "cooperative": true,
+      "coexisting": true
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "mace-benchmark-blind-v1-method-result",
+  "task_id": "blind_01_parse_header_links",
+  "method": "pure_symbolic",
+  "status": "UNSUPPORTED",
+  "counted_as_analyzed": false,
+  "correctness": null,
+  "tokens": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "llm_calls": 0
+  },
+  "wall_seconds": 0.009,
+  "started_at_utc": "2026-11-01T07:05:08+00:00",
+  "finished_at_utc": "2026-11-01T07:05:08+00:00",
+  "answer": null,
+  "explanation": [
+    "The published fixture/domain interface has no 'str' argument sort, so it cannot accept this frozen task as specified.",
+    "A diagnostic direct call to mace.symbolic.derive_guard (outside the published fixture interface) returns UNKNOWN on the string constant.",
+    "Neither result is counted as analysed."
+  ],
+  "input_information": {
+    "public_task_sha256": "a20efe0664a8539553c64c122222b2debbef12c1ed55f4fab30f29aeb4472486",
+    "freeze_public_sha256": "a20efe0664a8539553c64c122222b2debbef12c1ed55f4fab30f29aeb4472486",
+    "freeze_sha256": "931a20237c2047e5a476b15effba108eaee8247956398a2eddc556cef62afc52",
+    "public_schema_sha256": "c367fec1e5c9ceac971c97610a8e264f6582df9ef4591964c77de8345e024d2b",
+    "private_data_used": false
+  },
+  "environment": {
+    "python": "3.11.7",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "fixture_interface": {
+    "supported": false,
+    "error": "TermError: unsupported argument sort in domain: str"
+  },
+  "diagnostic_derive_guard": {
+    "performed": true,
+    "error": null,
+    "result": {
+      "status": "UNKNOWN",
+      "guard": null,
+      "reason": "unsupported constant ' \\'\"'",
+      "paths": 0,
+      "node_count": 0,
+      "explanation": [],
+      "coverage": {
+        "reached": 3,
+        "summarized": 0,
+        "covered": 3,
+        "total": 19,
+        "ratio": 0.158
+      }
+    }
+  },
+  "diagnostic_status": "UNKNOWN",
+  "analysis_performed": false,
+  "llm_calls": 0
+}

@@ -1,0 +1,2641 @@
+{
+  "sets": [
+    "held1",
+    "held2"
+  ],
+  "levels": [
+    "full"
+  ],
+  "fixtures": [
+    "dead_flag",
+    "dict_slot",
+    "parity_snap",
+    "clamp_absorb",
+    "toggle_pair"
+  ],
+  "implementation_sha256": "7b514fda833186ebff50a87c0ce1b9a616819136a56e5739212dc99106875b54",
+  "git_head": "7599e20bb0faf06ad64d385b0f02e1b8f8099829",
+  "results": {
+    "dead_flag/full": {
+      "fixture": "dead_flag",
+      "target_line": 3,
+      "pool": {
+        "level": "full",
+        "size": 35,
+        "families": [
+          "list-content",
+          "list-length",
+          "list-relational",
+          "list-sum",
+          "list-sum-mod"
+        ]
+      },
+      "witnesses": {
+        "total": 40,
+        "fit": 20,
+        "eval": 20,
+        "learn": 10,
+        "tune": 10,
+        "masked": 40,
+        "unmasked": 0,
+        "masked_examples": [
+          {
+            "args": {
+              "xs": []
+            },
+            "pre": {
+              "xs": [],
+              "flag": false
+            },
+            "post": {
+              "xs": [],
+              "flag": true
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ]
+            },
+            "pre": {
+              "xs": [
+                0
+              ],
+              "flag": false
+            },
+            "post": {
+              "xs": [
+                0
+              ],
+              "flag": true
+            }
+          }
+        ],
+        "unmasked_examples": []
+      },
+      "sufficient": {
+        "guard": "len(xs) > 0",
+        "fit": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "eval": {
+          "sound": true,
+          "complete": false,
+          "exact": false,
+          "false_accept": 0,
+          "false_reject": 1
+        },
+        "full": {
+          "sound": true,
+          "complete": false,
+          "exact": false,
+          "false_accept": 0,
+          "false_reject": 1
+        },
+        "kind": "sufficient",
+        "fit_kind": "exact",
+        "clauses": 1,
+        "failures": 0,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                2
+              ]
+            },
+            "clause": "len(xs) > 0",
+            "covered": 10
+          }
+        ],
+        "repair": []
+      },
+      "necessary": {
+        "guard": "not (((sum(xs) != 1) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((distinct(xs) < len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((count(xs, 0) > 0) and (count(xs, 1) > 0) and (distinct(xs) == len(xs))) or ((sum(xs) != 1) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)))",
+        "fit": {
+          "sound": true,
+          "complete": false,
+          "exact": false,
+          "false_accept": 0,
+          "false_reject": 7
+        },
+        "eval": {
+          "sound": true,
+          "complete": false,
+          "exact": false,
+          "false_accept": 0,
+          "false_reject": 13
+        },
+        "full": {
+          "sound": true,
+          "complete": false,
+          "exact": false,
+          "false_accept": 0,
+          "false_reject": 20
+        },
+        "kind": "sufficient",
+        "fit_kind": "sufficient",
+        "clauses": 4,
+        "failures": 3,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                2,
+                2
+              ]
+            },
+            "clause": "(distinct(xs) < len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                0
+              ]
+            },
+            "clause": "(count(xs, 0) > 0) and (count(xs, 1) > 0) and (distinct(xs) == len(xs))",
+            "covered": 2
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                2,
+                1
+              ]
+            },
+            "clause": "(sum(xs) != 1) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                2,
+                2
+              ]
+            },
+            "clause": "(sum(xs) != 1) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                1,
+                0,
+                0
+              ]
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                0,
+                2,
+                2
+              ]
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                2,
+                2,
+                0
+              ]
+            },
+            "error": "no clause in the pool separates this witness"
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 0,
+            "false_reject": 10,
+            "tighten_examples": [],
+            "expand_examples": [
+              {
+                "xs": [
+                  1,
+                  0,
+                  0
+                ]
+              },
+              {
+                "xs": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              {
+                "xs": [
+                  1,
+                  0
+                ]
+              }
+            ],
+            "before": "False",
+            "after": "((sum(xs) != 1) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((distinct(xs) < len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((count(xs, 0) > 0) and (count(xs, 1) > 0) and (distinct(xs) == len(xs))) or ((sum(xs) != 1) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False))"
+          }
+        ]
+      },
+      "check": {
+        "status": "REFUTED",
+        "unsound": 0,
+        "incomplete": 1,
+        "exact": false,
+        "error": null
+      },
+      "necessary_check": {
+        "status": "REFUTED",
+        "unsound": 0,
+        "incomplete": 20,
+        "exact": false,
+        "error": null
+      },
+      "seconds": 0.33000560011714697
+    },
+    "dict_slot/full": {
+      "fixture": "dict_slot",
+      "target_line": 3,
+      "pool": {
+        "level": "full",
+        "size": 75,
+        "families": [
+          "bool-var",
+          "list-content",
+          "list-length",
+          "list-relational",
+          "list-sum",
+          "list-sum-mod"
+        ]
+      },
+      "witnesses": {
+        "total": 80,
+        "fit": 40,
+        "eval": 40,
+        "learn": 20,
+        "tune": 20,
+        "masked": 40,
+        "unmasked": 40,
+        "masked_examples": [
+          {
+            "args": {
+              "xs": [],
+              "mode": true
+            },
+            "pre": {
+              "xs": [],
+              "mode": true,
+              "d": {
+                "0": 0,
+                "1": 0
+              }
+            },
+            "post": {
+              "xs": [],
+              "mode": true,
+              "d": {
+                "0": 5,
+                "1": 0
+              }
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "mode": true
+            },
+            "pre": {
+              "xs": [
+                0
+              ],
+              "mode": true,
+              "d": {
+                "0": 0,
+                "1": 1
+              }
+            },
+            "post": {
+              "xs": [
+                0
+              ],
+              "mode": true,
+              "d": {
+                "0": 5,
+                "1": 1
+              }
+            }
+          }
+        ],
+        "unmasked_examples": [
+          {
+            "args": {
+              "xs": [],
+              "mode": false
+            },
+            "pre": {
+              "xs": [],
+              "mode": false,
+              "d": {
+                "0": 0,
+                "1": 0
+              }
+            },
+            "post": {
+              "xs": [],
+              "mode": false,
+              "d": {
+                "0": 5,
+                "1": 0
+              }
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "mode": false
+            },
+            "pre": {
+              "xs": [
+                0
+              ],
+              "mode": false,
+              "d": {
+                "0": 0,
+                "1": 1
+              }
+            },
+            "post": {
+              "xs": [
+                0
+              ],
+              "mode": false,
+              "d": {
+                "0": 5,
+                "1": 1
+              }
+            }
+          }
+        ]
+      },
+      "sufficient": {
+        "guard": "mode",
+        "fit": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "eval": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "full": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "kind": "exact",
+        "fit_kind": "exact",
+        "clauses": 1,
+        "failures": 0,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                2
+              ],
+              "mode": true
+            },
+            "clause": "mode",
+            "covered": 11
+          }
+        ],
+        "repair": []
+      },
+      "necessary": {
+        "guard": "not (((mode) and (sum(xs) % 5 != 2) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((mode) and (sum(xs) % 5 != 0) and (sum(xs) % 5 != 1) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) % 5 != 0) and (sum(xs) % 5 != 2) and (sum(xs) % 5 != 3) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((not mode) and (count(xs, 1) > 0) and (sum(xs) % 5 != 2) and (sum(xs) % 5 != 3)) or ((mode) and (sum(xs) % 5 != 0) and (sum(xs) % 5 != 1) and (distinct(xs) < len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)))",
+        "fit": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 12,
+          "false_reject": 10
+        },
+        "eval": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 14,
+          "false_reject": 12
+        },
+        "full": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 26,
+          "false_reject": 22
+        },
+        "kind": "neither",
+        "fit_kind": "neither",
+        "clauses": 5,
+        "failures": 2,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                2
+              ],
+              "mode": false
+            },
+            "clause": "(not mode) and (count(xs, 1) > 0) and (sum(xs) % 5 != 2) and (sum(xs) % 5 != 3)",
+            "covered": 5
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                0,
+                1
+              ],
+              "mode": true
+            },
+            "clause": "(mode) and (sum(xs) % 5 != 0) and (sum(xs) % 5 != 1) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 4
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [],
+              "mode": true
+            },
+            "clause": "(mode) and (sum(xs) % 5 != 2) and ((min(xs) == max(xs)) if len(xs) > 0 else True)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                2,
+                0
+              ],
+              "mode": true
+            },
+            "clause": "(mode) and (sum(xs) % 5 != 0) and (sum(xs) % 5 != 1) and (distinct(xs) < len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                2,
+                2
+              ],
+              "mode": false
+            },
+            "clause": "(sum(xs) % 5 != 0) and (sum(xs) % 5 != 2) and (sum(xs) % 5 != 3) and ((min(xs) == max(xs)) if len(xs) > 0 else True)",
+            "covered": 2
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                1,
+                0,
+                1
+              ],
+              "mode": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                0,
+                2,
+                0
+              ],
+              "mode": false
+            },
+            "error": "no clause in the pool separates this witness"
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 10,
+            "false_reject": 10,
+            "tighten_examples": [
+              {
+                "xs": [
+                  2
+                ],
+                "mode": false
+              },
+              {
+                "xs": [
+                  2,
+                  1,
+                  0
+                ],
+                "mode": false
+              },
+              {
+                "xs": [
+                  1,
+                  1
+                ],
+                "mode": false
+              }
+            ],
+            "expand_examples": [
+              {
+                "xs": [
+                  0
+                ],
+                "mode": true
+              },
+              {
+                "xs": [
+                  1,
+                  1,
+                  0
+                ],
+                "mode": true
+              },
+              {
+                "xs": [
+                  1,
+                  2,
+                  0
+                ],
+                "mode": true
+              }
+            ],
+            "before": "not mode",
+            "after": "((mode) and (sum(xs) % 5 != 2) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((mode) and (sum(xs) % 5 != 0) and (sum(xs) % 5 != 1) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) % 5 != 0) and (sum(xs) % 5 != 2) and (sum(xs) % 5 != 3) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((not mode) and (count(xs, 1) > 0) and (sum(xs) % 5 != 2) and (sum(xs) % 5 != 3)) or ((mode) and (sum(xs) % 5 != 0) and (sum(xs) % 5 != 1) and (distinct(xs) < len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False))"
+          }
+        ]
+      },
+      "check": {
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "necessary_check": {
+        "status": "REFUTED",
+        "unsound": 26,
+        "incomplete": 22,
+        "exact": false,
+        "error": null
+      },
+      "seconds": 0.34230649983510375
+    },
+    "parity_snap/full": {
+      "fixture": "parity_snap",
+      "target_line": 3,
+      "pool": {
+        "level": "full",
+        "size": 46,
+        "families": [
+          "bool-var",
+          "list-content",
+          "list-length",
+          "list-relational",
+          "list-sum",
+          "list-sum-mod"
+        ]
+      },
+      "witnesses": {
+        "total": 170,
+        "fit": 85,
+        "eval": 85,
+        "learn": 43,
+        "tune": 42,
+        "masked": 43,
+        "unmasked": 127,
+        "masked_examples": [
+          {
+            "args": {
+              "xs": [],
+              "even": true
+            },
+            "pre": {
+              "xs": [],
+              "even": true,
+              "total": 0
+            },
+            "post": {
+              "xs": [],
+              "even": true,
+              "total": 1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "even": true
+            },
+            "pre": {
+              "xs": [
+                0
+              ],
+              "even": true,
+              "total": 0
+            },
+            "post": {
+              "xs": [
+                0
+              ],
+              "even": true,
+              "total": 1
+            }
+          }
+        ],
+        "unmasked_examples": [
+          {
+            "args": {
+              "xs": [],
+              "even": false
+            },
+            "pre": {
+              "xs": [],
+              "even": false,
+              "total": 0
+            },
+            "post": {
+              "xs": [],
+              "even": false,
+              "total": 1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "even": false
+            },
+            "pre": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": -1
+            },
+            "post": {
+              "xs": [
+                -1
+              ],
+              "even": false,
+              "total": 0
+            }
+          }
+        ]
+      },
+      "sufficient": {
+        "guard": "(even) and (sum(xs) % 2 != 1)",
+        "fit": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "eval": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "full": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "kind": "exact",
+        "fit_kind": "exact",
+        "clauses": 1,
+        "failures": 0,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                2,
+                -1
+              ],
+              "even": true
+            },
+            "clause": "(even) and (sum(xs) % 2 != 1)",
+            "covered": 6
+          }
+        ],
+        "repair": []
+      },
+      "necessary": {
+        "guard": "not (((count(xs, 2) > 0) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((count(xs, 2) > 0) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((sum(xs) <= 1) and (count(xs, 2) > 0) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((not even) and (distinct(xs) < len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((even) and (count(xs, 0) > 0) and (sum(xs) % 2 != 1)) or ((even) and (sum(xs) <= 0) and (sum(xs) % 2 != 1)) or ((not even) and (distinct(xs) < len(xs)) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((count(xs, 0) > 0) and (sum(xs) % 2 != 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((even) and (sum(xs) % 2 != 0) and (distinct(xs) == len(xs)) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((not even) and (count(xs, 2) > 0) and (sum(xs) % 2 != 1) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((even) and (sum(xs) != 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (sum(xs) == 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) <= 1) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) != 1) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) % 2 != 1) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (sum(xs) % 2 != 1) and (distinct(xs) == len(xs)) and ((count(xs, xs[0] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (sum(xs) <= 1) and (distinct(xs) < len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((sum(xs) != 2) and (sum(xs) % 2 != 1) and (distinct(xs) < len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((len(xs) == 3) and (sum(xs) != 2) and (sum(xs) % 2 != 1) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((even) and (sum(xs) <= 1) and (distinct(xs) == len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)) or ((sum(xs) != 1) and (count(xs, 0) > 0) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs))) or ((even) and (sum(xs) != 1) and (sum(xs) >= 0) and (count(xs, 1) > 0) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs))))",
+        "fit": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 34,
+          "false_reject": 13
+        },
+        "eval": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 16,
+          "false_reject": 22
+        },
+        "full": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 50,
+          "false_reject": 35
+        },
+        "kind": "neither",
+        "fit_kind": "neither",
+        "clauses": 23,
+        "failures": 7,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                0,
+                0
+              ],
+              "even": false
+            },
+            "clause": "(len(xs) == 3) and (sum(xs) != 2) and (sum(xs) % 2 != 1) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)",
+            "covered": 6
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                0
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (count(xs, 2) > 0) and (sum(xs) % 2 != 1) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)",
+            "covered": 4
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                -1,
+                -1
+              ],
+              "even": true
+            },
+            "clause": "(even) and (sum(xs) <= 0) and (sum(xs) % 2 != 1)",
+            "covered": 5
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                -1,
+                2,
+                1
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (sum(xs) % 2 != 1) and (distinct(xs) == len(xs)) and ((count(xs, xs[0] + 2) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                1,
+                0
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (distinct(xs) < len(xs)) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                1
+              ],
+              "even": true
+            },
+            "clause": "(sum(xs) <= 1) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                1,
+                1
+              ],
+              "even": true
+            },
+            "clause": "(even) and (count(xs, 0) > 0) and (sum(xs) % 2 != 1)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                -1,
+                -1
+              ],
+              "even": true
+            },
+            "clause": "(even) and (sum(xs) != 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                -1,
+                0,
+                0
+              ],
+              "even": true
+            },
+            "clause": "(sum(xs) != 1) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                0
+              ],
+              "even": false
+            },
+            "clause": "(sum(xs) != 2) and (sum(xs) % 2 != 1) and (distinct(xs) < len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                1
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (distinct(xs) < len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)",
+            "covered": 2
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2
+              ],
+              "even": true
+            },
+            "clause": "(count(xs, 2) > 0) and ((min(xs) == max(xs)) if len(xs) > 0 else True)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                2
+              ],
+              "even": true
+            },
+            "clause": "(even) and (sum(xs) != 1) and (sum(xs) >= 0) and (count(xs, 1) > 0) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs))",
+            "covered": 2
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                2,
+                0
+              ],
+              "even": false
+            },
+            "clause": "(count(xs, 2) > 0) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                1,
+                0
+              ],
+              "even": false
+            },
+            "clause": "(count(xs, 0) > 0) and (sum(xs) % 2 != 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                0,
+                -1
+              ],
+              "even": true
+            },
+            "clause": "(sum(xs) <= 1) and (count(xs, 2) > 0) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 2
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                -1,
+                1,
+                2
+              ],
+              "even": true
+            },
+            "clause": "(sum(xs) % 2 != 1) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 2) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                -1,
+                2
+              ],
+              "even": true
+            },
+            "clause": "(even) and (sum(xs) <= 1) and (distinct(xs) == len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                1
+              ],
+              "even": true
+            },
+            "clause": "(even) and (sum(xs) % 2 != 0) and (distinct(xs) == len(xs)) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                0,
+                2
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                0,
+                -1
+              ],
+              "even": true
+            },
+            "clause": "(sum(xs) != 1) and (count(xs, 0) > 0) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs))",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                1,
+                -1
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (sum(xs) == 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                -1,
+                1
+              ],
+              "even": false
+            },
+            "clause": "(not even) and (sum(xs) <= 1) and (distinct(xs) < len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                1,
+                -1,
+                -1
+              ],
+              "even": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                1
+              ],
+              "even": true
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                2,
+                -1,
+                2
+              ],
+              "even": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                1,
+                2
+              ],
+              "even": true
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                2,
+                0,
+                1
+              ],
+              "even": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                1,
+                -1,
+                0
+              ],
+              "even": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                1,
+                0,
+                0
+              ],
+              "even": true
+            },
+            "error": "no clause in the pool separates this witness"
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 28,
+            "false_reject": 14,
+            "tighten_examples": [
+              {
+                "xs": [
+                  -1,
+                  2,
+                  0
+                ],
+                "even": false
+              },
+              {
+                "xs": [
+                  2,
+                  -1,
+                  0
+                ],
+                "even": true
+              },
+              {
+                "xs": [
+                  2,
+                  1,
+                  1
+                ],
+                "even": false
+              }
+            ],
+            "expand_examples": [
+              {
+                "xs": [
+                  -1,
+                  0,
+                  -1
+                ],
+                "even": true
+              },
+              {
+                "xs": [
+                  2,
+                  0,
+                  0
+                ],
+                "even": true
+              },
+              {
+                "xs": [
+                  0,
+                  -1,
+                  -1
+                ],
+                "even": true
+              }
+            ],
+            "before": "(not even) or (sum(xs) % 2 == 1)",
+            "after": "((count(xs, 2) > 0) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((count(xs, 2) > 0) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((sum(xs) <= 1) and (count(xs, 2) > 0) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((not even) and (distinct(xs) < len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((even) and (count(xs, 0) > 0) and (sum(xs) % 2 != 1)) or ((even) and (sum(xs) <= 0) and (sum(xs) % 2 != 1)) or ((not even) and (distinct(xs) < len(xs)) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((count(xs, 0) > 0) and (sum(xs) % 2 != 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((even) and (sum(xs) % 2 != 0) and (distinct(xs) == len(xs)) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((not even) and (count(xs, 2) > 0) and (sum(xs) % 2 != 1) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((even) and (sum(xs) != 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (sum(xs) == 1) and (distinct(xs) < len(xs)) and ((count(xs, xs[-1] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) <= 1) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) != 1) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) % 2 != 1) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (sum(xs) % 2 != 1) and (distinct(xs) == len(xs)) and ((count(xs, xs[0] + 2) > 0) if len(xs) > 0 else False)) or ((not even) and (sum(xs) <= 1) and (distinct(xs) < len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((sum(xs) != 2) and (sum(xs) % 2 != 1) and (distinct(xs) < len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((len(xs) == 3) and (sum(xs) != 2) and (sum(xs) % 2 != 1) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((even) and (sum(xs) <= 1) and (distinct(xs) == len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)) or ((sum(xs) != 1) and (count(xs, 0) > 0) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs))) or ((even) and (sum(xs) != 1) and (sum(xs) >= 0) and (count(xs, 1) > 0) and (sum(xs) % 2 != 0) and (distinct(xs) < len(xs)))"
+          }
+        ]
+      },
+      "check": {
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "necessary_check": {
+        "status": "REFUTED",
+        "unsound": 50,
+        "incomplete": 35,
+        "exact": false,
+        "error": null
+      },
+      "seconds": 0.43365189991891384
+    },
+    "clamp_absorb/full": {
+      "fixture": "clamp_absorb",
+      "target_line": 4,
+      "pool": {
+        "level": "full",
+        "size": 62,
+        "families": [
+          "bool-var",
+          "list-content",
+          "list-length",
+          "list-relational",
+          "list-sum",
+          "list-sum-mod"
+        ]
+      },
+      "witnesses": {
+        "total": 170,
+        "fit": 85,
+        "eval": 85,
+        "learn": 43,
+        "tune": 42,
+        "masked": 11,
+        "unmasked": 159,
+        "masked_examples": [
+          {
+            "args": {
+              "xs": [
+                5,
+                5
+              ],
+              "cap": true
+            },
+            "pre": {
+              "xs": [
+                5,
+                5
+              ],
+              "cap": true,
+              "total": 10
+            },
+            "post": {
+              "xs": [
+                5,
+                5
+              ],
+              "cap": true,
+              "total": 11
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0,
+                5,
+                5
+              ],
+              "cap": true
+            },
+            "pre": {
+              "xs": [
+                0,
+                5,
+                5
+              ],
+              "cap": true,
+              "total": 10
+            },
+            "post": {
+              "xs": [
+                0,
+                5,
+                5
+              ],
+              "cap": true,
+              "total": 11
+            }
+          }
+        ],
+        "unmasked_examples": [
+          {
+            "args": {
+              "xs": [],
+              "cap": false
+            },
+            "pre": {
+              "xs": [],
+              "cap": false,
+              "total": 0
+            },
+            "post": {
+              "xs": [],
+              "cap": false,
+              "total": 1
+            }
+          },
+          {
+            "args": {
+              "xs": [],
+              "cap": true
+            },
+            "pre": {
+              "xs": [],
+              "cap": true,
+              "total": 0
+            },
+            "post": {
+              "xs": [],
+              "cap": true,
+              "total": 1
+            }
+          }
+        ]
+      },
+      "sufficient": {
+        "guard": "(cap) and (sum(xs) >= 10)",
+        "fit": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "eval": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "full": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "kind": "exact",
+        "fit_kind": "exact",
+        "clauses": 1,
+        "failures": 0,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                5,
+                5,
+                1
+              ],
+              "cap": true
+            },
+            "clause": "(cap) and (sum(xs) >= 10)",
+            "covered": 8
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 1,
+            "false_reject": 4,
+            "tighten_examples": [
+              {
+                "xs": [
+                  5,
+                  1,
+                  5
+                ],
+                "cap": false
+              }
+            ],
+            "expand_examples": [
+              {
+                "xs": [
+                  5,
+                  5,
+                  0
+                ],
+                "cap": true
+              },
+              {
+                "xs": [
+                  5,
+                  5,
+                  1
+                ],
+                "cap": true
+              },
+              {
+                "xs": [
+                  5,
+                  5
+                ],
+                "cap": true
+              }
+            ],
+            "before": "(sum(xs) >= 10) and (sum(xs) % 10 != 0) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)",
+            "after": "(cap) and (sum(xs) >= 10)"
+          }
+        ]
+      },
+      "necessary": {
+        "guard": "not (((cap) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) == 10) and (count(xs, 0) > 0) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((count(xs, 0) > 0) and (distinct(xs) == len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)) or ((not cap) and (sum(xs) % 10 != 2) and ((xs[0] == min(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((cap) and (count(xs, 0) > 0) and (sum(xs) % 10 != 1) and ((xs[0] == min(xs)) if len(xs) > 0 else False)) or ((not cap) and (sum(xs) >= 10) and (sum(xs) % 10 != 0) and (sum(xs) % 10 != 1)) or ((not cap) and (sum(xs) % 10 != 1) and (sum(xs) % 10 != 5) and (distinct(xs) == len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((cap) and (sum(xs) % 10 != 1) and (sum(xs) % 10 != 2) and (sum(xs) % 10 != 3) and (sum(xs) % 10 != 5) and (sum(xs) % 10 != 6) and (sum(xs) % 10 != 8)) or ((sum(xs) % 10 != 1) and (sum(xs) % 10 != 2) and (sum(xs) % 10 != 3) and (sum(xs) % 10 != 5) and (sum(xs) % 10 != 6) and (sum(xs) % 10 != 7) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)))",
+        "fit": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 44,
+          "false_reject": 2
+        },
+        "eval": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 36,
+          "false_reject": 2
+        },
+        "full": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 80,
+          "false_reject": 4
+        },
+        "kind": "neither",
+        "fit_kind": "neither",
+        "clauses": 9,
+        "failures": 8,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                5,
+                0,
+                2
+              ],
+              "cap": true
+            },
+            "clause": "(cap) and (sum(xs) % 10 != 1) and (sum(xs) % 10 != 2) and (sum(xs) % 10 != 3) and (sum(xs) % 10 != 5) and (sum(xs) % 10 != 6) and (sum(xs) % 10 != 8)",
+            "covered": 10
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                5,
+                2
+              ],
+              "cap": false
+            },
+            "clause": "(count(xs, 0) > 0) and (distinct(xs) == len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)",
+            "covered": 8
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                1,
+                2
+              ],
+              "cap": false
+            },
+            "clause": "(not cap) and (sum(xs) % 10 != 2) and ((xs[0] == min(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 5
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                5
+              ],
+              "cap": true
+            },
+            "clause": "(sum(xs) % 10 != 1) and (sum(xs) % 10 != 2) and (sum(xs) % 10 != 3) and (sum(xs) % 10 != 5) and (sum(xs) % 10 != 6) and (sum(xs) % 10 != 7) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)",
+            "covered": 3
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2,
+                5,
+                1
+              ],
+              "cap": true
+            },
+            "clause": "(cap) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)",
+            "covered": 4
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                0,
+                0,
+                2
+              ],
+              "cap": true
+            },
+            "clause": "(cap) and (count(xs, 0) > 0) and (sum(xs) % 10 != 1) and ((xs[0] == min(xs)) if len(xs) > 0 else False)",
+            "covered": 2
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                5,
+                0,
+                5
+              ],
+              "cap": false
+            },
+            "clause": "(sum(xs) == 10) and (count(xs, 0) > 0) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                5,
+                5,
+                2
+              ],
+              "cap": false
+            },
+            "clause": "(not cap) and (sum(xs) >= 10) and (sum(xs) % 10 != 0) and (sum(xs) % 10 != 1)",
+            "covered": 1
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "xs": [
+                2
+              ],
+              "cap": false
+            },
+            "clause": "(not cap) and (sum(xs) % 10 != 1) and (sum(xs) % 10 != 5) and (distinct(xs) == len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)",
+            "covered": 1
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                5,
+                5,
+                1
+              ],
+              "cap": true
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                5,
+                0,
+                0
+              ],
+              "cap": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                5,
+                1,
+                2
+              ],
+              "cap": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                5,
+                2
+              ],
+              "cap": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                0,
+                0,
+                2
+              ],
+              "cap": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                5,
+                5,
+                2
+              ],
+              "cap": true
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                2,
+                1,
+                0
+              ],
+              "cap": false
+            },
+            "error": "no clause in the pool separates this witness"
+          },
+          {
+            "kind": "unseparated-positive",
+            "seed": {
+              "xs": [
+                5,
+                1,
+                1
+              ],
+              "cap": false
+            },
+            "error": "no clause in the pool separates this witness"
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 38,
+            "false_reject": 2,
+            "tighten_examples": [
+              {
+                "xs": [
+                  2,
+                  2,
+                  5
+                ],
+                "cap": false
+              },
+              {
+                "xs": [
+                  2,
+                  2
+                ],
+                "cap": false
+              },
+              {
+                "xs": [
+                  2,
+                  0,
+                  1
+                ],
+                "cap": false
+              }
+            ],
+            "expand_examples": [
+              {
+                "xs": [
+                  5,
+                  5,
+                  1
+                ],
+                "cap": true
+              },
+              {
+                "xs": [
+                  5,
+                  5,
+                  2
+                ],
+                "cap": true
+              }
+            ],
+            "before": "(not cap) or (sum(xs) <= 10)",
+            "after": "((cap) and ((count(xs, xs[-1] + 1) > 0) if len(xs) > 0 else False)) or ((sum(xs) == 10) and (count(xs, 0) > 0) and ((xs[-1] == max(xs)) if len(xs) > 0 else False)) or ((count(xs, 0) > 0) and (distinct(xs) == len(xs)) and ((xs[0] == min(xs)) if len(xs) > 0 else False)) or ((not cap) and (sum(xs) % 10 != 2) and ((xs[0] == min(xs)) if len(xs) > 0 else False) and ((count(xs, xs[0] + 1) > 0) if len(xs) > 0 else False)) or ((cap) and (count(xs, 0) > 0) and (sum(xs) % 10 != 1) and ((xs[0] == min(xs)) if len(xs) > 0 else False)) or ((not cap) and (sum(xs) >= 10) and (sum(xs) % 10 != 0) and (sum(xs) % 10 != 1)) or ((not cap) and (sum(xs) % 10 != 1) and (sum(xs) % 10 != 5) and (distinct(xs) == len(xs)) and ((min(xs) == max(xs)) if len(xs) > 0 else True)) or ((cap) and (sum(xs) % 10 != 1) and (sum(xs) % 10 != 2) and (sum(xs) % 10 != 3) and (sum(xs) % 10 != 5) and (sum(xs) % 10 != 6) and (sum(xs) % 10 != 8)) or ((sum(xs) % 10 != 1) and (sum(xs) % 10 != 2) and (sum(xs) % 10 != 3) and (sum(xs) % 10 != 5) and (sum(xs) % 10 != 6) and (sum(xs) % 10 != 7) and (distinct(xs) == len(xs)) and ((xs[-1] == max(xs)) if len(xs) > 0 else False))"
+          }
+        ]
+      },
+      "check": {
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "necessary_check": {
+        "status": "REFUTED",
+        "unsound": 80,
+        "incomplete": 4,
+        "exact": false,
+        "error": null
+      },
+      "seconds": 0.3998853999655694
+    },
+    "toggle_pair/full": {
+      "fixture": "toggle_pair",
+      "target_line": 5,
+      "pool": {
+        "level": "full",
+        "size": 40,
+        "families": [
+          "bool-var",
+          "cross-equality",
+          "cross-order",
+          "int-mod",
+          "int-scalar"
+        ]
+      },
+      "witnesses": {
+        "total": 18,
+        "fit": 9,
+        "eval": 9,
+        "learn": 5,
+        "tune": 4,
+        "masked": 12,
+        "unmasked": 6,
+        "masked_examples": [
+          {
+            "args": {
+              "n": 0,
+              "k": 0,
+              "flag": false
+            },
+            "pre": {
+              "n": 0,
+              "k": 0,
+              "flag": false,
+              "a": 0,
+              "b": 0
+            },
+            "post": {
+              "n": 0,
+              "k": 0,
+              "flag": false,
+              "a": 0,
+              "b": 0
+            }
+          },
+          {
+            "args": {
+              "n": 0,
+              "k": 0,
+              "flag": true
+            },
+            "pre": {
+              "n": 0,
+              "k": 0,
+              "flag": true,
+              "a": 0,
+              "b": 0
+            },
+            "post": {
+              "n": 0,
+              "k": 0,
+              "flag": true,
+              "a": 0,
+              "b": 0
+            }
+          }
+        ],
+        "unmasked_examples": [
+          {
+            "args": {
+              "n": 1,
+              "k": 0,
+              "flag": false
+            },
+            "pre": {
+              "n": 1,
+              "k": 0,
+              "flag": false,
+              "a": 1,
+              "b": 0
+            },
+            "post": {
+              "n": 1,
+              "k": 0,
+              "flag": false,
+              "a": 0,
+              "b": 0
+            }
+          },
+          {
+            "args": {
+              "n": 1,
+              "k": 1,
+              "flag": false
+            },
+            "pre": {
+              "n": 1,
+              "k": 1,
+              "flag": false,
+              "a": 1,
+              "b": 1
+            },
+            "post": {
+              "n": 1,
+              "k": 1,
+              "flag": false,
+              "a": 0,
+              "b": 1
+            }
+          }
+        ]
+      },
+      "sufficient": {
+        "guard": "(flag) or (n < 1)",
+        "fit": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "eval": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "full": {
+          "sound": true,
+          "complete": true,
+          "exact": true,
+          "false_accept": 0,
+          "false_reject": 0
+        },
+        "kind": "exact",
+        "fit_kind": "exact",
+        "clauses": 2,
+        "failures": 0,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "n": 2,
+              "k": 2,
+              "flag": true
+            },
+            "clause": "flag",
+            "covered": 5
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "n": 0,
+              "k": 1,
+              "flag": false
+            },
+            "clause": "n < 1",
+            "covered": 2
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 0,
+            "false_reject": 3,
+            "tighten_examples": [],
+            "expand_examples": [
+              {
+                "n": 2,
+                "k": 2,
+                "flag": true
+              },
+              {
+                "n": 0,
+                "k": 1,
+                "flag": false
+              },
+              {
+                "n": 0,
+                "k": 2,
+                "flag": true
+              }
+            ],
+            "before": "k < 1",
+            "after": "(flag) or (n < 1)"
+          }
+        ]
+      },
+      "necessary": {
+        "guard": "not ((k > 0) or (n == 1))",
+        "fit": {
+          "sound": true,
+          "complete": false,
+          "exact": false,
+          "false_accept": 0,
+          "false_reject": 4
+        },
+        "eval": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 1,
+          "false_reject": 5
+        },
+        "full": {
+          "sound": false,
+          "complete": false,
+          "exact": false,
+          "false_accept": 1,
+          "false_reject": 9
+        },
+        "kind": "neither",
+        "fit_kind": "sufficient",
+        "clauses": 2,
+        "failures": 0,
+        "log": [
+          {
+            "kind": "expand",
+            "seed": {
+              "n": 0,
+              "k": 1,
+              "flag": false
+            },
+            "clause": "k > 0",
+            "covered": 5
+          },
+          {
+            "kind": "expand",
+            "seed": {
+              "n": 1,
+              "k": 0,
+              "flag": true
+            },
+            "clause": "n == 1",
+            "covered": 1
+          }
+        ],
+        "repair": [
+          {
+            "kind": "refit-on-counterexamples",
+            "false_accept": 0,
+            "false_reject": 1,
+            "tighten_examples": [],
+            "expand_examples": [
+              {
+                "n": 1,
+                "k": 0,
+                "flag": true
+              }
+            ],
+            "before": "k > 0",
+            "after": "(k > 0) or (n == 1)"
+          }
+        ]
+      },
+      "check": {
+        "status": "BOUNDED",
+        "unsound": 0,
+        "incomplete": 0,
+        "exact": true,
+        "error": null
+      },
+      "necessary_check": {
+        "status": "REFUTED",
+        "unsound": 1,
+        "incomplete": 9,
+        "exact": false,
+        "error": null
+      },
+      "seconds": 0.2622886998578906
+    }
+  },
+  "references": {
+    "alt_masking": {
+      "direct": {
+        "fixture": "alt_masking",
+        "method": "direct",
+        "guard": "mode == 0 or mode == 1",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 12,
+        "chars": 22,
+        "set": "dev6",
+        "stored_status": "GUARD_VERIFIED",
+        "tokens": 701,
+        "wall_seconds": 5.324,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "alt_masking",
+        "method": "mace",
+        "guard": "mode == 0 or mode == 1",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 12,
+        "chars": 22,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 13280,
+        "wall_seconds": 72.7,
+        "explain": {
+          "relations": 5,
+          "rationales": 5,
+          "source_lines": 11
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "dedup_channel": {
+      "direct": {
+        "fixture": "dedup_channel",
+        "method": "direct",
+        "guard": "distinct(xs) == distinct(xs + [xs[0] + 1])",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 24,
+        "chars": 42,
+        "set": "dev6",
+        "stored_status": "GUARD_VERIFIED",
+        "tokens": 1573,
+        "wall_seconds": 8.507,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "dedup_channel",
+        "method": "mace",
+        "guard": "len(xs) == 0 or (pre and distinct(xs) and len(fn_0(xs)) == len(fn_0(xs + [xs[0] + 1])))",
+        "check": {
+          "status": "INVALID",
+          "typed": false,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": false,
+          "error": "expected bool, got int"
+        },
+        "nodes": 49,
+        "chars": 87,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 12087,
+        "wall_seconds": 69.231,
+        "explain": {
+          "relations": 6,
+          "rationales": 6,
+          "source_lines": 7
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "modulo_absorb": {
+      "direct": {
+        "fixture": "modulo_absorb",
+        "method": "direct",
+        "guard": "cap and (fn_0(xs) + 1) % 10 == 0",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 47,
+          "incomplete": 212,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 18,
+        "chars": 32,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 2793,
+        "wall_seconds": 13.549,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "modulo_absorb",
+        "method": "mace",
+        "guard": "cap and (fn_0(xs) - fn_0(xs) % 10) == fn_0(xs) + 1 if not cap else fn_0(xs)",
+        "check": {
+          "status": "INVALID",
+          "typed": false,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": false,
+          "error": "conditional branches differ: bool vs int"
+        },
+        "nodes": 39,
+        "chars": 75,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 13931,
+        "wall_seconds": 66.653,
+        "explain": {
+          "relations": 5,
+          "rationales": 5,
+          "source_lines": 8
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "overwrite_channel": {
+      "direct": {
+        "fixture": "overwrite_channel",
+        "method": "direct",
+        "guard": "fn_0(xs) == 0 if not keep else True",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 14,
+        "chars": 35,
+        "set": "dev6",
+        "stored_status": "GUARD_VERIFIED",
+        "tokens": 2634,
+        "wall_seconds": 7.695,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "overwrite_channel",
+        "method": "mace",
+        "guard": "keep or not keep",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 28,
+          "incomplete": 0,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 8,
+        "chars": 16,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 15024,
+        "wall_seconds": 66.874,
+        "explain": {
+          "relations": 5,
+          "rationales": 5,
+          "source_lines": 5
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "sort_channel": {
+      "direct": {
+        "fixture": "sort_channel",
+        "method": "direct",
+        "guard": "use_left == False and use_right == False",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 1134,
+          "incomplete": 6452,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 12,
+        "chars": 40,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 3720,
+        "wall_seconds": 17.82,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "sort_channel",
+        "method": "mace",
+        "guard": "xs == sorted(xs)",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 7046,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 9,
+        "chars": 16,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 11886,
+        "wall_seconds": 50.318,
+        "explain": {
+          "relations": 4,
+          "rationales": 4,
+          "source_lines": 4
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "swap_channels": {
+      "direct": {
+        "fixture": "swap_channels",
+        "method": "direct",
+        "guard": "not show_gap",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 4,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 4,
+        "chars": 12,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 2801,
+        "wall_seconds": 8.584,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "swap_channels",
+        "method": "mace",
+        "guard": "True",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 12,
+          "incomplete": 0,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 1,
+        "chars": 4,
+        "set": "dev6",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 14299,
+        "wall_seconds": 61.913,
+        "explain": {
+          "relations": 5,
+          "rationales": 5,
+          "source_lines": 12
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "dead_flag": {
+      "direct": {
+        "fixture": "dead_flag",
+        "method": "direct",
+        "guard": "True",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 1,
+        "chars": 4,
+        "set": "held1",
+        "stored_status": "GUARD_VERIFIED",
+        "tokens": 1319,
+        "wall_seconds": 4.893,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "dead_flag",
+        "method": "mace",
+        "guard": "True",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 1,
+        "chars": 4,
+        "set": "held1",
+        "stored_status": "ALL_VERIFIED",
+        "tokens": 1558,
+        "wall_seconds": 17.796,
+        "explain": {
+          "relations": 4,
+          "rationales": 4,
+          "source_lines": 4
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "dict_slot": {
+      "direct": {
+        "fixture": "dict_slot",
+        "method": "direct",
+        "guard": "mode",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 2,
+        "chars": 4,
+        "set": "held1",
+        "stored_status": "GUARD_VERIFIED",
+        "tokens": 642,
+        "wall_seconds": 2.785,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "dict_slot",
+        "method": "mace",
+        "guard": "mode",
+        "check": {
+          "status": "BOUNDED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": true,
+          "error": null
+        },
+        "nodes": 2,
+        "chars": 4,
+        "set": "held1",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 12729,
+        "wall_seconds": 51.765,
+        "explain": {
+          "relations": 5,
+          "rationales": 5,
+          "source_lines": 7
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "parity_snap": {
+      "direct": {
+        "fixture": "parity_snap",
+        "method": "direct",
+        "guard": "sum(xs) % 2 == 0 and not even",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 43,
+          "incomplete": 43,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 17,
+        "chars": 29,
+        "set": "held1",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 2460,
+        "wall_seconds": 11.471,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "parity_snap",
+        "method": "mace",
+        "guard": "even and sum(xs) % 2 == 0 or not even",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 85,
+          "incomplete": 0,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 21,
+        "chars": 37,
+        "set": "held1",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 14870,
+        "wall_seconds": 86.375,
+        "explain": {
+          "relations": 8,
+          "rationales": 8,
+          "source_lines": 13
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "clamp_absorb": {
+      "direct": {
+        "fixture": "clamp_absorb",
+        "method": "direct",
+        "guard": "sum(xs) + 1 == min(sum(xs) + 1, 10) if cap else sum(xs) + 1 == sum(xs)",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 74,
+          "incomplete": 11,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 40,
+        "chars": 70,
+        "set": "held2",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 2404,
+        "wall_seconds": 12.089,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "clamp_absorb",
+        "method": "mace",
+        "guard": "total_post <= 10 or not cap",
+        "check": {
+          "status": "INVALID",
+          "typed": false,
+          "unsound": 0,
+          "incomplete": 0,
+          "exact": false,
+          "error": "unknown variable: total_post. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects"
+        },
+        "nodes": 11,
+        "chars": 27,
+        "set": "held2",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 15391,
+        "wall_seconds": 89.208,
+        "explain": {
+          "relations": 7,
+          "rationales": 7,
+          "source_lines": 12
+        },
+        "paths": null,
+        "coverage": null
+      }
+    },
+    "toggle_pair": {
+      "direct": {
+        "fixture": "toggle_pair",
+        "method": "direct",
+        "guard": "not flag",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 6,
+          "incomplete": 9,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 4,
+        "chars": 8,
+        "set": "held2",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 2579,
+        "wall_seconds": 9.595,
+        "explain": {
+          "relations": 0,
+          "rationales": 0,
+          "source_lines": 0
+        },
+        "paths": null,
+        "coverage": null
+      },
+      "mace": {
+        "fixture": "toggle_pair",
+        "method": "mace",
+        "guard": "flag",
+        "check": {
+          "status": "REFUTED",
+          "typed": true,
+          "unsound": 0,
+          "incomplete": 3,
+          "exact": false,
+          "error": null
+        },
+        "nodes": 2,
+        "chars": 4,
+        "set": "held2",
+        "stored_status": "ROUNDS_EXHAUSTED",
+        "tokens": 16026,
+        "wall_seconds": 71.677,
+        "explain": {
+          "relations": 5,
+          "rationales": 5,
+          "source_lines": 7
+        },
+        "paths": null,
+        "coverage": null
+      }
+    }
+  }
+}

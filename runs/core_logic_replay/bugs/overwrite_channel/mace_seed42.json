@@ -1,0 +1,4761 @@
+{
+  "fixture": "overwrite_channel",
+  "mode": "mace",
+  "provider": "FIXED_PROPOSAL_REPLAY",
+  "guard_source": "qwen",
+  "evidence_gate": false,
+  "diagnostic_only": false,
+  "model": "fixed-m5-proposals",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 3,
+  "status": "ROUNDS_EXHAUSTED",
+  "final_guard": "keep or not keep",
+  "final_bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "value_post == 0",
+        "condition": "True",
+        "source_lines": [
+          11
+        ],
+        "rationale": "Line 11 explicitly sets value to 0."
+      }
+    ],
+    "upstream": [
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "keep",
+        "condition": "True",
+        "source_lines": [
+          13
+        ],
+        "rationale": "If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.",
+        "role": "supporting"
+      },
+      {
+        "id": "U2",
+        "kind": "upstream",
+        "expr": "not keep",
+        "condition": "True",
+        "source_lines": [
+          13
+        ],
+        "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+        "role": "fixed_point"
+      }
+    ],
+    "observers": [
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "value if keep else 0",
+        "condition": "True",
+        "source_lines": [
+          15
+        ],
+        "rationale": "Channel 0's value is determined by the value of keep and the value of value after line 11.",
+        "channel": 0
+      },
+      {
+        "id": "O1",
+        "kind": "observer",
+        "expr": "value + 1 if keep else 1",
+        "condition": "True",
+        "source_lines": [
+          15
+        ],
+        "rationale": "Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.",
+        "channel": 1
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "kind": "mask_guard",
+      "expr": "keep or not keep",
+      "condition": "True",
+      "source_lines": [
+        13,
+        15
+      ],
+      "rationale": ""
+    },
+    "uncertainty": "The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions."
+  },
+  "final_report": {
+    "guard_ok": false,
+    "evidence_level": "BOUNDED",
+    "domain_size": 80,
+    "usable_rows": 80,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "keep": "bool",
+      "value": "int"
+    },
+    "relations": [
+      {
+        "id": "T1",
+        "kind": "target_effect",
+        "expr": "value_post == 0",
+        "condition": "True",
+        "source_lines": [
+          11
+        ],
+        "rationale": "Line 11 explicitly sets value to 0.",
+        "status": "BOUNDED",
+        "checked": 80,
+        "condition_false": 0,
+        "failures": 0,
+        "counterexamples": []
+      },
+      {
+        "id": "U1",
+        "kind": "upstream",
+        "expr": "keep",
+        "condition": "True",
+        "source_lines": [
+          13
+        ],
+        "rationale": "If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.",
+        "role": "supporting",
+        "status": "REFUTED",
+        "checked": 80,
+        "condition_false": 0,
+        "failures": 40,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "snap_plus": {
+              "xs": [],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [],
+              "keep": false,
+              "value": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "U2",
+        "kind": "upstream",
+        "expr": "not keep",
+        "condition": "True",
+        "source_lines": [
+          13
+        ],
+        "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+        "role": "fixed_point",
+        "status": "REFUTED",
+        "checked": 80,
+        "condition_false": 0,
+        "failures": 40,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "keep": true
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "snap_plus": {
+              "xs": [],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [],
+              "keep": true,
+              "value": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "expr_value": false
+          }
+        ]
+      },
+      {
+        "id": "O0",
+        "kind": "observer",
+        "expr": "value if keep else 0",
+        "condition": "True",
+        "source_lines": [
+          15
+        ],
+        "rationale": "Channel 0's value is determined by the value of keep and the value of value after line 11.",
+        "channel": 0,
+        "status": "REFUTED",
+        "checked": 80,
+        "faithful_failures": 28,
+        "faithful_minus_failures": 28,
+        "invariance_checked": 80,
+        "invariance_failures": 28,
+        "evaluation_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed": 0,
+            "actual": -1,
+            "kind": "faithfulness_minus"
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed": 0,
+            "actual": -1,
+            "kind": "faithfulness"
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed_plus": 0,
+            "observed_minus": -1,
+            "kind": "invariance"
+          }
+        ]
+      },
+      {
+        "id": "O1",
+        "kind": "observer",
+        "expr": "value + 1 if keep else 1",
+        "condition": "True",
+        "source_lines": [
+          15
+        ],
+        "rationale": "Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.",
+        "channel": 1,
+        "status": "REFUTED",
+        "checked": 80,
+        "faithful_failures": 28,
+        "faithful_minus_failures": 28,
+        "invariance_checked": 80,
+        "invariance_failures": 28,
+        "evaluation_errors": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed": 1,
+            "actual": 0,
+            "kind": "faithfulness_minus"
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed": 1,
+            "actual": 0,
+            "kind": "faithfulness"
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "observed_plus": 1,
+            "observed_minus": 0,
+            "kind": "invariance"
+          }
+        ]
+      }
+    ],
+    "guard": {
+      "id": "G",
+      "expr": "keep or not keep",
+      "source_lines": [
+        13,
+        15
+      ],
+      "status": "REFUTED",
+      "checked": 80,
+      "unsound": 28,
+      "incomplete": 0,
+      "evaluation_errors": 0,
+      "exact": false,
+      "shape": "or",
+      "parts": [
+        "keep",
+        "not keep"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          0,
+          28
+        ],
+        "rejects_wrong": [
+          0,
+          0
+        ]
+      },
+      "counterexamples": [
+        {
+          "args": {
+            "xs": [
+              -1
+            ],
+            "keep": false
+          },
+          "out_plus": [
+            0,
+            1
+          ],
+          "out_minus": [
+            -1,
+            0
+          ],
+          "snap_plus": {
+            "xs": [
+              -1
+            ],
+            "keep": false,
+            "value": 0
+          },
+          "snap_minus": {
+            "xs": [
+              -1
+            ],
+            "keep": false,
+            "value": -1
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            false,
+            true
+          ],
+          "part_text": [
+            "keep",
+            "not keep"
+          ]
+        },
+        {
+          "args": {
+            "xs": [
+              1
+            ],
+            "keep": false
+          },
+          "out_plus": [
+            0,
+            1
+          ],
+          "out_minus": [
+            1,
+            2
+          ],
+          "snap_plus": {
+            "xs": [
+              1
+            ],
+            "keep": false,
+            "value": 0
+          },
+          "snap_minus": {
+            "xs": [
+              1
+            ],
+            "keep": false,
+            "value": 1
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            false,
+            true
+          ],
+          "part_text": [
+            "keep",
+            "not keep"
+          ]
+        },
+        {
+          "args": {
+            "xs": [
+              -1,
+              -1
+            ],
+            "keep": false
+          },
+          "out_plus": [
+            0,
+            1
+          ],
+          "out_minus": [
+            -2,
+            -1
+          ],
+          "snap_plus": {
+            "xs": [
+              -1,
+              -1
+            ],
+            "keep": false,
+            "value": 0
+          },
+          "snap_minus": {
+            "xs": [
+              -1,
+              -1
+            ],
+            "keep": false,
+            "value": -2
+          },
+          "diagnostic": {
+            "A_changed_local_state": true
+          },
+          "kind": "unsound",
+          "predicted": true,
+          "parts": [
+            false,
+            true
+          ],
+          "part_text": [
+            "keep",
+            "not keep"
+          ]
+        }
+      ],
+      "contrasts": [
+        {
+          "only_differing_argument": "xs",
+          "masked": {
+            "args": {
+              "xs": [],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "guard_says": true
+          }
+        },
+        {
+          "only_differing_argument": "keep",
+          "masked": {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "guard_says": true
+          },
+          "exposed": {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "guard_says": true
+          }
+        }
+      ]
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no verified observer for channels [0, 1]"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "checked": 0,
+        "failures": 0,
+        "counterexamples": [
+          {
+            "args": {
+              "xs": [],
+              "keep": true
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "snap_plus": {
+              "xs": [],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [],
+              "keep": true,
+              "value": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              -1,
+              0
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": true,
+              "value": -1
+            },
+            "diagnostic": {
+              "A_changed_local_state": true
+            },
+            "expr_value": false
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "keep": true
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              0,
+              1
+            ],
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "keep": true,
+              "value": 0
+            },
+            "diagnostic": {
+              "A_changed_local_state": false
+            },
+            "expr_value": false
+          }
+        ],
+        "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2'])"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0,
+          1
+        ],
+        "missing_reasons": [
+          "no sufficient condition with a non-vacuous witness"
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "semantics": "sufficient_only",
+        "sufficient_conditions": [],
+        "necessary_conditions": [],
+        "exact_equivalence": "not_established",
+        "complete": false,
+        "guard_complete": false,
+        "unverified_relations": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 24,
+      "active_masked": 28,
+      "active_exposed": 28
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [
+            -1
+          ],
+          "keep": false
+        },
+        "out_plus": [
+          0,
+          1
+        ],
+        "out_minus": [
+          -1,
+          0
+        ],
+        "snap_plus": {
+          "xs": [
+            -1
+          ],
+          "keep": false,
+          "value": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1
+          ],
+          "keep": false,
+          "value": -1
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            1
+          ],
+          "keep": false
+        },
+        "out_plus": [
+          0,
+          1
+        ],
+        "out_minus": [
+          1,
+          2
+        ],
+        "snap_plus": {
+          "xs": [
+            1
+          ],
+          "keep": false,
+          "value": 0
+        },
+        "snap_minus": {
+          "xs": [
+            1
+          ],
+          "keep": false,
+          "value": 1
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            -1,
+            -1
+          ],
+          "keep": false
+        },
+        "out_plus": [
+          0,
+          1
+        ],
+        "out_minus": [
+          -2,
+          -1
+        ],
+        "snap_plus": {
+          "xs": [
+            -1,
+            -1
+          ],
+          "keep": false,
+          "value": 0
+        },
+        "snap_minus": {
+          "xs": [
+            -1,
+            -1
+          ],
+          "keep": false,
+          "value": -2
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 2,
+            "contexts_with_flip": 1,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "xs",
+              "args": {
+                "keep": false
+              },
+              "masked": {
+                "value": [],
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ]
+              },
+              "exposed": {
+                "value": [
+                  -1
+                ],
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ]
+              }
+            }
+          },
+          "keep": {
+            "contexts": 40,
+            "contexts_with_flip": 28,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "keep",
+              "args": {
+                "xs": [
+                  -1
+                ]
+              },
+              "masked": {
+                "value": true,
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ]
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ]
+              }
+            }
+          }
+        },
+        "causally_relevant": [
+          "xs",
+          "keep"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "source_lines": [
+              11
+            ]
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "source_lines": [
+              13
+            ],
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "source_lines": [
+              13
+            ],
+            "role": "fixed_point"
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "source_lines": [
+              15
+            ],
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "source_lines": [
+              15
+            ],
+            "channel": 1
+          },
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [
+              13,
+              15
+            ],
+            "status": "REFUTED"
+          }
+        ],
+        "edges": [
+          {
+            "from": "O0",
+            "to": "G",
+            "op": "and"
+          },
+          {
+            "from": "O1",
+            "to": "G",
+            "op": "and"
+          }
+        ],
+        "unsupported": [
+          "U1",
+          "U2"
+        ],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 11,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"value_post == 0\",\n     \"source_lines\": [11],\n     \"rationale\": \"Line 11 explicitly sets value to 0.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"keep\",\n     \"condition\": \"True\",\n     \"role\": \"supporting\",\n     \"source_lines\": [13],\n     \"rationale\": \"If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"not keep\",\n     \"condition\": \"True\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [13],\n     \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"fn_0(xs) if keep else 0\",\n     \"condition\": \"True\",\n     \"source_lines\": [15],\n     \"rationale\": \"Channel 0's value is determined by the value of keep and the result of fn_0(xs).\"},\n    {\"id\": \"O1\", \"channel\": 1,\n     \"expr\": \"fn_0(xs) + 1 if keep else 1\",\n     \"condition\": \"True\",\n     \"source_lines\": [15],\n     \"rationale\": \"Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"keep\",\n                 \"source_lines\": [13, 15]},\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "value_post == 0",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "Line 11 explicitly sets value to 0."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.",
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "not keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "fn_0(xs) if keep else 0",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 0's value is determined by the value of keep and the result of fn_0(xs).",
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "fn_0(xs) + 1 if keep else 1",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.",
+            "channel": 1
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "keep",
+          "condition": "True",
+          "source_lines": [
+            13,
+            15
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions."
+      },
+      "patch_notes": [],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 80,
+        "usable_rows": 80,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "keep": "bool",
+          "value": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "value_post == 0",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "Line 11 explicitly sets value to 0.",
+            "status": "BOUNDED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.",
+            "role": "supporting",
+            "status": "REFUTED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 40,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": false,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "not keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 40,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "fn_0(xs) if keep else 0",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 0's value is determined by the value of keep and the result of fn_0(xs).",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 80,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 28,
+            "invariance_checked": 80,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": -1,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  1,
+                  2
+                ],
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": 1,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -2,
+                  -1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -2
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": -2,
+                "kind": "faithfulness_minus"
+              }
+            ]
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "fn_0(xs) + 1 if keep else 1",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.",
+            "channel": 1,
+            "status": "REFUTED",
+            "checked": 80,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 28,
+            "invariance_checked": 80,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": 0,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  1,
+                  2
+                ],
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": 2,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -2,
+                  -1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -2
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": -1,
+                "kind": "faithfulness_minus"
+              }
+            ]
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "keep",
+          "source_lines": [
+            13,
+            15
+          ],
+          "status": "REFUTED",
+          "checked": 80,
+          "unsound": 0,
+          "incomplete": 12,
+          "evaluation_errors": 0,
+          "exact": false,
+          "shape": null,
+          "parts": [
+            "keep"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0
+            ],
+            "rejects_wrong": [
+              12
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [],
+                "keep": false
+              },
+              "out_plus": [
+                0,
+                1
+              ],
+              "out_minus": [
+                0,
+                1
+              ],
+              "snap_plus": {
+                "xs": [],
+                "keep": false,
+                "value": 0
+              },
+              "snap_minus": {
+                "xs": [],
+                "keep": false,
+                "value": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false
+              ],
+              "part_text": [
+                "keep"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  0
+                ],
+                "keep": false
+              },
+              "out_plus": [
+                0,
+                1
+              ],
+              "out_minus": [
+                0,
+                1
+              ],
+              "snap_plus": {
+                "xs": [
+                  0
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  0
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false
+              ],
+              "part_text": [
+                "keep"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1,
+                  1
+                ],
+                "keep": false
+              },
+              "out_plus": [
+                0,
+                1
+              ],
+              "out_minus": [
+                0,
+                1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  1
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1,
+                  1
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "diagnostic": {
+                "A_changed_local_state": false
+              },
+              "kind": "incomplete",
+              "predicted": false,
+              "parts": [
+                false
+              ],
+              "part_text": [
+                "keep"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "guard_says": false
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": false
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no verified observer for channels [0, 1]"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2'])"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "missing_reasons": [
+              "no sufficient condition with a non-vacuous witness"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 24,
+          "active_masked": 28,
+          "active_exposed": 28
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              1,
+              2
+            ],
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "keep": false,
+              "value": 1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -2,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false,
+              "value": -2
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "keep": false
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      0,
+                      1
+                    ]
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  }
+                }
+              },
+              "keep": {
+                "contexts": 40,
+                "contexts_with_flip": 28,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "keep",
+                  "args": {
+                    "xs": [
+                      -1
+                    ]
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "keep"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  11
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  13
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  13
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  15
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O1",
+                "kind": "observer",
+                "source_lines": [
+                  15
+                ],
+                "channel": 1
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  13,
+                  15
+                ],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O1",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 11,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 11 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     total = 0\n003:     for x in xs:\n004:         total = total + x\n005:     return total\n006: \n007: \n008: def program(xs, keep):\n009:     value = fn_0(xs)\n010: \n011:     value = 0  # TARGET_A\n012: \n013:     if keep:\n014:         value = fn_0(xs)\n015:     return value, value + 1\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1}; keep: bool (every combination is enumerated; 80 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  keep: bool\n  value: int\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n  fn_0(list[int]) -> int\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 2 value(s), one per channel\n   (0, 1). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        }
+      ],
+      "candidate_round": {
+        "round": 1,
+        "domain_size": 80,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "keep",
+        "qwen_status": "REFUTED",
+        "qwen_classification": "FALSE_REJECT",
+        "false_accepts": 0,
+        "false_rejects": 12,
+        "evaluation_errors": 0,
+        "invalid_relations": [],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "O0",
+          "O1"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "keep",
+        "selection_reason": null,
+        "all_relations_pass": false
+      }
+    },
+    {
+      "round": 2,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"revise\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"keep and value == fn_0(xs)\",\n      \"condition\": \"True\",\n      \"source_lines\": [13],\n      \"rationale\": \"If keep is True and value is equal to fn_0(xs) before line 11, the effect of line 11 is irrelevant.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"not keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [13],\n      \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"value if keep else 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [15],\n      \"rationale\": \"Channel 0's value is determined by the value of keep and the value of value after line 11.\"\n    },\n    {\n      \"id\": \"O1\",\n      \"channel\": 1,\n      \"expr\": \"value + 1 if keep else 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [15],\n      \"rationale\": \"Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.\"\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"expr\": \"keep and value == fn_0(xs) or not keep\",\n    \"source_lines\": [13, 15]\n  },\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "value_post == 0",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "Line 11 explicitly sets value to 0."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "keep and value == fn_0(xs)",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is True and value is equal to fn_0(xs) before line 11, the effect of line 11 is irrelevant.",
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "not keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "fn_0(xs) if keep else 0",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 0's value is determined by the value of keep and the result of fn_0(xs).",
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "fn_0(xs) + 1 if keep else 1",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.",
+            "channel": 1
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "keep and value == fn_0(xs) or not keep",
+          "condition": "True",
+          "source_lines": [
+            13,
+            15
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions."
+      },
+      "patch_notes": [
+        "revised U1",
+        "unchanged U2",
+        "replaced mask_guard"
+      ],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 80,
+        "usable_rows": 80,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "keep": "bool",
+          "value": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "value_post == 0",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "Line 11 explicitly sets value to 0.",
+            "status": "BOUNDED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "keep and value == fn_0(xs)",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is True and value is equal to fn_0(xs) before line 11, the effect of line 11 is irrelevant.",
+            "role": "supporting",
+            "status": "INVALID",
+            "reason": "unknown variable: value. upstream relations are evaluated on the entry arguments only; local variables computed before A are not in scope there",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "not keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 40,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "fn_0(xs) if keep else 0",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 0's value is determined by the value of keep and the result of fn_0(xs).",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 80,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 28,
+            "invariance_checked": 80,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": -1,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  1,
+                  2
+                ],
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": 1,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -2,
+                  -1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -2
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": -2,
+                "kind": "faithfulness_minus"
+              }
+            ]
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "fn_0(xs) + 1 if keep else 1",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.",
+            "channel": 1,
+            "status": "REFUTED",
+            "checked": 80,
+            "faithful_failures": 0,
+            "faithful_minus_failures": 28,
+            "invariance_checked": 80,
+            "invariance_failures": 0,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": 0,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  1,
+                  2
+                ],
+                "snap_plus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    1
+                  ],
+                  "keep": false,
+                  "value": 1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": 2,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -2,
+                  -1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1,
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -2
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": -1,
+                "kind": "faithfulness_minus"
+              }
+            ]
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "keep and value == fn_0(xs) or not keep",
+          "source_lines": [
+            13,
+            15
+          ],
+          "status": "INVALID",
+          "reason": "unknown variable: value. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects",
+          "unsound": 0,
+          "incomplete": 0,
+          "checked": 0,
+          "evaluation_errors": 0,
+          "exact": false,
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no verified observer for channels [0, 1]"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2'])"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "missing_reasons": [
+              "no sufficient condition with a non-vacuous witness"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 24,
+          "active_masked": 28,
+          "active_exposed": 28
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              1,
+              2
+            ],
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "keep": false,
+              "value": 1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -2,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false,
+              "value": -2
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "keep": false
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      0,
+                      1
+                    ]
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  }
+                }
+              },
+              "keep": {
+                "contexts": 40,
+                "contexts_with_flip": 28,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "keep",
+                  "args": {
+                    "xs": [
+                      -1
+                    ]
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "keep"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  11
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  13
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  13
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  15
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O1",
+                "kind": "observer",
+                "source_lines": [
+                  15
+                ],
+                "channel": 1
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  13,
+                  15
+                ],
+                "status": "INVALID"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O1",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 11,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 11 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     total = 0\n003:     for x in xs:\n004:         total = total + x\n005:     return total\n006: \n007: \n008: def program(xs, keep):\n009:     value = fn_0(xs)\n010: \n011:     value = 0  # TARGET_A\n012: \n013:     if keep:\n014:         value = fn_0(xs)\n015:     return value, value + 1\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1}; keep: bool (every combination is enumerated; 80 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  keep: bool\n  value: int\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n  fn_0(list[int]) -> int\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 2 value(s), one per channel\n   (0, 1). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"value_post == 0\",\n     \"source_lines\": [11],\n     \"rationale\": \"Line 11 explicitly sets value to 0.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"keep\",\n     \"condition\": \"True\",\n     \"role\": \"supporting\",\n     \"source_lines\": [13],\n     \"rationale\": \"If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"not keep\",\n     \"condition\": \"True\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [13],\n     \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"fn_0(xs) if keep else 0\",\n     \"condition\": \"True\",\n     \"source_lines\": [15],\n     \"rationale\": \"Channel 0's value is determined by the value of keep and the result of fn_0(xs).\"},\n    {\"id\": \"O1\", \"channel\": 1,\n     \"expr\": \"fn_0(xs) + 1 if keep else 1\",\n     \"condition\": \"True\",\n     \"source_lines\": [15],\n     \"rationale\": \"Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"keep\",\n                 \"source_lines\": [13, 15]},\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 80 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: keep\n  condition:  True\n  diagnosis:  on these inputs the condition was true but the stated fact is false; the fact or its condition is wrong\n  counterexample: {\"args\": {\"xs\": [], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\nRELATION U2 (upstream) FAILED.\n  expression: not keep\n  condition:  True\n  diagnosis:  on these inputs the condition was true and A leaves the local state unchanged, but the expression itself evaluates to false; the expression is what is wrong\n  counterexample: {\"args\": {\"xs\": [], \"keep\": true}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": true, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": true}, \"out_plus\": [-1, 0], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": true, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": true}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": true, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\nRELATION O0 (observer) FAILED.\n  expression: fn_0(xs) if keep else 0\n  condition:  True\n  diagnosis:  on these inputs the expression matched the version with A but not the version without it: it restates the outcome instead of describing the downstream computation, which must hold in both versions\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": -1, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [1, 2], \"snap_plus\": {\"xs\": [1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [1], \"keep\": false, \"value\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": 1, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [-1, -1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-2, -1], \"snap_plus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": -2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": -2, \"kind\": \"faithfulness_minus\"}\nRELATION O1 (observer) FAILED.\n  expression: fn_0(xs) + 1 if keep else 1\n  condition:  True\n  diagnosis:  on these inputs the expression matched the version with A but not the version without it: it restates the outcome instead of describing the downstream computation, which must hold in both versions\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": 0, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [1, 2], \"snap_plus\": {\"xs\": [1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [1], \"keep\": false, \"value\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": 2, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [-1, -1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-2, -1], \"snap_plus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": -2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": -1, \"kind\": \"faithfulness_minus\"}\nRELATION G (mask_guard) FAILED.\n  expression: keep\n  condition:  None\n  diagnosis:  the outputs are equal on these inputs but the guard is false, so it rejects inputs it should accept; the subterms below are the ones that were false there\n  counterexample: {\"args\": {\"xs\": [], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"keep\"]}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"keep\"]}\n  counterexample: {\"args\": {\"xs\": [-1, 1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [-1, 1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, 1], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"keep\"]}\n  subterm #0 becomes false on 12 masked input(s) it must accept: keep\n  contrast on xs: {\"xs\": [], \"keep\": false} -> both versions return [0, 1]; {\"xs\": [-1], \"keep\": false} -> [0, 1] vs [-1, 0]. Only that one argument differs, so the guard must give different answers on these two inputs.\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"value_post == 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        11\n      ],\n      \"rationale\": \"Line 11 explicitly sets value to 0.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        13\n      ],\n      \"rationale\": \"If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.\",\n      \"role\": \"supporting\"\n    },\n    {\n      \"id\": \"U2\",\n      \"kind\": \"upstream\",\n      \"expr\": \"not keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        13\n      ],\n      \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\",\n      \"role\": \"fixed_point\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"fn_0(xs) if keep else 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        15\n      ],\n      \"rationale\": \"Channel 0's value is determined by the value of keep and the result of fn_0(xs).\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"observer\",\n      \"expr\": \"fn_0(xs) + 1 if keep else 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        15\n      ],\n      \"rationale\": \"Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.\",\n      \"channel\": 1\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"keep\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      13,\n      15\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}"
+        }
+      ],
+      "candidate_round": {
+        "round": 2,
+        "domain_size": 80,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "keep and value == fn_0(xs) or not keep",
+        "qwen_status": "INVALID",
+        "qwen_classification": "INVALID_CONTRACT",
+        "false_accepts": 0,
+        "false_rejects": 0,
+        "evaluation_errors": 0,
+        "invalid_relations": [
+          "U1"
+        ],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "O0",
+          "O1"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "keep and value == fn_0(xs) or not keep",
+        "selection_reason": null,
+        "all_relations_pass": false
+      }
+    },
+    {
+      "round": 3,
+      "stats": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0
+      },
+      "raw_response": "{\n  \"revise\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [13],\n      \"rationale\": \"If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"not keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [13],\n      \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\"\n    },\n    {\n      \"id\": \"O0\",\n      \"expr\": \"value if keep else 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [15],\n      \"rationale\": \"Channel 0's value is determined by the value of keep and the value of value after line 11.\"\n    },\n    {\n      \"id\": \"O1\",\n      \"expr\": \"value + 1 if keep else 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [15],\n      \"rationale\": \"Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.\"\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"expr\": \"keep or not keep\",\n    \"source_lines\": [13, 15]\n  },\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}",
+      "bundle": {
+        "target_effects": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "value_post == 0",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "Line 11 explicitly sets value to 0."
+          }
+        ],
+        "upstream": [
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.",
+            "role": "supporting"
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "not keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+            "role": "fixed_point"
+          }
+        ],
+        "observers": [
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "value if keep else 0",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 0's value is determined by the value of keep and the value of value after line 11.",
+            "channel": 0
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "value + 1 if keep else 1",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.",
+            "channel": 1
+          }
+        ],
+        "mask_guard": {
+          "id": "G",
+          "kind": "mask_guard",
+          "expr": "keep or not keep",
+          "condition": "True",
+          "source_lines": [
+            13,
+            15
+          ],
+          "rationale": ""
+        },
+        "uncertainty": "The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions."
+      },
+      "patch_notes": [
+        "revised U1",
+        "unchanged U2",
+        "revised O0",
+        "revised O1",
+        "replaced mask_guard"
+      ],
+      "report": {
+        "guard_ok": false,
+        "evidence_level": "BOUNDED",
+        "domain_size": 80,
+        "usable_rows": 80,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "keep": "bool",
+          "value": "int"
+        },
+        "relations": [
+          {
+            "id": "T1",
+            "kind": "target_effect",
+            "expr": "value_post == 0",
+            "condition": "True",
+            "source_lines": [
+              11
+            ],
+            "rationale": "Line 11 explicitly sets value to 0.",
+            "status": "BOUNDED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 0,
+            "counterexamples": []
+          },
+          {
+            "id": "U1",
+            "kind": "upstream",
+            "expr": "keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.",
+            "role": "supporting",
+            "status": "REFUTED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 40,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": false,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "U2",
+            "kind": "upstream",
+            "expr": "not keep",
+            "condition": "True",
+            "source_lines": [
+              13
+            ],
+            "rationale": "If keep is False, value is not reassigned after line 11, making line 11 a no-op.",
+            "role": "fixed_point",
+            "status": "REFUTED",
+            "checked": 80,
+            "condition_false": 0,
+            "failures": 40,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ]
+          },
+          {
+            "id": "O0",
+            "kind": "observer",
+            "expr": "value if keep else 0",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 0's value is determined by the value of keep and the value of value after line 11.",
+            "channel": 0,
+            "status": "REFUTED",
+            "checked": 80,
+            "faithful_failures": 28,
+            "faithful_minus_failures": 28,
+            "invariance_checked": 80,
+            "invariance_failures": 28,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": -1,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 0,
+                "actual": -1,
+                "kind": "faithfulness"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 0,
+                "observed_minus": -1,
+                "kind": "invariance"
+              }
+            ]
+          },
+          {
+            "id": "O1",
+            "kind": "observer",
+            "expr": "value + 1 if keep else 1",
+            "condition": "True",
+            "source_lines": [
+              15
+            ],
+            "rationale": "Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.",
+            "channel": 1,
+            "status": "REFUTED",
+            "checked": 80,
+            "faithful_failures": 28,
+            "faithful_minus_failures": 28,
+            "invariance_checked": 80,
+            "invariance_failures": 28,
+            "evaluation_errors": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": 0,
+                "kind": "faithfulness_minus"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed": 1,
+                "actual": 0,
+                "kind": "faithfulness"
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "observed_plus": 1,
+                "observed_minus": 0,
+                "kind": "invariance"
+              }
+            ]
+          }
+        ],
+        "guard": {
+          "id": "G",
+          "expr": "keep or not keep",
+          "source_lines": [
+            13,
+            15
+          ],
+          "status": "REFUTED",
+          "checked": 80,
+          "unsound": 28,
+          "incomplete": 0,
+          "evaluation_errors": 0,
+          "exact": false,
+          "shape": "or",
+          "parts": [
+            "keep",
+            "not keep"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0,
+              28
+            ],
+            "rejects_wrong": [
+              0,
+              0
+            ]
+          },
+          "counterexamples": [
+            {
+              "args": {
+                "xs": [
+                  -1
+                ],
+                "keep": false
+              },
+              "out_plus": [
+                0,
+                1
+              ],
+              "out_minus": [
+                -1,
+                0
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1
+                ],
+                "keep": false,
+                "value": -1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                false,
+                true
+              ],
+              "part_text": [
+                "keep",
+                "not keep"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  1
+                ],
+                "keep": false
+              },
+              "out_plus": [
+                0,
+                1
+              ],
+              "out_minus": [
+                1,
+                2
+              ],
+              "snap_plus": {
+                "xs": [
+                  1
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  1
+                ],
+                "keep": false,
+                "value": 1
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                false,
+                true
+              ],
+              "part_text": [
+                "keep",
+                "not keep"
+              ]
+            },
+            {
+              "args": {
+                "xs": [
+                  -1,
+                  -1
+                ],
+                "keep": false
+              },
+              "out_plus": [
+                0,
+                1
+              ],
+              "out_minus": [
+                -2,
+                -1
+              ],
+              "snap_plus": {
+                "xs": [
+                  -1,
+                  -1
+                ],
+                "keep": false,
+                "value": 0
+              },
+              "snap_minus": {
+                "xs": [
+                  -1,
+                  -1
+                ],
+                "keep": false,
+                "value": -2
+              },
+              "diagnostic": {
+                "A_changed_local_state": true
+              },
+              "kind": "unsound",
+              "predicted": true,
+              "parts": [
+                false,
+                true
+              ],
+              "part_text": [
+                "keep",
+                "not keep"
+              ]
+            }
+          ],
+          "contrasts": [
+            {
+              "only_differing_argument": "xs",
+              "masked": {
+                "args": {
+                  "xs": [],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": true
+              }
+            },
+            {
+              "only_differing_argument": "keep",
+              "masked": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": true
+              },
+              "exposed": {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": false
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "guard_says": true
+              }
+            }
+          ]
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no verified observer for channels [0, 1]"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "checked": 0,
+            "failures": 0,
+            "counterexamples": [
+              {
+                "args": {
+                  "xs": [],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  -1,
+                  0
+                ],
+                "out_minus": [
+                  -1,
+                  0
+                ],
+                "snap_plus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    -1
+                  ],
+                  "keep": true,
+                  "value": -1
+                },
+                "diagnostic": {
+                  "A_changed_local_state": true
+                },
+                "expr_value": false
+              },
+              {
+                "args": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true
+                },
+                "out_plus": [
+                  0,
+                  1
+                ],
+                "out_minus": [
+                  0,
+                  1
+                ],
+                "snap_plus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "snap_minus": {
+                  "xs": [
+                    0
+                  ],
+                  "keep": true,
+                  "value": 0
+                },
+                "diagnostic": {
+                  "A_changed_local_state": false
+                },
+                "expr_value": false
+              }
+            ],
+            "reason": "no fixed-point witness: the aggregate would have checked=0 (unverified members: ['U2'])"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "missing_reasons": [
+              "no sufficient condition with a non-vacuous witness"
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "semantics": "sufficient_only",
+            "sufficient_conditions": [],
+            "necessary_conditions": [],
+            "exact_equivalence": "not_established",
+            "complete": false,
+            "guard_complete": false,
+            "unverified_relations": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 24,
+          "active_masked": 28,
+          "active_exposed": 28
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -1,
+              0
+            ],
+            "snap_plus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1
+              ],
+              "keep": false,
+              "value": -1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              1,
+              2
+            ],
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "keep": false,
+              "value": 1
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false
+            },
+            "out_plus": [
+              0,
+              1
+            ],
+            "out_minus": [
+              -2,
+              -1
+            ],
+            "snap_plus": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false,
+              "value": 0
+            },
+            "snap_minus": {
+              "xs": [
+                -1,
+                -1
+              ],
+              "keep": false,
+              "value": -2
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 1,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "xs",
+                  "args": {
+                    "keep": false
+                  },
+                  "masked": {
+                    "value": [],
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      0,
+                      1
+                    ]
+                  },
+                  "exposed": {
+                    "value": [
+                      -1
+                    ],
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  }
+                }
+              },
+              "keep": {
+                "contexts": 40,
+                "contexts_with_flip": 28,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "keep",
+                  "args": {
+                    "xs": [
+                      -1
+                    ]
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      -1,
+                      0
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      0,
+                      1
+                    ],
+                    "out_minus": [
+                      -1,
+                      0
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "xs",
+              "keep"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "T1",
+                "kind": "target_effect",
+                "source_lines": [
+                  11
+                ]
+              },
+              {
+                "id": "U1",
+                "kind": "upstream",
+                "source_lines": [
+                  13
+                ],
+                "role": "supporting"
+              },
+              {
+                "id": "U2",
+                "kind": "upstream",
+                "source_lines": [
+                  13
+                ],
+                "role": "fixed_point"
+              },
+              {
+                "id": "O0",
+                "kind": "observer",
+                "source_lines": [
+                  15
+                ],
+                "channel": 0
+              },
+              {
+                "id": "O1",
+                "kind": "observer",
+                "source_lines": [
+                  15
+                ],
+                "channel": 1
+              },
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [
+                  13,
+                  15
+                ],
+                "status": "REFUTED"
+              }
+            ],
+            "edges": [
+              {
+                "from": "O0",
+                "to": "G",
+                "op": "and"
+              },
+              {
+                "from": "O1",
+                "to": "G",
+                "op": "and"
+              }
+            ],
+            "unsupported": [
+              "U1",
+              "U2"
+            ],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 11,
+        "source_sha256": null
+      },
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 11 holds the single marked target A.\n\n001: def fn_0(xs):\n002:     total = 0\n003:     for x in xs:\n004:         total = total + x\n005:     return total\n006: \n007: \n008: def program(xs, keep):\n009:     value = fn_0(xs)\n010: \n011:     value = 0  # TARGET_A\n012: \n013:     if keep:\n014:         value = fn_0(xs)\n015:     return value, value + 1\n\nInput domain used by the bounded checker:\nxs: list[int] with length 0..3, values in {-1, 0, 1}; keep: bool (every combination is enumerated; 80 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  keep: bool\n  value: int\n  xs: list[int]\n\nDeclared types of the user-defined functions (derived from their use in this\nprogram, not from their names):\n  fn_0(list[int]) -> int\n\nYour task\n---------\nA is deleted in a second version of this program. Derive a typed contract that\nexplains, from the actual semantics of the code, when the returned value is the\nsame in both versions.\n\n1. target_effects: describe precisely how A changes the local state. A name\n   such as xs denotes the local value right before A; xs_post is its value\n   right after A.\n2. upstream: state facts that earlier code guarantees about the entry\n   arguments, including facts about what the called functions return (you may\n   call a listed program function on expression arguments). Each fact needs the\n   input condition under which it holds and a role:\n     - \"fixed_point\": under the condition, A provably does not change the local\n       state at all (A is a no-op there);\n     - \"supporting\": a fact that explains why a downstream observation becomes\n       insensitive to A (e.g. a list is already sorted or duplicate-free), but\n       does not by itself make A a no-op.\n3. observers: the program returns 2 value(s), one per channel\n   (0, 1). For every channel give an expression that computes that\n   channel's value from the state after A, and a condition under which deleting\n   A cannot change that observed value. Use the real computation in the\n   downstream code; do not paraphrase it.\n4. mask_guard: a single Boolean condition under which the whole returned value\n   is unchanged. A structurally valid guard combines the upstream conditions\n   that make A a no-op with the conjunction of the observer conditions; derive\n   the parts, then state the guard.\n5. Cite the source lines that establish each relation. Report what you could\n   not establish in \"uncertainty\". A separate checker will test every relation\n   on a finite domain and send you concrete counterexamples; nothing you write\n   is taken as proved.\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nReturn exactly this JSON shape (values are placeholders, not an answer):\n{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"<bool expr over the state right before A, and <name>_post>\",\n     \"source_lines\": [<line numbers of A and of the code that computes the value>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"<bool expr over the entry arguments>\",\n     \"condition\": \"<bool expr; when the upstream fact holds, usually True>\",\n     \"role\": \"fixed_point | supporting\",\n     \"source_lines\": [<line numbers of the upstream code that establishes it>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"<bool or int expr that equals channel 0's value on every input>\",\n     \"condition\": \"<bool expr over the entry arguments: when A cannot change channel 0>\",\n     \"source_lines\": [<line numbers of the downstream code that computes this channel>],\n     \"rationale\": \"<one sentence>\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"<bool expr over the entry arguments: when the whole output is unchanged>\",\n                 \"source_lines\": [<line numbers>]},\n  \"uncertainty\": \"<what you could not establish from the source>\"\n}\n"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"target_effects\": [\n    {\"id\": \"T1\",\n     \"expr\": \"value_post == 0\",\n     \"source_lines\": [11],\n     \"rationale\": \"Line 11 explicitly sets value to 0.\"}\n  ],\n  \"upstream\": [\n    {\"id\": \"U1\",\n     \"expr\": \"keep\",\n     \"condition\": \"True\",\n     \"role\": \"supporting\",\n     \"source_lines\": [13],\n     \"rationale\": \"If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.\"},\n    {\"id\": \"U2\",\n     \"expr\": \"not keep\",\n     \"condition\": \"True\",\n     \"role\": \"fixed_point\",\n     \"source_lines\": [13],\n     \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\"}\n  ],\n  \"observers\": [\n    {\"id\": \"O0\", \"channel\": 0,\n     \"expr\": \"fn_0(xs) if keep else 0\",\n     \"condition\": \"True\",\n     \"source_lines\": [15],\n     \"rationale\": \"Channel 0's value is determined by the value of keep and the result of fn_0(xs).\"},\n    {\"id\": \"O1\", \"channel\": 1,\n     \"expr\": \"fn_0(xs) + 1 if keep else 1\",\n     \"condition\": \"True\",\n     \"source_lines\": [15],\n     \"rationale\": \"Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.\"}\n  ],\n  \"mask_guard\": {\"id\": \"G\",\n                 \"expr\": \"keep\",\n                 \"source_lines\": [13, 15]},\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 80 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: keep\n  condition:  True\n  diagnosis:  on these inputs the condition was true but the stated fact is false; the fact or its condition is wrong\n  counterexample: {\"args\": {\"xs\": [], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\nRELATION U2 (upstream) FAILED.\n  expression: not keep\n  condition:  True\n  diagnosis:  on these inputs the condition was true and A leaves the local state unchanged, but the expression itself evaluates to false; the expression is what is wrong\n  counterexample: {\"args\": {\"xs\": [], \"keep\": true}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": true, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": true}, \"out_plus\": [-1, 0], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": true, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": true}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": true, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\nRELATION O0 (observer) FAILED.\n  expression: fn_0(xs) if keep else 0\n  condition:  True\n  diagnosis:  on these inputs the expression matched the version with A but not the version without it: it restates the outcome instead of describing the downstream computation, which must hold in both versions\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": -1, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [1, 2], \"snap_plus\": {\"xs\": [1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [1], \"keep\": false, \"value\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": 1, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [-1, -1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-2, -1], \"snap_plus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": -2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": -2, \"kind\": \"faithfulness_minus\"}\nRELATION O1 (observer) FAILED.\n  expression: fn_0(xs) + 1 if keep else 1\n  condition:  True\n  diagnosis:  on these inputs the expression matched the version with A but not the version without it: it restates the outcome instead of describing the downstream computation, which must hold in both versions\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": 0, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [1, 2], \"snap_plus\": {\"xs\": [1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [1], \"keep\": false, \"value\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": 2, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [-1, -1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-2, -1], \"snap_plus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": -2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": -1, \"kind\": \"faithfulness_minus\"}\nRELATION G (mask_guard) FAILED.\n  expression: keep\n  condition:  None\n  diagnosis:  the outputs are equal on these inputs but the guard is false, so it rejects inputs it should accept; the subterms below are the ones that were false there\n  counterexample: {\"args\": {\"xs\": [], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"keep\"]}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"keep\"]}\n  counterexample: {\"args\": {\"xs\": [-1, 1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [-1, 1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, 1], \"keep\": false, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"kind\": \"incomplete\", \"predicted\": false, \"parts\": [false], \"part_text\": [\"keep\"]}\n  subterm #0 becomes false on 12 masked input(s) it must accept: keep\n  contrast on xs: {\"xs\": [], \"keep\": false} -> both versions return [0, 1]; {\"xs\": [-1], \"keep\": false} -> [0, 1] vs [-1, 0]. Only that one argument differs, so the guard must give different answers on these two inputs.\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"value_post == 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        11\n      ],\n      \"rationale\": \"Line 11 explicitly sets value to 0.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        13\n      ],\n      \"rationale\": \"If keep is True, value is reassigned in line 14, making the effect of line 11 irrelevant.\",\n      \"role\": \"supporting\"\n    },\n    {\n      \"id\": \"U2\",\n      \"kind\": \"upstream\",\n      \"expr\": \"not keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        13\n      ],\n      \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\",\n      \"role\": \"fixed_point\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"fn_0(xs) if keep else 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        15\n      ],\n      \"rationale\": \"Channel 0's value is determined by the value of keep and the result of fn_0(xs).\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"observer\",\n      \"expr\": \"fn_0(xs) + 1 if keep else 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        15\n      ],\n      \"rationale\": \"Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.\",\n      \"channel\": 1\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"keep\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      13,\n      15\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n  \"revise\": [\n    {\n      \"id\": \"U1\",\n      \"expr\": \"keep and value == fn_0(xs)\",\n      \"condition\": \"True\",\n      \"source_lines\": [13],\n      \"rationale\": \"If keep is True and value is equal to fn_0(xs) before line 11, the effect of line 11 is irrelevant.\"\n    },\n    {\n      \"id\": \"U2\",\n      \"expr\": \"not keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [13],\n      \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"channel\": 0,\n      \"expr\": \"value if keep else 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [15],\n      \"rationale\": \"Channel 0's value is determined by the value of keep and the value of value after line 11.\"\n    },\n    {\n      \"id\": \"O1\",\n      \"channel\": 1,\n      \"expr\": \"value + 1 if keep else 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [15],\n      \"rationale\": \"Channel 1's value is determined by the value of keep and the value of value after line 11 plus 1.\"\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"expr\": \"keep and value == fn_0(xs) or not keep\",\n    \"source_lines\": [13, 15]\n  },\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}"
+        },
+        {
+          "role": "user",
+          "content": "The bounded checker tested your contract on 80 paired executions (BOUNDED domain) and found the\nproblems below.\n\nRELATION U1 (upstream) FAILED.\n  expression: keep and value == fn_0(xs)\n  condition:  True\n  checker note: unknown variable: value. upstream relations are evaluated on the entry arguments only; local variables computed before A are not in scope there\nRELATION U2 (upstream) FAILED.\n  expression: not keep\n  condition:  True\n  diagnosis:  on these inputs the condition was true and A leaves the local state unchanged, but the expression itself evaluates to false; the expression is what is wrong\n  counterexample: {\"args\": {\"xs\": [], \"keep\": true}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [], \"keep\": true, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": true}, \"out_plus\": [-1, 0], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": true, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"expr_value\": false}\n  counterexample: {\"args\": {\"xs\": [0], \"keep\": true}, \"out_plus\": [0, 1], \"out_minus\": [0, 1], \"snap_plus\": {\"xs\": [0], \"keep\": true, \"value\": 0}, \"snap_minus\": {\"xs\": [0], \"keep\": true, \"value\": 0}, \"diagnostic\": {\"A_changed_local_state\": false}, \"expr_value\": false}\nRELATION O0 (observer) FAILED.\n  expression: fn_0(xs) if keep else 0\n  condition:  True\n  diagnosis:  on these inputs the expression matched the version with A but not the version without it: it restates the outcome instead of describing the downstream computation, which must hold in both versions\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": -1, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [1, 2], \"snap_plus\": {\"xs\": [1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [1], \"keep\": false, \"value\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": 1, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [-1, -1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-2, -1], \"snap_plus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": -2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 0, \"actual\": -2, \"kind\": \"faithfulness_minus\"}\nRELATION O1 (observer) FAILED.\n  expression: fn_0(xs) + 1 if keep else 1\n  condition:  True\n  diagnosis:  on these inputs the expression matched the version with A but not the version without it: it restates the outcome instead of describing the downstream computation, which must hold in both versions\n  counterexample: {\"args\": {\"xs\": [-1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-1, 0], \"snap_plus\": {\"xs\": [-1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1], \"keep\": false, \"value\": -1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": 0, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [1, 2], \"snap_plus\": {\"xs\": [1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [1], \"keep\": false, \"value\": 1}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": 2, \"kind\": \"faithfulness_minus\"}\n  counterexample: {\"args\": {\"xs\": [-1, -1], \"keep\": false}, \"out_plus\": [0, 1], \"out_minus\": [-2, -1], \"snap_plus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": 0}, \"snap_minus\": {\"xs\": [-1, -1], \"keep\": false, \"value\": -2}, \"diagnostic\": {\"A_changed_local_state\": true}, \"observed\": 1, \"actual\": -1, \"kind\": \"faithfulness_minus\"}\nRELATION G (mask_guard) FAILED.\n  expression: keep and value == fn_0(xs) or not keep\n  condition:  None\n  checker note: unknown variable: value. mask_guard is evaluated on the entry arguments only; <name>_post exists only inside target_effects\n\nRevise only what is wrong. Reply with a patch object of this shape:\n{\n  \"revise\": [{\"id\": \"<existing id>\", \"expr\": \"<new expr, optional>\",\n              \"condition\": \"<new condition, optional>\",\n              \"source_lines\": [<lines>], \"rationale\": \"<why it fixes the counterexample>\"}],\n  \"add_observers\": [{\"id\": \"O9\", \"channel\": <int>, \"expr\": \"...\", \"condition\": \"...\",\n                     \"source_lines\": [..], \"rationale\": \"...\"}],\n  \"mask_guard\": {\"id\": \"G\", \"expr\": \"<revised guard>\", \"source_lines\": [..]},\n  \"uncertainty\": \"<updated>\"\n}\nRules: every counterexample is a real execution of both versions. A relation\nlisted as failed is therefore wrong on a real input -- do not reply that it is\n\"already correct\". Change the expression, the condition, or both. Do not\nweaken a condition so that no input satisfies it. Do not enumerate operations\nto delete. Do not claim any relation is proved. Allowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n\n\nYour previous contract was:\n{\n  \"target_effects\": [\n    {\n      \"id\": \"T1\",\n      \"kind\": \"target_effect\",\n      \"expr\": \"value_post == 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        11\n      ],\n      \"rationale\": \"Line 11 explicitly sets value to 0.\"\n    }\n  ],\n  \"upstream\": [\n    {\n      \"id\": \"U1\",\n      \"kind\": \"upstream\",\n      \"expr\": \"keep and value == fn_0(xs)\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        13\n      ],\n      \"rationale\": \"If keep is True and value is equal to fn_0(xs) before line 11, the effect of line 11 is irrelevant.\",\n      \"role\": \"supporting\"\n    },\n    {\n      \"id\": \"U2\",\n      \"kind\": \"upstream\",\n      \"expr\": \"not keep\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        13\n      ],\n      \"rationale\": \"If keep is False, value is not reassigned after line 11, making line 11 a no-op.\",\n      \"role\": \"fixed_point\"\n    }\n  ],\n  \"observers\": [\n    {\n      \"id\": \"O0\",\n      \"kind\": \"observer\",\n      \"expr\": \"fn_0(xs) if keep else 0\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        15\n      ],\n      \"rationale\": \"Channel 0's value is determined by the value of keep and the result of fn_0(xs).\",\n      \"channel\": 0\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"observer\",\n      \"expr\": \"fn_0(xs) + 1 if keep else 1\",\n      \"condition\": \"True\",\n      \"source_lines\": [\n        15\n      ],\n      \"rationale\": \"Channel 1's value is determined by the value of keep and the result of fn_0(xs) plus 1.\",\n      \"channel\": 1\n    }\n  ],\n  \"mask_guard\": {\n    \"id\": \"G\",\n    \"kind\": \"mask_guard\",\n    \"expr\": \"keep and value == fn_0(xs) or not keep\",\n    \"condition\": \"True\",\n    \"source_lines\": [\n      13,\n      15\n    ],\n    \"rationale\": \"\"\n  },\n  \"uncertainty\": \"The effect of deleting line 11 when keep is False is clear, but the guard expression is simplified based on the observer conditions.\"\n}"
+        }
+      ],
+      "candidate_round": {
+        "round": 3,
+        "domain_size": 80,
+        "domain_level": "BOUNDED",
+        "qwen_guard": "keep or not keep",
+        "qwen_status": "REFUTED",
+        "qwen_classification": "FALSE_ACCEPT",
+        "false_accepts": 28,
+        "false_rejects": 0,
+        "evaluation_errors": 0,
+        "invalid_relations": [],
+        "unknown_relations": [
+          "U1",
+          "U2",
+          "O0",
+          "O1"
+        ],
+        "derived_guard": null,
+        "derived_status": null,
+        "derived_classification": null,
+        "selected_guard": "keep or not keep",
+        "selection_reason": null,
+        "all_relations_pass": false
+      }
+    }
+  ],
+  "usage": {
+    "calls": 3,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "decode_seconds": 0.0,
+    "wall_seconds": 0.383
+  },
+  "domain": {
+    "size": 80,
+    "exhaustive": true
+  },
+  "core_logic": "bugs",
+  "candidate_rounds": [
+    {
+      "round": 1,
+      "domain_size": 80,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "keep",
+      "qwen_status": "REFUTED",
+      "qwen_classification": "FALSE_REJECT",
+      "false_accepts": 0,
+      "false_rejects": 12,
+      "evaluation_errors": 0,
+      "invalid_relations": [],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "O0",
+        "O1"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "keep",
+      "selection_reason": null,
+      "all_relations_pass": false
+    },
+    {
+      "round": 2,
+      "domain_size": 80,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "keep and value == fn_0(xs) or not keep",
+      "qwen_status": "INVALID",
+      "qwen_classification": "INVALID_CONTRACT",
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "evaluation_errors": 0,
+      "invalid_relations": [
+        "U1"
+      ],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "O0",
+        "O1"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "keep and value == fn_0(xs) or not keep",
+      "selection_reason": null,
+      "all_relations_pass": false
+    },
+    {
+      "round": 3,
+      "domain_size": 80,
+      "domain_level": "BOUNDED",
+      "qwen_guard": "keep or not keep",
+      "qwen_status": "REFUTED",
+      "qwen_classification": "FALSE_ACCEPT",
+      "false_accepts": 28,
+      "false_rejects": 0,
+      "evaluation_errors": 0,
+      "invalid_relations": [],
+      "unknown_relations": [
+        "U1",
+        "U2",
+        "O0",
+        "O1"
+      ],
+      "derived_guard": null,
+      "derived_status": null,
+      "derived_classification": null,
+      "selected_guard": "keep or not keep",
+      "selection_reason": null,
+      "all_relations_pass": false
+    }
+  ],
+  "candidate_history": [],
+  "candidate_selection": null,
+  "generated_utc": "2026-11-03T02:01:37.651675+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "note": "Reference contract for CPU self-checks and later scoring. NEVER shown to the model.",
+  "bundle": {
+    "target_effects": [
+      {
+        "id": "T1",
+        "expr": "v_post == v + 1",
+        "source_lines": [
+          5
+        ],
+        "rationale": "A increments the local v."
+      }
+    ],
+    "upstream": [],
+    "observers": [
+      {
+        "id": "O0",
+        "channel": 0,
+        "expr": "v * 0 if mode == 0 else (v - v if mode == 1 else v)",
+        "condition": "mode == 0 or mode == 1",
+        "source_lines": [
+          5,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "rationale": "Both absorbing branches erase the value; the third returns it."
+      }
+    ],
+    "mask_guard": {
+      "id": "G",
+      "expr": "mode == 0 or mode == 1",
+      "source_lines": [
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "rationale": "Only the two absorbing branches erase the increment."
+    },
+    "uncertainty": "reference bundle; bounded-checked only."
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "task_id": "sd_tabulate_2557_curlen",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M7_LOOP_STATE",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "A adjusts the per-line accumulator when a trailing whitespace chunk is dropped; U1 rebuilds the accumulator from the surviving chunks.  The rebuild is declared for two-line truncation, which is the masking input; three-line truncation exposes the deletion.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "tabulate/__init__.py",
+    "line": 2557,
+    "function": "_wrap_chunks",
+    "code": "                cur_len -= self._len(cur_line[-1])",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "tabulate._CustomTextWrap(width=..., max_lines=...).wrap(text)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_two_lines",
+      "role": "masking",
+      "description": "two-line truncation where the last line ends in a dropped whitespace chunk"
+    },
+    {
+      "id": "expose_three_lines",
+      "role": "exposing",
+      "description": "three-line truncation with the same dropped-chunk shape"
+    },
+    {
+      "id": "control_line_fits",
+      "role": "control",
+      "description": "the candidate line fits even without the decrement"
+    },
+    {
+      "id": "control_no_max_lines",
+      "role": "control",
+      "description": "max_lines is None; cur_len is not consulted"
+    }
+  ],
+  "original_tests": [
+    "test/test_textwrapper.py"
+  ],
+  "original_test_suite": {
+    "tests": [
+      "test/test_textwrapper.py"
+    ],
+    "returncode": 0,
+    "summary": "8 passed, 3 skipped in 0.06s",
+    "passed": true
+  },
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

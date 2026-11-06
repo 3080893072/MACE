@@ -1,0 +1,258 @@
+{
+  "task_id": "sd_networkx_adjlist_strip_m1",
+  "split": "DEV",
+  "mechanism": "M1_SINGLE_OPERATION",
+  "model": "glm-4.7-flash:q4_K_M",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900,
+    "think": false
+  },
+  "public_source_sha256": "19a5b1a5c7cd789290f4d015d79063014caf305d4faf26786d2fc2f147a5f64e",
+  "prompt_sha256": "806a5b99750545e3d70bbc30be69769da5d99883f032deae95881b62ff718b9d",
+  "prompt_chars": 12419,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_networkx_adjlist_strip_m1\n\n## File\n`networkx/readwrite/adjlist.py`\n\n## Program with source line numbers\n```text\n   1 | \"\"\"\n   2 | **************\n   3 | Adjacency List\n   4 | **************\n   5 | Read and write NetworkX graphs as adjacency lists.\n   6 | \n   7 | Adjacency list format is useful for graphs without data associated\n   8 | with nodes or edges and for nodes that can be meaningfully represented\n   9 | as strings.\n  10 | \n  11 | Format\n  12 | ------\n  13 | The adjacency list format consists of lines with node labels.  The\n  14 | first label in a line is the source node.  Further labels in the line\n  15 | are considered target nodes and are added to the graph along with an edge\n  16 | between the source node and target node.\n  17 | \n  18 | The graph with edges a-b, a-c, d-e can be represented as the following\n  19 | adjacency list (anything following the # in a line is a comment)::\n  20 | \n  21 |      a b c # source target target\n  22 |      d e\n  23 | \"\"\"\n  24 | \n  25 | __all__ = [\"generate_adjlist\", \"write_adjlist\", \"parse_adjlist\", \"read_adjlist\"]\n  26 | \n  27 | import networkx as nx\n  28 | from networkx.utils import open_file\n  29 | \n  30 | \n  31 | def generate_adjlist(G, delimiter=\" \"):\n  32 |     \"\"\"Generate a single line of the graph G in adjacency list format.\n  33 | \n  34 |     Parameters\n  35 |     ----------\n  36 |     G : NetworkX graph\n  37 | \n  38 |     delimiter : string, optional\n  39 |        Separator for node labels\n  40 | \n  41 |     Returns\n  42 |     -------\n  43 |     lines : string\n  44 |         Lines of data in adjlist format.\n  45 | \n  46 |     Examples\n  47 |     --------\n  48 |     >>> G = nx.lollipop_graph(4, 3)\n  49 |     >>> for line in nx.generate_adjlist(G):\n  50 |     ...     print(line)\n  51 |     0 1 2 3\n  52 |     1 2 3\n  53 |     2 3\n  54 |     3 4\n  55 |     4 5\n  56 |     5 6\n  57 |     6\n  58 | \n  59 |     See Also\n  60 |     --------\n  61 |     write_adjlist, read_adjlist\n  62 | \n  63 |     Notes\n  64 |     -----\n  65 |     The default `delimiter=\" \"` will result in unexpected results if node names contain\n  66 |     whitespace characters. To avoid this problem, specify an alternate delimiter when spaces are\n  67 |     valid in node names.\n  68 | \n  69 |     NB: This option is not available for data that isn't user-generated.\n  70 | \n  71 |     \"\"\"\n  72 |     directed = G.is_directed()\n  73 |     seen = set()\n  74 |     for s, nbrs in G.adjacency():\n  75 |         line = str(s) + delimiter\n  76 |         for t, data in nbrs.items():\n  77 |             if not directed and t in seen:\n  78 |                 continue\n  79 |             if G.is_multigraph():\n  80 |                 for d in data.values():\n  81 |                     line += str(t) + delimiter\n  82 |             else:\n  83 |                 line += str(t) + delimiter\n  84 |         if not directed:\n  85 |             seen.add(s)\n  86 |         yield line[: -len(delimiter)]\n  87 | \n  88 | \n  89 | @open_file(1, mode=\"wb\")\n  90 | def write_adjlist(G, path, comments=\"#\", delimiter=\" \", encoding=\"utf-8\"):\n  91 |     \"\"\"Write graph G in single-line adjacency-list format to path.\n  92 | \n  93 | \n  94 |     Parameters\n  95 |     ----------\n  96 |     G : NetworkX graph\n  97 | \n  98 |     path : string or file\n  99 |        Filename or file handle for data output.\n 100 |        Filenames ending in .gz or .bz2 will be compressed.\n 101 | \n 102 |     comments : string, optional\n 103 |        Marker for comment lines\n 104 | \n 105 |     delimiter : string, optional\n 106 |        Separator for node labels\n 107 | \n 108 |     encoding : string, optional\n 109 |        Text encoding.\n 110 | \n 111 |     Examples\n 112 |     --------\n 113 |     >>> G = nx.path_graph(4)\n 114 |     >>> nx.write_adjlist(G, \"test.adjlist\")\n 115 | \n 116 |     The path can be a filehandle or a string with the name of the file. If a\n 117 |     filehandle is provided, it has to be opened in 'wb' mode.\n 118 | \n 119 |     >>> fh = open(\"test.adjlist\", \"wb\")\n 120 |     >>> nx.write_adjlist(G, fh)\n 121 | \n 122 |     Notes\n 123 |     -----\n 124 |     The default `delimiter=\" \"` will result in unexpected results if node names contain\n 125 |     whitespace characters. To avoid this problem, specify an alternate delimiter when spaces are\n 126 |     valid in node names.\n 127 |     NB: This option is not available for data that isn't user-generated.\n 128 | \n 129 |     This format does not store graph, node, or edge data.\n 130 | \n 131 |     See Also\n 132 |     --------\n 133 |     read_adjlist, generate_adjlist\n 134 |     \"\"\"\n 135 |     import sys\n 136 |     import time\n 137 | \n 138 |     pargs = comments + \" \".join(sys.argv) + \"\\n\"\n 139 |     header = (\n 140 |         pargs\n 141 |         + comments\n 142 |         + f\" GMT {time.asctime(time.gmtime())}\\n\"\n 143 |         + comments\n 144 |         + f\" {G.name}\\n\"\n 145 |     )\n 146 |     path.write(header.encode(encoding))\n 147 | \n 148 |     for line in generate_adjlist(G, delimiter):\n 149 |         line += \"\\n\"\n 150 |         path.write(line.encode(encoding))\n 151 | \n 152 | \n 153 | @nx._dispatch(graphs=None)\n 154 | def parse_adjlist(\n 155 |     lines, comments=\"#\", delimiter=None, create_using=None, nodetype=None\n 156 | ):\n 157 |     \"\"\"Parse lines of a graph adjacency list representation.\n 158 | \n 159 |     Parameters\n 160 |     ----------\n 161 |     lines : list or iterator of strings\n 162 |         Input data in adjlist format\n 163 | \n 164 |     create_using : NetworkX graph constructor, optional (default=nx.Graph)\n 165 |        Graph type to create. If graph instance, then cleared before populated.\n 166 | \n 167 |     nodetype : Python type, optional\n 168 |        Convert nodes to this type.\n 169 | \n 170 |     comments : string, optional\n 171 |        Marker for comment lines\n 172 | \n 173 |     delimiter : string, optional\n 174 |        Separator for node labels.  The default is whitespace.\n 175 | \n 176 |     Returns\n 177 |     -------\n 178 |     G: NetworkX graph\n 179 |         The graph corresponding to the lines in adjacency list format.\n 180 | \n 181 |     Examples\n 182 |     --------\n 183 |     >>> lines = [\"1 2 5\", \"2 3 4\", \"3 5\", \"4\", \"5\"]\n 184 |     >>> G = nx.parse_adjlist(lines, nodetype=int)\n 185 |     >>> nodes = [1, 2, 3, 4, 5]\n 186 |     >>> all(node in G for node in nodes)\n 187 |     True\n 188 |     >>> edges = [(1, 2), (1, 5), (2, 3), (2, 4), (3, 5)]\n 189 |     >>> all((u, v) in G.edges() or (v, u) in G.edges() for (u, v) in edges)\n 190 |     True\n 191 | \n 192 |     See Also\n 193 |     --------\n 194 |     read_adjlist\n 195 | \n 196 |     \"\"\"\n 197 |     G = nx.empty_graph(0, create_using)\n 198 |     for line in lines:\n 199 |         p = line.find(comments)\n 200 |         if p >= 0:\n 201 |             line = line[:p]\n 202 |         if not len(line):\n 203 |             continue\n 204 |         vlist = line.strip().split(delimiter)\n 205 | \n 206 |         if \"\\t\" not in line:\n 207 |             vlist = line.strip(\" \").split(delimiter)\n 208 | \n 209 |         u = vlist.pop(0)\n 210 |         # convert types\n 211 |         if nodetype is not None:\n 212 |             try:\n 213 |                 u = nodetype(u)\n 214 |             except BaseException as err:\n 215 |                 raise TypeError(\n 216 |                     f\"Failed to convert node ({u}) to type \" f\"{nodetype}\"\n 217 |                 ) from err\n 218 |         G.add_node(u)\n 219 |         if nodetype is not None:\n 220 |             try:\n 221 |                 vlist = list(map(nodetype, vlist))\n 222 |             except BaseException as err:\n 223 |                 raise TypeError(\n 224 |                     f\"Failed to convert nodes ({','.join(vlist)}) to type {nodetype}\"\n 225 |                 ) from err\n 226 |         G.add_edges_from([(u, v) for v in vlist])\n 227 |     return G\n 228 | \n 229 | \n 230 | @open_file(0, mode=\"rb\")\n 231 | @nx._dispatch(graphs=None)\n 232 | def read_adjlist(\n 233 |     path,\n 234 |     comments=\"#\",\n 235 |     delimiter=None,\n 236 |     create_using=None,\n 237 |     nodetype=None,\n 238 |     encoding=\"utf-8\",\n 239 | ):\n 240 |     \"\"\"Read graph in adjacency list format from path.\n 241 | \n 242 |     Parameters\n 243 |     ----------\n 244 |     path : string or file\n 245 |        Filename or file handle to read.\n 246 |        Filenames ending in .gz or .bz2 will be uncompressed.\n 247 | \n 248 |     create_using : NetworkX graph constructor, optional (default=nx.Graph)\n 249 |        Graph type to create. If graph instance, then cleared before populated.\n 250 | \n 251 |     nodetype : Python type, optional\n 252 |        Convert nodes to this type.\n 253 | \n 254 |     comments : string, optional\n 255 |        Marker for comment lines\n 256 | \n 257 |     delimiter : string, optional\n 258 |        Separator for node labels.  The default is whitespace.\n 259 | \n 260 |     Returns\n 261 |     -------\n 262 |     G: NetworkX graph\n 263 |         The graph corresponding to the lines in adjacency list format.\n 264 | \n 265 |     Examples\n 266 |     --------\n 267 |     >>> G = nx.path_graph(4)\n 268 |     >>> nx.write_adjlist(G, \"test.adjlist\")\n 269 |     >>> G = nx.read_adjlist(\"test.adjlist\")\n 270 | \n 271 |     The path can be a filehandle or a string with the name of the file. If a\n 272 |     filehandle is provided, it has to be opened in 'rb' mode.\n 273 | \n 274 |     >>> fh = open(\"test.adjlist\", \"rb\")\n 275 |     >>> G = nx.read_adjlist(fh)\n 276 | \n 277 |     Filenames ending in .gz or .bz2 will be compressed.\n 278 | \n 279 |     >>> nx.write_adjlist(G, \"test.adjlist.gz\")\n 280 |     >>> G = nx.read_adjlist(\"test.adjlist.gz\")\n 281 | \n 282 |     The optional nodetype is a function to convert node strings to nodetype.\n 283 | \n 284 |     For example\n 285 | \n 286 |     >>> G = nx.read_adjlist(\"test.adjlist\", nodetype=int)\n 287 | \n 288 |     will attempt to convert all nodes to integer type.\n 289 | \n 290 |     Since nodes must be hashable, the function nodetype must return hashable\n 291 |     types (e.g. int, float, str, frozenset - or tuples of those, etc.)\n 292 | \n 293 |     The optional create_using parameter indicates the type of NetworkX graph\n 294 |     created.  The default is `nx.Graph`, an undirected graph.\n 295 |     To read the data as a directed graph use\n 296 | \n 297 |     >>> G = nx.read_adjlist(\"test.adjlist\", create_using=nx.DiGraph)\n 298 | \n 299 |     Notes\n 300 |     -----\n 301 |     This format does not store graph or node data.\n 302 | \n 303 |     See Also\n 304 |     --------\n 305 |     write_adjlist\n 306 |     \"\"\"\n 307 |     lines = (line.decode(encoding) for line in path)\n 308 |     return parse_adjlist(\n 309 |         lines,\n 310 |         comments=comments,\n 311 |         delimiter=delimiter,\n 312 |         create_using=create_using,\n 313 |         nodetype=nodetype,\n 314 |     )\n```\n\n## Target A\nLine 204: `vlist = line.strip().split(delimiter)`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": 209, \"text\": \"u = vlist.pop(0)\"},\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": 226, \"text\": \"G.add_edges_from([(u, v) for v in vlist])\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The `pop(0)` operation removes the first element from `vlist`, making the subsequent `split` operation on an empty list harmless.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": 209, \"text\": \"u = vlist.pop(0)\"},\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": 226, \"text\": \"G.add_edges_from([(u, v) for v in vlist])\"},\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": 219, \"text\": \"if nodetype is not None:\"},\n        {\"file\": \"networkx/readwrite/adjlist.py\", \"line\": 221, \"text\": \"vlist = list(map(nodetype, vlist))\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"The `pop(0)` operation removes the first element from `vlist`, making the subsequent `map` operation on an empty list harmless.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 3689,
+      "completion_tokens": 333,
+      "total_duration_ns": 7306902163,
+      "load_duration_ns": 2714777,
+      "prompt_eval_duration_ns": 1046115000,
+      "eval_duration_ns": 6043547000,
+      "model": "glm-4.7-flash:q4_K_M",
+      "done_reason": "stop",
+      "wall_seconds": 7.417,
+      "attempt": 0
+    },
+    "model": "glm-4.7-flash:q4_K_M"
+  },
+  "prompt_tokens": 3689,
+  "completion_tokens": 333,
+  "runtime_s": 7.417,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "networkx/readwrite/adjlist.py:209-209",
+        "networkx/readwrite/adjlist.py:226-226"
+      ],
+      "ops": [
+        {
+          "id": "networkx/readwrite/adjlist.py:209-209",
+          "key": "networkx/readwrite/adjlist.py:209-209",
+          "file": "networkx/readwrite/adjlist.py",
+          "first_line": 209,
+          "last_line": 209,
+          "line": 209,
+          "end_line": 209,
+          "col": 8,
+          "end_col": 24,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "u = vlist.pop(0)",
+          "text": "u = vlist.pop(0)",
+          "node_key": [
+            "Assign",
+            209,
+            8,
+            209,
+            24
+          ]
+        },
+        {
+          "id": "networkx/readwrite/adjlist.py:226-226",
+          "key": "networkx/readwrite/adjlist.py:226-226",
+          "file": "networkx/readwrite/adjlist.py",
+          "first_line": 226,
+          "last_line": 226,
+          "line": 226,
+          "end_line": 226,
+          "col": 8,
+          "end_col": 49,
+          "kind": "expr",
+          "node_type": "Expr",
+          "code": "G.add_edges_from([(u, v) for v in vlist])",
+          "text": "G.add_edges_from([(u, v) for v in vlist])",
+          "node_key": [
+            "Expr",
+            226,
+            8,
+            226,
+            49
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "The `pop(0)` operation removes the first element from `vlist`, making the subsequent `split` operation on an empty list harmless."
+    },
+    {
+      "ids": [
+        "networkx/readwrite/adjlist.py:209-209",
+        "networkx/readwrite/adjlist.py:226-226",
+        "networkx/readwrite/adjlist.py:219-225",
+        "networkx/readwrite/adjlist.py:221-221"
+      ],
+      "ops": [
+        {
+          "id": "networkx/readwrite/adjlist.py:209-209",
+          "key": "networkx/readwrite/adjlist.py:209-209",
+          "file": "networkx/readwrite/adjlist.py",
+          "first_line": 209,
+          "last_line": 209,
+          "line": 209,
+          "end_line": 209,
+          "col": 8,
+          "end_col": 24,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "u = vlist.pop(0)",
+          "text": "u = vlist.pop(0)",
+          "node_key": [
+            "Assign",
+            209,
+            8,
+            209,
+            24
+          ]
+        },
+        {
+          "id": "networkx/readwrite/adjlist.py:226-226",
+          "key": "networkx/readwrite/adjlist.py:226-226",
+          "file": "networkx/readwrite/adjlist.py",
+          "first_line": 226,
+          "last_line": 226,
+          "line": 226,
+          "end_line": 226,
+          "col": 8,
+          "end_col": 49,
+          "kind": "expr",
+          "node_type": "Expr",
+          "code": "G.add_edges_from([(u, v) for v in vlist])",
+          "text": "G.add_edges_from([(u, v) for v in vlist])",
+          "node_key": [
+            "Expr",
+            226,
+            8,
+            226,
+            49
+          ]
+        },
+        {
+          "id": "networkx/readwrite/adjlist.py:219-225",
+          "key": "networkx/readwrite/adjlist.py:219-225",
+          "file": "networkx/readwrite/adjlist.py",
+          "first_line": 219,
+          "last_line": 225,
+          "line": 219,
+          "end_line": 225,
+          "col": 8,
+          "end_col": 26,
+          "kind": "if",
+          "node_type": "If",
+          "code": "if nodetype is not None:\n            try:\n                vlist = list(map(nodetype, vlist))\n            except BaseException as err:\n                raise TypeError(\n                    f\"Failed to convert nodes ({','.join(vlist)}) to type {nodetype}\"\n                ) from err",
+          "text": "if nodetype is not None:\n            try:\n                vlist = list(map(nodetype, vlist))\n            except BaseException as err:\n                raise TypeError(\n                    f\"Failed to convert nodes ({','.join(vlist)}) to type {nodetype}\"\n                ) from err",
+          "node_key": [
+            "If",
+            219,
+            8,
+            225,
+            26
+          ]
+        },
+        {
+          "id": "networkx/readwrite/adjlist.py:221-221",
+          "key": "networkx/readwrite/adjlist.py:221-221",
+          "file": "networkx/readwrite/adjlist.py",
+          "first_line": 221,
+          "last_line": 221,
+          "line": 221,
+          "end_line": 221,
+          "col": 16,
+          "end_col": 50,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "vlist = list(map(nodetype, vlist))",
+          "text": "vlist = list(map(nodetype, vlist))",
+          "node_key": [
+            "Assign",
+            221,
+            16,
+            221,
+            50
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "The `pop(0)` operation removes the first element from `vlist`, making the subsequent `map` operation on an empty list harmless."
+    }
+  ],
+  "rejected": [],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "false_relations": 7,
+    "unmatched_sets": 2,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_space_padding",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          []
+        ],
+        "stray_ops": [
+          "networkx/readwrite/adjlist.py:209-209",
+          "networkx/readwrite/adjlist.py:226-226",
+          "networkx/readwrite/adjlist.py:209-209",
+          "networkx/readwrite/adjlist.py:219-225",
+          "networkx/readwrite/adjlist.py:221-221",
+          "networkx/readwrite/adjlist.py:226-226"
+        ],
+        "msms_exact": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_relations": 7,
+        "unmatched_sets": 2
+      }
+    }
+  ],
+  "status": "OK"
+}

@@ -1,0 +1,231 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+__________________ TestHTTPUtility.test_is_resource_modified __________________
+
+self = <test_http.TestHTTPUtility object at 0x0000028068B6E490>
+
+    def test_is_resource_modified(self):
+        env = create_environ()
+    
+        # any method is allowed
+        env["REQUEST_METHOD"] = "POST"
+>       assert http.is_resource_modified(env, etag="testing")
+
+<local-path> 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<local-path> in is_resource_modified
+    return _sansio_http.is_resource_modified(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+http_range = None, http_if_range = None, http_if_modified_since = None
+http_if_none_match = None, http_if_match = None, etag = 'testing', data = None
+last_modified = None, ignore_if_range = True
+
+    def is_resource_modified(
+        http_range: t.Optional[str] = None,
+        http_if_range: t.Optional[str] = None,
+        http_if_modified_since: t.Optional[str] = None,
+        http_if_none_match: t.Optional[str] = None,
+        http_if_match: t.Optional[str] = None,
+        etag: t.Optional[str] = None,
+        data: t.Optional[bytes] = None,
+        last_modified: t.Optional[t.Union[datetime, str]] = None,
+        ignore_if_range: bool = True,
+    ) -> bool:
+        """Convenience method for conditional requests.
+        :param http_range: Range HTTP header
+        :param http_if_range: If-Range HTTP header
+        :param http_if_modified_since: If-Modified-Since HTTP header
+        :param http_if_none_match: If-None-Match HTTP header
+        :param http_if_match: If-Match HTTP header
+        :param etag: the etag for the response for comparison.
+        :param data: or alternatively the data of the response to automatically
+                     generate an etag using :func:`generate_etag`.
+        :param last_modified: an optional date of the last modification.
+        :param ignore_if_range: If `False`, `If-Range` header will be taken into
+                                account.
+        :return: `True` if the resource was modified, otherwise `False`.
+    
+        .. versionadded:: 2.2
+        """
+        if etag is None and data is not None:
+            etag = generate_etag(data)
+        elif data is not None:
+            raise TypeError("both data and etag given")
+    
+        pass  # P-: target A deleted
+        if isinstance(last_modified, str):
+            last_modified = parse_date(last_modified)
+    
+        # HTTP doesn't use microsecond, remove it to avoid false positive
+        # comparisons. Mark naive datetimes as UTC.
+        if last_modified is not None:
+            last_modified = _dt_as_utc(last_modified.replace(microsecond=0))
+    
+        if_range = None
+        if not ignore_if_range and http_range is not None:
+            # https://tools.ietf.org/html/rfc7233#section-3.2
+            # A server MUST ignore an If-Range header field received in a request
+            # that does not contain a Range header field.
+            if_range = parse_if_range_header(http_if_range)
+    
+        if if_range is not None and if_range.date is not None:
+            modified_since: t.Optional[datetime] = if_range.date
+        else:
+            modified_since = parse_date(http_if_modified_since)
+    
+        if modified_since and last_modified and last_modified <= modified_since:
+            unmodified = True
+    
+        if etag:
+            etag, _ = unquote_etag(etag)
+            etag = t.cast(str, etag)
+    
+            if if_range is not None and if_range.etag is not None:
+                unmodified = parse_etags(if_range.etag).contains(etag)
+            else:
+                if_none_match = parse_etags(http_if_none_match)
+                if if_none_match:
+                    # https://tools.ietf.org/html/rfc7232#section-3.2
+                    # "A recipient MUST use the weak comparison function when comparing
+                    # entity-tags for If-None-Match"
+                    unmodified = if_none_match.contains_weak(etag)
+    
+                # https://tools.ietf.org/html/rfc7232#section-3.1
+                # "Origin server MUST use the strong comparison function when
+                # comparing entity-tags for If-Match"
+                if_match = parse_etags(http_if_match)
+                if if_match:
+                    unmodified = not if_match.is_strong(etag)
+    
+>       return not unmodified
+E       UnboundLocalError: cannot access local variable 'unmodified' where it is not associated with a value
+
+<local-path> UnboundLocalError
+________ TestHTTPUtility.test_is_resource_modified_for_range_requests _________
+
+self = <test_http.TestHTTPUtility object at 0x0000028068B78610>
+
+    def test_is_resource_modified_for_range_requests(self):
+        env = create_environ()
+    
+        env["HTTP_IF_MODIFIED_SINCE"] = http.http_date(datetime(2008, 1, 1, 12, 30))
+        env["HTTP_IF_RANGE"] = http.generate_etag(b"awesome_if_range")
+        # Range header not present, so If-Range should be ignored
+        assert not http.is_resource_modified(
+            env,
+            data=b"not_the_same",
+            ignore_if_range=False,
+            last_modified=datetime(2008, 1, 1, 12, 30),
+        )
+    
+        env["HTTP_RANGE"] = ""
+        assert not http.is_resource_modified(
+            env, data=b"awesome_if_range", ignore_if_range=False
+        )
+        assert http.is_resource_modified(
+            env, data=b"not_the_same", ignore_if_range=False
+        )
+    
+        env["HTTP_IF_RANGE"] = http.http_date(datetime(2008, 1, 1, 13, 30))
+>       assert http.is_resource_modified(
+            env, last_modified=datetime(2008, 1, 1, 14, 00), ignore_if_range=False
+        )
+
+<local-path> 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<local-path> in is_resource_modified
+    return _sansio_http.is_resource_modified(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+http_range = '', http_if_range = 'Tue, 01 Jan 2008 13:30:00 GMT'
+http_if_modified_since = 'Tue, 01 Jan 2008 12:30:00 GMT'
+http_if_none_match = None, http_if_match = None, etag = None, data = None
+last_modified = datetime.datetime(2008, 1, 1, 14, 0, tzinfo=datetime.timezone.utc)
+ignore_if_range = False
+
+    def is_resource_modified(
+        http_range: t.Optional[str] = None,
+        http_if_range: t.Optional[str] = None,
+        http_if_modified_since: t.Optional[str] = None,
+        http_if_none_match: t.Optional[str] = None,
+        http_if_match: t.Optional[str] = None,
+        etag: t.Optional[str] = None,
+        data: t.Optional[bytes] = None,
+        last_modified: t.Optional[t.Union[datetime, str]] = None,
+        ignore_if_range: bool = True,
+    ) -> bool:
+        """Convenience method for conditional requests.
+        :param http_range: Range HTTP header
+        :param http_if_range: If-Range HTTP header
+        :param http_if_modified_since: If-Modified-Since HTTP header
+        :param http_if_none_match: If-None-Match HTTP header
+        :param http_if_match: If-Match HTTP header
+        :param etag: the etag for the response for comparison.
+        :param data: or alternatively the data of the response to automatically
+                     generate an etag using :func:`generate_etag`.
+        :param last_modified: an optional date of the last modification.
+        :param ignore_if_range: If `False`, `If-Range` header will be taken into
+                                account.
+        :return: `True` if the resource was modified, otherwise `False`.
+    
+        .. versionadded:: 2.2
+        """
+        if etag is None and data is not None:
+            etag = generate_etag(data)
+        elif data is not None:
+            raise TypeError("both data and etag given")
+    
+        pass  # P-: target A deleted
+        if isinstance(last_modified, str):
+            last_modified = parse_date(last_modified)
+    
+        # HTTP doesn't use microsecond, remove it to avoid false positive
+        # comparisons. Mark naive datetimes as UTC.
+        if last_modified is not None:
+            last_modified = _dt_as_utc(last_modified.replace(microsecond=0))
+    
+        if_range = None
+        if not ignore_if_range and http_range is not None:
+            # https://tools.ietf.org/html/rfc7233#section-3.2
+            # A server MUST ignore an If-Range header field received in a request
+            # that does not contain a Range header field.
+            if_range = parse_if_range_header(http_if_range)
+    
+        if if_range is not None and if_range.date is not None:
+            modified_since: t.Optional[datetime] = if_range.date
+        else:
+            modified_since = parse_date(http_if_modified_since)
+    
+        if modified_since and last_modified and last_modified <= modified_since:
+            unmodified = True
+    
+        if etag:
+            etag, _ = unquote_etag(etag)
+            etag = t.cast(str, etag)
+    
+            if if_range is not None and if_range.etag is not None:
+                unmodified = parse_etags(if_range.etag).contains(etag)
+            else:
+                if_none_match = parse_etags(http_if_none_match)
+                if if_none_match:
+                    # https://tools.ietf.org/html/rfc7232#section-3.2
+                    # "A recipient MUST use the weak comparison function when comparing
+                    # entity-tags for If-None-Match"
+                    unmodified = if_none_match.contains_weak(etag)
+    
+                # https://tools.ietf.org/html/rfc7232#section-3.1
+                # "Origin server MUST use the strong comparison function when
+                # comparing entity-tags for If-Match"
+                if_match = parse_etags(http_if_match)
+                if if_match:
+                    unmodified = not if_match.is_strong(etag)
+    
+>       return not unmodified
+E       UnboundLocalError: cannot access local variable 'unmodified' where it is not associated with a value
+
+<local-path> UnboundLocalError
+=========================== short test summary info ===========================
+FAILED ..\..\tmp\realbench\qualification\work\werkzeug_minus_is_resource_modified\tests\test_http.py::TestHTTPUtility::test_is_resource_modified
+FAILED ..\..\tmp\realbench\qualification\work\werkzeug_minus_is_resource_modified\tests\test_http.py::TestHTTPUtility::test_is_resource_modified_for_range_requests
+2 failed in 0.16s

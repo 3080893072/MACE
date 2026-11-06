@@ -1,0 +1,51 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1407:name:rows",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1407,
+    "end_line": 1407,
+    "kind": "Assign",
+    "code": "rows = rows[1:]"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_list_of_dicts_firstrow"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                rows = rows[1:]",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.42,
+    "failed_nodeids": [
+      "test.test_input::test_list_of_dicts_firstrow"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n_________________________ test_list_of_dicts_firstrow _________________________\n\n    def test_list_of_dicts_firstrow():\n        \"Input: a list of dictionaries, with the first dict as headers.\"\n        lod = [{\"foo\": \"FOO\", \"bar\": \"BAR\"}, {\"foo\": 3, \"bar\": 4, \"baz\": 5}]\n        # if some key is missing in the first dict, use the key name instead\n        expected1 = \"\\n\".join(\n            [\"  FOO    BAR    baz\", \"-----  -----  -----\", \"    3      4      5\"]\n        )\n        expected2 = \"\\n\".join(\n            [\"  BAR    FOO    baz\", \"-----  -----  -----\", \"    4      3      5\"]\n        )\n        result = tabulate(lod, headers=\"firstrow\")\n>       assert_in(result, [expected1, expected2])\n\ntest\\test_input.py:445: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nresult = 'FOO    BAR      baz\\n-----  -----  -----\\nFOO    BAR\\n3      4          5'\nexpected_set = ['  FOO    BAR    baz\\n-----  -----  -----\\n    3      4      5', '  BAR    FOO    baz\\n-----  -----  -----\\n    4      3      5']\n\n    def assert_in(result, expected_set):\n        nums = range(1, len(expected_set) + 1)\n        for i, expected in zip(nums, expected_set):\n            print(\"Expected %d:\\n%s\\n\" % (i, expected))\n        print(\"Got:\\n%s\\n\" % result)\n>       assert result in expected_set\nE       AssertionError\n\ntest\\common.py:16: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected 1:\n  FOO    BAR    baz\n-----  -----  -----\n    3      4      5\n\nExpected 2:\n  BAR    FOO    baz\n-----  -----  -----\n    4      3      5\n\nGot:\nFOO    BAR      baz\n-----  -----  -----\nFOO    BAR\n3      4          5\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_list_of_dicts_firstrow - AssertionError\n1 failed in 0.11s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

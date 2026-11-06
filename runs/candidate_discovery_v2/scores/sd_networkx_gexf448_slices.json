@@ -1,0 +1,379 @@
+{
+  "task_id": "sd_networkx_gexf448_slices",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "present": 1,
+    "false_relations": 1,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_undirected_slices",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1"
+        ]
+      ],
+      "confirmed": [
+        [
+          "networkx/readwrite/gexf.py:404-404",
+          "networkx/readwrite/gexf.py:451-451"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "true",
+          "rationale": "Keeping the alternative path in line 451 ensures that the function can still add slices if needed, masking the effect of deleting the target operation.",
+          "disabled_operations": [
+            "networkx/readwrite/gexf.py:404-404",
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "shared_state",
+          "masking_condition": "true",
+          "rationale": "Keeping the operation in line 456 ensures that edge_element is still modified and returned correctly, compensating for the deletion of the target operation.",
+          "disabled_operations": [
+            "networkx/readwrite/gexf.py:404-404",
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:451-451",
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [
+            "networkx/readwrite/gexf.py:404-404"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:404-404",
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "source": "qwen_graph_pair",
+          "disabled_operations": [
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:404-404",
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "source": "qwen_graph_pair",
+          "disabled_operations": [
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:404-404"
+          ],
+          "source": "graph_combo_1",
+          "disabled_operations": [
+            "networkx/readwrite/gexf.py:451-451",
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "networkx/readwrite/gexf.py:404-404",
+            "networkx/readwrite/gexf.py:451-451",
+            "networkx/readwrite/gexf.py:456-456"
+          ],
+          "source": "graph_combo_3",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": false,
+          "status": "NOT_MINIMAL",
+          "minimality_witness": [
+            "networkx/readwrite/gexf.py:404-404",
+            "networkx/readwrite/gexf.py:451-451"
+          ],
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ]
+        ],
+        "stray_ops": [
+          "networkx/readwrite/gexf.py:404-404"
+        ],
+        "msms_exact": false,
+        "hidden_msms_present": true,
+        "false_relations": 1,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 0,
+    "c0_false": 1,
+    "c0_probes": 22,
+    "direct_exact": 0,
+    "old_full_exact": 0,
+    "masking_inputs": 3
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/gexf.py:404-404",
+        "networkx/readwrite/gexf.py:456-456"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 2
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/gexf.py:454-454",
+        "networkx/readwrite/gexf.py:455-455",
+        "networkx/readwrite/gexf.py:456-456",
+        "networkx/readwrite/gexf.py:380-380",
+        "networkx/readwrite/gexf.py:393-393"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 5
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/gexf.py:393-393",
+        "networkx/readwrite/gexf.py:394-394",
+        "networkx/readwrite/gexf.py:395-395",
+        "networkx/readwrite/gexf.py:397-397",
+        "networkx/readwrite/gexf.py:399-399",
+        "networkx/readwrite/gexf.py:400-400",
+        "networkx/readwrite/gexf.py:404-404",
+        "networkx/readwrite/gexf.py:405-405",
+        "networkx/readwrite/gexf.py:407-407",
+        "networkx/readwrite/gexf.py:409-409",
+        "networkx/readwrite/gexf.py:410-410",
+        "networkx/readwrite/gexf.py:413-413",
+        "networkx/readwrite/gexf.py:415-415",
+        "networkx/readwrite/gexf.py:417-417",
+        "networkx/readwrite/gexf.py:418-418",
+        "networkx/readwrite/gexf.py:422-422",
+        "networkx/readwrite/gexf.py:423-423",
+        "networkx/readwrite/gexf.py:427-427",
+        "networkx/readwrite/gexf.py:428-428",
+        "networkx/readwrite/gexf.py:432-432",
+        "networkx/readwrite/gexf.py:433-433",
+        "networkx/readwrite/gexf.py:434-434",
+        "networkx/readwrite/gexf.py:438-438",
+        "networkx/readwrite/gexf.py:439-439",
+        "networkx/readwrite/gexf.py:440-440",
+        "networkx/readwrite/gexf.py:443-443",
+        "networkx/readwrite/gexf.py:444-444",
+        "networkx/readwrite/gexf.py:445-445",
+        "networkx/readwrite/gexf.py:446-446",
+        "networkx/readwrite/gexf.py:454-454",
+        "networkx/readwrite/gexf.py:455-455",
+        "networkx/readwrite/gexf.py:456-456",
+        "networkx/readwrite/gexf.py:457-457",
+        "networkx/readwrite/gexf.py:458-458",
+        "networkx/readwrite/gexf.py:462-462",
+        "networkx/readwrite/gexf.py:464-464",
+        "networkx/readwrite/gexf.py:465-465",
+        "networkx/readwrite/gexf.py:469-469",
+        "networkx/readwrite/gexf.py:470-470",
+        "networkx/readwrite/gexf.py:472-472",
+        "networkx/readwrite/gexf.py:476-476",
+        "networkx/readwrite/gexf.py:478-478",
+        "networkx/readwrite/gexf.py:479-479",
+        "networkx/readwrite/gexf.py:480-480",
+        "networkx/readwrite/gexf.py:482-484",
+        "networkx/readwrite/gexf.py:486-486",
+        "networkx/readwrite/gexf.py:487-487",
+        "networkx/readwrite/gexf.py:488-488",
+        "networkx/readwrite/gexf.py:492-492",
+        "networkx/readwrite/gexf.py:494-494",
+        "networkx/readwrite/gexf.py:496-496",
+        "networkx/readwrite/gexf.py:498-498",
+        "networkx/readwrite/gexf.py:500-500",
+        "networkx/readwrite/gexf.py:501-501",
+        "networkx/readwrite/gexf.py:504-504",
+        "networkx/readwrite/gexf.py:505-507",
+        "networkx/readwrite/gexf.py:508-508",
+        "networkx/readwrite/gexf.py:509-509",
+        "networkx/readwrite/gexf.py:511-511",
+        "networkx/readwrite/gexf.py:513-513",
+        "networkx/readwrite/gexf.py:517-517",
+        "networkx/readwrite/gexf.py:519-519",
+        "networkx/readwrite/gexf.py:521-521",
+        "networkx/readwrite/gexf.py:522-522",
+        "networkx/readwrite/gexf.py:523-523",
+        "networkx/readwrite/gexf.py:524-524",
+        "networkx/readwrite/gexf.py:529-529",
+        "networkx/readwrite/gexf.py:532-532",
+        "networkx/readwrite/gexf.py:533-533",
+        "networkx/readwrite/gexf.py:534-534",
+        "networkx/readwrite/gexf.py:535-535",
+        "networkx/readwrite/gexf.py:537-537",
+        "networkx/readwrite/gexf.py:539-539",
+        "networkx/readwrite/gexf.py:540-540",
+        "networkx/readwrite/gexf.py:541-541",
+        "networkx/readwrite/gexf.py:543-543",
+        "networkx/readwrite/gexf.py:546-546",
+        "networkx/readwrite/gexf.py:547-547",
+        "networkx/readwrite/gexf.py:549-549",
+        "networkx/readwrite/gexf.py:552-552",
+        "networkx/readwrite/gexf.py:553-553",
+        "networkx/readwrite/gexf.py:554-554",
+        "networkx/readwrite/gexf.py:555-555",
+        "networkx/readwrite/gexf.py:556-556",
+        "networkx/readwrite/gexf.py:559-559",
+        "networkx/readwrite/gexf.py:561-561",
+        "networkx/readwrite/gexf.py:564-569",
+        "networkx/readwrite/gexf.py:571-577",
+        "networkx/readwrite/gexf.py:578-578",
+        "networkx/readwrite/gexf.py:580-580",
+        "networkx/readwrite/gexf.py:582-582",
+        "networkx/readwrite/gexf.py:583-583",
+        "networkx/readwrite/gexf.py:585-585",
+        "networkx/readwrite/gexf.py:587-587",
+        "networkx/readwrite/gexf.py:588-588",
+        "networkx/readwrite/gexf.py:590-590",
+        "networkx/readwrite/gexf.py:593-595",
+        "networkx/readwrite/gexf.py:597-597",
+        "networkx/readwrite/gexf.py:598-598",
+        "networkx/readwrite/gexf.py:600-600",
+        "networkx/readwrite/gexf.py:602-607",
+        "networkx/readwrite/gexf.py:608-608",
+        "networkx/readwrite/gexf.py:609-609",
+        "networkx/readwrite/gexf.py:623-623",
+        "networkx/readwrite/gexf.py:625-625",
+        "networkx/readwrite/gexf.py:627-627",
+        "networkx/readwrite/gexf.py:628-628",
+        "networkx/readwrite/gexf.py:629-629",
+        "networkx/readwrite/gexf.py:630-630",
+        "networkx/readwrite/gexf.py:633-633",
+        "networkx/readwrite/gexf.py:635-635",
+        "networkx/readwrite/gexf.py:637-637",
+        "networkx/readwrite/gexf.py:639-639",
+        "networkx/readwrite/gexf.py:640-640",
+        "networkx/readwrite/gexf.py:642-642",
+        "networkx/readwrite/gexf.py:643-643",
+        "networkx/readwrite/gexf.py:644-644",
+        "networkx/readwrite/gexf.py:645-645",
+        "networkx/readwrite/gexf.py:646-646",
+        "networkx/readwrite/gexf.py:654-654",
+        "networkx/readwrite/gexf.py:656-656",
+        "networkx/readwrite/gexf.py:658-658",
+        "networkx/readwrite/gexf.py:660-662",
+        "networkx/readwrite/gexf.py:663-663",
+        "networkx/readwrite/gexf.py:664-664",
+        "networkx/readwrite/gexf.py:840-840",
+        "networkx/readwrite/gexf.py:841-841",
+        "networkx/readwrite/gexf.py:844-848",
+        "networkx/readwrite/gexf.py:850-855",
+        "networkx/readwrite/gexf.py:857-857",
+        "networkx/readwrite/gexf.py:859-859",
+        "networkx/readwrite/gexf.py:861-861",
+        "networkx/readwrite/gexf.py:863-863",
+        "networkx/readwrite/gexf.py:865-865",
+        "networkx/readwrite/gexf.py:867-867",
+        "networkx/readwrite/gexf.py:869-869",
+        "networkx/readwrite/gexf.py:871-871",
+        "networkx/readwrite/gexf.py:873-877",
+        "networkx/readwrite/gexf.py:880-880",
+        "networkx/readwrite/gexf.py:881-881",
+        "networkx/readwrite/gexf.py:893-893",
+        "networkx/readwrite/gexf.py:895-895",
+        "networkx/readwrite/gexf.py:897-897",
+        "networkx/readwrite/gexf.py:898-898",
+        "networkx/readwrite/gexf.py:899-899",
+        "networkx/readwrite/gexf.py:900-900",
+        "networkx/readwrite/gexf.py:903-903",
+        "networkx/readwrite/gexf.py:905-905",
+        "networkx/readwrite/gexf.py:906-906",
+        "networkx/readwrite/gexf.py:908-908",
+        "networkx/readwrite/gexf.py:909-909",
+        "networkx/readwrite/gexf.py:910-910",
+        "networkx/readwrite/gexf.py:911-911"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 153
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/gexf.py:456-456"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 1
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1"
+      ],
+      "stray_candidates": [
+        "networkx/readwrite/gexf.py:404-404",
+        "networkx/readwrite/gexf.py:456-456"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 2
+    }
+  }
+}

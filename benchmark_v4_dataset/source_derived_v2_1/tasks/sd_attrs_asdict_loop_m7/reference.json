@@ -1,0 +1,91 @@
+{
+  "task_id": "sd_attrs_asdict_loop_m7",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "src/attr/_funcs.py",
+    "line": 118,
+    "function": "asdict",
+    "code": "                rv[a.name] = v",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "src/attr/_funcs.py",
+      "line": 120,
+      "code": "if a.name != \"y\":",
+      "role": "Per-attribute copy limited to attributes other than 'y'.",
+      "patch_anchor_line": 118,
+      "block_span": [
+        119,
+        122
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_single_attr": {
+      "role": "masking",
+      "description": "object whose only attribute is not 'y'",
+      "p_plus": {
+        "out": {
+          "x": 1
+        }
+      },
+      "p_minus": {
+        "out": {
+          "x": 1
+        }
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_two_attrs": {
+      "role": "exposing",
+      "description": "object with a second attribute named 'y' that U skips",
+      "p_plus": {
+        "out": {
+          "x": 1,
+          "y": 2
+        }
+      },
+      "p_minus": {
+        "out": {
+          "x": 1
+        }
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_attrs_asdict_loop_m7/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

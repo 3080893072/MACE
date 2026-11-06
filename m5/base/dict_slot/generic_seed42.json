@@ -1,0 +1,526 @@
+{
+  "fixture": "dict_slot",
+  "mode": "generic",
+  "provider": "ollama",
+  "guard_source": "qwen",
+  "diagnostic_only": false,
+  "model": "qwen2.5-coder:32b",
+  "seed": 42,
+  "rounds_allowed": 3,
+  "rounds_used": 1,
+  "status": "GUARD_VERIFIED",
+  "final_guard": "mode",
+  "final_bundle": null,
+  "final_report": {
+    "guard_ok": true,
+    "evidence_level": "BOUNDED",
+    "domain_size": 80,
+    "usable_rows": 80,
+    "execution_errors": 0,
+    "post_sorts": {
+      "xs": "list[int]",
+      "mode": "bool",
+      "d": "dict[int,int]"
+    },
+    "relations": [],
+    "guard": {
+      "id": "G",
+      "expr": "mode",
+      "source_lines": [],
+      "status": "BOUNDED",
+      "checked": 80,
+      "unsound": 0,
+      "incomplete": 0,
+      "shape": null,
+      "parts": [
+        "mode"
+      ],
+      "blame": {
+        "accepts_wrong": [
+          0
+        ],
+        "rejects_wrong": [
+          0
+        ]
+      },
+      "counterexamples": []
+    },
+    "observer_soundness": {
+      "status": "UNKNOWN",
+      "reason": "no complete observer set"
+    },
+    "composition": {
+      "upstream_fixed_point": {
+        "status": "UNKNOWN",
+        "reason": "no upstream relation with role='fixed_point' was verified"
+      },
+      "derived_guard": {
+        "reason": "no verified relation can contribute to the guard",
+        "expr": null,
+        "partial_expr": null,
+        "channels_covered": [],
+        "missing_channels": [
+          0,
+          1
+        ],
+        "fixed_point_relations": [],
+        "observer_relations": [],
+        "parts": [],
+        "compose_status": "UNKNOWN",
+        "status": "UNKNOWN"
+      }
+    },
+    "behaviour": {
+      "local_inactive": 0,
+      "active_masked": 40,
+      "active_exposed": 40
+    },
+    "witnesses": [
+      {
+        "args": {
+          "xs": [],
+          "mode": false
+        },
+        "out_plus": [
+          5,
+          2
+        ],
+        "out_minus": [
+          0,
+          2
+        ],
+        "snap_plus": {
+          "xs": [],
+          "mode": false,
+          "d": {
+            "0": 5,
+            "1": 0
+          }
+        },
+        "snap_minus": {
+          "xs": [],
+          "mode": false,
+          "d": {
+            "0": 0,
+            "1": 0
+          }
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            0
+          ],
+          "mode": false
+        },
+        "out_plus": [
+          5,
+          3
+        ],
+        "out_minus": [
+          0,
+          3
+        ],
+        "snap_plus": {
+          "xs": [
+            0
+          ],
+          "mode": false,
+          "d": {
+            "0": 5,
+            "1": 1
+          }
+        },
+        "snap_minus": {
+          "xs": [
+            0
+          ],
+          "mode": false,
+          "d": {
+            "0": 0,
+            "1": 1
+          }
+        }
+      },
+      {
+        "args": {
+          "xs": [
+            1
+          ],
+          "mode": false
+        },
+        "out_plus": [
+          5,
+          4
+        ],
+        "out_minus": [
+          0,
+          4
+        ],
+        "snap_plus": {
+          "xs": [
+            1
+          ],
+          "mode": false,
+          "d": {
+            "0": 5,
+            "1": 1
+          }
+        },
+        "snap_minus": {
+          "xs": [
+            1
+          ],
+          "mode": false,
+          "d": {
+            "0": 0,
+            "1": 1
+          }
+        }
+      }
+    ],
+    "attribution": {
+      "contrast": {
+        "status": "TESTED",
+        "arguments": {
+          "xs": {
+            "contexts": 2,
+            "contexts_with_flip": 0,
+            "causally_relevant": false,
+            "example": null
+          },
+          "mode": {
+            "contexts": 40,
+            "contexts_with_flip": 40,
+            "causally_relevant": true,
+            "example": {
+              "same_args_except": "mode",
+              "args": {
+                "xs": []
+              },
+              "masked": {
+                "value": true,
+                "out_plus": [
+                  7,
+                  2
+                ],
+                "out_minus": [
+                  7,
+                  2
+                ]
+              },
+              "exposed": {
+                "value": false,
+                "out_plus": [
+                  5,
+                  2
+                ],
+                "out_minus": [
+                  0,
+                  2
+                ]
+              }
+            }
+          }
+        },
+        "causally_relevant": [
+          "mode"
+        ]
+      },
+      "proof_dag": {
+        "nodes": [
+          {
+            "id": "G",
+            "kind": "mask_guard",
+            "source_lines": [],
+            "status": "BOUNDED"
+          }
+        ],
+        "edges": [],
+        "unsupported": [],
+        "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+      }
+    },
+    "all_relations_pass": false,
+    "status": "OK",
+    "target_line": 3,
+    "source_sha256": null
+  },
+  "exchanges": [
+    {
+      "round": 1,
+      "stats": {
+        "prompt_tokens": 785,
+        "completion_tokens": 61,
+        "total_duration_ns": 3370675565,
+        "load_duration_ns": 1929484,
+        "prompt_eval_duration_ns": 221067000,
+        "eval_duration_ns": 3000221000,
+        "model": "qwen2.5-coder:32b",
+        "done_reason": "stop",
+        "wall_seconds": 3.372,
+        "attempt": 0
+      },
+      "raw_response": "{\n  \"mask_guard\": \"mode\",\n  \"explanation\": \"If mode is True, the value of d[0] is set to 7 regardless of the initial assignment in A. Thus, deleting A does not change the output.\",\n  \"used_summaries\": [\"program\"]\n}",
+      "guard": "mode",
+      "report": {
+        "guard_ok": true,
+        "evidence_level": "BOUNDED",
+        "domain_size": 80,
+        "usable_rows": 80,
+        "execution_errors": 0,
+        "post_sorts": {
+          "xs": "list[int]",
+          "mode": "bool",
+          "d": "dict[int,int]"
+        },
+        "relations": [],
+        "guard": {
+          "id": "G",
+          "expr": "mode",
+          "source_lines": [],
+          "status": "BOUNDED",
+          "checked": 80,
+          "unsound": 0,
+          "incomplete": 0,
+          "shape": null,
+          "parts": [
+            "mode"
+          ],
+          "blame": {
+            "accepts_wrong": [
+              0
+            ],
+            "rejects_wrong": [
+              0
+            ]
+          },
+          "counterexamples": []
+        },
+        "observer_soundness": {
+          "status": "UNKNOWN",
+          "reason": "no complete observer set"
+        },
+        "composition": {
+          "upstream_fixed_point": {
+            "status": "UNKNOWN",
+            "reason": "no upstream relation with role='fixed_point' was verified"
+          },
+          "derived_guard": {
+            "reason": "no verified relation can contribute to the guard",
+            "expr": null,
+            "partial_expr": null,
+            "channels_covered": [],
+            "missing_channels": [
+              0,
+              1
+            ],
+            "fixed_point_relations": [],
+            "observer_relations": [],
+            "parts": [],
+            "compose_status": "UNKNOWN",
+            "status": "UNKNOWN"
+          }
+        },
+        "behaviour": {
+          "local_inactive": 0,
+          "active_masked": 40,
+          "active_exposed": 40
+        },
+        "witnesses": [
+          {
+            "args": {
+              "xs": [],
+              "mode": false
+            },
+            "out_plus": [
+              5,
+              2
+            ],
+            "out_minus": [
+              0,
+              2
+            ],
+            "snap_plus": {
+              "xs": [],
+              "mode": false,
+              "d": {
+                "0": 5,
+                "1": 0
+              }
+            },
+            "snap_minus": {
+              "xs": [],
+              "mode": false,
+              "d": {
+                "0": 0,
+                "1": 0
+              }
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                0
+              ],
+              "mode": false
+            },
+            "out_plus": [
+              5,
+              3
+            ],
+            "out_minus": [
+              0,
+              3
+            ],
+            "snap_plus": {
+              "xs": [
+                0
+              ],
+              "mode": false,
+              "d": {
+                "0": 5,
+                "1": 1
+              }
+            },
+            "snap_minus": {
+              "xs": [
+                0
+              ],
+              "mode": false,
+              "d": {
+                "0": 0,
+                "1": 1
+              }
+            }
+          },
+          {
+            "args": {
+              "xs": [
+                1
+              ],
+              "mode": false
+            },
+            "out_plus": [
+              5,
+              4
+            ],
+            "out_minus": [
+              0,
+              4
+            ],
+            "snap_plus": {
+              "xs": [
+                1
+              ],
+              "mode": false,
+              "d": {
+                "0": 5,
+                "1": 1
+              }
+            },
+            "snap_minus": {
+              "xs": [
+                1
+              ],
+              "mode": false,
+              "d": {
+                "0": 0,
+                "1": 1
+              }
+            }
+          }
+        ],
+        "attribution": {
+          "contrast": {
+            "status": "TESTED",
+            "arguments": {
+              "xs": {
+                "contexts": 2,
+                "contexts_with_flip": 0,
+                "causally_relevant": false,
+                "example": null
+              },
+              "mode": {
+                "contexts": 40,
+                "contexts_with_flip": 40,
+                "causally_relevant": true,
+                "example": {
+                  "same_args_except": "mode",
+                  "args": {
+                    "xs": []
+                  },
+                  "masked": {
+                    "value": true,
+                    "out_plus": [
+                      7,
+                      2
+                    ],
+                    "out_minus": [
+                      7,
+                      2
+                    ]
+                  },
+                  "exposed": {
+                    "value": false,
+                    "out_plus": [
+                      5,
+                      2
+                    ],
+                    "out_minus": [
+                      0,
+                      2
+                    ]
+                  }
+                }
+              }
+            },
+            "causally_relevant": [
+              "mode"
+            ]
+          },
+          "proof_dag": {
+            "nodes": [
+              {
+                "id": "G",
+                "kind": "mask_guard",
+                "source_lines": [],
+                "status": "BOUNDED"
+              }
+            ],
+            "edges": [],
+            "unsupported": [],
+            "shape": "guard = (OR fixed_point conditions) OR (AND observer conditions)"
+          }
+        },
+        "all_relations_pass": false,
+        "status": "OK",
+        "target_line": 3,
+        "source_sha256": null
+      },
+      "error": null,
+      "request": [
+        {
+          "role": "system",
+          "content": "You are a precise program-semantics analyst. A single marked assignment A is deleted in one version of a Python program. You explain, with typed relations over the program state, when the two versions still produce the same output. Derive every relation from the actual source code. Do not guess which other statements to delete, do not enumerate source-operation subsets, and never claim that something is proved: a separate bounded checker tests your relations. Respond with one JSON object and nothing else."
+        },
+        {
+          "role": "user",
+          "content": "Program under analysis (line numbers are not part of the code).\nLine 3 holds the single marked target A.\n\n001: def program(xs, mode):\n002:     d = {0: 0, 1: len(xs)}\n003:     d[0] = 5  # TARGET_A\n004:     if mode:\n005:         d[0] = 7\n006:     return d[0], d[1] + len(d) + sum(xs)\n\nInput domain: xs: list[int] with length 0..3, values in {0, 1, 2}; mode: bool (every combination is enumerated; 80 cases)\n\nVariable names in scope at A, with their sorts (nothing else exists):\n  d: dict[int,int]\n  mode: bool\n  xs: list[int]\n\nDeclared function types:\n(no user-defined functions)\n\nGeneric function summaries produced without knowledge of this task:\n{\"functions\": [{\"name\": \"program\", \"computes\": \"A tuple containing two values: the first value is determined by the 'mode' parameter, and the second value is the sum of the length of the input list 'xs', the length of the dictionary 'd', and the sum of all elements in 'xs'.\", \"input\": {\"xs\": \"A list of numbers.\", \"mode\": \"A boolean value.\"}, \"output\": {\"type\": \"tuple\", \"description\": \"The first element is either 5 or 7 based on the 'mode'. The second element is the sum of the length of 'xs', the length of the dictionary 'd', and the sum of all elements in 'xs'.\"}, \"loop_invariants\": \"No loops are present in the function.\", \"depends_on\": [\"xs\", \"mode\"]}]}\n\nUsing these summaries, infer the condition under which deleting A leaves the\nreturned value unchanged. Reply as JSON:\n{\"mask_guard\": \"<bool expr>\", \"explanation\": \"<short>\", \"used_summaries\": [\"...\"]}\n\nAllowed expression language (parsed by a typed checker; no Python execution):\n  sorts        bool, int, list[int], dict[int,int]\n  literals     3, -1, True, False, [1, 2], {0: 1}\n  variables    entry arguments and the local variables right before A\n               (snapshot), plus <name>_post for their values right after A\n               (target_effects only)\n  arithmetic   + - * // %          (int only)\n  boolean      and or not          (parentheses allowed)\n  comparisons  == !=               (any sort)\n               < <= > >=           (int only)\n  conditional  <a> if <cond> else <b>\n  indexing     xs[i]  (list), d[k]  (dict)   -- i/k are int expressions\n  builtins     len, min, max, sum, abs, sorted, vals, distinct, count\n  calls        the program functions listed in the signature table, applied to\n               expressions of the declared parameter sorts\nNot allowed: assignments, lambdas, comprehensions, imports, attribute access,\nslices, strings, float, helper names not listed in the signature table.\n"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "calls": 2,
+    "prompt_tokens": 953,
+    "completion_tokens": 261,
+    "decode_seconds": 13.74,
+    "wall_seconds": 14.61
+  },
+  "domain": {
+    "size": 80,
+    "exhaustive": true
+  },
+  "generated_utc": "2026-10-30T10:50:33.817489+00:00"
+}

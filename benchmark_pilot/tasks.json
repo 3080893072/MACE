@@ -1,0 +1,914 @@
+{
+  "schema": "mace-benchmark-pilot/1",
+  "frozen_at": "2026-11-01",
+  "public_only": true,
+  "notes": "The solver receives only this file.  Masking roles, intervention tables, and per-input labels are in oracle.json / attribution.json and are never passed to the solver.",
+  "tasks": [
+    {
+      "task_id": "ctrl_01",
+      "kind": "controlled",
+      "entry": "program",
+      "program": {
+        "language": "python",
+        "source": "def program(mode, x):\n    v = x\n    v = v + 1  # TARGET_A\n    if mode == 0:\n        v = x\n    return v\n",
+        "target_A": {
+          "line": 3,
+          "text": "v = v + 1",
+          "kind": "assignment"
+        }
+      },
+      "deletion": {
+        "kind": "replace_statement_with_pass",
+        "description": "Delete the target assignment: replace the single statement on the marked line with `pass`.",
+        "p_minus_source": "def program(mode, x):\n    v = x\n    pass  # P-: A deleted\n    if mode == 0:\n        v = x\n    return v\n"
+      },
+      "existing_tests": [
+        {
+          "name": "t_mode0_x0",
+          "source": "def t_mode0_x0():\n    assert program(0, 0) == 0\n",
+          "input": {
+            "mode": 0,
+            "x": 0
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        },
+        {
+          "name": "t_mode0_x1",
+          "source": "def t_mode0_x1():\n    assert program(0, 1) == 1\n",
+          "input": {
+            "mode": 0,
+            "x": 1
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        }
+      ],
+      "input_domain": {
+        "kind": "explicit",
+        "args": [
+          {
+            "name": "mode",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "x",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "cases": [
+          {
+            "mode": 0,
+            "x": 0
+          },
+          {
+            "mode": 0,
+            "x": 1
+          },
+          {
+            "mode": 0,
+            "x": 2
+          },
+          {
+            "mode": 1,
+            "x": 0
+          },
+          {
+            "mode": 1,
+            "x": 1
+          },
+          {
+            "mode": 1,
+            "x": 2
+          }
+        ],
+        "generator": "benchmark_pilot.generators:controlled_cases",
+        "generator_args": {
+          "task_id": "ctrl_01"
+        },
+        "note": "Full Cartesian product of the two argument domains."
+      },
+      "observable_behavior": {
+        "kind": "return_value",
+        "equality": "same return value; a raise in either version is a distinguishable observation"
+      },
+      "why_suspected_redundant": "A developer added v = v + 1 and now suspects it is redundant: a downstream branch may overwrite v.  The suspicion is plausible from reading the code.",
+      "provenance": {
+        "source": "synthetic controlled task, written for this pilot",
+        "real_maintenance": false,
+        "note": "Operation roles are not disclosed in tasks.json.  The task is a designed instrument, not a claim about a real commit."
+      }
+    },
+    {
+      "task_id": "ctrl_02",
+      "kind": "controlled",
+      "entry": "program",
+      "program": {
+        "language": "python",
+        "source": "def program(x, c, d):\n    v = x\n    v = v + 6  # TARGET_A\n    if c == 0:\n        v = v // 6 * 6\n    if d == 0:\n        v = v // 7 * 7\n    return v\n",
+        "target_A": {
+          "line": 3,
+          "text": "v = v + 6",
+          "kind": "assignment"
+        }
+      },
+      "deletion": {
+        "kind": "replace_statement_with_pass",
+        "description": "Delete the target assignment: replace the single statement on the marked line with `pass`.",
+        "p_minus_source": "def program(x, c, d):\n    v = x\n    pass  # P-: A deleted\n    if c == 0:\n        v = v // 6 * 6\n    if d == 0:\n        v = v // 7 * 7\n    return v\n"
+      },
+      "existing_tests": [
+        {
+          "name": "t_rounds_x3",
+          "source": "def t_rounds_x3():\n    assert program(3, 0, 0) == 0\n",
+          "input": {
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        },
+        {
+          "name": "t_rounds_x5",
+          "source": "def t_rounds_x5():\n    assert program(5, 0, 0) == 0\n",
+          "input": {
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        }
+      ],
+      "input_domain": {
+        "kind": "explicit",
+        "args": [
+          {
+            "name": "x",
+            "sort": "int",
+            "legal_values": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "name": "c",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "d",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          }
+        ],
+        "cases": [
+          {
+            "x": 1,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "x": 1,
+            "c": 0,
+            "d": 1
+          },
+          {
+            "x": 1,
+            "c": 1,
+            "d": 0
+          },
+          {
+            "x": 1,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "x": 2,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "x": 2,
+            "c": 0,
+            "d": 1
+          },
+          {
+            "x": 2,
+            "c": 1,
+            "d": 0
+          },
+          {
+            "x": 2,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "x": 3,
+            "c": 0,
+            "d": 1
+          },
+          {
+            "x": 3,
+            "c": 1,
+            "d": 0
+          },
+          {
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "x": 4,
+            "c": 0,
+            "d": 1
+          },
+          {
+            "x": 4,
+            "c": 1,
+            "d": 0
+          },
+          {
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "x": 5,
+            "c": 0,
+            "d": 1
+          },
+          {
+            "x": 5,
+            "c": 1,
+            "d": 0
+          },
+          {
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "x": 6,
+            "c": 0,
+            "d": 1
+          },
+          {
+            "x": 6,
+            "c": 1,
+            "d": 0
+          },
+          {
+            "x": 6,
+            "c": 1,
+            "d": 1
+          }
+        ],
+        "generator": "benchmark_pilot.generators:controlled_cases",
+        "generator_args": {
+          "task_id": "ctrl_02"
+        },
+        "note": "Full Cartesian product of the three argument domains."
+      },
+      "observable_behavior": {
+        "kind": "return_value",
+        "equality": "same return value; a raise in either version is a distinguishable observation"
+      },
+      "why_suspected_redundant": "A developer added v = v + 6 and notices that two nearby roundings may make the increment invisible on some inputs.  Neither rounding looks redundant on its own, so the suspicion is that they interact.",
+      "provenance": {
+        "source": "synthetic controlled task, written for this pilot",
+        "real_maintenance": false,
+        "note": "Operation roles are not disclosed in tasks.json."
+      }
+    },
+    {
+      "task_id": "ctrl_03",
+      "kind": "controlled",
+      "entry": "program",
+      "program": {
+        "language": "python",
+        "source": "def program(p, q, x, c, d):\n    v = x\n    v = v + 4  # TARGET_A\n    if p == 0:\n        v = x\n    if q == 0:\n        v = x\n    if d == 0:\n        v = v // 3 * 3\n    if c == 0:\n        v = v // 7 * 7\n    return v\n",
+        "target_A": {
+          "line": 3,
+          "text": "v = v + 4",
+          "kind": "assignment"
+        }
+      },
+      "deletion": {
+        "kind": "replace_statement_with_pass",
+        "description": "Delete the target assignment: replace the single statement on the marked line with `pass`.",
+        "p_minus_source": "def program(p, q, x, c, d):\n    v = x\n    pass  # P-: A deleted\n    if p == 0:\n        v = x\n    if q == 0:\n        v = x\n    if d == 0:\n        v = v // 3 * 3\n    if c == 0:\n        v = v // 7 * 7\n    return v\n"
+      },
+      "existing_tests": [
+        {
+          "name": "t_b_only",
+          "source": "def t_b_only():\n    assert program(0, 1, 5, 1, 1) == 5\n",
+          "input": {
+            "p": 0,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        },
+        {
+          "name": "t_e_only",
+          "source": "def t_e_only():\n    assert program(1, 0, 6, 1, 1) == 6\n",
+          "input": {
+            "p": 1,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        },
+        {
+          "name": "t_coop",
+          "source": "def t_coop():\n    assert program(1, 1, 4, 0, 0) == 0\n",
+          "input": {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        },
+        {
+          "name": "t_both_overwrite",
+          "source": "def t_both_overwrite():\n    assert program(0, 0, 5, 1, 1) == 5\n",
+          "input": {
+            "p": 0,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        }
+      ],
+      "input_domain": {
+        "kind": "explicit",
+        "args": [
+          {
+            "name": "p",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "q",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "x",
+            "sort": "int",
+            "legal_values": [
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "name": "c",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "d",
+            "sort": "int",
+            "legal_values": [
+              0,
+              1
+            ]
+          }
+        ],
+        "cases": [
+          {
+            "p": 0,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 1,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 1,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 0,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 0,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 0,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 0,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 0,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 0,
+            "q": 0,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 0,
+            "d": 0
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 3,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 4,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 5,
+            "c": 1,
+            "d": 1
+          },
+          {
+            "p": 1,
+            "q": 1,
+            "x": 6,
+            "c": 1,
+            "d": 1
+          }
+        ],
+        "generator": "benchmark_pilot.generators:controlled_cases",
+        "generator_args": {
+          "task_id": "ctrl_03"
+        },
+        "note": "The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed."
+      },
+      "observable_behavior": {
+        "kind": "return_value",
+        "equality": "same return value; a raise in either version is a distinguishable observation"
+      },
+      "why_suspected_redundant": "A developer added v = v + 4 to a function with two overwrite branches, a floor-to-3 and a floor-to-7.  Several operations look individually able to hide the increment; the developer wants to know which combinations really do.",
+      "provenance": {
+        "source": "synthetic controlled task, written for this pilot",
+        "real_maintenance": false,
+        "note": "Operation roles are not disclosed in tasks.json."
+      }
+    },
+    {
+      "task_id": "real_formatdef",
+      "kind": "real",
+      "entry": "program",
+      "program": {
+        "language": "python",
+        "source": "import inspect\n\n\ndef program(func):\n    return \"%s%s\" % (func.__name__, str(inspect.signature(func)))  # TARGET_A\n",
+        "target_A": {
+          "line": 5,
+          "text": "return \"%s%s\" % (func.__name__, str(inspect.signature(func)))",
+          "kind": "call"
+        }
+      },
+      "deletion": {
+        "kind": "reverse_commit_patch",
+        "description": "P+ is the pre-deletion source at the stated parent commit; P- applies the developer's real one-line deletion from the stated child commit.",
+        "diff": "-    return \"%s%s\" % (func.__name__, str(inspect.signature(func)))\n+    return \"%s%s\" % (func.__name__, inspect.signature(func))",
+        "p_minus_source": "import inspect\n\n\ndef program(func):\n    return \"%s%s\" % (func.__name__, inspect.signature(func))  # TARGET_A\n"
+      },
+      "existing_tests": [
+        {
+          "name": "test_formatdef",
+          "source": "def test_formatdef():\n    def function1():\n        pass\n\n    assert program(function1) == \"function1()\"\n\n    def function2(arg1):\n        pass\n\n    assert program(function2) == \"function2(arg1)\"\n\n    def function3(arg1, arg2=\"qwe\"):\n        pass\n\n    assert program(function3) == \"function3(arg1, arg2='qwe')\"\n\n    def function4(arg1, *args, **kwargs):\n        pass\n\n    assert program(function4) == \"function4(arg1, *args, **kwargs)\"\n",
+          "input": {
+            "case_ids": [
+              "function1",
+              "function2",
+              "function3",
+              "function4"
+            ]
+          },
+          "extraction": "_formatdef was renamed to program; the test body is otherwise verbatim from testing/test_helpers.py at the parent commit.",
+          "results": {
+            "plus": {
+              "passed": true,
+              "error": null
+            },
+            "minus": {
+              "passed": true,
+              "error": null
+            }
+          }
+        }
+      ],
+      "existing_test_suite": null,
+      "input_domain": {
+        "kind": "explicit",
+        "args": [
+          "func"
+        ],
+        "cases": [
+          {
+            "id": "function1"
+          },
+          {
+            "id": "function2"
+          },
+          {
+            "id": "function3"
+          },
+          {
+            "id": "function4"
+          },
+          {
+            "id": "function5"
+          },
+          {
+            "id": "function6"
+          },
+          {
+            "id": "function7"
+          },
+          {
+            "id": "function8"
+          }
+        ],
+        "generator": "benchmark_pilot.generators:formatdef_cases",
+        "note": "The program's legal input space is not finite.  The declared domain is a frozen finite set of representative inputs; every claim is BOUNDED to this set, never a proof over all legal inputs."
+      },
+      "observable_behavior": {
+        "kind": "return_value",
+        "equality": "same return value (a string)"
+      },
+      "why_suspected_redundant": "The commit message is exactly \"Remove redundant str() in _formatdef\".  The developer believed str() around inspect.signature(func) was unnecessary and deleted it.",
+      "provenance": {
+        "source": "real maintenance commit",
+        "real_maintenance": true,
+        "repository": "https://github.com/pytest-dev/pluggy",
+        "license": "MIT (LICENSE at the parent commit)",
+        "commit": "0999f64a8c2ab7c7d968ab2e8c8849629a6d891c",
+        "parent_commit": "6011c43de0a1ba729e950f066a44ea8932cecb05",
+        "commit_date": "2020-06-26T11:28:01Z",
+        "commit_message": "Remove redundant str() in _formatdef",
+        "author": "Ran Benita <ran@unusedvar.com>",
+        "source_path": "src/pluggy/manager.py",
+        "source_line": 364,
+        "diff": "-    return \"%s%s\" % (func.__name__, str(inspect.signature(func)))\n+    return \"%s%s\" % (func.__name__, inspect.signature(func))",
+        "why_developer_suspected": "Developers deleted the str() call in a one-line commit whose message calls it redundant; this is the developer's own suspicion, not a reconstruction.",
+        "existing_tests": {
+          "command": "PYTHONPATH=src python -m pytest testing -q",
+          "result_parent": "79 passed",
+          "result_child": "79 passed",
+          "logs": [
+            "benchmark_pilot/logs/real_formatdef_parent_pytest.log",
+            "benchmark_pilot/logs/real_formatdef_child_commit_pytest.log"
+          ],
+          "specific_test": "testing/test_helpers.py::test_formatdef"
+        },
+        "environment": {
+          "python": "3.11.7",
+          "pytest": "7.4.0",
+          "platform": "Windows 11 (win32)",
+          "command": "PYTHONPATH=src python -m pytest testing -q"
+        },
+        "extraction": "The two-line function is reproduced verbatim (including the outer %%s formatting) as a standalone module.  No domain restriction beyond finitely many function objects, declared below."
+      }
+    },
+    {
+      "task_id": "real_setdiff",
+      "kind": "real",
+      "entry": "program",
+      "program": {
+        "language": "python",
+        "source": "def program(declared, provided):\n    notincall = set(declared) - set(provided.keys())  # TARGET_A\n    return sorted(notincall)\n",
+        "target_A": {
+          "line": 2,
+          "text": "notincall = set(declared) - set(provided.keys())",
+          "kind": "assignment"
+        }
+      },
+      "deletion": {
+        "kind": "reverse_commit_patch",
+        "description": "P+ is the pre-deletion source at the stated parent commit; P- applies the developer's real one-line deletion from the stated child commit.",
+        "diff": "-            notincall = set(self.spec.argnames) - set(kwargs.keys())\n+            notincall = set(self.spec.argnames) - kwargs.keys()",
+        "p_minus_source": "def program(declared, provided):\n    notincall = set(declared) - provided.keys()  # TARGET_A\n    return sorted(notincall)\n"
+      },
+      "existing_tests": [],
+      "existing_test_suite": {
+        "command": "PYTHONPATH=src python -m pytest testing -q",
+        "result_parent": "79 passed",
+        "result_child": "79 passed",
+        "logs": [
+          "benchmark_pilot/logs/real_setdiff_parent_pytest.log",
+          "benchmark_pilot/logs/real_setdiff_child_pytest.log"
+        ],
+        "note": "No test in the suite calls _HookCaller.__call__ with a missing declared argument, so the changed warning path is not exercised at this commit."
+      },
+      "input_domain": {
+        "kind": "explicit",
+        "args": [
+          "declared",
+          "provided"
+        ],
+        "cases": [
+          {
+            "id": "empty_empty",
+            "declared": [],
+            "provided": {}
+          },
+          {
+            "id": "ab_a",
+            "declared": [
+              "a",
+              "b"
+            ],
+            "provided": {
+              "a": 1
+            }
+          },
+          {
+            "id": "ab_ab",
+            "declared": [
+              "a",
+              "b"
+            ],
+            "provided": {
+              "a": 1,
+              "b": 2
+            }
+          },
+          {
+            "id": "a_extra",
+            "declared": [
+              "a"
+            ],
+            "provided": {
+              "a": 1,
+              "b": 2
+            }
+          },
+          {
+            "id": "abc_none",
+            "declared": [
+              "a",
+              "b",
+              "c"
+            ],
+            "provided": {}
+          },
+          {
+            "id": "a_empty",
+            "declared": [
+              "a"
+            ],
+            "provided": {}
+          }
+        ],
+        "generator": "benchmark_pilot.generators:setdiff_cases",
+        "note": "The program's legal input space is not finite.  The declared domain is a frozen finite set of representative inputs; every claim is BOUNDED to this set, never a proof over all legal inputs."
+      },
+      "observable_behavior": {
+        "kind": "return_value",
+        "equality": "same sorted list of missing argument names"
+      },
+      "why_suspected_redundant": "The commit message is \"Remove redundant set() on dict keys view\", with the body \"A dict keys view supports set-like operations.\"  The developer explicitly judged the inner set() call redundant.",
+      "provenance": {
+        "source": "real maintenance commit",
+        "real_maintenance": true,
+        "repository": "https://github.com/pytest-dev/pluggy",
+        "license": "MIT (LICENSE at the parent commit)",
+        "commit": "98f1b58bf3650e529373dbcc203fcca9619637ec",
+        "parent_commit": "656bc3d04d3b452d501cfd955c53c5e724a61bc5",
+        "commit_date": "2020-06-29T12:49:33Z",
+        "commit_message": "Remove redundant set() on dict keys view\n\nA dict keys view supports set-like operations.",
+        "author": "Ran Benita <ran@unusedvar.com>",
+        "source_path": "src/pluggy/hooks.py",
+        "source_line": 251,
+        "diff": "-            notincall = set(self.spec.argnames) - set(kwargs.keys())\n+            notincall = set(self.spec.argnames) - kwargs.keys()",
+        "why_developer_suspected": "The commit body states the justification directly: a keys view supports set-like operations.",
+        "existing_tests": {
+          "command": "PYTHONPATH=src python -m pytest testing -q",
+          "result_parent": "79 passed",
+          "result_child": "79 passed",
+          "logs": [
+            "benchmark_pilot/logs/real_setdiff_parent_pytest.log",
+            "benchmark_pilot/logs/real_setdiff_child_pytest.log"
+          ],
+          "specific_test": null
+        },
+        "environment": {
+          "python": "3.11.7",
+          "pytest": "7.4.0",
+          "platform": "Windows 11 (win32)",
+          "command": "PYTHONPATH=src python -m pytest testing -q"
+        },
+        "extraction": "The expression is extracted from _HookCaller.__call__ into a standalone function.  self.spec.argnames becomes declared and kwargs becomes provided; the deleted operation is exactly the inner set() call.  The warning/return that follows the assignment is replaced by returning the missing names, which is the only value the deleted operation can affect."
+      }
+    }
+  ]
+}

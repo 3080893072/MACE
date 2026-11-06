@@ -1,0 +1,123 @@
+{
+  "task_id": "sd_docutils_smartquotes_strip_m1",
+  "story": "SOURCE_DERIVED_MASKING_STORY",
+  "target_operation": {
+    "file": "docutils/frontend.py",
+    "line": 272,
+    "function": "validate_smartquotes_locales",
+    "code": "        quotes = quotes.strip()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "candidate_universe": [
+    {
+      "id": "U1",
+      "file": "docutils/frontend.py",
+      "line": 274,
+      "code": "if \"\\t\" not in quotes:",
+      "role": "Space-only trimming of the quote specification: restores A for space padding.",
+      "patch_anchor_line": 272,
+      "block_span": [
+        273,
+        276
+      ]
+    }
+  ],
+  "inputs": {
+    "mask_space_padding": {
+      "role": "masking",
+      "description": "quote specification padded with spaces",
+      "p_plus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "expose_tab_padding": {
+      "role": "exposing",
+      "description": "quote specification padded with tabs: A trims them, the space-only repair does not",
+      "p_plus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus": {
+        "error": "ValueError: Invalid value \"b'en:\\tabcd'\". Please specify 4 quotes\n    (primary open/close; secondary open/close)."
+      },
+      "p_minus_equals_plus": false,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NOT_SEPARABLE",
+      "empty_kept_masks": false,
+      "u_necessary": true
+    },
+    "control_unpadded": {
+      "role": "control",
+      "description": "quote specification with no padding",
+      "p_plus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus": {
+        "out": [
+          [
+            "en",
+            "abcd"
+          ]
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "msms": [],
+      "mmbs": [],
+      "mmbs_status": "NONE",
+      "empty_kept_masks": true,
+      "u_necessary": false
+    }
+  },
+  "minimality": {
+    "domain": "FINITE_DOMAIN_EXACT over U=[U1]",
+    "subsets": {
+      "[]": "differs from P+",
+      "[U1]": "equal to P+"
+    },
+    "note": "The subset table is shown for the first masking input; every input has its own exact table in evidence/sd_docutils_smartquotes_strip_m1/enumeration.json."
+  },
+  "not_claimed": [
+    "this is not a naturally occurring upstream defect",
+    "no claim that the original test suite exposes the deletion",
+    "no claim outside the declared finite inputs and U"
+  ],
+  "relation_definition_version": "v2.1",
+  "mmbs_definition": "minimal non-empty breaking disabled sets, only when P_MINUS == P_PLUS"
+}

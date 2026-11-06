@@ -1,0 +1,172 @@
+{
+  "task_id": "sd_docutils_make_id_nonid_m2",
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 1,
+    "present": 1,
+    "false_relations": 0,
+    "unmatched_sets": 0
+  },
+  "detail": [
+    {
+      "input": "mask_two_runs",
+      "public_id": "in1",
+      "hidden": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "confirmed": [
+        [
+          "docutils/nodes.py:2241-2241",
+          "docutils/nodes.py:2244-2244"
+        ]
+      ],
+      "candidate_sets": [
+        {
+          "kept_operations": [
+            "docutils/nodes.py:2241-2241"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "true",
+          "rationale": "Replacing commas with hyphens can compensate for the lack of whitespace replacement by hyphens.",
+          "disabled_operations": [
+            "docutils/nodes.py:2244-2244"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/nodes.py:2244-2244"
+          ],
+          "source": "qwen_candidate_set",
+          "relation_type": "alternative_path",
+          "masking_condition": "true",
+          "rationale": "Replacing exclamation marks with hyphens can compensate for the lack of whitespace replacement by hyphens.",
+          "disabled_operations": [
+            "docutils/nodes.py:2241-2241"
+          ],
+          "masked": false,
+          "minimal": false,
+          "status": "NOT_MASKED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        },
+        {
+          "kept_operations": [
+            "docutils/nodes.py:2241-2241",
+            "docutils/nodes.py:2244-2244"
+          ],
+          "source": "qwen_combo_2",
+          "disabled_operations": [],
+          "masked": true,
+          "minimal": true,
+          "status": "CONFIRMED",
+          "minimality_witness": null,
+          "unknown_subset": null
+        }
+      ],
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": true,
+        "hidden_msms_present": true,
+        "false_relations": 0,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "baseline": {
+    "c0_exact": 1,
+    "c0_false": 0,
+    "c0_probes": 2,
+    "direct_exact": null,
+    "old_full_exact": null,
+    "masking_inputs": 2
+  },
+  "recall": {
+    "u_graph": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_graph_only": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "docutils/nodes.py:2246-2246",
+        "docutils/nodes.py:2231-2231",
+        "docutils/nodes.py:2232-2232",
+        "docutils/nodes.py:2233-2233"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 4
+    },
+    "u_ast": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [
+        "docutils/nodes.py:105-105",
+        "docutils/nodes.py:107-107",
+        "docutils/nodes.py:109-109",
+        "docutils/nodes.py:111-111",
+        "docutils/nodes.py:734-734",
+        "docutils/nodes.py:981-981",
+        "docutils/nodes.py:983-983",
+        "docutils/nodes.py:984-984",
+        "docutils/nodes.py:986-986",
+        "docutils/nodes.py:2231-2231",
+        "docutils/nodes.py:2232-2232",
+        "docutils/nodes.py:2233-2233",
+        "docutils/nodes.py:2236-2237",
+        "docutils/nodes.py:2246-2246",
+        "docutils/nodes.py:2247-2247"
+      ],
+      "recall": 1.0,
+      "wrong_candidates": 15
+    },
+    "u_qwen": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    },
+    "u_union": {
+      "covered_blocks": [
+        "U1",
+        "U2"
+      ],
+      "stray_candidates": [],
+      "recall": 1.0,
+      "wrong_candidates": 0
+    }
+  }
+}

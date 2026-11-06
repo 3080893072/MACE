@@ -1,0 +1,61 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/ellipticcurve.py:1365:name:doubler",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/ellipticcurve.py",
+  "function": "_maybe_precompute",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1365,
+    "end_line": 1365,
+    "kind": "Assign",
+    "code": "doubler = doubler.scale()"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": false,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_keys.py::TestVerifyingKeyFromDer::test_edwards_precompute_no_side_effect"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            doubler = doubler.scale()",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "FULL_SUITE_DETECTS_DELETION",
+  "status": "PROJECT_SUITE_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 0.9,
+    "failed_nodeids": [],
+    "stdout_tail": ".                                                                        [100%]\n- generated xml file: <local-path> -\n1 passed in 0.54s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 20.17,
+    "failed_nodeids": [
+      "src.ecdsa.test_ecdsa::test_sig_verify",
+      "src.ecdsa.test_jacobi.TestJacobi::test_add_different_scale_points",
+      "src.ecdsa.test_jacobi.TestJacobi::test_add_one_scaled_point",
+      "src.ecdsa.test_jacobi.TestJacobi::test_add_same_scale_points"
+    ],
+    "stdout_tail": " *: 'NoneType' and 'int'\nE       Failing test case: test_add_one_scaled_point(\nE           self=<ecdsa.test_jacobi.TestJacobi testMethod=test_add_one_scaled_point>,\nE           a_mul=1,\nE           b_mul=1_332_297_598_440_044_874_827_085_038_830_181_364_212_942_568_457,\nE           new_z=1,\nE       )\n\nsrc\\ecdsa\\test_jacobi.py:277: TypeError\n____________________ TestJacobi.test_add_same_scale_points ____________________\n  + Exception Group Traceback (most recent call last):\n  |   File \"D:\\Anaconda3\\Lib\\unittest\\case.py\", line 57, in testPartExecutor\n  |     yield\n  |   File \"D:\\Anaconda3\\Lib\\unittest\\case.py\", line 623, in run\n  |     self._callTestMethod(testMethod)\n  |   File \"D:\\Anaconda3\\Lib\\unittest\\case.py\", line 579, in _callTestMethod\n  |     if method() is not None:\n  |        ^^^^^^^^\n  |   File \"<local-path>\", line 287, in test_add_same_scale_points\n  |     @given(\n  |             \n  |   File \"<local-path>\", line 2330, in wrapped_test\n  |     raise the_error_hypothesis_found\n  | ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)\n  +-+---------------- 1 ----------------\n    | Traceback (most recent call last):\n    |   File \"<local-path>\", line 313, in test_add_same_scale_points\n    |     a.x() * new_zz % p,\n    |     ~~~~~~^~~~~~~~\n    | TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'\n    | Failing test case: test_add_same_scale_points(\n    |     self=<ecdsa.test_jacobi.TestJacobi testMethod=test_add_same_scale_points>,\n    |     a_mul=1_332_297_598_440_044_874_827_085_038_830_181_364_212_942_568_457,\n    |     b_mul=1,\n    |     new_z=1,\n    | )\n    +---------------- 2 ----------------\n    | Traceback (most recent call last):\n    |   File \"<local-path>\", line 319, in test_add_same_scale_points\n    |     b.x() * new_zz % p,\n    |     ~~~~~~^~~~~~~~\n    | TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'\n    | Failing test case: test_add_same_scale_points(\n    |     self=<ecdsa.test_jacobi.TestJacobi testMethod=test_add_same_scale_points>,\n    |     a_mul=1,\n    |     b_mul=1_332_297_598_440_044_874_827_085_038_830_181_364_212_942_568_457,\n    |     new_z=1,\n    | )\n    +------------------------------------\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_ecdsa.py::test_sig_verify - ExceptionGroup: Hypothesis ...\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_add_different_scale_points\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_add_one_scaled_point - Type...\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_add_same_scale_points - Exc...\n4 failed, 1758 passed, 6 skipped, 6 warnings in 19.78s\n",
+    "stderr_tail": ""
+  },
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

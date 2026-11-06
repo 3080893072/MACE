@@ -1,0 +1,57 @@
+{
+  "task_id": "sd_docutils_smartquotes_strip_m1",
+  "project": "docutils",
+  "version": "0.20.1",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M1_SINGLE_OPERATION",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "validate_smartquotes_locales() trims the quote specification before requiring exactly four characters. The patch restores the trimming for space padding only; tab padding survives the repair and fails the four-character check, which is the exposing witness.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "docutils/frontend.py",
+    "line": 272,
+    "function": "validate_smartquotes_locales",
+    "code": "        quotes = quotes.strip()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "validate_smartquotes_locales"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "docutils.frontend.validate_smartquotes_locales(None, [spec], None)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_space_padding",
+      "role": "masking",
+      "description": "quote specification padded with spaces"
+    },
+    {
+      "id": "expose_tab_padding",
+      "role": "exposing",
+      "description": "quote specification padded with tabs: A trims them, the space-only repair does not"
+    },
+    {
+      "id": "control_unpadded",
+      "role": "control",
+      "description": "quote specification with no padding"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

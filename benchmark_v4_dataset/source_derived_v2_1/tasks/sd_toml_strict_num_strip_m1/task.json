@@ -1,0 +1,57 @@
+{
+  "task_id": "sd_toml_strict_num_strip_m1",
+  "project": "toml",
+  "version": "0.10.2",
+  "split": "DEV",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "researcher_constructed": true,
+  "mechanism": "M1_SINGLE_OPERATION",
+  "construction_note": "A is a real statement in the released source.  The deletion and the candidate operations U are researcher-constructed: this task must not be reported as a natural upstream defect.",
+  "construction_rationale": "The numeric grammar check trims surrounding whitespace before applying the leading-zero rule. The patch restores trimming for spaces only; a tab-padded literal keeps its tabs, the leading character is no longer '0', and the check wrongly accepts it - the exposing witness.",
+  "masking_conditions": "The masking verdicts hold exactly on the declared finite input set; the exposing input lies outside the declared repair domain of U and restores the A-effect.",
+  "target_operation": {
+    "file": "toml/decoder.py",
+    "line": 91,
+    "function": "_strictly_valid_num",
+    "code": "    n = n.strip()",
+    "statement": "single statement; deletion keeps the line and indentation"
+  },
+  "related_functions": [
+    "_strictly_valid_num"
+  ],
+  "function_metadata": {
+    "source": "innermost AST FunctionDef/AsyncFunctionDef enclosing A in the upstream file",
+    "related_functions_rule": "A function plus every function enclosing a U anchor",
+    "corrected_in_v2_1": false,
+    "legacy_v2_function": null
+  },
+  "deletion_method": "replace the line with equal-indentation 'pass  # P-: target A deleted'; line numbers are preserved",
+  "legal_input_contract": {
+    "api": "toml.decoder._strictly_valid_num(text)",
+    "constraints": [
+      "inputs use only public/declared API arguments",
+      "no source edits beyond the recorded patch",
+      "observation is the returned value, the serialised output, or the exception type and message"
+    ]
+  },
+  "declared_inputs": [
+    {
+      "id": "mask_space_padded_leading_zero",
+      "role": "masking",
+      "description": "space-padded integer with a leading zero (rejected after trimming)"
+    },
+    {
+      "id": "expose_tab_padded_leading_zero",
+      "role": "exposing",
+      "description": "tab-padded integer: A trims the tabs and rejects it, the space-only repair accepts it"
+    },
+    {
+      "id": "control_plain_integer",
+      "role": "control",
+      "description": "plain integer literal"
+    }
+  ],
+  "original_tests": [],
+  "original_test_suite": {},
+  "scope_note": "Exact over the declared finite inputs and the declared candidate universe U; not a claim over all legal inputs or operations outside U."
+}

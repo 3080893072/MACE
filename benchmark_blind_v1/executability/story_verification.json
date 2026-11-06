@@ -1,0 +1,781 @@
+{
+  "schema_version": "mace-story-verification-v1",
+  "task_id": "blind_01_parse_header_links",
+  "generated_at_utc": "2026-11-01T07:00:10+00:00",
+  "provenance": {
+    "requests_version": "2.31.0",
+    "installed_source_sha256": "c9193a0df87262a9a6041998cfa34600d32e8152f508e79b862a31ab5482a720",
+    "embedded_source_sha256": "30ec21977962e75df1741ca7d700668fa4d240f5635c3cb320c46eca4a3396aa",
+    "p_minus_sha256": "f4b3b2b7822c8265a2a25f87a4936d4107668c650f427ca2abbc3444a2a2fccd",
+    "upstream_test_path": "tests/test_utils.py",
+    "upstream_test_line_range": [
+      644,
+      664
+    ],
+    "upstream_test_block_sha256": "bc1dc592ba999659c69065eb51f9a6bf435edf3c98c76180f7e80dd4428791e9"
+  },
+  "upstream_test_passes_on_installed": true,
+  "upstream_test_error": null,
+  "cases": [
+    {
+      "case_id": "t1",
+      "value": "<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\"",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg",
+          "rel": "front",
+          "type": "image/jpeg"
+        }
+      ],
+      "installed_passed": true,
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "front"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>; rel=front; type=\"image/jpeg"
+              ]
+            ]
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "rel"
+                    ],
+                    [
+                      "str",
+                      "front"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>; rel=front; type=\"image/jpeg\""
+              ]
+            ]
+          ]
+        }
+      },
+      "plus_test_passed": true,
+      "minus_test_passed": true,
+      "observations_equal": true,
+      "a_has_local_effect": true,
+      "target_executed_plus": true,
+      "target_executed_minus": true,
+      "gap": "masked"
+    },
+    {
+      "case_id": "t2",
+      "value": "<http:/.../front.jpeg>",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg"
+        }
+      ],
+      "installed_passed": true,
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>"
+              ]
+            ]
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>"
+              ]
+            ]
+          ]
+        }
+      },
+      "plus_test_passed": true,
+      "minus_test_passed": true,
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "target_executed_plus": true,
+      "target_executed_minus": true,
+      "gap": "unexercised"
+    },
+    {
+      "case_id": "t3",
+      "value": "<http:/.../front.jpeg>;",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg"
+        }
+      ],
+      "installed_passed": true,
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>;"
+              ]
+            ]
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>;"
+              ]
+            ]
+          ]
+        }
+      },
+      "plus_test_passed": true,
+      "minus_test_passed": true,
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "target_executed_plus": true,
+      "target_executed_minus": true,
+      "gap": "unexercised"
+    },
+    {
+      "case_id": "t4",
+      "value": "<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;",
+      "expected": [
+        {
+          "url": "http:/.../front.jpeg",
+          "type": "image/jpeg"
+        },
+        {
+          "url": "http://.../back.jpeg"
+        }
+      ],
+      "installed_passed": true,
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              },
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://.../back.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;"
+              ]
+            ]
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            [
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "type"
+                    ],
+                    [
+                      "str",
+                      "image/jpeg"
+                    ]
+                  ],
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http:/.../front.jpeg"
+                    ]
+                  ]
+                ]
+              },
+              {
+                "dict": [
+                  [
+                    [
+                      "str",
+                      "url"
+                    ],
+                    [
+                      "str",
+                      "http://.../back.jpeg"
+                    ]
+                  ]
+                ]
+              }
+            ]
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                "<http:/.../front.jpeg>; type=\"image/jpeg\",<http://.../back.jpeg>;"
+              ]
+            ]
+          ]
+        }
+      },
+      "plus_test_passed": true,
+      "minus_test_passed": true,
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "target_executed_plus": true,
+      "target_executed_minus": true,
+      "gap": "unexercised"
+    },
+    {
+      "case_id": "t5",
+      "value": "",
+      "expected": [],
+      "installed_passed": true,
+      "plus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                ""
+              ]
+            ]
+          ]
+        }
+      },
+      "minus": {
+        "observation": [
+          "return",
+          [
+            "seq",
+            []
+          ]
+        ],
+        "raised": null,
+        "target_executed": true,
+        "snapshot_after_A": {
+          "dict": [
+            [
+              [
+                "str",
+                "links"
+              ],
+              [
+                "seq",
+                []
+              ]
+            ],
+            [
+              [
+                "str",
+                "replace_chars"
+              ],
+              [
+                "str",
+                " '\""
+              ]
+            ],
+            [
+              [
+                "str",
+                "value"
+              ],
+              [
+                "str",
+                ""
+              ]
+            ]
+          ]
+        }
+      },
+      "plus_test_passed": true,
+      "minus_test_passed": true,
+      "observations_equal": true,
+      "a_has_local_effect": false,
+      "target_executed_plus": true,
+      "target_executed_minus": true,
+      "gap": "unexercised"
+    }
+  ],
+  "counts": {
+    "all_original_tests_pass_on_p_plus": true,
+    "all_original_tests_pass_on_p_minus": true,
+    "caught": 0,
+    "masked_with_local_effect": 1,
+    "unexercised": 4,
+    "assertion_gap": 0,
+    "test_broken": 0,
+    "a_exercised": 1,
+    "p_plus_minus_observations_differ": 0
+  },
+  "oracle_agreement": {
+    "matches": true,
+    "mismatches": []
+  }
+}

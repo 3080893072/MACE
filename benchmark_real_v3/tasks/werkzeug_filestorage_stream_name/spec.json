@@ -1,0 +1,60 @@
+{
+  "task_id": "werkzeug_filestorage_stream_name",
+  "project_id": "werkzeug-2.2.3",
+  "source_version": "Werkzeug 2.2.3",
+  "difficulty": "easy-medium",
+  "mechanism": "conditional overwrite (special-stream reset masks the stream-name derivation)",
+  "target_operation": {
+    "file": "src/werkzeug/datastructures.py",
+    "line": 2918,
+    "code": "filename = getattr(stream, \"name\", None)",
+    "function": "FileStorage.__init__",
+    "note": "fallback that derives the upload filename from the stream when the caller passes none"
+  },
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected",
+  "candidate_universe": [
+    {
+      "id": "special_name_reset",
+      "file": "src/werkzeug/datastructures.py",
+      "line": 2924,
+      "code": "filename = None",
+      "kind": "assignment",
+      "role": "conditional overwrite that erases names such as '<stderr>'"
+    }
+  ],
+  "universe_notes": [
+    "U contains the only later write to 'filename' on the same branch that can erase the value derived at A.",
+    "The os.fsdecode at line 2921 is not in U: on the masking input its input is already str, and it cannot make a derived non-special name equal to None.",
+    "The explicit-filename branch (line 2926) does not execute when A executes.",
+    "Completeness outside these statements is not claimed."
+  ],
+  "probe": "probe_werkzeug_filestorage.py",
+  "inputs": [
+    {
+      "id": "expose_regular_stream",
+      "role": "exposing",
+      "payload": {
+        "stream": "tempfile"
+      },
+      "note": "An opened file has a regular .name. P+ stores it as the filename, P- stores None."
+    },
+    {
+      "id": "mask_special_stream",
+      "role": "masking",
+      "payload": {
+        "stream": "stderr"
+      },
+      "note": "sys.stderr has name '<stderr>'. The reset at line 2924 makes both variants store None; disabling the reset exposes the difference."
+    }
+  ],
+  "scope": {
+    "inputs_executed": 2,
+    "operations_in_universe": 1,
+    "not_claimed": [
+      "All stream types",
+      "All filename encodings",
+      "Operations outside the declared U"
+    ]
+  }
+}

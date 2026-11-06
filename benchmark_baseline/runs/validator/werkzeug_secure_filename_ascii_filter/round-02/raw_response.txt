@@ -1,0 +1,22 @@
+```json
+{
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "filename": "<home>\\Documents\\secret\\password.txt"
+      }
+    }
+  ],
+  "test_gap": {
+    "summary": "The deletion risks exposing the filename as a Windows device file.",
+    "tests": [
+      {
+        "name": "tests/test_utils.py::test_secure_filename",
+        "verdict": "assertion_gap"
+      }
+    ]
+  }
+}
+```

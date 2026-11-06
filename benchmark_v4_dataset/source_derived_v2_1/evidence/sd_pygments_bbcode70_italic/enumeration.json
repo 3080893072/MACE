@@ -1,0 +1,419 @@
+{
+  "case_id": "sd_pygments_bbcode70_italic",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M2_TWO_OPERATION_COOPERATIVE",
+  "slug": "pygments-2.17.2",
+  "file": "pygments/formatters/bbcode.py",
+  "A_line": 70,
+  "A_code": "                end = '[/i]' + end",
+  "original_sha256": "ef370d727a0d8fe742c8996b1e79adab4576a3c6460f5e0de5a9c5578150e4f1",
+  "patched_sha256": "3ebab5010d5397d01d2dc304ae060d95d96c47505eeece6a226fc10c5b6b4cf6",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 70,
+      "role": "First cooperation leg: decides whether the local repair applies (italic and no colour).",
+      "lines": [
+        "_sd_i = bool(ndef['italic']) and not ndef['color']"
+      ]
+    },
+    {
+      "id": "U2",
+      "after_line": 70,
+      "role": "Second cooperation leg: consumes the U1 flag and prepends the missing closing italic tag.",
+      "lines": [
+        "if _sd_i and not end.startswith('[/i]'):",
+        "    end = '[/i]' + end"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 70,
+      "end": 72
+    },
+    "U2": {
+      "begin": 73,
+      "end": 76
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_italic": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "expose_italic_color": {
+        "out": "[color=#ff0000][i]abc[/i][/color] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "mask_italic_codetag": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      }
+    },
+    "P_MINUS": {
+      "mask_italic": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "expose_italic_color": {
+        "out": "[color=#ff0000][i]abc[/color] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "mask_italic_codetag": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_italic": {
+        "out": "[i]abc = 1\n"
+      },
+      "expose_italic_color": {
+        "out": "[color=#ff0000][i]abc[/color] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "mask_italic_codetag": {
+        "out": "[code][i]abc = 1\n[/code]\n"
+      }
+    },
+    "KEEP_U1": {
+      "mask_italic": {
+        "out": "[i]abc = 1\n"
+      },
+      "expose_italic_color": {
+        "out": "[color=#ff0000][i]abc[/color] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "mask_italic_codetag": {
+        "out": "[code][i]abc = 1\n[/code]\n"
+      }
+    },
+    "KEEP_U2": {
+      "mask_italic": {
+        "error": "NameError: name '_sd_i' is not defined"
+      },
+      "expose_italic_color": {
+        "error": "NameError: name '_sd_i' is not defined"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "mask_italic_codetag": {
+        "error": "NameError: name '_sd_i' is not defined"
+      }
+    },
+    "KEEP_U1_U2": {
+      "mask_italic": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "expose_italic_color": {
+        "out": "[color=#ff0000][i]abc[/color] = 1\n"
+      },
+      "control_bold": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "mask_italic_codetag": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      }
+    }
+  },
+  "per_input": {
+    "mask_italic": {
+      "plus": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "p_minus": {
+        "out": "[i]abc[/i] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[i]abc = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[i]abc = 1\n"
+        },
+        "KEEP_U2": {
+          "error": "NameError: name '_sd_i' is not defined"
+        },
+        "KEEP_U1_U2": {
+          "out": "[i]abc[/i] = 1\n"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "u_necessary": true
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    },
+    "expose_italic_color": {
+      "plus": {
+        "out": "[color=#ff0000][i]abc[/i][/color] = 1\n"
+      },
+      "p_minus": {
+        "out": "[color=#ff0000][i]abc[/color] = 1\n"
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[color=#ff0000][i]abc[/color] = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[color=#ff0000][i]abc[/color] = 1\n"
+        },
+        "KEEP_U2": {
+          "error": "NameError: name '_sd_i' is not defined"
+        },
+        "KEEP_U1_U2": {
+          "out": "[color=#ff0000][i]abc[/color] = 1\n"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [],
+        "mmbs": [],
+        "u_necessary": true
+      },
+      "relation": "EXPOSING",
+      "msms_status": "NONE",
+      "mmbs_status": "NOT_SEPARABLE",
+      "mmbs_not_separable_reason": "P_MINUS != P_PLUS: the disabled universe does not reproduce A, so there is no masked baseline and no breaking disabled set is definable"
+    },
+    "control_bold": {
+      "plus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus": {
+        "out": "[b]abc[/b] = 1\n"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[b]abc[/b] = 1\n"
+        },
+        "KEEP_U1": {
+          "out": "[b]abc[/b] = 1\n"
+        },
+        "KEEP_U2": {
+          "out": "[b]abc[/b] = 1\n"
+        },
+        "KEEP_U1_U2": {
+          "out": "[b]abc[/b] = 1\n"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          []
+        ],
+        "mmbs": [
+          []
+        ],
+        "u_necessary": false
+      },
+      "relation": "MASKED",
+      "msms_status": "NONE",
+      "mmbs_status": "NONE"
+    },
+    "mask_italic_codetag": {
+      "plus": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      },
+      "p_minus": {
+        "out": "[code][i]abc[/i] = 1\n[/code]\n"
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1",
+          "U2"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "out": "[code][i]abc = 1\n[/code]\n"
+        },
+        "KEEP_U1": {
+          "out": "[code][i]abc = 1\n[/code]\n"
+        },
+        "KEEP_U2": {
+          "error": "NameError: name '_sd_i' is not defined"
+        },
+        "KEEP_U1_U2": {
+          "out": "[code][i]abc[/i] = 1\n[/code]\n"
+        }
+      },
+      "legacy_v2": {
+        "minimal_masking_sets": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "mmbs": [
+          [
+            "U1",
+            "U2"
+          ]
+        ],
+        "u_necessary": true
+      },
+      "relation": "MASKED",
+      "msms_status": "COMPUTED",
+      "mmbs_status": "COMPUTED"
+    }
+  },
+  "correction": {
+    "version": "v2.1",
+    "rules": [
+      "minimal sets must be non-empty; the empty kept set suppresses non-empty minimal sets",
+      "MMBS is recomputed from the disabled-set observation table and is never copied from MSMS"
+    ],
+    "changed_inputs": [
+      {
+        "input": "mask_italic",
+        "mmbs": {
+          "legacy_v2": [
+            [
+              "U1",
+              "U2"
+            ]
+          ],
+          "v2_1": [
+            [
+              "U1"
+            ],
+            [
+              "U2"
+            ]
+          ]
+        }
+      },
+      {
+        "input": "control_bold",
+        "minimal_masking_sets": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        },
+        "mmbs": {
+          "legacy_v2": [
+            []
+          ],
+          "v2_1": []
+        }
+      },
+      {
+        "input": "mask_italic_codetag",
+        "mmbs": {
+          "legacy_v2": [
+            [
+              "U1",
+              "U2"
+            ]
+          ],
+          "v2_1": [
+            [
+              "U1"
+            ],
+            [
+              "U2"
+            ]
+          ]
+        }
+      }
+    ],
+    "legacy_file": "enumeration_v2_legacy.json"
+  },
+  "status_summary": {
+    "EXPOSING": 1,
+    "MASKED": 3,
+    "mmbs_COMPUTED": 2,
+    "mmbs_NONE": 1,
+    "mmbs_NOT_SEPARABLE": 1,
+    "msms_COMPUTED": 2,
+    "msms_NONE": 2
+  }
+}

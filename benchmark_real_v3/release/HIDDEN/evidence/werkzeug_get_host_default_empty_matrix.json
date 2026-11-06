@@ -1,0 +1,752 @@
+{
+  "task_id": "werkzeug_get_host_default_empty",
+  "project_id": "werkzeug-2.2.3",
+  "project": "Werkzeug",
+  "version": "2.2.3",
+  "target_operation": {
+    "file": "src/werkzeug/sansio/utils.py",
+    "line": 82,
+    "code": "host = \"\"",
+    "function": "get_host",
+    "note": "default host used when neither a Host header nor a server address is supplied"
+  },
+  "candidate_universe": [
+    {
+      "id": "overwrite_host_header",
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 85,
+      "code": "host = host_header",
+      "kind": "assignment",
+      "role": "first conditional overwrite; masks A whenever a Host header is present"
+    },
+    {
+      "id": "overwrite_server",
+      "file": "src/werkzeug/sansio/utils.py",
+      "line": 87,
+      "code": "host = server[0]",
+      "kind": "assignment",
+      "role": "second conditional overwrite; masks A whenever only a server address is present"
+    }
+  ],
+  "probe": "probe_werkzeug_get_host.py",
+  "scope": {
+    "declared_inputs": [
+      "expose_neither",
+      "mask_host_header",
+      "mask_server"
+    ],
+    "candidate_universe_size": 2,
+    "all_subsets_enumerated": true,
+    "exposing_inputs": [
+      "expose_neither"
+    ],
+    "masking_inputs": [
+      "mask_host_header",
+      "mask_server"
+    ],
+    "claim": "Exact over the declared finite inputs and declared candidate universe U.  Not a claim over the whole legal input domain or over operations outside U."
+  },
+  "inputs": {
+    "expose_neither": {
+      "role": "exposing",
+      "payload": {
+        "scheme": "http",
+        "host_header": null,
+        "server": null
+      },
+      "executable": {
+        "EMPTY": true,
+        "overwrite_host_header": true,
+        "overwrite_server": true,
+        "overwrite_host_header+overwrite_server": true
+      },
+      "masked_strict": {
+        "EMPTY": false,
+        "overwrite_host_header": false,
+        "overwrite_server": false,
+        "overwrite_host_header+overwrite_server": false
+      },
+      "exposed": {
+        "EMPTY": true,
+        "overwrite_host_header": true,
+        "overwrite_server": true,
+        "overwrite_host_header+overwrite_server": true
+      },
+      "msms": [],
+      "mmbs": [],
+      "plus_observations": {
+        "EMPTY": {
+          "host": "",
+          "outcome": "return"
+        },
+        "overwrite_host_header": {
+          "host": "",
+          "outcome": "return"
+        },
+        "overwrite_server": {
+          "host": "",
+          "outcome": "return"
+        },
+        "overwrite_host_header+overwrite_server": {
+          "host": "",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        },
+        "overwrite_host_header": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        },
+        "overwrite_server": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        },
+        "overwrite_host_header+overwrite_server": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        }
+      }
+    },
+    "mask_host_header": {
+      "role": "masking",
+      "payload": {
+        "scheme": "http",
+        "host_header": "example.com",
+        "server": null
+      },
+      "executable": {
+        "EMPTY": true,
+        "overwrite_host_header": true,
+        "overwrite_server": true,
+        "overwrite_host_header+overwrite_server": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "overwrite_host_header": false,
+        "overwrite_server": true,
+        "overwrite_host_header+overwrite_server": false
+      },
+      "exposed": {
+        "EMPTY": false,
+        "overwrite_host_header": true,
+        "overwrite_server": false,
+        "overwrite_host_header+overwrite_server": true
+      },
+      "msms": [
+        [
+          "overwrite_host_header"
+        ]
+      ],
+      "mmbs": [
+        [
+          "overwrite_host_header"
+        ]
+      ],
+      "plus_observations": {
+        "EMPTY": {
+          "host": "example.com",
+          "outcome": "return"
+        },
+        "overwrite_host_header": {
+          "host": "",
+          "outcome": "return"
+        },
+        "overwrite_server": {
+          "host": "example.com",
+          "outcome": "return"
+        },
+        "overwrite_host_header+overwrite_server": {
+          "host": "",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "host": "example.com",
+          "outcome": "return"
+        },
+        "overwrite_host_header": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        },
+        "overwrite_server": {
+          "host": "example.com",
+          "outcome": "return"
+        },
+        "overwrite_host_header+overwrite_server": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        }
+      }
+    },
+    "mask_server": {
+      "role": "masking",
+      "payload": {
+        "scheme": "http",
+        "host_header": null,
+        "server": [
+          "example.com",
+          8080
+        ]
+      },
+      "executable": {
+        "EMPTY": true,
+        "overwrite_host_header": true,
+        "overwrite_server": true,
+        "overwrite_host_header+overwrite_server": true
+      },
+      "masked_strict": {
+        "EMPTY": true,
+        "overwrite_host_header": true,
+        "overwrite_server": false,
+        "overwrite_host_header+overwrite_server": false
+      },
+      "exposed": {
+        "EMPTY": false,
+        "overwrite_host_header": false,
+        "overwrite_server": true,
+        "overwrite_host_header+overwrite_server": true
+      },
+      "msms": [
+        [
+          "overwrite_server"
+        ]
+      ],
+      "mmbs": [
+        [
+          "overwrite_server"
+        ]
+      ],
+      "plus_observations": {
+        "EMPTY": {
+          "host": "example.com:8080",
+          "outcome": "return"
+        },
+        "overwrite_host_header": {
+          "host": "example.com:8080",
+          "outcome": "return"
+        },
+        "overwrite_server": {
+          "host": ":8080",
+          "outcome": "return"
+        },
+        "overwrite_host_header+overwrite_server": {
+          "host": ":8080",
+          "outcome": "return"
+        }
+      },
+      "minus_observations": {
+        "EMPTY": {
+          "host": "example.com:8080",
+          "outcome": "return"
+        },
+        "overwrite_host_header": {
+          "host": "example.com:8080",
+          "outcome": "return"
+        },
+        "overwrite_server": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        },
+        "overwrite_host_header+overwrite_server": {
+          "message": "cannot access local variable 'host' where it is not associated with a value",
+          "outcome": "raise",
+          "type": "UnboundLocalError"
+        }
+      }
+    }
+  },
+  "runs": {
+    "plus": {
+      "expose_neither": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "",
+            "outcome": "return"
+          }
+        },
+        "overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header+overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "",
+            "outcome": "return"
+          }
+        }
+      },
+      "mask_host_header": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "",
+            "outcome": "return"
+          }
+        },
+        "overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header+overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "",
+            "outcome": "return"
+          }
+        }
+      },
+      "mask_server": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com:8080",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com:8080",
+            "outcome": "return"
+          }
+        },
+        "overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": ":8080",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header+overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": ":8080",
+            "outcome": "return"
+          }
+        }
+      }
+    },
+    "minus": {
+      "expose_neither": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        },
+        "overwrite_host_header": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        },
+        "overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        },
+        "overwrite_host_header+overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        }
+      },
+      "mask_host_header": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        },
+        "overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header+overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": "example.com",
+            "server": null
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        }
+      },
+      "mask_server": {
+        "EMPTY": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com:8080",
+            "outcome": "return"
+          }
+        },
+        "overwrite_host_header": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "host": "example.com:8080",
+            "outcome": "return"
+          }
+        },
+        "overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        },
+        "overwrite_host_header+overwrite_server": {
+          "probe": "probe_werkzeug_get_host.py",
+          "payload": {
+            "scheme": "http",
+            "host_header": null,
+            "server": [
+              "example.com",
+              8080
+            ]
+          },
+          "command": [
+            "<local-path>",
+            "<local-path>"
+          ],
+          "returncode": 0,
+          "stderr_tail": "",
+          "observation": {
+            "message": "cannot access local variable 'host' where it is not associated with a value",
+            "outcome": "raise",
+            "type": "UnboundLocalError"
+          }
+        }
+      }
+    }
+  }
+}

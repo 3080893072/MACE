@@ -1,0 +1,32 @@
+```json
+{
+  "task_id": "werkzeug_bind_server_name_lower",
+  "claims": [
+    {
+      "operation": {
+        "file": "src/werkzeug/routing/map.py",
+        "line": 219
+      }
+    },
+    {
+      "operation": {
+        "file": "src/werkzeug/routing/map.py",
+        "line": 307
+      }
+    }
+  ],
+  "test_gap": {
+    "summary": "The deletion of the `server_name` assignment in `map.py:307` causes the `server_name` to be lowercased, which may lead to incorrect behavior in certain scenarios where the server name is expected to be in uppercase.",
+    "tests": [
+      {
+        "name": "test_server_name_casing",
+        "verdict": "assertion_gap"
+      },
+      {
+        "name": "test_server_name_interpolation",
+        "verdict": "assertion_gap"
+      }
+    ]
+  }
+}
+```

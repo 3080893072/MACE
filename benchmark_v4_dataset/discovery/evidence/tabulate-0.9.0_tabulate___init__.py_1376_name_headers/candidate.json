@@ -1,0 +1,53 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1376:name:headers",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1376,
+    "end_line": 1376,
+    "kind": "Assign",
+    "code": "headers = list(map(str, keys))  # headers should be strings"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_dict_like",
+    "test/test_output.py::test_dict_like_with_index"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            headers = list(map(str, keys))  # headers should be strings",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.52,
+    "failed_nodeids": [
+      "test.test_input::test_dict_like",
+      "test.test_output::test_dict_like_with_index"
+    ],
+    "stdout_tail": "def test_dict_like():\n        \"Input: a dict of iterables with keys as headers.\"\n        # columns should be padded with None, keys should be used as headers\n        dd = {\"a\": range(3), \"b\": range(101, 105)}\n        # keys' order (hence columns' order) is not deterministic in Python 3\n        # => we have to consider both possible results as valid\n        expected1 = \"\\n\".join(\n            [\"  a    b\", \"---  ---\", \"  0  101\", \"  1  102\", \"  2  103\", \"     104\"]\n        )\n        expected2 = \"\\n\".join(\n            [\"  b    a\", \"---  ---\", \"101    0\", \"102    1\", \"103    2\", \"104\"]\n        )\n        result = tabulate(dd, \"keys\")\n        print(\"Keys' order: %s\" % dd.keys())\n>       assert_in(result, [expected1, expected2])\n\ntest\\test_input.py:107: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nresult = '  k    e\\n---  ---\\n  0  101\\n  1  102\\n  2  103\\n     104'\nexpected_set = ['  a    b\\n---  ---\\n  0  101\\n  1  102\\n  2  103\\n     104', '  b    a\\n---  ---\\n101    0\\n102    1\\n103    2\\n104']\n\n    def assert_in(result, expected_set):\n        nums = range(1, len(expected_set) + 1)\n        for i, expected in zip(nums, expected_set):\n            print(\"Expected %d:\\n%s\\n\" % (i, expected))\n        print(\"Got:\\n%s\\n\" % result)\n>       assert result in expected_set\nE       AssertionError\n\ntest\\common.py:16: AssertionError\n---------------------------- Captured stdout call -----------------------------\nKeys' order: dict_keys(['a', 'b'])\nExpected 1:\n  a    b\n---  ---\n  0  101\n  1  102\n  2  103\n     104\n\nExpected 2:\n  b    a\n---  ---\n101    0\n102    1\n103    2\n104\n\nGot:\n  k    e\n---  ---\n  0  101\n  1  102\n  2  103\n     104\n\n__________________________ test_dict_like_with_index __________________________\n\n    def test_dict_like_with_index():\n        \"Output: a table with a running index\"\n        dd = {\"b\": range(101, 104)}\n        expected = \"\\n\".join([\"      b\", \"--  ---\", \" 0  101\", \" 1  102\", \" 2  103\"])\n        result = tabulate(dd, \"keys\", showindex=True)\n>       assert_equal(result, expected)\n\ntest\\test_output.py:2850: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nexpected = '  k    e\\n---  ---\\n  0  101\\n  1  102\\n  2  103'\nresult = '      b\\n--  ---\\n 0  101\\n 1  102\\n 2  103'\n\n    def assert_equal(expected, result):\n        print(\"Expected:\\n%s\\n\" % expected)\n        print(\"Got:\\n%s\\n\" % result)\n>       assert expected == result\nE       AssertionError\n\ntest\\common.py:8: AssertionError\n---------------------------- Captured stdout call -----------------------------\nExpected:\n  k    e\n---  ---\n  0  101\n  1  102\n  2  103\n\nGot:\n      b\n--  ---\n 0  101\n 1  102\n 2  103\n\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED test/test_input.py::test_dict_like - AssertionError\nFAILED test/test_output.py::test_dict_like_with_index - AssertionError\n2 failed in 0.16s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

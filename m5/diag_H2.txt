@@ -1,0 +1,11 @@
+| fixture | mode | guard src | first bad stage | target | upstream | observer | guard | guard status | unsound/inc | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| dead_flag | mace | qwen | none | BOUNDED | BOUNDED | BOUNDED | BOUNDED | BOUNDED | 0/0 | 1250 | 17.8 |
+| dict_slot | mace | qwen | upstream | BOUNDED | REFUTED | REFUTED | BOUNDED | BOUNDED | 0/0 | 11796 | 51.8 |
+| parity_snap | mace | qwen | upstream | BOUNDED | REFUTED | REFUTED | REFUTED | REFUTED | 85/0 | 13270 | 86.4 |
+
+First bad stage over all cases: none 1, upstream 2
+
+| mode | guard src | cases | exact guard | contract all-pass | invalid guard | `_post` | local out of scope | other type | semantic errors (typed) | tokens | s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| mace | qwen | 3 | 2 | 1 | 0 | 0 | 0 | 0 | 1 | 26316 | 156.0 |

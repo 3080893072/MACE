@@ -1,0 +1,313 @@
+{
+  "case_id": "sd_pygments_groff73_italic",
+  "method": "graph",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "project": "Pygments",
+  "universe": [
+    {
+      "id": "pygments/formatters/groff.py:70-70",
+      "file": "pygments/formatters/groff.py",
+      "first_line": 70,
+      "last_line": 70,
+      "kind": "assign",
+      "code": "                end = regular + end",
+      "graph_score": 1.6,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/groff.py:73-73",
+          "to": "pygments/formatters/groff.py:70-70",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/groff.py:64-64",
+      "file": "pygments/formatters/groff.py",
+      "first_line": 64,
+      "last_line": 64,
+      "kind": "assign",
+      "code": "            start = end = ''",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/groff.py:73-73",
+          "to": "pygments/formatters/groff.py:64-64",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/groff.py:67-67",
+      "file": "pygments/formatters/groff.py",
+      "first_line": 67,
+      "last_line": 67,
+      "kind": "assign",
+      "code": "                end = '\\\\m[]' + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/groff.py:73-73",
+          "to": "pygments/formatters/groff.py:67-67",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/groff.py:82-82",
+      "file": "pygments/formatters/groff.py",
+      "first_line": 82,
+      "last_line": 82,
+      "kind": "assign",
+      "code": "                    end = _sd_tag + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/groff.py:73-73",
+          "to": "pygments/formatters/groff.py:82-82",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/groff.py:86-86",
+      "file": "pygments/formatters/groff.py",
+      "first_line": 86,
+      "last_line": 86,
+      "kind": "assign",
+      "code": "                end = '\\\\M[]' + end",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/groff.py:73-73",
+          "to": "pygments/formatters/groff.py:86-86",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:end",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    },
+    {
+      "id": "pygments/formatters/groff.py:59-59",
+      "file": "pygments/formatters/groff.py",
+      "first_line": 59,
+      "last_line": 59,
+      "kind": "assign",
+      "code": "        regular = '\\\\f[CR]' if self.monospaced else '\\\\f[R]'",
+      "graph_score": 1.1,
+      "graph_path": [
+        {
+          "from": "pygments/formatters/groff.py:73-73",
+          "to": "pygments/formatters/groff.py:59-59",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:regular",
+          "guard": ""
+        }
+      ],
+      "graph_function": "_make_styles"
+    }
+  ],
+  "discovery": {
+    "method": "graph",
+    "rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic",
+    "stats": {
+      "nodes": 30,
+      "edges": 243,
+      "edge_kinds": {
+        "alias": 112,
+        "call": 32,
+        "control": 31,
+        "data": 68
+      },
+      "edge_confidence": {
+        "MAY": 145,
+        "MUST": 95,
+        "UNKNOWN": 3
+      },
+      "deletable": 23,
+      "unresolved_calls": [
+        "UNKNOWN:get_bool_opt",
+        "UNKNOWN:get_int_opt"
+      ]
+    },
+    "eligible": 23,
+    "selected": 6,
+    "truncated": true,
+    "u_covered": [
+      "U3"
+    ],
+    "u_total": [
+      "U1",
+      "U2",
+      "U3"
+    ],
+    "u_recall": 0.333,
+    "u_exact": false
+  },
+  "per_input": [
+    {
+      "public_id": "in1",
+      "input_key": "mask_italic_mono",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/groff.py:59-59",
+          "pygments/formatters/groff.py:64-64",
+          "pygments/formatters/groff.py:82-82"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "pygments/formatters/groff.py:82-82"
+        ]
+      ],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 12,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/groff.py:59-59",
+            "pygments/formatters/groff.py:64-64",
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "evaluations": 49,
+          "elapsed_seconds": 0.014
+        },
+        "first_mmbs": {
+          "set": [
+            "pygments/formatters/groff.py:82-82"
+          ],
+          "evaluations": 7,
+          "elapsed_seconds": 0.002
+        }
+      }
+    },
+    {
+      "public_id": "in2",
+      "input_key": "expose_italic_nonmono",
+      "a_executes": true,
+      "masked_empty": false,
+      "exposed_empty": true,
+      "searched": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "metrics": {}
+    },
+    {
+      "public_id": "in3",
+      "input_key": "control_bold_mono",
+      "a_executes": true,
+      "masked_empty": true,
+      "exposed_empty": false,
+      "searched": true,
+      "msms_ids": [
+        [
+          "pygments/formatters/groff.py:64-64"
+        ]
+      ],
+      "mmbs_ids": [],
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "cache_hits": 11,
+        "first_msms": {
+          "set": [
+            "pygments/formatters/groff.py:64-64"
+          ],
+          "evaluations": 9,
+          "elapsed_seconds": 0.003
+        },
+        "first_mmbs": null
+      }
+    }
+  ],
+  "scoring": {
+    "msms_exact": 0,
+    "msms_exact_intervention": 0,
+    "mmbs_exact": null,
+    "mmbs_status": "NOT_SEPARABLE: reference mmbs is identical to msms on every input of every case",
+    "masking_inputs": 1,
+    "false_relations": 3,
+    "unmatched_sets": 0,
+    "mmbs_emitted_sets": 1,
+    "coop_exact": false
+  },
+  "detail": [
+    {
+      "input": "mask_italic_mono",
+      "hidden_msms": [
+        [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      ],
+      "got_msms_ops": [
+        [
+          "pygments/formatters/groff.py:59-59",
+          "pygments/formatters/groff.py:64-64",
+          "pygments/formatters/groff.py:82-82"
+        ]
+      ],
+      "got_msms_blocks": [
+        [
+          "U3"
+        ]
+      ],
+      "got_msms_blocks_identity": [
+        []
+      ],
+      "stray_ops": [
+        "pygments/formatters/groff.py:59-59",
+        "pygments/formatters/groff.py:64-64"
+      ],
+      "got_msms_intervention_classes": [
+        []
+      ],
+      "msms_exact": false,
+      "intervention_equivalent": false,
+      "got_mmbs_disabled_sets": [
+        [
+          "pygments/formatters/groff.py:82-82"
+        ]
+      ]
+    }
+  ],
+  "cost": {
+    "wall_seconds_algorithm": 2.85,
+    "probe_executions_algorithm": 128,
+    "probe_executions_scoring": 0,
+    "variant_builds": 128,
+    "subsets_evaluated": 128
+  }
+}

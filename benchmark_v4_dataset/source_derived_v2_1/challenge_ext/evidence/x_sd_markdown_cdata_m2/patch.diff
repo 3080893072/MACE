@@ -1,0 +1,33 @@
+--- a/markdown/serializers.py
++++ b/markdown/serializers.py
+@@ -68,12 +68,30 @@
+         # the most common case in most applications.
+         if "&" in text:
+             # Only replace & when not part of an entity
+             text = RE_AMP.sub('&amp;', text)
+         if "<" in text:
+             text = text.replace("<", "&lt;")
++            # SD:U:U1:begin
++            text = text.replace("<", "&lt;", 1)
++            # SD:U:U1:end
++            # SD:U:U2:begin
++            text = text.replace("<", "&lt;", 1)
++            # SD:U:U2:end
++            # SD:U:U3:begin
++            if "\x00" in text:
++                text = text.replace("\x00", "")
++            # SD:U:U3:end
++            # SD:U:U4:begin
++            if "&amp;" in text:
++                text = text.replace("&amp;", "&")
++            # SD:U:U4:end
++            # SD:U:U5:begin
++            if "\r" in text:
++                text = text.replace("\r", "")
++            # SD:U:U5:end
+         if ">" in text:
+             text = text.replace(">", "&gt;")
+         return text
+     except (TypeError, AttributeError):  # pragma: no cover
+         _raise_serialization_error(text)
+ 

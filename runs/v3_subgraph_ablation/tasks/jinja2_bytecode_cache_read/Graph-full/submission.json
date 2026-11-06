@@ -1,0 +1,104 @@
+{
+  "submission_id": "baseline-C",
+  "task_id": "jinja2_bytecode_cache_read",
+  "claims": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "input": {
+        "template": "{{ 6*7 }}",
+        "cached_source": "{{ 1+1 }}"
+      }
+    },
+    {
+      "type": "MSMS",
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "code": "        code = None"
+        },
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 131,
+          "code": "            bucket = bcc.get_bucket(environment, name, filename, source)"
+        },
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137,
+          "code": "            code = environment.compile(source, name, filename)"
+        },
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 146,
+          "end_line": 148,
+          "code": "        return environment.template_class.from_code(\n            environment, code, globals, uptodate\n        )"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 119,
+          "code": "        code = None"
+        }
+      ]
+    },
+    {
+      "type": "MMBS",
+      "inputs": [
+        {
+          "template": "{{ 6*7 }}"
+        },
+        {
+          "template": "{{ 1+1 }}"
+        },
+        {
+          "template": "{% for i in [1,2] %}{{ i }}{% endfor %}"
+        },
+        {
+          "template": "{{ 6*7 }}",
+          "cached_source": "{{ 6*7 }}"
+        }
+      ],
+      "operations": [
+        {
+          "file": "src/jinja2/loaders.py",
+          "line": 137,
+          "code": "            code = environment.compile(source, name, filename)"
+        }
+      ]
+    }
+  ]
+}

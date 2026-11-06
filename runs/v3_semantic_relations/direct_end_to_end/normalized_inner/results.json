@@ -1,0 +1,1910 @@
+{
+  "schema": "mace-direct-end-to-end-v1",
+  "model": "qwen2.5-coder:32b",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0
+  },
+  "tasks": {
+    "ctrl_02": {
+      "task_id": "ctrl_02",
+      "kind": "pilot",
+      "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+      "prompt_sha256": "e5d503628edf6b0e55d7cf4279a56e43d3ba2a96410fa76fedb3db0318b189ba",
+      "model_output": {
+        "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 5, \"text\": \"v = v // 6 * 6\"}\n      ],\n      \"condition\": \"c == 0\",\n      \"rationale\": \"When c is 0, the operation on line 5 nullifies the effect of adding 6 on line 3.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"v = v // 7 * 7\"}\n      ],\n      \"condition\": \"d == 0\",\n      \"rationale\": \"When d is 0, the operation on line 6 nullifies the effect of adding 6 on line 3.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 5, \"text\": \"v = v // 6 * 6\"},\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"v = v // 7 * 7\"}\n      ],\n      \"condition\": \"c == 0 and d == 0\",\n      \"rationale\": \"When both c and d are 0, the operations on lines 5 and 6 together nullify the effect of adding 6 on line 3.\"\n    }\n  ]\n}",
+        "stats": {
+          "prompt_tokens": 1068,
+          "completion_tokens": 286,
+          "total_duration_ns": 23610114178,
+          "load_duration_ns": 8616825470,
+          "prompt_eval_duration_ns": 620603000,
+          "eval_duration_ns": 14269620000,
+          "model": "qwen2.5-coder:32b",
+          "done_reason": "stop",
+          "wall_seconds": 24.242,
+          "attempt": 0
+        },
+        "model": "qwen2.5-coder:32b",
+        "wall_seconds": 24.243,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+          },
+          {
+            "role": "user",
+            "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_02\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(x, c, d):\n   2 |     v = x\n   3 |     v = v + 6  # TARGET_A\n   4 |     if c == 0:\n   5 |         v = v // 6 * 6\n   6 |     if d == 0:\n   7 |         v = v // 7 * 7\n   8 |     return v\n```\n\n## Target A\nLine 3: `v = v + 6`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [1, 2, 3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"x\": 1, \"c\": 0, \"d\": 0}, {\"x\": 1, \"c\": 0, \"d\": 1}, {\"x\": 1, \"c\": 1, \"d\": 0}, {\"x\": 1, \"c\": 1, \"d\": 1}, {\"x\": 2, \"c\": 0, \"d\": 0}, {\"x\": 2, \"c\": 0, \"d\": 1}, {\"x\": 2, \"c\": 1, \"d\": 0}, {\"x\": 2, \"c\": 1, \"d\": 1}, {\"x\": 3, \"c\": 0, \"d\": 0}, {\"x\": 3, \"c\": 0, \"d\": 1}, {\"x\": 3, \"c\": 1, \"d\": 0}, {\"x\": 3, \"c\": 1, \"d\": 1}, {\"x\": 4, \"c\": 0, \"d\": 0}, {\"x\": 4, \"c\": 0, \"d\": 1}, {\"x\": 4, \"c\": 1, \"d\": 0}, {\"x\": 4, \"c\": 1, \"d\": 1}, {\"x\": 5, \"c\": 0, \"d\": 0}, {\"x\": 5, \"c\": 0, \"d\": 1}, {\"x\": 5, \"c\": 1, \"d\": 0}, {\"x\": 5, \"c\": 1, \"d\": 1}, {\"x\": 6, \"c\": 0, \"d\": 0}, {\"x\": 6, \"c\": 0, \"d\": 1}, {\"x\": 6, \"c\": 1, \"d\": 0}, {\"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: Full Cartesian product of the three argument domains.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+          }
+        ]
+      },
+      "relations": [
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L4_C4_if",
+              "key": "op_L4_C4_if",
+              "file": "<program>",
+              "first_line": 4,
+              "last_line": 5,
+              "line": 4,
+              "end_line": 5,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if c == 0:\n        v = v // 6 * 6",
+              "text": "if c == 0:\n        v = v // 6 * 6"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 5,
+                "text": "v = v // 6 * 6"
+              }
+            ],
+            "condition": "c == 0",
+            "rationale": "When c is 0, the operation on line 5 nullifies the effect of adding 6 on line 3."
+          },
+          "verification": {
+            "status": "FALSE",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": false,
+              "disabling_set_exposes": true
+            },
+            "operations": [
+              "C"
+            ],
+            "kind": "independent",
+            "case_id": "case_0000",
+            "input": {
+              "x": 1,
+              "c": 0,
+              "d": 0
+            },
+            "reason": "the declared set enabled alone does not mask A",
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 5,
+                  "text": "v = v // 6 * 6"
+                }
+              ],
+              "condition": "c == 0",
+              "rationale": "When c is 0, the operation on line 5 nullifies the effect of adding 6 on line 3."
+            }
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L6_C4_if",
+              "key": "op_L6_C4_if",
+              "file": "<program>",
+              "first_line": 6,
+              "last_line": 7,
+              "line": 6,
+              "end_line": 7,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if d == 0:\n        v = v // 7 * 7",
+              "text": "if d == 0:\n        v = v // 7 * 7"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 6,
+                "text": "v = v // 7 * 7"
+              }
+            ],
+            "condition": "d == 0",
+            "rationale": "When d is 0, the operation on line 6 nullifies the effect of adding 6 on line 3."
+          },
+          "verification": {
+            "status": "FALSE",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": false,
+              "disabling_set_exposes": true
+            },
+            "operations": [
+              "D"
+            ],
+            "kind": "independent",
+            "case_id": "case_0000",
+            "input": {
+              "x": 1,
+              "c": 0,
+              "d": 0
+            },
+            "reason": "the declared set enabled alone does not mask A",
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 6,
+                  "text": "v = v // 7 * 7"
+                }
+              ],
+              "condition": "d == 0",
+              "rationale": "When d is 0, the operation on line 6 nullifies the effect of adding 6 on line 3."
+            }
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L4_C4_if",
+              "key": "op_L4_C4_if",
+              "file": "<program>",
+              "first_line": 4,
+              "last_line": 5,
+              "line": 4,
+              "end_line": 5,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if c == 0:\n        v = v // 6 * 6",
+              "text": "if c == 0:\n        v = v // 6 * 6"
+            },
+            {
+              "id": "op_L6_C4_if",
+              "key": "op_L6_C4_if",
+              "file": "<program>",
+              "first_line": 6,
+              "last_line": 7,
+              "line": 6,
+              "end_line": 7,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if d == 0:\n        v = v // 7 * 7",
+              "text": "if d == 0:\n        v = v // 7 * 7"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 5,
+                "text": "v = v // 6 * 6"
+              },
+              {
+                "file": "<program>",
+                "line": 6,
+                "text": "v = v // 7 * 7"
+              }
+            ],
+            "condition": "c == 0 and d == 0",
+            "rationale": "When both c and d are 0, the operations on lines 5 and 6 together nullify the effect of adding 6 on line 3."
+          },
+          "verification": {
+            "status": "FALSE",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": true,
+              "disabling_set_exposes": true,
+              "proper_subsets_do_not_mask": {
+                "C": true,
+                "D": true
+              }
+            },
+            "operations": [
+              "C",
+              "D"
+            ],
+            "kind": "cooperative",
+            "case_id": "case_0000",
+            "input": {
+              "x": 1,
+              "c": 0,
+              "d": 0
+            },
+            "condition": {
+              "status": "VALID",
+              "exact": false,
+              "sound": false,
+              "complete": true,
+              "false_accept": [
+                "case_0020"
+              ],
+              "false_reject": [],
+              "witness_value": true
+            },
+            "reason": "condition is unsound: it accepts inputs where the declared relation does not hold",
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 5,
+                  "text": "v = v // 6 * 6"
+                },
+                {
+                  "file": "<program>",
+                  "line": 6,
+                  "text": "v = v // 7 * 7"
+                }
+              ],
+              "condition": "c == 0 and d == 0",
+              "rationale": "When both c and d are 0, the operations on lines 5 and 6 together nullify the effect of adding 6 on line 3."
+            }
+          }
+        }
+      ],
+      "summary": {
+        "call_error": null,
+        "raw_relations": 3,
+        "mapped_relations": 3,
+        "rejected_relations": 0,
+        "parse_error": null,
+        "verified_relations": 0,
+        "true_relations": 1,
+        "covered_true_relations": 0,
+        "exact_task": false,
+        "statuses": [
+          "FALSE",
+          "FALSE",
+          "FALSE"
+        ]
+      }
+    },
+    "ctrl_03": {
+      "task_id": "ctrl_03",
+      "kind": "pilot",
+      "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_03\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(p, q, x, c, d):\n   2 |     v = x\n   3 |     v = v + 4  # TARGET_A\n   4 |     if p == 0:\n   5 |         v = x\n   6 |     if q == 0:\n   7 |         v = x\n   8 |     if d == 0:\n   9 |         v = v // 3 * 3\n  10 |     if c == 0:\n  11 |         v = v // 7 * 7\n  12 |     return v\n```\n\n## Target A\nLine 3: `v = v + 4`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"p\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"q\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 1, \"x\": 6, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 6, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 6, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 4, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+      "prompt_sha256": "137e1af0c66140944eda3db21a2d3ff3756456717cb4701eb10ba0b0c38acfb2",
+      "model_output": {
+        "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 4, \"text\": \"if p == 0:\"},\n        {\"file\": \"<program>\", \"line\": 5, \"text\": \"    v = x\"}\n      ],\n      \"condition\": \"p == 0\",\n      \"rationale\": \"If p is 0, the value of v is reassigned to x, making the addition in TARGET_A unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 6, \"text\": \"if q == 0:\"},\n        {\"file\": \"<program>\", \"line\": 7, \"text\": \"    v = x\"}\n      ],\n      \"condition\": \"q == 0\",\n      \"rationale\": \"If q is 0, the value of v is reassigned to x, making the addition in TARGET_A unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 8, \"text\": \"if d == 0:\"},\n        {\"file\": \"<program>\", \"line\": 9, \"text\": \"    v = v // 3 * 3\"}\n      ],\n      \"condition\": \"d == 0 and (x + 4) % 3 == 0\",\n      \"rationale\": \"If d is 0 and the result of v + 4 is divisible by 3, the subsequent operation does not change the value of v, making the addition in TARGET_A unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 10, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 11, \"text\": \"    v = v // 7 * 7\"}\n      ],\n      \"condition\": \"c == 0 and (x + 4) % 7 == 0\",\n      \"rationale\": \"If c is 0 and the result of v + 4 is divisible by 7, the subsequent operation does not change the value of v, making the addition in TARGET_A unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"<program>\", \"line\": 8, \"text\": \"if d == 0:\"},\n        {\"file\": \"<program>\", \"line\": 9, \"text\": \"    v = v // 3 * 3\"},\n        {\"file\": \"<program>\", \"line\": 10, \"text\": \"if c == 0:\"},\n        {\"file\": \"<program>\", \"line\": 11, \"text\": \"    v = v // 7 * 7\"}\n      ],\n      \"condition\": \"d == 0 and c == 0 and (x + 4) % 21 == 0\",\n      \"rationale\": \"If both d and c are 0 and the result of v + 4 is divisible by 21, both subsequent operations do not change the value of v, making the addition in TARGET_A unobservable.\"\n    }\n  ]\n}",
+        "stats": {
+          "prompt_tokens": 1356,
+          "completion_tokens": 665,
+          "total_duration_ns": 35685146296,
+          "load_duration_ns": 83542709,
+          "prompt_eval_duration_ns": 660665000,
+          "eval_duration_ns": 33199114000,
+          "model": "qwen2.5-coder:32b",
+          "done_reason": "stop",
+          "wall_seconds": 36.275,
+          "attempt": 0
+        },
+        "model": "qwen2.5-coder:32b",
+        "wall_seconds": 36.276,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+          },
+          {
+            "role": "user",
+            "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nctrl_03\n\n## Files\n`<program>`\n\n## Program with source line numbers\n```text\n   1 | def program(p, q, x, c, d):\n   2 |     v = x\n   3 |     v = v + 4  # TARGET_A\n   4 |     if p == 0:\n   5 |         v = x\n   6 |     if q == 0:\n   7 |         v = x\n   8 |     if d == 0:\n   9 |         v = v // 3 * 3\n  10 |     if c == 0:\n  11 |         v = v // 7 * 7\n  12 |     return v\n```\n\n## Target A\nLine 3: `v = v + 4`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: [{\"name\": \"p\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"q\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [3, 4, 5, 6]}, {\"name\": \"c\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"d\", \"sort\": \"int\", \"legal_values\": [0, 1]}]\nFrozen legal cases: [{\"p\": 0, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 1, \"x\": 6, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 0, \"x\": 6, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 0, \"q\": 0, \"x\": 6, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 4, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 0, \"d\": 0}, {\"p\": 1, \"q\": 1, \"x\": 3, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 4, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 5, \"c\": 1, \"d\": 1}, {\"p\": 1, \"q\": 1, \"x\": 6, \"c\": 1, \"d\": 1}]\nLegal constraints: The legal domain is the union of five control regimes, not the full Cartesian product; the 20 frozen cases are listed explicitly.  The restriction is part of the task definition and was fixed before any submission existed.\n\n## Observable\n{\"kind\": \"return_value\", \"equality\": \"same return value; a raise in either version is a distinguishable observation\"}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+          }
+        ]
+      },
+      "relations": [
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L4_C4_if",
+              "key": "op_L4_C4_if",
+              "file": "<program>",
+              "first_line": 4,
+              "last_line": 5,
+              "line": 4,
+              "end_line": 5,
+              "col": 4,
+              "end_col": 13,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if p == 0:\n        v = x",
+              "text": "if p == 0:\n        v = x"
+            }
+          ],
+          "duplicates": 1,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 4,
+                "text": "if p == 0:"
+              },
+              {
+                "file": "<program>",
+                "line": 5,
+                "text": "    v = x"
+              }
+            ],
+            "condition": "p == 0",
+            "rationale": "If p is 0, the value of v is reassigned to x, making the addition in TARGET_A unobservable."
+          },
+          "verification": {
+            "status": "VERIFIED",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": true,
+              "disabling_set_exposes": true,
+              "proper_subsets_do_not_mask": {}
+            },
+            "operations": [
+              "B"
+            ],
+            "kind": "independent",
+            "case_id": "case_0000",
+            "input": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "condition": {
+              "status": "VALID",
+              "exact": true,
+              "sound": true,
+              "complete": true,
+              "false_accept": [],
+              "false_reject": [],
+              "witness_value": true
+            },
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 4,
+                  "text": "if p == 0:"
+                },
+                {
+                  "file": "<program>",
+                  "line": 5,
+                  "text": "    v = x"
+                }
+              ],
+              "condition": "p == 0",
+              "rationale": "If p is 0, the value of v is reassigned to x, making the addition in TARGET_A unobservable."
+            }
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L6_C4_if",
+              "key": "op_L6_C4_if",
+              "file": "<program>",
+              "first_line": 6,
+              "last_line": 7,
+              "line": 6,
+              "end_line": 7,
+              "col": 4,
+              "end_col": 13,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if q == 0:\n        v = x",
+              "text": "if q == 0:\n        v = x"
+            }
+          ],
+          "duplicates": 1,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 6,
+                "text": "if q == 0:"
+              },
+              {
+                "file": "<program>",
+                "line": 7,
+                "text": "    v = x"
+              }
+            ],
+            "condition": "q == 0",
+            "rationale": "If q is 0, the value of v is reassigned to x, making the addition in TARGET_A unobservable."
+          },
+          "verification": {
+            "status": "VERIFIED",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": true,
+              "disabling_set_exposes": true,
+              "proper_subsets_do_not_mask": {}
+            },
+            "operations": [
+              "E"
+            ],
+            "kind": "independent",
+            "case_id": "case_0004",
+            "input": {
+              "p": 1,
+              "q": 0,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "condition": {
+              "status": "VALID",
+              "exact": true,
+              "sound": true,
+              "complete": true,
+              "false_accept": [],
+              "false_reject": [],
+              "witness_value": true
+            },
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 6,
+                  "text": "if q == 0:"
+                },
+                {
+                  "file": "<program>",
+                  "line": 7,
+                  "text": "    v = x"
+                }
+              ],
+              "condition": "q == 0",
+              "rationale": "If q is 0, the value of v is reassigned to x, making the addition in TARGET_A unobservable."
+            }
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L8_C4_if",
+              "key": "op_L8_C4_if",
+              "file": "<program>",
+              "first_line": 8,
+              "last_line": 9,
+              "line": 8,
+              "end_line": 9,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if d == 0:\n        v = v // 3 * 3",
+              "text": "if d == 0:\n        v = v // 3 * 3"
+            }
+          ],
+          "duplicates": 1,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 8,
+                "text": "if d == 0:"
+              },
+              {
+                "file": "<program>",
+                "line": 9,
+                "text": "    v = v // 3 * 3"
+              }
+            ],
+            "condition": "d == 0 and (x + 4) % 3 == 0",
+            "rationale": "If d is 0 and the result of v + 4 is divisible by 3, the subsequent operation does not change the value of v, making the addition in TARGET_A unobservable."
+          },
+          "verification": {
+            "status": "FALSE",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": false,
+              "disabling_set_exposes": false
+            },
+            "operations": [
+              "D"
+            ],
+            "kind": "independent",
+            "case_id": "case_0000",
+            "input": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "reason": "the declared set enabled alone does not mask A",
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 8,
+                  "text": "if d == 0:"
+                },
+                {
+                  "file": "<program>",
+                  "line": 9,
+                  "text": "    v = v // 3 * 3"
+                }
+              ],
+              "condition": "d == 0 and (x + 4) % 3 == 0",
+              "rationale": "If d is 0 and the result of v + 4 is divisible by 3, the subsequent operation does not change the value of v, making the addition in TARGET_A unobservable."
+            }
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L10_C4_if",
+              "key": "op_L10_C4_if",
+              "file": "<program>",
+              "first_line": 10,
+              "last_line": 11,
+              "line": 10,
+              "end_line": 11,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if c == 0:\n        v = v // 7 * 7",
+              "text": "if c == 0:\n        v = v // 7 * 7"
+            }
+          ],
+          "duplicates": 1,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 10,
+                "text": "if c == 0:"
+              },
+              {
+                "file": "<program>",
+                "line": 11,
+                "text": "    v = v // 7 * 7"
+              }
+            ],
+            "condition": "c == 0 and (x + 4) % 7 == 0",
+            "rationale": "If c is 0 and the result of v + 4 is divisible by 7, the subsequent operation does not change the value of v, making the addition in TARGET_A unobservable."
+          },
+          "verification": {
+            "status": "FALSE",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": false,
+              "disabling_set_exposes": false
+            },
+            "operations": [
+              "C"
+            ],
+            "kind": "independent",
+            "case_id": "case_0000",
+            "input": {
+              "p": 0,
+              "q": 1,
+              "x": 3,
+              "c": 1,
+              "d": 1
+            },
+            "reason": "the declared set enabled alone does not mask A",
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 10,
+                  "text": "if c == 0:"
+                },
+                {
+                  "file": "<program>",
+                  "line": 11,
+                  "text": "    v = v // 7 * 7"
+                }
+              ],
+              "condition": "c == 0 and (x + 4) % 7 == 0",
+              "rationale": "If c is 0 and the result of v + 4 is divisible by 7, the subsequent operation does not change the value of v, making the addition in TARGET_A unobservable."
+            }
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "op_L8_C4_if",
+              "key": "op_L8_C4_if",
+              "file": "<program>",
+              "first_line": 8,
+              "last_line": 9,
+              "line": 8,
+              "end_line": 9,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if d == 0:\n        v = v // 3 * 3",
+              "text": "if d == 0:\n        v = v // 3 * 3"
+            },
+            {
+              "id": "op_L10_C4_if",
+              "key": "op_L10_C4_if",
+              "file": "<program>",
+              "first_line": 10,
+              "last_line": 11,
+              "line": 10,
+              "end_line": 11,
+              "col": 4,
+              "end_col": 22,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if c == 0:\n        v = v // 7 * 7",
+              "text": "if c == 0:\n        v = v // 7 * 7"
+            }
+          ],
+          "duplicates": 2,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "<program>",
+                "line": 8,
+                "text": "if d == 0:"
+              },
+              {
+                "file": "<program>",
+                "line": 9,
+                "text": "    v = v // 3 * 3"
+              },
+              {
+                "file": "<program>",
+                "line": 10,
+                "text": "if c == 0:"
+              },
+              {
+                "file": "<program>",
+                "line": 11,
+                "text": "    v = v // 7 * 7"
+              }
+            ],
+            "condition": "d == 0 and c == 0 and (x + 4) % 21 == 0",
+            "rationale": "If both d and c are 0 and the result of v + 4 is divisible by 21, both subsequent operations do not change the value of v, making the addition in TARGET_A unobservable."
+          },
+          "verification": {
+            "status": "FALSE",
+            "checks": {
+              "a_has_local_effect": true,
+              "original_masks": true,
+              "only_set_masks": true,
+              "disabling_set_exposes": true,
+              "proper_subsets_do_not_mask": {
+                "C": true,
+                "D": true
+              }
+            },
+            "operations": [
+              "C",
+              "D"
+            ],
+            "kind": "cooperative",
+            "case_id": "case_0012",
+            "input": {
+              "p": 1,
+              "q": 1,
+              "x": 3,
+              "c": 0,
+              "d": 0
+            },
+            "condition": {
+              "status": "VALID",
+              "exact": false,
+              "sound": true,
+              "complete": false,
+              "false_accept": [],
+              "false_reject": [
+                "case_0012",
+                "case_0013"
+              ],
+              "witness_value": false
+            },
+            "reason": "condition is false on the witness input",
+            "relation": {
+              "operations": [
+                {
+                  "file": "<program>",
+                  "line": 8,
+                  "text": "if d == 0:"
+                },
+                {
+                  "file": "<program>",
+                  "line": 9,
+                  "text": "    v = v // 3 * 3"
+                },
+                {
+                  "file": "<program>",
+                  "line": 10,
+                  "text": "if c == 0:"
+                },
+                {
+                  "file": "<program>",
+                  "line": 11,
+                  "text": "    v = v // 7 * 7"
+                }
+              ],
+              "condition": "d == 0 and c == 0 and (x + 4) % 21 == 0",
+              "rationale": "If both d and c are 0 and the result of v + 4 is divisible by 21, both subsequent operations do not change the value of v, making the addition in TARGET_A unobservable."
+            }
+          }
+        }
+      ],
+      "summary": {
+        "call_error": null,
+        "raw_relations": 5,
+        "mapped_relations": 5,
+        "rejected_relations": 0,
+        "parse_error": null,
+        "verified_relations": 2,
+        "true_relations": 4,
+        "covered_true_relations": 2,
+        "exact_task": false,
+        "statuses": [
+          "VERIFIED",
+          "VERIFIED",
+          "FALSE",
+          "FALSE",
+          "FALSE"
+        ]
+      }
+    },
+    "werkzeug_get_host_default_empty": {
+      "task_id": "werkzeug_get_host_default_empty",
+      "kind": "real_v3",
+      "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_get_host_default_empty\n\n## Files\n`src/werkzeug/sansio/utils.py`\n\n## Program with source line numbers\n```text\n  56 | def get_host(\n  57 |     scheme: str,\n  58 |     host_header: t.Optional[str],\n  59 |     server: t.Optional[t.Tuple[str, t.Optional[int]]] = None,\n  60 |     trusted_hosts: t.Optional[t.Iterable[str]] = None,\n  61 | ) -> str:\n  62 |     \"\"\"Return the host for the given parameters.\n  63 | \n  64 |     This first checks the ``host_header``. If it's not present, then\n  65 |     ``server`` is used. The host will only contain the port if it is\n  66 |     different than the standard port for the protocol.\n  67 | \n  68 |     Optionally, verify that the host is trusted using\n  69 |     :func:`host_is_trusted` and raise a\n  70 |     :exc:`~werkzeug.exceptions.SecurityError` if it is not.\n  71 | \n  72 |     :param scheme: The protocol the request used, like ``\"https\"``.\n  73 |     :param host_header: The ``Host`` header value.\n  74 |     :param server: Address of the server. ``(host, port)``, or\n  75 |         ``(path, None)`` for unix sockets.\n  76 |     :param trusted_hosts: A list of trusted host names.\n  77 | \n  78 |     :return: Host, with port if necessary.\n  79 |     :raise ~werkzeug.exceptions.SecurityError: If the host is not\n  80 |         trusted.\n  81 |     \"\"\"\n  82 |     host = \"\"\n  83 | \n  84 |     if host_header is not None:\n  85 |         host = host_header\n  86 |     elif server is not None:\n  87 |         host = server[0]\n  88 | \n  89 |         if server[1] is not None:\n  90 |             host = f\"{host}:{server[1]}\"\n  91 | \n  92 |     if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n  93 |         host = host[:-3]\n  94 |     elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n  95 |         host = host[:-4]\n  96 | \n  97 |     if trusted_hosts is not None:\n  98 |         if not host_is_trusted(host, trusted_hosts):\n  99 |             raise SecurityError(f\"Host {host!r} is not trusted.\")\n 100 | \n 101 |     return host\n```\n\n## Target A\nLine 82: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"host_header\": {\"description\": \"Host header value, or null when absent.\", \"max_length\": 1024, \"required\": false, \"type\": \"string|null\"}, \"scheme\": {\"description\": \"URL scheme; defaults to http.\", \"enum\": [\"http\", \"https\", \"ws\", \"wss\"], \"required\": false, \"type\": \"string\"}, \"server\": {\"description\": \"Server address [host, port], or null.\", \"items\": [\"string\", \"integer|null\"], \"required\": false, \"type\": \"array|null\"}}\nFrozen legal cases: [{\"scheme\": \"http\", \"host_header\": null, \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"example.com\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": null, \"server\": [\"example.com\", 8080]}, {\"scheme\": \"https\", \"host_header\": \"example.com:443\", \"server\": [\"example.com\", 443]}, {\"scheme\": \"ws\", \"host_header\": \"Example.COM:80\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"spam\", \"server\": [\"spam\", 80]}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; scheme must be one of http, https, ws, wss.; host_header must be a string or null.; server must be null or a two-element array [string, integer|null]; port must be 0..65535.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"host\": \"string\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+      "prompt_sha256": "0ee7228363d4e02a64c7b937a8c2253e9271a81a53afe319d92c002978e81902",
+      "model_output": {
+        "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 84, \"text\": \"if host_header is not None:\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 85, \"text\": \"    host = host_header\"}\n      ],\n      \"condition\": \"host_header is not None\",\n      \"rationale\": \"If host_header is not None, the value of host is set from host_header, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 86, \"text\": \"elif server is not None:\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 87, \"text\": \"    host = server[0]\"}\n      ],\n      \"condition\": \"host_header is None and server is not None\",\n      \"rationale\": \"If host_header is None and server is not None, the value of host is set from server[0], making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 89, \"text\": \"if server[1] is not None:\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 90, \"text\": \"    host = f\\\"{host}:{server[1]}\\\"\"}\n      ],\n      \"condition\": \"host_header is None and server is not None and server[1] is not None\",\n      \"rationale\": \"If host_header is None, server is not None, and server[1] is not None, the value of host is updated to include the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 92, \"text\": \"if scheme in {\\\"http\\\", \\\"ws\\\"} and host.endswith(\\\":80\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 93, \"text\": \"    host = host[:-3]\"}\n      ],\n      \"condition\": \"host_header is not None and host.endswith(\\\":80\\\") and scheme in {\\\"http\\\", \\\"ws\\\"}\",\n      \"rationale\": \"If host_header is not None, host ends with \\\":80\\\", and scheme is either \\\"http\\\" or \\\"ws\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 92, \"text\": \"if scheme in {\\\"http\\\", \\\"ws\\\"} and host.endswith(\\\":80\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 93, \"text\": \"    host = host[:-3]\"}\n      ],\n      \"condition\": \"host_header is None and server is not None and server[1] == 80 and scheme in {\\\"http\\\", \\\"ws\\\"}\",\n      \"rationale\": \"If host_header is None, server is not None, server[1] is 80, and scheme is either \\\"http\\\" or \\\"ws\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 94, \"text\": \"elif scheme in {\\\"https\\\", \\\"wss\\\"} and host.endswith(\\\":443\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 95, \"text\": \"    host = host[:-4]\"}\n      ],\n      \"condition\": \"host_header is not None and host.endswith(\\\":443\\\") and scheme in {\\\"https\\\", \\\"wss\\\"}\",\n      \"rationale\": \"If host_header is not None, host ends with \\\":443\\\", and scheme is either \\\"https\\\" or \\\"wss\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 94, \"text\": \"elif scheme in {\\\"https\\\", \\\"wss\\\"} and host.endswith(\\\":443\\\"):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 95, \"text\": \"    host = host[:-4]\"}\n      ],\n      \"condition\": \"host_header is None and server is not None and server[1] == 443 and scheme in {\\\"https\\\", \\\"wss\\\"}\",\n      \"rationale\": \"If host_header is None, server is not None, server[1] is 443, and scheme is either \\\"https\\\" or \\\"wss\\\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 98, \"text\": \"if not host_is_trusted(host, trusted_hosts):\"},\n        {\"file\": \"src/werkzeug/sansio/utils.py\", \"line\": 99, \"text\": \"    raise SecurityError(f\\\"Host {host!r} is not trusted.\\\")\"}\n      ],\n      \"condition\": \"trusted_hosts is not None and not host_is_trusted(host, trusted_hosts)\",\n      \"rationale\": \"If trusted_hosts is not None and the host is not trusted, a SecurityError is raised, making the initial assignment of host to an empty string unobservable.\"\n    }\n  ]\n}",
+        "stats": {
+          "prompt_tokens": 1421,
+          "completion_tokens": 1320,
+          "total_duration_ns": 68726481936,
+          "load_duration_ns": 2662770,
+          "prompt_eval_duration_ns": 681261000,
+          "eval_duration_ns": 66023579000,
+          "model": "qwen2.5-coder:32b",
+          "done_reason": "stop",
+          "wall_seconds": 69.482,
+          "attempt": 0
+        },
+        "model": "qwen2.5-coder:32b",
+        "wall_seconds": 69.485,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+          },
+          {
+            "role": "user",
+            "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_get_host_default_empty\n\n## Files\n`src/werkzeug/sansio/utils.py`\n\n## Program with source line numbers\n```text\n  56 | def get_host(\n  57 |     scheme: str,\n  58 |     host_header: t.Optional[str],\n  59 |     server: t.Optional[t.Tuple[str, t.Optional[int]]] = None,\n  60 |     trusted_hosts: t.Optional[t.Iterable[str]] = None,\n  61 | ) -> str:\n  62 |     \"\"\"Return the host for the given parameters.\n  63 | \n  64 |     This first checks the ``host_header``. If it's not present, then\n  65 |     ``server`` is used. The host will only contain the port if it is\n  66 |     different than the standard port for the protocol.\n  67 | \n  68 |     Optionally, verify that the host is trusted using\n  69 |     :func:`host_is_trusted` and raise a\n  70 |     :exc:`~werkzeug.exceptions.SecurityError` if it is not.\n  71 | \n  72 |     :param scheme: The protocol the request used, like ``\"https\"``.\n  73 |     :param host_header: The ``Host`` header value.\n  74 |     :param server: Address of the server. ``(host, port)``, or\n  75 |         ``(path, None)`` for unix sockets.\n  76 |     :param trusted_hosts: A list of trusted host names.\n  77 | \n  78 |     :return: Host, with port if necessary.\n  79 |     :raise ~werkzeug.exceptions.SecurityError: If the host is not\n  80 |         trusted.\n  81 |     \"\"\"\n  82 |     host = \"\"\n  83 | \n  84 |     if host_header is not None:\n  85 |         host = host_header\n  86 |     elif server is not None:\n  87 |         host = server[0]\n  88 | \n  89 |         if server[1] is not None:\n  90 |             host = f\"{host}:{server[1]}\"\n  91 | \n  92 |     if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n  93 |         host = host[:-3]\n  94 |     elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n  95 |         host = host[:-4]\n  96 | \n  97 |     if trusted_hosts is not None:\n  98 |         if not host_is_trusted(host, trusted_hosts):\n  99 |             raise SecurityError(f\"Host {host!r} is not trusted.\")\n 100 | \n 101 |     return host\n```\n\n## Target A\nLine 82: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"host_header\": {\"description\": \"Host header value, or null when absent.\", \"max_length\": 1024, \"required\": false, \"type\": \"string|null\"}, \"scheme\": {\"description\": \"URL scheme; defaults to http.\", \"enum\": [\"http\", \"https\", \"ws\", \"wss\"], \"required\": false, \"type\": \"string\"}, \"server\": {\"description\": \"Server address [host, port], or null.\", \"items\": [\"string\", \"integer|null\"], \"required\": false, \"type\": \"array|null\"}}\nFrozen legal cases: [{\"scheme\": \"http\", \"host_header\": null, \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"example.com\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": null, \"server\": [\"example.com\", 8080]}, {\"scheme\": \"https\", \"host_header\": \"example.com:443\", \"server\": [\"example.com\", 443]}, {\"scheme\": \"ws\", \"host_header\": \"Example.COM:80\", \"server\": null}, {\"scheme\": \"http\", \"host_header\": \"spam\", \"server\": [\"spam\", 80]}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; scheme must be one of http, https, ws, wss.; host_header must be a string or null.; server must be null or a two-element array [string, integer|null]; port must be 0..65535.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"host\": \"string\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+          }
+        ]
+      },
+      "relations": [
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:84-90",
+              "key": "src/werkzeug/sansio/utils.py:84-90",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 84,
+              "last_line": 90,
+              "line": 84,
+              "end_line": 90,
+              "col": 4,
+              "end_col": 40,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if host_header is not None:\n        host = host_header\n    elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+              "text": "if host_header is not None:\n        host = host_header\n    elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+              "node_key": [
+                "If",
+                84,
+                4,
+                90,
+                40
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:85-85",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 85,
+              "last_line": 85,
+              "kind": "assignment",
+              "code": "        host = host_header"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 84,
+                "text": "if host_header is not None:"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 85,
+                "text": "    host = host_header"
+              }
+            ],
+            "condition": "host_header is not None",
+            "rationale": "If host_header is not None, the value of host is set from host_header, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:85-85",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 85,
+              "last_line": 85,
+              "kind": "assignment",
+              "code": "        host = host_header"
+            }
+          ],
+          "verification": {
+            "status": "SET_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:85-85"
+            ],
+            "new_ops": [],
+            "msms_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}"
+            ],
+            "mmbs_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}"
+            ],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:86-90",
+              "key": "src/werkzeug/sansio/utils.py:86-90",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 86,
+              "last_line": 90,
+              "line": 86,
+              "end_line": 90,
+              "col": 4,
+              "end_col": 40,
+              "kind": "if",
+              "node_type": "If",
+              "code": "elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+              "text": "elif server is not None:\n        host = server[0]\n\n        if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+              "node_key": [
+                "If",
+                86,
+                4,
+                90,
+                40
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:87-87",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 87,
+              "last_line": 87,
+              "kind": "assignment",
+              "code": "        host = server[0]"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 86,
+                "text": "elif server is not None:"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 87,
+                "text": "    host = server[0]"
+              }
+            ],
+            "condition": "host_header is None and server is not None",
+            "rationale": "If host_header is None and server is not None, the value of host is set from server[0], making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:87-87",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 87,
+              "last_line": 87,
+              "kind": "assignment",
+              "code": "        host = server[0]"
+            }
+          ],
+          "verification": {
+            "status": "SET_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:87-87"
+            ],
+            "new_ops": [],
+            "msms_inputs": [
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "mmbs_inputs": [
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:89-90",
+              "key": "src/werkzeug/sansio/utils.py:89-90",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 89,
+              "last_line": 90,
+              "line": 89,
+              "end_line": 90,
+              "col": 8,
+              "end_col": 40,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+              "text": "if server[1] is not None:\n            host = f\"{host}:{server[1]}\"",
+              "node_key": [
+                "If",
+                89,
+                8,
+                90,
+                40
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:90-90",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 90,
+              "last_line": 90,
+              "kind": "assignment",
+              "code": "            host = f\"{host}:{server[1]}\""
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 89,
+                "text": "if server[1] is not None:"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 90,
+                "text": "    host = f\"{host}:{server[1]}\""
+              }
+            ],
+            "condition": "host_header is None and server is not None and server[1] is not None",
+            "rationale": "If host_header is None, server is not None, and server[1] is not None, the value of host is updated to include the port, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:90-90",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 90,
+              "last_line": 90,
+              "kind": "assignment",
+              "code": "            host = f\"{host}:{server[1]}\""
+            }
+          ],
+          "verification": {
+            "status": "NOT_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:90-90"
+            ],
+            "new_ops": [],
+            "msms_inputs": [],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:92-95",
+              "key": "src/werkzeug/sansio/utils.py:92-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 92,
+              "last_line": 95,
+              "line": 92,
+              "end_line": 95,
+              "col": 4,
+              "end_col": 24,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "node_key": [
+                "If",
+                92,
+                4,
+                95,
+                24
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:93-93",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 93,
+              "last_line": 93,
+              "kind": "assignment",
+              "code": "        host = host[:-3]"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 92,
+                "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 93,
+                "text": "    host = host[:-3]"
+              }
+            ],
+            "condition": "host_header is not None and host.endswith(\":80\") and scheme in {\"http\", \"ws\"}",
+            "rationale": "If host_header is not None, host ends with \":80\", and scheme is either \"http\" or \"ws\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:93-93",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 93,
+              "last_line": 93,
+              "kind": "assignment",
+              "code": "        host = host[:-3]"
+            }
+          ],
+          "verification": {
+            "status": "NOT_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            "new_ops": [],
+            "msms_inputs": [],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:92-95",
+              "key": "src/werkzeug/sansio/utils.py:92-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 92,
+              "last_line": 95,
+              "line": 92,
+              "end_line": 95,
+              "col": 4,
+              "end_col": 24,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):\n        host = host[:-3]\n    elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "node_key": [
+                "If",
+                92,
+                4,
+                95,
+                24
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:93-93",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 93,
+              "last_line": 93,
+              "kind": "assignment",
+              "code": "        host = host[:-3]"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 92,
+                "text": "if scheme in {\"http\", \"ws\"} and host.endswith(\":80\"):"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 93,
+                "text": "    host = host[:-3]"
+              }
+            ],
+            "condition": "host_header is None and server is not None and server[1] == 80 and scheme in {\"http\", \"ws\"}",
+            "rationale": "If host_header is None, server is not None, server[1] is 80, and scheme is either \"http\" or \"ws\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:93-93",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 93,
+              "last_line": 93,
+              "kind": "assignment",
+              "code": "        host = host[:-3]"
+            }
+          ],
+          "verification": {
+            "status": "NOT_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:93-93"
+            ],
+            "new_ops": [],
+            "msms_inputs": [],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:94-95",
+              "key": "src/werkzeug/sansio/utils.py:94-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 94,
+              "last_line": 95,
+              "line": 94,
+              "end_line": 95,
+              "col": 4,
+              "end_col": 24,
+              "kind": "if",
+              "node_type": "If",
+              "code": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "node_key": [
+                "If",
+                94,
+                4,
+                95,
+                24
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:95-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 95,
+              "last_line": 95,
+              "kind": "assignment",
+              "code": "        host = host[:-4]"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 94,
+                "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 95,
+                "text": "    host = host[:-4]"
+              }
+            ],
+            "condition": "host_header is not None and host.endswith(\":443\") and scheme in {\"https\", \"wss\"}",
+            "rationale": "If host_header is not None, host ends with \":443\", and scheme is either \"https\" or \"wss\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:95-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 95,
+              "last_line": 95,
+              "kind": "assignment",
+              "code": "        host = host[:-4]"
+            }
+          ],
+          "verification": {
+            "status": "NOT_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            "new_ops": [],
+            "msms_inputs": [],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:94-95",
+              "key": "src/werkzeug/sansio/utils.py:94-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 94,
+              "last_line": 95,
+              "line": 94,
+              "end_line": 95,
+              "col": 4,
+              "end_col": 24,
+              "kind": "if",
+              "node_type": "If",
+              "code": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):\n        host = host[:-4]",
+              "node_key": [
+                "If",
+                94,
+                4,
+                95,
+                24
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:95-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 95,
+              "last_line": 95,
+              "kind": "assignment",
+              "code": "        host = host[:-4]"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 94,
+                "text": "elif scheme in {\"https\", \"wss\"} and host.endswith(\":443\"):"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 95,
+                "text": "    host = host[:-4]"
+              }
+            ],
+            "condition": "host_header is None and server is not None and server[1] == 443 and scheme in {\"https\", \"wss\"}",
+            "rationale": "If host_header is None, server is not None, server[1] is 443, and scheme is either \"https\" or \"wss\", the value of host is modified to remove the port, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:95-95",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 95,
+              "last_line": 95,
+              "kind": "assignment",
+              "code": "        host = host[:-4]"
+            }
+          ],
+          "verification": {
+            "status": "NOT_CONFIRMED",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:95-95"
+            ],
+            "new_ops": [],
+            "msms_inputs": [],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:98-99",
+              "key": "src/werkzeug/sansio/utils.py:98-99",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 98,
+              "last_line": 99,
+              "line": 98,
+              "end_line": 99,
+              "col": 8,
+              "end_col": 65,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if not host_is_trusted(host, trusted_hosts):\n            raise SecurityError(f\"Host {host!r} is not trusted.\")",
+              "text": "if not host_is_trusted(host, trusted_hosts):\n            raise SecurityError(f\"Host {host!r} is not trusted.\")",
+              "node_key": [
+                "If",
+                98,
+                8,
+                99,
+                65
+              ]
+            },
+            {
+              "id": "src/werkzeug/sansio/utils.py:99-99",
+              "key": "src/werkzeug/sansio/utils.py:99-99",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 99,
+              "last_line": 99,
+              "line": 99,
+              "end_line": 99,
+              "col": 12,
+              "end_col": 65,
+              "kind": "raise",
+              "node_type": "Raise",
+              "code": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+              "text": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+              "node_key": [
+                "Raise",
+                99,
+                12,
+                99,
+                65
+              ]
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 98,
+                "text": "if not host_is_trusted(host, trusted_hosts):"
+              },
+              {
+                "file": "src/werkzeug/sansio/utils.py",
+                "line": 99,
+                "text": "    raise SecurityError(f\"Host {host!r} is not trusted.\")"
+              }
+            ],
+            "condition": "trusted_hosts is not None and not host_is_trusted(host, trusted_hosts)",
+            "rationale": "If trusted_hosts is not None and the host is not trusted, a SecurityError is raised, making the initial assignment of host to an empty string unobservable."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/sansio/utils.py:99-99",
+              "key": "src/werkzeug/sansio/utils.py:99-99",
+              "file": "src/werkzeug/sansio/utils.py",
+              "first_line": 99,
+              "last_line": 99,
+              "line": 99,
+              "end_line": 99,
+              "col": 12,
+              "end_col": 65,
+              "kind": "raise",
+              "node_type": "Raise",
+              "code": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+              "text": "raise SecurityError(f\"Host {host!r} is not trusted.\")",
+              "node_key": [
+                "Raise",
+                99,
+                12,
+                99,
+                65
+              ]
+            }
+          ],
+          "verification": {
+            "status": "NEW_OP",
+            "ids": [
+              "src/werkzeug/sansio/utils.py:99-99"
+            ],
+            "new_ops": [
+              "src/werkzeug/sansio/utils.py:99-99"
+            ],
+            "msms_inputs": [],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [
+              "{\"host_header\": \"example.com\", \"scheme\": \"http\", \"server\": null}",
+              "{\"host_header\": null, \"scheme\": \"http\", \"server\": [\"example.com\", 8080]}",
+              "{\"host_header\": \"example.com:443\", \"scheme\": \"https\", \"server\": [\"example.com\", 443]}",
+              "{\"host_header\": \"Example.COM:80\", \"scheme\": \"ws\", \"server\": null}",
+              "{\"host_header\": \"spam\", \"scheme\": \"http\", \"server\": [\"spam\", 80]}",
+              "{\"host_header\": null, \"scheme\": \"wss\", \"server\": [\"unix/socket\", null]}"
+            ],
+            "condition": "NOT_EVALUATED"
+          }
+        }
+      ],
+      "summary": {
+        "call_error": null,
+        "raw_relations": 8,
+        "mapped_relations": 8,
+        "rejected_relations": 0,
+        "parse_error": null,
+        "normalization": "inner",
+        "set_confirmed_relations": 2,
+        "not_confirmed_relations": 5,
+        "new_op_relations": 1,
+        "condition": "NOT_EVALUATED"
+      }
+    },
+    "werkzeug_filestorage_stream_name": {
+      "task_id": "werkzeug_filestorage_stream_name",
+      "kind": "real_v3",
+      "prompt": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_filestorage_stream_name\n\n## Files\n`src/werkzeug/datastructures.py`\n\n## Program with source line numbers\n```text\n2902 |     def __init__(\n2903 |         self,\n2904 |         stream=None,\n2905 |         filename=None,\n2906 |         name=None,\n2907 |         content_type=None,\n2908 |         content_length=None,\n2909 |         headers=None,\n2910 |     ):\n2911 |         self.name = name\n2912 |         self.stream = stream or BytesIO()\n2913 | \n2914 |         # If no filename is provided, attempt to get the filename from\n2915 |         # the stream object. Python names special streams like\n2916 |         # ``<stderr>`` with angular brackets, skip these streams.\n2917 |         if filename is None:\n2918 |             filename = getattr(stream, \"name\", None)\n2919 | \n2920 |             if filename is not None:\n2921 |                 filename = os.fsdecode(filename)\n2922 | \n2923 |             if filename and filename[0] == \"<\" and filename[-1] == \">\":\n2924 |                 filename = None\n2925 |         else:\n2926 |             filename = os.fsdecode(filename)\n2927 | \n2928 |         self.filename = filename\n2929 | \n2930 |         if headers is None:\n2931 |             headers = Headers()\n2932 |         self.headers = headers\n2933 |         if content_type is not None:\n2934 |             headers[\"Content-Type\"] = content_type\n2935 |         if content_length is not None:\n2936 |             headers[\"Content-Length\"] = str(content_length)\n```\n\n## Target A\nLine 2918: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"data\": {\"description\": \"Bytes encoded as UTF-8 for none/named streams.\", \"required\": false, \"type\": \"string\"}, \"name\": {\"description\": \"Required when stream is 'named'.\", \"required\": false, \"type\": \"string\"}, \"stream\": {\"description\": \"Kind of stream object passed to FileStorage.\", \"enum\": [\"tempfile\", \"stderr\", \"none\", \"named\"], \"required\": true, \"type\": \"string\"}}\nFrozen legal cases: [{\"stream\": \"tempfile\"}, {\"stream\": \"stderr\"}, {\"stream\": \"none\", \"data\": \"abc\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"x.txt\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stderr>\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stdin>\"}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; stream must be one of tempfile, stderr, none, named.; data, when present, must be a string.; name is required for stream='named' and must be a string.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"filename\": \"string|null\", \"filename_type\": \"Python type name\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n",
+      "prompt_sha256": "5eaadce2513e38bbe74eca625e73a5c22f1bbfa72429914d4c06ce81951487a3",
+      "model_output": {
+        "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2919, \"text\": \"filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'stderr' or stream == 'tempfile'\",\n      \"rationale\": \"Deleting line 2918 and line 2919 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2920, \"text\": \"if filename is not None:\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"    filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'stderr' or stream == 'tempfile'\",\n      \"rationale\": \"Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2923, \"text\": \"if filename and filename[0] == \\\"<\\\" and filename[-1] == \\\">\\\":\\\"\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"    filename = None\"}\n      ],\n      \"condition\": \"stream == 'stderr' or stream == 'tempfile'\",\n      \"rationale\": \"Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2926, \"text\": \"filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'named' and name[0] == '<' and name[-1] == '>'\",\n      \"rationale\": \"Deleting line 2918 and line 2926 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2920, \"text\": \"if filename is not None:\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2921, \"text\": \"    filename = os.fsdecode(filename)\"}\n      ],\n      \"condition\": \"stream == 'named' and name[0] == '<' and name[-1] == '>'\",\n      \"rationale\": \"Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2923, \"text\": \"if filename and filename[0] == \\\"<\\\" and filename[-1] == \\\">\\\":\\\"\"},\n        {\"file\": \"src/werkzeug/datastructures.py\", \"line\": 2924, \"text\": \"    filename = None\"}\n      ],\n      \"condition\": \"stream == 'named' and name[0] == '<' and name[-1] == '>'\",\n      \"rationale\": \"Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed.\"\n    }\n  ]\n}",
+        "stats": {
+          "prompt_tokens": 1109,
+          "completion_tokens": 877,
+          "total_duration_ns": 45261110382,
+          "load_duration_ns": 2892618,
+          "prompt_eval_duration_ns": 427978000,
+          "eval_duration_ns": 43922234000,
+          "model": "qwen2.5-coder:32b",
+          "done_reason": "stop",
+          "wall_seconds": 46.333,
+          "attempt": 0
+        },
+        "model": "qwen2.5-coder:32b",
+        "wall_seconds": 46.335,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+          },
+          {
+            "role": "user",
+            "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Task\nwerkzeug_filestorage_stream_name\n\n## Files\n`src/werkzeug/datastructures.py`\n\n## Program with source line numbers\n```text\n2902 |     def __init__(\n2903 |         self,\n2904 |         stream=None,\n2905 |         filename=None,\n2906 |         name=None,\n2907 |         content_type=None,\n2908 |         content_length=None,\n2909 |         headers=None,\n2910 |     ):\n2911 |         self.name = name\n2912 |         self.stream = stream or BytesIO()\n2913 | \n2914 |         # If no filename is provided, attempt to get the filename from\n2915 |         # the stream object. Python names special streams like\n2916 |         # ``<stderr>`` with angular brackets, skip these streams.\n2917 |         if filename is None:\n2918 |             filename = getattr(stream, \"name\", None)\n2919 | \n2920 |             if filename is not None:\n2921 |                 filename = os.fsdecode(filename)\n2922 | \n2923 |             if filename and filename[0] == \"<\" and filename[-1] == \">\":\n2924 |                 filename = None\n2925 |         else:\n2926 |             filename = os.fsdecode(filename)\n2927 | \n2928 |         self.filename = filename\n2929 | \n2930 |         if headers is None:\n2931 |             headers = Headers()\n2932 |         self.headers = headers\n2933 |         if content_type is not None:\n2934 |             headers[\"Content-Type\"] = content_type\n2935 |         if content_length is not None:\n2936 |             headers[\"Content-Length\"] = str(content_length)\n```\n\n## Target A\nLine 2918: ``\nDeletion rule: replace exactly this line with `pass` at the same indentation.\nDeleting A is **unobservable on an input** when the program's observable\nbehaviour is the same with A present and with A deleted.\n\n## Legal inputs\nArguments: {\"data\": {\"description\": \"Bytes encoded as UTF-8 for none/named streams.\", \"required\": false, \"type\": \"string\"}, \"name\": {\"description\": \"Required when stream is 'named'.\", \"required\": false, \"type\": \"string\"}, \"stream\": {\"description\": \"Kind of stream object passed to FileStorage.\", \"enum\": [\"tempfile\", \"stderr\", \"none\", \"named\"], \"required\": true, \"type\": \"string\"}}\nFrozen legal cases: [{\"stream\": \"tempfile\"}, {\"stream\": \"stderr\"}, {\"stream\": \"none\", \"data\": \"abc\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"x.txt\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stderr>\"}, {\"stream\": \"named\", \"data\": \"abc\", \"name\": \"<stdin>\"}]\nLegal constraints: The payload is a JSON object with only the fields listed above.; stream must be one of tempfile, stderr, none, named.; data, when present, must be a string.; name is required for stream='named' and must be a string.\n\n## Observable\n{\"raise\": {\"message\": \"string\", \"outcome\": \"raise\", \"type\": \"exception class name\"}, \"return\": {\"filename\": \"string|null\", \"filename_type\": \"Python type name\", \"outcome\": \"return\"}}\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it\nhas the same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition on the arguments under which the relation holds, using\n  only argument names, int/bool constants, comparisons, arithmetic, `and`,\n  `or`, `not`.  If it holds for every legal input, write `true`;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"<path from Files>\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<restricted boolean expression or null>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object\nand no prose outside it.\n"
+          }
+        ]
+      },
+      "relations": [
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2921-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2921,
+              "last_line": 2921,
+              "kind": "assignment",
+              "code": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2919,
+                "text": "filename = os.fsdecode(filename)"
+              }
+            ],
+            "condition": "stream == 'stderr' or stream == 'tempfile'",
+            "rationale": "Deleting line 2918 and line 2919 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2921-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2921,
+              "last_line": 2921,
+              "kind": "assignment",
+              "code": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "verification": {
+            "status": "SET_CONFIRMED",
+            "ids": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "new_ops": [],
+            "msms_inputs": [
+              "{\"data\": \"abc\", \"stream\": \"none\"}"
+            ],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2920-2921",
+              "key": "src/werkzeug/datastructures.py:2920-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2920,
+              "last_line": 2921,
+              "line": 2920,
+              "end_line": 2921,
+              "col": 12,
+              "end_col": 48,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if filename is not None:\n                filename = os.fsdecode(filename)",
+              "text": "if filename is not None:\n                filename = os.fsdecode(filename)",
+              "node_key": [
+                "If",
+                2920,
+                12,
+                2921,
+                48
+              ]
+            },
+            {
+              "id": "src/werkzeug/datastructures.py:2921-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2921,
+              "last_line": 2921,
+              "kind": "assignment",
+              "code": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2920,
+                "text": "if filename is not None:"
+              },
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2921,
+                "text": "    filename = os.fsdecode(filename)"
+              }
+            ],
+            "condition": "stream == 'stderr' or stream == 'tempfile'",
+            "rationale": "Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2921-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2921,
+              "last_line": 2921,
+              "kind": "assignment",
+              "code": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "verification": {
+            "status": "SET_CONFIRMED",
+            "ids": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "new_ops": [],
+            "msms_inputs": [
+              "{\"data\": \"abc\", \"stream\": \"none\"}"
+            ],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "unmapped operation",
+          "rejected": [
+            {
+              "status": "rejected",
+              "reason": "text_mismatch",
+              "line": 2923,
+              "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\"",
+              "proposal": {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2923,
+                "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+              }
+            }
+          ],
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2923,
+                "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+              },
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "text": "    filename = None"
+              }
+            ],
+            "condition": "stream == 'stderr' or stream == 'tempfile'",
+            "rationale": "Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed."
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2926-2926",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2926,
+              "last_line": 2926,
+              "kind": "assignment",
+              "code": "            filename = os.fsdecode(filename)"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": true,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2926,
+                "text": "filename = os.fsdecode(filename)"
+              }
+            ],
+            "condition": "stream == 'named' and name[0] == '<' and name[-1] == '>'",
+            "rationale": "Deleting line 2918 and line 2926 together makes the deletion of A unobservable because the filename will be None in these cases, and os.fsdecode will not be called."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2926-2926",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2926,
+              "last_line": 2926,
+              "kind": "assignment",
+              "code": "            filename = os.fsdecode(filename)"
+            }
+          ],
+          "verification": {
+            "status": "SET_CONFIRMED",
+            "ids": [
+              "src/werkzeug/datastructures.py:2926-2926"
+            ],
+            "new_ops": [],
+            "msms_inputs": [
+              "{\"data\": \"abc\", \"stream\": \"none\"}"
+            ],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "mapped",
+          "ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2920-2921",
+              "key": "src/werkzeug/datastructures.py:2920-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2920,
+              "last_line": 2921,
+              "line": 2920,
+              "end_line": 2921,
+              "col": 12,
+              "end_col": 48,
+              "kind": "if",
+              "node_type": "If",
+              "code": "if filename is not None:\n                filename = os.fsdecode(filename)",
+              "text": "if filename is not None:\n                filename = os.fsdecode(filename)",
+              "node_key": [
+                "If",
+                2920,
+                12,
+                2921,
+                48
+              ]
+            },
+            {
+              "id": "src/werkzeug/datastructures.py:2921-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2921,
+              "last_line": 2921,
+              "kind": "assignment",
+              "code": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "duplicates": 0,
+          "in_graph": false,
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2920,
+                "text": "if filename is not None:"
+              },
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2921,
+                "text": "    filename = os.fsdecode(filename)"
+              }
+            ],
+            "condition": "stream == 'named' and name[0] == '<' and name[-1] == '>'",
+            "rationale": "Deleting line 2918 and lines 2920-2921 together makes the deletion of A unobservable because the filename will be None in these cases, and the subsequent checks and decoding will not be performed."
+          },
+          "normalized_ops": [
+            {
+              "id": "src/werkzeug/datastructures.py:2921-2921",
+              "file": "src/werkzeug/datastructures.py",
+              "first_line": 2921,
+              "last_line": 2921,
+              "kind": "assignment",
+              "code": "                filename = os.fsdecode(filename)"
+            }
+          ],
+          "verification": {
+            "status": "SET_CONFIRMED",
+            "ids": [
+              "src/werkzeug/datastructures.py:2921-2921"
+            ],
+            "new_ops": [],
+            "msms_inputs": [
+              "{\"data\": \"abc\", \"stream\": \"none\"}"
+            ],
+            "mmbs_inputs": [],
+            "incomplete_inputs": [],
+            "condition": "NOT_EVALUATED"
+          }
+        },
+        {
+          "status": "rejected",
+          "reason": "unmapped operation",
+          "rejected": [
+            {
+              "status": "rejected",
+              "reason": "text_mismatch",
+              "line": 2923,
+              "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\"",
+              "proposal": {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2923,
+                "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+              }
+            }
+          ],
+          "relation": {
+            "operations": [
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2923,
+                "text": "if filename and filename[0] == \"<\" and filename[-1] == \">\":\""
+              },
+              {
+                "file": "src/werkzeug/datastructures.py",
+                "line": 2924,
+                "text": "    filename = None"
+              }
+            ],
+            "condition": "stream == 'named' and name[0] == '<' and name[-1] == '>'",
+            "rationale": "Deleting line 2918 and lines 2923-2924 together makes the deletion of A unobservable because the filename will be None in these cases, and the check for special stream names will not be performed."
+          }
+        }
+      ],
+      "summary": {
+        "call_error": null,
+        "raw_relations": 6,
+        "mapped_relations": 4,
+        "rejected_relations": 2,
+        "parse_error": null,
+        "normalization": "inner",
+        "set_confirmed_relations": 4,
+        "not_confirmed_relations": 0,
+        "new_op_relations": 0,
+        "condition": "NOT_EVALUATED"
+      }
+    }
+  },
+  "totals": {
+    "calls": 4,
+    "prompt_tokens": 4954,
+    "completion_tokens": 3148,
+    "wall_seconds": 176.33900000000003
+  }
+}

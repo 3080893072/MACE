@@ -1,0 +1,19 @@
+--- a/src/humanize/filesize.py
++++ b/src/humanize/filesize.py
+@@ -51,12 +51,16 @@
+ 
+     Returns:
+         str: Human readable representation of a filesize.
+     """
+     if gnu:
+         suffix = suffixes["gnu"]
++        # SD:U:U1:begin
++        if gnu and value >= 0:
++            suffix = suffixes["gnu"]
++        # SD:U:U1:end
+     elif binary:
+         suffix = suffixes["binary"]
+     else:
+         suffix = suffixes["decimal"]
+ 
+     base = 1024 if (gnu or binary) else 1000

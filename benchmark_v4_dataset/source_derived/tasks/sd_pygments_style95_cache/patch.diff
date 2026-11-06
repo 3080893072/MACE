@@ -1,0 +1,28 @@
+--- a/pygments/style.py
++++ b/pygments/style.py
+@@ -121,12 +121,25 @@
+                     else:
+                         ndef[0] = colorformat(styledef)
+ 
+         return obj
+ 
+     def style_for_token(cls, token):
++        # SD:U:U1:begin
++        try:
++            t = cls._styles[token]
++        except KeyError:
++            if cls.styles.get(token, '') != '':
++                raise
++            _sd_parent = cls._styles.get(token.parent)
++            if _sd_parent is None:
++                _sd_parent = cls._styles.get(Token)
++            if _sd_parent is None:
++                _sd_parent = ['', 0, 0, 0, '', '', 0, 0, 0]
++            t = cls._styles[token] = list(_sd_parent)
++        # SD:U:U1:end
+         t = cls._styles[token]
+         ansicolor = bgansicolor = None
+         color = t[0]
+         if color in _deprecated_ansicolors:
+             color = _deprecated_ansicolors[color]
+         if color in ansicolors:

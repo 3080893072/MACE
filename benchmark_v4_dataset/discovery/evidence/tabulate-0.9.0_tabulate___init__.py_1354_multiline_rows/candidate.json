@@ -1,0 +1,54 @@
+{
+  "candidate_id": "tabulate-0.9.0:tabulate/__init__.py:1354:multiline:rows",
+  "project": "tabulate",
+  "version": "0.9.0",
+  "split": "DEV",
+  "file": "tabulate/__init__.py",
+  "function": "_normalize_tabular_data",
+  "mechanism": "multiline",
+  "target_A": {
+    "line": 1354,
+    "end_line": 1356,
+    "kind": "Assign",
+    "code": "rows = list(  # multi-line"
+  },
+  "static_shape": {
+    "in_loop": false,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "multiline"
+  },
+  "original_hit_tests": [
+    "test/test_input.py::test_dict_like",
+    "test/test_output.py::test_dict_like_with_index"
+  ],
+  "original_hit_test_count": 2,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "            rows = list(",
+    "replacement": "            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 3,
+    "timed_out": null,
+    "seconds": 0.58,
+    "failed_nodeids": [
+      "::test.test_input",
+      "::test.test_output",
+      "pytest::internal"
+    ],
+    "stdout_tail": "late-0.9.0\\Lib\\site-packages\\_pytest\\main.py\", line 672, in perform_collect\nINTERNALERROR>     hook.pytest_collection_modifyitems(\nINTERNALERROR>   File \"<local-path>\", line 197, in __call__\nINTERNALERROR>     return self._hookexec(\nINTERNALERROR>            ^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 183, in _hookexec\nINTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 195, in _multicall\nINTERNALERROR>     raise exception\nINTERNALERROR>   File \"<local-path>\", line 167, in _multicall\nINTERNALERROR>     teardown.throw(exception)\nINTERNALERROR>   File \"<local-path>\", line 64, in run_old_style_hookwrapper\nINTERNALERROR>     return result.get_result()\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 103, in get_result\nINTERNALERROR>     raise exc.with_traceback(tb)\nINTERNALERROR>   File \"<local-path>\", line 49, in run_old_style_hookwrapper\nINTERNALERROR>     res = yield\nINTERNALERROR>           ^^^^^\nINTERNALERROR>   File \"<local-path>\", line 167, in _multicall\nINTERNALERROR>     teardown.throw(exception)\nINTERNALERROR>   File \"<local-path>\", line 64, in run_old_style_hookwrapper\nINTERNALERROR>     return result.get_result()\nINTERNALERROR>            ^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 103, in get_result\nINTERNALERROR>     raise exc.with_traceback(tb)\nINTERNALERROR>   File \"<local-path>\", line 49, in run_old_style_hookwrapper\nINTERNALERROR>     res = yield\nINTERNALERROR>           ^^^^^\nINTERNALERROR>   File \"<local-path>\", line 147, in _multicall\nINTERNALERROR>     res = hook_impl.function(*args)\nINTERNALERROR>           ^^^^^^^^^^^^^^^^^^^^^^^^^\nINTERNALERROR>   File \"<local-path>\", line 30, in pytest_collection_modifyitems\nINTERNALERROR>     raise RuntimeError(\nINTERNALERROR> RuntimeError: 2 selected tests were not collected; first: ['test/test_input.py::test_dict_like', 'test/test_output.py::test_dict_like_with_index']\n\n2 errors in 0.22s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

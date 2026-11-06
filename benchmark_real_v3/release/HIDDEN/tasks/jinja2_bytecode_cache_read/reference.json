@@ -1,0 +1,178 @@
+{
+  "acceptance": {
+    "errors": [],
+    "p_minus_suite_log": "evidence/jinja2_bytecode_cache_read_p_minus_full.log",
+    "p_minus_suite_success": true,
+    "p_minus_suite_summary": {
+      "deselected": 0,
+      "error": 0,
+      "failed": 0,
+      "passed": 845,
+      "skipped": 0,
+      "xfailed": 0
+    },
+    "t_task_success": true,
+    "t_task_summary": {
+      "deselected": 0,
+      "error": 0,
+      "failed": 0,
+      "passed": 1,
+      "skipped": 0,
+      "xfailed": 0
+    },
+    "verdict": "PASS"
+  },
+  "candidate_universe": [
+    {
+      "code": "code = environment.compile(source, name, filename)",
+      "file": "src/jinja2/loaders.py",
+      "first_line": 137,
+      "id": "compile_fallback",
+      "kind": "assignment",
+      "last_line": 137,
+      "line": 137,
+      "role": "backup path that keeps P- working when the cache read is removed"
+    }
+  ],
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "evidence": {
+    "independent_matrix": "evidence/jinja2_bytecode_cache_read_independent_matrix.json",
+    "matrix": "evidence/jinja2_bytecode_cache_read_matrix.json",
+    "p_minus_junit": "evidence/jinja2_bytecode_cache_read_p_minus_full.junit.xml",
+    "p_minus_log": "evidence/jinja2_bytecode_cache_read_p_minus_full.log",
+    "t_task_log": "evidence/jinja2_bytecode_cache_read_t_task.log"
+  },
+  "frozen_t_task": [
+    "tests/test_bytecode_cache.py::TestByteCodeCache::test_simple"
+  ],
+  "label": "DEVELOPMENT/PILOT",
+  "partial_truth": {
+    "attribution_scope": "Exact only for the 1 declared candidate operation(s) and executed inputs.  No claim that all possible B/C/D/E operations were found.",
+    "confirmed_level": "FINITE_DOMAIN_EXACT over the frozen witnesses and all subsets of the declared U; never PROVEN over the legal input domain.",
+    "exposing_witnesses": [
+      "expose_cache_poisoned"
+    ],
+    "masking_witnesses": [
+      "mask_cache_benign"
+    ]
+  },
+  "probe": "probe_jinja_bytecode_cache.py",
+  "project": "Jinja2",
+  "project_id": "jinja2-3.1.3",
+  "project_source_tree_sha256": "76a289afb2a1fbb65b5f18233fab82ae6e7c501c521e9dd33b302e4d9d32ad42",
+  "reference_claims": [
+    {
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "witness_id": "expose_cache_poisoned"
+    },
+    {
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "code": "code = environment.compile(source, name, filename)",
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MSMS",
+      "witness_id": "mask_cache_benign"
+    },
+    {
+      "expected_status": "WITNESS_VERIFIED",
+      "input": {
+        "template": "{{ 6*7 }}"
+      },
+      "operations": [
+        {
+          "code": "code = environment.compile(source, name, filename)",
+          "file": "src/jinja2/loaders.py",
+          "line": 137
+        }
+      ],
+      "type": "MMBS",
+      "witness_id": "mask_cache_benign"
+    }
+  ],
+  "reference_relations": {
+    "expose_cache_poisoned": {
+      "exposed_EMPTY": true,
+      "exposed_with_universe_disabled": {
+        "EMPTY": true,
+        "compile_fallback": true
+      },
+      "masked_strict_EMPTY": false,
+      "mmbs": [],
+      "msms": [],
+      "role": "exposing"
+    },
+    "mask_cache_benign": {
+      "exposed_EMPTY": false,
+      "exposed_with_universe_disabled": {
+        "EMPTY": false,
+        "compile_fallback": true
+      },
+      "masked_strict_EMPTY": true,
+      "mmbs": [
+        [
+          "compile_fallback"
+        ]
+      ],
+      "msms": [
+        [
+          "compile_fallback"
+        ]
+      ],
+      "role": "masking"
+    }
+  },
+  "release_version": "v3.0-dev-pilot-2026-11-02",
+  "schema": "mace_benchmark_v3_hidden_reference",
+  "scope": {
+    "inputs_executed": 2,
+    "not_claimed": [
+      "All legal BytecodeCache implementations",
+      "All templates and environments",
+      "Operations outside the declared U"
+    ],
+    "operations_in_universe": 1
+  },
+  "source_version": "Jinja2 3.1.3",
+  "target_operation": {
+    "code": "code = bucket.code",
+    "file": "src/jinja2/loaders.py",
+    "function": "BaseLoader.load",
+    "line": 132,
+    "note": "read of a bytecode-cache bucket; deleting it makes the loader ignore a hit and recompile"
+  },
+  "task_id": "jinja2_bytecode_cache_read",
+  "test_scope": "Jinja2 3.1.3 released tests/ suite, no protocol-level deselection; P+ result 845 passed",
+  "universe_notes": [
+    "U is the set of statements in BaseLoader.load that can supply the local 'code' consumed by Template.from_code.",
+    "The bucket write at lines 142-143 is not in U: it runs after the observable is produced and its deletion does not change the rendered value on either variant.",
+    "Completeness outside these statements is not claimed."
+  ],
+  "version": "3.1.3",
+  "witnesses": {
+    "expose_cache_poisoned": {
+      "payload": {
+        "cached_source": "{{ 1+1 }}",
+        "template": "{{ 6*7 }}"
+      },
+      "role": "exposing"
+    },
+    "mask_cache_benign": {
+      "payload": {
+        "template": "{{ 6*7 }}"
+      },
+      "role": "masking"
+    }
+  }
+}

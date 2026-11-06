@@ -1,0 +1,39 @@
+{
+  "schema_version": "mace-open-discovery-raw-v1",
+  "task_id": "ctrl_01",
+  "method": "direct_qwen",
+  "provider": "transformers-local",
+  "model_info": {
+    "provider": "transformers-local",
+    "model": "qwen15b",
+    "path": "D:/tmp/qwen15b",
+    "dtype": "torch.bfloat16",
+    "device": "cuda:0",
+    "parameters": 1543714304,
+    "max_position_embeddings": 32768
+  },
+  "generation": {
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "do_sample": false
+  },
+  "prompt": "You are analysing a proposed deletion in a Python function.  Use only\nthe public information below.  A Python exception is an observation.  The best\nevidence level is BOUNDED: execution on the declared finite domain, never a proof.\n\n## Program with source line numbers\n```text\n  1 | def program(mode, x):\n  2 |     v = x\n  3 |     v = v + 1  # TARGET_A\n  4 |     if mode == 0:\n  5 |         v = x\n  6 |     return v\n```\n\n## Target A\nLine 3: `v = v + 1`\nDeletion rule: replace exactly this line with `pass` at the same indentation.\n\n## Legal inputs\nArguments: [{\"name\": \"mode\", \"sort\": \"int\", \"legal_values\": [0, 1]}, {\"name\": \"x\", \"sort\": \"int\", \"legal_values\": [0, 1, 2]}]\nFrozen legal cases: [{\"mode\": 0, \"x\": 0}, {\"mode\": 0, \"x\": 1}, {\"mode\": 0, \"x\": 2}, {\"mode\": 1, \"x\": 0}, {\"mode\": 1, \"x\": 1}, {\"mode\": 1, \"x\": 2}]\nEvery reported input must be one of these exact cases.\n\n## Observable\nreturn_value: same return value; a raise in either version is a distinguishable observation\n\n## Existing tests\n### t_mode0_x0\n```python\ndef t_mode0_x0():\n    assert program(0, 0) == 0\n```\ninput: {\"mode\": 0, \"x\": 0}\n\n### t_mode0_x1\n```python\ndef t_mode0_x1():\n    assert program(0, 1) == 1\n```\ninput: {\"mode\": 0, \"x\": 1}\n\n## What to find\nFind downstream operations (statements other than the target A) that can make\nA's local effect unobservable.  An operation is a downstream statement such as\nan `if`; report its 1-based source line.  Do not use any hidden operation name.\n\nFor each relation, report:\n- `operations`: one or more downstream operations, each with `line` and `text`.\n- `kind`:\n  - `independent`: one operation alone makes P+ and P- observationally equal;\n  - `cooperative`: two or more operations together make them equal, but no\n    proper non-empty subset does;\n  - `coexisting`: two or more operations must be disabled together to make\n    P+ and P- observationally different, while no proper subset does.\n- `input`: one exact legal case where the relation holds.\n- `condition`: a boolean expression over the argument names that describes\n  where this relation holds.  Use only the arguments, int/bool constants,\n  comparisons, arithmetic, `and`, `or`, `not`.  No function calls, attribute\n  access, or string constants.  For independent/cooperative the condition means\n  \"the declared set, enabled alone, masks A\"; for coexisting it means\n  \"disabling the declared set exposes A\".\n- `explanation`: one sentence.\n- `counterexample`: null, or {\"input\": <exact legal case where deleting A\n  changes the observable>}.\n\nReturn at most 5 different relations.  Do not repeat the same\noperation set and kind.  If you cannot find any, return an empty list.\n\n## Required JSON\n{\n  \"task_id\": \"ctrl_01\",\n  \"relations\": [\n    {\n      \"operations\": [{\"line\": <int>, \"text\": \"<source line>\"}],\n      \"kind\": \"independent | cooperative | coexisting\",\n      \"input\": {<argument>: <value>},\n      \"condition\": \"<restricted boolean expression>\",\n      \"explanation\": \"<one sentence>\",\n      \"counterexample\": null\n    }\n  ],\n  \"guard\": {\"expr\": \"<restricted boolean expression; true when A is masked>\", \"status\": \"BOUNDED | UNKNOWN\"},\n  \"test_gap\": [{\"test\": \"<existing test name>\", \"verdict\": \"unexercised | masked | would_be_caught | assertion_gap | test_broken | not_covered\"}],\n  \"evidence\": \"<optional executable observations>\"\n}\nReturn one JSON object and no prose outside it.\n",
+  "prompt_sha256": "690e77b200405ea502f84436b66ed8f2885f1eea6ffd3d07789c2a3ab0d042c0",
+  "started_at_utc": "2026-11-01T11:26:50+00:00",
+  "finished_at_utc": "2026-11-01T11:27:08+00:00",
+  "wall_seconds": 17.757,
+  "stats": {
+    "prompt_tokens": 972,
+    "completion_tokens": 299,
+    "total_tokens": 1271,
+    "wall_seconds": 8.598,
+    "model": "qwen15b",
+    "provider": "transformers-local",
+    "temperature": 0.0,
+    "seed": 42,
+    "max_new_tokens": 1200,
+    "device": "cuda:0"
+  },
+  "raw_response": "```json\n{\n  \"task_id\": \"ctrl_01\",\n  \"relations\": [\n    {\n      \"operations\": [{\"line\": 4, \"text\": \"if mode == 0:\"}],\n      \"kind\": \"independent\",\n      \"input\": {\"mode\": 0, \"x\": 0},\n      \"condition\": \"True\",\n      \"explanation\": \"The if block is not executed when mode is 0.\",\n      \"counterexample\": null\n    },\n    {\n      \"operations\": [{\"line\": 4, \"text\": \"if mode == 0:\"}],\n      \"kind\": \"independent\",\n      \"input\": {\"mode\": 0, \"x\": 1},\n      \"condition\": \"True\",\n      \"explanation\": \"The if block is not executed when mode is 0.\",\n      \"counterexample\": null\n    },\n    {\n      \"operations\": [{\"line\": 4, \"text\": \"if mode == 0:\"}],\n      \"kind\": \"independent\",\n      \"input\": {\"mode\": 0, \"x\": 2},\n      \"condition\": \"True\",\n      \"explanation\": \"The if block is not executed when mode is 0.\",\n      \"counterexample\": null\n    }\n  ],\n  \"guard\": {\"expr\": \"True\", \"status\": \"BOUNDED\"},\n  \"test_gap\": [],\n  \"evidence\": null\n}\n```"
+}

@@ -1,0 +1,276 @@
+{
+  "submissions": [
+    {
+      "task_id": "ctrl_01",
+      "guard": {
+        "expr": "(mode == 0 and x == 0) or (mode == 0 and x == 1) or (mode == 0 and x == 2)",
+        "status": "BOUNDED"
+      },
+      "masking": {
+        "absorber_sets": [
+          {
+            "ops": [
+              "B"
+            ],
+            "kind": "independent",
+            "witness": {
+              "case_id": "case_0000",
+              "args": {
+                "mode": 0,
+                "x": 0
+              }
+            }
+          }
+        ],
+        "coexisting": []
+      },
+      "witnesses": [
+        {
+          "case_id": "case_0003"
+        },
+        {
+          "case_id": "case_0004"
+        }
+      ],
+      "witness_claim": "exists",
+      "test_gap": {
+        "verdict": "masked",
+        "tests": [
+          {
+            "name": "t_mode0_x0",
+            "verdict": "masked",
+            "masking_ops": [
+              "B"
+            ]
+          },
+          {
+            "name": "t_mode0_x1",
+            "verdict": "masked",
+            "masking_ops": [
+              "B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "ctrl_02",
+      "guard": {
+        "expr": "(x == 1 and c == 0 and d == 0) or (x == 2 and c == 0 and d == 0) or (x == 3 and c == 0 and d == 0) or (x == 4 and c == 0 and d == 0) or (x == 5 and c == 0 and d == 0)",
+        "status": "BOUNDED"
+      },
+      "masking": {
+        "absorber_sets": [
+          {
+            "ops": [
+              "C",
+              "D"
+            ],
+            "kind": "cooperative",
+            "witness": {
+              "case_id": "case_0000",
+              "args": {
+                "x": 1,
+                "c": 0,
+                "d": 0
+              }
+            }
+          }
+        ],
+        "coexisting": []
+      },
+      "witnesses": [
+        {
+          "case_id": "case_0001"
+        },
+        {
+          "case_id": "case_0002"
+        }
+      ],
+      "witness_claim": "exists",
+      "test_gap": {
+        "verdict": "masked",
+        "tests": [
+          {
+            "name": "t_rounds_x3",
+            "verdict": "masked",
+            "masking_ops": [
+              "C",
+              "D"
+            ]
+          },
+          {
+            "name": "t_rounds_x5",
+            "verdict": "masked",
+            "masking_ops": [
+              "C",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "ctrl_03",
+      "guard": {
+        "expr": "(p == 0 and q == 1 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 1 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 1 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 3 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 4 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 5 and c == 1 and d == 1) or (p == 0 and q == 0 and x == 6 and c == 1 and d == 1) or (p == 1 and q == 1 and x == 3 and c == 0 and d == 0) or (p == 1 and q == 1 and x == 4 and c == 0 and d == 0)",
+        "status": "BOUNDED"
+      },
+      "masking": {
+        "absorber_sets": [
+          {
+            "ops": [
+              "B"
+            ],
+            "kind": "independent",
+            "witness": {
+              "case_id": "case_0000",
+              "args": {
+                "p": 0,
+                "q": 1,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              }
+            }
+          },
+          {
+            "ops": [
+              "E"
+            ],
+            "kind": "independent",
+            "witness": {
+              "case_id": "case_0004",
+              "args": {
+                "p": 1,
+                "q": 0,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              }
+            }
+          },
+          {
+            "ops": [
+              "C",
+              "D"
+            ],
+            "kind": "cooperative",
+            "witness": {
+              "case_id": "case_0012",
+              "args": {
+                "p": 1,
+                "q": 1,
+                "x": 3,
+                "c": 0,
+                "d": 0
+              }
+            }
+          }
+        ],
+        "coexisting": [
+          {
+            "ops": [
+              "B",
+              "E"
+            ],
+            "kind": "coexisting",
+            "witness": {
+              "case_id": "case_0008",
+              "args": {
+                "p": 0,
+                "q": 0,
+                "x": 3,
+                "c": 1,
+                "d": 1
+              }
+            }
+          }
+        ]
+      },
+      "witnesses": [
+        {
+          "case_id": "case_0014"
+        },
+        {
+          "case_id": "case_0015"
+        }
+      ],
+      "witness_claim": "exists",
+      "test_gap": {
+        "verdict": "masked",
+        "tests": [
+          {
+            "name": "t_b_only",
+            "verdict": "masked",
+            "masking_ops": [
+              "B"
+            ]
+          },
+          {
+            "name": "t_e_only",
+            "verdict": "masked",
+            "masking_ops": [
+              "E"
+            ]
+          },
+          {
+            "name": "t_coop",
+            "verdict": "masked",
+            "masking_ops": [
+              "C",
+              "D"
+            ]
+          },
+          {
+            "name": "t_both_overwrite",
+            "verdict": "masked",
+            "masking_ops": [
+              "B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "real_formatdef",
+      "guard": {
+        "expr": "True",
+        "status": "BOUNDED"
+      },
+      "masking": {
+        "absorber_sets": [],
+        "coexisting": []
+      },
+      "witnesses": [],
+      "witness_claim": "none_exists",
+      "test_gap": {
+        "verdict": "masked",
+        "tests": [
+          {
+            "name": "test_formatdef",
+            "verdict": "masked",
+            "masking_ops": []
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "real_setdiff",
+      "guard": {
+        "expr": "True",
+        "status": "BOUNDED"
+      },
+      "masking": {
+        "absorber_sets": [],
+        "coexisting": []
+      },
+      "witnesses": [],
+      "witness_claim": "none_exists",
+      "test_gap": {
+        "verdict": "not_covered",
+        "tests": []
+      }
+    }
+  ]
+}

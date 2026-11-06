@@ -1,0 +1,19 @@
+--- a/docutils/nodes.py
++++ b/docutils/nodes.py
+@@ -2226,12 +2226,16 @@
+     ``[a-z](-?[a-z0-9]+)*`` pattern.
+ 
+     .. _HTML 4.01 spec: https://www.w3.org/TR/html401
+     .. _CSS1 spec: https://www.w3.org/TR/REC-CSS1
+     """
+     id = string.lower()
++    # SD:U:U1:begin
++    if string.isascii():
++        id = string.lower()
++    # SD:U:U1:end
+     id = id.translate(_non_id_translate_digraphs)
+     id = id.translate(_non_id_translate)
+     # get rid of non-ascii characters.
+     # 'ascii' lowercase to prevent problems with turkish locale.
+     id = unicodedata.normalize(
+             'NFKD', id).encode('ascii', 'ignore').decode('ascii')

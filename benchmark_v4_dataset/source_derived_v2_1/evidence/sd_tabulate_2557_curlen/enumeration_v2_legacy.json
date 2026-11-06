@@ -1,0 +1,322 @@
+{
+  "case_id": "sd_tabulate_2557_curlen",
+  "track": "SOURCE_DERIVED_CONTROLLED",
+  "mechanism": "M7_LOOP_STATE",
+  "slug": "tabulate-0.9.0",
+  "file": "tabulate/__init__.py",
+  "A_line": 2557,
+  "A_code": "                cur_len -= self._len(cur_line[-1])",
+  "original_sha256": "5f7af0a28fcd713b830c97388675945fa8c4950b05b58f8d187c900a5752d57d",
+  "patched_sha256": "026bd8b861ca42aa066593413f407916fea2e5f99c5bd63238c5d38301da1834",
+  "U": [
+    {
+      "id": "U1",
+      "after_line": 2557,
+      "role": "Recomputes the loop-carried line accumulator from the remaining chunks instead of applying the decrement.",
+      "lines": [
+        "if self.max_lines == 2:",
+        "    cur_len = sum(map(self._len, cur_line[:-1]))"
+      ]
+    }
+  ],
+  "line_map": {
+    "U1": {
+      "begin": 2557,
+      "end": 2560
+    }
+  },
+  "observations": {
+    "PLUS": {
+      "mask_two_lines": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "expose_three_lines": {
+        "lines": [
+          "one two",
+          "three four",
+          "five [...]"
+        ]
+      },
+      "control_line_fits": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "control_no_max_lines": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      }
+    },
+    "P_MINUS": {
+      "mask_two_lines": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "expose_three_lines": {
+        "lines": [
+          "one two",
+          "three four",
+          "[...]"
+        ]
+      },
+      "control_line_fits": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "control_no_max_lines": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      }
+    },
+    "KEEP_EMPTY": {
+      "mask_two_lines": {
+        "lines": [
+          "word word",
+          "[...]"
+        ]
+      },
+      "expose_three_lines": {
+        "lines": [
+          "one two",
+          "three four",
+          "[...]"
+        ]
+      },
+      "control_line_fits": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "control_no_max_lines": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      }
+    },
+    "KEEP_U1": {
+      "mask_two_lines": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "expose_three_lines": {
+        "lines": [
+          "one two",
+          "three four",
+          "[...]"
+        ]
+      },
+      "control_line_fits": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "control_no_max_lines": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      }
+    }
+  },
+  "per_input": {
+    "mask_two_lines": {
+      "plus": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "word word",
+          "word [...]"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        [
+          "U1"
+        ]
+      ],
+      "mmbs": [
+        [
+          "U1"
+        ]
+      ],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "lines": [
+            "word word",
+            "[...]"
+          ]
+        },
+        "KEEP_U1": {
+          "lines": [
+            "word word",
+            "word [...]"
+          ]
+        }
+      }
+    },
+    "expose_three_lines": {
+      "plus": {
+        "lines": [
+          "one two",
+          "three four",
+          "five [...]"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "one two",
+          "three four",
+          "[...]"
+        ]
+      },
+      "p_minus_equals_plus": false,
+      "exposing_witness": true,
+      "masking_sets": [],
+      "minimal_masking_sets": [],
+      "mmbs": [],
+      "empty_kept_masks": false,
+      "u_necessary": true,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "lines": [
+            "one two",
+            "three four",
+            "[...]"
+          ]
+        },
+        "KEEP_U1": {
+          "lines": [
+            "one two",
+            "three four",
+            "[...]"
+          ]
+        }
+      }
+    },
+    "control_line_fits": {
+      "plus": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "aaa bbb",
+          "ccc ddd"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "lines": [
+            "aaa bbb",
+            "ccc ddd"
+          ]
+        },
+        "KEEP_U1": {
+          "lines": [
+            "aaa bbb",
+            "ccc ddd"
+          ]
+        }
+      }
+    },
+    "control_no_max_lines": {
+      "plus": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      },
+      "p_minus": {
+        "lines": [
+          "word word",
+          "word word",
+          "word"
+        ]
+      },
+      "p_minus_equals_plus": true,
+      "exposing_witness": false,
+      "masking_sets": [
+        [],
+        [
+          "U1"
+        ]
+      ],
+      "minimal_masking_sets": [
+        []
+      ],
+      "mmbs": [
+        []
+      ],
+      "empty_kept_masks": true,
+      "u_necessary": false,
+      "by_variant": {
+        "KEEP_EMPTY": {
+          "lines": [
+            "word word",
+            "word word",
+            "word"
+          ]
+        },
+        "KEEP_U1": {
+          "lines": [
+            "word word",
+            "word word",
+            "word"
+          ]
+        }
+      }
+    }
+  }
+}

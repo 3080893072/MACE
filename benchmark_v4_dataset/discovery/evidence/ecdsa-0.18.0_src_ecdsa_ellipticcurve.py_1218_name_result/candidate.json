@@ -1,0 +1,59 @@
+{
+  "candidate_id": "ecdsa-0.18.0:src/ecdsa/ellipticcurve.py:1218:name:result",
+  "project": "ecdsa",
+  "version": "0.18.0",
+  "split": "DEV",
+  "file": "src/ecdsa/ellipticcurve.py",
+  "function": "__mul__",
+  "mechanism": "name",
+  "target_A": {
+    "line": 1218,
+    "end_line": 1218,
+    "kind": "Assign",
+    "code": "result = result + self"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": false,
+    "nested_scope": false,
+    "read_before_later_write": false,
+    "later_write_reads_A": true,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "src/ecdsa/test_ecdsa.py::TestPublicKey::test_inequality_different_curves",
+    "src/ecdsa/test_ellipticcurve.py::TestPoint::test_p192",
+    "src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 5]",
+    "src/ecdsa/test_ellipticcurve.py::test_p192_mult_tests",
+    "src/ecdsa/test_jacobi.py::TestJacobi::test_multiplications"
+  ],
+  "original_hit_test_count": 5,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                result = result + self",
+    "replacement": "                pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1.19,
+    "failed_nodeids": [
+      "src.ecdsa.test_ecdsa.TestPublicKey::test_inequality_different_curves",
+      "src.ecdsa.test_ellipticcurve.TestPoint::test_p192",
+      "src.ecdsa.test_ellipticcurve::test_add_and_mult_equivalence[g_23 test with mult 5]",
+      "src.ecdsa.test_ellipticcurve::test_p192_mult_tests",
+      "src.ecdsa.test_jacobi.TestJacobi::test_multiplications"
+    ],
+    "stdout_tail": "times(g_23, 8))],\n        ids=[\"g_23 test with mult {0}\".format(i) for i in range(9)],\n    )\n    def test_add_and_mult_equivalence(p, m, check):\n>       assert p * m == check\nE       assert (<ecdsa.ellipticcurve.Point object at 0x0000021CDEE45F10> * 5) == <ecdsa.ellipticcurve.Point object at 0x0000021CDED2E810>\n\nsrc\\ecdsa\\test_ellipticcurve.py:71: AssertionError\n_____________________________ TestPoint.test_p192 _____________________________\n\nself = <ecdsa.test_ellipticcurve.TestPoint testMethod=test_p192>\n\n    def test_p192(self):\n        # Checking against some sample computations presented\n        # in X9.62:\n        d = 651056770906015076056810763456358567190100156695615665659\n        Q = d * self.p192\n>       self.assertEqual(\n            Q.x(), 0x62B12D60690CDCF330BABAB6E69763B471F994DD702D16A5\n        )\nE       AssertionError: 5781772018808304679719427843852469494478641665883339950424 != 2419923217401292748504953371159479209793178847833016309413\n\nsrc\\ecdsa\\test_ellipticcurve.py:123: AssertionError\n_______________________ TestJacobi.test_multiplications _______________________\n\nself = <ecdsa.test_jacobi.TestJacobi testMethod=test_multiplications>\n\n    @settings(max_examples=10)\n>   @given(\n        st.integers(\n            min_value=0, max_value=int(generator_brainpoolp160r1.order())\n        )\n    )\n\nsrc\\ecdsa\\test_jacobi.py:203: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nsrc\\ecdsa\\test_jacobi.py:214: in test_multiplications\n    self.assertEqual((pj.x(), pj.y()), (pw.x(), pw.y()))\nE   AssertionError: Tuples differ: (91428467123677766933088117533231795369584[52 chars]2380) != (10297242757057782170405707833751285907242[53 chars]6139)\nE   \nE   First differing element 0:\nE   91428467123677766933088117533231795369584763144\nE   102972427570577821704057078337512859072428132482\nE   \nE   - (91428467123677766933088117533231795369584763144,\nE   -  811627582950566905868758920071244891444202092380)\nE   + (102972427570577821704057078337512859072428132482,\nE   +  213892490018919080706955587770325492560723866139)\nE   Failing test case: test_multiplications(\nE       self=<ecdsa.test_jacobi.TestJacobi testMethod=test_multiplications>,\nE       mul=5,\nE   )\nE   Explanation:\nE       These lines were always and only run by failing test cases:\nE           <local-path> generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED src/ecdsa/test_ecdsa.py::TestPublicKey::test_inequality_different_curves\nFAILED src/ecdsa/test_ellipticcurve.py::test_p192_mult_tests - assert (<ecdsa...\nFAILED src/ecdsa/test_ellipticcurve.py::test_add_and_mult_equivalence[g_23 test with mult 5]\nFAILED src/ecdsa/test_ellipticcurve.py::TestPoint::test_p192 - AssertionError...\nFAILED src/ecdsa/test_jacobi.py::TestJacobi::test_multiplications - Assertion...\n5 failed in 0.82s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

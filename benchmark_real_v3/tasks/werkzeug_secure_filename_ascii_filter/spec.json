@@ -1,0 +1,61 @@
+{
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "project_id": "werkzeug-2.2.3",
+  "source_version": "Werkzeug 2.2.3",
+  "difficulty": "medium",
+  "mechanism": "downstream sanitization absorption (the later whitelist/substitution statement removes the residual non-ASCII characters, hiding the deleted filter)",
+  "target_operation": {
+    "file": "src/werkzeug/utils.py",
+    "line": 222,
+    "code": "filename = filename.encode(\"ascii\", \"ignore\").decode(\"ascii\")",
+    "function": "secure_filename",
+    "note": "drops every non-ASCII character before the later whitelist sanitization"
+  },
+  "deletion_method": "replace the target line with an equal-indentation 'pass  # P-: target A deleted' (benchmark_real_v3.run_suite.delete_line); line numbers are preserved",
+  "test_scope": "Werkzeug 2.2.3 released tests/ suite with 24 dev_server tests protocol-deselected; P+ applicable suite 816 passed, 24 deselected; tests/test_utils.py::test_secure_filename executes A",
+  "candidate_universe": [
+    {
+      "id": "sanitize_whitelist",
+      "file": "src/werkzeug/utils.py",
+      "first_line": 227,
+      "last_line": 229,
+      "code": "filename = str(_filename_ascii_strip_re.sub(\"\", \"_\".join(filename.split()))).strip(\"._\")",
+      "kind": "block",
+      "role": "later whitelist sanitization that absorbs the characters A would have removed"
+    }
+  ],
+  "universe_notes": [
+    "U is the later statement that rewrites the whole filename from the value A produced.",
+    "The separator replacement at line 226 is not a masker on the declared inputs: neither input contains os.sep or os.path.altsep, so the statement is a no-op there.",
+    "The Windows device-name prefix at line 239 only triggers for reserved names and is not in U.",
+    "Completeness outside the declared U is not claimed."
+  ],
+  "probe": "probe_werkzeug_secure_filename.py",
+  "inputs": [
+    {
+      "id": "expose_ogham_space",
+      "role": "exposing",
+      "payload": {
+        "filename": "a b"
+      },
+      "note": "U+1680 is Unicode whitespace and survives NFKD unchanged. P+ drops it (\"ab\"); P- keeps it until the whitelist sanitizer splits on it and joins with an underscore (\"a_b\")."
+    },
+    {
+      "id": "mask_nonascii_letters",
+      "role": "masking",
+      "payload": {
+        "filename": "北京.txt"
+      },
+      "note": "The later whitelist removes the non-ASCII letters in both variants, so the outputs agree; disabling that sanitizer exposes the deleted filter."
+    }
+  ],
+  "scope": {
+    "inputs_executed": 2,
+    "operations_in_universe": 1,
+    "not_claimed": [
+      "All filenames, platforms and Windows device names",
+      "Operations outside the declared U",
+      "A task-level certificate over the whole legal input domain"
+    ]
+  }
+}

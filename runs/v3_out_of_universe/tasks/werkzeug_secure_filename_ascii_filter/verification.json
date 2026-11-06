@@ -1,0 +1,341 @@
+{
+  "task_id": "werkzeug_secure_filename_ascii_filter",
+  "local_universe_size": 5,
+  "c_universe_size": 3,
+  "graph_universe_extra": [
+    "src/werkzeug/utils.py:221-221",
+    "src/werkzeug/utils.py:241-241"
+  ],
+  "unverified_claims": 3,
+  "rows": [
+    {
+      "relation_key": "MSMS:src/werkzeug/utils.py:221",
+      "type": "MSMS",
+      "scorer_status": "UNVERIFIED",
+      "verdict": "ACCEPTED_LOCAL_UNIVERSE",
+      "outcome_scope": "exact over the submitted finite inputs and the public graph candidate universe; not over HIDDEN U and not over the whole legal input domain",
+      "modes_with_claim": [
+        "Graph-candidates",
+        "Graph-full"
+      ],
+      "operations": [
+        {
+          "operation": {
+            "file": "src/werkzeug/utils.py",
+            "line": 221,
+            "code": "    filename = unicodedata.normalize(\"NFKD\", filename)"
+          },
+          "op_id": "src/werkzeug/utils.py:221-221",
+          "in_c_universe": false,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "    filename = unicodedata.normalize(\"NFKD\", filename)"
+          }
+        }
+      ],
+      "per_input": [
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/utils.py:221-221"
+            ],
+            "complement": [
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "filename": null,
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "outcome": "return"
+              }
+            },
+            "proper_subsets": []
+          },
+          "input": {
+            "filename": "北京.txt"
+          },
+          "active_ops": [
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/utils.py:221-221": false
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/utils.py:221-221"
+            ],
+            "complement": [
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "filename": null,
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "outcome": "return"
+              }
+            },
+            "proper_subsets": []
+          },
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "active_ops": [
+            "src/werkzeug/utils.py:221-221",
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/utils.py:221-221": true
+          }
+        }
+      ],
+      "probes_used": 23
+    },
+    {
+      "relation_key": "MSMS:src/werkzeug/utils.py:226",
+      "type": "MSMS",
+      "scorer_status": "UNVERIFIED",
+      "verdict": "ACCEPTED_LOCAL_UNIVERSE",
+      "outcome_scope": "exact over the submitted finite inputs and the public graph candidate universe; not over HIDDEN U and not over the whole legal input domain",
+      "modes_with_claim": [
+        "Graph-candidates",
+        "Graph-full"
+      ],
+      "operations": [
+        {
+          "operation": {
+            "file": "src/werkzeug/utils.py",
+            "line": 226,
+            "code": "            filename = filename.replace(sep, \" \")"
+          },
+          "op_id": "src/werkzeug/utils.py:226-226",
+          "in_c_universe": true,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "            filename = filename.replace(sep, \" \")"
+          }
+        }
+      ],
+      "per_input": [
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/utils.py:226-226"
+            ],
+            "complement": [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "filename": null,
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "outcome": "return"
+              }
+            },
+            "proper_subsets": []
+          },
+          "input": {
+            "filename": "北京.txt"
+          },
+          "active_ops": [
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/utils.py:226-226": false
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/utils.py:226-226"
+            ],
+            "complement": [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:239-239",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "filename": null,
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "outcome": "return"
+              }
+            },
+            "proper_subsets": []
+          },
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "active_ops": [
+            "src/werkzeug/utils.py:221-221",
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/utils.py:226-226": false
+          }
+        }
+      ],
+      "probes_used": 27
+    },
+    {
+      "relation_key": "MSMS:src/werkzeug/utils.py:239",
+      "type": "MSMS",
+      "scorer_status": "UNVERIFIED",
+      "verdict": "ACCEPTED_LOCAL_UNIVERSE",
+      "outcome_scope": "exact over the submitted finite inputs and the public graph candidate universe; not over HIDDEN U and not over the whole legal input domain",
+      "modes_with_claim": [
+        "Graph-candidates",
+        "Graph-full"
+      ],
+      "operations": [
+        {
+          "operation": {
+            "file": "src/werkzeug/utils.py",
+            "line": 239,
+            "code": "        filename = f\"_{filename}\""
+          },
+          "op_id": "src/werkzeug/utils.py:239-239",
+          "in_c_universe": true,
+          "in_local_universe": true,
+          "source_check": {
+            "line_matches_claim_code": true,
+            "actual_line": "        filename = f\"_{filename}\""
+          }
+        }
+      ],
+      "per_input": [
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/utils.py:239-239"
+            ],
+            "complement": [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "filename": null,
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "outcome": "return"
+              }
+            },
+            "proper_subsets": []
+          },
+          "input": {
+            "filename": "北京.txt"
+          },
+          "active_ops": [
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/utils.py:239-239": false
+          }
+        },
+        {
+          "verdict": "ACCEPTED",
+          "reason": "masked and minimal over U",
+          "evidence": {
+            "kept": [
+              "src/werkzeug/utils.py:239-239"
+            ],
+            "complement": [
+              "src/werkzeug/utils.py:221-221",
+              "src/werkzeug/utils.py:226-226",
+              "src/werkzeug/utils.py:227-229",
+              "src/werkzeug/utils.py:241-241"
+            ],
+            "base": {
+              "status": "OK",
+              "masked": true,
+              "exposed": false,
+              "plus": {
+                "filename": null,
+                "outcome": "return"
+              },
+              "minus": {
+                "filename": null,
+                "outcome": "return"
+              }
+            },
+            "proper_subsets": []
+          },
+          "input": {
+            "filename": "i contain cool ümläuts.txt"
+          },
+          "active_ops": [
+            "src/werkzeug/utils.py:221-221",
+            "src/werkzeug/utils.py:227-229",
+            "src/werkzeug/utils.py:241-241"
+          ],
+          "members_individually_active": {
+            "src/werkzeug/utils.py:239-239": false
+          }
+        }
+      ],
+      "probes_used": 31
+    }
+  ],
+  "probe_executions": 31,
+  "variant_builds": 16
+}

@@ -1,0 +1,399 @@
+{
+  "task_id": "sd_docutils_language_tag_m3",
+  "split": "DEV",
+  "mechanism": "M3_THREE_OPERATION_COOPERATIVE",
+  "model": "qwen2.5-coder:32b",
+  "options": {
+    "temperature": 0.0,
+    "seed": 42,
+    "num_ctx": 8192,
+    "num_predict": 4096,
+    "retries": 0,
+    "timeout_s": 900
+  },
+  "public_source_sha256": "3ab0d7762c166d4f315cc5833c71850924695a6542c518535c0a289252c331cf",
+  "prompt_sha256": "bde8655b4fe073a554f00999283279f054afac315ded59fa4a26ea18aa3e6f7e",
+  "prompt_chars": 37158,
+  "declared_inputs": 3,
+  "call": {
+    "ok": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You analyse Python masking relations. Return one JSON object only. Every operation must cite a real file, line and source text."
+      },
+      {
+        "role": "user",
+        "content": "You are analysing a proposed deletion in a Python function. Use only\nthe public information below. A Python exception is an observation. The best\nevidence level is BOUNDED: execution on the declared finite inputs, never a proof.\n\n## Task\nsd_docutils_language_tag_m3\n\n## File\n`docutils/utils/__init__.py`\n\n## Program with source line numbers\n```text\n   1 | # $Id: __init__.py 9283 2022-11-28 23:55:57Z milde $\n   2 | # Author: David Goodger <goodger@python.org>\n   3 | # Copyright: This module has been placed in the public domain.\n   4 | \n   5 | \"\"\"\n   6 | Miscellaneous utilities for the documentation utilities.\n   7 | \"\"\"\n   8 | \n   9 | __docformat__ = 'reStructuredText'\n  10 | \n  11 | import sys\n  12 | import os\n  13 | import os.path\n  14 | from pathlib import PurePath, Path\n  15 | import re\n  16 | import itertools\n  17 | import warnings\n  18 | import unicodedata\n  19 | \n  20 | from docutils import ApplicationError, DataError, __version_info__\n  21 | from docutils import io, nodes\n  22 | # for backwards compatibility\n  23 | from docutils.nodes import unescape  # noqa: F401\n  24 | \n  25 | \n  26 | class SystemMessage(ApplicationError):\n  27 | \n  28 |     def __init__(self, system_message, level):\n  29 |         Exception.__init__(self, system_message.astext())\n  30 |         self.level = level\n  31 | \n  32 | \n  33 | class SystemMessagePropagation(ApplicationError):\n  34 |     pass\n  35 | \n  36 | \n  37 | class Reporter:\n  38 | \n  39 |     \"\"\"\n  40 |     Info/warning/error reporter and ``system_message`` element generator.\n  41 | \n  42 |     Five levels of system messages are defined, along with corresponding\n  43 |     methods: `debug()`, `info()`, `warning()`, `error()`, and `severe()`.\n  44 | \n  45 |     There is typically one Reporter object per process.  A Reporter object is\n  46 |     instantiated with thresholds for reporting (generating warnings) and\n  47 |     halting processing (raising exceptions), a switch to turn debug output on\n  48 |     or off, and an I/O stream for warnings.  These are stored as instance\n  49 |     attributes.\n  50 | \n  51 |     When a system message is generated, its level is compared to the stored\n  52 |     thresholds, and a warning or error is generated as appropriate.  Debug\n  53 |     messages are produced if the stored debug switch is on, independently of\n  54 |     other thresholds.  Message output is sent to the stored warning stream if\n  55 |     not set to ''.\n  56 | \n  57 |     The Reporter class also employs a modified form of the \"Observer\" pattern\n  58 |     [GoF95]_ to track system messages generated.  The `attach_observer` method\n  59 |     should be called before parsing, with a bound method or function which\n  60 |     accepts system messages.  The observer can be removed with\n  61 |     `detach_observer`, and another added in its place.\n  62 | \n  63 |     .. [GoF95] Gamma, Helm, Johnson, Vlissides. *Design Patterns: Elements of\n  64 |        Reusable Object-Oriented Software*. Addison-Wesley, Reading, MA, USA,\n  65 |        1995.\n  66 |     \"\"\"\n  67 | \n  68 |     levels = 'DEBUG INFO WARNING ERROR SEVERE'.split()\n  69 |     \"\"\"List of names for system message levels, indexed by level.\"\"\"\n  70 | \n  71 |     # system message level constants:\n  72 |     (DEBUG_LEVEL,\n  73 |      INFO_LEVEL,\n  74 |      WARNING_LEVEL,\n  75 |      ERROR_LEVEL,\n  76 |      SEVERE_LEVEL) = range(5)\n  77 | \n  78 |     def __init__(self, source, report_level, halt_level, stream=None,\n  79 |                  debug=False, encoding=None, error_handler='backslashreplace'):\n  80 |         \"\"\"\n  81 |         :Parameters:\n  82 |             - `source`: The path to or description of the source data.\n  83 |             - `report_level`: The level at or above which warning output will\n  84 |               be sent to `stream`.\n  85 |             - `halt_level`: The level at or above which `SystemMessage`\n  86 |               exceptions will be raised, halting execution.\n  87 |             - `debug`: Show debug (level=0) system messages?\n  88 |             - `stream`: Where warning output is sent.  Can be file-like (has a\n  89 |               ``.write`` method), a string (file name, opened for writing),\n  90 |               '' (empty string) or `False` (for discarding all stream messages)\n  91 |               or `None` (implies `sys.stderr`; default).\n  92 |             - `encoding`: The output encoding.\n  93 |             - `error_handler`: The error handler for stderr output encoding.\n  94 |         \"\"\"\n  95 | \n  96 |         self.source = source\n  97 |         \"\"\"The path to or description of the source data.\"\"\"\n  98 | \n  99 |         self.error_handler = error_handler\n 100 |         \"\"\"The character encoding error handler.\"\"\"\n 101 | \n 102 |         self.debug_flag = debug\n 103 |         \"\"\"Show debug (level=0) system messages?\"\"\"\n 104 | \n 105 |         self.report_level = report_level\n 106 |         \"\"\"The level at or above which warning output will be sent\n 107 |         to `self.stream`.\"\"\"\n 108 | \n 109 |         self.halt_level = halt_level\n 110 |         \"\"\"The level at or above which `SystemMessage` exceptions\n 111 |         will be raised, halting execution.\"\"\"\n 112 | \n 113 |         if not isinstance(stream, io.ErrorOutput):\n 114 |             stream = io.ErrorOutput(stream, encoding, error_handler)\n 115 | \n 116 |         self.stream = stream\n 117 |         \"\"\"Where warning output is sent.\"\"\"\n 118 | \n 119 |         self.encoding = encoding or getattr(stream, 'encoding', 'ascii')\n 120 |         \"\"\"The output character encoding.\"\"\"\n 121 | \n 122 |         self.observers = []\n 123 |         \"\"\"List of bound methods or functions to call with each system_message\n 124 |         created.\"\"\"\n 125 | \n 126 |         self.max_level = -1\n 127 |         \"\"\"The highest level system message generated so far.\"\"\"\n 128 | \n 129 |     def set_conditions(self, category, report_level, halt_level,\n 130 |                        stream=None, debug=False):\n 131 |         warnings.warn('docutils.utils.Reporter.set_conditions() deprecated; '\n 132 |                       'Will be removed in Docutils 0.21 or later. '\n 133 |                       'Set attributes via configuration settings or directly.',\n 134 |                       DeprecationWarning, stacklevel=2)\n 135 |         self.report_level = report_level\n 136 |         self.halt_level = halt_level\n 137 |         if not isinstance(stream, io.ErrorOutput):\n 138 |             stream = io.ErrorOutput(stream, self.encoding, self.error_handler)\n 139 |         self.stream = stream\n 140 |         self.debug_flag = debug\n 141 | \n 142 |     def attach_observer(self, observer):\n 143 |         \"\"\"\n 144 |         The `observer` parameter is a function or bound method which takes one\n 145 |         argument, a `nodes.system_message` instance.\n 146 |         \"\"\"\n 147 |         self.observers.append(observer)\n 148 | \n 149 |     def detach_observer(self, observer):\n 150 |         self.observers.remove(observer)\n 151 | \n 152 |     def notify_observers(self, message):\n 153 |         for observer in self.observers:\n 154 |             observer(message)\n 155 | \n 156 |     def system_message(self, level, message, *children, **kwargs):\n 157 |         \"\"\"\n 158 |         Return a system_message object.\n 159 | \n 160 |         Raise an exception or generate a warning if appropriate.\n 161 |         \"\"\"\n 162 |         # `message` can be a `str` or `Exception` instance.\n 163 |         if isinstance(message, Exception):\n 164 |             message = str(message)\n 165 | \n 166 |         attributes = kwargs.copy()\n 167 |         if 'base_node' in kwargs:\n 168 |             source, line = get_source_line(kwargs['base_node'])\n 169 |             del attributes['base_node']\n 170 |             if source is not None:\n 171 |                 attributes.setdefault('source', source)\n 172 |             if line is not None:\n 173 |                 attributes.setdefault('line', line)\n 174 |                 # assert source is not None, \"line- but no source-argument\"\n 175 |         if 'source' not in attributes:\n 176 |             # 'line' is absolute line number\n 177 |             try:\n 178 |                 source, line = self.get_source_and_line(attributes.get('line'))\n 179 |             except AttributeError:\n 180 |                 source, line = None, None\n 181 |             if source is not None:\n 182 |                 attributes['source'] = source\n 183 |             if line is not None:\n 184 |                 attributes['line'] = line\n 185 |         # assert attributes['line'] is not None, (message, kwargs)\n 186 |         # assert attributes['source'] is not None, (message, kwargs)\n 187 |         attributes.setdefault('source', self.source)\n 188 | \n 189 |         msg = nodes.system_message(message, level=level,\n 190 |                                    type=self.levels[level],\n 191 |                                    *children, **attributes)\n 192 |         if self.stream and (level >= self.report_level\n 193 |                             or self.debug_flag and level == self.DEBUG_LEVEL\n 194 |                             or level >= self.halt_level):\n 195 |             self.stream.write(msg.astext() + '\\n')\n 196 |         if level >= self.halt_level:\n 197 |             raise SystemMessage(msg, level)\n 198 |         if level > self.DEBUG_LEVEL or self.debug_flag:\n 199 |             self.notify_observers(msg)\n 200 |         self.max_level = max(level, self.max_level)\n 201 |         return msg\n 202 | \n 203 |     def debug(self, *args, **kwargs):\n 204 |         \"\"\"\n 205 |         Level-0, \"DEBUG\": an internal reporting issue. Typically, there is no\n 206 |         effect on the processing. Level-0 system messages are handled\n 207 |         separately from the others.\n 208 |         \"\"\"\n 209 |         if self.debug_flag:\n 210 |             return self.system_message(self.DEBUG_LEVEL, *args, **kwargs)\n 211 | \n 212 |     def info(self, *args, **kwargs):\n 213 |         \"\"\"\n 214 |         Level-1, \"INFO\": a minor issue that can be ignored. Typically there is\n 215 |         no effect on processing, and level-1 system messages are not reported.\n 216 |         \"\"\"\n 217 |         return self.system_message(self.INFO_LEVEL, *args, **kwargs)\n 218 | \n 219 |     def warning(self, *args, **kwargs):\n 220 |         \"\"\"\n 221 |         Level-2, \"WARNING\": an issue that should be addressed. If ignored,\n 222 |         there may be unpredictable problems with the output.\n 223 |         \"\"\"\n 224 |         return self.system_message(self.WARNING_LEVEL, *args, **kwargs)\n 225 | \n 226 |     def error(self, *args, **kwargs):\n 227 |         \"\"\"\n 228 |         Level-3, \"ERROR\": an error that should be addressed. If ignored, the\n 229 |         output will contain errors.\n 230 |         \"\"\"\n 231 |         return self.system_message(self.ERROR_LEVEL, *args, **kwargs)\n 232 | \n 233 |     def severe(self, *args, **kwargs):\n 234 |         \"\"\"\n 235 |         Level-4, \"SEVERE\": a severe error that must be addressed. If ignored,\n 236 |         the output will contain severe errors. Typically level-4 system\n 237 |         messages are turned into exceptions which halt processing.\n 238 |         \"\"\"\n 239 |         return self.system_message(self.SEVERE_LEVEL, *args, **kwargs)\n 240 | \n 241 | \n 242 | class ExtensionOptionError(DataError): pass\n 243 | class BadOptionError(ExtensionOptionError): pass\n 244 | class BadOptionDataError(ExtensionOptionError): pass\n 245 | class DuplicateOptionError(ExtensionOptionError): pass\n 246 | \n 247 | \n 248 | def extract_extension_options(field_list, options_spec):\n 249 |     \"\"\"\n 250 |     Return a dictionary mapping extension option names to converted values.\n 251 | \n 252 |     :Parameters:\n 253 |         - `field_list`: A flat field list without field arguments, where each\n 254 |           field body consists of a single paragraph only.\n 255 |         - `options_spec`: Dictionary mapping known option names to a\n 256 |           conversion function such as `int` or `float`.\n 257 | \n 258 |     :Exceptions:\n 259 |         - `KeyError` for unknown option names.\n 260 |         - `ValueError` for invalid option values (raised by the conversion\n 261 |            function).\n 262 |         - `TypeError` for invalid option value types (raised by conversion\n 263 |            function).\n 264 |         - `DuplicateOptionError` for duplicate options.\n 265 |         - `BadOptionError` for invalid fields.\n 266 |         - `BadOptionDataError` for invalid option data (missing name,\n 267 |           missing data, bad quotes, etc.).\n 268 |     \"\"\"\n 269 |     option_list = extract_options(field_list)\n 270 |     return assemble_option_dict(option_list, options_spec)\n 271 | \n 272 | \n 273 | def extract_options(field_list):\n 274 |     \"\"\"\n 275 |     Return a list of option (name, value) pairs from field names & bodies.\n 276 | \n 277 |     :Parameter:\n 278 |         `field_list`: A flat field list, where each field name is a single\n 279 |         word and each field body consists of a single paragraph only.\n 280 | \n 281 |     :Exceptions:\n 282 |         - `BadOptionError` for invalid fields.\n 283 |         - `BadOptionDataError` for invalid option data (missing name,\n 284 |           missing data, bad quotes, etc.).\n 285 |     \"\"\"\n 286 |     option_list = []\n 287 |     for field in field_list:\n 288 |         if len(field[0].astext().split()) != 1:\n 289 |             raise BadOptionError(\n 290 |                 'extension option field name may not contain multiple words')\n 291 |         name = str(field[0].astext().lower())\n 292 |         body = field[1]\n 293 |         if len(body) == 0:\n 294 |             data = None\n 295 |         elif (len(body) > 1\n 296 |               or not isinstance(body[0], nodes.paragraph)\n 297 |               or len(body[0]) != 1\n 298 |               or not isinstance(body[0][0], nodes.Text)):\n 299 |             raise BadOptionDataError(\n 300 |                   'extension option field body may contain\\n'\n 301 |                   'a single paragraph only (option \"%s\")' % name)\n 302 |         else:\n 303 |             data = body[0][0].astext()\n 304 |         option_list.append((name, data))\n 305 |     return option_list\n 306 | \n 307 | \n 308 | def assemble_option_dict(option_list, options_spec):\n 309 |     \"\"\"\n 310 |     Return a mapping of option names to values.\n 311 | \n 312 |     :Parameters:\n 313 |         - `option_list`: A list of (name, value) pairs (the output of\n 314 |           `extract_options()`).\n 315 |         - `options_spec`: Dictionary mapping known option names to a\n 316 |           conversion function such as `int` or `float`.\n 317 | \n 318 |     :Exceptions:\n 319 |         - `KeyError` for unknown option names.\n 320 |         - `DuplicateOptionError` for duplicate options.\n 321 |         - `ValueError` for invalid option values (raised by conversion\n 322 |            function).\n 323 |         - `TypeError` for invalid option value types (raised by conversion\n 324 |            function).\n 325 |     \"\"\"\n 326 |     options = {}\n 327 |     for name, value in option_list:\n 328 |         convertor = options_spec[name]  # raises KeyError if unknown\n 329 |         if convertor is None:\n 330 |             raise KeyError(name)        # or if explicitly disabled\n 331 |         if name in options:\n 332 |             raise DuplicateOptionError('duplicate option \"%s\"' % name)\n 333 |         try:\n 334 |             options[name] = convertor(value)\n 335 |         except (ValueError, TypeError) as detail:\n 336 |             raise detail.__class__('(option: \"%s\"; value: %r)\\n%s'\n 337 |                                    % (name, value, ' '.join(detail.args)))\n 338 |     return options\n 339 | \n 340 | \n 341 | class NameValueError(DataError): pass\n 342 | \n 343 | \n 344 | def decode_path(path):\n 345 |     \"\"\"\n 346 |     Ensure `path` is Unicode. Return `str` instance.\n 347 | \n 348 |     Decode file/path string in a failsafe manner if not already done.\n 349 |     \"\"\"\n 350 |     # TODO: is this still required with Python 3?\n 351 |     if isinstance(path, str):\n 352 |         return path\n 353 |     try:\n 354 |         path = path.decode(sys.getfilesystemencoding(), 'strict')\n 355 |     except AttributeError:  # default value None has no decode method\n 356 |         if not path:\n 357 |             return ''\n 358 |         raise ValueError('`path` value must be a String or ``None``, '\n 359 |                          f'not {path!r}')\n 360 |     except UnicodeDecodeError:\n 361 |         try:\n 362 |             path = path.decode('utf-8', 'strict')\n 363 |         except UnicodeDecodeError:\n 364 |             path = path.decode('ascii', 'replace')\n 365 |     return path\n 366 | \n 367 | \n 368 | def extract_name_value(line):\n 369 |     \"\"\"\n 370 |     Return a list of (name, value) from a line of the form \"name=value ...\".\n 371 | \n 372 |     :Exception:\n 373 |         `NameValueError` for invalid input (missing name, missing data, bad\n 374 |         quotes, etc.).\n 375 |     \"\"\"\n 376 |     attlist = []\n 377 |     while line:\n 378 |         equals = line.find('=')\n 379 |         if equals == -1:\n 380 |             raise NameValueError('missing \"=\"')\n 381 |         attname = line[:equals].strip()\n 382 |         if equals == 0 or not attname:\n 383 |             raise NameValueError(\n 384 |                   'missing attribute name before \"=\"')\n 385 |         line = line[equals+1:].lstrip()\n 386 |         if not line:\n 387 |             raise NameValueError(\n 388 |                   'missing value after \"%s=\"' % attname)\n 389 |         if line[0] in '\\'\"':\n 390 |             endquote = line.find(line[0], 1)\n 391 |             if endquote == -1:\n 392 |                 raise NameValueError(\n 393 |                       'attribute \"%s\" missing end quote (%s)'\n 394 |                       % (attname, line[0]))\n 395 |             if len(line) > endquote + 1 and line[endquote + 1].strip():\n 396 |                 raise NameValueError(\n 397 |                       'attribute \"%s\" end quote (%s) not followed by '\n 398 |                       'whitespace' % (attname, line[0]))\n 399 |             data = line[1:endquote]\n 400 |             line = line[endquote+1:].lstrip()\n 401 |         else:\n 402 |             space = line.find(' ')\n 403 |             if space == -1:\n 404 |                 data = line\n 405 |                 line = ''\n 406 |             else:\n 407 |                 data = line[:space]\n 408 |                 line = line[space+1:].lstrip()\n 409 |         attlist.append((attname.lower(), data))\n 410 |     return attlist\n 411 | \n 412 | \n 413 | def new_reporter(source_path, settings):\n 414 |     \"\"\"\n 415 |     Return a new Reporter object.\n 416 | \n 417 |     :Parameters:\n 418 |         `source` : string\n 419 |             The path to or description of the source text of the document.\n 420 |         `settings` : optparse.Values object\n 421 |             Runtime settings.\n 422 |     \"\"\"\n 423 |     reporter = Reporter(\n 424 |         source_path, settings.report_level, settings.halt_level,\n 425 |         stream=settings.warning_stream, debug=settings.debug,\n 426 |         encoding=settings.error_encoding,\n 427 |         error_handler=settings.error_encoding_error_handler)\n 428 |     return reporter\n 429 | \n 430 | \n 431 | def new_document(source_path, settings=None):\n 432 |     \"\"\"\n 433 |     Return a new empty document object.\n 434 | \n 435 |     :Parameters:\n 436 |         `source_path` : string\n 437 |             The path to or description of the source text of the document.\n 438 |         `settings` : optparse.Values object\n 439 |             Runtime settings.  If none are provided, a default core set will\n 440 |             be used.  If you will use the document object with any Docutils\n 441 |             components, you must provide their default settings as well.\n 442 | \n 443 |             For example, if parsing rST, at least provide the rst-parser\n 444 |             settings, obtainable as follows:\n 445 | \n 446 |             Defaults for parser component::\n 447 | \n 448 |                 settings = docutils.frontend.get_default_settings(\n 449 |                                docutils.parsers.rst.Parser)\n 450 | \n 451 |             Defaults and configuration file customizations::\n 452 | \n 453 |                 settings = docutils.core.Publisher(\n 454 |                     parser=docutils.parsers.rst.Parser).get_settings()\n 455 | \n 456 |     \"\"\"\n 457 |     # Import at top of module would lead to circular dependency!\n 458 |     from docutils import frontend\n 459 |     if settings is None:\n 460 |         settings = frontend.get_default_settings()\n 461 |     source_path = decode_path(source_path)\n 462 |     reporter = new_reporter(source_path, settings)\n 463 |     document = nodes.document(settings, reporter, source=source_path)\n 464 |     document.note_source(source_path, -1)\n 465 |     return document\n 466 | \n 467 | \n 468 | def clean_rcs_keywords(paragraph, keyword_substitutions):\n 469 |     if len(paragraph) == 1 and isinstance(paragraph[0], nodes.Text):\n 470 |         textnode = paragraph[0]\n 471 |         for pattern, substitution in keyword_substitutions:\n 472 |             match = pattern.search(textnode)\n 473 |             if match:\n 474 |                 paragraph[0] = nodes.Text(pattern.sub(substitution, textnode))\n 475 |                 return\n 476 | \n 477 | \n 478 | def relative_path(source, target):\n 479 |     \"\"\"\n 480 |     Build and return a path to `target`, relative to `source` (both files).\n 481 | \n 482 |     Differences to `os.relpath()`:\n 483 | \n 484 |     * Inverse argument order.\n 485 |     * `source` expects path to a FILE (while os.relpath expects a dir)!\n 486 |       (Add a \"dummy\" file name if `source` points to a directory.)\n 487 |     * Always use Posix path separator (\"/\") for the output.\n 488 |     * Use `os.sep` for parsing the input (ignored by `os.relpath()`).\n 489 |     * If there is no common prefix, return the absolute path to `target`.\n 490 | \n 491 |     \"\"\"\n 492 |     source_parts = os.path.abspath(source or type(target)('dummy_file')\n 493 |                                    ).split(os.sep)\n 494 |     target_parts = os.path.abspath(target).split(os.sep)\n 495 |     # Check first 2 parts because '/dir'.split('/') == ['', 'dir']:\n 496 |     if source_parts[:2] != target_parts[:2]:\n 497 |         # Nothing in common between paths.\n 498 |         # Return absolute path, using '/' for URLs:\n 499 |         return '/'.join(target_parts)\n 500 |     source_parts.reverse()\n 501 |     target_parts.reverse()\n 502 |     while (source_parts and target_parts\n 503 |            and source_parts[-1] == target_parts[-1]):\n 504 |         # Remove path components in common:\n 505 |         source_parts.pop()\n 506 |         target_parts.pop()\n 507 |     target_parts.reverse()\n 508 |     parts = ['..'] * (len(source_parts) - 1) + target_parts\n 509 |     return '/'.join(parts)\n 510 | \n 511 | \n 512 | def get_stylesheet_reference(settings, relative_to=None):\n 513 |     \"\"\"\n 514 |     Retrieve a stylesheet reference from the settings object.\n 515 | \n 516 |     Deprecated. Use get_stylesheet_list() instead to\n 517 |     enable specification of multiple stylesheets as a comma-separated\n 518 |     list.\n 519 |     \"\"\"\n 520 |     warnings.warn('utils.get_stylesheet_reference()'\n 521 |                   ' is obsoleted by utils.get_stylesheet_list()'\n 522 |                   ' and will be removed in Docutils 2.0.',\n 523 |                   DeprecationWarning, stacklevel=2)\n 524 |     if settings.stylesheet_path:\n 525 |         assert not settings.stylesheet, (\n 526 |             'stylesheet and stylesheet_path are mutually exclusive.')\n 527 |         if relative_to is None:\n 528 |             relative_to = settings._destination\n 529 |         return relative_path(relative_to, settings.stylesheet_path)\n 530 |     else:\n 531 |         return settings.stylesheet\n 532 | \n 533 | \n 534 | # Return 'stylesheet' or 'stylesheet_path' arguments as list.\n 535 | #\n 536 | # The original settings arguments are kept unchanged: you can test\n 537 | # with e.g. ``if settings.stylesheet_path: ...``.\n 538 | #\n 539 | # Differences to the depracated `get_stylesheet_reference()`:\n 540 | # * return value is a list\n 541 | # * no re-writing of the path (and therefore no optional argument)\n 542 | #   (if required, use ``utils.relative_path(source, target)``\n 543 | #   in the calling script)\n 544 | def get_stylesheet_list(settings):\n 545 |     \"\"\"\n 546 |     Retrieve list of stylesheet references from the settings object.\n 547 |     \"\"\"\n 548 |     assert not (settings.stylesheet and settings.stylesheet_path), (\n 549 |             'stylesheet and stylesheet_path are mutually exclusive.')\n 550 |     stylesheets = settings.stylesheet_path or settings.stylesheet or []\n 551 |     # programmatically set default may be string with comma separated list:\n 552 |     if not isinstance(stylesheets, list):\n 553 |         stylesheets = [path.strip() for path in stylesheets.split(',')]\n 554 |     if settings.stylesheet_path:\n 555 |         # expand relative paths if found in stylesheet-dirs:\n 556 |         stylesheets = [find_file_in_dirs(path, settings.stylesheet_dirs)\n 557 |                        for path in stylesheets]\n 558 |     return stylesheets\n 559 | \n 560 | \n 561 | def find_file_in_dirs(path, dirs):\n 562 |     \"\"\"\n 563 |     Search for `path` in the list of directories `dirs`.\n 564 | \n 565 |     Return the first expansion that matches an existing file.\n 566 |     \"\"\"\n 567 |     path = Path(path)\n 568 |     if path.is_absolute():\n 569 |         return path.as_posix()\n 570 |     for d in dirs:\n 571 |         f = Path(d).expanduser() / path\n 572 |         if f.exists():\n 573 |             return f.as_posix()\n 574 |     return path.as_posix()\n 575 | \n 576 | \n 577 | def get_trim_footnote_ref_space(settings):\n 578 |     \"\"\"\n 579 |     Return whether or not to trim footnote space.\n 580 | \n 581 |     If trim_footnote_reference_space is not None, return it.\n 582 | \n 583 |     If trim_footnote_reference_space is None, return False unless the\n 584 |     footnote reference style is 'superscript'.\n 585 |     \"\"\"\n 586 |     if settings.setdefault('trim_footnote_reference_space', None) is None:\n 587 |         return getattr(settings, 'footnote_references', None) == 'superscript'\n 588 |     else:\n 589 |         return settings.trim_footnote_reference_space\n 590 | \n 591 | \n 592 | def get_source_line(node):\n 593 |     \"\"\"\n 594 |     Return the \"source\" and \"line\" attributes from the `node` given or from\n 595 |     its closest ancestor.\n 596 |     \"\"\"\n 597 |     while node:\n 598 |         if node.source or node.line:\n 599 |             return node.source, node.line\n 600 |         node = node.parent\n 601 |     return None, None\n 602 | \n 603 | \n 604 | def escape2null(text):\n 605 |     \"\"\"Return a string with escape-backslashes converted to nulls.\"\"\"\n 606 |     parts = []\n 607 |     start = 0\n 608 |     while True:\n 609 |         found = text.find('\\\\', start)\n 610 |         if found == -1:\n 611 |             parts.append(text[start:])\n 612 |             return ''.join(parts)\n 613 |         parts.append(text[start:found])\n 614 |         parts.append('\\x00' + text[found+1:found+2])\n 615 |         start = found + 2               # skip character after escape\n 616 | \n 617 | \n 618 | def split_escaped_whitespace(text):\n 619 |     \"\"\"\n 620 |     Split `text` on escaped whitespace (null+space or null+newline).\n 621 |     Return a list of strings.\n 622 |     \"\"\"\n 623 |     strings = text.split('\\x00 ')\n 624 |     strings = [string.split('\\x00\\n') for string in strings]\n 625 |     # flatten list of lists of strings to list of strings:\n 626 |     return list(itertools.chain(*strings))\n 627 | \n 628 | \n 629 | def strip_combining_chars(text):\n 630 |     return ''.join(c for c in text if not unicodedata.combining(c))\n 631 | \n 632 | \n 633 | def find_combining_chars(text):\n 634 |     \"\"\"Return indices of all combining chars in  Unicode string `text`.\n 635 | \n 636 |     >>> from docutils.utils import find_combining_chars\n 637 |     >>> find_combining_chars('A t̆ab̆lĕ')\n 638 |     [3, 6, 9]\n 639 | \n 640 |     \"\"\"\n 641 |     return [i for i, c in enumerate(text) if unicodedata.combining(c)]\n 642 | \n 643 | \n 644 | def column_indices(text):\n 645 |     \"\"\"Indices of Unicode string `text` when skipping combining characters.\n 646 | \n 647 |     >>> from docutils.utils import column_indices\n 648 |     >>> column_indices('A t̆ab̆lĕ')\n 649 |     [0, 1, 2, 4, 5, 7, 8]\n 650 | \n 651 |     \"\"\"\n 652 |     # TODO: account for asian wide chars here instead of using dummy\n 653 |     # replacements in the tableparser?\n 654 |     string_indices = list(range(len(text)))\n 655 |     for index in find_combining_chars(text):\n 656 |         string_indices[index] = None\n 657 |     return [i for i in string_indices if i is not None]\n 658 | \n 659 | \n 660 | east_asian_widths = {'W': 2,   # Wide\n 661 |                      'F': 2,   # Full-width (wide)\n 662 |                      'Na': 1,  # Narrow\n 663 |                      'H': 1,   # Half-width (narrow)\n 664 |                      'N': 1,   # Neutral (not East Asian, treated as narrow)\n 665 |                      'A': 1,   # Ambiguous (s/b wide in East Asian context,\n 666 |                      }         # narrow otherwise, but that doesn't work)\n 667 | \"\"\"Mapping of result codes from `unicodedata.east_asian_widt()` to character\n 668 | column widths.\"\"\"\n 669 | \n 670 | \n 671 | def column_width(text):\n 672 |     \"\"\"Return the column width of text.\n 673 | \n 674 |     Correct ``len(text)`` for wide East Asian and combining Unicode chars.\n 675 |     \"\"\"\n 676 |     width = sum(east_asian_widths[unicodedata.east_asian_width(c)]\n 677 |                 for c in text)\n 678 |     # correction for combining chars:\n 679 |     width -= len(find_combining_chars(text))\n 680 |     return width\n 681 | \n 682 | \n 683 | def uniq(L):\n 684 |     r = []\n 685 |     for item in L:\n 686 |         if item not in r:\n 687 |             r.append(item)\n 688 |     return r\n 689 | \n 690 | \n 691 | def normalize_language_tag(tag):\n 692 |     \"\"\"Return a list of normalized combinations for a `BCP 47` language tag.\n 693 | \n 694 |     Example:\n 695 | \n 696 |     >>> from docutils.utils import normalize_language_tag\n 697 |     >>> normalize_language_tag('de_AT-1901')\n 698 |     ['de-at-1901', 'de-at', 'de-1901', 'de']\n 699 |     >>> normalize_language_tag('de-CH-x_altquot')\n 700 |     ['de-ch-x-altquot', 'de-ch', 'de-x-altquot', 'de']\n 701 | \n 702 |     \"\"\"\n 703 |     # normalize:\n 704 |     tag = tag.lower().replace('-', '_')\n 705 | \n 706 |     tag = tag.lower()\n 707 | \n 708 | \n 709 |     tag = tag.replace('-', '_', 1)\n 710 | \n 711 | \n 712 |     tag = tag.replace('-', '_', 1)\n 713 | \n 714 |     # split (except singletons, which mark the following tag as non-standard):\n 715 |     tag = re.sub(r'_([a-zA-Z0-9])_', r'_\\1-', tag)\n 716 |     subtags = [subtag for subtag in tag.split('_')]\n 717 |     base_tag = (subtags.pop(0),)\n 718 |     # find all combinations of subtags\n 719 |     taglist = []\n 720 |     for n in range(len(subtags), 0, -1):\n 721 |         for tags in itertools.combinations(subtags, n):\n 722 |             taglist.append('-'.join(base_tag+tags))\n 723 |     taglist += base_tag\n 724 |     return taglist\n 725 | \n 726 | \n 727 | def xml_declaration(encoding=None):\n 728 |     \"\"\"Return an XML text declaration.\n 729 | \n 730 |     Include an encoding declaration, if `encoding`\n 731 |     is not 'unicode', '', or None.\n 732 |     \"\"\"\n 733 |     if encoding and encoding.lower() != 'unicode':\n 734 |         encoding_declaration = f' encoding=\"{encoding}\"'\n 735 |     else:\n 736 |         encoding_declaration = ''\n 737 |     return f'<?xml version=\"1.0\"{encoding_declaration}?>\\n'\n 738 | \n 739 | \n 740 | class DependencyList:\n 741 | \n 742 |     \"\"\"\n 743 |     List of dependencies, with file recording support.\n 744 | \n 745 |     Note that the output file is not automatically closed.  You have\n 746 |     to explicitly call the close() method.\n 747 |     \"\"\"\n 748 | \n 749 |     def __init__(self, output_file=None, dependencies=()):\n 750 |         \"\"\"\n 751 |         Initialize the dependency list, automatically setting the\n 752 |         output file to `output_file` (see `set_output()`) and adding\n 753 |         all supplied dependencies.\n 754 | \n 755 |         If output_file is None, no file output is done when calling add().\n 756 |         \"\"\"\n 757 |         self.list = []\n 758 |         self.file = None\n 759 |         if output_file:\n 760 |             self.set_output(output_file)\n 761 |         self.add(*dependencies)\n 762 | \n 763 |     def set_output(self, output_file):\n 764 |         \"\"\"\n 765 |         Set the output file and clear the list of already added\n 766 |         dependencies.\n 767 | \n 768 |         `output_file` must be a string.  The specified file is\n 769 |         immediately overwritten.\n 770 | \n 771 |         If output_file is '-', the output will be written to stdout.\n 772 |         \"\"\"\n 773 |         if output_file:\n 774 |             if output_file == '-':\n 775 |                 self.file = sys.stdout\n 776 |             else:\n 777 |                 self.file = open(output_file, 'w', encoding='utf-8')\n 778 | \n 779 |     def add(self, *paths):\n 780 |         \"\"\"\n 781 |         Append `path` to `self.list` unless it is already there.\n 782 | \n 783 |         Also append to `self.file` unless it is already there\n 784 |         or `self.file is `None`.\n 785 |         \"\"\"\n 786 |         for path in paths:\n 787 |             if isinstance(path, PurePath):\n 788 |                 path = path.as_posix()  # use '/' as separator\n 789 |             if path not in self.list:\n 790 |                 self.list.append(path)\n 791 |                 if self.file is not None:\n 792 |                     self.file.write(path+'\\n')\n 793 | \n 794 |     def close(self):\n 795 |         \"\"\"\n 796 |         Close the output file.\n 797 |         \"\"\"\n 798 |         if self.file is not sys.stdout:\n 799 |             self.file.close()\n 800 |         self.file = None\n 801 | \n 802 |     def __repr__(self):\n 803 |         try:\n 804 |             output_file = self.file.name\n 805 |         except AttributeError:\n 806 |             output_file = None\n 807 |         return '%s(%r, %s)' % (self.__class__.__name__, output_file, self.list)\n 808 | \n 809 | \n 810 | release_level_abbreviations = {\n 811 |     'alpha': 'a',\n 812 |     'beta': 'b',\n 813 |     'candidate': 'rc',\n 814 |     'final': ''}\n 815 | \n 816 | \n 817 | def version_identifier(version_info=None):\n 818 |     \"\"\"\n 819 |     Return a version identifier string built from `version_info`, a\n 820 |     `docutils.VersionInfo` namedtuple instance or compatible tuple. If\n 821 |     `version_info` is not provided, by default return a version identifier\n 822 |     string based on `docutils.__version_info__` (i.e. the current Docutils\n 823 |     version).\n 824 |     \"\"\"\n 825 |     if version_info is None:\n 826 |         version_info = __version_info__\n 827 |     if version_info.micro:\n 828 |         micro = '.%s' % version_info.micro\n 829 |     else:\n 830 |         # 0 is omitted:\n 831 |         micro = ''\n 832 |     releaselevel = release_level_abbreviations[version_info.releaselevel]\n 833 |     if version_info.serial:\n 834 |         serial = version_info.serial\n 835 |     else:\n 836 |         # 0 is omitted:\n 837 |         serial = ''\n 838 |     if version_info.release:\n 839 |         dev = ''\n 840 |     else:\n 841 |         dev = '.dev'\n 842 |     version = '%s.%s%s%s%s%s' % (\n 843 |         version_info.major,\n 844 |         version_info.minor,\n 845 |         micro,\n 846 |         releaselevel,\n 847 |         serial,\n 848 |         dev)\n 849 |     return version\n```\n\n## Target A\nLine 704: `tag = tag.lower().replace('-', '_')`\nDeletion rule: replace exactly this line with equal-indentation `pass`.\nDeleting A is unobservable on an input when the program's observable behaviour\nis the same with A present and with A deleted.\n\n## Legal inputs\nThe declared finite inputs are opaque labels: `in1`, `in2`, `in3`.  Do not assume their\nroles or argument values.\n\n## Observable\nThe function return value, or the raised exception type and message.\n\n## Question\nFind every set of one or more other statements such that, on at least one\nlegal input, deleting those statements together makes the deletion of A\nunobservable.  Each set must be minimal: no proper non-empty subset of it has\nthe same effect.  Different sets may be alternative paths.\n\nFor each set:\n- list the exact statements with their 1-based starting line and source text;\n- state the condition under which the relation holds, using only simple\n  comparisons/boolean expressions; write `true` if it is unconditional;\n- give a one-sentence rationale.\n\n## Required JSON\n{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": <int>, \"text\": \"<source text>\"}\n      ],\n      \"condition\": \"<boolean expression or true>\",\n      \"rationale\": \"<one sentence>\"\n    }\n  ]\n}\n\nReturn at most 12 different relations.  Return one JSON object and no prose\noutside it.\n"
+      }
+    ],
+    "raw_response": "{\n  \"relations\": [\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 706, \"text\": \"tag = tag.lower()\"},\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 708, \"text\": \"tag = tag.replace('-', '_', 1)\"},\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 710, \"text\": \"tag = tag.replace('-', '_', 1)\"}\n      ],\n      \"condition\": \"true\",\n      \"rationale\": \"Deleting these lines makes the effect of line 704 unobservable as they perform the same operations.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 706, \"text\": \"tag = tag.lower()\"},\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 708, \"text\": \"tag = tag.replace('-', '_', 1)\"}\n      ],\n      \"condition\": \"tag.count('-') <= 1\",\n      \"rationale\": \"Deleting these lines makes the effect of line 704 unobservable if there is at most one hyphen in the tag.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 706, \"text\": \"tag = tag.lower()\"},\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 710, \"text\": \"tag = tag.replace('-', '_', 1)\"}\n      ],\n      \"condition\": \"tag.count('-') <= 1\",\n      \"rationale\": \"Deleting these lines makes the effect of line 704 unobservable if there is at most one hyphen in the tag.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 708, \"text\": \"tag = tag.replace('-', '_', 1)\"},\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 710, \"text\": \"tag = tag.replace('-', '_', 1)\"}\n      ],\n      \"condition\": \"tag.count('-') <= 1\",\n      \"rationale\": \"Deleting these lines makes the effect of line 704 unobservable if there is at most one hyphen in the tag.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 706, \"text\": \"tag = tag.lower()\"}\n      ],\n      \"condition\": \"tag.count('-') == 0\",\n      \"rationale\": \"Deleting this line makes the effect of line 704 unobservable if there are no hyphens in the tag.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 708, \"text\": \"tag = tag.replace('-', '_', 1)\"}\n      ],\n      \"condition\": \"tag.count('-') == 0\",\n      \"rationale\": \"Deleting this line makes the effect of line 704 unobservable if there are no hyphens in the tag.\"\n    },\n    {\n      \"operations\": [\n        {\"file\": \"docutils/utils/__init__.py\", \"line\": 710, \"text\": \"tag = tag.replace('-', '_', 1)\"}\n      ],\n      \"condition\": \"tag.count('-') == 0\",\n      \"rationale\": \"Deleting this line makes the effect of line 704 unobservable if there are no hyphens in the tag.\"\n    }\n  ]\n}",
+    "stats": {
+      "prompt_tokens": 4098,
+      "completion_tokens": 790,
+      "total_duration_ns": 42586240666,
+      "load_duration_ns": 5308890,
+      "prompt_eval_duration_ns": 1754700000,
+      "eval_duration_ns": 39579883000,
+      "model": "qwen2.5-coder:32b",
+      "done_reason": "stop",
+      "wall_seconds": 43.397,
+      "attempt": 0
+    },
+    "model": "qwen2.5-coder:32b"
+  },
+  "prompt_tokens": 4098,
+  "completion_tokens": 790,
+  "runtime_s": 43.397,
+  "done_reason": "stop",
+  "context_limit": 8192,
+  "context_truncated_suspected": false,
+  "parsed_sets": [
+    {
+      "ids": [
+        "docutils/utils/__init__.py:706-706",
+        "docutils/utils/__init__.py:709-709"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:706-706",
+          "key": "docutils/utils/__init__.py:706-706",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 706,
+          "last_line": 706,
+          "line": 706,
+          "end_line": 706,
+          "col": 4,
+          "end_col": 21,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.lower()",
+          "text": "tag = tag.lower()",
+          "node_key": [
+            "Assign",
+            706,
+            4,
+            706,
+            21
+          ]
+        },
+        {
+          "id": "docutils/utils/__init__.py:709-709",
+          "key": "docutils/utils/__init__.py:709-709",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 709,
+          "last_line": 709,
+          "line": 709,
+          "end_line": 709,
+          "col": 4,
+          "end_col": 34,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.replace('-', '_', 1)",
+          "text": "tag = tag.replace('-', '_', 1)",
+          "node_key": [
+            "Assign",
+            709,
+            4,
+            709,
+            34
+          ]
+        }
+      ],
+      "condition": "true",
+      "rationale": "Deleting these lines makes the effect of line 704 unobservable as they perform the same operations."
+    },
+    {
+      "ids": [
+        "docutils/utils/__init__.py:706-706",
+        "docutils/utils/__init__.py:709-709"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:706-706",
+          "key": "docutils/utils/__init__.py:706-706",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 706,
+          "last_line": 706,
+          "line": 706,
+          "end_line": 706,
+          "col": 4,
+          "end_col": 21,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.lower()",
+          "text": "tag = tag.lower()",
+          "node_key": [
+            "Assign",
+            706,
+            4,
+            706,
+            21
+          ]
+        },
+        {
+          "id": "docutils/utils/__init__.py:709-709",
+          "key": "docutils/utils/__init__.py:709-709",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 709,
+          "last_line": 709,
+          "line": 709,
+          "end_line": 709,
+          "col": 4,
+          "end_col": 34,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.replace('-', '_', 1)",
+          "text": "tag = tag.replace('-', '_', 1)",
+          "node_key": [
+            "Assign",
+            709,
+            4,
+            709,
+            34
+          ]
+        }
+      ],
+      "condition": "tag.count('-') <= 1",
+      "rationale": "Deleting these lines makes the effect of line 704 unobservable if there is at most one hyphen in the tag."
+    },
+    {
+      "ids": [
+        "docutils/utils/__init__.py:706-706",
+        "docutils/utils/__init__.py:709-709"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:706-706",
+          "key": "docutils/utils/__init__.py:706-706",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 706,
+          "last_line": 706,
+          "line": 706,
+          "end_line": 706,
+          "col": 4,
+          "end_col": 21,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.lower()",
+          "text": "tag = tag.lower()",
+          "node_key": [
+            "Assign",
+            706,
+            4,
+            706,
+            21
+          ]
+        },
+        {
+          "id": "docutils/utils/__init__.py:709-709",
+          "key": "docutils/utils/__init__.py:709-709",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 709,
+          "last_line": 709,
+          "line": 709,
+          "end_line": 709,
+          "col": 4,
+          "end_col": 34,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.replace('-', '_', 1)",
+          "text": "tag = tag.replace('-', '_', 1)",
+          "node_key": [
+            "Assign",
+            709,
+            4,
+            709,
+            34
+          ]
+        }
+      ],
+      "condition": "tag.count('-') <= 1",
+      "rationale": "Deleting these lines makes the effect of line 704 unobservable if there is at most one hyphen in the tag."
+    },
+    {
+      "ids": [
+        "docutils/utils/__init__.py:709-709"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:709-709",
+          "key": "docutils/utils/__init__.py:709-709",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 709,
+          "last_line": 709,
+          "line": 709,
+          "end_line": 709,
+          "col": 4,
+          "end_col": 34,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.replace('-', '_', 1)",
+          "text": "tag = tag.replace('-', '_', 1)",
+          "node_key": [
+            "Assign",
+            709,
+            4,
+            709,
+            34
+          ]
+        }
+      ],
+      "condition": "tag.count('-') <= 1",
+      "rationale": "Deleting these lines makes the effect of line 704 unobservable if there is at most one hyphen in the tag."
+    },
+    {
+      "ids": [
+        "docutils/utils/__init__.py:706-706"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:706-706",
+          "key": "docutils/utils/__init__.py:706-706",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 706,
+          "last_line": 706,
+          "line": 706,
+          "end_line": 706,
+          "col": 4,
+          "end_col": 21,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.lower()",
+          "text": "tag = tag.lower()",
+          "node_key": [
+            "Assign",
+            706,
+            4,
+            706,
+            21
+          ]
+        }
+      ],
+      "condition": "tag.count('-') == 0",
+      "rationale": "Deleting this line makes the effect of line 704 unobservable if there are no hyphens in the tag."
+    },
+    {
+      "ids": [
+        "docutils/utils/__init__.py:709-709"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:709-709",
+          "key": "docutils/utils/__init__.py:709-709",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 709,
+          "last_line": 709,
+          "line": 709,
+          "end_line": 709,
+          "col": 4,
+          "end_col": 34,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.replace('-', '_', 1)",
+          "text": "tag = tag.replace('-', '_', 1)",
+          "node_key": [
+            "Assign",
+            709,
+            4,
+            709,
+            34
+          ]
+        }
+      ],
+      "condition": "tag.count('-') == 0",
+      "rationale": "Deleting this line makes the effect of line 704 unobservable if there are no hyphens in the tag."
+    },
+    {
+      "ids": [
+        "docutils/utils/__init__.py:709-709"
+      ],
+      "ops": [
+        {
+          "id": "docutils/utils/__init__.py:709-709",
+          "key": "docutils/utils/__init__.py:709-709",
+          "file": "docutils/utils/__init__.py",
+          "first_line": 709,
+          "last_line": 709,
+          "line": 709,
+          "end_line": 709,
+          "col": 4,
+          "end_col": 34,
+          "kind": "assign",
+          "node_type": "Assign",
+          "code": "tag = tag.replace('-', '_', 1)",
+          "text": "tag = tag.replace('-', '_', 1)",
+          "node_key": [
+            "Assign",
+            709,
+            4,
+            709,
+            34
+          ]
+        }
+      ],
+      "condition": "tag.count('-') == 0",
+      "rationale": "Deleting this line makes the effect of line 704 unobservable if there are no hyphens in the tag."
+    }
+  ],
+  "rejected": [],
+  "parse_error": null,
+  "scoring": {
+    "masking_inputs": 1,
+    "exact": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "false_relations": 3,
+    "unmatched_sets": 0,
+    "mmbs_domain": 1,
+    "mmbs_exact": null,
+    "mmbs_note": "Direct protocol does not request MMBS; not scored (not counted as wrong or empty)."
+  },
+  "detail": [
+    {
+      "input": "mask_two_separators",
+      "public_id": "in1",
+      "mmbs_expected": [
+        [
+          "U1"
+        ],
+        [
+          "U2"
+        ],
+        [
+          "U3"
+        ]
+      ],
+      "mmbs_status": "COMPUTED",
+      "mmbs_exact": null,
+      "score": {
+        "hidden_msms": [
+          [
+            "U1",
+            "U2",
+            "U3"
+          ]
+        ],
+        "got_msms_blocks": [
+          [
+            "U1"
+          ],
+          [
+            "U1",
+            "U2"
+          ],
+          [
+            "U2"
+          ]
+        ],
+        "stray_ops": [],
+        "msms_exact": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_relations": 3,
+        "unmatched_sets": 0
+      }
+    }
+  ],
+  "status": "OK"
+}

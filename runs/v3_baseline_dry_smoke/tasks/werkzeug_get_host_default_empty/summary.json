@@ -1,0 +1,98 @@
+{
+  "task_id": "werkzeug_get_host_default_empty",
+  "story": "FULL_MASKING_STORY",
+  "baselines": {
+    "A_direct_qwen": {
+      "run_label": "DRY_RUN",
+      "submission": {
+        "task_id": "werkzeug_get_host_default_empty",
+        "claims": [],
+        "submission_id": "baseline-A"
+      },
+      "score": {
+        "protocol": "mace_benchmark_v3_scoring",
+        "scorer_version": "mace-benchmark-v3-scorer-1.0",
+        "task_id": "werkzeug_get_host_default_empty",
+        "submission_id": "baseline-A",
+        "status_counts": {
+          "WITNESS_VERIFIED": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "PROVEN": 0,
+          "FALSE": 0,
+          "INVALID": 0,
+          "UNVERIFIED": 0,
+          "UNSUPPORTED": 0,
+          "DUPLICATE": 0
+        },
+        "score": {
+          "credited_relations": 0,
+          "claim_credit": 0,
+          "domain_exact_relations": 0,
+          "witness_verified_relations": 0,
+          "deduplicated": 0
+        },
+        "claims": [],
+        "scope_notes": [
+          "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+          "A single witness is never promoted to a claim over the whole legal input domain.",
+          "Operations outside U are reported UNVERIFIED, not FALSE."
+        ]
+      },
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "wall_seconds": 0.0,
+        "dry_run": true
+      },
+      "input_contract_errors": []
+    },
+    "B_qwen_verifier": {
+      "run_label": "DRY_RUN",
+      "condition": "pure_verification",
+      "feedback_regeneration": "NOT_RUN (not executed in this pilot)",
+      "verifier_counts": {
+        "total": 0,
+        "verified": 0,
+        "refuted": 0,
+        "unknown": 0
+      },
+      "score": {
+        "protocol": "mace_benchmark_v3_scoring",
+        "scorer_version": "mace-benchmark-v3-scorer-1.0",
+        "task_id": "werkzeug_get_host_default_empty",
+        "submission_id": "baseline-A",
+        "status_counts": {
+          "WITNESS_VERIFIED": 0,
+          "FINITE_DOMAIN_EXACT": 0,
+          "PROVEN": 0,
+          "FALSE": 0,
+          "INVALID": 0,
+          "UNVERIFIED": 0,
+          "UNSUPPORTED": 0,
+          "DUPLICATE": 0
+        },
+        "score": {
+          "credited_relations": 0,
+          "claim_credit": 0,
+          "domain_exact_relations": 0,
+          "witness_verified_relations": 0,
+          "deduplicated": 0
+        },
+        "claims": [],
+        "scope_notes": [
+          "Minimality is exact only over the declared candidate universe U and the submitted finite inputs.",
+          "A single witness is never promoted to a claim over the whole legal input domain.",
+          "Operations outside U are reported UNVERIFIED, not FALSE."
+        ]
+      },
+      "model_calls": 1,
+      "probe_executions": 0,
+      "wall_seconds": 0.095
+    },
+    "legacy_full_mace": {
+      "run_label": "UNSUPPORTED_INTERFACE",
+      "reason": "The historical Full MACE run loop emits code-level guards and does not expose an operation-level MSMS/MMBS submission interface. It is recorded as unsupported, not as zero."
+    }
+  }
+}

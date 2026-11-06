@@ -1,0 +1,1257 @@
+{
+  "run_label": "NO_MODEL_DETERMINISTIC_RUN",
+  "baseline": "C_ast_intervention",
+  "baseline_version": "C-ast-intervention-1.0",
+  "task_id": "werkzeug_bind_server_name_lower",
+  "discovery": {
+    "candidate_ops": [
+      {
+        "id": "src/werkzeug/routing/map.py:305-305",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 305,
+        "last_line": 305,
+        "kind": "assign",
+        "code": "            server_name = wsgi_server_name",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:305-305",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:311-311",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 311,
+        "last_line": 311,
+        "kind": "assign",
+        "code": "                server_name = server_name[:-3]",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:311-311",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:313-313",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 313,
+        "last_line": 313,
+        "kind": "assign",
+        "code": "                server_name = server_name[:-4]",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:313-313",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:344-353",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 344,
+        "last_line": 353,
+        "kind": "return",
+        "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:344-353",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "def-use:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:219-219",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 219,
+        "last_line": 219,
+        "kind": "assign",
+        "code": "        server_name = server_name.lower()",
+        "graph_score": 1.314754,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:219-219",
+            "kind": "alias",
+            "confidence": "MAY",
+            "evidence": "call may mutate:lower",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:231-231",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 231,
+        "last_line": 231,
+        "kind": "assign",
+        "code": "            server_name = _encode_idna(server_name)  # type: ignore",
+        "graph_score": 1.064754,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:231-231",
+            "kind": "alias",
+            "confidence": "MAY",
+            "evidence": "call may mutate:_encode_idna",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind"
+      }
+    ],
+    "candidate_ids": [
+      "src/werkzeug/routing/map.py:305-305",
+      "src/werkzeug/routing/map.py:311-311",
+      "src/werkzeug/routing/map.py:313-313",
+      "src/werkzeug/routing/map.py:344-353",
+      "src/werkzeug/routing/map.py:219-219",
+      "src/werkzeug/routing/map.py:231-231"
+    ],
+    "discovery_rule": "injected_candidates",
+    "candidate_source": "subgraph"
+  },
+  "pruning": {
+    "universe": [
+      {
+        "id": "src/werkzeug/routing/map.py:305-305",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 305,
+        "last_line": 305,
+        "kind": "assign",
+        "code": "            server_name = wsgi_server_name",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:305-305",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:311-311",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 311,
+        "last_line": 311,
+        "kind": "assign",
+        "code": "                server_name = server_name[:-3]",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:311-311",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:313-313",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 313,
+        "last_line": 313,
+        "kind": "assign",
+        "code": "                server_name = server_name[:-4]",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:313-313",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "redefinition:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:344-353",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 344,
+        "last_line": 353,
+        "kind": "return",
+        "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )",
+        "graph_score": 1.35,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:344-353",
+            "kind": "data",
+            "confidence": "MUST",
+            "evidence": "def-use:server_name",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind_to_environ"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:219-219",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 219,
+        "last_line": 219,
+        "kind": "assign",
+        "code": "        server_name = server_name.lower()",
+        "graph_score": 1.314754,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:219-219",
+            "kind": "alias",
+            "confidence": "MAY",
+            "evidence": "call may mutate:lower",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind"
+      },
+      {
+        "id": "src/werkzeug/routing/map.py:231-231",
+        "file": "src/werkzeug/routing/map.py",
+        "first_line": 231,
+        "last_line": 231,
+        "kind": "assign",
+        "code": "            server_name = _encode_idna(server_name)  # type: ignore",
+        "graph_score": 1.064754,
+        "graph_path": [
+          {
+            "from": "src/werkzeug/routing/map.py:307-307",
+            "to": "src/werkzeug/routing/map.py:231-231",
+            "kind": "alias",
+            "confidence": "MAY",
+            "evidence": "call may mutate:_encode_idna",
+            "guard": ""
+          }
+        ],
+        "graph_function": "bind"
+      }
+    ],
+    "kept": 6,
+    "dropped": [],
+    "mode": "injected_candidates"
+  },
+  "universe": [
+    {
+      "id": "src/werkzeug/routing/map.py:305-305",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 305,
+      "last_line": 305,
+      "kind": "assign",
+      "code": "            server_name = wsgi_server_name",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/routing/map.py:307-307",
+          "to": "src/werkzeug/routing/map.py:305-305",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:server_name",
+          "guard": ""
+        }
+      ],
+      "graph_function": "bind_to_environ"
+    },
+    {
+      "id": "src/werkzeug/routing/map.py:311-311",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 311,
+      "last_line": 311,
+      "kind": "assign",
+      "code": "                server_name = server_name[:-3]",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/routing/map.py:307-307",
+          "to": "src/werkzeug/routing/map.py:311-311",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:server_name",
+          "guard": ""
+        }
+      ],
+      "graph_function": "bind_to_environ"
+    },
+    {
+      "id": "src/werkzeug/routing/map.py:313-313",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 313,
+      "last_line": 313,
+      "kind": "assign",
+      "code": "                server_name = server_name[:-4]",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/routing/map.py:307-307",
+          "to": "src/werkzeug/routing/map.py:313-313",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "redefinition:server_name",
+          "guard": ""
+        }
+      ],
+      "graph_function": "bind_to_environ"
+    },
+    {
+      "id": "src/werkzeug/routing/map.py:344-353",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 344,
+      "last_line": 353,
+      "kind": "return",
+      "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )",
+      "graph_score": 1.35,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/routing/map.py:307-307",
+          "to": "src/werkzeug/routing/map.py:344-353",
+          "kind": "data",
+          "confidence": "MUST",
+          "evidence": "def-use:server_name",
+          "guard": ""
+        }
+      ],
+      "graph_function": "bind_to_environ"
+    },
+    {
+      "id": "src/werkzeug/routing/map.py:219-219",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 219,
+      "last_line": 219,
+      "kind": "assign",
+      "code": "        server_name = server_name.lower()",
+      "graph_score": 1.314754,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/routing/map.py:307-307",
+          "to": "src/werkzeug/routing/map.py:219-219",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:lower",
+          "guard": ""
+        }
+      ],
+      "graph_function": "bind"
+    },
+    {
+      "id": "src/werkzeug/routing/map.py:231-231",
+      "file": "src/werkzeug/routing/map.py",
+      "first_line": 231,
+      "last_line": 231,
+      "kind": "assign",
+      "code": "            server_name = _encode_idna(server_name)  # type: ignore",
+      "graph_score": 1.064754,
+      "graph_path": [
+        {
+          "from": "src/werkzeug/routing/map.py:307-307",
+          "to": "src/werkzeug/routing/map.py:231-231",
+          "kind": "alias",
+          "confidence": "MAY",
+          "evidence": "call may mutate:_encode_idna",
+          "guard": ""
+        }
+      ],
+      "graph_function": "bind"
+    }
+  ],
+  "inputs": [
+    {
+      "host": "example.com",
+      "server_name": null,
+      "subdomain": null
+    },
+    {
+      "host": "example.com",
+      "server_name": "EXAMPLE.COM",
+      "subdomain": null
+    },
+    {
+      "host": "example.com",
+      "server_name": "EXAMPLE.COM",
+      "subdomain": "www"
+    },
+    {
+      "host": "sub.example.com",
+      "server_name": "EXAMPLE.COM",
+      "subdomain": null
+    },
+    {
+      "host": "example.com",
+      "server_name": "example.com:80",
+      "subdomain": "www"
+    },
+    {
+      "host": "example.com",
+      "server_name": "EXAMPLE.COM:443",
+      "subdomain": "www"
+    },
+    {
+      "host": "EXAMPLE.COM",
+      "server_name": null,
+      "subdomain": "api"
+    }
+  ],
+  "per_input": [
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": null,
+        "subdomain": null
+      },
+      "a_executes": false,
+      "active_ops": [],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": ""
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/routing/map.py:344-353",
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219",
+          "src/werkzeug/routing/map.py:344-353"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "cache_hits": 13,
+        "executor_cache_hits": 13,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "evaluations": 31,
+          "elapsed_seconds": 29.56
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 8,
+          "elapsed_seconds": 3.12
+        },
+        "wall_seconds": 68.488,
+        "search_mode": "graph",
+        "msms_unknown": [],
+        "mmbs_unknown": []
+      }
+    },
+    {
+      "input": {
+        "host": "sub.example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": null
+      },
+      "a_executes": true,
+      "active_ops": [],
+      "masked_empty": false,
+      "exposed_empty": true,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "sub"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "<invalid>"
+        }
+      },
+      "search_metrics": null
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "example.com:80",
+        "subdomain": "www"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/routing/map.py:311-311",
+        "src/werkzeug/routing/map.py:344-353"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/routing/map.py:344-353"
+        ]
+      ],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "www"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "cache_hits": 12,
+        "executor_cache_hits": 12,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "evaluations": 7,
+          "elapsed_seconds": 1.399
+        },
+        "first_mmbs": null,
+        "wall_seconds": 27.265,
+        "search_mode": "graph",
+        "msms_unknown": [],
+        "mmbs_unknown": []
+      }
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM:443",
+        "subdomain": "www"
+      },
+      "a_executes": true,
+      "active_ops": [
+        "src/werkzeug/routing/map.py:344-353",
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219",
+          "src/werkzeug/routing/map.py:344-353"
+        ]
+      ],
+      "mmbs_ids": [
+        [
+          "src/werkzeug/routing/map.py:219-219"
+        ]
+      ],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com:443",
+          "subdomain": "www"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com:443",
+          "subdomain": "www"
+        }
+      },
+      "search_metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "cache_hits": 13,
+        "executor_cache_hits": 13,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "evaluations": 31,
+          "elapsed_seconds": 11.558
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 8,
+          "elapsed_seconds": 1.161
+        },
+        "wall_seconds": 26.988,
+        "search_mode": "graph",
+        "msms_unknown": [],
+        "mmbs_unknown": []
+      }
+    },
+    {
+      "input": {
+        "host": "EXAMPLE.COM",
+        "server_name": null,
+        "subdomain": "api"
+      },
+      "a_executes": false,
+      "active_ops": [],
+      "masked_empty": true,
+      "exposed_empty": false,
+      "msms_ids": [],
+      "mmbs_ids": [],
+      "observations_empty": {
+        "plus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "api"
+        },
+        "minus": {
+          "outcome": "return",
+          "server_name": "example.com",
+          "subdomain": "api"
+        }
+      },
+      "search_metrics": null
+    }
+  ],
+  "submission": {
+    "submission_id": "baseline-C",
+    "task_id": "werkzeug_bind_server_name_lower",
+    "claims": [
+      {
+        "type": "EXPOSING_COUNTEREXAMPLE",
+        "input": {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        }
+      },
+      {
+        "type": "MSMS",
+        "inputs": [
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          },
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 344,
+            "end_line": 353,
+            "code": "        return Map.bind(\n            self,\n            server_name,\n            script_name,\n            subdomain,\n            scheme,\n            env[\"REQUEST_METHOD\"],\n            path_info,\n            query_args=query_args,\n        )"
+          }
+        ]
+      },
+      {
+        "type": "MMBS",
+        "inputs": [
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM",
+            "subdomain": "www"
+          },
+          {
+            "host": "example.com",
+            "server_name": "EXAMPLE.COM:443",
+            "subdomain": "www"
+          }
+        ],
+        "operations": [
+          {
+            "file": "src/werkzeug/routing/map.py",
+            "line": 219,
+            "code": "        server_name = server_name.lower()"
+          }
+        ]
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "type": "EXPOSING_COUNTEREXAMPLE",
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        },
+        {
+          "host": "sub.example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": null
+        }
+      ],
+      "basis": "execution"
+    },
+    {
+      "type": "MSMS",
+      "operations": [
+        "src/werkzeug/routing/map.py:219-219",
+        "src/werkzeug/routing/map.py:344-353"
+      ],
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    },
+    {
+      "type": "MMBS",
+      "operations": [
+        "src/werkzeug/routing/map.py:219-219"
+      ],
+      "inputs": [
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM",
+          "subdomain": "www"
+        },
+        {
+          "host": "example.com",
+          "server_name": "EXAMPLE.COM:443",
+          "subdomain": "www"
+        }
+      ],
+      "level": "FINITE_DOMAIN_EXACT",
+      "basis": "subset enumeration over discovered universe"
+    }
+  ],
+  "unknowns": [],
+  "probe_executions": 392,
+  "variant_builds": 128,
+  "discovery_source": "subgraph",
+  "emission_mode": "minimality_only",
+  "filter_stats": {
+    "msms_dropped": 0,
+    "mmbs_dropped": 0,
+    "msms_total": 3,
+    "mmbs_total": 2
+  },
+  "search": {
+    "mode": "graph",
+    "inputs_with_search": 3,
+    "evaluations": 192,
+    "subsets_total": 192,
+    "complete": true,
+    "executor_cache_hits": 38,
+    "unknown_subsets": 0,
+    "invalid_subsets": 0,
+    "msms_unknown": 0,
+    "mmbs_unknown": 0
+  },
+  "graph_meta": {
+    "subgraph_sha256": "385ac7817f1130c6c54afdbf5c78fb7fad29b4e41332e18199ed632395927ffe",
+    "stats": {
+      "nodes": 70,
+      "edges": 706,
+      "edge_kinds": {
+        "alias": 410,
+        "call": 88,
+        "control": 39,
+        "data": 169
+      },
+      "edge_confidence": {
+        "MAY": 476,
+        "MUST": 205,
+        "UNKNOWN": 25
+      },
+      "deletable": 49,
+      "unresolved_calls": [
+        "UNKNOWN:BadHost",
+        "UNKNOWN:MapAdapter",
+        "UNKNOWN:RuntimeError",
+        "UNKNOWN:StateMachineMatcher",
+        "UNKNOWN:_encode_idna",
+        "UNKNOWN:_get_environ",
+        "UNKNOWN:_wsgi_decoding_dance",
+        "UNKNOWN:append",
+        "UNKNOWN:copy",
+        "UNKNOWN:get",
+        "UNKNOWN:get_host",
+        "UNKNOWN:join",
+        "UNKNOWN:lock_class",
+        "UNKNOWN:lower",
+        "UNKNOWN:setdefault",
+        "UNKNOWN:split",
+        "UNKNOWN:strip",
+        "UNKNOWN:update",
+        "UNKNOWN:warn"
+      ]
+    },
+    "selection": {
+      "eligible": 49,
+      "selected": 6,
+      "truncated": true,
+      "omitted": [
+        {
+          "id": "src/werkzeug/routing/map.py:317-317",
+          "first_line": 317,
+          "score": 1.05
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:326-330",
+          "first_line": 326,
+          "score": 1.05
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:294-294",
+          "first_line": 294,
+          "score": 0.914754
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:296-299",
+          "first_line": 296,
+          "score": 0.864754
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:235-244",
+          "first_line": 235,
+          "score": 0.814754
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:295-295",
+          "first_line": 295,
+          "score": 0.683333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:302-302",
+          "first_line": 302,
+          "score": 0.683333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:331-331",
+          "first_line": 331,
+          "score": 0.683333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:341-341",
+          "first_line": 341,
+          "score": 0.683333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:342-342",
+          "first_line": 342,
+          "score": 0.683333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:343-343",
+          "first_line": 343,
+          "score": 0.683333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:293-293",
+          "first_line": 293,
+          "score": 0.633333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:333-333",
+          "first_line": 333,
+          "score": 0.583333
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:318-318",
+          "first_line": 318,
+          "score": 0.55
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:316-316",
+          "first_line": 316,
+          "score": 0.510784
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:109-109",
+          "first_line": 109,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:110-110",
+          "first_line": 110,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:113-113",
+          "first_line": 113,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:114-114",
+          "first_line": 114,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:115-115",
+          "first_line": 115,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:116-116",
+          "first_line": 116,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:117-117",
+          "first_line": 117,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:118-118",
+          "first_line": 118,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:119-119",
+          "first_line": 119,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:123-123",
+          "first_line": 123,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:125-125",
+          "first_line": 125,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:126-126",
+          "first_line": 126,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:129-129",
+          "first_line": 129,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:174-174",
+          "first_line": 174,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:176-176",
+          "first_line": 176,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:178-178",
+          "first_line": 178,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:224-224",
+          "first_line": 224,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:226-226",
+          "first_line": 226,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:228-228",
+          "first_line": 228,
+          "score": 0.495616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:108-108",
+          "first_line": 108,
+          "score": 0.445616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:111-111",
+          "first_line": 111,
+          "score": 0.445616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:121-121",
+          "first_line": 121,
+          "score": 0.445616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:336-336",
+          "first_line": 336,
+          "score": 0.445616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:338-338",
+          "first_line": 338,
+          "score": 0.445616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:177-177",
+          "first_line": 177,
+          "score": 0.395616
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:222-222",
+          "first_line": 222,
+          "score": 0.391729
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:233-233",
+          "first_line": 233,
+          "score": 0.391729
+        },
+        {
+          "id": "src/werkzeug/routing/map.py:339-339",
+          "first_line": 339,
+          "score": 0.339912
+        }
+      ]
+    },
+    "unknowns": [
+      "ambiguous call get_host from bind_to_environ left as MAY/UNKNOWN (different class scope)",
+      "unresolved call: UNKNOWN:BadHost",
+      "unresolved call: UNKNOWN:MapAdapter",
+      "unresolved call: UNKNOWN:RuntimeError",
+      "unresolved call: UNKNOWN:StateMachineMatcher",
+      "unresolved call: UNKNOWN:_encode_idna",
+      "unresolved call: UNKNOWN:_get_environ",
+      "unresolved call: UNKNOWN:_wsgi_decoding_dance",
+      "unresolved call: UNKNOWN:append",
+      "unresolved call: UNKNOWN:copy",
+      "unresolved call: UNKNOWN:get",
+      "unresolved call: UNKNOWN:get_host",
+      "unresolved call: UNKNOWN:join",
+      "unresolved call: UNKNOWN:lock_class",
+      "unresolved call: UNKNOWN:lower",
+      "unresolved call: UNKNOWN:setdefault",
+      "unresolved call: UNKNOWN:split",
+      "unresolved call: UNKNOWN:strip",
+      "unresolved call: UNKNOWN:update",
+      "unresolved call: UNKNOWN:warn"
+    ],
+    "discovery_rule": "target file functions reachable forward from A's function (same-name calls, bounded), plus up to two levels of backward callers; statement nodes; data/control/alias/call edges; unresolved flows retained as MAY/UNKNOWN; candidates ranked by graph distance to A and to return anchors, shared state and same-function membership; top-k selection is a heuristic"
+  },
+  "search_runs": [
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM",
+        "subdomain": "www"
+      },
+      "mode": "graph",
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "cache_hits": 13,
+        "executor_cache_hits": 13,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "evaluations": 31,
+          "elapsed_seconds": 29.56
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 8,
+          "elapsed_seconds": 3.12
+        },
+        "wall_seconds": 68.488,
+        "search_mode": "graph",
+        "msms_unknown": [],
+        "mmbs_unknown": []
+      }
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "example.com:80",
+        "subdomain": "www"
+      },
+      "mode": "graph",
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "cache_hits": 12,
+        "executor_cache_hits": 12,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "evaluations": 7,
+          "elapsed_seconds": 1.399
+        },
+        "first_mmbs": null,
+        "wall_seconds": 27.265,
+        "search_mode": "graph",
+        "msms_unknown": [],
+        "mmbs_unknown": []
+      }
+    },
+    {
+      "input": {
+        "host": "example.com",
+        "server_name": "EXAMPLE.COM:443",
+        "subdomain": "www"
+      },
+      "mode": "graph",
+      "metrics": {
+        "evaluations": 64,
+        "subsets_total": 64,
+        "complete": true,
+        "evidence_complete": true,
+        "cache_hits": 13,
+        "executor_cache_hits": 13,
+        "unknown_subsets": 0,
+        "invalid_subsets": 0,
+        "first_msms": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219",
+            "src/werkzeug/routing/map.py:344-353"
+          ],
+          "evaluations": 31,
+          "elapsed_seconds": 11.558
+        },
+        "first_mmbs": {
+          "set": [
+            "src/werkzeug/routing/map.py:219-219"
+          ],
+          "evaluations": 8,
+          "elapsed_seconds": 1.161
+        },
+        "wall_seconds": 26.988,
+        "search_mode": "graph",
+        "msms_unknown": [],
+        "mmbs_unknown": []
+      }
+    }
+  ],
+  "mode": "Graph-full",
+  "wall_seconds": 140.018
+}

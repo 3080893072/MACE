@@ -1,0 +1,65 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/filters/reindent.py:142:augassign:position",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/filters/reindent.py",
+  "function": "_process_identifierlist",
+  "mechanism": "augassign",
+  "target_A": {
+    "line": 142,
+    "end_line": 142,
+    "kind": "AugAssign",
+    "code": "position += len(token.value) + 1"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": true,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "augassign"
+  },
+  "original_hit_tests": [
+    "tests/test_format.py::TestFormatReindent::test_identifier_and_functions",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_comment_first",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_with_functions",
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_with_wrap_after",
+    "tests/test_format.py::TestFormatReindent::test_keywordfunctions",
+    "tests/test_format.py::TestFormatReindent::test_long_identifier_list_with_functions",
+    "tests/test_format.py::TestFormatReindent::test_nested_identifier_list",
+    "tests/test_format.py::test_format_column_ordering",
+    "tests/test_format.py::test_having_produces_newline",
+    "tests/test_regressions.py::test_issue207_runaway_format",
+    "tests/test_regressions.py::test_issue40",
+    "tests/test_regressions.py::test_issue90",
+    "tests/test_regressions.py::test_null_with_as"
+  ],
+  "original_hit_test_count": 14,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                    position += len(token.value) + 1",
+    "replacement": "                    pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.56,
+    "failed_nodeids": [
+      "tests.test_format.TestFormatReindent::test_identifier_list_with_wrap_after",
+      "tests.test_format.TestFormatReindent::test_long_identifier_list_with_functions"
+    ],
+    "stdout_tail": ".F..F.........                                                           [100%]\n================================== FAILURES ===================================\n___________ TestFormatReindent.test_identifier_list_with_wrap_after ___________\n\nself = <tests.test_format.TestFormatReindent object at 0x000001F94C984090>\n\n    def test_identifier_list_with_wrap_after(self):\n        f = lambda sql: sqlparse.format(sql, reindent=True, wrap_after=14)\n        s = 'select foo, bar, baz from table1, table2 where 1 = 2'\n>       assert f(s) == '\\n'.join([\n            'select foo, bar,',\n            '       baz',\n            'from table1, table2',\n            'where 1 = 2'])\nE       AssertionError: assert 'select foo, ...\\nwhere 1 = 2' == 'select foo, ...\\nwhere 1 = 2'\nE         - select foo, bar,\nE         + select foo, bar, baz\nE         ?                 ++++\nE         -        baz\nE           from table1, table2\nE           where 1 = 2\n\ntests\\test_format.py:460: AssertionError\n_________ TestFormatReindent.test_long_identifier_list_with_functions _________\n\nself = <tests.test_format.TestFormatReindent object at 0x000001F94C9856D0>\n\n    def test_long_identifier_list_with_functions(self):\n        f = lambda sql: sqlparse.format(sql, reindent=True, wrap_after=30)\n        s = (\"select 'abc' as foo, json_build_object('a',  a,\"\n             \"'b', b, 'c', c, 'd', d, 'e', e) as col2\"\n             \"col3 from my_table\")\n>       assert f(s) == '\\n'.join([\n            \"select 'abc' as foo,\",\n            \"       json_build_object('a',\",\n            \"         a, 'b', b, 'c', c, 'd', d,\",\n            \"         'e', e) as col2col3\",\n            \"from my_table\"])\nE       assert \"select 'abc'...from my_table\" == \"select 'abc'...from my_table\"\nE         - select 'abc' as foo,\nE         -        json_build_object('a',\nE         -          a, 'b', b, 'c', c, 'd', d,\nE         + select 'abc' as foo, json_build_object('a',\nE         +                        a, 'b', b,\nE         +                        'c', c, 'd', d,\nE         -          'e', e) as col2col3...\nE         \nE         ...Full output truncated (3 lines hidden), use '-vv' to show\n\ntests\\test_format.py:494: AssertionError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_list_with_wrap_after\nFAILED tests/test_format.py::TestFormatReindent::test_long_identifier_list_with_functions\n2 failed, 12 passed in 0.21s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}

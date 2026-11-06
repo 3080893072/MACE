@@ -1,0 +1,51 @@
+{
+  "candidate_id": "sqlparse-0.4.4:sqlparse/filters/reindent.py:146:name:adjust",
+  "project": "sqlparse",
+  "version": "0.4.4",
+  "split": "DEV",
+  "file": "sqlparse/filters/reindent.py",
+  "function": "_process_identifierlist",
+  "mechanism": "name",
+  "target_A": {
+    "line": 146,
+    "end_line": 146,
+    "kind": "Assign",
+    "code": "adjust = -2"
+  },
+  "static_shape": {
+    "in_loop": true,
+    "in_try": false,
+    "in_if": true,
+    "in_with": true,
+    "nested_scope": false,
+    "read_before_later_write": true,
+    "later_write_reads_A": false,
+    "later_write_is_plain_assign": true,
+    "mechanism": "name"
+  },
+  "original_hit_tests": [
+    "tests/test_format.py::TestFormatReindent::test_identifier_list_comment_first"
+  ],
+  "original_hit_test_count": 1,
+  "p_plus_suite": null,
+  "deletion": {
+    "original_line": "                            adjust = -2",
+    "replacement": "                            pass  # P-: target A deleted"
+  },
+  "stage2": "A_EXECUTED_WITH_LOCAL_USE",
+  "stage3": "TARGETED_TEST_DETECTS_DELETION",
+  "status": "SCREENED_REJECT_TEST_DETECTS_DELETION",
+  "targeted_minus": {
+    "returncode": 1,
+    "timed_out": null,
+    "seconds": 0.5,
+    "failed_nodeids": [
+      "tests.test_format.TestFormatReindent::test_identifier_list_comment_first"
+    ],
+    "stdout_tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n____________ TestFormatReindent.test_identifier_list_comment_first ____________\n\nself = <tests.test_format.TestFormatReindent object at 0x000001BB05806110>\n\n    def test_identifier_list_comment_first(self):\n        f = lambda sql: sqlparse.format(sql, reindent=True, comma_first=True)\n        # not the 3: It cleans up whitespace too!\n        s = 'select foo, bar, baz from table where foo in (1, 2,3)'\n>       assert f(s) == '\\n'.join([\n            'select foo',\n            '     , bar',\n            '     , baz',\n            'from table',\n            'where foo in (1',\n            '            , 2',\n            '            , 3)'])\nE       AssertionError: assert 'select foo\\n...         , 3)' == 'select foo\\n...         , 3)'\nE           select foo\nE         -      , bar\nE         +        , bar\nE         ? ++\nE         -      , baz\nE         +        , baz\nE         ? ++...\nE         \nE         ...Full output truncated (8 lines hidden), use '-vv' to show\n\ntests\\test_format.py:470: AssertionError\n- generated xml file: <local-path> -\n=========================== short test summary info ===========================\nFAILED tests/test_format.py::TestFormatReindent::test_identifier_list_comment_first\n1 failed in 0.16s\n",
+    "stderr_tail": ""
+  },
+  "full_minus": null,
+  "stage4_probe": null,
+  "verdict": "NOT_A_MASKING_CANDIDATE"
+}
